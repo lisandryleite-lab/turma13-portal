@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { Nav } from "@/components/nav"
+import { BottomNav } from "@/components/bottom-nav"
 
 export default async function LogadoLayout({ children }: { children: React.ReactNode }) {
   const session = await auth()
@@ -9,7 +10,10 @@ export default async function LogadoLayout({ children }: { children: React.React
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "var(--creme)" }}>
       <Nav isAdmin={session.user.isAdmin} />
-      <main style={{ flex: 1, minWidth: 0, overflowY: "auto" }}>{children}</main>
+      <main className="main-logado" style={{ flex: 1, minWidth: 0, overflowY: "auto" }}>
+        {children}
+      </main>
+      <BottomNav />
     </div>
   )
 }

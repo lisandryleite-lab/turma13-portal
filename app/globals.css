@@ -174,23 +174,20 @@
   max-width: 160px;
   pointer-events: auto;
 }
-/* Mobile: topo horizontal */
+/* Desktop: bottom nav oculto */
+.bottom-nav {
+  display: none;
+}
+
+/* Mobile: sidebar oculta, bottom nav ativa */
 @media (max-width: 767px) {
   .sidebar {
-    width: 100% !important;
-    min-width: 100% !important;
-    height: auto !important;
-    position: static !important;
-    flex-direction: row !important;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-  .sidebar .nav-label {
-    opacity: 1 !important;
-    max-width: 80px !important;
-    font-size: 11px !important;
-  }
-  .sidebar-logo {
     display: none;
+  }
+  .bottom-nav {
+    display: flex;
+  }
+  .main-logado {
+    padding-bottom: 72px;
   }
 }

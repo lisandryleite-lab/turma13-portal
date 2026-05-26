@@ -17,7 +17,7 @@
 - **`matricula` é sempre `Int`/`number`, nunca `string`.** Ao receber do corpo da requisição, converter com `Number()` e validar com `isNaN()`.
 - **Componentes server por padrão.** Só adicionar `"use client"` em componentes que usam hooks, eventos ou estado interativo.
 - **Gráficos com SVG inline puro.** Sem `chart.js`, `recharts` ou qualquer lib de gráfico. Barras de progresso são `<div>` com `style={{ width: "X%" }}`.
-- **Sem sidebar.** Navegação é top nav horizontal fixo (`<nav>` no topo). Componente: `components/nav.tsx` (área logada) e `components/app-nav.tsx` (turma13cfo2026).
+- **Navegação:** sidebar vertical colapsada no desktop — 64px com ícones SVG inline, expande para 220px no hover (`components/nav.tsx`). Bottom nav fixo no mobile com 5 ícones principais (`components/bottom-nav.tsx`). Item Admin só aparece para `isAdmin === true`. Sem biblioteca de ícones — SVG inline (Lucide paths).
 - **Paleta de cores via CSS variables** (definidas em `app/globals.css`):
   - `--azul-profundo: #0B2D5E`
   - `--azul-medio: #1A52A8`
