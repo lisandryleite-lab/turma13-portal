@@ -1,3 +1,4 @@
+import "dotenv/config"
 import { PrismaClient } from "../lib/generated/prisma/client"
 import { PrismaNeon } from "@prisma/adapter-neon"
 import { neonConfig } from "@neondatabase/serverless"
@@ -155,6 +156,22 @@ async function main() {
     })
     console.log(`✓ ${a.mat} ${a.ng}`)
   }
+
+  // Usuário de teste — senha customizada (não segue padrão matrícula)
+  const senhaTesteHash = await bcrypt.hash("1234", 12)
+  await prisma.user.upsert({
+    where: { matricula: 999 },
+    update: {},
+    create: {
+      matricula: 999,
+      nomeGuerra: "LISANDRY TESTE",
+      nomeCompleto: "Usuário de Teste",
+      email: "teste999@turma13.local",
+      password: senhaTesteHash,
+      isAdmin: false,
+    },
+  })
+  console.log("✓ 999 LISANDRY TESTE (senha: 1234)")
 
   // Disciplinas
   for (const [sigla, nome, modulo, cargaTotal, cargaMinistrada, status] of DISCIPLINAS) {
