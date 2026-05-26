@@ -71,8 +71,8 @@ export default async function EscalasPage() {
       semana={semana}
       ano={ano}
       mes={mes}
-      isAdmin={isAdmin}
-      minhaMatricula={minhaMatricula}
+      isAdmin={isAdmin ?? false}
+      minhaMatricula={minhaMatricula ?? 0}
       servicoAtual={servicoComNomes}
       proximasSemanasServico={proximasSemanasServico}
       calendario={calendario.map(d => ({

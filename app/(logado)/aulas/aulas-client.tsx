@@ -48,13 +48,14 @@ function BadgeStatus({ status }: { status: string }) {
 }
 
 export function AulasClient({
-  disciplinas, isAdmin, semana, totalCarga, totalMinistradas,
+  disciplinas, isAdmin, semana, totalCarga, totalMinistradas, hoje,
 }: {
   disciplinas: Disciplina[]
   isAdmin: boolean
   semana: number
   totalCarga: number
   totalMinistradas: number
+  hoje: number
 }) {
   const router = useRouter()
   const [filtro, setFiltro] = useState<Filtro>("todas")
@@ -71,7 +72,7 @@ export function AulasClient({
   const restantes = totalCarga - totalMinistradas
   const semanasRestantes = mediaHorasSemana > 0 ? Math.ceil(restantes / mediaHorasSemana) : null
   const dataFimProjetada = semanasRestantes
-    ? new Date(Date.now() + semanasRestantes * 7 * 24 * 60 * 60 * 1000)
+    ? new Date(hoje + semanasRestantes * 7 * 24 * 60 * 60 * 1000)
     : null
 
   const listaFiltrada = filtro === "concluidas" ? concluidas

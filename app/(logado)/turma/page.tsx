@@ -63,7 +63,7 @@ export default async function TurmaPage() {
       nomesPorMat={nomesPorMat}
       hierarquia={HIERARQUIA}
       funcoesFixas={FUNCOES_FIXAS}
-      minhaMatricula={minhaMatricula}
+      minhaMatricula={minhaMatricula ?? 0}
     />
   )
 }

@@ -13,14 +13,16 @@ export default async function AulasPage() {
   const totalCarga = disciplinas.reduce((s, d) => s + d.cargaTotal, 0)
   const totalMinistradas = disciplinas.reduce((s, d) => s + d.cargaMinistrada, 0)
   const semana = semanaAtual()
+  const hoje = Date.now()
 
   return (
     <AulasClient
       disciplinas={disciplinas}
-      isAdmin={isAdmin}
+      isAdmin={isAdmin ?? false}
       semana={semana}
       totalCarga={totalCarga}
       totalMinistradas={totalMinistradas}
+      hoje={hoje}
     />
   )
 }

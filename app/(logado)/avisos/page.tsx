@@ -13,7 +13,7 @@ export default async function AvisosPage() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-slate-900">Mural de Avisos</h1>
       </div>
-      <AvisosClient avisos={avisos} isAdmin={isAdmin} />
+      <AvisosClient avisos={avisos} isAdmin={isAdmin ?? false} />
     </div>
   )
 }
