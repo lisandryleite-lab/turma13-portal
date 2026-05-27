@@ -150,6 +150,9 @@ export default async function DashboardPage() {
             {aluno?.grupoFaxina && <p><span className="text-slate-500">Faxina:</span> <span className="font-medium">{aluno.grupoFaxina}</span></p>}
             {aluno?.aniversario && <p><span className="text-slate-500">Aniversário:</span> <span className="font-medium">{aluno.aniversario}</span></p>}
           </div>
+          <Link href="/alterar-senha" className="text-xs mt-3 inline-block hover:underline" style={{ color: "var(--azul-medio)" }}>
+            🔒 Alterar senha →
+          </Link>
         </div>
 
         {/* Missão da Semana */}
