@@ -18,6 +18,7 @@ const eslintConfig = defineConfig([
       "@typescript-eslint/no-explicit-any": "warn",
       "@next/next/no-page-custom-font": "off",
       "react-hooks/purity": "warn",
+      "react-hooks/no-direct-set-state-in-use-effect": "warn",
     },
   },
 ]);

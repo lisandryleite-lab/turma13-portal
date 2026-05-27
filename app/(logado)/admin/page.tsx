@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { AdminClient } from "./admin-client"
+import Link from "next/link"
 
 export const dynamic = "force-dynamic"
 
@@ -20,7 +21,12 @@ export default async function AdminPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-slate-900 mb-6">Administração</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-slate-900">Administração</h1>
+        <Link href="/admin/notas" style={{ background: "var(--azul-profundo)", color: "#fff", borderRadius: 8, padding: "8px 18px", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>
+          📝 Gerenciar Notas
+        </Link>
+      </div>
       <AdminClient alunos={alunos} />
     </div>
   )
