@@ -160,6 +160,29 @@ export function Nav({ isAdmin }: { isAdmin?: boolean }) {
         )}
       </nav>
 
+      {/* Alterar senha */}
+      <Link
+        href="/alterar-senha"
+        title="Alterar senha"
+        style={{
+          display: "flex", alignItems: "center", gap: 12,
+          padding: "10px 20px", textDecoration: "none",
+          color: "rgba(255,255,255,0.4)",
+          background: "transparent", transition: "background 0.15s",
+          borderTop: "1px solid rgba(255,255,255,0.08)",
+          overflow: "hidden",
+        }}
+        onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}
+        onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+      >
+        <span style={{ flexShrink: 0, width: 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </span>
+        <span className="nav-label" style={{ fontSize: 13 }}>Alterar senha</span>
+      </Link>
+
       {/* Sair */}
       <button
         onClick={() => signOut({ callbackUrl: "/login" })}
