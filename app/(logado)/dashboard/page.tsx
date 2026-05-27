@@ -196,6 +196,31 @@ export default async function DashboardPage() {
           </div>
         )}
 
+        {/* Próximas Provas */}
+        <div className="col-span-full rounded-xl p-5 border" style={{ background: "#FFF7ED", borderColor: "#FED7AA" }}>
+          <h2 className="font-semibold text-sm mb-3" style={{ color: "#9A3412" }}>
+            📋 Próximas Provas
+          </h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {[
+              { sigla: "ACE", nome: "Análise Criminal e Estatística" },
+              { sigla: "GPGA", nome: "Gestão Pública Geral Aplicada" },
+              { sigla: "GRAPP", nome: "Gestão por Resultados e Avaliação" },
+            ].map(p => (
+              <div key={p.sigla} style={{
+                background: "#fff", border: "1.5px solid #FED7AA", borderRadius: 8,
+                padding: "7px 14px", display: "flex", alignItems: "center", gap: 8,
+              }}>
+                <span style={{ fontWeight: 800, fontSize: 13, color: "#9A3412" }}>{p.sigla}</span>
+                <span style={{ fontSize: 12, color: "#78350F" }}>{p.nome}</span>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontSize: 11, color: "#B45309", marginTop: 8 }}>
+            Datas a confirmar — fique atento aos avisos.
+          </p>
+        </div>
+
         {/* Links rápidos */}
         <div className="col-span-full grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
