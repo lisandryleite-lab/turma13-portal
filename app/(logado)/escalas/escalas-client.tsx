@@ -84,8 +84,9 @@ export function EscalasClient({
       .filter(e => e.data)
       .map(e => {
         const d = new Date(e.data + "T12:00:00")
-        const GRUPOS = ["LIMA","GOLF","HOTEL","INDIA","JULIETT","KILO"]
-        const idx = ((Math.floor((d.getTime() - new Date(2026,0,1).getTime()) / 86400000) % 6) + 6) % 6
+        const GRUPOS = ["GOLF","HOTEL","INDIA","JULIETT","KILO","LIMA","MIKE","NOVEMBER"]
+        const REF = new Date(2026, 4, 26) // 26/05/2026 = GOLF
+        const idx = ((Math.floor((d.getTime() - REF.getTime()) / 86400000) % 8) + 8) % 8
         return { data: e.data + "T12:00:00", grupoPlantao: GRUPOS[idx], adjuntoMat: e.adjuntoMat ? Number(e.adjuntoMat) : null }
       })
     await fetch("/api/plantao-mes", { method: "POST", headers: { "Content-Type":"application/json" }, body: JSON.stringify({ dias }) })
@@ -279,7 +280,7 @@ export function EscalasClient({
       {aba === "plantao" && (
         <div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 12, marginBottom: 28 }}>
-            {(["LIMA","GOLF","HOTEL","INDIA","JULIETT","KILO"] as GrupoPlantao[]).map(g => {
+            {(["GOLF","HOTEL","INDIA","JULIETT","KILO","LIMA","MIKE","NOVEMBER"] as GrupoPlantao[]).map(g => {
               const membros = membrosPlantao[g] || []
               const temEu = membros.some(m => m.mat === minhaMatricula)
               return (

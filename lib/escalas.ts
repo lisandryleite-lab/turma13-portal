@@ -2,11 +2,11 @@
 //  Cálculos automáticos de escalas — Turma 13 CFO PM 2026
 // ─────────────────────────────────────────────────────────────
 
-// Matrícula ordenada por antiguidade (menor = mais antigo)
+// Matrícula ordenada por antiguidade (menor = mais antigo) — 33 alunos (206 e 207 removidos)
 export const MATRICULAS_ORDEM = [
   1, 7, 13, 19, 23, 26, 37, 41, 45, 54, 55, 57, 60, 65,
   71, 76, 81, 94, 98, 105, 106, 108, 114, 116, 131, 143,
-  144, 153, 165, 167, 174, 186, 191, 206, 207,
+  144, 153, 165, 167, 174, 186, 191,
 ]
 
 // Semana de referência: semana 16 → P1=41 (idx 7), P3=45 (idx 8), P4=54 (idx 9)
@@ -25,19 +25,21 @@ export function calcularServico(semana: number): {
 
 // ─────────────────────────────────────────────────────────────
 //  Grupo de plantão externo — cicla a cada dia corrido
-//  Referência confirmada: 20/05/2026 (terça) = LIMA
-//  Ciclo: LIMA → GOLF → HOTEL → INDIA → JULIETT → KILO → (repete)
-//  Inclui fins de semana
+//  Referência confirmada: 26/05/2026 = GOLF (índice 0)
+//  Ciclo: GOLF → HOTEL → INDIA → JULIETT → KILO → LIMA → MIKE → NOVEMBER → (repete)
+//  Inclui fins de semana. Verificação: 02/06/2026 = NOVEMBER.
 // ─────────────────────────────────────────────────────────────
-export const GRUPOS_PLANTAO = ["LIMA", "GOLF", "HOTEL", "INDIA", "JULIETT", "KILO"] as const
+export const GRUPOS_PLANTAO = ["GOLF", "HOTEL", "INDIA", "JULIETT", "KILO", "LIMA", "MIKE", "NOVEMBER"] as const
 export type GrupoPlantao = typeof GRUPOS_PLANTAO[number]
 
-// Referência: 20/05/2026 = LIMA (índice 0) — confirmado pela turma
-const REF_PLANTAO = new Date(2026, 4, 20) // 20 de maio de 2026
+// Referência: 26/05/2026 = GOLF (índice 0) — confirmado pela turma
+// Normaliza para UTC midnight para evitar problemas de fuso horário
+const REF_PLANTAO_UTC = new Date("2026-05-26T00:00:00.000Z").getTime()
 
 export function grupoPlantaoPorData(data: Date): GrupoPlantao {
-  const diffDias = Math.floor((data.getTime() - REF_PLANTAO.getTime()) / 86_400_000)
-  return GRUPOS_PLANTAO[((diffDias % 6) + 6) % 6]
+  const dataUTC = Date.UTC(data.getFullYear(), data.getMonth(), data.getDate())
+  const diffDias = Math.floor((dataUTC - REF_PLANTAO_UTC) / 86_400_000)
+  return GRUPOS_PLANTAO[((diffDias % 8) + 8) % 8]
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -114,12 +116,14 @@ export const COMPOSICAO_FAXINA: Record<GrupoFaxina, { mat: number; nome: string 
   G8: [{ mat: 7, nome: "ALDO SILVA" }, { mat: 37, nome: "PABLO TORRES" }, { mat: 23, nome: "RODOLFO MOURA" }, { mat: 26, nome: "ANDRÉ" }],
 }
 
-// Composição dos grupos de plantão — documento oficial 13/04/2026
+// Composição dos grupos de plantão — atualizado maio/2026 (8 grupos)
 export const MEMBROS_PLANTAO: Record<GrupoPlantao, { mat: number; nome: string }[]> = {
-  GOLF:    [{ mat: 7,   nome: "ALDO SILVA" }, { mat: 19,  nome: "THAIS FIGUEIREDO" }, { mat: 57,  nome: "CLEYTON" }, { mat: 143, nome: "VIDAL" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
-  HOTEL:   [{ mat: 13,  nome: "JONAS" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 45,  nome: "GABRIELE COSTA" }, { mat: 54,  nome: "ELDER CARVALHO" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 144, nome: "SAMUEL SANTOS" }, { mat: 165, nome: "KEVIN GOMES" }],
-  INDIA:   [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 81,  nome: "FERNANDO ROCHA" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 153, nome: "HUGO" }],
-  JULIETT: [{ mat: 55,  nome: "SHIRLAYNE" }, { mat: 71,  nome: "LEIMIG" }, { mat: 76,  nome: "ARAÚJO JR" }, { mat: 94,  nome: "ANDRÉ CARDOSO" }, { mat: 174, nome: "ALEXANDRE" }],
-  KILO:    [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }],
-  LIMA:    [{ mat: 108, nome: "LISANDRY" }, { mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 186, nome: "SAMUEL SILVA" }],
+  GOLF:     [{ mat: 1,   nome: "HELLTON FERNANDES" }, { mat: 7,   nome: "ALDO SILVA" }, { mat: 19,  nome: "THAIS FIGUEIREDO" }, { mat: 57,  nome: "CLEYTON" }, { mat: 143, nome: "VIDAL" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
+  HOTEL:    [{ mat: 13,  nome: "JONAS" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 144, nome: "SAMUEL SANTOS" }],
+  INDIA:    [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 116, nome: "BERTIPALHA" }],
+  JULIETT:  [{ mat: 94,  nome: "ANDRÉ CARDOSO" }],
+  KILO:     [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }],
+  LIMA:     [{ mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 186, nome: "SAMUEL SILVA" }],
+  MIKE:     [{ mat: 45,  nome: "GABRIELE COSTA" }, { mat: 54,  nome: "ELDER CARVALHO" }, { mat: 81,  nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 108, nome: "LISANDRY" }, { mat: 153, nome: "HUGO" }, { mat: 165, nome: "KEVIN GOMES" }],
+  NOVEMBER: [{ mat: 55,  nome: "SHIRLAYNE" }, { mat: 71,  nome: "LEIMIG" }, { mat: 76,  nome: "ARAÚJO JR" }],
 }

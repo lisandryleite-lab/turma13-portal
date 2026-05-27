@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const DATA_INICIO = new Date("2026-01-05")
+export const DATA_INICIO = new Date("2026-01-06")
 
 export function semanaAtual(): number {
   const diff = Date.now() - DATA_INICIO.getTime()
