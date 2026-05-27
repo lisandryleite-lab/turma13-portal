@@ -10,7 +10,7 @@
 | ORM | Prisma 7 com adapter Neon (PostgreSQL serverless) |
 | Autenticação | NextAuth v5 beta (next-auth@5.0.0-beta.31), estratégia JWT |
 | E-mail | Resend |
-| Deploy | Vercel — subdiretório `turma13/` do repo `lisandryleite-lab/agendamento-apmp` |
+| Deploy | Vercel — repo `lisandryleite-lab/turma13-portal` · https://turma13-portal.vercel.app |
 
 ## Regras absolutas
 
@@ -31,7 +31,7 @@
 DATABASE_URL          # Neon PostgreSQL connection string
 AUTH_SECRET           # Segredo NextAuth (openssl rand -base64 32)
 RESEND_API_KEY        # API key do Resend para e-mails
-NEXTAUTH_URL          # URL base da aplicação (ex: https://turma13-apmp.vercel.app)
+NEXTAUTH_URL          # URL base da aplicação — produção: https://turma13-portal.vercel.app
 ```
 
 ## Estrutura de páginas
@@ -82,7 +82,7 @@ Escalas nominais da turma com data exata, posição e userId.
 Escala individual de um aluno (plantão externo, faxina de alojamento, etc.) com data, hora e função.
 
 ### `PlantaoDia`
-Plantão externo da 2ª CIA por dia. Admin insere mensalmente. Campo `grupoPlantao`: LIMA | GOLF | HOTEL | INDIA | JULIETT | KILO.
+Plantão externo da 2ª CIA por dia. Admin insere mensalmente. Campo `grupoPlantao`: GOLF | HOTEL | INDIA | JULIETT | KILO | LIMA | MIKE | NOVEMBER (8 grupos).
 
 ### `FuncaoDestaqueDia`
 Funções de destaque diárias (Mestre, Leitor, Discurso, Comandante) com matrícula do responsável.
@@ -101,6 +101,31 @@ Data de referência para cálculo automático da rotação de faxina.
 
 ### `Aviso`
 Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
+
+## Dados operacionais da Turma — referências estáticas
+
+### Semana atual (`lib/utils.ts`)
+`DATA_INICIO = new Date("2026-01-06")` → semana 20 = semana de 26/05/2026.
+⚠️ O código atual usa Jan 05 (gera semana 21). Ajuste pendente: mudar para Jan 06.
+
+### Turma
+33 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
+
+### Grupos de plantão — 8 grupos (atualizado maio/2026)
+Ciclo **diário** (todos os dias, incluindo fins de semana).
+Ordem: GOLF → HOTEL → INDIA → JULIETT → KILO → LIMA → MIKE → NOVEMBER → (repete).
+Referência confirmada: **26/05/2026 = GOLF**. Verificação: 02/06/2026 = NOVEMBER.
+
+| Grupo    | Mats                           | Membros                                                                          |
+|----------|--------------------------------|----------------------------------------------------------------------------------|
+| GOLF     | 1, 7, 19, 57, 143, 191         | Hellton Fernandes, Aldo Silva, Thais Figueiredo, Cleyton, Vidal, Gomes Nascimento |
+| HOTEL    | 13, 23, 105, 144               | Jonas, Rodolfo Moura, Lucas Eduardo, Samuel Santos                               |
+| INDIA    | 41, 60, 116                    | Alan Silva, João Nunes, Bertipalha                                               |
+| JULIETT  | 94                             | André Cardoso                                                                    |
+| KILO     | 26, 37, 65, 98                 | André, Pablo Torres, Kauhanni, José Menezes                                      |
+| LIMA     | 114, 131, 167, 174, 186        | Josiane Farias, José Inácio, Gustavo Neto, Alexandre, Samuel Silva               |
+| MIKE     | 45, 54, 81, 106, 108, 153, 165 | Gabriele Costa, Elder Carvalho, Fernando Rocha, Rafael Ribeiro, Lisandry, Hugo, Kevin Gomes |
+| NOVEMBER | 55, 71, 76                     | Shirlayne, Leimig, Araújo Junior                                                 |
 
 ## Autenticação — padrão de uso
 
