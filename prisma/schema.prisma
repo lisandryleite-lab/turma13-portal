@@ -30,6 +30,7 @@ model User {
   notasAlteradas   HistoricoNota[]   @relation("AlteradoPor")
   escalasAluno     EscalaAluno[]
   missoesConcluidas MissaoConcluida[]
+  nfdc              Float   @default(10)
 }
 
 model Account {

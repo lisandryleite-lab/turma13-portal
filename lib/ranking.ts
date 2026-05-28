@@ -86,7 +86,7 @@ export function calcularMGC({ mfic, nfdc, tcc }: ComponentesMGC): number | null 
  * NFDC = 10 (sem transgressões registradas ainda).
  * TCC = incluído se avaliacao === "TCC".
  */
-export function calcularMGCSimples(notas: Verificacao[]): number | null {
+export function calcularMGCSimples(notas: Verificacao[], nfdc = 10): number | null {
   if (notas.length === 0) return null
 
   // Separa TCC
@@ -103,5 +103,23 @@ export function calcularMGCSimples(notas: Verificacao[]): number | null {
   const mfic = calcularMFIC(porDisc)
   const tcc = notaTCC?.nota ?? null
 
-  return calcularMGC({ mfic, nfdc: 10, tcc })
+  return calcularMGC({ mfic, nfdc, tcc })
+}
+
+/** Extrai MFIC e TCC separadamente (para exibição detalhada) */
+export function calcularComponentes(notas: Verificacao[], nfdc = 10) {
+  const notaTCC = notas.find((n) => n.disciplina === "TCC" || n.avaliacao === "TCC")
+  const notasSemTCC = notas.filter((n) => n.disciplina !== "TCC" && n.avaliacao !== "TCC")
+
+  const porDisc = new Map<string, Verificacao[]>()
+  for (const n of notasSemTCC) {
+    if (!porDisc.has(n.disciplina)) porDisc.set(n.disciplina, [])
+    porDisc.get(n.disciplina)!.push(n)
+  }
+
+  const mfic = calcularMFIC(porDisc)
+  const tcc = notaTCC?.nota ?? null
+  const mgc = calcularMGC({ mfic, nfdc, tcc })
+
+  return { mfic, nfdc, tcc, mgc }
 }
