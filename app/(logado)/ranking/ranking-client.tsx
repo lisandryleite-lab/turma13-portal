@@ -170,38 +170,55 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
     if (data.nfdc!==undefined){setNfdc(data.nfdc);setEditNfdc(false)}
   }
 
+  const [msg, setMsg] = useState<{tipo:"ok"|"erro";texto:string}|null>(null)
+
+  function flash(tipo:"ok"|"erro", texto:string) {
+    setMsg({tipo,texto})
+    setTimeout(()=>setMsg(null), 3000)
+  }
+
   async function lancarTCC(nota:string) {
     if (!nota) return
     setSalvando(true)
-    const res = await fetch("/api/notas",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({disciplina:"TCC",avaliacao:"TCC",nota:Number(nota),ehAF:false,apto:false,data:new Date().toISOString().slice(0,10),observacao:null})})
-    const nova = await res.json()
-    setSalvando(false)
-    setNotas(prev=>[{...nova,data:nova.data?.slice(0,10)??new Date().toISOString().slice(0,10)},...prev.filter(n=>n.disciplina!=="TCC")])
+    try {
+      const res = await fetch("/api/notas",{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({disciplina:"TCC",avaliacao:"TCC",nota:Number(nota),ehAF:false,apto:false,
+          data:new Date().toISOString().slice(0,10),observacao:null})})
+      if (!res.ok) { const e=await res.json(); flash("erro",e.error||"Erro ao salvar TCC"); return }
+      flash("ok","TCC salvo!")
+      router.refresh()
+    } catch { flash("erro","Erro de conexão") } finally { setSalvando(false) }
   }
 
   async function deletarTCC() {
     if (!notaTCC||!confirm("Remover nota do TCC?")) return
     await fetch(`/api/notas/${notaTCC.id}`,{method:"DELETE"})
-    setNotas(prev=>prev.filter(n=>n.id!==notaTCC.id))
+    router.refresh()
   }
 
   async function lancar(sigla:string) {
     if (!form.avaliacao) return
+    const notaVal = form.apto ? 0 : Number(form.nota)
+    if (!form.apto && (isNaN(notaVal)||notaVal<0||notaVal>10)) {
+      flash("erro","Nota deve ser entre 0 e 10"); return
+    }
     setSalvando(true)
-    const res = await fetch("/api/notas",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({disciplina:sigla,avaliacao:form.avaliacao,nota:Number(form.nota),ehAF:form.ehAF,apto:form.apto,data:form.data,observacao:form.observacao||null})})
-    const nova = await res.json()
-    setSalvando(false)
-    setFormSigla(null)
-    setForm({avaliacao:"",nota:"",ehAF:false,apto:false,data:new Date().toISOString().slice(0,10),observacao:""})
-    setNotas(prev=>[{...nova,data:nova.data?.slice(0,10)??form.data},...prev])
+    try {
+      const res = await fetch("/api/notas",{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({disciplina:sigla,avaliacao:form.avaliacao,nota:notaVal,
+          ehAF:form.ehAF,apto:form.apto,data:form.data,observacao:form.observacao||null})})
+      if (!res.ok) { const e=await res.json(); flash("erro",e.error||"Erro ao salvar nota"); return }
+      setFormSigla(null)
+      setForm({avaliacao:"",nota:"",ehAF:false,apto:false,data:new Date().toISOString().slice(0,10),observacao:""})
+      flash("ok",`Nota de ${sigla} salva! Calculando...`)
+      router.refresh()
+    } catch { flash("erro","Erro de conexão ao salvar") } finally { setSalvando(false) }
   }
 
   async function deletar(id:string) {
     if (!confirm("Excluir esta nota?")) return
     await fetch(`/api/notas/${id}`,{method:"DELETE"})
-    setNotas(prev=>prev.filter(n=>n.id!==id))
+    router.refresh()
   }
 
   const discComNotas = disciplinas.filter(d=>(notasPorDisc[d.sigla]?.length??0)>0 && d.sigla!=="TCC")
@@ -210,6 +227,19 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
 
   return (
     <div style={{display:"flex",flexDirection:"column",gap:20}}>
+
+      {/* Toast de feedback */}
+      {msg && (
+        <div style={{
+          position:"fixed",top:20,right:20,zIndex:9999,
+          background: msg.tipo==="ok"?"#15803d":"#b91c1c",
+          color:"#fff",borderRadius:10,padding:"12px 20px",
+          fontSize:13,fontWeight:600,boxShadow:"0 4px 16px rgba(0,0,0,0.18)",
+          animation:"slideIn 0.2s ease",
+        }}>
+          {msg.tipo==="ok"?"✓":"✗"} {msg.texto}
+        </div>
+      )}
 
       {/* Painel de componentes */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}>
