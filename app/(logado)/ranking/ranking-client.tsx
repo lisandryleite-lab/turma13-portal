@@ -205,7 +205,8 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
   }
 
   const discComNotas = disciplinas.filter(d=>(notasPorDisc[d.sigla]?.length??0)>0 && d.sigla!=="TCC")
-  const discSemNotas = disciplinas.filter(d=>(notasPorDisc[d.sigla]?.length??0)===0 && d.status!=="Início" && d.sigla!=="TCC")
+  // Inclui TODAS as disciplinas sem nota (inclusive "Início") — aluno pode ter prova de qualquer módulo
+  const discSemNotas = disciplinas.filter(d=>(notasPorDisc[d.sigla]?.length??0)===0 && d.sigla!=="TCC")
 
   return (
     <div style={{display:"flex",flexDirection:"column",gap:20}}>
@@ -343,18 +344,78 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
         </div>
       )}
 
-      {/* Disciplinas sem notas */}
+      {/* Disciplinas sem notas — formulário inline ao clicar */}
       {discSemNotas.length>0&&(
         <div>
-          <p style={{fontSize:11,fontWeight:700,color:"#9aa3b8",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:8}}>Sem nota lançada</p>
+          <p style={{fontSize:11,fontWeight:700,color:"#9aa3b8",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:8}}>
+            Sem nota lançada ({discSemNotas.length})
+          </p>
           <div style={{background:"#fff",border:"1px solid #dde3ee",borderRadius:14,overflow:"hidden"}}>
-            {discSemNotas.map((d,i)=>(
-              <div key={d.sigla} style={{borderTop:i>0?"1px solid #edf0f7":undefined,padding:"10px 16px",display:"flex",alignItems:"center",gap:12}}>
-                <span style={{fontSize:11,fontWeight:700,color:AM,width:52,flexShrink:0}}>{d.sigla}</span>
-                <span style={{fontSize:13,color:AZ,flex:1}}>{d.nome}</span>
-                <button onClick={()=>{setAberta(d.sigla);setFormSigla(d.sigla);setForm({avaliacao:"",nota:"",ehAF:false,apto:false,data:new Date().toISOString().slice(0,10),observacao:""})}} style={{fontSize:11,color:AM,background:"#f0f4ff",border:"none",borderRadius:6,padding:"4px 10px",cursor:"pointer",flexShrink:0}}>+ Nota</button>
-              </div>
-            ))}
+            {discSemNotas.map((d,i)=>{
+              const podeP2 = d.cargaTotal>=40
+              const aberta = formSigla===d.sigla
+              return (
+                <div key={d.sigla} style={{borderTop:i>0?"1px solid #edf0f7":undefined}}>
+                  {/* Linha da disciplina */}
+                  <div style={{padding:"10px 16px",display:"flex",alignItems:"center",gap:12}}>
+                    <div style={{flex:1,minWidth:0}}>
+                      <span style={{fontSize:11,fontWeight:700,color:AM}}>{d.sigla}</span>
+                      <span style={{fontSize:13,color:AZ,marginLeft:8}}>{d.nome}</span>
+                    </div>
+                    <span style={{fontSize:10,color:"#c5cde0",flexShrink:0}}>{d.cargaTotal}h</span>
+                    <button
+                      onClick={()=>{
+                        if(aberta){setFormSigla(null)}
+                        else{setFormSigla(d.sigla);setForm({avaliacao:"",nota:"",ehAF:false,apto:false,data:new Date().toISOString().slice(0,10),observacao:""})}
+                      }}
+                      style={{fontSize:11,color:aberta?"#b91c1c":AM,background:aberta?"#fee2e2":"#f0f4ff",border:"none",borderRadius:6,padding:"4px 10px",cursor:"pointer",flexShrink:0,fontWeight:600}}>
+                      {aberta?"Cancelar":"+ Nota"}
+                    </button>
+                  </div>
+                  {/* Formulário inline */}
+                  {aberta&&(
+                    <div style={{background:"#f8faff",borderTop:"1px solid #edf0f7",padding:"14px 16px"}}>
+                      <div style={{background:"#fff",borderRadius:8,padding:"14px",border:`1.5px solid ${AM}`,display:"flex",flexWrap:"wrap",gap:10,alignItems:"flex-end"}}>
+                        <div>
+                          <label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Avaliação *</label>
+                          <input value={form.avaliacao} onChange={e=>setForm(f=>({...f,avaliacao:e.target.value}))}
+                            placeholder={podeP2?"P1, P2, AF…":"P1, AF…"}
+                            style={{border:"1px solid #dde3ee",borderRadius:6,padding:"7px 10px",fontSize:14,width:80}}
+                            autoFocus />
+                        </div>
+                        <div>
+                          <label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Nota (0–10)</label>
+                          <input type="number" min={0} max={10} step={0.1} value={form.nota}
+                            onChange={e=>setForm(f=>({...f,nota:e.target.value}))} disabled={form.apto}
+                            style={{border:"1px solid #dde3ee",borderRadius:6,padding:"7px 10px",fontSize:14,width:75,opacity:form.apto?0.4:1}} />
+                        </div>
+                        <div>
+                          <label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Data</label>
+                          <input type="date" value={form.data} onChange={e=>setForm(f=>({...f,data:e.target.value}))}
+                            style={{border:"1px solid #dde3ee",borderRadius:6,padding:"7px 10px",fontSize:13}} />
+                        </div>
+                        <div style={{display:"flex",gap:14,paddingBottom:3}}>
+                          <label style={{fontSize:12,display:"flex",alignItems:"center",gap:5,cursor:"pointer"}}>
+                            <input type="checkbox" checked={form.ehAF} onChange={e=>setForm(f=>({...f,ehAF:e.target.checked}))}/> AF
+                          </label>
+                          <label style={{fontSize:12,display:"flex",alignItems:"center",gap:5,cursor:"pointer"}}>
+                            <input type="checkbox" checked={form.apto} onChange={e=>setForm(f=>({...f,apto:e.target.checked}))}/> Apto
+                          </label>
+                        </div>
+                        <div style={{display:"flex",gap:8}}>
+                          <button onClick={()=>lancar(d.sigla)} disabled={salvando||!form.avaliacao} style={{
+                            background:AZ,color:"#fff",border:"none",borderRadius:7,
+                            padding:"8px 18px",fontSize:13,fontWeight:700,cursor:"pointer",
+                            opacity:!form.avaliacao?0.5:1
+                          }}>{salvando?"Salvando…":"Salvar nota"}</button>
+                          <button onClick={()=>setFormSigla(null)} style={{background:"none",border:"none",fontSize:12,color:"#9aa3b8",cursor:"pointer"}}>Cancelar</button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </div>
       )}
