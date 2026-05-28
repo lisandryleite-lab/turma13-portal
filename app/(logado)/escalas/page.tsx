@@ -6,7 +6,6 @@ import {
   calendarioFaxinaMes,
   COMPOSICAO_FAXINA,
   MEMBROS_PLANTAO,
-  MATRICULAS_ORDEM,
 } from "@/lib/escalas"
 import { semanaAtual } from "@/lib/utils"
 
@@ -25,9 +24,6 @@ export default async function EscalasPage() {
   const semana = semanaAtual()
   const { ano, mes } = mesAtual()
 
-  // Dados calculados automaticamente
-  const servico = calcularServico(semana)
-
   // Calendários de faxina: mês atual até dezembro
   const mesesCalendario = Array.from({ length: 12 - mes + 1 }, (_, i) => {
     const m = mes + i
@@ -38,44 +34,56 @@ export default async function EscalasPage() {
     }
   })
 
-  const calendario = mesesCalendario[0].dias
+  // Gera semanas restantes do ano com cálculo automático
+  const semanasAno = Array.from({ length: 52 - semana + 1 }, (_, i) => semana + i)
 
-  // Dados externos (admin insere)
-  const inicio = new Date(ano, mes - 1, 1)
-  const fim = new Date(ano, mes, 0, 23, 59, 59)
-  const [plantaoDias, funcoesDias, alunos] = await Promise.all([
-    prisma.plantaoDia.findMany({ where: { data: { gte: inicio, lte: fim } }, orderBy: { data: "asc" } }),
-    prisma.funcaoDestaqueDia.findMany({ where: { data: { gte: inicio, lte: fim } }, orderBy: [{ data: "asc" }, { funcao: "asc" }] }),
+  const [plantaoDias, funcoesDias, alunos, overridesBD] = await Promise.all([
+    // plantão do mês atual ao final do ano
+    prisma.plantaoDia.findMany({
+      where: { data: { gte: new Date(ano, mes - 1, 1), lte: new Date(ano, 11, 31) } },
+      orderBy: { data: "asc" },
+    }),
+    prisma.funcaoDestaqueDia.findMany({
+      where: { data: { gte: new Date(ano, mes - 1, 1), lte: new Date(ano, 11, 31) } },
+      orderBy: [{ data: "asc" }, { funcao: "asc" }],
+    }),
     prisma.user.findMany({
-      where: { isAdmin: false },
+      where: { isAdmin: false, matricula: { gt: 0 } },
       select: { matricula: true, nomeGuerra: true, grupoFaxina: true, grupoPlantao: true },
       orderBy: { matricula: "asc" },
     }),
+    // Overrides admin para escala de serviço
+    prisma.escalaServico.findMany({
+      where: { semana: { in: semanasAno } },
+    }),
   ])
 
-  // Monta mapa nome de guerra por matrícula
   const nomesPorMat: Record<number, string> = {}
   for (const a of alunos) nomesPorMat[a.matricula] = a.nomeGuerra
 
-  // P1/P3/P4 com nomes
-  const servicoComNomes = {
-    semana,
-    p1: servico.p1 ? { mat: servico.p1, nome: nomesPorMat[servico.p1] ?? `Mat.${servico.p1}` } : null,
-    p3: servico.p3 ? { mat: servico.p3, nome: nomesPorMat[servico.p3] ?? `Mat.${servico.p3}` } : null,
-    p4: servico.p4 ? { mat: servico.p4, nome: nomesPorMat[servico.p4] ?? `Mat.${servico.p4}` } : null,
+  const overridesMap: Record<number, { p1: number | null; p3: number | null; p4: number | null }> = {}
+  for (const o of overridesBD) {
+    overridesMap[o.semana] = { p1: o.p1 ?? null, p3: o.p3 ?? null, p4: o.p4 ?? null }
   }
 
-  // Próximas 4 semanas de serviço
-  const proximasSemanasServico = Array.from({ length: 4 }, (_, i) => {
-    const s = semana + i
-    const sv = calcularServico(s)
+  // Monta lista de todas as semanas restantes mesclando automático + override
+  function resolverServico(s: number) {
+    const auto = calcularServico(s)
+    const ov = overridesMap[s]
+    const p1Mat = ov?.p1 ?? auto.p1
+    const p3Mat = ov?.p3 ?? auto.p3
+    const p4Mat = ov?.p4 ?? auto.p4
     return {
       semana: s,
-      p1: sv.p1 ? { mat: sv.p1, nome: nomesPorMat[sv.p1] ?? `Mat.${sv.p1}` } : null,
-      p3: sv.p3 ? { mat: sv.p3, nome: nomesPorMat[sv.p3] ?? `Mat.${sv.p3}` } : null,
-      p4: sv.p4 ? { mat: sv.p4, nome: nomesPorMat[sv.p4] ?? `Mat.${sv.p4}` } : null,
+      isOverride: !!ov,
+      p1: p1Mat ? { mat: p1Mat, nome: nomesPorMat[p1Mat] ?? `Mat.${p1Mat}` } : null,
+      p3: p3Mat ? { mat: p3Mat, nome: nomesPorMat[p3Mat] ?? `Mat.${p3Mat}` } : null,
+      p4: p4Mat ? { mat: p4Mat, nome: nomesPorMat[p4Mat] ?? `Mat.${p4Mat}` } : null,
     }
-  })
+  }
+
+  const todasSemanas = semanasAno.map(resolverServico)
+  const servicoAtual = todasSemanas[0]
 
   return (
     <EscalasClient
@@ -84,9 +92,8 @@ export default async function EscalasPage() {
       mes={mes}
       isAdmin={isAdmin ?? false}
       minhaMatricula={minhaMatricula ?? 0}
-      servicoAtual={servicoComNomes}
-      proximasSemanasServico={proximasSemanasServico}
-      calendario={calendario}
+      servicoAtual={servicoAtual}
+      todasSemanas={todasSemanas}
       mesesCalendario={mesesCalendario}
       composicaoFaxina={COMPOSICAO_FAXINA}
       membrosPlantao={MEMBROS_PLANTAO}

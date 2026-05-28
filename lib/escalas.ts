@@ -9,9 +9,9 @@ export const MATRICULAS_ORDEM = [
   144, 153, 165, 167, 174, 186, 191,
 ]
 
-// Semana de referência: semana 16 → P1=41 (idx 7), P3=45 (idx 8), P4=54 (idx 9)
-const REF_SEMANA = 16
-const REF_P1_IDX = 7
+// Semana de referência: semana 20 → P1=65 KAUHANNI (idx 13), P3=71 LEIMIG (idx 14), P4=76 ARAUJO JUNIOR (idx 15)
+const REF_SEMANA = 20
+const REF_P1_IDX = 13
 
 export function calcularServico(semana: number): {
   p1: number | null

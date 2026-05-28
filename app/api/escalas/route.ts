@@ -35,3 +35,14 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ ok: true })
 }
+
+export async function DELETE(req: NextRequest) {
+  const session = await auth()
+  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+
+  const { tipo, semana } = await req.json()
+  if (tipo === "servico") {
+    await prisma.escalaServico.deleteMany({ where: { semana: Number(semana) } })
+  }
+  return NextResponse.json({ ok: true })
+}
