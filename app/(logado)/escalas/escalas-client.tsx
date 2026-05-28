@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import type { MEMBROS_PLANTAO, GrupoFaxina, GrupoPlantao } from "@/lib/escalas"
 
 const MESES = ["","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
@@ -153,54 +154,6 @@ export function EscalasClient({
     router.refresh()
   }
 
-  // ── Print ─────────────────────────────────────────────────────
-  function abrirImpressao() {
-    const w = window.open("","_blank","width=900,height=700")
-    if (!w) return
-    const servicoAtualVis = semanas[0]
-    const proximas = semanas.slice(0,8)
-    const gruposHtml = GRUPOS_FAXINA.map(g=>{
-      const membros = composicao[g]||[]
-      return `<div class="grupo"><strong>${g}</strong><ul>${membros.map(m=>`<li>${m.mat} ${m.nome}</li>`).join("")}</ul></div>`
-    }).join("")
-    const servicoHtml = proximas.map(s=>`<tr><td>Semana ${s.semana}${s.isOverride?" *":""}</td><td>${s.p1?.nome??"—"}</td><td>${s.p3?.nome??"—"}</td><td>${s.p4?.nome??"—"}</td></tr>`).join("")
-    const plantaoHtml = (["GOLF","HOTEL","INDIA","JULIETT","KILO","LIMA","MIKE","NOVEMBER"]).map(g=>{
-      const membros = membrosPlantao[g as keyof typeof membrosPlantao]||[]
-      return `<div class="grupo"><strong>${g}</strong><ul>${membros.map(m=>`<li>${m.mat} ${m.nome}</li>`).join("")}</ul></div>`
-    }).join("")
-
-    w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Escala Turma 13</title><style>
-      body{font-family:Arial,sans-serif;font-size:12px;margin:20px;color:#0B2D5E}
-      h1{font-size:16px;text-align:center;margin-bottom:4px}
-      h2{font-size:13px;margin:16px 0 6px;border-bottom:1px solid #ccc;padding-bottom:4px;color:#1A52A8}
-      table{width:100%;border-collapse:collapse;margin-bottom:12px}
-      th,td{border:1px solid #ddd;padding:5px 8px;text-align:left;font-size:11px}
-      th{background:#0B2D5E;color:#fff}
-      .grupos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-      .grupo{border:1px solid #ddd;border-radius:4px;padding:6px}
-      .grupo strong{display:block;color:#0B2D5E;margin-bottom:4px}
-      .grupo ul{margin:0;padding-left:14px}
-      .grupo li{margin:1px 0}
-      @media print{button{display:none}}
-    </style></head><body>
-      <h1>Escala — Turma 13 CFO PM 2026</h1>
-      <p style="text-align:center;font-size:11px;color:#666">Semana ${semana}/52 · ${MESES[mes]} ${ano}</p>
-      <button onclick="window.print()" style="display:block;margin:10px auto;padding:6px 20px;background:#0B2D5E;color:#fff;border:none;border-radius:6px;cursor:pointer">Imprimir</button>
-
-      <h2>Escala de Serviço (próximas 8 semanas)</h2>
-      <table><thead><tr><th>Semana</th><th>P1 — Pessoal</th><th>P3 — Operações</th><th>P4 — Logística</th></tr></thead>
-      <tbody>${servicoHtml}</tbody></table>
-
-      <h2>Grupos de Faxina</h2>
-      <div class="grupos">${gruposHtml}</div>
-
-      <h2>Grupos de Plantão</h2>
-      <div class="grupos">${plantaoHtml}</div>
-
-      <p style="font-size:10px;color:#999;margin-top:16px">* semana editada manualmente</p>
-    </body></html>`)
-    w.document.close()
-  }
 
   const isMinhaFaxina=(g:GrupoFaxina|null)=>g?(composicao[g]||[]).some(p=>p.mat===minhaMatricula):false
   const funcoesPorData=new Map<string,FuncaoDia[]>()
@@ -219,9 +172,9 @@ export function EscalasClient({
           <h1 style={{fontFamily:"var(--serif)",fontWeight:600,fontSize:24,color:"var(--azul-profundo)"}}>Escalas</h1>
           <p style={{color:"var(--cinza-texto)",fontSize:13,marginTop:4}}>Semana {semana}/52 · {MESES[mes]} {ano}</p>
         </div>
-        <button onClick={abrirImpressao} style={{background:"var(--dourado)",color:"#fff",border:"none",borderRadius:8,padding:"8px 18px",fontSize:13,fontWeight:600,cursor:"pointer",display:"flex",alignItems:"center",gap:8}}>
+        <Link href="/escalas/imprimir" target="_blank" style={{background:"var(--dourado)",color:"#fff",border:"none",borderRadius:8,padding:"8px 18px",fontSize:13,fontWeight:600,cursor:"pointer",display:"flex",alignItems:"center",gap:8,textDecoration:"none"}}>
           🖨️ Imprimir Escala
-        </button>
+        </Link>
       </div>
 
       {/* Abas */}
