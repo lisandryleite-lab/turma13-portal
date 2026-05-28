@@ -35,12 +35,10 @@ const LINKS: LinkDef[] = [
   { href: "/ranking",      label: "Ranking",      Icon: TrophyIco },
   { href: "/qts",          label: "QTS",          Icon: GridIco   },
   { href: "/aulas",        label: "Aulas",        Icon: BookIco   },
-  { href: "/missao",       label: "Missão",       Icon: TargetIco },
+  { href: "/comunicados",  label: "Comunicados",  Icon: BellIco   },
   { href: "/escalas",      label: "Escalas",      Icon: EscalaIco },
   { href: "/xerifancia",   label: "Xerifância",   Icon: StarIco   },
   { href: "/turma",        label: "Turma",        Icon: UsersIco  },
-  { href: "/aniversarios", label: "Aniversários", Icon: CakeIco   },
-  { href: "/avisos",       label: "Avisos",       Icon: BellIco   },
   { href: "/links",        label: "Links Úteis",  Icon: LinkIco   },
 ]
 

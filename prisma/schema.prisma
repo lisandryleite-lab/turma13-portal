@@ -27,8 +27,9 @@ model User {
   sessions      Session[]
   accounts      Account[]
   notas         Nota[]
-  notasAlteradas HistoricoNota[] @relation("AlteradoPor")
-  escalasAluno  EscalaAluno[]
+  notasAlteradas   HistoricoNota[]   @relation("AlteradoPor")
+  escalasAluno     EscalaAluno[]
+  missoesConcluidas MissaoConcluida[]
 }
 
 model Account {
@@ -151,11 +152,25 @@ model EscalaAluno {
 }
 
 model Missao {
+  id         String             @id @default(cuid())
+  semana     Int                @unique
+  titulo     String
+  corpo      String
+  concluida  Boolean            @default(false)
+  createdAt  DateTime           @default(now())
+  conclusoes MissaoConcluida[]
+}
+
+model MissaoConcluida {
   id        String   @id @default(cuid())
-  semana    Int      @unique
-  titulo    String
-  corpo     String
+  missaoId  String
+  userId    String
   createdAt DateTime @default(now())
+
+  missao Missao @relation(fields: [missaoId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([missaoId, userId])
 }
 
 model Disciplina {

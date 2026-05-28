@@ -6,8 +6,8 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const semana = Number(searchParams.get("semana") || 0)
   const missao = semana
-    ? await prisma.missao.findUnique({ where: { semana } })
-    : await prisma.missao.findFirst({ orderBy: { semana: "desc" } })
+    ? await prisma.missao.findUnique({ where: { semana }, include: { conclusoes: { include: { user: { select: { id: true, nomeGuerra: true, matricula: true } } } } } })
+    : await prisma.missao.findMany({ orderBy: { semana: "desc" }, include: { conclusoes: { include: { user: { select: { id: true, nomeGuerra: true, matricula: true } } } } } })
   return NextResponse.json(missao)
 }
 
@@ -22,4 +22,13 @@ export async function POST(req: NextRequest) {
     create: { semana: Number(semana), titulo, corpo },
   })
   return NextResponse.json(missao)
+}
+
+export async function DELETE(req: NextRequest) {
+  const session = await auth()
+  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+
+  const { id } = await req.json()
+  await prisma.missao.delete({ where: { id } })
+  return NextResponse.json({ ok: true })
 }

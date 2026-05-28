@@ -60,7 +60,7 @@ const DISCIPLINAS = [
   ["ACE","Análise Criminal e Estatística","MC-II",30,30,"Concluída"],
   ["QAGV","Qualidade do Atendimento aos Grupos Vulneráveis","MC-II",20,0,"Início"],
   ["DHAAPM","Direitos Humanos Aplicados à Atividade Policial Militar","MC-III",30,30,"Concluída"],
-  ["CMSCM","Gerenciamento de Crises","MC-IV",30,30,"Concluída"],
+  ["GC","Gerenciamento de Crises","MC-IV",30,0,"Em andamento"],
   ["SMQV","Saúde Mental e Qualidade de Vida","MC-V",20,20,"Concluída"],
   ["TFM1","Treinamento Físico Militar I","MC-V",60,60,"Concluída"],
   ["TFM2","Treinamento Físico Militar II","MC-V",60,14,"Em andamento"],

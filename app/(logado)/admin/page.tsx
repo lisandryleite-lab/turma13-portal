@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { AdminClient } from "./admin-client"
-import Link from "next/link"
+import { semanaAtual } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
 
@@ -10,24 +10,44 @@ export default async function AdminPage() {
   const session = await auth()
   if (!session?.user?.isAdmin) redirect("/dashboard")
 
-  const alunos = await prisma.user.findMany({
-    orderBy: { matricula: "asc" },
-    select: {
-      id: true, matricula: true, nomeGuerra: true, nomeCompleto: true,
-      email: true, isAdmin: true, aniversario: true, canga: true,
-      grupoPlantao: true, grupoFaxina: true,
-    },
-  })
+  const semana = semanaAtual()
+
+  const [alunos, disciplinas, qtsList, missoes, avisos, xerifes] = await Promise.all([
+    prisma.user.findMany({
+      orderBy: { matricula: "asc" },
+      select: {
+        id: true, matricula: true, nomeGuerra: true, nomeCompleto: true,
+        email: true, isAdmin: true, aniversario: true, canga: true,
+        grupoPlantao: true, grupoFaxina: true,
+      },
+    }),
+    prisma.disciplina.findMany({ orderBy: [{ modulo: "asc" }, { sigla: "asc" }] }),
+    prisma.qTS.findMany({ orderBy: { semana: "asc" }, select: { semana: true, dados: true, createdAt: true } }),
+    prisma.missao.findMany({ orderBy: { semana: "desc" }, select: { id: true, semana: true, titulo: true, createdAt: true } }),
+    prisma.aviso.findMany({ orderBy: { createdAt: "desc" }, select: { id: true, titulo: true, fixado: true, createdAt: true } }),
+    prisma.xerife.findMany({ orderBy: { dataInicio: "desc" }, take: 5,
+      select: { id: true, nomeGuerra: true, matricula: true, dataInicio: true, dataFim: true, atual: true } }),
+  ])
+
+  // Stats
+  const totalNotas = await prisma.nota.count()
+  const totalMissoesConcluidas = await prisma.missaoConcluida.count()
+  const alunosAtivos = alunos.filter(a => !a.isAdmin && a.matricula > 0).length
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Administração</h1>
-        <Link href="/admin/notas" style={{ background: "var(--azul-profundo)", color: "#fff", borderRadius: 8, padding: "8px 18px", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>
-          📝 Gerenciar Notas
-        </Link>
-      </div>
-      <AdminClient alunos={alunos} />
-    </div>
+    <AdminClient
+      semanaAtual={semana}
+      alunos={alunos}
+      disciplinas={disciplinas}
+      qtsList={qtsList.map(q => ({ ...q, createdAt: q.createdAt.toISOString() }))}
+      missoes={missoes.map(m => ({ ...m, createdAt: m.createdAt.toISOString() }))}
+      avisos={avisos.map(a => ({ ...a, createdAt: a.createdAt.toISOString() }))}
+      xerifes={xerifes.map(x => ({
+        ...x,
+        dataInicio: x.dataInicio.toISOString(),
+        dataFim: x.dataFim ? x.dataFim.toISOString() : null,
+      }))}
+      stats={{ totalNotas, totalMissoesConcluidas, alunosAtivos }}
+    />
   )
 }

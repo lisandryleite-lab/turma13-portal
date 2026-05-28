@@ -23,3 +23,12 @@ export async function POST(req: NextRequest) {
   })
   return NextResponse.json(qts)
 }
+
+export async function DELETE(req: NextRequest) {
+  const session = await auth()
+  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+
+  const { semana } = await req.json()
+  await prisma.qTS.delete({ where: { semana: Number(semana) } })
+  return NextResponse.json({ ok: true })
+}

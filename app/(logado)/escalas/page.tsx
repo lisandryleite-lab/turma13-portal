@@ -27,7 +27,18 @@ export default async function EscalasPage() {
 
   // Dados calculados automaticamente
   const servico = calcularServico(semana)
-  const calendario = calendarioFaxinaMes(ano, mes)
+
+  // Calendários de faxina: mês atual até dezembro
+  const mesesCalendario = Array.from({ length: 12 - mes + 1 }, (_, i) => {
+    const m = mes + i
+    return {
+      ano,
+      mes: m,
+      dias: calendarioFaxinaMes(ano, m).map(d => ({ ...d, data: d.data.toISOString() })),
+    }
+  })
+
+  const calendario = mesesCalendario[0].dias
 
   // Dados externos (admin insere)
   const inicio = new Date(ano, mes - 1, 1)
@@ -75,10 +86,8 @@ export default async function EscalasPage() {
       minhaMatricula={minhaMatricula ?? 0}
       servicoAtual={servicoComNomes}
       proximasSemanasServico={proximasSemanasServico}
-      calendario={calendario.map(d => ({
-        ...d,
-        data: d.data.toISOString(),
-      }))}
+      calendario={calendario}
+      mesesCalendario={mesesCalendario}
       composicaoFaxina={COMPOSICAO_FAXINA}
       membrosPlantao={MEMBROS_PLANTAO}
       plantaoDias={plantaoDias.map(p => ({ ...p, data: p.data.toISOString() }))}

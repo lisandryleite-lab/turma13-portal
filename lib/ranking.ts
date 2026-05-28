@@ -1,5 +1,3 @@
-import "server-only"
-
 /**
  * Fórmula conforme Decreto 57.694/2024 — CFO PMPE
  *

@@ -47,10 +47,8 @@ function BadgeStatus({ status }: { status: string }) {
   )
 }
 
-type NotaItem = { id: string; disciplina: string; avaliacao: string; nota: number; peso: number; ehAF: boolean; apto: boolean; data: string; observacao: string | null }
-
 export function AulasClient({
-  disciplinas, isAdmin, semana, totalCarga, totalMinistradas, hoje, notasPorDisciplina,
+  disciplinas, isAdmin, semana, totalCarga, totalMinistradas, hoje,
 }: {
   disciplinas: Disciplina[]
   isAdmin: boolean
@@ -58,7 +56,6 @@ export function AulasClient({
   totalCarga: number
   totalMinistradas: number
   hoje: number
-  notasPorDisciplina: Record<string, NotaItem[]>
 }) {
   const router = useRouter()
   const [filtro, setFiltro] = useState<Filtro>("todas")
@@ -66,30 +63,6 @@ export function AulasClient({
   const [editando, setEditando] = useState<string | null>(null)
   const [valores, setValores] = useState<Record<string, { cargaMinistrada: number; status: string }>>({})
 
-  // Estado do formulário de notas
-  const [formNotaSigla, setFormNotaSigla] = useState<string | null>(null)
-  const [notaForm, setNotaForm] = useState({ avaliacao: "", nota: "", ehAF: false, apto: false, data: new Date().toISOString().slice(0, 10), observacao: "" })
-  const [salvandoNota, setSalvandoNota] = useState(false)
-
-  async function lancarNota(sigla: string) {
-    if (!notaForm.avaliacao) return
-    setSalvandoNota(true)
-    await fetch("/api/notas", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ disciplina: sigla, avaliacao: notaForm.avaliacao, nota: notaForm.nota, ehAF: notaForm.ehAF, apto: notaForm.apto, data: notaForm.data, observacao: notaForm.observacao || null }),
-    })
-    setSalvandoNota(false)
-    setFormNotaSigla(null)
-    setNotaForm({ avaliacao: "", nota: "", ehAF: false, apto: false, data: new Date().toISOString().slice(0, 10), observacao: "" })
-    router.refresh()
-  }
-
-  async function deletarNota(id: string) {
-    if (!confirm("Excluir esta nota?")) return
-    await fetch(`/api/notas/${id}`, { method: "DELETE" })
-    router.refresh()
-  }
 
   const pctGeral = totalCarga > 0 ? Math.round((totalMinistradas / totalCarga) * 100) : 0
   const concluidas = disciplinas.filter(d => d.cargaMinistrada >= d.cargaTotal && d.cargaTotal > 0)
@@ -302,87 +275,10 @@ export function AulasClient({
                             </div>
                           )}
 
-                          {/* ── Minhas notas nesta disciplina ── */}
-                          <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid var(--cinza-borda)" }}>
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                              <span style={{ fontSize: 11, fontWeight: 700, color: "var(--azul-profundo)", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                                Minhas Notas
-                              </span>
-                              {formNotaSigla !== d.sigla && (
-                                <button
-                                  onClick={() => { setFormNotaSigla(d.sigla); setNotaForm({ avaliacao: "", nota: "", ehAF: false, apto: false, data: new Date().toISOString().slice(0, 10), observacao: "" }) }}
-                                  style={{ fontSize: 11, color: "var(--azul-medio)", background: "none", border: "1px solid var(--azul-medio)", borderRadius: 6, padding: "3px 10px", cursor: "pointer" }}>
-                                  + Lançar nota
-                                </button>
-                              )}
-                            </div>
-
-                            {(notasPorDisciplina[d.sigla] || []).length > 0 ? (
-                              <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 10 }}>
-                                {(notasPorDisciplina[d.sigla] || []).map(n => (
-                                  <div key={n.id} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, background: "#fff", borderRadius: 6, padding: "5px 10px", border: "1px solid var(--cinza-borda)" }}>
-                                    <span style={{ fontWeight: 700, width: 40, color: "var(--azul-medio)", flexShrink: 0 }}>{n.avaliacao}</span>
-                                    <span style={{ fontWeight: 700, flexShrink: 0, color: n.apto ? "#15803d" : n.nota >= 7 ? "#15803d" : n.nota >= 4 ? "var(--dourado)" : "#b91c1c" }}>
-                                      {n.apto ? "APTO" : n.nota.toFixed(1)}
-                                    </span>
-                                    {n.ehAF && <span style={{ fontSize: 10, background: "#fef3c7", color: "#92400e", borderRadius: 4, padding: "1px 5px", flexShrink: 0 }}>AF</span>}
-                                    {n.observacao && <span style={{ color: "var(--cinza-texto)", fontSize: 11, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{n.observacao}</span>}
-                                    <span style={{ color: "var(--cinza-texto)", marginLeft: "auto", flexShrink: 0 }}>{n.data}</span>
-                                    <button onClick={() => deletarNota(n.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#b91c1c", fontSize: 16, lineHeight: 1, padding: "0 2px" }} title="Excluir nota">×</button>
-                                  </div>
-                                ))}
-                              </div>
-                            ) : (
-                              <p style={{ fontSize: 12, color: "var(--cinza-texto)", marginBottom: 8 }}>Nenhuma nota lançada ainda.</p>
-                            )}
-
-                            {formNotaSigla === d.sigla && (
-                              <div style={{ background: "#fff", borderRadius: 8, padding: "12px 14px", border: "1.5px solid var(--azul-medio)", display: "flex", flexWrap: "wrap", gap: 10, alignItems: "flex-end" }}>
-                                <div>
-                                  <label style={{ fontSize: 11, color: "var(--cinza-texto)", display: "block", marginBottom: 2 }}>Avaliação *</label>
-                                  <input value={notaForm.avaliacao} onChange={e => setNotaForm(f => ({ ...f, avaliacao: e.target.value }))}
-                                    placeholder="P1, P2, AF…" style={{ border: "1.5px solid var(--cinza-borda)", borderRadius: 6, padding: "5px 8px", fontSize: 13, width: 80 }} />
-                                </div>
-                                <div>
-                                  <label style={{ fontSize: 11, color: "var(--cinza-texto)", display: "block", marginBottom: 2 }}>Nota (0–10)</label>
-                                  <input type="number" min={0} max={10} step={0.1} value={notaForm.nota}
-                                    onChange={e => setNotaForm(f => ({ ...f, nota: e.target.value }))}
-                                    disabled={notaForm.apto}
-                                    style={{ border: "1.5px solid var(--cinza-borda)", borderRadius: 6, padding: "5px 8px", fontSize: 13, width: 70, opacity: notaForm.apto ? 0.4 : 1 }} />
-                                </div>
-                                <div>
-                                  <label style={{ fontSize: 11, color: "var(--cinza-texto)", display: "block", marginBottom: 2 }}>Data *</label>
-                                  <input type="date" value={notaForm.data} onChange={e => setNotaForm(f => ({ ...f, data: e.target.value }))}
-                                    style={{ border: "1.5px solid var(--cinza-borda)", borderRadius: 6, padding: "5px 8px", fontSize: 13 }} />
-                                </div>
-                                <div style={{ display: "flex", gap: 12, paddingBottom: 3 }}>
-                                  <label style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, cursor: "pointer" }}>
-                                    <input type="checkbox" checked={notaForm.ehAF} onChange={e => setNotaForm(f => ({ ...f, ehAF: e.target.checked }))} />
-                                    É AF
-                                  </label>
-                                  <label style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, cursor: "pointer" }}>
-                                    <input type="checkbox" checked={notaForm.apto} onChange={e => setNotaForm(f => ({ ...f, apto: e.target.checked }))} />
-                                    Apto
-                                  </label>
-                                </div>
-                                <div>
-                                  <label style={{ fontSize: 11, color: "var(--cinza-texto)", display: "block", marginBottom: 2 }}>Observação</label>
-                                  <input value={notaForm.observacao} onChange={e => setNotaForm(f => ({ ...f, observacao: e.target.value }))}
-                                    style={{ border: "1.5px solid var(--cinza-borda)", borderRadius: 6, padding: "5px 8px", fontSize: 13, width: 140 }} />
-                                </div>
-                                <div style={{ display: "flex", gap: 6 }}>
-                                  <button onClick={() => lancarNota(d.sigla)} disabled={salvandoNota || !notaForm.avaliacao}
-                                    style={{ background: "var(--azul-profundo)", color: "#fff", border: "none", borderRadius: 6, padding: "7px 14px", fontSize: 12, cursor: "pointer", fontWeight: 600, opacity: !notaForm.avaliacao ? 0.5 : 1 }}>
-                                    {salvandoNota ? "Salvando…" : "Salvar"}
-                                  </button>
-                                  <button onClick={() => setFormNotaSigla(null)}
-                                    style={{ background: "none", border: "none", fontSize: 12, color: "var(--cinza-texto)", cursor: "pointer" }}>
-                                    Cancelar
-                                  </button>
-                                </div>
-                              </div>
-                            )}
-                          </div>
+                          <p style={{ fontSize: 12, color: "var(--cinza-texto)", marginTop: 12,
+                            paddingTop: 10, borderTop: "1px solid var(--cinza-borda)" }}>
+                            Para lançar notas, acesse a aba <strong>Ranking → Minhas Notas</strong>.
+                          </p>
                         </div>
                       )}
                     </div>

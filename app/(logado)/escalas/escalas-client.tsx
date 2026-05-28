@@ -52,13 +52,14 @@ function CardServico({ label, pessoa, destaque }: { label: string; pessoa: {mat:
 export function EscalasClient({
   semana, ano, mes, isAdmin, minhaMatricula,
   servicoAtual, proximasSemanasServico,
-  calendario, composicaoFaxina, membrosPlantao,
+  calendario, mesesCalendario, composicaoFaxina, membrosPlantao,
   plantaoDias, funcoesDias, nomesPorMat, alunos,
 }: {
   semana: number; ano: number; mes: number; isAdmin: boolean; minhaMatricula: number
   servicoAtual: ServicoSemana
   proximasSemanasServico: ServicoSemana[]
   calendario: DiaCal[]
+  mesesCalendario: { ano: number; mes: number; dias: DiaCal[] }[]
   composicaoFaxina: typeof COMPOSICAO_FAXINA
   membrosPlantao: typeof MEMBROS_PLANTAO
   plantaoDias: PlantaoDia[]
@@ -238,41 +239,91 @@ export function EscalasClient({
             })}
           </div>
 
-          <h2 style={{ fontSize: 14, fontWeight: 700, color: "var(--azul-profundo)", marginBottom: 12, letterSpacing: "0.06em", textTransform: "uppercase" }}>
-            Calendário — {MESES[mes]}
-          </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4, fontSize: 11, marginBottom: 8 }}>
-            {["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"].map(d => (
-              <div key={d} style={{ textAlign: "center", fontWeight: 700, color: "var(--cinza-texto)", padding: 4 }}>{d}</div>
-            ))}
-          </div>
-          {(() => {
-            const primeiroDia = new Date(ano, mes - 1, 1).getDay()
-            const cells: (DiaCal | null)[] = Array(primeiroDia).fill(null).concat(calendario as DiaCal[])
+          {/* Calendários multi-mês: atual até dezembro */}
+          {mesesCalendario.map(({ ano: a, mes: m, dias }) => {
+            const hoje = new Date()
+            const hojeStr = `${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,"0")}-${String(hoje.getDate()).padStart(2,"0")}`
+            const primeiroDia = new Date(a, m - 1, 1).getDay()
+            const cells: (DiaCal | null)[] = Array(primeiroDia).fill(null).concat(dias as DiaCal[])
             while (cells.length % 7 !== 0) cells.push(null)
+            const esteHoje = dias.find(d => d.data.slice(0,10) === hojeStr)
             return (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4 }}>
-                {cells.map((dia, i) => {
-                  if (!dia) return <div key={i} />
-                  const d = new Date(dia.data)
-                  const meuGrupo = isMinhaFaxina(dia.grupoFaxina)
-                  return (
-                    <div key={i} style={{
-                      background: meuGrupo ? "var(--azul-claro)" : dia.tipo==="fds" ? "#F8FAFC" : "#fff",
-                      border: `1.5px solid ${meuGrupo ? "var(--azul-medio)" : "var(--cinza-borda)"}`,
-                      borderRadius: 8, padding: "6px 4px", textAlign: "center", minHeight: 56,
-                    }}>
-                      <p style={{ fontWeight: 700, fontSize: 13, color: dia.tipo==="fds"?"var(--cinza-texto)":"var(--grafite)", marginBottom: 3 }}>
-                        {d.getDate()}
-                      </p>
-                      {dia.tipo === "util" && dia.grupoFaxina && <TagGrupo grupo={dia.grupoFaxina} small />}
-                      {dia.tipo === "fds" && <span style={{ fontSize: 10, color: "var(--cinza-texto)" }}>FDS<br/>{dia.grupoPlantao}</span>}
+              <div key={`${a}-${m}`} style={{ marginBottom: 28 }}>
+                <h2 style={{ fontSize: 14, fontWeight: 700, color: "var(--azul-profundo)", marginBottom: 10,
+                  letterSpacing: "0.06em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: 10 }}>
+                  {MESES[m]} {a}
+                  {m === mes && a === ano && (
+                    <span style={{ fontSize: 11, background: "var(--dourado)", color: "#fff",
+                      borderRadius: 20, padding: "2px 10px", fontWeight: 700 }}>Mês atual</span>
+                  )}
+                </h2>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4, fontSize: 11, marginBottom: 6 }}>
+                  {["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"].map(d => (
+                    <div key={d} style={{ textAlign: "center", fontWeight: 700, color: "var(--cinza-texto)", padding: 4 }}>{d}</div>
+                  ))}
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4, marginBottom: 12 }}>
+                  {cells.map((dia, i) => {
+                    if (!dia) return <div key={i} />
+                    const dObj = new Date(dia.data)
+                    const meuGrupo = isMinhaFaxina(dia.grupoFaxina)
+                    const isHoje = dia.data.slice(0,10) === hojeStr
+                    return (
+                      <div key={i} style={{
+                        background: isHoje ? "var(--azul-profundo)" : meuGrupo ? "var(--azul-claro)" : dia.tipo==="fds" ? "#F8FAFC" : "#fff",
+                        border: isHoje ? "2px solid var(--dourado)" : `1.5px solid ${meuGrupo ? "var(--azul-medio)" : "var(--cinza-borda)"}`,
+                        borderRadius: 8, padding: "6px 4px", textAlign: "center", minHeight: 56,
+                        boxShadow: isHoje ? "0 2px 8px rgba(11,45,94,0.22)" : undefined,
+                      }}>
+                        <p style={{ fontWeight: 700, fontSize: 13, marginBottom: 3,
+                          color: isHoje ? "#fff" : dia.tipo==="fds" ? "var(--cinza-texto)" : "var(--grafite)" }}>
+                          {dObj.getDate()}
+                          {isHoje && <span style={{ fontSize: 8, display: "block", color: "var(--dourado-claro, #f0d080)", letterSpacing: "0.04em" }}>HOJE</span>}
+                        </p>
+                        {dia.tipo === "util" && dia.grupoFaxina && (
+                          <TagGrupo grupo={dia.grupoFaxina} small />
+                        )}
+                        {dia.tipo === "fds" && (
+                          <span style={{ fontSize: 9, color: isHoje ? "rgba(255,255,255,0.65)" : "var(--cinza-texto)" }}>
+                            FDS<br/>{dia.grupoPlantao}
+                          </span>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+
+                {/* Plantão de hoje — só no mês atual */}
+                {esteHoje && m === mes && a === ano && (
+                  <div style={{ background: "var(--azul-profundo)", borderRadius: 12, padding: "14px 18px", marginTop: 4 }}>
+                    <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.65)", textTransform: "uppercase",
+                      letterSpacing: "0.06em", marginBottom: 10 }}>
+                      Plantão de Hoje — {esteHoje.grupoPlantao}
+                    </p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                      {(membrosPlantao[esteHoje.grupoPlantao] || []).map(m2 => {
+                        const euSou = m2.mat === minhaMatricula
+                        return (
+                          <span key={m2.mat} style={{
+                            background: euSou ? "var(--dourado)" : "rgba(255,255,255,0.12)",
+                            color: "#fff", borderRadius: 6, padding: "4px 10px",
+                            fontSize: 12, fontWeight: euSou ? 700 : 400,
+                          }}>
+                            {m2.mat} {m2.nome}{euSou ? " ←" : ""}
+                          </span>
+                        )
+                      })}
                     </div>
-                  )
-                })}
+                    {esteHoje.tipo === "util" && esteHoje.grupoFaxina && (
+                      <p style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 10 }}>
+                        Faxina: <strong style={{ color: "rgba(255,255,255,0.8)" }}>{esteHoje.grupoFaxina}</strong>
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             )
-          })()}
+          })}
         </div>
       )}
 

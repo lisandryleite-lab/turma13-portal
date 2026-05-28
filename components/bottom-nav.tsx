@@ -19,11 +19,11 @@ const UsersIco  = () => <Svg><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
 type LinkDef = { href: string; label: string; Icon: React.FC }
 
 const LINKS: LinkDef[] = [
-  { href: "/dashboard", label: "Início",  Icon: HomeIco   },
-  { href: "/escalas",   label: "Escalas", Icon: EscalaIco },
-  { href: "/qts",       label: "QTS",     Icon: GridIco   },
-  { href: "/avisos",    label: "Avisos",  Icon: BellIco   },
-  { href: "/turma",     label: "Turma",   Icon: UsersIco  },
+  { href: "/dashboard",   label: "Início",  Icon: HomeIco   },
+  { href: "/escalas",     label: "Escalas", Icon: EscalaIco },
+  { href: "/qts",         label: "QTS",     Icon: GridIco   },
+  { href: "/comunicados", label: "Avisos",  Icon: BellIco   },
+  { href: "/turma",       label: "Turma",   Icon: UsersIco  },
 ]
 
 export function BottomNav() {
