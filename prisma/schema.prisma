@@ -242,6 +242,17 @@ model FuncaoDestaqueDia {
   @@unique([data, funcao])
 }
 
+// Composição dos grupos de faxina — editável pelo admin
+model FaxinaGrupoMembro {
+  id    String @id @default(cuid())
+  grupo String  // G1–G8
+  mat   Int
+  nome  String
+
+  @@unique([grupo, mat])
+  @@index([grupo])
+}
+
 // Referência para cálculo automático da faxina
 model FaxinaRef {
   id            String   @id @default(cuid())

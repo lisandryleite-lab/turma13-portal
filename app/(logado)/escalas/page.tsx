@@ -37,7 +37,7 @@ export default async function EscalasPage() {
   // Gera semanas restantes do ano com cálculo automático
   const semanasAno = Array.from({ length: 52 - semana + 1 }, (_, i) => semana + i)
 
-  const [plantaoDias, funcoesDias, alunos, overridesBD] = await Promise.all([
+  const [plantaoDias, funcoesDias, alunos, overridesBD, faxinaMembrosBD] = await Promise.all([
     // plantão do mês atual ao final do ano
     prisma.plantaoDia.findMany({
       where: { data: { gte: new Date(ano, mes - 1, 1), lte: new Date(ano, 11, 31) } },
@@ -53,9 +53,9 @@ export default async function EscalasPage() {
       orderBy: { matricula: "asc" },
     }),
     // Overrides admin para escala de serviço
-    prisma.escalaServico.findMany({
-      where: { semana: { in: semanasAno } },
-    }),
+    prisma.escalaServico.findMany({ where: { semana: { in: semanasAno } } }),
+    // Composição dos grupos de faxina (DB-backed)
+    prisma.faxinaGrupoMembro.findMany({ orderBy: [{ grupo: "asc" }, { mat: "asc" }] }),
   ])
 
   const nomesPorMat: Record<number, string> = {}
@@ -85,6 +85,14 @@ export default async function EscalasPage() {
   const todasSemanas = semanasAno.map(resolverServico)
   const servicoAtual = todasSemanas[0]
 
+  // Monta composicaoFaxina do banco (com fallback para estático)
+  const composicaoFaxinaBD: Record<string, { id: string; mat: number; nome: string }[]> = {}
+  for (const m of faxinaMembrosBD) {
+    if (!composicaoFaxinaBD[m.grupo]) composicaoFaxinaBD[m.grupo] = []
+    composicaoFaxinaBD[m.grupo].push({ id: m.id, mat: m.mat, nome: m.nome })
+  }
+  const composicaoFinal = faxinaMembrosBD.length > 0 ? composicaoFaxinaBD : COMPOSICAO_FAXINA
+
   return (
     <EscalasClient
       semana={semana}
@@ -95,7 +103,7 @@ export default async function EscalasPage() {
       servicoAtual={servicoAtual}
       todasSemanas={todasSemanas}
       mesesCalendario={mesesCalendario}
-      composicaoFaxina={COMPOSICAO_FAXINA}
+      composicaoFaxina={composicaoFinal}
       membrosPlantao={MEMBROS_PLANTAO}
       plantaoDias={plantaoDias.map(p => ({ ...p, data: p.data.toISOString() }))}
       funcoesDias={funcoesDias.map(f => ({ ...f, data: f.data.toISOString() }))}
