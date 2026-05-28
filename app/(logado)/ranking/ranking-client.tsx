@@ -2,7 +2,11 @@
 
 import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { calcularMGCSimples, calcularComponentes } from "@/lib/ranking"
+import {
+  calcularMGCSimples, calcularComponentes,
+  calcularPosicaoHistorica, calcularPercentil, calcularProjecaoConsolidada,
+  BASE_T1, BASE_T2,
+} from "@/lib/ranking"
 
 // ── tipos ───────────────────────────────────────────────────────────────────────
 type Disciplina  = { id:string; sigla:string; nome:string; modulo:string; cargaTotal:number; cargaMinistrada:number; status:string }
@@ -39,6 +43,83 @@ function calcMD(notas:NotaItem[]):number|null {
   const provas=notas.filter(n=>!n.ehAF&&!n.apto)
   if (!provas.length) return null
   return provas.reduce((s,n)=>s+n.nota,0)/provas.length
+}
+
+// ── SEÇÃO ESTATÍSTICA (projeção histórica) ───────────────────────────────────────
+function SecaoEstatistica({ mgc, ranking, posicaoAtual, totalAlunos }: {
+  mgc: number
+  ranking: AlunoRank[]
+  posicaoAtual: number
+  totalAlunos: number
+}) {
+  const stats = useMemo(() => {
+    const t3ComDados = ranking.filter(a => a.mgc !== null).length
+    const posT1 = calcularPosicaoHistorica(mgc, BASE_T1)
+    const posT2 = calcularPosicaoHistorica(mgc, BASE_T2)
+    return {
+      posT1: Math.max(1, Math.round(posT1)),
+      posT2: Math.max(1, Math.round(posT2)),
+      percT1: calcularPercentil(mgc, BASE_T1),
+      percT2: calcularPercentil(mgc, BASE_T2),
+      proj: calcularProjecaoConsolidada(mgc, posicaoAtual - 1, totalAlunos, t3ComDados),
+    }
+  }, [mgc, ranking, posicaoAtual, totalAlunos])
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <p style={{ fontSize: 11, fontWeight: 700, color: "#9aa3b8", textTransform: "uppercase", letterSpacing: "0.06em", margin: "4px 0 0" }}>
+        Projeção Histórica
+      </p>
+
+      {/* Estimativas T1 e T2 */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        {([
+          { label: "Estimativa T1", pos: stats.posT1, total: 148, perc: stats.percT1 },
+          { label: "Estimativa T2", pos: stats.posT2, total: 171, perc: stats.percT2 },
+        ] as const).map(item => (
+          <div key={item.label} style={{ background: "#fff", border: "1px solid #dde3ee", borderRadius: 12, padding: "14px 16px" }}>
+            <p style={{ fontSize: 10, fontWeight: 700, color: "#9aa3b8", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>{item.label}</p>
+            <p style={{ fontSize: 22, fontWeight: 800, fontFamily: "var(--serif)", color: AZ, margin: 0 }}>
+              {item.pos}º <span style={{ fontSize: 12, fontWeight: 500, color: "#9aa3b8" }}>de {item.total}</span>
+            </p>
+            <div style={{ marginTop: 8, background: "#f0f4ff", borderRadius: 6, padding: "4px 8px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 11, color: "#6b7a99" }}>Percentil</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: AM }}>{item.perc}%</span>
+            </div>
+            <p style={{ fontSize: 10, color: "#9aa3b8", marginTop: 6, margin: "6px 0 0" }}>
+              Superior a {item.perc}% da {item.label.split(" ")[1]}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Projeção Consolidada */}
+      <div style={{ background: "#fff", border: "1px solid #dde3ee", borderRadius: 14, overflow: "hidden" }}>
+        <div style={{ padding: "12px 16px", borderBottom: "1px solid #edf0f7" }}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "#9aa3b8", textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>
+            Projeção Consolidada — T3
+          </p>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
+          {[
+            { label: "Melhor cenário", val: `${stats.proj.melhor}º`, cor: "#15803d" },
+            { label: "Mais provável",  val: `${stats.proj.provavel}º`,  cor: AZ },
+            { label: "Conservador",    val: `${stats.proj.conservador}º`, cor: "#b45309" },
+          ].map((item, i) => (
+            <div key={item.label} style={{ padding: "16px 10px", textAlign: "center", borderRight: i < 2 ? "1px solid #edf0f7" : undefined }}>
+              <p style={{ fontSize: 10, color: "#9aa3b8", marginBottom: 4, margin: "0 0 4px" }}>{item.label}</p>
+              <p style={{ fontSize: 28, fontWeight: 800, fontFamily: "var(--serif)", color: item.cor, margin: 0 }}>{item.val}</p>
+            </div>
+          ))}
+        </div>
+        <div style={{ padding: "10px 16px", background: "#f8faff", textAlign: "center" }}>
+          <p style={{ fontSize: 11, color: "#6b7a99", margin: 0 }}>
+            Faixa provável: entre <strong>{stats.proj.melhor}º</strong> e <strong>{stats.proj.conservador}º</strong> de {totalAlunos} cadetes
+          </p>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 // ── ABA MEU RANKING ─────────────────────────────────────────────────────────────
@@ -99,6 +180,15 @@ function AbaMeuRanking({ranking,minhaEntrada,meusComponentes,isAdmin,totalAlunos
             <p style={{fontSize:22,fontWeight:800,color:AZ,fontFamily:"var(--serif)",margin:0}}>{fmtNum(meusComponentes.mgc)}</p>
           </div>
         </div>
+
+        {minhaEntrada?.mgc !== null && minhaEntrada !== null && (
+          <SecaoEstatistica
+            mgc={minhaEntrada.mgc!}
+            ranking={ranking}
+            posicaoAtual={minhaEntrada.posicao}
+            totalAlunos={totalAlunos}
+          />
+        )}
 
         <p style={{fontSize:12,color:"#9aa3b8",textAlign:"center"}}>Posições dos demais cadetes são privadas · Atualizado em tempo real</p>
       </div>
@@ -454,7 +544,7 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
 }
 
 // ── ABA SIMULAR ──────────────────────────────────────────────────────────────────
-function AbaSimular({disciplinas,minhasNotas,minhaNFDC}:{disciplinas:Disciplina[];minhasNotas:NotaItem[];minhaNFDC:number}) {
+function AbaSimular({disciplinas,minhasNotas,minhaNFDC,ranking,totalAlunos}:{disciplinas:Disciplina[];minhasNotas:NotaItem[];minhaNFDC:number;ranking:AlunoRank[];totalAlunos:number}) {
   const [sim,setSim] = useState<Record<string,Record<string,string>>>(()=>{
     const m:Record<string,Record<string,string>>={}
     for (const n of minhasNotas){
@@ -468,7 +558,7 @@ function AbaSimular({disciplinas,minhasNotas,minhaNFDC}:{disciplinas:Disciplina[
   const [simTCC,setSimTCC] = useState(notaTCC?String(notaTCC.nota):"")
   const [simNFDC,setSimNFDC] = useState(String(minhaNFDC))
 
-  const {mfic,nfdc:nfdcSim,tcc,mgc} = useMemo(()=>{
+  const {mfic,nfdc:nfdcSim,tcc,mgc} = useMemo<{mfic:number|null;nfdc:number;tcc:number|null;mgc:number|null}>(()=>{
     const notasSim:Parameters<typeof calcularComponentes>[0]=[]
     for (const [disc,avals] of Object.entries(sim)){
       for (const [aval,val] of Object.entries(avals)){
@@ -483,6 +573,19 @@ function AbaSimular({disciplinas,minhasNotas,minhaNFDC}:{disciplinas:Disciplina[
     const nf=Number(simNFDC);const nfdcVal=isNaN(nf)?minhaNFDC:nf
     return calcularComponentes(notasSim,nfdcVal)
   },[sim,simTCC,simNFDC,minhaNFDC])
+
+  const statsSimulados = useMemo(()=>{
+    if (mgc === null) return null
+    const t3ComDados = ranking.filter(a => a.mgc !== null).length
+    const t3Acima = ranking.filter(a => a.mgc !== null && a.mgc > mgc).length
+    return {
+      posT1: Math.max(1, Math.round(calcularPosicaoHistorica(mgc, BASE_T1))),
+      posT2: Math.max(1, Math.round(calcularPosicaoHistorica(mgc, BASE_T2))),
+      percT1: calcularPercentil(mgc, BASE_T1),
+      percT2: calcularPercentil(mgc, BASE_T2),
+      proj: calcularProjecaoConsolidada(mgc, t3Acima, totalAlunos, t3ComDados),
+    }
+  },[mgc,ranking,totalAlunos])
 
   function setNota(disc:string,aval:string,val:string){setSim(prev=>({...prev,[disc]:{...prev[disc],[aval]:val}}))}
 
@@ -517,6 +620,50 @@ function AbaSimular({disciplinas,minhasNotas,minhaNFDC}:{disciplinas:Disciplina[
             style={{border:"1px solid #dde3ee",borderRadius:7,padding:"8px 12px",fontSize:18,width:"100%",fontWeight:700,textAlign:"center"}}/>
         </div>
       </div>
+
+      {/* Projeção simulada */}
+      {statsSimulados && (
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          <p style={{fontSize:11,fontWeight:700,color:"#9aa3b8",textTransform:"uppercase",letterSpacing:"0.06em",margin:0}}>Projeção Simulada</p>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+            {([
+              {label:"Estimativa T1",pos:statsSimulados.posT1,total:148,perc:statsSimulados.percT1},
+              {label:"Estimativa T2",pos:statsSimulados.posT2,total:171,perc:statsSimulados.percT2},
+            ] as const).map(item=>(
+              <div key={item.label} style={{background:"#fff",border:"1px solid #dde3ee",borderRadius:12,padding:"12px 14px"}}>
+                <p style={{fontSize:10,fontWeight:700,color:"#9aa3b8",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:4}}>{item.label}</p>
+                <p style={{fontSize:20,fontWeight:800,fontFamily:"var(--serif)",color:AZ,margin:0}}>{item.pos}º <span style={{fontSize:11,fontWeight:500,color:"#9aa3b8"}}>de {item.total}</span></p>
+                <div style={{marginTop:6,background:"#f0f4ff",borderRadius:5,padding:"3px 8px",display:"flex",justifyContent:"space-between"}}>
+                  <span style={{fontSize:10,color:"#6b7a99"}}>Percentil</span>
+                  <span style={{fontSize:12,fontWeight:700,color:AM}}>{item.perc}%</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{background:"#fff",border:"1px solid #dde3ee",borderRadius:14,overflow:"hidden"}}>
+            <div style={{padding:"10px 14px",borderBottom:"1px solid #edf0f7"}}>
+              <p style={{fontSize:10,fontWeight:700,color:"#9aa3b8",textTransform:"uppercase",letterSpacing:"0.06em",margin:0}}>Projeção Consolidada — T3</p>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)"}}>
+              {[
+                {label:"Melhor",val:`${statsSimulados.proj.melhor}º`,cor:"#15803d"},
+                {label:"Provável",val:`${statsSimulados.proj.provavel}º`,cor:AZ},
+                {label:"Conservador",val:`${statsSimulados.proj.conservador}º`,cor:"#b45309"},
+              ].map((item,i)=>(
+                <div key={item.label} style={{padding:"12px 8px",textAlign:"center",borderRight:i<2?"1px solid #edf0f7":undefined}}>
+                  <p style={{fontSize:10,color:"#9aa3b8",margin:"0 0 3px"}}>{item.label}</p>
+                  <p style={{fontSize:24,fontWeight:800,fontFamily:"var(--serif)",color:item.cor,margin:0}}>{item.val}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{padding:"8px 14px",background:"#f8faff",textAlign:"center"}}>
+              <p style={{fontSize:11,color:"#6b7a99",margin:0}}>
+                Faixa: <strong>{statsSimulados.proj.melhor}º</strong> a <strong>{statsSimulados.proj.conservador}º</strong> de {totalAlunos} cadetes
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Tabela de notas por disciplina */}
       <div style={{background:"#fff",border:"1px solid #dde3ee",borderRadius:14,overflow:"hidden"}}>
@@ -566,7 +713,7 @@ export function RankingClient({ranking,minhaEntrada,meusComponentes,minhaNFDC,is
       </div>
       {aba==="ranking" && <AbaMeuRanking ranking={ranking} minhaEntrada={minhaEntrada} meusComponentes={meusComponentes} isAdmin={isAdmin} totalAlunos={totalAlunos}/>}
       {aba==="notas"   && <AbaMinhasNotas disciplinas={disciplinas} minhasNotas={minhasNotas} minhaNFDC={minhaNFDC} userId={userId}/>}
-      {aba==="simular" && <AbaSimular disciplinas={disciplinas} minhasNotas={minhasNotas} minhaNFDC={minhaNFDC}/>}
+      {aba==="simular" && <AbaSimular disciplinas={disciplinas} minhasNotas={minhasNotas} minhaNFDC={minhaNFDC} ranking={ranking} totalAlunos={totalAlunos}/>}
     </div>
   )
 }
