@@ -28,214 +28,152 @@ export default async function DashboardPage() {
     }),
   ])
 
-  // Progresso geral
   const totalCarga = disciplinas.reduce((s, d) => s + d.cargaTotal, 0)
   const totalMinistrada = disciplinas.reduce((s, d) => s + d.cargaMinistrada, 0)
   const progressoGeral = totalCarga > 0 ? Math.round((totalMinistrada / totalCarga) * 100) : 0
   const disciplinasEncerradas = disciplinas.filter(d => d.status === "Encerrada" || d.cargaMinistrada >= d.cargaTotal).length
 
-  // Disciplinas próximas de encerrar (em andamento, >= 70% ministrada)
-  const proximasAEncerrar = disciplinas
-    .filter(d => d.cargaMinistrada > 0 && d.cargaMinistrada < d.cargaTotal)
-    .map(d => ({ ...d, pct: Math.round((d.cargaMinistrada / d.cargaTotal) * 100) }))
-    .filter(d => d.pct >= 60)
-    .sort((a, b) => b.pct - a.pct)
-    .slice(0, 5)
-
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold" style={{ fontFamily: "var(--serif)", color: "var(--azul-profundo)" }}>
+    <div style={{ maxWidth: 900, margin: "0 auto", padding: "24px 16px" }}>
+
+      {/* ── Xerife — banner discreto no topo ── */}
+      {xerife && (
+        <div style={{
+          display: "flex", alignItems: "center", gap: 10,
+          background: "rgba(184,146,74,0.10)",
+          border: "1px solid rgba(184,146,74,0.30)",
+          borderRadius: 10, padding: "8px 14px",
+          marginBottom: 20,
+        }}>
+          <span style={{ fontSize: 16 }}>⭐</span>
+          <p style={{ fontSize: 12, color: "var(--azul-profundo)", margin: 0 }}>
+            <span style={{ fontWeight: 400, color: "#8a7040" }}>Xerife atual: </span>
+            <span style={{ fontWeight: 700 }}>{xerife.nomeGuerra}</span>
+            <span style={{ color: "#b8924a", marginLeft: 6, fontSize: 11 }}>Mat. {xerife.matricula}</span>
+          </p>
+          <Link href="/xerifancia" style={{ marginLeft: "auto", fontSize: 11, color: "var(--dourado)", textDecoration: "none", flexShrink: 0 }}>
+            Ver histórico →
+          </Link>
+        </div>
+      )}
+
+      {/* ── Saudação ── */}
+      <div style={{ marginBottom: 24 }}>
+        <h1 style={{ fontFamily: "var(--serif)", fontWeight: 700, fontSize: 24, color: "var(--azul-profundo)", margin: 0 }}>
           Olá, {aluno?.nomeGuerra}!
         </h1>
-        <p className="text-slate-500 text-sm mt-1">Semana {semana}/52 · Mat. {matricula}</p>
+        <p style={{ color: "#6b7a99", fontSize: 13, marginTop: 4 }}>Semana {semana}/52 · Mat. {matricula}</p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))" }}>
 
-        {/* Progresso geral do curso */}
-        <div className="col-span-full bg-white rounded-xl p-5 border border-blue-100 shadow-sm">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-semibold text-sm" style={{ color: "var(--azul-profundo)" }}>
-              Progresso do Curso
-            </h2>
-            <span className="text-xs text-slate-500">
-              {disciplinasEncerradas}/{disciplinas.length} disciplinas encerradas
-            </span>
+        {/* ── Progresso geral ── */}
+        <div style={{ gridColumn: "1/-1", background: "#fff", borderRadius: 14, padding: 20, border: "1px solid #dde3ee", boxShadow: "0 1px 4px rgba(11,45,94,0.06)" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+            <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--azul-profundo)", margin: 0 }}>Progresso do Curso</h2>
+            <span style={{ fontSize: 12, color: "#9aa3b8" }}>{disciplinasEncerradas}/{disciplinas.length} encerradas</span>
           </div>
-          <div className="relative h-3 rounded-full bg-slate-100 overflow-hidden mb-2">
-            <div
-              className="absolute inset-y-0 left-0 rounded-full transition-all"
-              style={{ width: `${progressoGeral}%`, background: "var(--azul-profundo)" }}
-            />
+          <div style={{ height: 10, background: "#edf0f7", borderRadius: 99, overflow: "hidden", marginBottom: 8 }}>
+            <div style={{ height: "100%", width: `${progressoGeral}%`, background: "var(--azul-profundo)", borderRadius: 99, transition: "width 0.4s" }} />
           </div>
-          <div className="flex justify-between text-xs text-slate-500">
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#9aa3b8" }}>
             <span>{totalMinistrada}h ministradas</span>
-            <span className="font-semibold" style={{ color: "var(--azul-profundo)" }}>{progressoGeral}%</span>
+            <span style={{ fontWeight: 700, color: "var(--azul-profundo)" }}>{progressoGeral}%</span>
             <span>{totalCarga}h total</span>
           </div>
         </div>
 
-        {/* Próximas a encerrar */}
-        {proximasAEncerrar.length > 0 && (
-          <div className="col-span-full sm:col-span-2 bg-white rounded-xl p-5 border border-blue-100 shadow-sm">
-            <h2 className="font-semibold text-sm mb-3" style={{ color: "var(--azul-profundo)" }}>
-              Próximas a Encerrar — Atenção para Avaliação
-            </h2>
-            <div className="space-y-2">
-              {proximasAEncerrar.map(d => (
-                <div key={d.id} className="flex items-center gap-3">
-                  <span className="text-xs font-mono font-bold w-12 shrink-0" style={{ color: "var(--azul-medio)" }}>
-                    {d.sigla}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <span className="text-xs text-slate-600 truncate">{d.nome}</span>
-                      <span className="text-xs font-semibold ml-2 shrink-0" style={{ color: d.pct >= 90 ? "var(--dourado)" : "var(--azul-medio)" }}>
-                        {d.pct}%
-                      </span>
-                    </div>
-                    <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: `${d.pct}%`,
-                          background: d.pct >= 90 ? "var(--dourado)" : "var(--azul-medio)",
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <span className="text-xs text-slate-400 shrink-0 w-20 text-right">
-                    {d.cargaMinistrada}h/{d.cargaTotal}h
-                  </span>
-                </div>
-              ))}
-            </div>
-            <Link href="/aulas" className="text-xs mt-3 inline-block hover:underline" style={{ color: "var(--azul-medio)" }}>
-              Ver todas as disciplinas →
-            </Link>
+        {/* ── Missão da Semana — em verde ── */}
+        <div style={{
+          background: "linear-gradient(135deg, #f0fdf4, #dcfce7)",
+          border: "1.5px solid #86efac",
+          borderRadius: 14, padding: 20,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+            <span style={{ fontSize: 18 }}>🎯</span>
+            <h2 style={{ fontSize: 13, fontWeight: 700, color: "#15803d", margin: 0 }}>Missão · Semana {semana}</h2>
           </div>
-        )}
+          {missao ? (
+            <div>
+              <p style={{ fontWeight: 700, color: "#14532d", fontSize: 14, margin: "0 0 6px" }}>{missao.titulo}</p>
+              <p style={{ color: "#166534", fontSize: 13, lineHeight: 1.6, margin: "0 0 10px" }}
+                className="line-clamp-3">{missao.corpo}</p>
+              <Link href="/comunicados" style={{ fontSize: 12, color: "#15803d", textDecoration: "none", fontWeight: 600 }}>
+                Ver completa →
+              </Link>
+            </div>
+          ) : (
+            <p style={{ color: "#86efac", fontSize: 13 }}>Não definida ainda</p>
+          )}
+        </div>
 
-        {/* Últimas notas */}
+        {/* ── Últimas avaliações ── */}
         {minhasNotas.length > 0 && (
-          <div className="bg-white rounded-xl p-5 border border-blue-100 shadow-sm">
-            <h2 className="font-semibold text-sm mb-3" style={{ color: "var(--azul-profundo)" }}>Últimas Avaliações</h2>
-            <div className="space-y-2">
+          <div style={{ background: "#fff", borderRadius: 14, padding: 20, border: "1px solid #dde3ee", boxShadow: "0 1px 4px rgba(11,45,94,0.06)" }}>
+            <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--azul-profundo)", margin: "0 0 12px" }}>Últimas Avaliações</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {minhasNotas.map(n => (
-                <div key={n.id} className="flex items-center justify-between text-sm">
-                  <div className="min-w-0">
-                    <p className="font-medium text-slate-700 truncate">{n.disciplina}</p>
-                    <p className="text-xs text-slate-400">{n.avaliacao}</p>
+                <div key={n.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 13 }}>
+                  <div style={{ minWidth: 0 }}>
+                    <p style={{ fontWeight: 600, color: "var(--azul-profundo)", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{n.disciplina}</p>
+                    <p style={{ fontSize: 11, color: "#9aa3b8", margin: 0 }}>{n.avaliacao}</p>
                   </div>
-                  <span
-                    className="font-bold ml-3 shrink-0"
-                    style={{ color: n.nota >= 7 ? "#15803d" : n.nota >= 5 ? "var(--dourado)" : "#b91c1c" }}
-                  >
+                  <span style={{ fontWeight: 800, marginLeft: 12, flexShrink: 0, fontSize: 15,
+                    color: n.nota >= 7 ? "#15803d" : n.nota >= 5 ? "var(--dourado)" : "#b91c1c" }}>
                     {n.nota.toFixed(1)}
                   </span>
                 </div>
               ))}
             </div>
+            <Link href="/ranking" style={{ fontSize: 12, color: "var(--azul-medio)", textDecoration: "none", display: "block", marginTop: 10 }}>Ver ranking →</Link>
           </div>
         )}
 
-        {/* Dados do aluno */}
-        <div className="bg-white rounded-xl p-5 border border-blue-100 shadow-sm">
-          <h2 className="font-semibold text-sm mb-3" style={{ color: "var(--azul-profundo)" }}>Seus dados</h2>
-          <div className="space-y-1.5 text-sm">
-            <p><span className="text-slate-500">Nome:</span> <span className="font-medium">{aluno?.nomeCompleto}</span></p>
-            {aluno?.canga && <p><span className="text-slate-500">Canga:</span> <span className="font-medium">{aluno.canga}</span></p>}
-            {aluno?.grupoPlantao && <p><span className="text-slate-500">Plantão:</span> <span className="font-medium">{aluno.grupoPlantao}</span></p>}
-            {aluno?.grupoFaxina && <p><span className="text-slate-500">Faxina:</span> <span className="font-medium">{aluno.grupoFaxina}</span></p>}
-            {aluno?.aniversario && <p><span className="text-slate-500">Aniversário:</span> <span className="font-medium">{aluno.aniversario}</span></p>}
+        {/* ── Dados do aluno ── */}
+        <div style={{ background: "#fff", borderRadius: 14, padding: 20, border: "1px solid #dde3ee", boxShadow: "0 1px 4px rgba(11,45,94,0.06)" }}>
+          <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--azul-profundo)", margin: "0 0 12px" }}>Seus Dados</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: 13 }}>
+            {aluno?.canga && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Canga: </span><span style={{ fontWeight: 600, color: "var(--azul-profundo)" }}>{aluno.canga}</span></p>}
+            {aluno?.grupoPlantao && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Plantão: </span><span style={{ fontWeight: 600 }}>{aluno.grupoPlantao}</span></p>}
+            {aluno?.grupoFaxina && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Faxina: </span><span style={{ fontWeight: 600 }}>{aluno.grupoFaxina}</span></p>}
+            {aluno?.aniversario && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Aniversário: </span><span style={{ fontWeight: 600 }}>{aluno.aniversario}</span></p>}
           </div>
-          <Link href="/alterar-senha" className="text-xs mt-3 inline-block hover:underline" style={{ color: "var(--azul-medio)" }}>
-            🔒 Alterar senha →
-          </Link>
+          <Link href="/alterar-senha" style={{ fontSize: 12, color: "#9aa3b8", textDecoration: "none", display: "block", marginTop: 10 }}>🔒 Alterar senha →</Link>
         </div>
 
-        {/* Missão da Semana */}
-        <div className="bg-white rounded-xl p-5 border border-blue-100 shadow-sm">
-          <h2 className="font-semibold text-sm mb-3" style={{ color: "var(--azul-profundo)" }}>Missão da Semana {semana}</h2>
-          {missao ? (
-            <div>
-              <p className="font-medium text-slate-800">{missao.titulo}</p>
-              <p className="text-slate-500 text-sm mt-1 line-clamp-3">{missao.corpo}</p>
-              <Link href="/missao" className="text-xs mt-2 inline-block hover:underline" style={{ color: "var(--azul-medio)" }}>
-                Ver completa →
-              </Link>
-            </div>
-          ) : (
-            <p className="text-slate-400 text-sm">Não definida ainda</p>
-          )}
-        </div>
-
-        {/* Xerife */}
-        <div className="bg-white rounded-xl p-5 border border-blue-100 shadow-sm text-center">
-          <h2 className="font-semibold text-sm mb-3" style={{ color: "var(--azul-profundo)" }}>Xerife Atual</h2>
-          {xerife ? (
-            <>
-              <div className="text-3xl mb-1">⭐</div>
-              <p className="font-bold text-slate-800">{xerife.nomeGuerra}</p>
-              <p className="text-slate-500 text-xs">Mat. {xerife.matricula}</p>
-            </>
-          ) : (
-            <p className="text-slate-400 text-sm">Não definido</p>
-          )}
-        </div>
-
-        {/* Último aviso */}
+        {/* ── Último aviso ── */}
         {aviso && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-5 col-span-full">
-            <h2 className="font-semibold text-yellow-800 text-sm mb-1">⚠️ {aviso.titulo}</h2>
-            <p className="text-yellow-700 text-sm line-clamp-2">{aviso.corpo}</p>
-            <Link href="/avisos" className="text-yellow-600 text-xs mt-1 inline-block hover:underline">
+          <div style={{ gridColumn: "1/-1", background: "#fffbf0", border: "1.5px solid #f0c060", borderRadius: 14, padding: 20 }}>
+            <h2 style={{ fontSize: 13, fontWeight: 700, color: "#92400e", margin: "0 0 6px" }}>📌 {aviso.titulo}</h2>
+            <p style={{ color: "#78350f", fontSize: 13, margin: "0 0 8px", lineHeight: 1.6 }}
+              className="line-clamp-2">{aviso.corpo}</p>
+            <Link href="/comunicados" style={{ fontSize: 12, color: "#b45309", textDecoration: "none", fontWeight: 600 }}>
               Ver todos os avisos →
             </Link>
           </div>
         )}
 
-        {/* Próximas Provas */}
-        <div className="col-span-full rounded-xl p-5 border" style={{ background: "#FFF7ED", borderColor: "#FED7AA" }}>
-          <h2 className="font-semibold text-sm mb-3" style={{ color: "#9A3412" }}>
-            📋 Próximas Provas
-          </h2>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {[
-              { sigla: "ACE", nome: "Análise Criminal e Estatística" },
-              { sigla: "GPGA", nome: "Gestão Pública Geral Aplicada" },
-              { sigla: "GRAPP", nome: "Gestão por Resultados e Avaliação" },
-            ].map(p => (
-              <div key={p.sigla} style={{
-                background: "#fff", border: "1.5px solid #FED7AA", borderRadius: 8,
-                padding: "7px 14px", display: "flex", alignItems: "center", gap: 8,
-              }}>
-                <span style={{ fontWeight: 800, fontSize: 13, color: "#9A3412" }}>{p.sigla}</span>
-                <span style={{ fontSize: 12, color: "#78350F" }}>{p.nome}</span>
-              </div>
-            ))}
-          </div>
-          <p style={{ fontSize: 11, color: "#B45309", marginTop: 8 }}>
-            Datas a confirmar — fique atento aos avisos.
-          </p>
-        </div>
-
-        {/* Links rápidos */}
-        <div className="col-span-full grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {/* ── Links rápidos: Ranking / Escalas / Links Úteis ── */}
+        <div style={{ gridColumn: "1/-1", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12 }}>
           {[
-            { href: "/qts",     label: "QTS",     emoji: "📅" },
-            { href: "/aulas",   label: "Aulas",   emoji: "📚" },
-            { href: "/escalas", label: "Escalas", emoji: "🔄" },
-            { href: "/turma",   label: "Turma",   emoji: "👥" },
-          ].map((l) => (
-            <Link key={l.href} href={l.href}
-              className="bg-white border border-blue-100 rounded-xl p-4 text-center hover:border-blue-300 hover:bg-blue-50 transition-colors shadow-sm">
-              <div className="text-2xl mb-1">{l.emoji}</div>
-              <p className="text-sm font-medium text-slate-700">{l.label}</p>
+            { href: "/ranking",  label: "Ranking",      emoji: "🏆", desc: "Sua posição no curso" },
+            { href: "/escalas",  label: "Escalas",      emoji: "🔄", desc: "Serviço, faxina e plantão" },
+            { href: "/links",    label: "Links Úteis",  emoji: "🔗", desc: "Recursos e sistemas" },
+          ].map(l => (
+            <Link key={l.href} href={l.href} style={{
+              background: "#fff", border: "1.5px solid #dde3ee", borderRadius: 14,
+              padding: "18px 16px", textAlign: "center", textDecoration: "none",
+              boxShadow: "0 1px 4px rgba(11,45,94,0.06)",
+              transition: "border-color 0.15s, box-shadow 0.15s",
+              display: "block",
+            }}>
+              <div style={{ fontSize: 28, marginBottom: 6 }}>{l.emoji}</div>
+              <p style={{ fontWeight: 700, fontSize: 14, color: "var(--azul-profundo)", margin: "0 0 3px" }}>{l.label}</p>
+              <p style={{ fontSize: 11, color: "#9aa3b8", margin: 0 }}>{l.desc}</p>
             </Link>
           ))}
         </div>
+
       </div>
     </div>
   )
