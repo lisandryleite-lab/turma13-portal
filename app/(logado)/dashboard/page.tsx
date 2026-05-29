@@ -12,7 +12,7 @@ export default async function DashboardPage() {
 
   const semana = semanaAtual()
 
-  const [aluno, missao, aviso, xerife, disciplinas, minhasNotas] = await Promise.all([
+  const [aluno, missao, aviso, xerife, disciplinas, minhasNotas, todosComAniv] = await Promise.all([
     prisma.user.findUnique({
       where: { matricula },
       select: { id: true, nomeGuerra: true, nomeCompleto: true, email: true, canga: true, grupoPlantao: true, grupoFaxina: true, aniversario: true },
@@ -26,7 +26,19 @@ export default async function DashboardPage() {
       orderBy: { data: "desc" },
       take: 5,
     }),
+    prisma.user.findMany({
+      where: { isAdmin: false, aniversario: { not: null } },
+      select: { nomeGuerra: true, aniversario: true, matricula: true },
+    }),
   ])
+
+  const hoje = new Date()
+  const mesAtual = hoje.getMonth() + 1
+  const diaHoje = String(hoje.getDate()).padStart(2, "0")
+
+  const aniversariantesDoMes = todosComAniv
+    .filter(a => Number(a.aniversario?.split("/")[1]) === mesAtual)
+    .sort((a, b) => Number(a.aniversario!.split("/")[0]) - Number(b.aniversario!.split("/")[0]))
 
   const totalCarga = disciplinas.reduce((s, d) => s + d.cargaTotal, 0)
   const totalMinistrada = disciplinas.reduce((s, d) => s + d.cargaMinistrada, 0)
@@ -129,16 +141,41 @@ export default async function DashboardPage() {
           </div>
         )}
 
-        {/* ── Dados do aluno ── */}
+        {/* ── Aniversariantes do mês ── */}
         <div style={{ background: "#fff", borderRadius: 14, padding: 20, border: "1px solid #dde3ee", boxShadow: "0 1px 4px rgba(11,45,94,0.06)" }}>
-          <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--azul-profundo)", margin: "0 0 12px" }}>Seus Dados</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: 13 }}>
-            {aluno?.canga && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Canga: </span><span style={{ fontWeight: 600, color: "var(--azul-profundo)" }}>{aluno.canga}</span></p>}
-            {aluno?.grupoPlantao && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Plantão: </span><span style={{ fontWeight: 600 }}>{aluno.grupoPlantao}</span></p>}
-            {aluno?.grupoFaxina && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Faxina: </span><span style={{ fontWeight: 600 }}>{aluno.grupoFaxina}</span></p>}
-            {aluno?.aniversario && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Aniversário: </span><span style={{ fontWeight: 600 }}>{aluno.aniversario}</span></p>}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+            <span style={{ fontSize: 16 }}>🎂</span>
+            <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--azul-profundo)", margin: 0 }}>
+              Aniversariantes — {["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"][mesAtual - 1]}
+            </h2>
           </div>
-          <Link href="/alterar-senha" style={{ fontSize: 12, color: "#9aa3b8", textDecoration: "none", display: "block", marginTop: 10 }}>🔒 Alterar senha →</Link>
+          {aniversariantesDoMes.length === 0 ? (
+            <p style={{ fontSize: 13, color: "#9aa3b8", margin: 0 }}>Ninguém este mês.</p>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              {aniversariantesDoMes.map(a => {
+                const dia = a.aniversario!.split("/")[0]
+                const isHoje = dia.padStart(2,"0") === diaHoje
+                return (
+                  <div key={a.matricula} style={{
+                    display: "flex", alignItems: "center", gap: 8, fontSize: 13,
+                    background: isHoje ? "#fffbf0" : "transparent",
+                    border: isHoje ? "1px solid #f0c060" : "1px solid transparent",
+                    borderRadius: 8, padding: isHoje ? "5px 10px" : "2px 0",
+                  }}>
+                    <span style={{ fontSize: 11, color: "#9aa3b8", width: 22, flexShrink: 0 }}>{dia}</span>
+                    {isHoje && <span>🎂</span>}
+                    <span style={{ fontWeight: isHoje ? 700 : 400, color: isHoje ? "#92400e" : "var(--azul-profundo)" }}>
+                      {a.nomeGuerra}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+          <Link href="/aniversarios" style={{ fontSize: 12, color: "var(--azul-medio)", textDecoration: "none", display: "block", marginTop: 10 }}>
+            Ver calendário completo →
+          </Link>
         </div>
 
         {/* ── Último aviso ── */}
