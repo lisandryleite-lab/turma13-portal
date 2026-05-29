@@ -12,7 +12,7 @@ export default async function DashboardPage() {
 
   const semana = semanaAtual()
 
-  const [aluno, missao, aviso, xerife, disciplinas, minhasNotas, todosComAniv] = await Promise.all([
+  const [aluno, missao, aviso, xerife, disciplinas, todosComAniv] = await Promise.all([
     prisma.user.findUnique({
       where: { matricula },
       select: { id: true, nomeGuerra: true, nomeCompleto: true, email: true, canga: true, grupoPlantao: true, grupoFaxina: true, aniversario: true },
@@ -21,11 +21,6 @@ export default async function DashboardPage() {
     prisma.aviso.findFirst({ orderBy: [{ fixado: "desc" }, { createdAt: "desc" }] }),
     prisma.xerife.findFirst({ where: { atual: true } }),
     prisma.disciplina.findMany({ orderBy: { sigla: "asc" } }),
-    prisma.nota.findMany({
-      where: { user: { matricula } },
-      orderBy: { data: "desc" },
-      take: 5,
-    }),
     prisma.user.findMany({
       where: { isAdmin: false, aniversario: { not: null } },
       select: { nomeGuerra: true, aniversario: true, matricula: true },
@@ -119,27 +114,17 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        {/* ── Últimas avaliações ── */}
-        {minhasNotas.length > 0 && (
-          <div style={{ background: "#fff", borderRadius: 14, padding: 20, border: "1px solid #dde3ee", boxShadow: "0 1px 4px rgba(11,45,94,0.06)" }}>
-            <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--azul-profundo)", margin: "0 0 12px" }}>Últimas Avaliações</h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {minhasNotas.map(n => (
-                <div key={n.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 13 }}>
-                  <div style={{ minWidth: 0 }}>
-                    <p style={{ fontWeight: 600, color: "var(--azul-profundo)", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{n.disciplina}</p>
-                    <p style={{ fontSize: 11, color: "#9aa3b8", margin: 0 }}>{n.avaliacao}</p>
-                  </div>
-                  <span style={{ fontWeight: 800, marginLeft: 12, flexShrink: 0, fontSize: 15,
-                    color: n.nota >= 7 ? "#15803d" : n.nota >= 5 ? "var(--dourado)" : "#b91c1c" }}>
-                    {n.nota.toFixed(1)}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <Link href="/ranking" style={{ fontSize: 12, color: "var(--azul-medio)", textDecoration: "none", display: "block", marginTop: 10 }}>Ver ranking →</Link>
+        {/* ── Seus Dados ── */}
+        <div style={{ background: "#fff", borderRadius: 14, padding: 20, border: "1px solid #dde3ee", boxShadow: "0 1px 4px rgba(11,45,94,0.06)" }}>
+          <h2 style={{ fontSize: 13, fontWeight: 700, color: "var(--azul-profundo)", margin: "0 0 12px" }}>Seus Dados</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: 13 }}>
+            {aluno?.canga && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Canga: </span><span style={{ fontWeight: 600, color: "var(--azul-profundo)" }}>{aluno.canga}</span></p>}
+            {aluno?.grupoPlantao && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Plantão: </span><span style={{ fontWeight: 600 }}>{aluno.grupoPlantao}</span></p>}
+            {aluno?.grupoFaxina && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Faxina: </span><span style={{ fontWeight: 600 }}>{aluno.grupoFaxina}</span></p>}
+            {aluno?.aniversario && <p style={{ margin: 0 }}><span style={{ color: "#9aa3b8" }}>Aniversário: </span><span style={{ fontWeight: 600 }}>{aluno.aniversario}</span></p>}
           </div>
-        )}
+          <Link href="/alterar-senha" style={{ fontSize: 12, color: "#9aa3b8", textDecoration: "none", display: "block", marginTop: 10 }}>🔒 Alterar senha →</Link>
+        </div>
 
         {/* ── Aniversariantes do mês ── */}
         <div style={{ background: "#fff", borderRadius: 14, padding: 20, border: "1px solid #dde3ee", boxShadow: "0 1px 4px rgba(11,45,94,0.06)" }}>
