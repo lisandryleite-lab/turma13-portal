@@ -239,7 +239,7 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
   const [nfdcInput,setNfdcInput] = useState(String(nfdcInicial))
   const [aberta,setAberta]   = useState<string|null>(null)
   const [formSigla,setFormSigla] = useState<string|null>(null)
-  const [form,setForm]       = useState({avaliacao:"",nota:"",ehAF:false,apto:false,data:new Date().toISOString().slice(0,10),observacao:""})
+  const [form,setForm]       = useState({avaliacao:"",nota:"",ehAF:false})
   const [salvando,setSalvando] = useState(false)
 
   const notasPorDisc = useMemo(()=>{
@@ -288,19 +288,19 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
 
   async function lancar(sigla:string) {
     if (!form.avaliacao) return
-    const notaVal = form.apto ? 0 : Number(form.nota)
-    if (!form.apto && (isNaN(notaVal)||notaVal<0||notaVal>10)) {
+    const notaVal = Number(form.nota)
+    if (isNaN(notaVal)||notaVal<0||notaVal>10) {
       flash("erro","Nota deve ser entre 0 e 10"); return
     }
     setSalvando(true)
     try {
       const res = await fetch("/api/notas",{method:"POST",headers:{"Content-Type":"application/json"},
         body:JSON.stringify({disciplina:sigla,avaliacao:form.avaliacao,nota:notaVal,
-          ehAF:form.ehAF,apto:form.apto,data:form.data,observacao:form.observacao||null})})
+          ehAF:form.ehAF,apto:false,data:new Date().toISOString().slice(0,10),observacao:null})})
       if (!res.ok) { const e=await res.json(); flash("erro",e.error||"Erro ao salvar nota"); return }
       setFormSigla(null)
-      setForm({avaliacao:"",nota:"",ehAF:false,apto:false,data:new Date().toISOString().slice(0,10),observacao:""})
-      flash("ok",`Nota de ${sigla} salva! Calculando...`)
+      setForm({avaliacao:"",nota:"",ehAF:false})
+      flash("ok",`Nota de ${sigla} salva!`)
       router.refresh()
     } catch { flash("erro","Erro de conexão ao salvar") } finally { setSalvando(false) }
   }
@@ -438,22 +438,19 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
                       {formSigla===d.sigla?(
                         <div style={{background:"#fff",borderRadius:8,padding:"12px",border:`1.5px solid ${AM}`,display:"flex",flexWrap:"wrap",gap:10,alignItems:"flex-end"}}>
                           <div><label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Avaliação *</label>
-                            <input value={form.avaliacao} onChange={e=>setForm(f=>({...f,avaliacao:e.target.value}))} placeholder={podeP2?"P1,P2,AF…":"P1,AF…"} style={{border:"1px solid #dde3ee",borderRadius:6,padding:"5px 8px",fontSize:13,width:70}}/></div>
+                            <input value={form.avaliacao} onChange={e=>setForm(f=>({...f,avaliacao:e.target.value}))} placeholder={podeP2?"P1,P2,AF…":"P1,AF…"} style={{border:"1px solid #dde3ee",borderRadius:6,padding:"5px 8px",fontSize:13,width:70}} autoFocus/></div>
                           <div><label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Nota (0–10)</label>
-                            <input type="number" min={0} max={10} step={0.1} value={form.nota} onChange={e=>setForm(f=>({...f,nota:e.target.value}))} disabled={form.apto} style={{border:"1px solid #dde3ee",borderRadius:6,padding:"5px 8px",fontSize:13,width:65,opacity:form.apto?0.4:1}}/></div>
-                          <div><label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Data</label>
-                            <input type="date" value={form.data} onChange={e=>setForm(f=>({...f,data:e.target.value}))} style={{border:"1px solid #dde3ee",borderRadius:6,padding:"5px 8px",fontSize:13}}/></div>
-                          <div style={{display:"flex",gap:12,paddingBottom:3}}>
-                            <label style={{fontSize:12,display:"flex",alignItems:"center",gap:4,cursor:"pointer"}}><input type="checkbox" checked={form.ehAF} onChange={e=>setForm(f=>({...f,ehAF:e.target.checked}))}/> AF</label>
-                            <label style={{fontSize:12,display:"flex",alignItems:"center",gap:4,cursor:"pointer"}}><input type="checkbox" checked={form.apto} onChange={e=>setForm(f=>({...f,apto:e.target.checked}))}/> Apto</label>
-                          </div>
+                            <input type="number" min={0} max={10} step={0.1} value={form.nota} onChange={e=>setForm(f=>({...f,nota:e.target.value}))} style={{border:"1px solid #dde3ee",borderRadius:6,padding:"5px 8px",fontSize:13,width:65}}/></div>
+                          <label style={{fontSize:12,display:"flex",alignItems:"center",gap:4,cursor:"pointer",paddingBottom:2}}>
+                            <input type="checkbox" checked={form.ehAF} onChange={e=>setForm(f=>({...f,ehAF:e.target.checked}))}/> AF (2ª chamada)
+                          </label>
                           <div style={{display:"flex",gap:6}}>
-                            <button onClick={()=>lancar(d.sigla)} disabled={salvando||!form.avaliacao} style={{background:AZ,color:"#fff",border:"none",borderRadius:6,padding:"7px 14px",fontSize:12,fontWeight:600,cursor:"pointer",opacity:!form.avaliacao?0.5:1}}>{salvando?"...":"Salvar"}</button>
+                            <button onClick={()=>lancar(d.sigla)} disabled={salvando||!form.avaliacao||!form.nota} style={{background:AZ,color:"#fff",border:"none",borderRadius:6,padding:"7px 14px",fontSize:12,fontWeight:600,cursor:"pointer",opacity:(!form.avaliacao||!form.nota)?0.5:1}}>{salvando?"...":"Salvar"}</button>
                             <button onClick={()=>setFormSigla(null)} style={{background:"none",border:"none",fontSize:12,color:"#9aa3b8",cursor:"pointer"}}>Cancelar</button>
                           </div>
                         </div>
                       ):(
-                        <button onClick={()=>{setFormSigla(d.sigla);setForm({avaliacao:"",nota:"",ehAF:false,apto:false,data:new Date().toISOString().slice(0,10),observacao:""})}} style={{fontSize:12,color:AM,background:"none",border:`1px solid ${AM}`,borderRadius:6,padding:"4px 12px",cursor:"pointer"}}>+ Lançar nota</button>
+                        <button onClick={()=>{setFormSigla(d.sigla);setForm({avaliacao:"",nota:"",ehAF:false})}} style={{fontSize:12,color:AM,background:"none",border:`1px solid ${AM}`,borderRadius:6,padding:"4px 12px",cursor:"pointer"}}>+ Lançar nota</button>
                       )}
                     </div>
                   )}
@@ -486,7 +483,7 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
                     <button
                       onClick={()=>{
                         if(aberta){setFormSigla(null)}
-                        else{setFormSigla(d.sigla);setForm({avaliacao:"",nota:"",ehAF:false,apto:false,data:new Date().toISOString().slice(0,10),observacao:""})}
+                        else{setFormSigla(d.sigla);setForm({avaliacao:"",nota:"",ehAF:false})}
                       }}
                       style={{fontSize:11,color:aberta?"#b91c1c":AM,background:aberta?"#fee2e2":"#f0f4ff",border:"none",borderRadius:6,padding:"4px 10px",cursor:"pointer",flexShrink:0,fontWeight:600}}>
                       {aberta?"Cancelar":"+ Nota"}
@@ -506,27 +503,17 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
                         <div>
                           <label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Nota (0–10)</label>
                           <input type="number" min={0} max={10} step={0.1} value={form.nota}
-                            onChange={e=>setForm(f=>({...f,nota:e.target.value}))} disabled={form.apto}
-                            style={{border:"1px solid #dde3ee",borderRadius:6,padding:"7px 10px",fontSize:14,width:75,opacity:form.apto?0.4:1}} />
+                            onChange={e=>setForm(f=>({...f,nota:e.target.value}))}
+                            style={{border:"1px solid #dde3ee",borderRadius:6,padding:"7px 10px",fontSize:14,width:75}} />
                         </div>
-                        <div>
-                          <label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Data</label>
-                          <input type="date" value={form.data} onChange={e=>setForm(f=>({...f,data:e.target.value}))}
-                            style={{border:"1px solid #dde3ee",borderRadius:6,padding:"7px 10px",fontSize:13}} />
-                        </div>
-                        <div style={{display:"flex",gap:14,paddingBottom:3}}>
-                          <label style={{fontSize:12,display:"flex",alignItems:"center",gap:5,cursor:"pointer"}}>
-                            <input type="checkbox" checked={form.ehAF} onChange={e=>setForm(f=>({...f,ehAF:e.target.checked}))}/> AF
-                          </label>
-                          <label style={{fontSize:12,display:"flex",alignItems:"center",gap:5,cursor:"pointer"}}>
-                            <input type="checkbox" checked={form.apto} onChange={e=>setForm(f=>({...f,apto:e.target.checked}))}/> Apto
-                          </label>
-                        </div>
+                        <label style={{fontSize:12,display:"flex",alignItems:"center",gap:5,cursor:"pointer",paddingBottom:2}}>
+                          <input type="checkbox" checked={form.ehAF} onChange={e=>setForm(f=>({...f,ehAF:e.target.checked}))}/> AF (2ª chamada)
+                        </label>
                         <div style={{display:"flex",gap:8}}>
-                          <button onClick={()=>lancar(d.sigla)} disabled={salvando||!form.avaliacao} style={{
+                          <button onClick={()=>lancar(d.sigla)} disabled={salvando||!form.avaliacao||!form.nota} style={{
                             background:AZ,color:"#fff",border:"none",borderRadius:7,
                             padding:"8px 18px",fontSize:13,fontWeight:700,cursor:"pointer",
-                            opacity:!form.avaliacao?0.5:1
+                            opacity:(!form.avaliacao||!form.nota)?0.5:1
                           }}>{salvando?"Salvando…":"Salvar nota"}</button>
                           <button onClick={()=>setFormSigla(null)} style={{background:"none",border:"none",fontSize:12,color:"#9aa3b8",cursor:"pointer"}}>Cancelar</button>
                         </div>
