@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import {
   calcularMGCSimples, calcularComponentes,
@@ -233,10 +233,12 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
   disciplinas:Disciplina[]; minhasNotas:NotaItem[]; minhaNFDC:number; userId:string
 }) {
   const router = useRouter()
-  const [notas,setNotas]     = useState(inicial)
   const [nfdc,setNfdc]       = useState(nfdcInicial)
   const [editNfdc,setEditNfdc] = useState(false)
   const [nfdcInput,setNfdcInput] = useState(String(nfdcInicial))
+
+  // Re-sincroniza NFDC se o servidor entregar valor novo
+  useEffect(()=>{ setNfdc(nfdcInicial); setNfdcInput(String(nfdcInicial)) },[nfdcInicial])
   const [aberta,setAberta]   = useState<string|null>(null)
   const [formSigla,setFormSigla] = useState<string|null>(null)
   const [form,setForm]       = useState({avaliacao:"",nota:"",ehAF:false})
@@ -244,13 +246,13 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
 
   const notasPorDisc = useMemo(()=>{
     const m:Record<string,NotaItem[]>={}
-    for (const n of notas){if(!m[n.disciplina])m[n.disciplina]=[];m[n.disciplina].push(n)}
+    for (const n of inicial){if(!m[n.disciplina])m[n.disciplina]=[];m[n.disciplina].push(n)}
     return m
-  },[notas])
+  },[inicial])
 
-  const notaTCC = notas.find(n=>n.disciplina==="TCC"||n.avaliacao==="TCC")
+  const notaTCC = inicial.find(n=>n.disciplina==="TCC"||n.avaliacao==="TCC")
 
-  const {mfic,tcc,mgc} = useMemo(()=>calcularComponentes(notas,nfdc),[notas,nfdc])
+  const {mfic,tcc,mgc} = useMemo(()=>calcularComponentes(inicial,nfdc),[inicial,nfdc])
 
   async function salvarNFDC() {
     setSalvando(true)
@@ -292,11 +294,13 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
     if (isNaN(notaVal)||notaVal<0||notaVal>10) {
       flash("erro","Nota deve ser entre 0 e 10"); return
     }
+    // Auto-detecta AF pelo nome da avaliação (igual ao Simular)
+    const ehAFVal = form.ehAF || form.avaliacao.trim().toUpperCase() === "AF"
     setSalvando(true)
     try {
       const res = await fetch("/api/notas",{method:"POST",headers:{"Content-Type":"application/json"},
         body:JSON.stringify({disciplina:sigla,avaliacao:form.avaliacao,nota:notaVal,
-          ehAF:form.ehAF,apto:false,data:new Date().toISOString().slice(0,10),observacao:null})})
+          ehAF:ehAFVal,apto:false,data:new Date().toISOString().slice(0,10),observacao:null})})
       if (!res.ok) { const e=await res.json(); flash("erro",e.error||"Erro ao salvar nota"); return }
       setFormSigla(null)
       setForm({avaliacao:"",nota:"",ehAF:false})
@@ -438,7 +442,7 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
                       {formSigla===d.sigla?(
                         <div style={{background:"#fff",borderRadius:8,padding:"12px",border:`1.5px solid ${AM}`,display:"flex",flexWrap:"wrap",gap:10,alignItems:"flex-end"}}>
                           <div><label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Avaliação *</label>
-                            <input value={form.avaliacao} onChange={e=>setForm(f=>({...f,avaliacao:e.target.value}))} placeholder={podeP2?"P1,P2,AF…":"P1,AF…"} style={{border:"1px solid #dde3ee",borderRadius:6,padding:"5px 8px",fontSize:13,width:70}} autoFocus/></div>
+                            <input value={form.avaliacao} onChange={e=>setForm(f=>({...f,avaliacao:e.target.value,ehAF:f.ehAF||e.target.value.trim().toUpperCase()==="AF"}))} placeholder={podeP2?"P1,P2,AF…":"P1,AF…"} style={{border:"1px solid #dde3ee",borderRadius:6,padding:"5px 8px",fontSize:13,width:70}} autoFocus/></div>
                           <div><label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Nota (0–10)</label>
                             <input type="number" min={0} max={10} step={0.1} value={form.nota} onChange={e=>setForm(f=>({...f,nota:e.target.value}))} style={{border:"1px solid #dde3ee",borderRadius:6,padding:"5px 8px",fontSize:13,width:65}}/></div>
                           <label style={{fontSize:12,display:"flex",alignItems:"center",gap:4,cursor:"pointer",paddingBottom:2}}>
@@ -495,7 +499,8 @@ function AbaMinhasNotas({disciplinas,minhasNotas:inicial,minhaNFDC:nfdcInicial,u
                       <div style={{background:"#fff",borderRadius:8,padding:"14px",border:`1.5px solid ${AM}`,display:"flex",flexWrap:"wrap",gap:10,alignItems:"flex-end"}}>
                         <div>
                           <label style={{fontSize:11,color:"#6b7a99",display:"block",marginBottom:2}}>Avaliação *</label>
-                          <input value={form.avaliacao} onChange={e=>setForm(f=>({...f,avaliacao:e.target.value}))}
+                          <input value={form.avaliacao}
+                            onChange={e=>setForm(f=>({...f,avaliacao:e.target.value,ehAF:f.ehAF||e.target.value.trim().toUpperCase()==="AF"}))}
                             placeholder={podeP2?"P1, P2, AF…":"P1, AF…"}
                             style={{border:"1px solid #dde3ee",borderRadius:6,padding:"7px 10px",fontSize:14,width:80}}
                             autoFocus />
@@ -537,13 +542,27 @@ function AbaSimular({disciplinas,minhasNotas,minhaNFDC,ranking,totalAlunos}:{dis
     for (const n of minhasNotas){
       if (n.disciplina==="TCC") continue
       if (!m[n.disciplina])m[n.disciplina]={}
-      m[n.disciplina][n.avaliacao]=n.apto?"apto":String(n.nota)
+      m[n.disciplina][n.avaliacao]=String(n.nota)
     }
     return m
   })
   const notaTCC = minhasNotas.find(n=>n.disciplina==="TCC"||n.avaliacao==="TCC")
   const [simTCC,setSimTCC] = useState(notaTCC?String(notaTCC.nota):"")
   const [simNFDC,setSimNFDC] = useState(String(minhaNFDC))
+
+  // Re-sincroniza com notas reais sempre que o servidor entrega dados novos (após router.refresh)
+  useEffect(()=>{
+    const m:Record<string,Record<string,string>>={}
+    for (const n of minhasNotas){
+      if (n.disciplina==="TCC") continue
+      if (!m[n.disciplina])m[n.disciplina]={}
+      m[n.disciplina][n.avaliacao]=String(n.nota)
+    }
+    setSim(m)
+    const tcc=minhasNotas.find(n=>n.disciplina==="TCC"||n.avaliacao==="TCC")
+    setSimTCC(tcc?String(tcc.nota):"")
+    setSimNFDC(String(minhaNFDC))
+  },[minhasNotas,minhaNFDC])
 
   const {mfic,nfdc:nfdcSim,tcc,mgc} = useMemo<{mfic:number|null;nfdc:number;tcc:number|null;mgc:number|null}>(()=>{
     const notasSim:Parameters<typeof calcularComponentes>[0]=[]
@@ -698,9 +717,10 @@ export function RankingClient({ranking,minhaEntrada,meusComponentes,minhaNFDC,is
           <button key={a.id} onClick={()=>setAba(a.id)} style={{background:"none",border:"none",cursor:"pointer",padding:"8px 18px",fontSize:14,fontWeight:aba===a.id?700:400,color:aba===a.id?AZ:"#9aa3b8",borderBottom:aba===a.id?`2px solid ${DOU}`:"2px solid transparent",marginBottom:-2,transition:"all 0.15s"}}>{a.label}</button>
         ))}
       </div>
-      {aba==="ranking" && <AbaMeuRanking ranking={ranking} minhaEntrada={minhaEntrada} meusComponentes={meusComponentes} isAdmin={isAdmin} totalAlunos={totalAlunos}/>}
-      {aba==="notas"   && <AbaMinhasNotas disciplinas={disciplinas} minhasNotas={minhasNotas} minhaNFDC={minhaNFDC} userId={userId}/>}
-      {aba==="simular" && <AbaSimular disciplinas={disciplinas} minhasNotas={minhasNotas} minhaNFDC={minhaNFDC} ranking={ranking} totalAlunos={totalAlunos}/>}
+      {/* Todas as abas ficam montadas — display:none preserva estado (ex: Simular) */}
+      <div style={{display:aba==="ranking"?undefined:"none"}}><AbaMeuRanking ranking={ranking} minhaEntrada={minhaEntrada} meusComponentes={meusComponentes} isAdmin={isAdmin} totalAlunos={totalAlunos}/></div>
+      <div style={{display:aba==="notas"?undefined:"none"}}><AbaMinhasNotas disciplinas={disciplinas} minhasNotas={minhasNotas} minhaNFDC={minhaNFDC} userId={userId}/></div>
+      <div style={{display:aba==="simular"?undefined:"none"}}><AbaSimular disciplinas={disciplinas} minhasNotas={minhasNotas} minhaNFDC={minhaNFDC} ranking={ranking} totalAlunos={totalAlunos}/></div>
     </div>
   )
 }
