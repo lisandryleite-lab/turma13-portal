@@ -1,0 +1,73 @@
+import { NextRequest, NextResponse } from "next/server"
+import { createHash } from "crypto"
+import { auth } from "@/lib/auth"
+import { prisma } from "@/lib/prisma"
+
+// Importação em lote de questões (Admin). Idempotente: upsert por hash
+// = sha1(materia|modulo|enunciado). Re-importar atualiza, não duplica.
+// Preserva as respostas dos alunos (não deleta questões existentes).
+
+type QIn = {
+  tipo?: string
+  enunciado?: string
+  alternativas?: { id: string; texto: string }[]
+  gabarito?: string
+  explicacao?: string
+  fonte?: string
+}
+
+export async function POST(req: NextRequest) {
+  const session = await auth()
+  if (!session?.user?.isAdmin)
+    return NextResponse.json({ error: "Apenas administradores." }, { status: 403 })
+
+  let body: any
+  try {
+    body = await req.json()
+  } catch {
+    return NextResponse.json({ error: "JSON inválido." }, { status: 400 })
+  }
+
+  const materia = String(body.materia || "").trim().toUpperCase()
+  const modulo = body.modulo != null ? String(body.modulo).trim() : ""
+  const questoes: QIn[] = Array.isArray(body.questoes) ? body.questoes : []
+
+  if (!materia) return NextResponse.json({ error: "Informe a matéria (sigla)." }, { status: 400 })
+  if (questoes.length === 0) return NextResponse.json({ error: "Nenhuma questão no pacote." }, { status: 400 })
+
+  // Valida que a matéria existe (entre as 52 disciplinas)
+  const disc = await prisma.disciplina.findUnique({ where: { sigla: materia } })
+  if (!disc) return NextResponse.json({ error: `Matéria "${materia}" não existe nas disciplinas.` }, { status: 400 })
+
+  let criadas = 0, atualizadas = 0
+  const erros: string[] = []
+
+  for (const [i, q] of questoes.entries()) {
+    const tipo = q.tipo === "certo_errado" ? "certo_errado" : "multipla"
+    const enunciado = String(q.enunciado || "").trim()
+    const gabarito = String(q.gabarito || "").trim()
+    if (!enunciado || !gabarito) { erros.push(`Questão ${i + 1}: enunciado/gabarito ausente.`); continue }
+
+    const alternativas = tipo === "multipla" ? (q.alternativas || []) : []
+    if (tipo === "multipla" && alternativas.length < 2) { erros.push(`Questão ${i + 1}: múltipla escolha precisa de ≥2 alternativas.`); continue }
+
+    const hash = createHash("sha1").update(`${materia}|${modulo}|${enunciado}`).digest("hex")
+    const dados = {
+      materia, modulo, tipo, enunciado,
+      alternativas: alternativas as any,
+      gabarito,
+      explicacao: q.explicacao?.trim() || null,
+      fonte: q.fonte?.trim() || null,
+    }
+    try {
+      const existe = await prisma.questao.findUnique({ where: { hash } })
+      await prisma.questao.upsert({ where: { hash }, update: dados, create: { ...dados, hash } })
+      existe ? atualizadas++ : criadas++
+    } catch (e: any) {
+      erros.push(`Questão ${i + 1}: ${e?.message || e}`)
+    }
+  }
+
+  const total = await prisma.questao.count({ where: { materia } })
+  return NextResponse.json({ materia, modulo, criadas, atualizadas, totalMateria: total, erros })
+}

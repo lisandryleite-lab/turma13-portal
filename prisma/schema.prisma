@@ -34,6 +34,7 @@ model User {
   notasCfo         NotaCFO[]
   notasCfoAlteradas HistoricoNotaCFO[] @relation("CfoAlteradoPor")
   preferenciaOpm   PreferenciaOPM?
+  respostas        Resposta[]
   escalasAluno     EscalaAluno[]
   missoesConcluidas MissaoConcluida[]
   nfdc              Float   @default(10)
@@ -341,4 +342,38 @@ model PreferenciaOPM {
   opcao1 OPM  @relation("Opcao1", fields: [opcao1Id], references: [id])
   opcao2 OPM? @relation("Opcao2", fields: [opcao2Id], references: [id])
   opcao3 OPM? @relation("Opcao3", fields: [opcao3Id], references: [id])
+}
+
+// ── CFO 2026 — Questões (banco de questões por matéria) ──────────────
+model Questao {
+  id           String   @id @default(cuid())
+  materia      String   // sigla da Disciplina (ex.: LPMO)
+  modulo       String   @default("")
+  tipo         String   @default("multipla") // multipla | certo_errado
+  enunciado    String
+  alternativas Json     // multipla: [{id:"A",texto:"..."}]; certo_errado: []
+  gabarito     String   // "A".."E" ou "certo"/"errado"
+  explicacao   String?
+  fonte        String?
+  hash         String   @unique // sha1(materia|modulo|enunciado) — import idempotente
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  respostas    Resposta[]
+  @@index([materia])
+}
+
+model Resposta {
+  id        String   @id @default(cuid())
+  userId    String
+  questaoId String
+  resposta  String   // o que o aluno marcou
+  acertou   Boolean
+  modo      String   @default("resolver") // resolver | simulado
+  data      DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questao Questao @relation(fields: [questaoId], references: [id], onDelete: Cascade)
+  @@index([userId])
+  @@index([questaoId])
 }
