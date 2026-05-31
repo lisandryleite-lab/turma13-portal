@@ -28,7 +28,7 @@ export default function LoginPage() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(180deg, var(--azul-profundo) 0%, #0F3D78 45%, var(--creme) 45%)",
+      background: "linear-gradient(180deg, var(--olive) 0%, #2f3d2f 45%, var(--canvas) 45%)",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -44,7 +44,7 @@ export default function LoginPage() {
           fontSize: 11,
           letterSpacing: "0.28em",
           textTransform: "uppercase",
-          color: "var(--dourado-claro)",
+          color: "var(--gold)",
           marginBottom: 10,
         }}>
           PMPE · APMP · Paudalho
@@ -58,7 +58,7 @@ export default function LoginPage() {
           letterSpacing: "-0.01em",
           margin: "0 0 6px",
         }}>
-          Portal <em style={{ fontStyle: "italic", color: "var(--dourado-claro)" }}>Turma 13</em>
+          Portal <em style={{ fontStyle: "italic", color: "var(--gold)" }}>CFO 2026</em>
         </h1>
         <p style={{
           fontFamily: "var(--sans)",
@@ -66,14 +66,14 @@ export default function LoginPage() {
           color: "rgba(255,255,255,0.65)",
           letterSpacing: "0.08em",
         }}>
-          CFO 2026 · 1º Pelotão · 2ª CIA
+          (isso é coisa nossa)
         </p>
 
         {/* linha decorativa dourada */}
         <div style={{
           width: 48,
           height: 1,
-          background: "linear-gradient(90deg, transparent, var(--dourado-claro), transparent)",
+          background: "linear-gradient(90deg, transparent, var(--gold), transparent)",
           margin: "14px auto 0",
           opacity: 0.6,
         }} />
@@ -94,7 +94,7 @@ export default function LoginPage() {
           fontFamily: "var(--serif)",
           fontWeight: 600,
           fontSize: 18,
-          color: "var(--azul-profundo)",
+          color: "var(--olive)",
           marginBottom: 4,
         }}>
           Acesse sua conta
@@ -144,7 +144,7 @@ export default function LoginPage() {
                 background: "var(--creme)",
                 transition: "border-color 0.15s",
               }}
-              onFocus={e => e.currentTarget.style.borderColor = "var(--azul-medio)"}
+              onFocus={e => e.currentTarget.style.borderColor = "var(--olive)"}
               onBlur={e => e.currentTarget.style.borderColor = "var(--cinza-borda)"}
             />
           </div>
@@ -171,7 +171,7 @@ export default function LoginPage() {
                 background: "var(--creme)",
                 transition: "border-color 0.15s",
               }}
-              onFocus={e => e.currentTarget.style.borderColor = "var(--azul-medio)"}
+              onFocus={e => e.currentTarget.style.borderColor = "var(--olive)"}
               onBlur={e => e.currentTarget.style.borderColor = "var(--cinza-borda)"}
             />
           </div>
@@ -181,7 +181,7 @@ export default function LoginPage() {
             disabled={loading}
             style={{
               width: "100%",
-              background: loading ? "#93a3b8" : "linear-gradient(135deg, var(--azul-profundo), var(--azul-medio))",
+              background: loading ? "#9a9a8e" : "linear-gradient(135deg, var(--olive), var(--gold))",
               color: "#fff",
               border: "none",
               borderRadius: 8,

@@ -50,12 +50,11 @@ const cards: {
     href: "/psicologia",
     bg: "olive",
     icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-        <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-        <path d="M10 9H8" />
-        <path d="M16 13H8" />
-        <path d="M16 17H8" />
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
+        <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" />
+        <path d="M12 6v12" />
+        <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" />
       </svg>
     ),
   },
@@ -144,7 +143,7 @@ export default function PortalCfoHome() {
             marginTop: 8,
           }}
         >
-          isso é coisa nossa
+          (isso é coisa nossa)
         </p>
       </header>
 
@@ -160,21 +159,9 @@ export default function PortalCfoHome() {
           alignContent: "start",
         }}
       >
-        <CardTile card={cards[0]} />
-        <CardTile card={cards[1]} />
-        <CardTile card={cards[2]} />
-        <CardTile card={cards[3]} />
-        {/* 6º espaço — placeholder pontilhado (reservado) */}
-        <div
-          aria-hidden
-          style={{
-            width: 96,
-            height: 96,
-            borderRadius: 24,
-            border: "2px dashed rgba(43, 42, 39, 0.20)",
-          }}
-        />
-        <CardTile card={cards[4]} />
+        {cards.map(card => (
+          <CardTile key={card.href} card={card} />
+        ))}
       </div>
 
       <footer
