@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { auth } from "@/lib/auth"
+import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { ViewToggle } from "../view-toggle"
 
@@ -75,6 +76,21 @@ const cards: {
   },
 ]
 
+// Card extra "Modificar senha" — só para alunos que NÃO são da Turma 13
+// (eles não entram no portal T13, onde fica a troca de senha).
+const cardSenha: (typeof cards)[number] = {
+  label: "Modificar senha",
+  href: "/trocar-senha",
+  bg: "olive",
+  icon: (
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+      <circle cx="12" cy="16" r="1" />
+    </svg>
+  ),
+}
+
 function CardTile({ card }: { card: (typeof cards)[number] }) {
   const isGold = card.bg === "gold"
   const wrapStyle: React.CSSProperties = {
@@ -133,6 +149,12 @@ export default async function PortalCfoHome() {
   const isAdmin = !!session?.user?.isAdmin
   const admView = await adminAtivo(isAdmin)
 
+  // Alunos fora da Turma 13 ganham um 6º card "Modificar senha"
+  const eu = session?.user?.id
+    ? await prisma.user.findUnique({ where: { id: session.user.id }, select: { turma13: true } })
+    : null
+  const cardsToShow = eu?.turma13 ? cards : [...cards, cardSenha]
+
   return (
     <main
       style={{
@@ -179,7 +201,7 @@ export default async function PortalCfoHome() {
           alignContent: "start",
         }}
       >
-        {cards.map(card => (
+        {cardsToShow.map(card => (
           <CardTile key={card.href} card={card} />
         ))}
       </div>
