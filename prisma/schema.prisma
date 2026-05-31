@@ -275,9 +275,11 @@ model FaxinaRef {
 model NotaCFO {
   id            String   @id @default(cuid())
   userId        String
-  materia       String
-  modulo        String   @default("") // "" = sem módulo (evita NULL em unique composto)
+  disciplina    String   // sigla da Disciplina (ex.: LPMO, TCC)
+  avaliacao     String   @default("P1") // P1, P2, AF, TCC...
   valor         Float
+  ehAF          Boolean  @default(false) // Avaliação Final (entra no cálculo de MDR)
+  apto          Boolean  @default(false) // disciplina de conceito APTO/INAPTO (fora da MFIC)
   autodeclarada Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -285,7 +287,7 @@ model NotaCFO {
   user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   historico HistoricoNotaCFO[]
 
-  @@unique([userId, materia, modulo])
+  @@unique([userId, disciplina, avaliacao])
 }
 
 model HistoricoNotaCFO {
@@ -295,8 +297,8 @@ model HistoricoNotaCFO {
   tipo          String   // criacao | edicao | exclusao
   valorAnterior String?
   valorNovo     String?
-  materia       String
-  modulo        String?
+  disciplina    String
+  avaliacao     String?
   createdAt     DateTime @default(now())
 
   notaCfo     NotaCFO @relation(fields: [notaCfoId], references: [id], onDelete: Cascade)
