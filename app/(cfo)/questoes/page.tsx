@@ -9,8 +9,8 @@ export default async function QuestoesPage() {
   if (!session?.user) redirect("/login")
   const userId = session.user.id!
 
-  const [porMateria, disciplinas, respostas] = await Promise.all([
-    prisma.questao.groupBy({ by: ["materia"], _count: { materia: true } }),
+  const [combos, disciplinas, respostas] = await Promise.all([
+    prisma.questao.groupBy({ by: ["materia", "modulo"], _count: { _all: true } }),
     prisma.disciplina.findMany({ select: { sigla: true, nome: true }, orderBy: { sigla: "asc" } }),
     prisma.resposta.findMany({
       where: { userId },
@@ -19,8 +19,16 @@ export default async function QuestoesPage() {
   ])
 
   const nomeMap = new Map(disciplinas.map(d => [d.sigla, d.nome]))
-  const materias = porMateria
-    .map(m => ({ sigla: m.materia, nome: nomeMap.get(m.materia) || m.materia, total: m._count.materia }))
+  // agrega total + módulos por matéria
+  const matMap = new Map<string, { total: number; modulos: Set<string> }>()
+  for (const c of combos) {
+    const e = matMap.get(c.materia) || { total: 0, modulos: new Set<string>() }
+    e.total += c._count._all
+    e.modulos.add(c.modulo)
+    matMap.set(c.materia, e)
+  }
+  const materias = [...matMap.entries()]
+    .map(([sigla, e]) => ({ sigla, nome: nomeMap.get(sigla) || sigla, total: e.total, modulos: [...e.modulos].sort() }))
     .sort((a, b) => a.sigla.localeCompare(b.sigla))
 
   const statMap = new Map<string, { acertos: number; total: number }>()

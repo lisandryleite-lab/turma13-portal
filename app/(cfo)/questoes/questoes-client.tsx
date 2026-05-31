@@ -4,7 +4,16 @@ import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
-type Materia = { sigla: string; nome: string; total: number }
+type Materia = { sigla: string; nome: string; total: number; modulos: string[] }
+
+const TIPOS: [string, string][] = [["", "Todos os tipos"], ["certo_errado", "Certo/Errado"], ["multipla", "Múltipla escolha"], ["dissertativa", "Dissertativa"]]
+const moduloLabel = (m: string) => (m === "" ? "Sem módulo" : `Módulo ${m}`)
+function buildQuery(materia: string, modulo: string, tipo: string, extra = "") {
+  let q = `materia=${encodeURIComponent(materia)}${extra}`
+  if (modulo !== "__all__") q += `&modulo=${encodeURIComponent(modulo)}`
+  if (tipo) q += `&tipo=${encodeURIComponent(tipo)}`
+  return q
+}
 type Disc = { sigla: string; nome: string }
 type Stat = { sigla: string; nome: string; acertos: number; total: number }
 type Alt = { id: string; texto: string }
@@ -74,7 +83,7 @@ export function QuestoesClient({
       {aba === "resolver" && <Resolver materias={materias} />}
       {aba === "simulado" && <Simulado materias={materias} />}
       {aba === "acerto" && <Acerto stats={stats} totalResp={totalResp} totalAcertos={totalAcertos} />}
-      {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} onImport={() => router.refresh()} />}
+      {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} materias={materias} onImport={() => router.refresh()} />}
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>
         Desenvolvido por AL CFO PM 108 LISANDRY
@@ -112,6 +121,8 @@ function Opcoes({ q, escolhida, gabarito, onPick }: { q: Questao; escolhida: str
 // ── Resolver ──
 function Resolver({ materias }: { materias: Materia[] }) {
   const [materia, setMateria] = useState("")
+  const [modulo, setModulo] = useState("__all__")
+  const [tipo, setTipo] = useState("")
   const [qs, setQs] = useState<Questao[] | null>(null)
   const [i, setI] = useState(0)
   const [escolhida, setEscolhida] = useState<string | null>(null)
@@ -121,9 +132,10 @@ function Resolver({ materias }: { materias: Materia[] }) {
   const [disTexto, setDisTexto] = useState("")
   const [disRevelado, setDisRevelado] = useState(false)
 
+  const mAtual = materias.find(m => m.sigla === materia)
   async function iniciar() {
     if (!materia) return
-    const res = await fetch(`/api/questoes?materia=${materia}&shuffle=1`)
+    const res = await fetch(`/api/questoes?${buildQuery(materia, modulo, tipo, "&shuffle=1")}`)
     const data = await res.json()
     setQs(data); setI(0); setEscolhida(null); setFeedback(null); setAcertos(0); setFeitas(0); setDisTexto(""); setDisRevelado(false)
   }
@@ -140,12 +152,27 @@ function Resolver({ materias }: { materias: Materia[] }) {
     return (
       <div style={card}>
         <label style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
-          Escolha a matéria
-          <select style={{ ...inputStyle, marginTop: 6 }} value={materia} onChange={e => setMateria(e.target.value)}>
+          Matéria
+          <select style={{ ...inputStyle, marginTop: 6 }} value={materia} onChange={e => { setMateria(e.target.value); setModulo("__all__") }}>
             <option value="">— selecione —</option>
             {materias.map(m => <option key={m.sigla} value={m.sigla}>{m.sigla} — {m.nome} ({m.total})</option>)}
           </select>
         </label>
+        {mAtual && (
+          <div style={{ display: "flex", gap: 12, marginTop: 12 }}>
+            <label style={{ flex: 1, fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>Módulo
+              <select style={{ ...inputStyle, marginTop: 6 }} value={modulo} onChange={e => setModulo(e.target.value)}>
+                <option value="__all__">Todos os módulos</option>
+                {mAtual.modulos.map(md => <option key={md} value={md}>{moduloLabel(md)}</option>)}
+              </select>
+            </label>
+            <label style={{ flex: 1, fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>Tipo
+              <select style={{ ...inputStyle, marginTop: 6 }} value={tipo} onChange={e => setTipo(e.target.value)}>
+                {TIPOS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+              </select>
+            </label>
+          </div>
+        )}
         {materias.length === 0 && <p style={{ color: "var(--ink-60)", marginTop: 10, fontSize: 13.5 }}>Ainda não há questões cadastradas.</p>}
         <button onClick={iniciar} disabled={!materia} style={{ marginTop: 14, padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: materia ? "pointer" : "default" }}>
           Começar
@@ -224,6 +251,7 @@ function Resolver({ materias }: { materias: Materia[] }) {
 // ── Simulado ──
 function Simulado({ materias }: { materias: Materia[] }) {
   const [materia, setMateria] = useState("")
+  const [modulo, setModulo] = useState("__all__")
   const [qtd, setQtd] = useState("10")
   const [min, setMin] = useState("15")
   const [qs, setQs] = useState<Questao[] | null>(null)
@@ -260,9 +288,10 @@ function Simulado({ materias }: { materias: Materia[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restante])
 
+  const mAtual = materias.find(m => m.sigla === materia)
   async function iniciar() {
     if (!materia) return
-    const res = await fetch(`/api/questoes?materia=${materia}&shuffle=1`)
+    const res = await fetch(`/api/questoes?${buildQuery(materia, modulo, "", "&shuffle=1")}`)
     const todas: Questao[] = await res.json()
     const data = todas.filter(q => q.tipo !== "dissertativa").slice(0, Number(qtd) || 10)
     setQs(data); setI(0); setRespostas({}); setResultado(null); setRestante((Number(min) || 15) * 60)
@@ -272,11 +301,20 @@ function Simulado({ materias }: { materias: Materia[] }) {
     return (
       <div style={card}>
         <label style={{ fontSize: 13, fontWeight: 600 }}>Matéria
-          <select style={{ ...inputStyle, marginTop: 6 }} value={materia} onChange={e => setMateria(e.target.value)}>
+          <select style={{ ...inputStyle, marginTop: 6 }} value={materia} onChange={e => { setMateria(e.target.value); setModulo("__all__") }}>
             <option value="">— selecione —</option>
             {materias.map(m => <option key={m.sigla} value={m.sigla}>{m.sigla} — {m.nome} ({m.total})</option>)}
           </select>
         </label>
+        {mAtual && (
+          <label style={{ display: "block", fontSize: 13, fontWeight: 600, marginTop: 12 }}>Módulo
+            <select style={{ ...inputStyle, marginTop: 6 }} value={modulo} onChange={e => setModulo(e.target.value)}>
+              <option value="__all__">Todos os módulos</option>
+              {mAtual.modulos.map(md => <option key={md} value={md}>{moduloLabel(md)}</option>)}
+            </select>
+          </label>
+        )}
+        <p style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 10 }}>O simulado usa apenas questões objetivas (Certo/Errado e Múltipla escolha).</p>
         <div style={{ display: "flex", gap: 12, marginTop: 12 }}>
           <label style={{ fontSize: 13, fontWeight: 600, flex: 1 }}>Nº de questões
             <input style={{ ...inputStyle, marginTop: 6 }} value={qtd} onChange={e => setQtd(e.target.value)} inputMode="numeric" />
@@ -364,11 +402,32 @@ function Acerto({ stats, totalResp, totalAcertos }: { stats: Stat[]; totalResp: 
   )
 }
 
-// ── Admin: importar pacote JSON ──
-function Admin({ disciplinas, onImport }: { disciplinas: Disc[]; onImport: () => void }) {
+// ── Admin: importar pacote JSON + limpar matéria ──
+function Admin({ disciplinas, materias, onImport }: { disciplinas: Disc[]; materias: Materia[]; onImport: () => void }) {
   const [json, setJson] = useState("")
   const [msg, setMsg] = useState("")
   const [enviando, setEnviando] = useState(false)
+  // limpar
+  const [limparMat, setLimparMat] = useState("")
+  const [limparMod, setLimparMod] = useState("__all__")
+  const [limpando, setLimpando] = useState(false)
+  const [limparMsg, setLimparMsg] = useState("")
+  const mLimpar = materias.find(m => m.sigla === limparMat)
+
+  async function limpar() {
+    if (!limparMat) return
+    const escopo = limparMod === "__all__" ? "TODAS as questões" : `as questões do ${moduloLabel(limparMod)}`
+    if (!confirm(`Excluir ${escopo} de ${limparMat}? Isso também apaga as respostas dos alunos e não pode ser desfeito.`)) return
+    setLimpando(true); setLimparMsg("")
+    let url = `/api/questoes/import?materia=${encodeURIComponent(limparMat)}`
+    if (limparMod !== "__all__") url += `&modulo=${encodeURIComponent(limparMod)}`
+    const res = await fetch(url, { method: "DELETE" })
+    const j = await res.json()
+    setLimpando(false)
+    if (!res.ok) return setLimparMsg("✗ " + (j.error || "Erro"))
+    setLimparMsg(`✓ ${j.removidas} questões removidas.`)
+    setLimparMat(""); setLimparMod("__all__"); onImport()
+  }
 
   async function importar() {
     setEnviando(true); setMsg("")
@@ -407,6 +466,32 @@ function Admin({ disciplinas, onImport }: { disciplinas: Disc[]; onImport: () =>
         {enviando ? "Importando…" : "Importar questões"}
       </button>
       {msg && <p style={{ marginTop: 10, fontSize: 13.5, color: msg.startsWith("✓") ? "var(--olive)" : "var(--red)", lineHeight: 1.5 }}>{msg}</p>}
+
+      {/* Limpar matéria */}
+      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--red)", marginTop: 32, marginBottom: 8 }}>Limpar matéria</h2>
+      <p style={{ fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.5, marginTop: 0 }}>
+        Remove as questões (e as respostas dos alunos) de uma matéria — útil para recadastrar do zero. Ação irreversível.
+      </p>
+      {materias.length === 0 ? <p style={{ color: "var(--ink-60)", fontSize: 13.5 }}>Nenhuma matéria com questões.</p> : (
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "end" }}>
+          <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 180px" }}>Matéria
+            <select style={{ ...inputStyle, marginTop: 6 }} value={limparMat} onChange={e => { setLimparMat(e.target.value); setLimparMod("__all__") }}>
+              <option value="">— selecione —</option>
+              {materias.map(m => <option key={m.sigla} value={m.sigla}>{m.sigla} ({m.total})</option>)}
+            </select>
+          </label>
+          <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 160px" }}>Módulo
+            <select style={{ ...inputStyle, marginTop: 6 }} value={limparMod} onChange={e => setLimparMod(e.target.value)} disabled={!mLimpar}>
+              <option value="__all__">Todos</option>
+              {mLimpar?.modulos.map(md => <option key={md} value={md}>{moduloLabel(md)}</option>)}
+            </select>
+          </label>
+          <button onClick={limpar} disabled={!limparMat || limpando} style={{ padding: "10px 16px", borderRadius: 8, border: "1px solid var(--red)", background: "#fff", color: "var(--red)", fontWeight: 600, cursor: !limparMat || limpando ? "default" : "pointer", opacity: !limparMat ? 0.5 : 1 }}>
+            {limpando ? "Removendo…" : "Excluir"}
+          </button>
+        </div>
+      )}
+      {limparMsg && <p style={{ marginTop: 10, fontSize: 13.5, color: limparMsg.startsWith("✓") ? "var(--olive)" : "var(--red)" }}>{limparMsg}</p>}
     </div>
   )
 }

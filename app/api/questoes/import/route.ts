@@ -80,3 +80,20 @@ export async function POST(req: NextRequest) {
   await logAcesso(session.user as any, "questoes/import", `${materia}${modulo ? "/" + modulo : ""}: +${criadas} novas, ${atualizadas} atualizadas`)
   return NextResponse.json({ materia, modulo, criadas, atualizadas, totalMateria: total, erros })
 }
+
+// Limpar questões de uma matéria (e opcionalmente de um módulo). Admin.
+export async function DELETE(req: NextRequest) {
+  const session = await auth()
+  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Apenas administradores." }, { status: 403 })
+
+  const sp = req.nextUrl.searchParams
+  const materia = (sp.get("materia") || "").toUpperCase()
+  if (!materia) return NextResponse.json({ error: "Informe a matéria." }, { status: 400 })
+
+  const where: { materia: string; modulo?: string } = { materia }
+  if (sp.has("modulo")) where.modulo = sp.get("modulo") || ""
+
+  const r = await prisma.questao.deleteMany({ where }) // respostas em cascata
+  await logAcesso(session.user as any, "questoes/limpar", `removeu ${r.count} questões de ${materia}${sp.has("modulo") ? "/" + (sp.get("modulo") || "(sem módulo)") : ""}`)
+  return NextResponse.json({ removidas: r.count })
+}
