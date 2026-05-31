@@ -3,7 +3,7 @@ import "./globals.css"
 import { SessionProvider } from "next-auth/react"
 
 export const metadata: Metadata = {
-  title: "CFO 2026",
+  title: "Portal CFO 2026",
   description: "Portal do CFO PMPE 2026 — Turma 3 · isso é coisa nossa",
 }
 

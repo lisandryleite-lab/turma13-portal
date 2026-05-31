@@ -47,3 +47,6 @@ next-env.d.ts
 
 # claude code
 .claude/
+
+# dados-fonte (PII — nunca commitar: planilhas/PDFs de alunos)
+/.dados-fonte/
