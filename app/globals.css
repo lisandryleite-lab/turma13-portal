@@ -223,3 +223,15 @@
 .memento-md .md-alert { background: #fbecec; border-color: var(--red); color: var(--ink); }
 .memento-md .md-mnem  { background: #f3eeff; border-color: #6b3fa0; color: #3a2a55; }
 .memento-md .md-chave { background: #fbf3e3; border-color: var(--gold); color: var(--ink); }
+
+/* Impressão de memento — esconde tudo, mostra só o conteúdo */
+@media print {
+  body * { visibility: hidden; }
+  .memento-print, .memento-print * { visibility: visible; }
+  .memento-print { position: absolute; left: 0; top: 0; width: 100%; padding: 0 8mm; }
+  .memento-print .memento-print-titulo {
+    display: block !important; font-family: var(--serif-cfo); color: #000;
+    font-size: 1.6rem; font-weight: 600; margin: 0 0 12px; border-bottom: 2px solid #000; padding-bottom: 6px;
+  }
+  .memento-md .md-table th { background: #000 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

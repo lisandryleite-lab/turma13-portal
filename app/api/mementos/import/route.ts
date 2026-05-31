@@ -54,3 +54,23 @@ export async function POST(req: NextRequest) {
   await logAcesso(session.user as any, "mementos/import", `${materia}${modulo ? "/" + modulo : ""}: ${mementoMsg || "sem memento"}; cards +${criadosCards}/${atualizadosCards}`)
   return NextResponse.json({ materia, modulo, mementoMsg, criadosCards, atualizadosCards, erros })
 }
+
+// Remove mementos e flashcards de uma matéria (e opcionalmente de um módulo). Admin.
+export async function DELETE(req: NextRequest) {
+  const session = await auth()
+  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Apenas administradores." }, { status: 403 })
+
+  const sp = req.nextUrl.searchParams
+  const materia = (sp.get("materia") || "").toUpperCase()
+  if (!materia) return NextResponse.json({ error: "Informe a matéria." }, { status: 400 })
+
+  const where: { materia: string; modulo?: string } = { materia }
+  if (sp.has("modulo")) where.modulo = sp.get("modulo") || ""
+
+  const [m, f] = await Promise.all([
+    prisma.memento.deleteMany({ where }),
+    prisma.flashcard.deleteMany({ where }),
+  ])
+  await logAcesso(session.user as any, "mementos/limpar", `removeu ${m.count} mementos e ${f.count} cards de ${materia}${sp.has("modulo") ? "/" + (sp.get("modulo") || "(sem módulo)") : ""}`)
+  return NextResponse.json({ mementos: m.count, flashcards: f.count })
+}

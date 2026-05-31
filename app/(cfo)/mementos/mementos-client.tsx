@@ -6,10 +6,13 @@ import { useRouter } from "next/navigation"
 import { renderMarkdown } from "@/lib/markdown"
 
 type MementoMeta = { id: string; materia: string; modulo: string; titulo: string; nome: string }
-type Mat = { sigla: string; nome: string; total: number }
+type Mat = { sigla: string; nome: string; total: number; modulos: string[] }
 type Disc = { sigla: string; nome: string }
 type Card = { id: string; frente: string; verso: string; modulo: string }
+type ContMat = { sigla: string; nome: string; modulos: string[] }
 type Aba = "mementos" | "flashcards" | "admin"
+
+const moduloLabel = (m: string) => (m === "" ? "Sem módulo" : `Módulo ${m}`)
 
 const cardBox: React.CSSProperties = { padding: 16, borderRadius: 12, background: "var(--surface)" }
 const inputStyle: React.CSSProperties = {
@@ -17,8 +20,8 @@ const inputStyle: React.CSSProperties = {
   border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15,
 }
 
-export function MementosClient({ mementos, flashMaterias, disciplinas, isAdmin }: {
-  mementos: MementoMeta[]; flashMaterias: Mat[]; disciplinas: Disc[]; isAdmin: boolean
+export function MementosClient({ mementos, flashMaterias, conteudoMaterias, disciplinas, isAdmin }: {
+  mementos: MementoMeta[]; flashMaterias: Mat[]; conteudoMaterias: ContMat[]; disciplinas: Disc[]; isAdmin: boolean
 }) {
   const router = useRouter()
   const [aba, setAba] = useState<Aba>("mementos")
@@ -43,7 +46,7 @@ export function MementosClient({ mementos, flashMaterias, disciplinas, isAdmin }
 
       {aba === "mementos" && <Mementos mementos={mementos} />}
       {aba === "flashcards" && <Flashcards materias={flashMaterias} />}
-      {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} onImport={() => router.refresh()} />}
+      {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} conteudoMaterias={conteudoMaterias} onImport={() => router.refresh()} />}
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>
         Desenvolvido por AL CFO PM 108 LISANDRY
@@ -69,10 +72,18 @@ function Mementos({ mementos }: { mementos: MementoMeta[] }) {
   if (aberto) {
     return (
       <div>
-        <button onClick={() => setAberto(null)} style={{ background: "none", border: "none", color: "var(--olive)", fontWeight: 600, cursor: "pointer", fontSize: 14, padding: 0 }}>
-          ← Lista de mementos
-        </button>
-        <div className="memento-md" style={{ marginTop: 16 }} dangerouslySetInnerHTML={{ __html: aberto.html }} />
+        <div className="memento-toolbar" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+          <button onClick={() => setAberto(null)} style={{ background: "none", border: "none", color: "var(--olive)", fontWeight: 600, cursor: "pointer", fontSize: 14, padding: 0 }}>
+            ← Lista de mementos
+          </button>
+          <button onClick={() => window.print()} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, cursor: "pointer" }}>
+            🖨 Imprimir
+          </button>
+        </div>
+        <div className="memento-md memento-print" style={{ marginTop: 16 }}>
+          <h1 className="memento-print-titulo" style={{ display: "none" }}>{aberto.titulo}</h1>
+          <div dangerouslySetInnerHTML={{ __html: aberto.html }} />
+        </div>
       </div>
     )
   }
@@ -105,10 +116,13 @@ function Mementos({ mementos }: { mementos: MementoMeta[] }) {
 // ── Flashcards (estudo com cronômetro) ──
 function Flashcards({ materias }: { materias: Mat[] }) {
   const [materia, setMateria] = useState("")
+  const [modulo, setModulo] = useState("__all__")
   const [cards, setCards] = useState<Card[] | null>(null)
   const [i, setI] = useState(0)
   const [virado, setVirado] = useState(false)
   const [seg, setSeg] = useState(0)
+
+  const mAtual = materias.find(m => m.sigla === materia)
 
   useEffect(() => {
     if (!cards) return
@@ -118,7 +132,9 @@ function Flashcards({ materias }: { materias: Mat[] }) {
 
   async function iniciar() {
     if (!materia) return
-    const res = await fetch(`/api/flashcards?materia=${materia}`)
+    let url = `/api/flashcards?materia=${encodeURIComponent(materia)}`
+    if (modulo !== "__all__") url += `&modulo=${encodeURIComponent(modulo)}`
+    const res = await fetch(url)
     const data: Card[] = await res.json()
     setCards(data.sort(() => Math.random() - 0.5)); setI(0); setVirado(false); setSeg(0)
   }
@@ -127,11 +143,19 @@ function Flashcards({ materias }: { materias: Mat[] }) {
     return (
       <div style={cardBox}>
         <label style={{ fontSize: 13, fontWeight: 600 }}>Escolha a matéria
-          <select style={{ ...inputStyle, marginTop: 6 }} value={materia} onChange={e => setMateria(e.target.value)}>
+          <select style={{ ...inputStyle, marginTop: 6 }} value={materia} onChange={e => { setMateria(e.target.value); setModulo("__all__") }}>
             <option value="">— selecione —</option>
             {materias.map(m => <option key={m.sigla} value={m.sigla}>{m.sigla} — {m.nome} ({m.total})</option>)}
           </select>
         </label>
+        {mAtual && (
+          <label style={{ display: "block", fontSize: 13, fontWeight: 600, marginTop: 12 }}>Módulo
+            <select style={{ ...inputStyle, marginTop: 6 }} value={modulo} onChange={e => setModulo(e.target.value)}>
+              <option value="__all__">Todos os módulos</option>
+              {mAtual.modulos.map(md => <option key={md} value={md}>{moduloLabel(md)}</option>)}
+            </select>
+          </label>
+        )}
         {materias.length === 0 && <p style={{ color: "var(--ink-60)", marginTop: 10, fontSize: 13.5 }}>Ainda não há flashcards cadastrados.</p>}
         <button onClick={iniciar} disabled={!materia} style={{ marginTop: 14, padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: materia ? "pointer" : "default" }}>
           Estudar
@@ -177,10 +201,31 @@ function Flashcards({ materias }: { materias: Mat[] }) {
 }
 
 // ── Admin: importar memento + flashcards ──
-function Admin({ disciplinas, onImport }: { disciplinas: Disc[]; onImport: () => void }) {
+function Admin({ disciplinas, conteudoMaterias, onImport }: { disciplinas: Disc[]; conteudoMaterias: ContMat[]; onImport: () => void }) {
   const [json, setJson] = useState("")
   const [msg, setMsg] = useState("")
   const [enviando, setEnviando] = useState(false)
+  // limpar
+  const [limparMat, setLimparMat] = useState("")
+  const [limparMod, setLimparMod] = useState("__all__")
+  const [limpando, setLimpando] = useState(false)
+  const [limparMsg, setLimparMsg] = useState("")
+  const mLimpar = conteudoMaterias.find(m => m.sigla === limparMat)
+
+  async function limpar() {
+    if (!limparMat) return
+    const escopo = limparMod === "__all__" ? "TODO o conteúdo (mementos e cards)" : `o conteúdo do ${moduloLabel(limparMod)}`
+    if (!confirm(`Excluir ${escopo} de ${limparMat}? Ação irreversível.`)) return
+    setLimpando(true); setLimparMsg("")
+    let url = `/api/mementos/import?materia=${encodeURIComponent(limparMat)}`
+    if (limparMod !== "__all__") url += `&modulo=${encodeURIComponent(limparMod)}`
+    const res = await fetch(url, { method: "DELETE" })
+    const j = await res.json()
+    setLimpando(false)
+    if (!res.ok) return setLimparMsg("✗ " + (j.error || "Erro"))
+    setLimparMsg(`✓ ${j.mementos} mementos e ${j.flashcards} cards removidos.`)
+    setLimparMat(""); setLimparMod("__all__"); onImport()
+  }
 
   async function importar() {
     setEnviando(true); setMsg("")
@@ -213,6 +258,32 @@ function Admin({ disciplinas, onImport }: { disciplinas: Disc[]; onImport: () =>
         {enviando ? "Importando…" : "Importar"}
       </button>
       {msg && <p style={{ marginTop: 10, fontSize: 13.5, color: msg.startsWith("✓") ? "var(--olive)" : "var(--red)", lineHeight: 1.5 }}>{msg}</p>}
+
+      {/* Limpar matéria */}
+      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--red)", marginTop: 32, marginBottom: 8 }}>Limpar matéria</h2>
+      <p style={{ fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.5, marginTop: 0 }}>
+        Remove os mementos e flashcards de uma matéria (ou de um módulo específico) — útil para recadastrar do zero. Ação irreversível.
+      </p>
+      {conteudoMaterias.length === 0 ? <p style={{ color: "var(--ink-60)", fontSize: 13.5 }}>Nenhuma matéria com conteúdo.</p> : (
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "end" }}>
+          <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 180px" }}>Matéria
+            <select style={{ ...inputStyle, marginTop: 6 }} value={limparMat} onChange={e => { setLimparMat(e.target.value); setLimparMod("__all__") }}>
+              <option value="">— selecione —</option>
+              {conteudoMaterias.map(m => <option key={m.sigla} value={m.sigla}>{m.sigla} — {m.nome}</option>)}
+            </select>
+          </label>
+          <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 160px" }}>Módulo
+            <select style={{ ...inputStyle, marginTop: 6 }} value={limparMod} onChange={e => setLimparMod(e.target.value)} disabled={!mLimpar}>
+              <option value="__all__">Todos</option>
+              {mLimpar?.modulos.map(md => <option key={md} value={md}>{moduloLabel(md)}</option>)}
+            </select>
+          </label>
+          <button onClick={limpar} disabled={!limparMat || limpando} style={{ padding: "10px 16px", borderRadius: 8, border: "1px solid var(--red)", background: "#fff", color: "var(--red)", fontWeight: 600, cursor: !limparMat || limpando ? "default" : "pointer", opacity: !limparMat ? 0.5 : 1 }}>
+            {limpando ? "Removendo…" : "Excluir"}
+          </button>
+        </div>
+      )}
+      {limparMsg && <p style={{ marginTop: 10, fontSize: 13.5, color: limparMsg.startsWith("✓") ? "var(--olive)" : "var(--red)" }}>{limparMsg}</p>}
     </div>
   )
 }
