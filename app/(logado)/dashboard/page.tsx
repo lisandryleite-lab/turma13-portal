@@ -178,7 +178,7 @@ export default async function DashboardPage() {
         {/* ── Links rápidos: Ranking / Escalas / Links Úteis ── */}
         <div style={{ gridColumn: "1/-1", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12 }}>
           {[
-            { href: "/ranking",  label: "Ranking",      emoji: "🏆", desc: "Sua posição no curso" },
+            { href: "/ranking-t13",  label: "Ranking",      emoji: "🏆", desc: "Sua posição no curso" },
             { href: "/escalas",  label: "Escalas",      emoji: "🔄", desc: "Serviço, faxina e plantão" },
             { href: "/links",    label: "Links Úteis",  emoji: "🔗", desc: "Recursos e sistemas" },
           ].map(l => (

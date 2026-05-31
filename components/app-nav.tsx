@@ -6,14 +6,14 @@ import { signOut } from "next-auth/react"
 import { cn } from "@/lib/utils"
 
 const NAV_ALUNO = [
-  { href: "/ranking",  label: "Ranking" },
+  { href: "/ranking-t13",  label: "Ranking" },
   { href: "/escalas",  label: "Escalas" },
   { href: "/avisos",   label: "Avisos" },
   { href: "/links",    label: "Links" },
 ]
 
 const NAV_ADMIN = [
-  { href: "/ranking",  label: "Ranking" },
+  { href: "/ranking-t13",  label: "Ranking" },
   { href: "/escalas",  label: "Escalas" },
   { href: "/avisos",   label: "Avisos" },
   { href: "/links",    label: "Links" },

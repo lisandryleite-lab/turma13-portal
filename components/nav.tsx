@@ -32,7 +32,7 @@ type LinkDef = { href: string; label: string; Icon: React.FC }
 
 const LINKS: LinkDef[] = [
   { href: "/dashboard",    label: "Início",       Icon: HomeIco   },
-  { href: "/ranking",      label: "Ranking",      Icon: TrophyIco },
+  { href: "/ranking-t13",  label: "Ranking T13",  Icon: TrophyIco },
   { href: "/qts",          label: "QTS",          Icon: GridIco   },
   { href: "/aulas",        label: "Aulas",        Icon: BookIco   },
   { href: "/comunicados",  label: "Comunicados",  Icon: BellIco   },

@@ -30,6 +30,8 @@ model User {
   accounts      Account[]
   notas         Nota[]
   notasAlteradas   HistoricoNota[]   @relation("AlteradoPor")
+  notasCfo         NotaCFO[]
+  notasCfoAlteradas HistoricoNotaCFO[] @relation("CfoAlteradoPor")
   escalasAluno     EscalaAluno[]
   missoesConcluidas MissaoConcluida[]
   nfdc              Float   @default(10)
@@ -262,4 +264,38 @@ model FaxinaRef {
   dataRef       DateTime @unique // dia útil conhecido
   grupoRef      String            // grupo que fez faxina nesse dia (G1..G8)
   createdAt     DateTime @default(now())
+}
+
+// ── CFO 2026 — Ranking (notas autodeclaradas) ──────────────────
+// Notas que o próprio aluno lança para simular sua posição.
+// NUNCA são oficiais — sempre tratar como simulação.
+model NotaCFO {
+  id            String   @id @default(cuid())
+  userId        String
+  materia       String
+  modulo        String   @default("") // "" = sem módulo (evita NULL em unique composto)
+  valor         Float
+  autodeclarada Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  historico HistoricoNotaCFO[]
+
+  @@unique([userId, materia, modulo])
+}
+
+model HistoricoNotaCFO {
+  id            String   @id @default(cuid())
+  notaCfoId     String
+  alteradoPorId String
+  tipo          String   // criacao | edicao | exclusao
+  valorAnterior String?
+  valorNovo     String?
+  materia       String
+  modulo        String?
+  createdAt     DateTime @default(now())
+
+  notaCfo     NotaCFO @relation(fields: [notaCfoId], references: [id], onDelete: Cascade)
+  alteradoPor User    @relation("CfoAlteradoPor", fields: [alteradoPorId], references: [id])
 }
