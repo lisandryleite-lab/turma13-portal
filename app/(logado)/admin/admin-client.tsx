@@ -484,7 +484,7 @@ function AbaGeral({ stats, missoes, avisos, xerifes, semanaAtual }: {
             { href: "/comunicados", label: "Comunicados" },
             { href: "/qts", label: "QTS" },
             { href: "/escalas", label: "Escalas" },
-            { href: "/ranking-t13", label: "Ranking" },
+            { href: "/ranking", label: "Ranking" },
           ].map(l => (
             <a key={l.href} href={l.href} style={{ background: AZ, color: "#fff", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>
               {l.label}

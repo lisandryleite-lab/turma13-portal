@@ -1,4 +1,7 @@
 import Link from "next/link"
+import { auth } from "@/lib/auth"
+import { adminAtivo } from "@/lib/view"
+import { ViewToggle } from "../view-toggle"
 
 type Tile = "olive" | "gold"
 
@@ -125,7 +128,11 @@ function CardTile({ card }: { card: (typeof cards)[number] }) {
   )
 }
 
-export default function PortalCfoHome() {
+export default async function PortalCfoHome() {
+  const session = await auth()
+  const isAdmin = !!session?.user?.isAdmin
+  const admView = await adminAtivo(isAdmin)
+
   return (
     <main
       style={{
@@ -136,6 +143,11 @@ export default function PortalCfoHome() {
         padding: "48px 24px 24px",
       }}
     >
+      {isAdmin && (
+        <div style={{ alignSelf: "flex-end", marginBottom: 8 }}>
+          <ViewToggle adminAtivo={admView} />
+        </div>
+      )}
       <header style={{ textAlign: "center", marginBottom: 48 }}>
         <h1
           style={{

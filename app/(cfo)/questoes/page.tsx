@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
+import { adminAtivo } from "@/lib/view"
 import { QuestoesClient } from "./questoes-client"
 
 export default async function QuestoesPage() {
@@ -38,7 +39,7 @@ export default async function QuestoesPage() {
     <QuestoesClient
       materias={materias}
       disciplinas={disciplinas}
-      isAdmin={session.user.isAdmin}
+      isAdmin={await adminAtivo(session.user.isAdmin)}
       stats={stats}
       totalResp={respostas.length}
       totalAcertos={respostas.filter(r => r.acertou).length}
