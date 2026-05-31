@@ -38,6 +38,7 @@ export default async function RankingPage() {
       notasIniciais={minhasNotas.map(n => ({ id: n.id, disciplina: n.disciplina, avaliacao: n.avaliacao, valor: n.valor, ehAF: n.ehAF, apto: n.apto }))}
       nfdc={eu?.nfdc ?? 10}
       disciplinas={disciplinas}
+      totalDisciplinas={disciplinas.length}
       turmaSize={turmaSize}
       mgcsOutros={mgcsOutros}
       nomeGuerra={session.user.nomeGuerra}

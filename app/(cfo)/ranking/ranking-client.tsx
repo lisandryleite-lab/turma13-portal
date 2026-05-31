@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { calcularComponentes, calcularProjecaoConsolidada, type Verificacao } from "@/lib/ranking"
+import { calcularComponentes, calcularProjecaoConsolidada, calcularPosicaoHistorica, BASE_T1, BASE_T2, type Verificacao } from "@/lib/ranking"
 
 type Nota = { id: string; disciplina: string; avaliacao: string; valor: number; ehAF: boolean; apto: boolean }
 type Disc = { sigla: string; nome: string; status: string }
@@ -21,11 +21,30 @@ const inputStyle: React.CSSProperties = {
 function toVerif(notas: Nota[]): Verificacao[] {
   return notas.map(n => ({ disciplina: n.disciplina, avaliacao: n.avaliacao, nota: n.valor, peso: 1, ehAF: n.ehAF, apto: n.apto }))
 }
+const mgcDe = (mfic: number | null, nfdc: number, tcc: number) =>
+  mfic == null ? null : Number(((mfic * 6.5 + nfdc * 2.5 + tcc * 1) / 10).toFixed(3))
+
+// MDs reais por disciplina (exclui TCC e conceito), aplicando regra de MDR
+function mdsReais(notas: Nota[]): number[] {
+  const g = new Map<string, Nota[]>()
+  for (const n of notas) { if (n.disciplina === "TCC") continue; if (!g.has(n.disciplina)) g.set(n.disciplina, []); g.get(n.disciplina)!.push(n) }
+  const out: number[] = []
+  for (const [, ns] of g) {
+    if (ns.some(n => n.apto)) continue
+    const reg = ns.filter(n => !n.ehAF && !n.apto)
+    if (reg.length === 0) continue
+    let m = reg.reduce((s, n) => s + n.valor, 0) / reg.length
+    const af = ns.find(n => n.ehAF)?.valor ?? null
+    if (m < 7 && m >= 4 && af != null) { const med = (m + af) / 2; m = med >= 7 ? 7 : med }
+    out.push(m)
+  }
+  return out
+}
 
 export function RankingClient({
-  notasIniciais, nfdc, disciplinas, turmaSize, mgcsOutros, nomeGuerra, opms, minhaPref, agregado1,
+  notasIniciais, nfdc, disciplinas, totalDisciplinas, turmaSize, mgcsOutros, nomeGuerra, opms, minhaPref, agregado1,
 }: {
-  notasIniciais: Nota[]; nfdc: number; disciplinas: Disc[]; turmaSize: number; mgcsOutros: number[]
+  notasIniciais: Nota[]; nfdc: number; disciplinas: Disc[]; totalDisciplinas: number; turmaSize: number; mgcsOutros: number[]
   nomeGuerra: string; opms: Opm[]; minhaPref: Pref | null; agregado1: Agregado[]
 }) {
   const router = useRouter()
@@ -41,6 +60,11 @@ export function RankingClient({
   const [erro, setErro] = useState("")
   const [salvando, setSalvando] = useState(false)
 
+  // NFDC e TCC (editáveis; default 10)
+  const tccReal = notas.find(n => n.disciplina === "TCC")?.valor ?? null
+  const [nfdcState, setNfdcState] = useState(nfdc)
+  const [tccState, setTccState] = useState<number>(tccReal ?? 10)
+
   // batalhões
   const [op1, setOp1] = useState(minhaPref?.opcao1Id || "")
   const [op2, setOp2] = useState(minhaPref?.opcao2Id || "")
@@ -49,14 +73,9 @@ export function RankingClient({
   const [prefMsg, setPrefMsg] = useState("")
   const op1Especial = !!op1 && !!opms.find(o => o.id === op1)?.especial
 
-  const comp = calcularComponentes(toVerif(notas), nfdc)
-
-  function projecao(mgc: number | null) {
-    if (mgc == null) return null
-    const t3Acima = mgcsOutros.filter(m => m > mgc).length
-    const t3ComDados = mgcsOutros.length + 1
-    return calcularProjecaoConsolidada(mgc, t3Acima, turmaSize, t3ComDados)
-  }
+  const comp = calcularComponentes(toVerif(notas), nfdcState)
+  const mfic = comp.mfic
+  const mgc = mgcDe(mfic, nfdcState, tccState)
 
   async function salvar(e: React.FormEvent) {
     e.preventDefault(); setErro("")
@@ -86,6 +105,19 @@ export function RankingClient({
     if (res.ok) { setNotas(prev => prev.filter(n => n.id !== id)); router.refresh() }
   }
 
+  async function salvarNfdc(v: number) {
+    await fetch("/api/nfdc", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ nfdc: v }) })
+    setNfdcState(v); router.refresh()
+  }
+  async function salvarTcc(v: number) {
+    const res = await fetch("/api/notas-cfo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ disciplina: "TCC", avaliacao: "TCC", valor: v }) })
+    if (res.ok) {
+      const nova: Nota = await res.json()
+      setNotas(prev => { const i = prev.findIndex(n => n.disciplina === "TCC"); if (i >= 0) { const c = [...prev]; c[i] = nova; return c } return [...prev, nova] })
+      setTccState(v); router.refresh()
+    }
+  }
+
   async function salvarPref() {
     if (!op1) return setPrefMsg("Escolha ao menos a 1ª opção.")
     setSalvandoPref(true); setPrefMsg("")
@@ -98,7 +130,6 @@ export function RankingClient({
     setPrefMsg("✓ Preferência salva."); router.refresh()
   }
 
-  // agrupa por disciplina p/ exibir MD
   const grupos = new Map<string, Nota[]>()
   for (const n of notas) { if (!grupos.has(n.disciplina)) grupos.set(n.disciplina, []); grupos.get(n.disciplina)!.push(n) }
   const nomeDisc = (s: string) => disciplinas.find(d => d.sigla === s)?.nome || s
@@ -159,10 +190,15 @@ export function RankingClient({
             {erro && <p style={{ gridColumn: "1 / -1", margin: 0, color: "var(--red)", fontSize: 13.5 }}>✗ {erro}</p>}
           </form>
 
+          {/* TCC e Nota Disciplinar */}
+          <div style={{ marginTop: 14 }}>
+            <NfdcTccEditor nfdc={nfdcState} tcc={tccState} tccDefinido={tccReal != null} onSaveNfdc={salvarNfdc} onSaveTcc={salvarTcc} />
+          </div>
+
           <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 24, marginBottom: 10 }}>Minhas notas</h2>
-          {notas.length === 0 ? <p style={{ color: "var(--ink-60)" }}>Nenhuma nota lançada ainda.</p> : (
+          {notas.filter(n => n.disciplina !== "TCC").length === 0 ? <p style={{ color: "var(--ink-60)" }}>Nenhuma nota de disciplina lançada ainda.</p> : (
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {[...grupos.entries()].map(([d, ns]) => {
+              {[...grupos.entries()].filter(([d]) => d !== "TCC").map(([d, ns]) => {
                 const m = md(ns)
                 return (
                   <div key={d} style={card}>
@@ -187,9 +223,17 @@ export function RankingClient({
         </>
       )}
 
-      {aba === "ranking" && <Painel comp={comp} proj={projecao(comp.mgc)} turmaSize={turmaSize} comDados={mgcsOutros.length + (comp.mgc != null ? 1 : 0)} />}
+      {aba === "ranking" && (
+        mgc == null ? <p style={{ color: "var(--ink-60)", marginTop: 20 }}>Lance suas notas para ver o ranking e a previsão.</p> : (
+          <RankingPanel mgc={mgc} mfic={mfic} nfdc={nfdcState} tcc={tccState} tccDefinido={tccReal != null}
+            mgcsOutros={mgcsOutros} turmaSize={turmaSize} onSaveNfdc={salvarNfdc} onSaveTcc={salvarTcc} />
+        )
+      )}
 
-      {aba === "simular" && <Simular notas={notas} nfdc={nfdc} projecao={projecao} turmaSize={turmaSize} />}
+      {aba === "simular" && (
+        <Simular mdsBase={mdsReais(notas)} tccInicial={tccReal ?? 10} nfdcInicial={nfdcState}
+          totalDisciplinas={totalDisciplinas} mgcsOutros={mgcsOutros} turmaSize={turmaSize} />
+      )}
 
       {aba === "batalhoes" && (
         <div style={{ marginTop: 20 }}>
@@ -201,7 +245,7 @@ export function RankingClient({
               <label key={i} style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>{s.rot}
                 <select value={s.val} onChange={e => s.set(e.target.value)} disabled={i > 0 && op1Especial} style={{ ...inputStyle, marginTop: 4, opacity: i > 0 && op1Especial ? 0.5 : 1 }}>
                   <option value="">— selecione —</option>
-                  {opms.filter(o => s.esp || !o.especial).map(o => <option key={o.id} value={o.id}>{o.sigla}{o.especial ? "" : ` — ${o.nome}`}</option>)}
+                  {opms.filter(o => s.esp || !o.especial).map(o => <option key={o.id} value={o.id}>{o.especial ? o.nome : `${o.sigla} — ${o.nome}`}</option>)}
                 </select>
               </label>
             ))}
@@ -219,7 +263,7 @@ export function RankingClient({
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
                 {ord.map(a => (
                   <li key={a.sigla} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ width: 64, fontSize: 13, fontWeight: 600 }}>{a.sigla}</span>
+                    <span style={{ width: 64, fontSize: 13, fontWeight: 600 }}>{a.especial ? "—" : a.sigla}</span>
                     <div style={{ flex: 1, height: 18, borderRadius: 6, background: "var(--surface)", overflow: "hidden" }}>
                       <div style={{ width: `${(a.count / max) * 100}%`, height: "100%", background: a.especial ? "var(--gold)" : "var(--olive)" }} />
                     </div>
@@ -237,64 +281,164 @@ export function RankingClient({
   )
 }
 
-function Painel({ comp, proj, turmaSize, comDados }: { comp: ReturnType<typeof calcularComponentes>; proj: ReturnType<typeof calcularProjecaoConsolidada> | null; turmaSize: number; comDados: number }) {
-  if (comp.mgc == null || !proj) return <p style={{ color: "var(--ink-60)", marginTop: 20 }}>Lance suas notas para ver o ranking e a previsão.</p>
-  const box = (label: string, v: string) => (
+// ── Editor de NFDC e TCC (default 10) ──
+function NfdcTccEditor({ nfdc, tcc, tccDefinido, onSaveNfdc, onSaveTcc }: {
+  nfdc: number; tcc: number; tccDefinido: boolean; onSaveNfdc: (v: number) => void; onSaveTcc: (v: number) => void
+}) {
+  const [n, setN] = useState(String(nfdc))
+  const [t, setT] = useState(String(tcc))
+  const [msg, setMsg] = useState("")
+  return (
+    <div style={card}>
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "end" }}>
+        <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 200px" }}>
+          Nota Disciplinar (NFDC) <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>— inicia em 10</span>
+          <input style={{ ...inputStyle, marginTop: 4 }} value={n} onChange={e => setN(e.target.value)} inputMode="decimal" />
+        </label>
+        <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 200px" }}>
+          Nota do TCC {tccDefinido ? "" : <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>— ainda não lançada</span>}
+          <input style={{ ...inputStyle, marginTop: 4 }} value={t} onChange={e => setT(e.target.value)} inputMode="decimal" />
+        </label>
+        <button
+          onClick={() => {
+            const nv = Number(n.replace(",", ".")), tv = Number(t.replace(",", "."))
+            if (isNaN(nv) || nv < 0 || nv > 10 || isNaN(tv) || tv < 0 || tv > 10) return setMsg("Valores devem ser entre 0 e 10.")
+            onSaveNfdc(nv); onSaveTcc(tv); setMsg("✓ Salvo.")
+          }}
+          style={{ padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--gold)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>
+          Salvar
+        </button>
+      </div>
+      {msg && <p style={{ margin: "8px 0 0", fontSize: 13, color: msg.startsWith("✓") ? "var(--olive)" : "var(--red)" }}>{msg}</p>}
+    </div>
+  )
+}
+
+// ── Painel "Meu ranking" ──
+function RankingPanel({ mgc, mfic, nfdc, tcc, tccDefinido, mgcsOutros, turmaSize, onSaveNfdc, onSaveTcc }: {
+  mgc: number; mfic: number | null; nfdc: number; tcc: number; tccDefinido: boolean
+  mgcsOutros: number[]; turmaSize: number; onSaveNfdc: (v: number) => void; onSaveTcc: (v: number) => void
+}) {
+  const acima = mgcsOutros.filter(m => m > mgc).length
+  const totalComDados = mgcsOutros.length + 1
+  const posReal = acima + 1
+  const posT1 = Math.round(calcularPosicaoHistorica(mgc, BASE_T1))
+  const posT2 = Math.round(calcularPosicaoHistorica(mgc, BASE_T2))
+  const proj = calcularProjecaoConsolidada(mgc, acima, turmaSize, totalComDados)
+
+  const box = (label: string, v: string, sub?: string) => (
     <div style={{ padding: "12px 10px", borderRadius: 10, background: "var(--surface)", textAlign: "center" }}>
       <div style={{ fontSize: 12, color: "var(--ink-60)" }}>{label}</div>
       <div style={{ fontSize: 18, fontWeight: 700, color: "var(--olive)" }}>{v}</div>
+      {sub && <div style={{ fontSize: 11, color: "var(--ink-60)" }}>{sub}</div>}
     </div>
   )
+
   return (
     <div style={{ marginTop: 20 }}>
       <div style={{ padding: "20px 18px", borderRadius: 14, background: "var(--olive)", color: "var(--canvas)", textAlign: "center" }}>
         <div style={{ fontSize: 13, opacity: 0.85 }}>Sua MGC (autodeclarada)</div>
-        <div style={{ fontFamily: "var(--serif-cfo)", fontSize: "2.2rem", fontWeight: 600 }}>{comp.mgc.toFixed(3)}</div>
+        <div style={{ fontFamily: "var(--serif-cfo)", fontSize: "2.2rem", fontWeight: 600 }}>{mgc.toFixed(3)}</div>
         <div style={{ fontSize: 14, opacity: 0.9, marginTop: 6 }}>Posição provável: <strong>{proj.provavel}º</strong> de {turmaSize} (T3)</div>
         <div style={{ fontSize: 13, opacity: 0.8 }}>faixa entre {proj.melhor}º e {proj.conservador}º</div>
       </div>
+
+      {/* Posições certeiras */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 14 }}>
-        {box("MFIC", comp.mfic != null ? comp.mfic.toFixed(3) : "—")}
-        {box("NFDC", comp.nfdc.toFixed(0))}
-        {box("TCC", comp.tcc != null ? comp.tcc.toFixed(2) : "—")}
+        {box("Entre quem já lançou (T3)", `${posReal}º`, `de ${totalComDados}`)}
+        {box("Se fosse da T1", `${posT1}º`, `de ${BASE_T1.length}`)}
+        {box("Se fosse da T2", `${posT2}º`, `de ${BASE_T2.length}`)}
       </div>
+
+      {/* Componentes */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 10 }}>
+        {box("MFIC", mfic != null ? mfic.toFixed(3) : "—")}
+        {box("NFDC", nfdc.toFixed(1))}
+        {box("TCC", tcc.toFixed(1) + (tccDefinido ? "" : "*"))}
+      </div>
+
+      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.1rem", color: "var(--olive)", marginTop: 24, marginBottom: 8 }}>Ajustar NFDC e TCC</h2>
+      <NfdcTccEditor nfdc={nfdc} tcc={tcc} tccDefinido={tccDefinido} onSaveNfdc={onSaveNfdc} onSaveTcc={onSaveTcc} />
+
       <p style={{ marginTop: 14, fontSize: 13, color: "var(--ink-60)", lineHeight: 1.5 }}>
-        Estimativa combinando os <strong>{comDados}</strong> alunos da T3 que já lançaram notas com a distribuição histórica (T1 + T2).
-        Quanto mais alunos lançarem, mais precisa fica. Não é a nota oficial.
+        A posição <strong>na T3</strong> compara com {totalComDados} alunos que já lançaram notas; as posições <strong>T1/T2</strong> usam as notas
+        finais oficiais daquelas turmas. {tccDefinido ? "" : "* TCC ainda não lançado — usando 10 por padrão. "}Não é a nota oficial.
       </p>
     </div>
   )
 }
 
-function Simular({ notas, nfdc, projecao, turmaSize }: { notas: Nota[]; nfdc: number; projecao: (m: number | null) => any; turmaSize: number }) {
-  const [clone, setClone] = useState<Nota[]>(() => notas.map(n => ({ ...n })))
-  const comp = calcularComponentes(toVerif(clone), nfdc)
-  const proj = projecao(comp.mgc)
+// ── Simular (independente das notas oficiais) ──
+function Simular({ mdsBase, tccInicial, nfdcInicial, totalDisciplinas, mgcsOutros, turmaSize }: {
+  mdsBase: number[]; tccInicial: number; nfdcInicial: number; totalDisciplinas: number; mgcsOutros: number[]; turmaSize: number
+}) {
+  const feitas = mdsBase.length
+  const restantesPadrao = Math.max(0, totalDisciplinas - feitas)
+  const [nfdc, setNfdc] = useState(String(nfdcInicial))
+  const [tcc, setTcc] = useState(String(tccInicial))
+  const [restantes, setRestantes] = useState(String(restantesPadrao))
+  const [mediaRest, setMediaRest] = useState("9.0")
+
+  const nfdcN = Number(nfdc.replace(",", ".")) || 0
+  const tccN = Number(tcc.replace(",", ".")) || 0
+  const restN = Math.max(0, Math.floor(Number(restantes) || 0))
+  const mediaN = Number(mediaRest.replace(",", ".")) || 0
+
+  const somaReais = mdsBase.reduce((s, m) => s + m, 0)
+  const totalCont = feitas + restN
+  const mficSim = totalCont > 0 ? (somaReais + restN * mediaN) / totalCont : null
+  const mgcSim = mgcDe(mficSim, nfdcN, tccN)
+
+  const acima = mgcSim != null ? mgcsOutros.filter(m => m > mgcSim).length : 0
+  const proj = mgcSim != null ? calcularProjecaoConsolidada(mgcSim, acima, turmaSize, mgcsOutros.length + 1) : null
+  const posT1 = mgcSim != null ? Math.round(calcularPosicaoHistorica(mgcSim, BASE_T1)) : 0
+  const posT2 = mgcSim != null ? Math.round(calcularPosicaoHistorica(mgcSim, BASE_T2)) : 0
+
   return (
     <div style={{ marginTop: 20 }}>
       <p style={{ color: "var(--ink-60)", fontSize: 14, marginBottom: 14, lineHeight: 1.5 }}>
-        Ajuste suas notas <strong>hipoteticamente</strong> e veja a MGC e a faixa mudarem. É só pra você — <strong>não salva</strong> nada.
+        Simule sua <strong>nota disciplinar (NFDC)</strong>, a <strong>nota do TCC</strong> e as <strong>disciplinas ainda não concluídas</strong>.
+        Parte das suas {feitas} disciplina(s) já lançada(s) e projeta o resto. <strong>Não altera</strong> nada — é só para você.
       </p>
-      {clone.length === 0 ? <p style={{ color: "var(--ink-60)" }}>Lance notas primeiro na aba “Lançar notas”.</p> : (
+      <div style={card}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <label style={{ fontSize: 13, fontWeight: 600 }}>NFDC (0–10)
+            <input style={{ ...inputStyle, marginTop: 4 }} value={nfdc} onChange={e => setNfdc(e.target.value)} inputMode="decimal" />
+          </label>
+          <label style={{ fontSize: 13, fontWeight: 600 }}>Nota do TCC (0–10)
+            <input style={{ ...inputStyle, marginTop: 4 }} value={tcc} onChange={e => setTcc(e.target.value)} inputMode="decimal" />
+          </label>
+          <label style={{ fontSize: 13, fontWeight: 600 }}>Disciplinas ainda não concluídas
+            <input style={{ ...inputStyle, marginTop: 4 }} value={restantes} onChange={e => setRestantes(e.target.value)} inputMode="numeric" />
+          </label>
+          <label style={{ fontSize: 13, fontWeight: 600 }}>Média estimada dessas disciplinas
+            <input style={{ ...inputStyle, marginTop: 4 }} value={mediaRest} onChange={e => setMediaRest(e.target.value)} inputMode="decimal" />
+          </label>
+        </div>
+        <p style={{ fontSize: 12.5, color: "var(--ink-60)", margin: "10px 0 0" }}>
+          Você já lançou <strong>{feitas}</strong> disciplina(s). MFIC simulada considera as suas + as estimadas.
+        </p>
+      </div>
+
+      {mgcSim != null && proj ? (
         <>
-          <div style={card}>
-            {clone.map((n, idx) => (
-              <div key={n.id} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-                <span style={{ flex: 1, fontSize: 14 }}>{n.disciplina} · {n.avaliacao}</span>
-                <input value={String(n.valor)} inputMode="decimal" onChange={e => { const v = Number(e.target.value.replace(",", ".")); setClone(c => c.map((x, i) => i === idx ? { ...x, valor: isNaN(v) ? x.valor : v } : x)) }}
-                  style={{ ...inputStyle, width: 80 }} />
-              </div>
-            ))}
+          <div style={{ marginTop: 14, padding: "20px 18px", borderRadius: 14, background: "var(--olive)", color: "var(--canvas)", textAlign: "center" }}>
+            <div style={{ fontSize: 13, opacity: 0.85 }}>MGC simulada</div>
+            <div style={{ fontFamily: "var(--serif-cfo)", fontSize: "2rem", fontWeight: 600 }}>{mgcSim.toFixed(3)}</div>
+            <div style={{ fontSize: 14, opacity: 0.9 }}>Posição provável: {proj.provavel}º de {turmaSize} (faixa {proj.melhor}º–{proj.conservador}º)</div>
           </div>
-          {comp.mgc != null && proj && (
-            <div style={{ marginTop: 14, padding: "20px 18px", borderRadius: 14, background: "var(--olive)", color: "var(--canvas)", textAlign: "center" }}>
-              <div style={{ fontSize: 13, opacity: 0.85 }}>MGC simulada</div>
-              <div style={{ fontFamily: "var(--serif-cfo)", fontSize: "2rem", fontWeight: 600 }}>{comp.mgc.toFixed(3)}</div>
-              <div style={{ fontSize: 14, opacity: 0.9 }}>Posição provável: {proj.provavel}º de {turmaSize} (faixa {proj.melhor}º–{proj.conservador}º)</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 10 }}>
+            <div style={{ padding: "12px 10px", borderRadius: 10, background: "var(--surface)", textAlign: "center" }}>
+              <div style={{ fontSize: 12, color: "var(--ink-60)" }}>Se fosse da T1</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "var(--olive)" }}>{posT1}º <span style={{ fontSize: 12, color: "var(--ink-60)" }}>de {BASE_T1.length}</span></div>
             </div>
-          )}
+            <div style={{ padding: "12px 10px", borderRadius: 10, background: "var(--surface)", textAlign: "center" }}>
+              <div style={{ fontSize: 12, color: "var(--ink-60)" }}>Se fosse da T2</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "var(--olive)" }}>{posT2}º <span style={{ fontSize: 12, color: "var(--ink-60)" }}>de {BASE_T2.length}</span></div>
+            </div>
+          </div>
         </>
-      )}
+      ) : <p style={{ marginTop: 12, color: "var(--ink-60)" }}>Informe os valores para simular.</p>}
     </div>
   )
 }
