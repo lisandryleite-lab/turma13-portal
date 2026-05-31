@@ -27,10 +27,10 @@ const CARDS: Card[] = [
 • Civil: conduta dolosa ou negligente que causa prejuízo material ou moral a terceiros, exigindo reparação.` },
 
   { modulo: "1", frente: "BOEPM — Falsidade e Denunciação", verso:
-`• Falsidade ideológica: omitir, inserir ou fazer inserir declaração falsa/diversa da devida em documento público ou particular.
-• Art. 299 do Código Penal é a referência: exige finalidade de prejudicar direito, criar obrigação ou alterar verdade juridicamente relevante.
+`• Falsidade ideológica (art. 299 do CP): omitir, inserir ou fazer inserir declaração falsa/diversa da devida em documento público ou particular, com fim de prejudicar direito, criar obrigação ou alterar verdade juridicamente relevante.
 • Denunciação caluniosa: exige finalidade específica de incriminar alguém injustamente — difere da simples alteração de verdade documental.
-⚠ Todo BO falso pode indicar falsidade, mas denunciação caluniosa exige intenção de fazer pessoa inocente ser investigada/responsabilizada.` },
+⚠ Todo BO falso pode indicar falsidade, mas denunciação caluniosa exige intenção de fazer pessoa inocente ser investigada/responsabilizada.
+🔑 Sigilo: divulgar documentos pode gerar responsabilização criminal (arts. 166 e 324 do Código Penal Militar) e administrativa (RDPMPE).` },
 
   { modulo: "1", frente: "BOEPM — Conduta Esperada do Redator", verso:
 `• Narrar fatos observados ou informados com clareza, distinguindo percepção direta, relato de terceiros, vestígios, providências e encaminhamentos.
@@ -79,9 +79,10 @@ const CARDS: Card[] = [
 • A decisão operacional concilia ordem judicial, documentação do risco e preservação da integridade física dos presentes.` },
 
   { modulo: "3", frente: "Algemas — Escolta de Presos", verso:
-`• Escolta é atividade de risco: exige consciência da missão, planejamento, disciplina, recursos adequados e observância das normas.
-• Viaturas de quatro rodas são prioritárias; motocicletas atuam como apoio, conforme planejamento e condições do deslocamento.
-• Armamentos, equipamentos e efetivo definidos conforme tipo de escolta, quantidade de presos, de veículos e risco previsto.
+`• Na PMPE: POP nº 0033 (algemas na condução/custódia de PMs no CREED) e POP nº 0018 (escoltas, conduções e custódia de presos).
+• Escolta é atividade de risco: exige consciência da missão, planejamento, disciplina e observância das normas.
+• Viaturas de quatro rodas são prioritárias; motos atuam como apoio.
+• Armamento conforme tipo de escolta/nº de presos/veículos: pistola cal. .40, carabina cal. 5.56 mm e, em casos complexos, fuzil cal. 7.62 mm.
 ⚠ Foco de prova: combinação entre excepcionalidade do uso de algemas, justificativa escrita e responsabilização pelo abuso.` },
 
   // ───────── MÓD 4 — Local de Crime / Sinistro ─────────
@@ -172,41 +173,46 @@ const CARDS: Card[] = [
 
   // ───────── MÓD 8 — Armas ─────────
   { modulo: "8", frente: "Estatuto do Desarmamento — Tipificações Penais", verso:
-`• Diferencia condutas: posse irregular, porte ilegal, disparo, comércio ilegal e tráfico internacional de arma de fogo.
-• Posse: manter a arma em local permitido ou vinculado ao domicílio/trabalho. Porte: trazer consigo ou circular armado.
-• O enquadramento depende de local, autorização, finalidade, tipo de arma, munição, acessório e circunstâncias da apreensão.
-⚠ Distinção central: posse e porte não são sinônimos — mudam o núcleo da conduta e a situação fática.` },
+`• Lei nº 10.826/2003. Diferencia posse, porte, comércio e tráfico; armas de uso permitido × restrito.
+• POSSE (art. 12): manter a arma em local de guarda (residência/trabalho) sem autorização legal.
+• PORTE (art. 14): trazer consigo/transportar a arma em local público ou de acesso ao público.
+• Na PMPE: POP nº 0017 — abordagem em 3 categorias: porte sem agressividade iminente, agressão iminente e agressão atual em curso. Documentos: porte e CRAF.
+⚠ Posse ≠ porte: muda o núcleo da conduta e a situação fática (guarda × trazer consigo).` },
 
   { modulo: "8", frente: "Estatuto do Desarmamento — Registro e Encaminhamento", verso:
 `• A documentação qualifica arma, munição e acessórios: numeração, calibre, condição aparente, local de encontro e pessoa vinculada.
 • A guarnição preserva o objeto, registra as circunstâncias da apreensão e encaminha conforme orientação legal e procedimento institucional.` },
 
-  { modulo: "8", frente: "Arma de Fogo da Corporação", verso:
-`• Exige controle, cautela, comunicação de extravio, registro formal e apuração das circunstâncias de guarda e responsabilidade.
-• O extravio tem relevância administrativa, operacional e eventualmente penal — envolve bem público e risco à segurança coletiva.
-• Comunicação imediata e preservação de informações sobre data, local, cautela e circunstâncias são essenciais à rastreabilidade.` },
+  { modulo: "8", frente: "Arma de Fogo da Corporação — Extravio", verso:
+`• Regulamentação na PMPE: Instrução Normativa do Comando Geral nº 612/2024.
+• Roubo/furto/extravio: registrar BO e comunicar à autoridade competente em até 3 dias.
+• Registro obrigatório no SIGMA (Sistema de Gerenciamento Militar de Armas, do Exército).
+• Envolve bem público e risco à segurança coletiva — relevância administrativa, operacional e eventualmente penal.` },
 
   { modulo: "8", frente: "Arma Branca", verso:
-`• Analisar pelo contexto de uso, ameaça, lesão, porte ostensivo, local, finalidade alegada e relação com outros tipos penais.
-• A simples existência de instrumento cortante não resolve o enquadramento; a dinâmica do fato e o risco concreto orientam o procedimento.
-⚠ Não confundir arma de fogo, simulacro e arma branca: cada categoria exige descrição própria e pode gerar consequências jurídicas diferentes.` },
+`• Porte sem justa causa em local público = contravenção penal (art. 19 da LCP): prisão simples de 15 dias a 6 meses ou multa.
+• Permitido com justa causa (trabalho ou atividade esportiva).
+• Seu emprego em crimes (roubo, agressão) é circunstância agravante na dosimetria da pena.
+⚠ Não confundir arma de fogo, simulacro e arma branca: cada categoria exige descrição própria e gera consequências jurídicas diferentes.` },
 
   // ───────── MÓD 9 — Drogas ─────────
-  { modulo: "9", frente: "Drogas — Diferenciação Legal (Usuário × Traficante)", verso:
-`• A lei federal diferencia usuário e traficante pelas circunstâncias do caso, não apenas pela presença da substância.
-• Elementos: quantidade, variedade, local, forma de acondicionamento, dinheiro, instrumentos, antecedentes e contexto da abordagem.
-• Usuário: porte para consumo pessoal. Tráfico: comercializar, entregar, transportar, guardar ou fornecer com finalidade ilícita.
-⚠ Erro comum: afirmar que a quantidade isolada sempre define tráfico — a análise considera o conjunto de circunstâncias objetivas.` },
+  { modulo: "9", frente: "Drogas — Usuário × Traficante (Lei 11.343/2006)", verso:
+`• Usuário (art. 28): NÃO é preso — advertência, prestação de serviços à comunidade e comparecimento a cursos educativos.
+• Tráfico (art. 33): importar, vender, guardar, transportar, oferecer etc.
+• STF (jun/2024): até 40 g de maconha ou 6 plantas fêmeas = presunção (RELATIVA) de uso pessoal; não vale para outras drogas.
+⚠ Quantidade isolada não define tráfico — analisa-se o conjunto de circunstâncias (acondicionamento, dinheiro, instrumentos, contexto).` },
 
-  { modulo: "9", frente: "Drogas — Registro Operacional", verso:
-`• O BO descreve substância aparente, quantidade, local de encontro, acondicionamento, dinheiro, objetos associados e declarações relevantes.
-• A cadeia de custódia e o encaminhamento adequado fortalecem a prova e reduzem questionamentos sobre origem, integridade ou vinculação do material.` },
+  { modulo: "9", frente: "Drogas — Tráfico (art. 33) e Registro", verso:
+`• Tráfico (art. 33 da Lei 11.343/2006): pena de reclusão de 5 a 15 anos + 500 a 1.500 dias-multa.
+• O BO descreve substância aparente, quantidade, local, acondicionamento, dinheiro, objetos associados e declarações.
+• A cadeia de custódia e o encaminhamento adequado fortalecem a prova e reduzem questionamentos sobre origem/integridade do material.` },
 
   // ───────── MÓD 10 — Poluição Sonora ─────────
-  { modulo: "10", frente: "Poluição Sonora — Instituições Envolvidas", verso:
-`• Pode envolver PM, órgãos municipais, fiscalização ambiental, trânsito, Ministério Público e outras instituições conforme competência.
-• A atuação integrada evita lacunas: uma mesma situação pode reunir contravenção, crime ambiental, infração administrativa, trânsito e regra municipal.
-• A PM atua no atendimento imediato, preservação da ordem, registro e encaminhamento ao órgão competente quando necessário.` },
+  { modulo: "10", frente: "Poluição Sonora — Enquadramento e Agentes", verso:
+`• Perturbação do sossego = contravenção (art. 42 da LCP). Poluição sonora com dano à saúde/ambiente = crime ambiental (art. 54 da Lei 9.605/98).
+• OMS: som acima de 50 decibéis (dB) pode ser nocivo à saúde.
+• Atuação integrada: PM, órgãos municipais, fiscalização ambiental, trânsito e Ministério Público conforme competência.
+⚠ Perturbação do sossego protege o descanso; poluição sonora tem potencial de dano à saúde e ao meio ambiente.` },
 
   { modulo: "10", frente: "Poluição Sonora — Critério de Atuação", verso:
 `• A abordagem identifica fonte sonora, horário, local, intensidade percebida, perturbação, equipamento usado e eventual resistência à ordem legal.
@@ -215,9 +221,10 @@ const CARDS: Card[] = [
 
   // ───────── MÓD 11 — Crime/Contravenção ─────────
   { modulo: "11", frente: "Crime, Contravenção e Ambiental — Diferenciação Básica", verso:
-`• Crime: infração penal mais grave, com sanções mais severas. Contravenção penal: menor gravidade, mas ainda sujeita à responsabilização.
-• Perturbação do sossego pode ser contravenção; poluição sonora ambiental pode ser crime ambiental se preencher os requisitos legais.
-• A distinção depende do bem jurídico atingido, intensidade, contexto, norma aplicável e prova disponível.` },
+`• Crime (teoria tripartida): fato típico + antijurídico + culpável. Princípio da legalidade: art. 1º do CP ("não há crime sem lei anterior que o defina").
+• Contravenção penal (Decreto-Lei 3.688/1941 — LCP): infração de menor potencial ofensivo, penas mais brandas.
+• Principais infrações p/ a PM: tráfico (art. 33/Lei 11.343/06), furto e roubo (arts. 155 e 157 do CP), homicídio (art. 121), violência doméstica (Lei 11.340/06), crimes de trânsito (Lei 9.503/97 — CTB, ex.: art. 306) e perturbação do sossego.
+⚠ Contravenção não é fato irrelevante: é infração penal de menor gravidade, com procedimento próprio.` },
 
   { modulo: "11", frente: "Crime, Contravenção e Ambiental — Exemplos Cobrados", verso:
 `• A apostila destaca: perturbação do sossego, embriaguez em via pública, jogos de azar, vadiagem (em desuso prático), comércio irregular e exibição obscena.
@@ -397,6 +404,10 @@ const CARDS: Card[] = [
 async function main() {
   const disc = await prisma.disciplina.findUnique({ where: { sigla: MATERIA } })
   if (!disc) throw new Error(`Disciplina ${MATERIA} não existe.`)
+
+  // limpa cards antigos (inclui os renomeados na revisão) para reinserir o conjunto atual
+  const del = await prisma.flashcard.deleteMany({ where: { materia: MATERIA } })
+  console.log(`Flashcards PO antigos removidos: ${del.count}`)
 
   let n = 0
   for (const c of CARDS) {
