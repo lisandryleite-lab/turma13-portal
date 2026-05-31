@@ -6,6 +6,7 @@ const cards: {
   label: string
   href: string
   bg: Tile
+  externo?: boolean
   icon: React.ReactNode
 }[] = [
   {
@@ -47,8 +48,9 @@ const cards: {
   },
   {
     label: "Psicologia",
-    href: "/psicologia",
+    href: "https://agendamento-apmp.vercel.app/",
     bg: "olive",
+    externo: true,
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
@@ -72,17 +74,15 @@ const cards: {
 
 function CardTile({ card }: { card: (typeof cards)[number] }) {
   const isGold = card.bg === "gold"
-  return (
-    <Link
-      href={card.href}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 12,
-        textDecoration: "none",
-      }}
-    >
+  const wrapStyle: React.CSSProperties = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 12,
+    textDecoration: "none",
+  }
+  const inner = (
+    <>
       <div
         style={{
           width: 96,
@@ -108,6 +108,19 @@ function CardTile({ card }: { card: (typeof cards)[number] }) {
       >
         {card.label}
       </span>
+    </>
+  )
+
+  if (card.externo) {
+    return (
+      <a href={card.href} target="_blank" rel="noopener noreferrer" style={wrapStyle}>
+        {inner}
+      </a>
+    )
+  }
+  return (
+    <Link href={card.href} style={wrapStyle}>
+      {inner}
     </Link>
   )
 }
