@@ -4,6 +4,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── Design System — Portal CFO 2026 ──
+   Creme editorial + alma militar (verde + dourado). Usar em TODAS as telas do CFO. */
+:root {
+  --canvas:  #faf9f5;  /* fundo de tela (creme quente, nunca branco puro) */
+  --surface: #f0ece0;  /* fundo de cards/painéis */
+  --olive:   #3a4a3a;  /* verde militar — acento principal */
+  --gold:    #b5933f;  /* dourado — acento secundário */
+  --ink:     #2b2a27;  /* texto principal (carvão quente, nunca preto puro) */
+  --ink-60:  rgba(43, 42, 39, 0.60); /* texto secundário */
+  --red:     #7a2e2e;  /* alertas/erros (sempre com ícone, nunca só cor) */
+  --serif-cfo: Georgia, Cambria, "Times New Roman", serif;
+}
+
 /* ── Identidade Visual — Portal Turma 13 ── */
 :root {
   --azul-profundo: #0B2D5E;

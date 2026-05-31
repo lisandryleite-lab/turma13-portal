@@ -21,7 +21,7 @@ export default function LoginPage() {
     if (res?.error) {
       setError("Matrícula ou senha incorretos.")
     } else {
-      router.push("/dashboard")
+      router.push("/inicio")
     }
   }
 
