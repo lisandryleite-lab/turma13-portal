@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { createHash } from "crypto"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { logAcesso } from "@/lib/log"
 
 // Importa memento (Markdown) e/ou flashcards de uma matéria (Admin). Idempotente.
 export async function POST(req: NextRequest) {
@@ -50,5 +51,6 @@ export async function POST(req: NextRequest) {
     } catch (e: any) { erros.push(`Card ${i + 1}: ${e?.message || e}`) }
   }
 
+  await logAcesso(session.user as any, "mementos/import", `${materia}${modulo ? "/" + modulo : ""}: ${mementoMsg || "sem memento"}; cards +${criadosCards}/${atualizadosCards}`)
   return NextResponse.json({ materia, modulo, mementoMsg, criadosCards, atualizadosCards, erros })
 }

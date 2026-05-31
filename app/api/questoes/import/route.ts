@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { createHash } from "crypto"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { logAcesso } from "@/lib/log"
 
 // Importação em lote de questões (Admin). Idempotente: upsert por hash
 // = sha1(materia|modulo|enunciado). Re-importar atualiza, não duplica.
@@ -76,5 +77,6 @@ export async function POST(req: NextRequest) {
   }
 
   const total = await prisma.questao.count({ where: { materia } })
+  await logAcesso(session.user as any, "questoes/import", `${materia}${modulo ? "/" + modulo : ""}: +${criadas} novas, ${atualizadas} atualizadas`)
   return NextResponse.json({ materia, modulo, criadas, atualizadas, totalMateria: total, erros })
 }

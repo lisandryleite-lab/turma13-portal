@@ -144,7 +144,12 @@ export default async function PortalCfoHome() {
       }}
     >
       {isAdmin && (
-        <div style={{ alignSelf: "flex-end", marginBottom: 8 }}>
+        <div style={{ alignSelf: "flex-end", marginBottom: 8, display: "flex", gap: 8, alignItems: "center" }}>
+          {admView && (
+            <Link href="/painel" style={{ fontSize: 12.5, fontWeight: 600, color: "var(--olive)", textDecoration: "none" }}>
+              Painel admin
+            </Link>
+          )}
           <ViewToggle adminAtivo={admView} />
         </div>
       )}

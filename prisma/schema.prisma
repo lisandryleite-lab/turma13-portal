@@ -408,3 +408,16 @@ model Flashcard {
 
   @@index([materia])
 }
+
+// ── CFO 2026 — Log de acesso (LGPD / auditoria) ──────────────────
+model LogAcesso {
+  id         String   @id @default(cuid())
+  userId     String
+  matricula  Int
+  nomeGuerra String
+  area       String   // ex.: painel-admin | questoes/import | mementos/import
+  acao       String   // descrição da ação
+  timestamp  DateTime @default(now())
+
+  @@index([timestamp])
+}
