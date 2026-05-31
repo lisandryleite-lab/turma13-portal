@@ -182,7 +182,12 @@ function Flashcards({ materias }: { materias: Mat[] }) {
           background: virado ? "#fbf3e3" : "var(--olive)", color: virado ? "var(--ink)" : "var(--canvas)", cursor: "pointer",
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", gap: 10 }}>
         <span style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: "0.08em", opacity: 0.8 }}>{virado ? "Verso" : "Frente"}</span>
-        <span style={{ fontSize: virado ? 16 : 19, fontWeight: virado ? 400 : 600, lineHeight: 1.5, fontFamily: virado ? "inherit" : "var(--serif-cfo)" }}>
+        <span style={{
+          fontSize: virado ? 15 : 19, fontWeight: virado ? 400 : 600, lineHeight: 1.55,
+          fontFamily: virado ? "inherit" : "var(--serif-cfo)",
+          whiteSpace: virado ? "pre-wrap" : "normal", textAlign: virado ? "left" : "center",
+          width: virado ? "100%" : "auto",
+        }}>
           {virado ? c.verso : c.frente}
         </span>
         <span style={{ fontSize: 12, opacity: 0.7 }}>toque para virar</span>
