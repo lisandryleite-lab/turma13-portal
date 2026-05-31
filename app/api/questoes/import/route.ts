@@ -31,16 +31,49 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "JSON inválido." }, { status: 400 })
   }
 
-  const materia = String(body.materia || "").trim().toUpperCase()
-  const modulo = body.modulo != null ? String(body.modulo).trim() : ""
-  const questoes: QIn[] = Array.isArray(body.questoes) ? body.questoes : []
+  // Aceita um pacote único {materia,modulo,questoes} OU um array de pacotes.
+  if (Array.isArray(body)) {
+    const resultados: any[] = []
+    let criadas = 0, atualizadas = 0
+    const erros: string[] = []
+    for (const [idx, pacote] of body.entries()) {
+      const r = await importarPacote(pacote, session)
+      if (r.error) { erros.push(`Pacote ${idx + 1}: ${r.error}`); continue }
+      criadas += r.criadas; atualizadas += r.atualizadas
+      if (r.erros?.length) erros.push(...r.erros.map(e => `Pacote ${idx + 1} (${r.materia}/${r.modulo}): ${e}`))
+      resultados.push({ materia: r.materia, modulo: r.modulo, criadas: r.criadas, atualizadas: r.atualizadas })
+    }
+    await logAcesso(session.user as any, "questoes/import", `lote de ${body.length} pacotes: +${criadas} novas, ${atualizadas} atualizadas`)
+    return NextResponse.json({ pacotes: resultados, criadas, atualizadas, erros })
+  }
 
-  if (!materia) return NextResponse.json({ error: "Informe a matéria (sigla)." }, { status: 400 })
-  if (questoes.length === 0) return NextResponse.json({ error: "Nenhuma questão no pacote." }, { status: 400 })
+  const r = await importarPacote(body, session)
+  if (r.error) return NextResponse.json({ error: r.error }, { status: 400 })
+  await logAcesso(session.user as any, "questoes/import", `${r.materia}${r.modulo ? "/" + r.modulo : ""}: +${r.criadas} novas, ${r.atualizadas} atualizadas`)
+  return NextResponse.json({ materia: r.materia, modulo: r.modulo, criadas: r.criadas, atualizadas: r.atualizadas, totalMateria: r.totalMateria, erros: r.erros })
+}
+
+type ImportResult = {
+  error?: string
+  materia?: string
+  modulo?: string
+  criadas: number
+  atualizadas: number
+  totalMateria?: number
+  erros?: string[]
+}
+
+async function importarPacote(body: any, _session: any): Promise<ImportResult> {
+  const materia = String(body?.materia || "").trim().toUpperCase()
+  const modulo = body?.modulo != null ? String(body.modulo).trim() : ""
+  const questoes: QIn[] = Array.isArray(body?.questoes) ? body.questoes : []
+
+  if (!materia) return { error: "Informe a matéria (sigla).", criadas: 0, atualizadas: 0 }
+  if (questoes.length === 0) return { error: "Nenhuma questão no pacote.", criadas: 0, atualizadas: 0 }
 
   // Valida que a matéria existe (entre as 52 disciplinas)
   const disc = await prisma.disciplina.findUnique({ where: { sigla: materia } })
-  if (!disc) return NextResponse.json({ error: `Matéria "${materia}" não existe nas disciplinas.` }, { status: 400 })
+  if (!disc) return { error: `Matéria "${materia}" não existe nas disciplinas.`, criadas: 0, atualizadas: 0 }
 
   let criadas = 0, atualizadas = 0
   const erros: string[] = []
@@ -77,8 +110,7 @@ export async function POST(req: NextRequest) {
   }
 
   const total = await prisma.questao.count({ where: { materia } })
-  await logAcesso(session.user as any, "questoes/import", `${materia}${modulo ? "/" + modulo : ""}: +${criadas} novas, ${atualizadas} atualizadas`)
-  return NextResponse.json({ materia, modulo, criadas, atualizadas, totalMateria: total, erros })
+  return { materia, modulo, criadas, atualizadas, totalMateria: total, erros }
 }
 
 // Limpar questões de uma matéria (e opcionalmente de um módulo). Admin.
