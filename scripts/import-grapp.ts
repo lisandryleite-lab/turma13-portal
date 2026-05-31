@@ -154,9 +154,10 @@ const CARDS: Card[] = [
 ⚠ A DIRESP não tem área territorial — atuação temática, não geográfica.` },
 
   { modulo: "5", frente: "JPS — Normas Legais", verso:
-`• Plano Estadual de Seg. Pública e Defesa Social 2023–2030: documento principal (escuta popular, oficinas, seminários).
-• Lei 16.170/2017: GPPV (Gratificação Pacto pela Vida) — premia metas intermediárias/eficiência (armas, mandados, crack).
-• Lei 16.171/2017: PDS (Prêmio de Defesa Social) — premia por resultados, conforme alcance da meta e lotação.
+`• Plano Estadual de Seg. Pública e Defesa Social 2023–2030: documento principal (escuta popular, oficinas, seminários); lançado em 27/11/2023.
+• Lei nº 16.170, de 25/10/2017: GPPV (Gratificação Pacto pela Vida) — premia metas intermediárias/eficiência (armas, mandados, crack).
+• Lei nº 16.171, de 26/10/2017: PDS (Prêmio de Defesa Social) — premia por resultados, conforme alcance da meta e lotação.
+• LC 141/2009 (art. 20, §3º): cabe à SEPLAG definir parâmetros/cláusulas dos Pactos de Resultados.
 • O JPS propôs alterações ao PPV; até a publicação, as leis citadas seguem vigentes.
 ⚠ A GPPV é premiação meritória — NÃO integra a remuneração; condicionada às metas do PDS.` },
 
@@ -192,10 +193,11 @@ const CARDS: Card[] = [
 • Gestão de Projetos: atividades não rotineiras com objetivo, tempo e escopo definidos.` },
 
   { modulo: "6", frente: "PDS — Prêmio de Defesa Social (Lei 16.171/2017)", verso:
-`• Premiação por resultados — PC, PM e BM da SDS e Casa Militar.
+`• Premiação por resultados — PC, PM e BM lotados na SDS/órgãos operativos e Casa Militar.
 • Base: desempenho na redução de MVI.
-• Meta trimestral por portaria conjunta SEPLAG/SDS. Parâmetro: redução anual mínima de 12% do CVLI/100mil.
-• Apuração: portaria da SEPLAG no mês subsequente ao fim do trimestre.` },
+• Meta trimestral por portaria conjunta SEPLAG/SDS (art. 8º). Parâmetro: redução anual mínima de 12% do CVLI/100mil hab.
+• Apuração (art. 9º): portaria da SEPLAG no mês subsequente ao fim do trimestre.
+• Quem apura o atingimento das metas é o NGR-SDS.` },
 
   { modulo: "6", frente: "PDS — 5 Categorias (Valores)", verso:
 `• PDS 1 — R$ 1.200: AIS com maior redução ABSOLUTA ou PERCENTUAL de MVI do Estado.
@@ -206,9 +208,9 @@ const CARDS: Card[] = [
 ⚠ PDS 1 exige a MAIOR redução (não basta atingir a meta); PDS 5 é o menor valor.` },
 
   { modulo: "6", frente: "GPPV — Gratificação Pacto pela Vida (Lei 16.170/2017)", verso:
-`• Premia a produção policial direta (metas intermediárias / eficiência).
+`• Lei nº 16.170, de 25/10/2017. Premia a produção policial direta (metas intermediárias / eficiência) de Policiais Civis e Militares.
 • Pagamento condicionado ao alcance das metas do PDS.
-• Natureza jurídica: premiação meritória — NÃO integra a remuneração.` },
+• Natureza jurídica: premiação meritória — NÃO integra, para qualquer efeito, a remuneração do servidor.` },
 
   { modulo: "6", frente: "GPPV — 3 Tipos", verso:
 `• GPPV-Armas: armas de fogo ilegais e explosivos das Forças Armadas. R$ 700 a R$ 2.000/arma (conforme classificação).
@@ -271,9 +273,9 @@ async function main() {
   const disc = await prisma.disciplina.findUnique({ where: { sigla: MATERIA } })
   if (!disc) throw new Error(`Disciplina ${MATERIA} não existe.`)
 
-  // Remove os mementos GRAPP criados por engano
-  const delM = await prisma.memento.deleteMany({ where: { materia: MATERIA } })
-  console.log(`Mementos GRAPP removidos: ${delM.count}`)
+  // Limpa apenas os flashcards (NÃO os mementos — o memento de GRAPP é legítimo).
+  const del = await prisma.flashcard.deleteMany({ where: { materia: MATERIA } })
+  console.log(`Flashcards GRAPP antigos removidos: ${del.count}`)
 
   let n = 0
   for (const c of CARDS) {
