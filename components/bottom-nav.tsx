@@ -13,17 +13,17 @@ const Svg = ({ children }: { children: React.ReactNode }) => (
 const HomeIco   = () => <Svg><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22v-7h6v7"/></Svg>
 const EscalaIco = () => <Svg><path d="m17 2 4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></Svg>
 const GridIco   = () => <Svg><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></Svg>
-const BellIco   = () => <Svg><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></Svg>
-const UsersIco  = () => <Svg><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></Svg>
+const TrophyIco = () => <Svg><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></Svg>
+const BookIco   = () => <Svg><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></Svg>
 
 type LinkDef = { href: string; label: string; Icon: React.FC }
 
 const LINKS: LinkDef[] = [
   { href: "/dashboard",   label: "Início",  Icon: HomeIco   },
+  { href: "/ranking",     label: "Ranking", Icon: TrophyIco },
   { href: "/escalas",     label: "Escalas", Icon: EscalaIco },
   { href: "/qts",         label: "QTS",     Icon: GridIco   },
-  { href: "/comunicados", label: "Avisos",  Icon: BellIco   },
-  { href: "/turma",       label: "Turma",   Icon: UsersIco  },
+  { href: "/aulas",       label: "Aulas",   Icon: BookIco   },
 ]
 
 export function BottomNav() {

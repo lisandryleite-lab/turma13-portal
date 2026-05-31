@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
+import { redirect } from "next/navigation"
 import { TurmaClient } from "./turma-client"
 
 export const dynamic = "force-dynamic"
@@ -41,6 +42,7 @@ const FUNCOES_FIXAS = [
 
 export default async function TurmaPage() {
   const session = await auth()
+  if (!session?.user?.isAdmin) redirect("/dashboard") // dados dos alunos: só Adm
   const minhaMatricula = session?.user?.matricula
 
   const alunos = await prisma.user.findMany({

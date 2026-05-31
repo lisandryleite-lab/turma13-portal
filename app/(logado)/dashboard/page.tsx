@@ -12,12 +12,11 @@ export default async function DashboardPage() {
 
   const semana = semanaAtual()
 
-  const [aluno, missao, aviso, xerife, disciplinas, todosComAniv] = await Promise.all([
+  const [aluno, aviso, xerife, disciplinas, todosComAniv] = await Promise.all([
     prisma.user.findUnique({
       where: { matricula },
       select: { id: true, nomeGuerra: true, nomeCompleto: true, email: true, canga: true, grupoPlantao: true, grupoFaxina: true, aniversario: true },
     }),
-    prisma.missao.findFirst({ where: { semana } }),
     prisma.aviso.findFirst({ orderBy: [{ fixado: "desc" }, { createdAt: "desc" }] }),
     prisma.xerife.findFirst({ where: { atual: true } }),
     prisma.disciplina.findMany({ orderBy: { sigla: "asc" } }),
@@ -88,30 +87,6 @@ export default async function DashboardPage() {
             <span style={{ fontWeight: 700, color: "var(--azul-profundo)" }}>{progressoGeral}%</span>
             <span>{totalCarga}h total</span>
           </div>
-        </div>
-
-        {/* ── Missão da Semana — em verde ── */}
-        <div style={{
-          background: "linear-gradient(135deg, #f0fdf4, #dcfce7)",
-          border: "1.5px solid #86efac",
-          borderRadius: 14, padding: 20,
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-            <span style={{ fontSize: 18 }}>🎯</span>
-            <h2 style={{ fontSize: 13, fontWeight: 700, color: "#15803d", margin: 0 }}>Missão · Semana {semana}</h2>
-          </div>
-          {missao ? (
-            <div>
-              <p style={{ fontWeight: 700, color: "#14532d", fontSize: 14, margin: "0 0 6px" }}>{missao.titulo}</p>
-              <p style={{ color: "#166534", fontSize: 13, lineHeight: 1.6, margin: "0 0 10px" }}
-                className="line-clamp-3">{missao.corpo}</p>
-              <Link href="/comunicados" style={{ fontSize: 12, color: "#15803d", textDecoration: "none", fontWeight: 600 }}>
-                Ver completa →
-              </Link>
-            </div>
-          ) : (
-            <p style={{ color: "#86efac", fontSize: 13 }}>Não definida ainda</p>
-          )}
         </div>
 
         {/* ── Seus Dados ── */}
