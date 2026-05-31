@@ -300,3 +300,15 @@ model HistoricoNotaCFO {
   notaCfo     NotaCFO @relation(fields: [notaCfoId], references: [id], onDelete: Cascade)
   alteradoPor User    @relation("CfoAlteradoPor", fields: [alteradoPorId], references: [id])
 }
+
+// ── CFO 2026 — Notas históricas (T1/T2) para previsão por percentil ──
+// Notas finais OFICIAIS de turmas anteriores. Base estatística da previsão.
+// Não têm relação com User (são de outras turmas).
+model NotaHistorica {
+  id           String @id @default(cuid())
+  turma        Int    // 1 (T1) ou 2 (T2)
+  valorFinal   Float
+  posicaoFinal Int?
+
+  @@index([turma])
+}

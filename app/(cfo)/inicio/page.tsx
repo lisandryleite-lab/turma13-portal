@@ -135,16 +135,6 @@ export default function PortalCfoHome() {
         >
           Portal CFO 2026
         </h1>
-        <p
-          style={{
-            fontStyle: "italic",
-            fontSize: "1rem",
-            color: "var(--ink-60)",
-            marginTop: 8,
-          }}
-        >
-          (isso é coisa nossa)
-        </p>
       </header>
 
       <div

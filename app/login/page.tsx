@@ -60,14 +60,6 @@ export default function LoginPage() {
         }}>
           Portal <em style={{ fontStyle: "italic", color: "var(--gold)" }}>CFO 2026</em>
         </h1>
-        <p style={{
-          fontFamily: "var(--sans)",
-          fontSize: 13,
-          color: "rgba(255,255,255,0.65)",
-          letterSpacing: "0.08em",
-        }}>
-          (isso é coisa nossa)
-        </p>
 
         {/* linha decorativa dourada */}
         <div style={{

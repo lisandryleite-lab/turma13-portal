@@ -7,10 +7,14 @@ export default async function RankingPage() {
   const session = await auth()
   if (!session?.user) redirect("/login")
 
-  const notas = await prisma.notaCFO.findMany({
-    where: { userId: session.user.id! },
-    orderBy: [{ materia: "asc" }, { modulo: "asc" }],
-  })
+  const [notas, historicoRows, turmaSize] = await Promise.all([
+    prisma.notaCFO.findMany({
+      where: { userId: session.user.id! },
+      orderBy: [{ materia: "asc" }, { modulo: "asc" }],
+    }),
+    prisma.notaHistorica.findMany({ select: { valorFinal: true } }),
+    prisma.user.count({ where: { turma: 3 } }),
+  ])
 
   return (
     <RankingClient
@@ -21,6 +25,8 @@ export default async function RankingPage() {
         valor: n.valor,
       }))}
       nomeGuerra={session.user.nomeGuerra}
+      historico={historicoRows.map(r => r.valorFinal)}
+      turmaSize={turmaSize}
     />
   )
 }

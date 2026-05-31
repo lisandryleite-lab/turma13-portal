@@ -3,18 +3,24 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { calcularPrevisao } from "@/lib/previsao"
 
 type Nota = { id: string; materia: string; modulo: string; valor: number }
 
 export function RankingClient({
   notasIniciais,
   nomeGuerra,
+  historico,
+  turmaSize,
 }: {
   notasIniciais: Nota[]
   nomeGuerra: string
+  historico: number[]
+  turmaSize: number
 }) {
   const router = useRouter()
   const [notas, setNotas] = useState<Nota[]>(notasIniciais)
+  const [aba, setAba] = useState<"lancar" | "previsao">("lancar")
   const [materia, setMateria] = useState("")
   const [modulo, setModulo] = useState("")
   const [valor, setValor] = useState("")
@@ -25,6 +31,8 @@ export function RankingClient({
     notas.length > 0
       ? (notas.reduce((s, n) => s + n.valor, 0) / notas.length).toFixed(3)
       : "—"
+
+  const previsao = calcularPrevisao(notas.map(n => n.valor), historico, turmaSize)
 
   async function salvar(e: React.FormEvent) {
     e.preventDefault()
@@ -107,21 +115,24 @@ export function RankingClient({
 
       {/* Abas */}
       <div style={{ display: "flex", gap: 8, marginTop: 20, flexWrap: "wrap" }}>
-        <span
-          style={{
-            padding: "8px 14px",
-            borderRadius: 999,
-            background: "var(--olive)",
-            color: "var(--canvas)",
-            fontSize: 14,
-            fontWeight: 600,
-          }}
-        >
-          Lançar notas
-        </span>
-        <span style={{ padding: "8px 14px", borderRadius: 999, background: "var(--surface)", color: "var(--ink-60)", fontSize: 14 }}>
-          Previsão · em breve
-        </span>
+        {(["lancar", "previsao"] as const).map(t => (
+          <button
+            key={t}
+            onClick={() => setAba(t)}
+            style={{
+              padding: "8px 14px",
+              borderRadius: 999,
+              border: "none",
+              cursor: "pointer",
+              fontSize: 14,
+              fontWeight: 600,
+              background: aba === t ? "var(--olive)" : "var(--surface)",
+              color: aba === t ? "var(--canvas)" : "var(--ink-60)",
+            }}
+          >
+            {t === "lancar" ? "Lançar notas" : "Previsão"}
+          </button>
+        ))}
         <span style={{ padding: "8px 14px", borderRadius: 999, background: "var(--surface)", color: "var(--ink-60)", fontSize: 14 }}>
           Simular · em breve
         </span>
@@ -147,6 +158,8 @@ export function RankingClient({
         </p>
       </div>
 
+      {aba === "lancar" && (
+      <>
       {/* Formulário de lançamento */}
       <form
         onSubmit={salvar}
@@ -238,6 +251,66 @@ export function RankingClient({
             </li>
           ))}
         </ul>
+      )}
+      </>
+      )}
+
+      {aba === "previsao" && (
+        <div style={{ marginTop: 20 }}>
+          {!previsao ? (
+            <p style={{ color: "var(--ink-60)" }}>
+              Lance suas notas na aba “Lançar notas” para ver sua previsão de posição.
+            </p>
+          ) : (
+            <>
+              {/* Faixa estimada — destaque */}
+              <div
+                style={{
+                  padding: "20px 18px",
+                  borderRadius: 14,
+                  background: "var(--olive)",
+                  color: "var(--canvas)",
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ fontSize: 13, opacity: 0.85 }}>Faixa provável de posição</div>
+                <div style={{ fontFamily: "var(--serif-cfo)", fontSize: "2rem", fontWeight: 600, marginTop: 4 }}>
+                  {previsao.posicaoMin}º – {previsao.posicaoMax}º
+                </div>
+                <div style={{ fontSize: 14, opacity: 0.85 }}>de {previsao.turmaSize} alunos da T3</div>
+              </div>
+
+              {/* Números de apoio */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 14 }}>
+                {[
+                  { label: "Sua média", valor: previsao.media.toFixed(3) },
+                  { label: "Mediana histórica", valor: previsao.medianaHistorica.toFixed(3) },
+                  { label: "Percentil estimado", valor: Math.round(previsao.percentil) + "º" },
+                ].map(b => (
+                  <div key={b.label} style={{ padding: "12px 10px", borderRadius: 10, background: "var(--surface)", textAlign: "center" }}>
+                    <div style={{ fontSize: 12, color: "var(--ink-60)" }}>{b.label}</div>
+                    <div style={{ fontSize: 18, fontWeight: 700, color: "var(--olive)", marginTop: 2, fontVariantNumeric: "tabular-nums" }}>
+                      {b.valor}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {!previsao.confiavel && (
+                <p style={{ display: "flex", gap: 8, marginTop: 14, padding: "10px 12px", borderRadius: 10, background: "#fbf3e3", border: "1px solid var(--gold)", fontSize: 13.5, color: "var(--ink)" }}>
+                  <span aria-hidden>ℹ️</span>
+                  Você lançou poucas notas ({previsao.qtdNotas}). A faixa fica mais precisa conforme você adiciona mais matérias.
+                </p>
+              )}
+
+              <p style={{ marginTop: 16, fontSize: 13, color: "var(--ink-60)", lineHeight: 1.5 }}>
+                Estimativa baseada na distribuição das notas finais das turmas anteriores
+                (T1 + T2, {historico.length} alunos). É uma <strong>aproximação</strong> a partir do
+                histórico — não é previsão exata nem reflete a sua nota oficial.
+              </p>
+            </>
+          )}
+        </div>
       )}
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>
