@@ -204,3 +204,22 @@
     padding-bottom: 72px;
   }
 }
+/* ── Memento (Markdown renderizado) — Portal CFO ── */
+.memento-md { color: var(--ink); font-size: 15px; line-height: 1.6; }
+.memento-md .md-h1 { font-family: var(--serif-cfo); color: var(--olive); font-size: 1.5rem; font-weight: 600; margin: 24px 0 10px; border-bottom: 2px solid var(--gold); padding-bottom: 6px; }
+.memento-md .md-h2 { font-family: var(--serif-cfo); color: var(--olive); font-size: 1.25rem; font-weight: 600; margin: 20px 0 8px; }
+.memento-md .md-h3 { font-family: var(--serif-cfo); color: var(--ink); font-size: 1.08rem; font-weight: 600; margin: 16px 0 6px; }
+.memento-md .md-p { margin: 8px 0; }
+.memento-md .md-ul, .memento-md .md-ol { margin: 8px 0; padding-left: 22px; }
+.memento-md .md-ul li, .memento-md .md-ol li { margin: 3px 0; }
+.memento-md code { background: var(--surface); padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
+.memento-md .md-hr { border: none; border-top: 1px solid rgba(58,74,58,0.2); margin: 18px 0; }
+.memento-md .md-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+.memento-md .md-table th { background: var(--olive); color: var(--canvas); text-align: left; padding: 8px 10px; }
+.memento-md .md-table td { border: 1px solid rgba(58,74,58,0.18); padding: 7px 10px; }
+.memento-md .md-table tbody tr:nth-child(even) { background: #f4f1e8; }
+.memento-md .md-callout { margin: 12px 0; padding: 11px 14px; border-radius: 10px; border-left: 4px solid; font-size: 14.5px; }
+.memento-md .md-quote { background: var(--surface); border-color: var(--ink-60); color: var(--ink); }
+.memento-md .md-alert { background: #fbecec; border-color: var(--red); color: var(--ink); }
+.memento-md .md-mnem  { background: #f3eeff; border-color: #6b3fa0; color: #3a2a55; }
+.memento-md .md-chave { background: #fbf3e3; border-color: var(--gold); color: var(--ink); }

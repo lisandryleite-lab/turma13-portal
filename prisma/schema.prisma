@@ -379,3 +379,32 @@ model Resposta {
   @@index([userId])
   @@index([questaoId])
 }
+
+// ── CFO 2026 — Mementos & Flashcards (Fase 7) ──────────────────
+model Memento {
+  id         String   @id @default(cuid())
+  materia    String   // sigla da Disciplina
+  modulo     String   @default("")
+  titulo     String
+  conteudoMd String   // conteúdo em Markdown (renderizado com design CFO)
+  ordem      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([materia, modulo, titulo])
+  @@index([materia])
+}
+
+model Flashcard {
+  id        String   @id @default(cuid())
+  materia   String
+  modulo    String   @default("")
+  frente    String
+  verso     String
+  ordem     Int      @default(0)
+  hash      String   @unique // sha1(materia|modulo|frente) — import idempotente
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([materia])
+}
