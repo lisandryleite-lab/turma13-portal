@@ -3,8 +3,8 @@ import "./globals.css"
 import { SessionProvider } from "next-auth/react"
 
 export const metadata: Metadata = {
-  title: "Turma 13 CFO 2026",
-  description: "Portal da Turma 13 — APMP Paudalho/PE · 1º Pelotão · 2ª CIA",
+  title: "CFO 2026",
+  description: "Portal do CFO PMPE 2026 — Turma 3 · isso é coisa nossa",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

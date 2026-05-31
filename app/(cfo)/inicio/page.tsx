@@ -134,7 +134,7 @@ export default function PortalCfoHome() {
             margin: 0,
           }}
         >
-          Portal CFO 2026
+          CFO 2026
         </h1>
         <p
           style={{
