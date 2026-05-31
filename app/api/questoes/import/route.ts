@@ -9,10 +9,12 @@ import { prisma } from "@/lib/prisma"
 
 type QIn = {
   tipo?: string
+  contexto?: string
   enunciado?: string
   alternativas?: { id: string; texto: string }[]
   gabarito?: string
   explicacao?: string
+  modelo?: { estrutura?: string; criterios?: string[]; resposta?: string }
   fonte?: string
 }
 
@@ -43,20 +45,25 @@ export async function POST(req: NextRequest) {
   const erros: string[] = []
 
   for (const [i, q] of questoes.entries()) {
-    const tipo = q.tipo === "certo_errado" ? "certo_errado" : "multipla"
+    const tipo = ["certo_errado", "dissertativa"].includes(q.tipo || "") ? q.tipo! : "multipla"
     const enunciado = String(q.enunciado || "").trim()
     const gabarito = String(q.gabarito || "").trim()
-    if (!enunciado || !gabarito) { erros.push(`Questão ${i + 1}: enunciado/gabarito ausente.`); continue }
+    if (!enunciado) { erros.push(`Questão ${i + 1}: enunciado ausente.`); continue }
 
     const alternativas = tipo === "multipla" ? (q.alternativas || []) : []
     if (tipo === "multipla" && alternativas.length < 2) { erros.push(`Questão ${i + 1}: múltipla escolha precisa de ≥2 alternativas.`); continue }
+    if (tipo !== "dissertativa" && !gabarito) { erros.push(`Questão ${i + 1}: gabarito ausente.`); continue }
+    if (tipo === "dissertativa" && !q.modelo?.resposta) { erros.push(`Questão ${i + 1}: dissertativa sem modelo de resposta.`); continue }
 
     const hash = createHash("sha1").update(`${materia}|${modulo}|${enunciado}`).digest("hex")
     const dados = {
-      materia, modulo, tipo, enunciado,
+      materia, modulo, tipo,
+      contexto: q.contexto?.trim() || null,
+      enunciado,
       alternativas: alternativas as any,
       gabarito,
       explicacao: q.explicacao?.trim() || null,
+      modelo: tipo === "dissertativa" ? (q.modelo as any) : undefined,
       fonte: q.fonte?.trim() || null,
     }
     try {

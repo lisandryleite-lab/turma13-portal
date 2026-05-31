@@ -8,9 +8,25 @@ type Materia = { sigla: string; nome: string; total: number }
 type Disc = { sigla: string; nome: string }
 type Stat = { sigla: string; nome: string; acertos: number; total: number }
 type Alt = { id: string; texto: string }
+type Modelo = { estrutura?: string; criterios?: string[]; resposta?: string }
 type Questao = {
   id: string; materia: string; modulo: string; tipo: string
-  enunciado: string; alternativas: Alt[]; gabarito: string; explicacao: string | null; fonte: string | null
+  contexto: string | null
+  enunciado: string; alternativas: Alt[]; gabarito: string; explicacao: string | null
+  modelo: Modelo | null; fonte: string | null
+}
+
+function Enunciado({ q }: { q: Questao }) {
+  return (
+    <>
+      {q.contexto && (
+        <div style={{ padding: "10px 12px", borderRadius: 8, background: "#fbf3e3", border: "1px solid var(--gold)", fontSize: 14, color: "var(--ink)", marginBottom: 10, lineHeight: 1.5 }}>
+          {q.contexto}
+        </div>
+      )}
+      <p style={{ fontSize: 15.5, lineHeight: 1.5, margin: 0, color: "var(--ink)" }}>{q.enunciado}</p>
+    </>
+  )
 }
 type Aba = "resolver" | "simulado" | "acerto" | "admin"
 
@@ -102,12 +118,14 @@ function Resolver({ materias }: { materias: Materia[] }) {
   const [feedback, setFeedback] = useState<{ acertou: boolean; gabarito: string; explicacao: string | null } | null>(null)
   const [acertos, setAcertos] = useState(0)
   const [feitas, setFeitas] = useState(0)
+  const [disTexto, setDisTexto] = useState("")
+  const [disRevelado, setDisRevelado] = useState(false)
 
   async function iniciar() {
     if (!materia) return
     const res = await fetch(`/api/questoes?materia=${materia}&shuffle=1`)
     const data = await res.json()
-    setQs(data); setI(0); setEscolhida(null); setFeedback(null); setAcertos(0); setFeitas(0)
+    setQs(data); setI(0); setEscolhida(null); setFeedback(null); setAcertos(0); setFeitas(0); setDisTexto(""); setDisRevelado(false)
   }
   async function responder(r: string) {
     if (!qs) return
@@ -116,7 +134,7 @@ function Resolver({ materias }: { materias: Materia[] }) {
     const j = await res.json()
     setFeedback(j); setFeitas(f => f + 1); if (j.acertou) setAcertos(a => a + 1)
   }
-  function proxima() { setEscolhida(null); setFeedback(null); setI(x => x + 1) }
+  function proxima() { setEscolhida(null); setFeedback(null); setDisTexto(""); setDisRevelado(false); setI(x => x + 1) }
 
   if (!qs) {
     return (
@@ -156,13 +174,44 @@ function Resolver({ materias }: { materias: Materia[] }) {
         <span>Questão {i + 1} de {qs.length} · acertos {acertos}/{feitas}</span>
       </div>
       <div style={card}>
-        <p style={{ fontSize: 15.5, lineHeight: 1.5, margin: 0, color: "var(--ink)" }}>{q.enunciado}</p>
-        <Opcoes q={q} escolhida={escolhida} gabarito={feedback?.gabarito ?? null} onPick={responder} />
+        <Enunciado q={q} />
+        {q.tipo === "dissertativa" ? (
+          <>
+            <textarea value={disTexto} onChange={e => setDisTexto(e.target.value)} disabled={disRevelado} rows={6}
+              placeholder="Escreva sua resposta…" style={{ ...inputStyle, marginTop: 12, resize: "vertical" }} />
+            {!disRevelado && (
+              <button onClick={() => setDisRevelado(true)} style={{ marginTop: 10, padding: "9px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>
+                Ver modelo de resposta
+              </button>
+            )}
+          </>
+        ) : (
+          <Opcoes q={q} escolhida={escolhida} gabarito={feedback?.gabarito ?? null} onPick={responder} />
+        )}
       </div>
-      {feedback && (
+
+      {/* Feedback objetivo */}
+      {feedback && q.tipo !== "dissertativa" && (
         <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: 10, background: feedback.acertou ? "#eef4ea" : "#fbecec", border: `1px solid ${feedback.acertou ? "var(--olive)" : "var(--red)"}` }}>
           <strong style={{ color: feedback.acertou ? "var(--olive)" : "var(--red)" }}>{feedback.acertou ? "✓ Acertou" : "✗ Errou"}</strong>
           {feedback.explicacao && <p style={{ margin: "6px 0 0", fontSize: 14, color: "var(--ink)", lineHeight: 1.5 }}>{feedback.explicacao}</p>}
+          <button onClick={proxima} style={{ marginTop: 10, padding: "9px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>
+            {i + 1 < qs.length ? "Próxima" : "Ver resultado"}
+          </button>
+        </div>
+      )}
+
+      {/* Modelo da dissertativa */}
+      {disRevelado && q.tipo === "dissertativa" && q.modelo && (
+        <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: 10, background: "#eef2f8", borderLeft: "3px solid var(--olive)" }}>
+          <strong style={{ color: "var(--olive)" }}>▸ Modelo de resposta</strong>
+          {q.modelo.estrutura && <p style={{ margin: "6px 0 0", fontSize: 13.5, color: "var(--ink-60)" }}><strong>Estrutura:</strong> {q.modelo.estrutura}</p>}
+          {q.modelo.criterios && q.modelo.criterios.length > 0 && (
+            <ul style={{ margin: "6px 0 0", paddingLeft: 18, fontSize: 13.5, color: "var(--ink-60)" }}>
+              {q.modelo.criterios.map((c, k) => <li key={k}>{c}</li>)}
+            </ul>
+          )}
+          {q.modelo.resposta && <p style={{ margin: "8px 0 0", fontSize: 14, color: "var(--ink)", lineHeight: 1.5 }}>{q.modelo.resposta}</p>}
           <button onClick={proxima} style={{ marginTop: 10, padding: "9px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>
             {i + 1 < qs.length ? "Próxima" : "Ver resultado"}
           </button>
@@ -213,8 +262,9 @@ function Simulado({ materias }: { materias: Materia[] }) {
 
   async function iniciar() {
     if (!materia) return
-    const res = await fetch(`/api/questoes?materia=${materia}&shuffle=1&limit=${Number(qtd) || 10}`)
-    const data: Questao[] = await res.json()
+    const res = await fetch(`/api/questoes?materia=${materia}&shuffle=1`)
+    const todas: Questao[] = await res.json()
+    const data = todas.filter(q => q.tipo !== "dissertativa").slice(0, Number(qtd) || 10)
     setQs(data); setI(0); setRespostas({}); setResultado(null); setRestante((Number(min) || 15) * 60)
   }
 
@@ -265,7 +315,7 @@ function Simulado({ materias }: { materias: Materia[] }) {
         <span style={{ fontFamily: "var(--serif-cfo)", fontSize: 18, fontWeight: 600, color: restante < 60 ? "var(--red)" : "var(--olive)" }}>⏱ {mm}:{ss}</span>
       </div>
       <div style={card}>
-        <p style={{ fontSize: 15.5, lineHeight: 1.5, margin: 0 }}>{q.enunciado}</p>
+        <Enunciado q={q} />
         <Opcoes q={q} escolhida={respostas[q.id] ?? null} gabarito={null} onPick={r => setRespostas(p => ({ ...p, [q.id]: r }))} />
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12 }}>
@@ -339,13 +389,16 @@ function Admin({ disciplinas, onImport }: { disciplinas: Disc[]; onImport: () =>
         Cole o <strong>pacote JSON</strong> gerado no Claude. A matéria precisa existir entre as {disciplinas.length} disciplinas (sigla). Importação idempotente (re-importar atualiza).
       </p>
       <pre style={{ ...card, fontSize: 12, overflowX: "auto", color: "var(--ink-60)" }}>{`{
-  "materia": "LPMO",
-  "modulo": "1",
+  "materia": "LPMO", "modulo": "1",
   "questoes": [
-    { "tipo": "multipla", "enunciado": "...",
-      "alternativas": [{"id":"A","texto":"..."},{"id":"B","texto":"..."}],
-      "gabarito": "A", "explicacao": "...", "fonte": "Lei 14.751/23" },
-    { "tipo": "certo_errado", "enunciado": "...", "gabarito": "certo", "explicacao": "..." }
+    { "tipo": "multipla", "contexto": "(opcional) caso prático…",
+      "enunciado": "...", "alternativas": [{"id":"A","texto":"..."},{"id":"B","texto":"..."}],
+      "gabarito": "A", "explicacao": "gabarito comentado", "fonte": "Lei 14.751/23" },
+    { "tipo": "certo_errado", "enunciado": "...", "gabarito": "certo",
+      "explicacao": "justificativa (em F, explica o erro)" },
+    { "tipo": "dissertativa", "enunciado": "...",
+      "modelo": { "estrutura": "Intro → Desenv. → Conclusão",
+        "criterios": ["critério 1","critério 2"], "resposta": "modelo de resposta…" } }
   ]
 }`}</pre>
       <textarea value={json} onChange={e => setJson(e.target.value)} rows={10} placeholder="Cole o JSON aqui…"

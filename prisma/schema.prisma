@@ -349,11 +349,13 @@ model Questao {
   id           String   @id @default(cuid())
   materia      String   // sigla da Disciplina (ex.: LPMO)
   modulo       String   @default("")
-  tipo         String   @default("multipla") // multipla | certo_errado
+  tipo         String   @default("multipla") // multipla | certo_errado | dissertativa
+  contexto     String?  // caso prático / situação (MC com ctx)
   enunciado    String
-  alternativas Json     // multipla: [{id:"A",texto:"..."}]; certo_errado: []
-  gabarito     String   // "A".."E" ou "certo"/"errado"
-  explicacao   String?
+  alternativas Json     // multipla: [{id:"A",texto:"..."}]; demais: []
+  gabarito     String   @default("") // "A".."E" ou "certo"/"errado"; vazio em dissertativa
+  explicacao   String?  // gabarito comentado (MC) ou justificativa do erro (VF)
+  modelo       Json?    // dissertativa: { estrutura, criterios:[], resposta }
   fonte        String?
   hash         String   @unique // sha1(materia|modulo|enunciado) — import idempotente
   createdAt    DateTime @default(now())
