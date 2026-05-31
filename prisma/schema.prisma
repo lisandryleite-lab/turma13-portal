@@ -33,6 +33,7 @@ model User {
   notasAlteradas   HistoricoNota[]   @relation("AlteradoPor")
   notasCfo         NotaCFO[]
   notasCfoAlteradas HistoricoNotaCFO[] @relation("CfoAlteradoPor")
+  preferenciaOpm   PreferenciaOPM?
   escalasAluno     EscalaAluno[]
   missoesConcluidas MissaoConcluida[]
   nfdc              Float   @default(10)
@@ -311,4 +312,33 @@ model NotaHistorica {
   posicaoFinal Int?
 
   @@index([turma])
+}
+
+// ── CFO 2026 — Preferência de Batalhão (OPM) ──────────────────
+// Lista fechada de OPMs (área da DIM / RMR) cadastrada pelo Adm.
+model OPM {
+  id       String  @id @default(cuid())
+  sigla    String  @unique
+  nome     String
+  especial Boolean @default(false) // "não decidiu / não faz diferença"
+  ordem    Int     @default(0)
+
+  prefsOpcao1 PreferenciaOPM[] @relation("Opcao1")
+  prefsOpcao2 PreferenciaOPM[] @relation("Opcao2")
+  prefsOpcao3 PreferenciaOPM[] @relation("Opcao3")
+}
+
+model PreferenciaOPM {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  opcao1Id  String
+  opcao2Id  String?
+  opcao3Id  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opcao1 OPM  @relation("Opcao1", fields: [opcao1Id], references: [id])
+  opcao2 OPM? @relation("Opcao2", fields: [opcao2Id], references: [id])
+  opcao3 OPM? @relation("Opcao3", fields: [opcao3Id], references: [id])
 }

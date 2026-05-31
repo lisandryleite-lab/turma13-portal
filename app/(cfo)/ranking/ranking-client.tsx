@@ -6,21 +6,39 @@ import { useRouter } from "next/navigation"
 import { calcularPrevisao } from "@/lib/previsao"
 
 type Nota = { id: string; materia: string; modulo: string; valor: number }
+type Opm = { id: string; sigla: string; nome: string; especial: boolean }
+type Pref = { opcao1Id: string; opcao2Id: string | null; opcao3Id: string | null }
+type Agregado = { sigla: string; nome: string; especial: boolean; count: number }
+type Aba = "lancar" | "previsao" | "simular" | "batalhoes"
 
 export function RankingClient({
   notasIniciais,
   nomeGuerra,
   historico,
   turmaSize,
+  opms,
+  minhaPref,
+  agregado1,
 }: {
   notasIniciais: Nota[]
   nomeGuerra: string
   historico: number[]
   turmaSize: number
+  opms: Opm[]
+  minhaPref: Pref | null
+  agregado1: Agregado[]
 }) {
   const router = useRouter()
   const [notas, setNotas] = useState<Nota[]>(notasIniciais)
-  const [aba, setAba] = useState<"lancar" | "previsao">("lancar")
+  const [aba, setAba] = useState<Aba>("lancar")
+  // Simular: cópia hipotética da média (não persiste, só muda a visão do aluno)
+  const [simMedia, setSimMedia] = useState<string>("")
+  // Batalhões: seleção de preferência
+  const [op1, setOp1] = useState(minhaPref?.opcao1Id || "")
+  const [op2, setOp2] = useState(minhaPref?.opcao2Id || "")
+  const [op3, setOp3] = useState(minhaPref?.opcao3Id || "")
+  const [salvandoPref, setSalvandoPref] = useState(false)
+  const [prefMsg, setPrefMsg] = useState("")
   const [materia, setMateria] = useState("")
   const [modulo, setModulo] = useState("")
   const [valor, setValor] = useState("")
@@ -33,6 +51,33 @@ export function RankingClient({
       : "—"
 
   const previsao = calcularPrevisao(notas.map(n => n.valor), historico, turmaSize)
+
+  // Simular: usa a média digitada (ou a real como ponto de partida)
+  const simValorNum = Number((simMedia || "").replace(",", "."))
+  const simPrevisao =
+    !isNaN(simValorNum) && simValorNum > 0 && simValorNum <= 10
+      ? calcularPrevisao([simValorNum], historico, turmaSize)
+      : null
+
+  const op1Especial = !!op1 && !!opms.find(o => o.id === op1)?.especial
+
+  async function salvarPref() {
+    if (!op1) return setPrefMsg("Escolha ao menos a 1ª opção.")
+    setSalvandoPref(true)
+    setPrefMsg("")
+    const res = await fetch("/api/preferencia-opm", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ opcao1Id: op1, opcao2Id: op1Especial ? null : op2 || null, opcao3Id: op1Especial ? null : op3 || null }),
+    })
+    setSalvandoPref(false)
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({}))
+      return setPrefMsg(j.error || "Erro ao salvar.")
+    }
+    setPrefMsg("✓ Preferência salva.")
+    router.refresh()
+  }
 
   async function salvar(e: React.FormEvent) {
     e.preventDefault()
@@ -115,10 +160,18 @@ export function RankingClient({
 
       {/* Abas */}
       <div style={{ display: "flex", gap: 8, marginTop: 20, flexWrap: "wrap" }}>
-        {(["lancar", "previsao"] as const).map(t => (
+        {([
+          ["lancar", "Lançar notas"],
+          ["previsao", "Previsão"],
+          ["simular", "Simular"],
+          ["batalhoes", "Batalhões"],
+        ] as const).map(([t, rotulo]) => (
           <button
             key={t}
-            onClick={() => setAba(t)}
+            onClick={() => {
+              if (t === "simular" && !simMedia && previsao) setSimMedia(previsao.media.toFixed(2))
+              setAba(t)
+            }}
             style={{
               padding: "8px 14px",
               borderRadius: 999,
@@ -130,12 +183,9 @@ export function RankingClient({
               color: aba === t ? "var(--canvas)" : "var(--ink-60)",
             }}
           >
-            {t === "lancar" ? "Lançar notas" : "Previsão"}
+            {rotulo}
           </button>
         ))}
-        <span style={{ padding: "8px 14px", borderRadius: 999, background: "var(--surface)", color: "var(--ink-60)", fontSize: 14 }}>
-          Simular · em breve
-        </span>
       </div>
 
       {/* Aviso fixo — simulação não-oficial (ícone + texto, nunca só cor) */}
@@ -310,6 +360,106 @@ export function RankingClient({
               </p>
             </>
           )}
+        </div>
+      )}
+
+      {aba === "simular" && (
+        <div style={{ marginTop: 20 }}>
+          <p style={{ color: "var(--ink-60)", fontSize: 14, marginBottom: 14, lineHeight: 1.5 }}>
+            Digite uma <strong>média hipotética</strong> e veja como sua faixa de posição mudaria.
+            É só para você — <strong>não altera</strong> o ranking de ninguém.
+          </p>
+          <label style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
+            Média hipotética (0–10)
+            <input
+              value={simMedia}
+              onChange={e => setSimMedia(e.target.value)}
+              inputMode="decimal"
+              placeholder="Ex.: 9,60"
+              style={{ ...inputStyle, marginTop: 4, maxWidth: 180, display: "block" }}
+            />
+          </label>
+          {simPrevisao ? (
+            <div style={{ marginTop: 16, padding: "20px 18px", borderRadius: 14, background: "var(--olive)", color: "var(--canvas)", textAlign: "center" }}>
+              <div style={{ fontSize: 13, opacity: 0.85 }}>Faixa simulada de posição</div>
+              <div style={{ fontFamily: "var(--serif-cfo)", fontSize: "2rem", fontWeight: 600, marginTop: 4 }}>
+                {simPrevisao.posicaoMin}º – {simPrevisao.posicaoMax}º
+              </div>
+              <div style={{ fontSize: 14, opacity: 0.85 }}>
+                de {simPrevisao.turmaSize} · percentil ~{Math.round(simPrevisao.percentil)}º
+              </div>
+            </div>
+          ) : (
+            <p style={{ marginTop: 12, color: "var(--ink-60)", fontSize: 13.5 }}>Digite uma média entre 0 e 10.</p>
+          )}
+        </div>
+      )}
+
+      {aba === "batalhoes" && (
+        <div style={{ marginTop: 20 }}>
+          <p style={{ color: "var(--ink-60)", fontSize: 14, marginBottom: 14, lineHeight: 1.5 }}>
+            Escolha sua preferência de batalhão (área da DIM / RMR). A 1ª opção é obrigatória;
+            2ª e 3ª são opcionais. O quadro de mais pedidos é <strong>anônimo</strong> — mostra só a contagem.
+          </p>
+
+          {/* Selects */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              { rot: "1ª opção", val: op1, set: setOp1, incluiEspecial: true },
+              { rot: "2ª opção (opcional)", val: op2, set: setOp2, incluiEspecial: false },
+              { rot: "3ª opção (opcional)", val: op3, set: setOp3, incluiEspecial: false },
+            ].map((sel, i) => (
+              <label key={i} style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
+                {sel.rot}
+                <select
+                  value={sel.val}
+                  onChange={e => sel.set(e.target.value)}
+                  disabled={i > 0 && op1Especial}
+                  style={{ ...inputStyle, marginTop: 4, opacity: i > 0 && op1Especial ? 0.5 : 1 }}
+                >
+                  <option value="">— selecione —</option>
+                  {opms
+                    .filter(o => sel.incluiEspecial || !o.especial)
+                    .map(o => (
+                      <option key={o.id} value={o.id}>
+                        {o.sigla}{o.especial ? "" : ` — ${o.nome}`}
+                      </option>
+                    ))}
+                </select>
+              </label>
+            ))}
+          </div>
+
+          <button
+            onClick={salvarPref}
+            disabled={salvandoPref}
+            style={{ marginTop: 14, padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontSize: 15, fontWeight: 600, cursor: salvandoPref ? "default" : "pointer" }}
+          >
+            {salvandoPref ? "Salvando…" : "Salvar preferência"}
+          </button>
+          {prefMsg && <p style={{ marginTop: 8, fontSize: 13.5, color: prefMsg.startsWith("✓") ? "var(--olive)" : "var(--red)" }}>{prefMsg}</p>}
+
+          {/* Quadro anônimo — mais pedidos como 1ª opção */}
+          <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 12 }}>
+            Mais pedidos como 1ª opção <span style={{ fontSize: 13, fontWeight: 400, color: "var(--ink-60)" }}>(anônimo)</span>
+          </h2>
+          {(() => {
+            const ordenado = [...agregado1].sort((a, b) => b.count - a.count)
+            const max = Math.max(1, ...ordenado.map(a => a.count))
+            return (
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+                {ordenado.map(a => (
+                  <li key={a.sigla} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <span style={{ width: 64, fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>{a.sigla}</span>
+                    <div style={{ flex: 1, height: 18, borderRadius: 6, background: "var(--surface)", overflow: "hidden" }}>
+                      <div style={{ width: `${(a.count / max) * 100}%`, height: "100%", background: a.especial ? "var(--gold)" : "var(--olive)" }} />
+                    </div>
+                    <span style={{ width: 28, textAlign: "right", fontSize: 14, fontWeight: 700, color: "var(--olive)", fontVariantNumeric: "tabular-nums" }}>{a.count}</span>
+                  </li>
+                ))}
+              </ul>
+            )
+          })()}
         </div>
       )}
 
