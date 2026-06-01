@@ -21,7 +21,14 @@ export default async function PainelPage() {
 
   await logAcesso(session.user as any, "painel-admin", "acessou o painel administrativo")
 
-  const [alunos, qCount, mCount, fCount, prefCount, qPorMat, fPorMat, mPorMat, logs] = await Promise.all([
+  const agora = new Date()
+  const inicioHoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate())
+  const seteDias = new Date(agora.getTime() - 7 * 24 * 60 * 60 * 1000)
+
+  const [
+    alunos, qCount, mCount, fCount, prefCount, qPorMat, fPorMat, mPorMat, logs,
+    acessosTotal, acessosHoje, acessos7d, acessosPorAluno,
+  ] = await Promise.all([
     prisma.user.count({ where: { turma: 3 } }),
     prisma.questao.count(),
     prisma.memento.count(),
@@ -30,7 +37,18 @@ export default async function PainelPage() {
     prisma.questao.groupBy({ by: ["materia"], _count: { materia: true } }),
     prisma.flashcard.groupBy({ by: ["materia"], _count: { materia: true } }),
     prisma.memento.groupBy({ by: ["materia"], _count: { materia: true } }),
-    prisma.logAcesso.findMany({ orderBy: { timestamp: "desc" }, take: 50 }),
+    prisma.logAcesso.findMany({ where: { area: { not: "login" } }, orderBy: { timestamp: "desc" }, take: 50 }),
+    prisma.logAcesso.count({ where: { area: "login" } }),
+    prisma.logAcesso.count({ where: { area: "login", timestamp: { gte: inicioHoje } } }),
+    prisma.logAcesso.count({ where: { area: "login", timestamp: { gte: seteDias } } }),
+    prisma.logAcesso.groupBy({
+      by: ["matricula", "nomeGuerra"],
+      where: { area: "login" },
+      _count: { _all: true },
+      _max: { timestamp: true },
+      orderBy: { _count: { matricula: "desc" } },
+      take: 40,
+    }),
   ])
 
   const mats = new Set<string>([...qPorMat, ...fPorMat, ...mPorMat].map(x => x.materia))
@@ -61,6 +79,39 @@ export default async function PainelPage() {
         {stat("Pref. OPM", prefCount)}
       </div>
 
+      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>Acessos ao site</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10 }}>
+        {stat("Acessos (total)", acessosTotal)}
+        {stat("Hoje", acessosHoje)}
+        {stat("Últimos 7 dias", acessos7d)}
+        {stat("Alunos que acessaram", acessosPorAluno.length)}
+      </div>
+      <p style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 8 }}>Cada acesso corresponde a um login no sistema. A contagem começou a partir desta atualização.</p>
+
+      <h3 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.05rem", color: "var(--olive)", marginTop: 18, marginBottom: 8 }}>Acessos por aluno</h3>
+      {acessosPorAluno.length === 0 ? (
+        <p style={{ color: "var(--ink-60)" }}>Nenhum login registrado ainda.</p>
+      ) : (
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+          <thead>
+            <tr style={{ background: "var(--olive)", color: "var(--canvas)" }}>
+              <th style={{ textAlign: "left", padding: "8px 10px" }}>Aluno</th>
+              <th style={{ padding: "8px 10px" }}>Acessos</th>
+              <th style={{ padding: "8px 10px" }}>Último acesso</th>
+            </tr>
+          </thead>
+          <tbody>
+            {acessosPorAluno.map((a, i) => (
+              <tr key={a.matricula} style={{ background: i % 2 ? "#f4f1e8" : "#fff" }}>
+                <td style={{ padding: "7px 10px", fontWeight: 600 }}>{a.nomeGuerra} <span style={{ color: "var(--ink-60)", fontWeight: 400 }}>({a.matricula})</span></td>
+                <td style={{ padding: "7px 10px", textAlign: "center" }}>{a._count._all}</td>
+                <td style={{ padding: "7px 10px", textAlign: "center", color: "var(--ink-60)" }}>{a._max.timestamp ? new Date(a._max.timestamp).toLocaleString("pt-BR") : "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
       <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>Conteúdo por matéria</h2>
       {conteudo.length === 0 ? (
         <p style={{ color: "var(--ink-60)" }}>Nenhum conteúdo cadastrado ainda.</p>
@@ -88,7 +139,7 @@ export default async function PainelPage() {
       )}
 
       <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>
-        Logs de acesso <span style={{ fontSize: 13, fontWeight: 400, color: "var(--ink-60)" }}>(LGPD · últimos 50)</span>
+        Logs de ações administrativas <span style={{ fontSize: 13, fontWeight: 400, color: "var(--ink-60)" }}>(LGPD · últimos 50)</span>
       </h2>
       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 6 }}>
         {logs.map(l => (

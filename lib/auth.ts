@@ -52,4 +52,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session
     },
   },
+  events: {
+    // Registra cada login para contagem de acessos ao site (visível no painel admin).
+    async signIn({ user }) {
+      const u = user as { id?: string; matricula?: number; nomeGuerra?: string }
+      if (!u?.id || u.matricula == null) return
+      try {
+        await prisma.logAcesso.create({
+          data: {
+            userId: u.id,
+            matricula: u.matricula,
+            nomeGuerra: u.nomeGuerra ?? "",
+            area: "login",
+            acao: "entrou no sistema",
+          },
+        })
+      } catch {
+        // o log nunca deve quebrar o login
+      }
+    },
+  },
 })
