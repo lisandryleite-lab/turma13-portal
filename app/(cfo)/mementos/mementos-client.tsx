@@ -156,11 +156,13 @@ function Flashcards({ materias }: { materias: Mat[] }) {
     const nome = mAtual?.nome || materia
 
     // Empacota os cards de cada módulo em "quadrados". Prioriza a legibilidade:
-    // se o conteúdo de um módulo não couber, ele continua em outro(s) quadrado(s).
-    const LINHAS_POR_QUAD = 26            // orçamento de linhas por quadrado (altura fixa)
-    const CHARS_POR_LINHA = 48            // ~caracteres por linha no verso
-    const custo = (c: Card) =>
-      1 + Math.max(1, Math.ceil(c.verso.length / CHARS_POR_LINHA)) + 1 // frente + verso + respiro
+    // se o conteúdo de um módulo não couber, ele continua em outro(s) quadrado(s),
+    // garantindo que NADA seja cortado (orçamento conservador).
+    const LINHAS_POR_QUAD = 21            // orçamento conservador de linhas por quadrado
+    const CHARS_POR_LINHA = 40            // ~caracteres por linha (verso)
+    const linhasTexto = (t: string) =>
+      t.split("\n").reduce((s, ln) => s + Math.max(1, Math.ceil(ln.length / CHARS_POR_LINHA)), 0)
+    const custo = (c: Card) => linhasTexto(c.frente) + linhasTexto(c.verso) + 1 // frente + verso + respiro
 
     type Quad = { mod: string; parte: number; total: number; items: Card[] }
     const quads: Quad[] = []
@@ -174,10 +176,13 @@ function Flashcards({ materias }: { materias: Mat[] }) {
         bucket.push(c); usado += n
       }
       if (bucket.length) partes.push(bucket)
-      partes.forEach((items, idx) => quads.push({ mod: m, parte: idx + 1, total: partes.length, items }))
+      partes.forEach((its, idx) => quads.push({ mod: m, parte: idx + 1, total: partes.length, items: its }))
     }
+    // completa a última folha com quadrados vazios para manter a grade 2×2
+    while (quads.length % 4 !== 0) quads.push({ mod: "__empty__", parte: 0, total: 0, items: [] })
 
-    const quadHtml = quads.map(q => {
+    const quadHtml = (q: Quad) => {
+      if (q.mod === "__empty__") return `<div class="fc-quad fc-empty"></div>`
       const cont = q.total > 1 ? ` (${q.parte}/${q.total})` : ""
       const linhas = q.items.map(c =>
         `<div class="fc-item"><div class="fc-frente">${esc(c.frente)}</div><div class="fc-verso">${esc(c.verso)}</div></div>`
@@ -186,29 +191,45 @@ function Flashcards({ materias }: { materias: Mat[] }) {
         <div class="fc-head">${esc(materia)} · ${q.mod ? "Módulo " + esc(q.mod) : "Geral"}${cont}</div>
         <div class="fc-body">${linhas}</div>
       </div>`
-    }).join("")
+    }
+
+    // agrupa em folhas de 4 (cada .folha cabe em UMA página → paginação confiável)
+    const folhas: string[] = []
+    for (let k = 0; k < quads.length; k += 4)
+      folhas.push(`<div class="folha">${quads.slice(k, k + 4).map(quadHtml).join("")}</div>`)
 
     const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
       <title>Cards — ${esc(nome)}</title>
       <style>
-        @page { size: A4 portrait; margin: 10mm; }
+        @page { size: A4 portrait; margin: 12mm; }
         * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         html, body { margin: 0; padding: 0; }
-        body { font-family: Arial, Helvetica, sans-serif; color: #14241c;
-          display: flex; flex-wrap: wrap; gap: 5mm; align-content: flex-start; }
-        /* 2 colunas × 2 linhas por folha A4 (margem 10mm => área útil 190×277mm) */
-        .fc-quad { width: 92mm; height: 131mm; border: 1px dashed #99a; border-radius: 6px;
-          padding: 5mm; overflow: hidden; display: flex; flex-direction: column;
-          break-inside: avoid; page-break-inside: avoid; }
-        .fc-head { font-weight: 800; font-size: 11.5px; color: #2f5130; text-transform: uppercase;
+        body { font-family: Arial, Helvetica, sans-serif; color: #14241c; }
+        /* cada folha = 1 página A4 (área útil c/ margem 12mm = 186×273mm) */
+        .folha { width: 186mm; height: 272mm; display: grid;
+          grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 6mm;
+          page-break-after: always; break-after: page; }
+        .folha:last-child { page-break-after: auto; break-after: auto; }
+        .fc-quad { border: 1px dashed #99a; border-radius: 6px; padding: 5mm;
+          overflow: hidden; display: flex; flex-direction: column; }
+        .fc-empty { border: none; }
+        .fc-head { font-weight: 800; font-size: 11px; color: #2f5130; text-transform: uppercase;
           letter-spacing: .03em; border-bottom: 1.5px solid #2f5130; padding-bottom: 3px; margin-bottom: 5px; }
         .fc-body { overflow: hidden; flex: 1; }
         .fc-item { margin-bottom: 6px; }
         .fc-frente { font-weight: 700; font-size: 10.5px; line-height: 1.3; color: #14241c; }
         .fc-verso { font-size: 10px; line-height: 1.35; color: #2c3a2c; white-space: pre-wrap; margin-top: 1px; }
+        .toolbar { padding: 10px 14px; background: #2f5130; color: #fff; font-size: 14px; }
+        .toolbar button { margin-left: 10px; padding: 6px 14px; border: none; border-radius: 6px;
+          background: #fff; color: #2f5130; font-weight: 700; cursor: pointer; }
+        @media print { .toolbar { display: none; } }
       </style></head>
-      <body>${quadHtml}
-        <script>window.onload=function(){window.print()}<\/script>
+      <body>
+        <div class="toolbar">Pré-visualização dos cards (A4, retrato, margem padrão).
+          <button onclick="window.print()">🖨️ Imprimir</button>
+        </div>
+        ${folhas.join("")}
+        <script>window.addEventListener('load',function(){setTimeout(function(){window.print()},400)})<\/script>
       </body></html>`
 
     const w = window.open("", "_blank")
