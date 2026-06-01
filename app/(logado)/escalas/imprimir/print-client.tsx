@@ -139,7 +139,7 @@ export function PrintClient({ semana, mes, ano, nomeMes, semanasServico, diasCal
               <tr key={semIdx}>
                 {cells.slice(semIdx * 7, semIdx * 7 + 7).map((dia, j) => {
                   if (!dia) return <td key={j} style={{ padding: 3, height: 36 }} />
-                  const d = new Date(dia.data)
+                  const numDia = Number(dia.data.slice(8, 10)) // dia a partir da string (tz-estável)
                   const cor = dia.grupoFaxina ? CORES_GRUPO[dia.grupoFaxina] || "#475569" : null
                   const fds = dia.tipo === "fds"
                   return (
@@ -149,7 +149,7 @@ export function PrintClient({ semana, mes, ano, nomeMes, semanasServico, diasCal
                       background: fds ? "#f8faff" : dia.grupoFaxina ? (cor! + "15") : "#fff",
                     }}>
                       <div style={{ fontWeight: 700, fontSize: 13, color: fds ? "#aaa" : "#0B2D5E" }}>
-                        {d.getDate()}
+                        {numDia}
                       </div>
                       {!fds && dia.grupoFaxina && (
                         <div style={{

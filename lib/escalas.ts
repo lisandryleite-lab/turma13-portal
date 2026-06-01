@@ -79,26 +79,30 @@ export function grupoFaxinaPorData(data: Date): GrupoFaxina | null {
 }
 
 // Gera calendário de faxina de um mês inteiro
+// IMPORTANTE: `data` é uma string "YYYY-MM-DD" (tz-estável). Construir com
+// `new Date(string)` no cliente e chamar getDate() causava deslize de fuso
+// (ex.: 01/06 aparecia como 31/05 em UTC-3). O número do dia deve vir da string.
 export function calendarioFaxinaMes(ano: number, mes: number): {
-  data: Date
+  data: string
   diaSemana: string
   tipo: "util" | "fds"
   grupoFaxina: GrupoFaxina | null
   grupoPlantao: GrupoPlantao
 }[] {
   const DIAS = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"]
+  const pad = (n: number) => String(n).padStart(2, "0")
   const dias: ReturnType<typeof calendarioFaxinaMes> = []
   const totalDias = new Date(ano, mes, 0).getDate()
 
   for (let d = 1; d <= totalDias; d++) {
-    const data = new Date(ano, mes - 1, d)
-    const util = isDiaUtil(data)
+    const dataObj = new Date(ano, mes - 1, d)
+    const util = isDiaUtil(dataObj)
     dias.push({
-      data,
-      diaSemana: DIAS[data.getDay()],
+      data: `${ano}-${pad(mes)}-${pad(d)}`,
+      diaSemana: DIAS[dataObj.getDay()],
       tipo: util ? "util" : "fds",
-      grupoFaxina: util ? grupoFaxinaPorData(data) : null,
-      grupoPlantao: grupoPlantaoPorData(data),
+      grupoFaxina: util ? grupoFaxinaPorData(dataObj) : null,
+      grupoPlantao: grupoPlantaoPorData(dataObj),
     })
   }
   return dias

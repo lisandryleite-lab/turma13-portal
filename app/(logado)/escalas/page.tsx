@@ -30,7 +30,7 @@ export default async function EscalasPage() {
     return {
       ano,
       mes: m,
-      dias: calendarioFaxinaMes(ano, m).map(d => ({ ...d, data: d.data.toISOString() })),
+      dias: calendarioFaxinaMes(ano, m), // data já é string "YYYY-MM-DD" (tz-estável)
     }
   })
 

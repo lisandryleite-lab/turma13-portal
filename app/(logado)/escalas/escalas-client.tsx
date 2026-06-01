@@ -355,13 +355,13 @@ export function EscalasClient({
                 <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4,marginBottom:16}}>
                   {cells.map((dia,i)=>{
                     if(!dia) return <div key={i}/>
-                    const dObj=new Date(dia.data)
+                    const numDia=Number(dia.data.slice(8,10)) // dia a partir da string (tz-estável)
                     const meuGrupo=isMinhaFaxina(dia.grupoFaxina)
                     const isHoje=dia.data.slice(0,10)===hojeStr
                     return (
                       <div key={i} style={{background:isHoje?"var(--azul-profundo)":meuGrupo?"var(--azul-claro)":dia.tipo==="fds"?"#F8FAFC":"#fff",border:isHoje?"2px solid var(--dourado)":`1.5px solid ${meuGrupo?"var(--azul-medio)":"var(--cinza-borda)"}`,borderRadius:8,padding:"6px 4px",textAlign:"center",minHeight:56,boxShadow:isHoje?"0 2px 8px rgba(11,45,94,0.22)":undefined}}>
                         <p style={{fontWeight:700,fontSize:13,marginBottom:3,color:isHoje?"#fff":dia.tipo==="fds"?"var(--cinza-texto)":"var(--grafite)"}}>
-                          {dObj.getDate()}
+                          {numDia}
                           {isHoje&&<span style={{fontSize:8,display:"block",color:"rgba(255,200,80,0.9)",letterSpacing:"0.04em"}}>HOJE</span>}
                         </p>
                         {dia.tipo==="util"&&dia.grupoFaxina&&<TagGrupo grupo={dia.grupoFaxina} small/>}

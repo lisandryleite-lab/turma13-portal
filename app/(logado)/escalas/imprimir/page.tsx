@@ -68,11 +68,8 @@ export default async function ImprimirEscalasPage() {
   // Gera semanas do mês atual (aproximado: 4 a 5 semanas)
   const semanasDoMes = Array.from({ length: 5 }, (_, i) => semana + i).map(resolverServico)
 
-  // Calendário faxina do mês atual
-  const diasCalendario = calendarioFaxinaMes(ano, mes).map(d => ({
-    ...d,
-    data: d.data.toISOString(),
-  }))
+  // Calendário faxina do mês atual (data já é string "YYYY-MM-DD" tz-estável)
+  const diasCalendario = calendarioFaxinaMes(ano, mes)
 
   const MESES = ["","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
 
