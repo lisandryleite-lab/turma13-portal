@@ -42,10 +42,10 @@ function mdsReais(notas: Nota[]): number[] {
 }
 
 export function RankingClient({
-  notasIniciais, nfdc, disciplinas, totalDisciplinas, turmaSize, mgcsOutros, nomeGuerra, opms, minhaPref, agregado1,
+  notasIniciais, nfdc, disciplinas, totalDisciplinas, turmaSize, mgcsOutros, nomeGuerra, opms, minhaPref, agregado1, agregadoTotal,
 }: {
   notasIniciais: Nota[]; nfdc: number; disciplinas: Disc[]; totalDisciplinas: number; turmaSize: number; mgcsOutros: number[]
-  nomeGuerra: string; opms: Opm[]; minhaPref: Pref | null; agregado1: Agregado[]
+  nomeGuerra: string; opms: Opm[]; minhaPref: Pref | null; agregado1: Agregado[]; agregadoTotal: Agregado[]
 }) {
   const router = useRouter()
   const [notas, setNotas] = useState<Nota[]>(notasIniciais)
@@ -254,30 +254,41 @@ export function RankingClient({
             {salvandoPref ? "Salvando…" : "Salvar preferência"}
           </button>
           {prefMsg && <p style={{ marginTop: 8, fontSize: 13.5, color: prefMsg.startsWith("✓") ? "var(--olive)" : "var(--red)" }}>{prefMsg}</p>}
-          <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 12 }}>
-            Mais pedidos como 1ª opção <span style={{ fontSize: 13, fontWeight: 400, color: "var(--ink-60)" }}>(anônimo)</span>
-          </h2>
-          {(() => {
-            const ord = [...agregado1].sort((a, b) => b.count - a.count); const max = Math.max(1, ...ord.map(a => a.count))
-            return (
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-                {ord.map(a => (
-                  <li key={a.sigla} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ width: 64, fontSize: 13, fontWeight: 600 }}>{a.especial ? "—" : a.sigla}</span>
-                    <div style={{ flex: 1, height: 18, borderRadius: 6, background: "var(--surface)", overflow: "hidden" }}>
-                      <div style={{ width: `${(a.count / max) * 100}%`, height: "100%", background: a.especial ? "var(--gold)" : "var(--olive)" }} />
-                    </div>
-                    <span style={{ width: 28, textAlign: "right", fontSize: 14, fontWeight: 700, color: "var(--olive)" }}>{a.count}</span>
-                  </li>
-                ))}
-              </ul>
-            )
-          })()}
+          <QuadroPedidos titulo="Mais pedidos como 1ª opção" dados={agregado1} />
+          <QuadroPedidos titulo="Mais pedidos no total (1ª + 2ª + 3ª)" dados={agregadoTotal} />
         </div>
       )}
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>Desenvolvido por AL CFO PM 108 LISANDRY</footer>
     </main>
+  )
+}
+
+// ── Quadro de mais pedidos (anônimo) — ordena desc, ignora zerados ──
+function QuadroPedidos({ titulo, dados }: { titulo: string; dados: Agregado[] }) {
+  const ord = [...dados].filter(a => a.count > 0).sort((a, b) => b.count - a.count)
+  const max = Math.max(1, ...ord.map(a => a.count))
+  return (
+    <>
+      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 12 }}>
+        {titulo} <span style={{ fontSize: 13, fontWeight: 400, color: "var(--ink-60)" }}>(anônimo)</span>
+      </h2>
+      {ord.length === 0 ? (
+        <p style={{ color: "var(--ink-60)", fontSize: 14 }}>Nenhuma preferência registrada ainda.</p>
+      ) : (
+        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+          {ord.map(a => (
+            <li key={a.sigla} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ width: 64, fontSize: 13, fontWeight: 600 }}>{a.sigla}</span>
+              <div style={{ flex: 1, height: 18, borderRadius: 6, background: "var(--surface)", overflow: "hidden" }}>
+                <div style={{ width: `${(a.count / max) * 100}%`, height: "100%", background: "var(--olive)" }} />
+              </div>
+              <span style={{ width: 28, textAlign: "right", fontSize: 14, fontWeight: 700, color: "var(--olive)" }}>{a.count}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   )
 }
 

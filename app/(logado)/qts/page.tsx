@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { QtsAdmin } from "./qts-admin"
+import { QtsPrint } from "./qts-print"
 import { semanaAtual } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
@@ -25,6 +26,9 @@ export default async function QtsPage() {
           </h1>
           <p style={{ color: "#9aa3b8", fontSize: 13, marginTop: 4 }}>Quadro de Trabalho Semanal</p>
         </div>
+        {qts && (
+          <QtsPrint dados={qts.dados as QtsDados} disciplinas={disciplinas} semana={SEMANA_ATUAL} />
+        )}
       </div>
 
       {/* Exibição atual */}

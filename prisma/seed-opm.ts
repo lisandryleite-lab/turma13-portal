@@ -24,6 +24,7 @@ const OPMS: { sigla: string; nome: string; ordem: number; especial?: boolean }[]
   { sigla: "20º BPM", nome: "Batalhão Cel. PM Olinto de Melo Viana (São Lourenço da Mata)", ordem: 10 },
   { sigla: "25º BPM", nome: "Batalhão Cel. PM Claudio Galdino da Silva (Jaboatão)", ordem: 11 },
   { sigla: "26º BPM", nome: "Batalhão 1º Sgt PM José Mariano Pimentel Neto (Itapissuma)", ordem: 12 },
+  { sigla: "BPTur", nome: "Batalhão de Polícia de Turismo (Recife)", ordem: 13 },
   { sigla: "—", nome: "Não decidiu / não faz diferença", ordem: 99, especial: true },
 ]
 

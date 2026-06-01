@@ -11,7 +11,10 @@ const HORARIOS = [
   "15h40-16h30","16h30-17h20","17h30-18h20","18h20-19h10",
 ]
 
-const DATA_INICIO = new Date("2026-01-12")
+// Data local (não UTC) — primeira segunda-feira do curso. Construída com
+// componentes ano/mês/dia para evitar o deslize de fuso que jogava o início
+// da semana para domingo.
+const DATA_INICIO = new Date(2026, 0, 12)
 
 function diasDaSemana(semana: number): string[] {
   const seg = new Date(DATA_INICIO.getTime() + (semana - 1) * 7 * 24 * 60 * 60 * 1000)

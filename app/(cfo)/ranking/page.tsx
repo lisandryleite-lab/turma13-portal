@@ -17,7 +17,7 @@ export default async function RankingPage() {
     prisma.user.count({ where: { turma: 3 } }),
     prisma.oPM.findMany({ orderBy: { ordem: "asc" } }),
     prisma.preferenciaOPM.findUnique({ where: { userId } }),
-    prisma.preferenciaOPM.groupBy({ by: ["opcao1Id"], _count: { opcao1Id: true } }),
+    prisma.preferenciaOPM.findMany({ select: { opcao1Id: true, opcao2Id: true, opcao3Id: true } }),
   ])
 
   // MGC dos OUTROS alunos T3 que já lançaram notas (para posicionar o ranking)
@@ -31,7 +31,17 @@ export default async function RankingPage() {
   const mgcsOutros: number[] = []
   for (const [, e] of porUser) { const m = calcularMGCSimples(e.vs, e.nfdc); if (m != null) mgcsOutros.push(m) }
 
-  const contagem1 = new Map(agregado.map(a => [a.opcao1Id, a._count.opcao1Id]))
+  // Contagem de preferências: 1ª opção e total (1ª + 2ª + 3ª)
+  const contagem1 = new Map<string, number>()
+  const contagemTotal = new Map<string, number>()
+  for (const p of agregado) {
+    contagem1.set(p.opcao1Id, (contagem1.get(p.opcao1Id) ?? 0) + 1)
+    for (const id of [p.opcao1Id, p.opcao2Id, p.opcao3Id]) {
+      if (id) contagemTotal.set(id, (contagemTotal.get(id) ?? 0) + 1)
+    }
+  }
+  // Exclui OPMs especiais (ex.: "—" Não decidiu) dos rankings — não são posições
+  const opmsReais = opms.filter(o => !o.especial)
 
   return (
     <RankingClient
@@ -44,7 +54,8 @@ export default async function RankingPage() {
       nomeGuerra={session.user.nomeGuerra}
       opms={opms.map(o => ({ id: o.id, sigla: o.sigla, nome: o.nome, especial: o.especial }))}
       minhaPref={minhaPref ? { opcao1Id: minhaPref.opcao1Id, opcao2Id: minhaPref.opcao2Id, opcao3Id: minhaPref.opcao3Id } : null}
-      agregado1={opms.map(o => ({ sigla: o.sigla, nome: o.nome, especial: o.especial, count: contagem1.get(o.id) ?? 0 }))}
+      agregado1={opmsReais.map(o => ({ sigla: o.sigla, nome: o.nome, especial: o.especial, count: contagem1.get(o.id) ?? 0 }))}
+      agregadoTotal={opmsReais.map(o => ({ sigla: o.sigla, nome: o.nome, especial: o.especial, count: contagemTotal.get(o.id) ?? 0 }))}
     />
   )
 }
