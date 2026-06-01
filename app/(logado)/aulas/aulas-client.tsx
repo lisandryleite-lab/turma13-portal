@@ -102,6 +102,74 @@ export function AulasClient({
     router.refresh()
   }
 
+  // ── Cartaz de acompanhamento (impressão em página única) ──
+  function imprimirCartaz() {
+    const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    const lista = listaFiltrada
+    const mods = [...new Set(lista.map(d => d.modulo))].sort()
+    const corPct = (p: number) => p >= 100 ? "#15803d" : p > 0 ? "#1A52A8" : "#94a3b8"
+
+    const secoes = mods.map(mod => {
+      const linhas = lista.filter(d => d.modulo === mod).map(d => {
+        const pct = d.cargaTotal > 0 ? Math.round((d.cargaMinistrada / d.cargaTotal) * 100) : 0
+        return `<tr>
+          <td style="border:1px solid #cbd5e1;padding:2px 5px;font-weight:700;color:#1A52A8;white-space:nowrap">${esc(d.sigla)}</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 5px">${esc(d.nome)}</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 5px;text-align:center;white-space:nowrap">${d.cargaMinistrada}h/${d.cargaTotal}h</td>
+          <td style="border:1px solid #cbd5e1;padding:2px 5px;width:80px">
+            <div style="height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden">
+              <div style="height:100%;width:${pct}%;background:${corPct(pct)}"></div>
+            </div>
+          </td>
+          <td style="border:1px solid #cbd5e1;padding:2px 5px;text-align:right;font-weight:700;color:${corPct(pct)}">${pct}%</td>
+        </tr>`
+      }).join("")
+      return `<tr><td colspan="5" style="background:#0B2D5E;color:#fff;padding:3px 6px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:0.06em">${esc(mod)}</td></tr>${linhas}`
+    }).join("")
+
+    const proj = dataFimProjetada
+      ? `Projeção de término: <strong>${dataFimProjetada.toLocaleDateString("pt-BR", { month: "long", year: "numeric" })}</strong> · ~${semanasRestantes} semanas · média ${mediaHorasSemana.toFixed(1)}h/sem`
+      : ""
+
+    const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+      <title>Acompanhamento de Aulas — Turma 13</title>
+      <style>
+        @page { size: A4 portrait; margin: 8mm; }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 10px; color: #1e293b; font-size: 10px; }
+        table { width: 100%; border-collapse: collapse; }
+      </style></head>
+      <body>
+        <div style="text-align:center;margin-bottom:8px">
+          <h1 style="font-size:18px;color:#0B2D5E;margin:0">Acompanhamento de Aulas — Turma 13</h1>
+          <p style="font-size:10px;color:#475569;margin:2px 0 0">Portal CFO PM 2026 · ${totalMinistradas}h de ${totalCarga}h ministradas (${pctGeral}%)</p>
+        </div>
+        <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;font-size:10px">
+          <span style="color:#15803d;font-weight:700">${concluidas.length} concluídas</span>
+          <span style="color:#1A52A8;font-weight:700">${emAndamento.length} em andamento</span>
+          <span style="color:#64748b;font-weight:700">${pendentes.length} pendentes</span>
+        </div>
+        ${proj ? `<p style="text-align:center;font-size:10px;color:#475569;margin:0 0 8px">${proj}</p>` : ""}
+        <table>
+          <thead>
+            <tr style="background:#1A52A8;color:#fff">
+              <th style="border:1px solid #1A52A8;padding:3px 5px;text-align:left">Sigla</th>
+              <th style="border:1px solid #1A52A8;padding:3px 5px;text-align:left">Disciplina</th>
+              <th style="border:1px solid #1A52A8;padding:3px 5px">Carga</th>
+              <th style="border:1px solid #1A52A8;padding:3px 5px">Progresso</th>
+              <th style="border:1px solid #1A52A8;padding:3px 5px">%</th>
+            </tr>
+          </thead>
+          <tbody>${secoes}</tbody>
+        </table>
+      </body></html>`
+
+    const w = window.open("", "_blank")
+    if (!w) { alert("Permita pop-ups para imprimir o cartaz."); return }
+    w.document.open(); w.document.write(html); w.document.close()
+    w.onload = () => w.print()
+  }
+
   const FILTROS: { id: Filtro; label: string; n: number }[] = [
     { id: "todas",      label: "Todas",        n: disciplinas.length },
     { id: "andamento",  label: "Em andamento", n: emAndamento.length },
@@ -162,7 +230,7 @@ export function AulasClient({
       </div>
 
       {/* ── Filtros ── */}
-      <div style={{ display: "flex", gap: 6, marginBottom: 20, flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: 6, marginBottom: 20, flexWrap: "wrap", alignItems: "center" }}>
         {FILTROS.map(f => (
           <button key={f.id} onClick={() => setFiltro(f.id)} style={{
             padding: "7px 16px", borderRadius: 20, border: "1.5px solid",
@@ -175,6 +243,12 @@ export function AulasClient({
             {f.label} <span style={{ opacity: 0.65 }}>({f.n})</span>
           </button>
         ))}
+        <button onClick={imprimirCartaz} style={{
+          marginLeft: "auto", padding: "7px 16px", borderRadius: 20, border: "1.5px solid var(--azul-profundo)",
+          background: "var(--azul-profundo)", color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer",
+        }}>
+          🖨️ Imprimir cartaz
+        </button>
       </div>
 
       {/* ── Lista por módulo ── */}
