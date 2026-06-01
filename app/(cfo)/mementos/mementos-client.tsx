@@ -155,42 +155,59 @@ function Flashcards({ materias }: { materias: Mat[] }) {
     const mods = [...porMod.keys()].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
     const nome = mAtual?.nome || materia
 
-    // 1 quadrado por módulo; 4 por folha (2×2)
-    const quadrados = mods.map(m => {
-      const cards = porMod.get(m)!
-      const linhas = cards.map(c =>
+    // Empacota os cards de cada módulo em "quadrados". Prioriza a legibilidade:
+    // se o conteúdo de um módulo não couber, ele continua em outro(s) quadrado(s).
+    const LINHAS_POR_QUAD = 26            // orçamento de linhas por quadrado (altura fixa)
+    const CHARS_POR_LINHA = 48            // ~caracteres por linha no verso
+    const custo = (c: Card) =>
+      1 + Math.max(1, Math.ceil(c.verso.length / CHARS_POR_LINHA)) + 1 // frente + verso + respiro
+
+    type Quad = { mod: string; parte: number; total: number; items: Card[] }
+    const quads: Quad[] = []
+    for (const m of mods) {
+      const items = porMod.get(m)!
+      const partes: Card[][] = []
+      let bucket: Card[] = [], usado = 0
+      for (const c of items) {
+        const n = custo(c)
+        if (bucket.length && usado + n > LINHAS_POR_QUAD) { partes.push(bucket); bucket = []; usado = 0 }
+        bucket.push(c); usado += n
+      }
+      if (bucket.length) partes.push(bucket)
+      partes.forEach((items, idx) => quads.push({ mod: m, parte: idx + 1, total: partes.length, items }))
+    }
+
+    const quadHtml = quads.map(q => {
+      const cont = q.total > 1 ? ` (${q.parte}/${q.total})` : ""
+      const linhas = q.items.map(c =>
         `<div class="fc-item"><div class="fc-frente">${esc(c.frente)}</div><div class="fc-verso">${esc(c.verso)}</div></div>`
       ).join("")
       return `<div class="fc-quad">
-        <div class="fc-head">${materia} · ${m ? "Módulo " + esc(m) : "Geral"}</div>
+        <div class="fc-head">${esc(materia)} · ${q.mod ? "Módulo " + esc(q.mod) : "Geral"}${cont}</div>
         <div class="fc-body">${linhas}</div>
       </div>`
-    })
-    // completa a última folha com quadrados vazios para manter a grade 2×2
-    while (quadrados.length % 4 !== 0) quadrados.push(`<div class="fc-quad fc-empty"></div>`)
-    const paginas: string[] = []
-    for (let k = 0; k < quadrados.length; k += 4) paginas.push(`<div class="fc-page">${quadrados.slice(k, k + 4).join("")}</div>`)
+    }).join("")
 
     const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
       <title>Cards — ${esc(nome)}</title>
       <style>
-        @page { size: A4 portrait; margin: 6mm; }
+        @page { size: A4 portrait; margin: 10mm; }
         * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #14241c; }
-        .fc-page { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
-          gap: 4mm; width: 198mm; height: 285mm; page-break-after: always; }
-        .fc-page:last-child { page-break-after: auto; }
-        .fc-quad { border: 1px dashed #9aa; border-radius: 6px; padding: 6mm; overflow: hidden;
-          display: flex; flex-direction: column; }
-        .fc-empty { border-color: transparent; }
-        .fc-head { font-weight: 800; font-size: 12px; color: #3a5a3a; text-transform: uppercase;
-          letter-spacing: .04em; border-bottom: 1.5px solid #3a5a3a; padding-bottom: 3px; margin-bottom: 6px; }
-        .fc-body { overflow: hidden; }
-        .fc-item { margin-bottom: 7px; }
-        .fc-frente { font-weight: 700; font-size: 10.5px; line-height: 1.25; color: #14241c; }
-        .fc-verso { font-size: 9.5px; line-height: 1.3; color: #2c3a2c; white-space: pre-wrap; margin-top: 1px; }
+        html, body { margin: 0; padding: 0; }
+        body { font-family: Arial, Helvetica, sans-serif; color: #14241c;
+          display: flex; flex-wrap: wrap; gap: 5mm; align-content: flex-start; }
+        /* 2 colunas × 2 linhas por folha A4 (margem 10mm => área útil 190×277mm) */
+        .fc-quad { width: 92mm; height: 131mm; border: 1px dashed #99a; border-radius: 6px;
+          padding: 5mm; overflow: hidden; display: flex; flex-direction: column;
+          break-inside: avoid; page-break-inside: avoid; }
+        .fc-head { font-weight: 800; font-size: 11.5px; color: #2f5130; text-transform: uppercase;
+          letter-spacing: .03em; border-bottom: 1.5px solid #2f5130; padding-bottom: 3px; margin-bottom: 5px; }
+        .fc-body { overflow: hidden; flex: 1; }
+        .fc-item { margin-bottom: 6px; }
+        .fc-frente { font-weight: 700; font-size: 10.5px; line-height: 1.3; color: #14241c; }
+        .fc-verso { font-size: 10px; line-height: 1.35; color: #2c3a2c; white-space: pre-wrap; margin-top: 1px; }
       </style></head>
-      <body>${paginas.join("")}
+      <body>${quadHtml}
         <script>window.onload=function(){window.print()}<\/script>
       </body></html>`
 
