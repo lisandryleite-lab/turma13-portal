@@ -139,6 +139,66 @@ function Flashcards({ materias }: { materias: Mat[] }) {
     setCards(data.sort(() => Math.random() - 0.5)); setI(0); setVirado(false); setSeg(0)
   }
 
+  // ── Imprimir cards: 1 quadrado por módulo, 4 módulos por folha A4 (2×2) ──
+  async function imprimirCards() {
+    if (!materia) return
+    const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    let url = `/api/flashcards?materia=${encodeURIComponent(materia)}`
+    if (modulo !== "__all__") url += `&modulo=${encodeURIComponent(modulo)}`
+    const res = await fetch(url)
+    const data: Card[] = await res.json()
+    if (!data.length) { alert("Sem cards para imprimir."); return }
+
+    // agrupa por módulo (ordem numérica), preservando a ordem dos cards
+    const porMod = new Map<string, Card[]>()
+    for (const c of data) { const k = c.modulo || ""; if (!porMod.has(k)) porMod.set(k, []); porMod.get(k)!.push(c) }
+    const mods = [...porMod.keys()].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+    const nome = mAtual?.nome || materia
+
+    // 1 quadrado por módulo; 4 por folha (2×2)
+    const quadrados = mods.map(m => {
+      const cards = porMod.get(m)!
+      const linhas = cards.map(c =>
+        `<div class="fc-item"><div class="fc-frente">${esc(c.frente)}</div><div class="fc-verso">${esc(c.verso)}</div></div>`
+      ).join("")
+      return `<div class="fc-quad">
+        <div class="fc-head">${materia} · ${m ? "Módulo " + esc(m) : "Geral"}</div>
+        <div class="fc-body">${linhas}</div>
+      </div>`
+    })
+    // completa a última folha com quadrados vazios para manter a grade 2×2
+    while (quadrados.length % 4 !== 0) quadrados.push(`<div class="fc-quad fc-empty"></div>`)
+    const paginas: string[] = []
+    for (let k = 0; k < quadrados.length; k += 4) paginas.push(`<div class="fc-page">${quadrados.slice(k, k + 4).join("")}</div>`)
+
+    const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+      <title>Cards — ${esc(nome)}</title>
+      <style>
+        @page { size: A4 portrait; margin: 6mm; }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #14241c; }
+        .fc-page { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+          gap: 4mm; width: 198mm; height: 285mm; page-break-after: always; }
+        .fc-page:last-child { page-break-after: auto; }
+        .fc-quad { border: 1px dashed #9aa; border-radius: 6px; padding: 6mm; overflow: hidden;
+          display: flex; flex-direction: column; }
+        .fc-empty { border-color: transparent; }
+        .fc-head { font-weight: 800; font-size: 12px; color: #3a5a3a; text-transform: uppercase;
+          letter-spacing: .04em; border-bottom: 1.5px solid #3a5a3a; padding-bottom: 3px; margin-bottom: 6px; }
+        .fc-body { overflow: hidden; }
+        .fc-item { margin-bottom: 7px; }
+        .fc-frente { font-weight: 700; font-size: 10.5px; line-height: 1.25; color: #14241c; }
+        .fc-verso { font-size: 9.5px; line-height: 1.3; color: #2c3a2c; white-space: pre-wrap; margin-top: 1px; }
+      </style></head>
+      <body>${paginas.join("")}
+        <script>window.onload=function(){window.print()}<\/script>
+      </body></html>`
+
+    const w = window.open("", "_blank")
+    if (!w) { alert("Permita pop-ups para imprimir os cards."); return }
+    w.document.open(); w.document.write(html); w.document.close()
+  }
+
   if (!cards) {
     return (
       <div style={cardBox}>
@@ -157,9 +217,15 @@ function Flashcards({ materias }: { materias: Mat[] }) {
           </label>
         )}
         {materias.length === 0 && <p style={{ color: "var(--ink-60)", marginTop: 10, fontSize: 13.5 }}>Ainda não há flashcards cadastrados.</p>}
-        <button onClick={iniciar} disabled={!materia} style={{ marginTop: 14, padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: materia ? "pointer" : "default" }}>
-          Estudar
-        </button>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
+          <button onClick={iniciar} disabled={!materia} style={{ padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: materia ? "pointer" : "default" }}>
+            Estudar
+          </button>
+          <button onClick={imprimirCards} disabled={!materia} style={{ padding: "11px 16px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, cursor: materia ? "pointer" : "default", opacity: materia ? 1 : 0.5 }}>
+            🖨️ Imprimir cards
+          </button>
+        </div>
+        {materia && <p style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 8 }}>Impressão: 1 quadrado por módulo, 4 por folha A4 — recorte e leve no bolso.</p>}
       </div>
     )
   }
