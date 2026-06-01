@@ -139,104 +139,6 @@ function Flashcards({ materias }: { materias: Mat[] }) {
     setCards(data.sort(() => Math.random() - 0.5)); setI(0); setVirado(false); setSeg(0)
   }
 
-  // ── Imprimir cards: 1 quadrado por módulo, 4 módulos por folha A4 (2×2) ──
-  async function imprimirCards() {
-    if (!materia) return
-    const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-    let url = `/api/flashcards?materia=${encodeURIComponent(materia)}`
-    if (modulo !== "__all__") url += `&modulo=${encodeURIComponent(modulo)}`
-    const res = await fetch(url)
-    const data: Card[] = await res.json()
-    if (!data.length) { alert("Sem cards para imprimir."); return }
-
-    // agrupa por módulo (ordem numérica), preservando a ordem dos cards
-    const porMod = new Map<string, Card[]>()
-    for (const c of data) { const k = c.modulo || ""; if (!porMod.has(k)) porMod.set(k, []); porMod.get(k)!.push(c) }
-    const mods = [...porMod.keys()].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-    const nome = mAtual?.nome || materia
-
-    // Empacota os cards de cada módulo em "quadrados". Prioriza a legibilidade:
-    // se o conteúdo de um módulo não couber, ele continua em outro(s) quadrado(s),
-    // garantindo que NADA seja cortado (orçamento conservador).
-    const LINHAS_POR_QUAD = 21            // orçamento conservador de linhas por quadrado
-    const CHARS_POR_LINHA = 40            // ~caracteres por linha (verso)
-    const linhasTexto = (t: string) =>
-      t.split("\n").reduce((s, ln) => s + Math.max(1, Math.ceil(ln.length / CHARS_POR_LINHA)), 0)
-    const custo = (c: Card) => linhasTexto(c.frente) + linhasTexto(c.verso) + 1 // frente + verso + respiro
-
-    type Quad = { mod: string; parte: number; total: number; items: Card[] }
-    const quads: Quad[] = []
-    for (const m of mods) {
-      const items = porMod.get(m)!
-      const partes: Card[][] = []
-      let bucket: Card[] = [], usado = 0
-      for (const c of items) {
-        const n = custo(c)
-        if (bucket.length && usado + n > LINHAS_POR_QUAD) { partes.push(bucket); bucket = []; usado = 0 }
-        bucket.push(c); usado += n
-      }
-      if (bucket.length) partes.push(bucket)
-      partes.forEach((its, idx) => quads.push({ mod: m, parte: idx + 1, total: partes.length, items: its }))
-    }
-    // completa a última folha com quadrados vazios para manter a grade 2×2
-    while (quads.length % 4 !== 0) quads.push({ mod: "__empty__", parte: 0, total: 0, items: [] })
-
-    const quadHtml = (q: Quad) => {
-      if (q.mod === "__empty__") return `<div class="fc-quad fc-empty"></div>`
-      const cont = q.total > 1 ? ` (${q.parte}/${q.total})` : ""
-      const linhas = q.items.map(c =>
-        `<div class="fc-item"><div class="fc-frente">${esc(c.frente)}</div><div class="fc-verso">${esc(c.verso)}</div></div>`
-      ).join("")
-      return `<div class="fc-quad">
-        <div class="fc-head">${esc(materia)} · ${q.mod ? "Módulo " + esc(q.mod) : "Geral"}${cont}</div>
-        <div class="fc-body">${linhas}</div>
-      </div>`
-    }
-
-    // agrupa em folhas de 4 (cada .folha cabe em UMA página → paginação confiável)
-    const folhas: string[] = []
-    for (let k = 0; k < quads.length; k += 4)
-      folhas.push(`<div class="folha">${quads.slice(k, k + 4).map(quadHtml).join("")}</div>`)
-
-    const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
-      <title>Cards — ${esc(nome)}</title>
-      <style>
-        @page { size: A4 portrait; margin: 12mm; }
-        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        html, body { margin: 0; padding: 0; }
-        body { font-family: Arial, Helvetica, sans-serif; color: #14241c; }
-        /* cada folha = 1 página A4 (área útil c/ margem 12mm = 186×273mm) */
-        .folha { width: 186mm; height: 272mm; display: grid;
-          grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 6mm;
-          page-break-after: always; break-after: page; }
-        .folha:last-child { page-break-after: auto; break-after: auto; }
-        .fc-quad { border: 1px dashed #99a; border-radius: 6px; padding: 5mm;
-          overflow: hidden; display: flex; flex-direction: column; }
-        .fc-empty { border: none; }
-        .fc-head { font-weight: 800; font-size: 11px; color: #2f5130; text-transform: uppercase;
-          letter-spacing: .03em; border-bottom: 1.5px solid #2f5130; padding-bottom: 3px; margin-bottom: 5px; }
-        .fc-body { overflow: hidden; flex: 1; }
-        .fc-item { margin-bottom: 6px; }
-        .fc-frente { font-weight: 700; font-size: 10.5px; line-height: 1.3; color: #14241c; }
-        .fc-verso { font-size: 10px; line-height: 1.35; color: #2c3a2c; white-space: pre-wrap; margin-top: 1px; }
-        .toolbar { padding: 10px 14px; background: #2f5130; color: #fff; font-size: 14px; }
-        .toolbar button { margin-left: 10px; padding: 6px 14px; border: none; border-radius: 6px;
-          background: #fff; color: #2f5130; font-weight: 700; cursor: pointer; }
-        @media print { .toolbar { display: none; } }
-      </style></head>
-      <body>
-        <div class="toolbar">Pré-visualização dos cards (A4, retrato, margem padrão).
-          <button onclick="window.print()">🖨️ Imprimir</button>
-        </div>
-        ${folhas.join("")}
-        <script>window.addEventListener('load',function(){setTimeout(function(){window.print()},400)})<\/script>
-      </body></html>`
-
-    const w = window.open("", "_blank")
-    if (!w) { alert("Permita pop-ups para imprimir os cards."); return }
-    w.document.open(); w.document.write(html); w.document.close()
-  }
-
   if (!cards) {
     return (
       <div style={cardBox}>
@@ -255,15 +157,9 @@ function Flashcards({ materias }: { materias: Mat[] }) {
           </label>
         )}
         {materias.length === 0 && <p style={{ color: "var(--ink-60)", marginTop: 10, fontSize: 13.5 }}>Ainda não há flashcards cadastrados.</p>}
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
-          <button onClick={iniciar} disabled={!materia} style={{ padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: materia ? "pointer" : "default" }}>
-            Estudar
-          </button>
-          <button onClick={imprimirCards} disabled={!materia} style={{ padding: "11px 16px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, cursor: materia ? "pointer" : "default", opacity: materia ? 1 : 0.5 }}>
-            🖨️ Imprimir cards
-          </button>
-        </div>
-        {materia && <p style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 8 }}>Impressão: 1 quadrado por módulo, 4 por folha A4 — recorte e leve no bolso.</p>}
+        <button onClick={iniciar} disabled={!materia} style={{ marginTop: 14, padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: materia ? "pointer" : "default" }}>
+          Estudar
+        </button>
       </div>
     )
   }
