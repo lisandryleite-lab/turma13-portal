@@ -6,7 +6,6 @@ import Link from "next/link"
 import type { MEMBROS_PLANTAO, GrupoFaxina, GrupoPlantao } from "@/lib/escalas"
 
 const MESES = ["","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
-const FUNCOES_DESTAQUE = ["Mestre","Leitor","Discurso","Comandante"] as const
 // Escala de serviço unificada (aba Plantão): 6 funções, na ordem de exibição
 const FUNCOES_SERVICO = ["Adjunto1","Adjunto2","Mestre","Leitor","Discurso","Comandante"] as const
 const LABEL_FUNCAO: Record<string,string> = {
@@ -67,7 +66,7 @@ export function EscalasClient({
   alunos:{matricula:number;nomeGuerra:string}[]
 }) {
   const router = useRouter()
-  const [aba,setAba] = useState<"servico"|"faxina"|"plantao"|"destaque">("servico")
+  const [aba,setAba] = useState<"servico"|"faxina"|"plantao">("servico")
   const [saving,setSaving] = useState(false)
   const [mesFaxinaIdx,setMesFaxinaIdx] = useState(0)
   const [semanaServicoIdx,setSemanaServicoIdx] = useState(0)
@@ -83,9 +82,6 @@ export function EscalasClient({
   const [addMat,setAddMat] = useState("")
   const [showAdminFaxina,setShowAdminFaxina] = useState(false)
 
-  // Funções admin
-  const [showFuncaoForm,setShowFuncaoForm] = useState(false)
-  const [funcaoEntradas,setFuncaoEntradas] = useState<{data:string;funcao:string;matricula:string}[]>([{data:"",funcao:"Mestre",matricula:""}])
   // Escala de serviço unificada (aba Plantão)
   const [showServicoForm,setShowServicoForm] = useState(false)
   const [servicoEntradas,setServicoEntradas] = useState<{data:string;funcao:string;matricula:string}[]>([{data:"",funcao:"Adjunto1",matricula:""}])
@@ -139,12 +135,6 @@ export function EscalasClient({
   }
 
   // ── Funções ───────────────────────────────────────────────────
-  async function salvarFuncoes() {
-    setSaving(true)
-    const funcoes=funcaoEntradas.filter(e=>e.data&&e.matricula).map(e=>({data:e.data+"T12:00:00",funcao:e.funcao,matricula:Number(e.matricula)}))
-    await fetch("/api/funcoes-destaque",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({funcoes})})
-    setSaving(false);setShowFuncaoForm(false);router.refresh()
-  }
   async function deletarFuncao(id:string) {
     await fetch("/api/funcoes-destaque",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify({id})})
     router.refresh()
@@ -158,8 +148,6 @@ export function EscalasClient({
 
 
   const isMinhaFaxina=(g:GrupoFaxina|null)=>g?(composicao[g]||[]).some(p=>p.mat===minhaMatricula):false
-  const funcoesPorData=new Map<string,FuncaoDia[]>()
-  for (const f of funcoesDias){const k=f.data.slice(0,10);if(!funcoesPorData.has(k))funcoesPorData.set(k,[]);funcoesPorData.get(k)!.push(f)}
 
   // Escala de serviço unificada: 6 funções por data (funcoesDias + adjuntos legados de plantaoDias)
   type ServicoItem={funcao:string;matricula:number;id?:string}
@@ -189,7 +177,7 @@ export function EscalasClient({
   const euSouP3=servicoAtual.p3?.mat===minhaMatricula
   const euSouP4=servicoAtual.p4?.mat===minhaMatricula
 
-  const tabs=[{id:"servico",label:"Serviço P1/P3/P4"},{id:"faxina",label:"Faxina"},{id:"plantao",label:"Plantão"},{id:"destaque",label:"Funções"}] as const
+  const tabs=[{id:"servico",label:"Serviço P1/P3/P4"},{id:"faxina",label:"Faxina"},{id:"plantao",label:"Plantão"}] as const
 
   return (
     <div style={{maxWidth:900,margin:"0 auto",padding:"32px 16px"}}>
@@ -498,50 +486,6 @@ export function EscalasClient({
                   <div style={{display:"flex",gap:8,marginTop:8}}>
                     <button onClick={()=>setServicoEntradas([...servicoEntradas,{data:"",funcao:"Adjunto1",matricula:""}])} style={{background:"#e0e7ff",color:"var(--azul-profundo)",border:"none",borderRadius:6,padding:"7px 14px",fontSize:12,cursor:"pointer"}}>+ Linha</button>
                     <button onClick={salvarServico} disabled={saving} style={{background:"var(--dourado)",color:"#fff",border:"none",borderRadius:8,padding:"7px 18px",fontSize:13,fontWeight:600,cursor:"pointer"}}>{saving?"Salvando…":"Salvar"}</button>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ── FUNÇÕES ── */}
-      {aba==="destaque"&&(
-        <div>
-          {funcoesDias.length===0&&<p style={{color:"var(--cinza-texto)",fontSize:13,marginBottom:16}}>Nenhuma função registrada.</p>}
-          <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:28}}>
-            {Array.from(funcoesPorData.entries()).map(([dataKey,todasFuncs])=>{
-              const funcs=todasFuncs.filter(f=>(FUNCOES_DESTAQUE as readonly string[]).includes(f.funcao))
-              if(funcs.length===0) return null
-              const d=new Date(dataKey+"T12:00:00");const euTenho=funcs.some(f=>f.matricula===minhaMatricula)
-              return <div key={dataKey} style={{background:euTenho?"var(--azul-claro)":"#fff",border:`1.5px solid ${euTenho?"var(--azul-medio)":"var(--cinza-borda)"}`,borderRadius:12,padding:"12px 16px"}}>
-                <p style={{fontWeight:700,fontSize:13,color:"var(--azul-profundo)",marginBottom:8}}>{d.toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"})}{euTenho&&<span style={{marginLeft:8,fontSize:11,color:"var(--azul-medio)",fontWeight:600}}>← você tem função</span>}</p>
-                <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-                  {funcs.map(f=><div key={f.id} style={{background:f.matricula===minhaMatricula?"var(--azul-profundo)":"var(--creme)",color:f.matricula===minhaMatricula?"#fff":"var(--grafite)",borderRadius:8,padding:"6px 12px",fontSize:12,display:"flex",alignItems:"center",gap:8}}>
-                    <span style={{fontWeight:600}}>{LABEL_FUNCAO[f.funcao]??f.funcao}</span><span>{nomesPorMat[f.matricula]??`Mat.${f.matricula}`}</span>
-                    {isAdmin&&<button onClick={()=>deletarFuncao(f.id)} style={{background:"none",border:"none",cursor:"pointer",color:f.matricula===minhaMatricula?"rgba(255,255,255,0.7)":"var(--cinza-texto)",fontSize:13,padding:0,lineHeight:1}}>×</button>}
-                  </div>)}
-                </div>
-              </div>
-            })}
-          </div>
-          {isAdmin&&(
-            <div>
-              <button onClick={()=>setShowFuncaoForm(!showFuncaoForm)} style={{background:"var(--azul-profundo)",color:"#fff",border:"none",borderRadius:8,padding:"9px 18px",fontSize:13,fontWeight:600,cursor:"pointer"}}>{showFuncaoForm?"Cancelar":"Inserir funções do mês"}</button>
-              {showFuncaoForm&&(
-                <div style={{marginTop:16,background:"var(--azul-claro)",borderRadius:12,padding:20}}>
-                  {funcaoEntradas.map((e,i)=>(
-                    <div key={i} style={{display:"flex",gap:8,marginBottom:8,flexWrap:"wrap"}}>
-                      <input type="date" value={e.data} onChange={ev=>{const n=[...funcaoEntradas];n[i]={...n[i],data:ev.target.value};setFuncaoEntradas(n)}} style={{border:"1px solid var(--cinza-borda)",borderRadius:6,padding:"6px 10px",fontSize:13}}/>
-                      <select value={e.funcao} onChange={ev=>{const n=[...funcaoEntradas];n[i]={...n[i],funcao:ev.target.value};setFuncaoEntradas(n)}} style={{border:"1px solid var(--cinza-borda)",borderRadius:6,padding:"6px 10px",fontSize:13}}>{FUNCOES_DESTAQUE.map(f=><option key={f} value={f}>{f}</option>)}</select>
-                      <select value={e.matricula} onChange={ev=>{const n=[...funcaoEntradas];n[i]={...n[i],matricula:ev.target.value};setFuncaoEntradas(n)}} style={{border:"1px solid var(--cinza-borda)",borderRadius:6,padding:"6px 10px",fontSize:13}}><option value="">— Aluno —</option>{alunos.map(a=><option key={a.matricula} value={a.matricula}>{a.matricula} {a.nomeGuerra}</option>)}</select>
-                      {funcaoEntradas.length>1&&<button onClick={()=>setFuncaoEntradas(funcaoEntradas.filter((_,j)=>j!==i))} style={{background:"#fee2e2",color:"#b91c1c",border:"none",borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:12}}>✕</button>}
-                    </div>
-                  ))}
-                  <div style={{display:"flex",gap:8,marginTop:8}}>
-                    <button onClick={()=>setFuncaoEntradas([...funcaoEntradas,{data:"",funcao:"Mestre",matricula:""}])} style={{background:"#e0e7ff",color:"var(--azul-profundo)",border:"none",borderRadius:6,padding:"7px 14px",fontSize:12,cursor:"pointer"}}>+ Linha</button>
-                    <button onClick={salvarFuncoes} disabled={saving} style={{background:"var(--dourado)",color:"#fff",border:"none",borderRadius:8,padding:"7px 18px",fontSize:13,fontWeight:600,cursor:"pointer"}}>{saving?"Salvando…":"Salvar"}</button>
                   </div>
                 </div>
               )}
