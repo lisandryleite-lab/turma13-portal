@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { semanaAtual } from "@/lib/utils"
+import { ResumoHoje } from "@/components/resumo-hoje"
 import Link from "next/link"
 
 export const dynamic = "force-dynamic"
@@ -72,6 +73,9 @@ export default async function DashboardPage() {
       </div>
 
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))" }}>
+
+        {/* ── Resumo de hoje: plantão, faxina e funções ── */}
+        <ResumoHoje matricula={matricula} />
 
         {/* ── Progresso geral ── */}
         <div style={{ gridColumn: "1/-1", background: "#fff", borderRadius: 14, padding: 20, border: "1px solid #dde3ee", boxShadow: "0 1px 4px rgba(11,45,94,0.06)" }}>
