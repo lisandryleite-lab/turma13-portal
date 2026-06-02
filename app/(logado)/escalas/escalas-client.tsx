@@ -31,10 +31,19 @@ const CORES_GRUPO: Record<string,string> = {
   G1:"#1D4ED8",G2:"#7C3AED",G3:"#B45309",G4:"#15803D",
   G5:"#B91C1C",G6:"#0369A1",G7:"#7E22CE",G8:"#92400E",
 }
+const CORES_PLANTAO: Record<string,string> = {
+  GOLF:"#15803D",HOTEL:"#0369A1",INDIA:"#B45309",JULIETT:"#7C3AED",
+  KILO:"#B91C1C",LIMA:"#1D4ED8",MIKE:"#7E22CE",NOVEMBER:"#92400E",
+}
 
 function TagGrupo({grupo,small}:{grupo:string;small?:boolean}) {
   const cor = CORES_GRUPO[grupo]||"#475569"
   return <span style={{background:cor+"18",color:cor,border:`1px solid ${cor}40`,borderRadius:6,padding:small?"1px 7px":"2px 10px",fontSize:small?11:12,fontWeight:600}}>{grupo}</span>
+}
+
+function TagPlantao({grupo,small}:{grupo:string;small?:boolean}) {
+  const cor = CORES_PLANTAO[grupo]||"#475569"
+  return <span style={{background:cor+"18",color:cor,border:`1px solid ${cor}40`,borderRadius:6,padding:small?"1px 6px":"2px 9px",fontSize:small?10:11,fontWeight:700,letterSpacing:"0.02em"}}>{grupo}</span>
 }
 
 function CardServico({label,pessoa,destaque}:{label:string;pessoa:{mat:number;nome:string}|null;destaque?:boolean}) {
@@ -69,6 +78,7 @@ export function EscalasClient({
   const [aba,setAba] = useState<"servico"|"faxina"|"plantao">("servico")
   const [saving,setSaving] = useState(false)
   const [mesFaxinaIdx,setMesFaxinaIdx] = useState(0)
+  const [mesPlantaoIdx,setMesPlantaoIdx] = useState(0)
   const [semanaServicoIdx,setSemanaServicoIdx] = useState(0)
 
   // Serviço overrides
@@ -148,6 +158,7 @@ export function EscalasClient({
 
 
   const isMinhaFaxina=(g:GrupoFaxina|null)=>g?(composicao[g]||[]).some(p=>p.mat===minhaMatricula):false
+  const meuGrupoPlantao=(["GOLF","HOTEL","INDIA","JULIETT","KILO","LIMA","MIKE","NOVEMBER"] as GrupoPlantao[]).find(g=>(membrosPlantao[g]||[]).some(m=>m.mat===minhaMatricula))??null
 
   // Escala de serviço unificada: 6 funções por data (funcoesDias + adjuntos legados de plantaoDias)
   type ServicoItem={funcao:string;matricula:number;id?:string}
@@ -438,6 +449,53 @@ export function EscalasClient({
               )
             })}
           </div>
+
+          {/* Calendário de plantão (ciclo diário dos 8 grupos) */}
+          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
+            <h2 style={{fontSize:14,fontWeight:700,color:"var(--azul-profundo)",letterSpacing:"0.06em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:10}}>
+              Plantão · {MESES[mesesCalendario[mesPlantaoIdx].mes]} {mesesCalendario[mesPlantaoIdx].ano}
+              {mesPlantaoIdx===0&&<span style={{fontSize:11,background:"var(--dourado)",color:"#fff",borderRadius:20,padding:"2px 10px",fontWeight:700}}>Mês atual</span>}
+            </h2>
+            <div style={{display:"flex",gap:8,alignItems:"center"}}>
+              <NavBtn onClick={()=>setMesPlantaoIdx(i=>Math.max(0,i-1))} disabled={mesPlantaoIdx===0}>‹</NavBtn>
+              <span style={{fontSize:12,color:"var(--cinza-texto)",minWidth:60,textAlign:"center"}}>{mesPlantaoIdx+1}/{mesesCalendario.length}</span>
+              <NavBtn onClick={()=>setMesPlantaoIdx(i=>Math.min(mesesCalendario.length-1,i+1))} disabled={mesPlantaoIdx===mesesCalendario.length-1}>›</NavBtn>
+            </div>
+          </div>
+          {meuGrupoPlantao&&<p style={{fontSize:12,color:"var(--cinza-texto)",marginBottom:10}}>Seu grupo: <TagPlantao grupo={meuGrupoPlantao}/> — os dias destacados são os seus.</p>}
+          {(()=>{
+            const {ano:a,mes:m,dias}=mesesCalendario[mesPlantaoIdx]
+            const hoje=new Date()
+            const hojeStr=`${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,"0")}-${String(hoje.getDate()).padStart(2,"0")}`
+            const primeiroDia=new Date(a,m-1,1).getDay()
+            const cells:(DiaCal|null)[]=[...Array(primeiroDia).fill(null),...(dias as DiaCal[])]
+            while(cells.length%7!==0) cells.push(null)
+            return (
+              <>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4,fontSize:11,marginBottom:6}}>
+                  {["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"].map(dd=><div key={dd} style={{textAlign:"center",fontWeight:700,color:"var(--cinza-texto)",padding:4}}>{dd}</div>)}
+                </div>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4,marginBottom:24}}>
+                  {cells.map((dia,i)=>{
+                    if(!dia) return <div key={i}/>
+                    const numDia=Number(dia.data.slice(8,10))
+                    const meuDia=meuGrupoPlantao!==null&&dia.grupoPlantao===meuGrupoPlantao
+                    const isHoje=dia.data.slice(0,10)===hojeStr
+                    return (
+                      <div key={i} style={{background:isHoje?"var(--azul-profundo)":meuDia?"var(--azul-claro)":"#fff",border:isHoje?"2px solid var(--dourado)":`1.5px solid ${meuDia?"var(--azul-medio)":"var(--cinza-borda)"}`,borderRadius:8,padding:"6px 4px",textAlign:"center",minHeight:56,boxShadow:isHoje?"0 2px 8px rgba(11,45,94,0.22)":undefined}}>
+                        <p style={{fontWeight:700,fontSize:13,marginBottom:4,color:isHoje?"#fff":"var(--grafite)"}}>
+                          {numDia}
+                          {isHoje&&<span style={{fontSize:8,display:"block",color:"rgba(255,200,80,0.9)",letterSpacing:"0.04em"}}>HOJE</span>}
+                        </p>
+                        <TagPlantao grupo={dia.grupoPlantao} small/>
+                      </div>
+                    )
+                  })}
+                </div>
+              </>
+            )
+          })()}
+
           <h2 style={{fontSize:14,fontWeight:700,color:"var(--azul-profundo)",marginBottom:4,letterSpacing:"0.06em",textTransform:"uppercase"}}>Escala de Serviço</h2>
           <p style={{fontSize:12,color:"var(--cinza-texto)",marginBottom:16}}>Uma tabela por função — Turma 13. A linha em destaque é a sua.</p>
           {datasServico.length===0&&<p style={{color:"var(--cinza-texto)",fontSize:13,marginBottom:16}}>Nenhum dado inserido ainda.</p>}
