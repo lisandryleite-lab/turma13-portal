@@ -7,6 +7,13 @@ import type { MEMBROS_PLANTAO, GrupoFaxina, GrupoPlantao } from "@/lib/escalas"
 
 const MESES = ["","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
 const FUNCOES_DESTAQUE = ["Mestre","Leitor","Discurso","Comandante"] as const
+// Escala de serviço unificada (aba Plantão): 6 funções, na ordem de exibição
+const FUNCOES_SERVICO = ["Adjunto1","Adjunto2","Mestre","Leitor","Discurso","Comandante"] as const
+const LABEL_FUNCAO: Record<string,string> = {
+  Adjunto1:"Adjunto da 1ª CIA", Adjunto2:"Adjunto da 2ª CIA",
+  Mestre:"Mestre de Cerimônia", Leitor:"Leitor de BI",
+  Discurso:"Discurso ao CFO", Comandante:"Comandante da 2ª CIA",
+}
 const GRUPOS_FAXINA = ["G1","G2","G3","G4","G5","G6","G7","G8"] as const
 
 type ServicoSemana = {
@@ -76,11 +83,12 @@ export function EscalasClient({
   const [addMat,setAddMat] = useState("")
   const [showAdminFaxina,setShowAdminFaxina] = useState(false)
 
-  // Plantão / Funções admin
-  const [showPlantaoForm,setShowPlantaoForm] = useState(false)
-  const [plantaoEntradas,setPlantaoEntradas] = useState<{data:string;adjuntoMat:string}[]>([{data:"",adjuntoMat:""}])
+  // Funções admin
   const [showFuncaoForm,setShowFuncaoForm] = useState(false)
   const [funcaoEntradas,setFuncaoEntradas] = useState<{data:string;funcao:string;matricula:string}[]>([{data:"",funcao:"Mestre",matricula:""}])
+  // Escala de serviço unificada (aba Plantão)
+  const [showServicoForm,setShowServicoForm] = useState(false)
+  const [servicoEntradas,setServicoEntradas] = useState<{data:string;funcao:string;matricula:string}[]>([{data:"",funcao:"Adjunto1",matricula:""}])
 
   // ── Faxina grupo admin ────────────────────────────────────────
   async function adicionarMembro() {
@@ -130,19 +138,7 @@ export function EscalasClient({
     router.refresh()
   }
 
-  // ── Plantão / Funções ─────────────────────────────────────────
-  async function salvarPlantao() {
-    setSaving(true)
-    const GRUPOS=["GOLF","HOTEL","INDIA","JULIETT","KILO","LIMA","MIKE","NOVEMBER"]
-    const REF=new Date(2026,4,26)
-    const dias=plantaoEntradas.filter(e=>e.data).map(e=>{
-      const d=new Date(e.data+"T12:00:00")
-      const idx=((Math.floor((d.getTime()-REF.getTime())/86400000)%8)+8)%8
-      return {data:e.data+"T12:00:00",grupoPlantao:GRUPOS[idx],adjuntoMat:e.adjuntoMat?Number(e.adjuntoMat):null}
-    })
-    await fetch("/api/plantao-mes",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({dias})})
-    setSaving(false);setShowPlantaoForm(false);router.refresh()
-  }
+  // ── Funções ───────────────────────────────────────────────────
   async function salvarFuncoes() {
     setSaving(true)
     const funcoes=funcaoEntradas.filter(e=>e.data&&e.matricula).map(e=>({data:e.data+"T12:00:00",funcao:e.funcao,matricula:Number(e.matricula)}))
@@ -153,11 +149,41 @@ export function EscalasClient({
     await fetch("/api/funcoes-destaque",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify({id})})
     router.refresh()
   }
+  async function salvarServico() {
+    setSaving(true)
+    const funcoes=servicoEntradas.filter(e=>e.data&&e.matricula).map(e=>({data:e.data+"T12:00:00",funcao:e.funcao,matricula:Number(e.matricula)}))
+    await fetch("/api/funcoes-destaque",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({funcoes})})
+    setSaving(false);setShowServicoForm(false);router.refresh()
+  }
 
 
   const isMinhaFaxina=(g:GrupoFaxina|null)=>g?(composicao[g]||[]).some(p=>p.mat===minhaMatricula):false
   const funcoesPorData=new Map<string,FuncaoDia[]>()
   for (const f of funcoesDias){const k=f.data.slice(0,10);if(!funcoesPorData.has(k))funcoesPorData.set(k,[]);funcoesPorData.get(k)!.push(f)}
+
+  // Escala de serviço unificada: 6 funções por data (funcoesDias + adjuntos legados de plantaoDias)
+  type ServicoItem={funcao:string;matricula:number;id?:string}
+  const servicoPorData=new Map<string,ServicoItem[]>()
+  for (const f of funcoesDias){const k=f.data.slice(0,10);if(!servicoPorData.has(k))servicoPorData.set(k,[]);servicoPorData.get(k)!.push({funcao:f.funcao,matricula:f.matricula,id:f.id})}
+  // Preserva adjuntos da 2ª CIA cadastrados antigamente em PlantaoDia
+  for (const p of plantaoDias){
+    if(!p.adjuntoMat) continue
+    const k=p.data.slice(0,10)
+    const arr=servicoPorData.get(k)??[]
+    if(!arr.some(x=>x.funcao==="Adjunto2")){arr.push({funcao:"Adjunto2",matricula:p.adjuntoMat});servicoPorData.set(k,arr)}
+  }
+  const ordemFuncao=(f:string)=>{const i=(FUNCOES_SERVICO as readonly string[]).indexOf(f);return i<0?99:i}
+  const datasServico=Array.from(servicoPorData.keys()).sort()
+  // Agrupa por função (uma tabela por função, datas em ordem)
+  const servicoPorFuncao=new Map<string,{dataKey:string;matricula:number;id?:string}[]>()
+  for (const dataKey of datasServico){
+    for (const it of servicoPorData.get(dataKey)??[]){
+      if(!servicoPorFuncao.has(it.funcao))servicoPorFuncao.set(it.funcao,[])
+      servicoPorFuncao.get(it.funcao)!.push({dataKey,matricula:it.matricula,id:it.id})
+    }
+  }
+  for (const arr of servicoPorFuncao.values()) arr.sort((a,b)=>a.dataKey.localeCompare(b.dataKey))
+  const fmtData=(k:string)=>{const d=new Date(k+"T12:00:00");const s=d.toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"2-digit"});return s.charAt(0).toUpperCase()+s.slice(1)}
   const semanaVis=semanas[semanaServicoIdx]??servicoAtual
   const euSouP1=servicoAtual.p1?.mat===minhaMatricula
   const euSouP3=servicoAtual.p3?.mat===minhaMatricula
@@ -424,36 +450,54 @@ export function EscalasClient({
               )
             })}
           </div>
-          <h2 style={{fontSize:14,fontWeight:700,color:"var(--azul-profundo)",marginBottom:12,letterSpacing:"0.06em",textTransform:"uppercase"}}>Adjuntos da Turma 13</h2>
-          {plantaoDias.filter(p=>p.adjuntoMat).length===0&&<p style={{color:"var(--cinza-texto)",fontSize:13,marginBottom:16}}>Nenhum dado inserido ainda.</p>}
-          <div style={{display:"flex",flexDirection:"column",gap:6,marginBottom:24}}>
-            {plantaoDias.filter(p=>p.adjuntoMat).map(p=>{
-              const d=new Date(p.data);const eu=p.adjuntoMat===minhaMatricula
-              return <div key={p.id} style={{background:eu?"var(--azul-claro)":"#fff",border:`1.5px solid ${eu?"var(--azul-medio)":"var(--cinza-borda)"}`,borderRadius:10,padding:"10px 16px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                <div><span style={{fontWeight:700,fontSize:13,color:"var(--azul-profundo)"}}>{d.toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"short"})}</span><span style={{marginLeft:12,fontSize:12,color:"var(--cinza-texto)"}}>{p.grupoPlantao}</span></div>
-                <div style={{fontSize:13,fontWeight:eu?700:400}}>{nomesPorMat[p.adjuntoMat!]??`Mat.${p.adjuntoMat}`}{eu&&<span style={{marginLeft:6,fontSize:11,color:"var(--azul-medio)"}}>← você</span>}</div>
-              </div>
+          <h2 style={{fontSize:14,fontWeight:700,color:"var(--azul-profundo)",marginBottom:4,letterSpacing:"0.06em",textTransform:"uppercase"}}>Escala de Serviço</h2>
+          <p style={{fontSize:12,color:"var(--cinza-texto)",marginBottom:16}}>Uma tabela por função — Turma 13. A linha em destaque é a sua.</p>
+          {datasServico.length===0&&<p style={{color:"var(--cinza-texto)",fontSize:13,marginBottom:16}}>Nenhum dado inserido ainda.</p>}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:16,marginBottom:24}}>
+            {FUNCOES_SERVICO.filter(f=>servicoPorFuncao.has(f)).map(funcao=>{
+              const linhas=servicoPorFuncao.get(funcao)!
+              const euAqui=linhas.some(l=>l.matricula===minhaMatricula)
+              return (
+                <div key={funcao} style={{background:"#fff",border:`1.5px solid ${euAqui?"var(--azul-medio)":"var(--cinza-borda)"}`,borderRadius:12,overflow:"hidden",boxShadow:"var(--shadow-sm)"}}>
+                  <div style={{background:"var(--azul-profundo)",color:"#fff",padding:"10px 14px",fontSize:13,fontWeight:700}}>{LABEL_FUNCAO[funcao]??funcao}</div>
+                  <table style={{width:"100%",borderCollapse:"collapse",fontSize:12}}>
+                    <tbody>
+                      {linhas.map((l,idx)=>{
+                        const eu=l.matricula===minhaMatricula
+                        return (
+                          <tr key={l.dataKey+l.id} style={{borderTop:idx===0?"none":"1px solid var(--cinza-borda)",background:eu?"var(--azul-claro)":"#fff"}}>
+                            <td style={{padding:"8px 14px",whiteSpace:"nowrap",color:"var(--cinza-texto)",fontWeight:600,width:1}}>{fmtData(l.dataKey)}</td>
+                            <td style={{padding:"8px 14px",fontWeight:eu?700:400,color:eu?"var(--azul-profundo)":"var(--grafite)"}}>
+                              {nomesPorMat[l.matricula]??`Mat.${l.matricula}`}
+                              {eu&&<span style={{marginLeft:6,fontSize:10,color:"var(--azul-medio)",fontWeight:700}}>← você</span>}
+                            </td>
+                            {isAdmin&&l.id&&<td style={{padding:"8px 10px",textAlign:"right",width:1}}><button onClick={()=>deletarFuncao(l.id!)} style={{background:"none",border:"none",cursor:"pointer",color:"var(--cinza-texto)",fontSize:14,padding:0,lineHeight:1}}>×</button></td>}
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )
             })}
           </div>
           {isAdmin&&(
             <div>
-              <button onClick={()=>setShowPlantaoForm(!showPlantaoForm)} style={{background:"var(--azul-profundo)",color:"#fff",border:"none",borderRadius:8,padding:"9px 18px",fontSize:13,fontWeight:600,cursor:"pointer"}}>{showPlantaoForm?"Cancelar":"Inserir adjuntos do mês"}</button>
-              {showPlantaoForm&&(
+              <button onClick={()=>setShowServicoForm(!showServicoForm)} style={{background:"var(--azul-profundo)",color:"#fff",border:"none",borderRadius:8,padding:"9px 18px",fontSize:13,fontWeight:600,cursor:"pointer"}}>{showServicoForm?"Cancelar":"Inserir escala de serviço"}</button>
+              {showServicoForm&&(
                 <div style={{marginTop:16,background:"var(--azul-claro)",borderRadius:12,padding:20}}>
-                  <p style={{fontSize:12,color:"var(--cinza-texto)",marginBottom:12}}>Informe as datas em que alunos da Turma 13 são adjuntos da 2ª CIA.</p>
-                  {plantaoEntradas.map((e,i)=>(
+                  <p style={{fontSize:12,color:"var(--cinza-texto)",marginBottom:12}}>Informe a data, a função e o aluno da Turma 13 escalado.</p>
+                  {servicoEntradas.map((e,i)=>(
                     <div key={i} style={{display:"flex",gap:8,marginBottom:8,flexWrap:"wrap"}}>
-                      <input type="date" value={e.data} onChange={ev=>{const n=[...plantaoEntradas];n[i]={...n[i],data:ev.target.value};setPlantaoEntradas(n)}} style={{border:"1px solid var(--cinza-borda)",borderRadius:6,padding:"6px 10px",fontSize:13}}/>
-                      <select value={e.adjuntoMat} onChange={ev=>{const n=[...plantaoEntradas];n[i]={...n[i],adjuntoMat:ev.target.value};setPlantaoEntradas(n)}} style={{border:"1px solid var(--cinza-borda)",borderRadius:6,padding:"6px 10px",fontSize:13}}>
-                        <option value="">— Adjunto —</option>
-                        {alunos.map(a=><option key={a.matricula} value={a.matricula}>{a.matricula} {a.nomeGuerra}</option>)}
-                      </select>
-                      {plantaoEntradas.length>1&&<button onClick={()=>setPlantaoEntradas(plantaoEntradas.filter((_,j)=>j!==i))} style={{background:"#fee2e2",color:"#b91c1c",border:"none",borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:12}}>✕</button>}
+                      <input type="date" value={e.data} onChange={ev=>{const n=[...servicoEntradas];n[i]={...n[i],data:ev.target.value};setServicoEntradas(n)}} style={{border:"1px solid var(--cinza-borda)",borderRadius:6,padding:"6px 10px",fontSize:13}}/>
+                      <select value={e.funcao} onChange={ev=>{const n=[...servicoEntradas];n[i]={...n[i],funcao:ev.target.value};setServicoEntradas(n)}} style={{border:"1px solid var(--cinza-borda)",borderRadius:6,padding:"6px 10px",fontSize:13}}>{FUNCOES_SERVICO.map(f=><option key={f} value={f}>{LABEL_FUNCAO[f]}</option>)}</select>
+                      <select value={e.matricula} onChange={ev=>{const n=[...servicoEntradas];n[i]={...n[i],matricula:ev.target.value};setServicoEntradas(n)}} style={{border:"1px solid var(--cinza-borda)",borderRadius:6,padding:"6px 10px",fontSize:13}}><option value="">— Aluno —</option>{alunos.map(a=><option key={a.matricula} value={a.matricula}>{a.matricula} {a.nomeGuerra}</option>)}</select>
+                      {servicoEntradas.length>1&&<button onClick={()=>setServicoEntradas(servicoEntradas.filter((_,j)=>j!==i))} style={{background:"#fee2e2",color:"#b91c1c",border:"none",borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:12}}>✕</button>}
                     </div>
                   ))}
                   <div style={{display:"flex",gap:8,marginTop:8}}>
-                    <button onClick={()=>setPlantaoEntradas([...plantaoEntradas,{data:"",adjuntoMat:""}])} style={{background:"#e0e7ff",color:"var(--azul-profundo)",border:"none",borderRadius:6,padding:"7px 14px",fontSize:12,cursor:"pointer"}}>+ Linha</button>
-                    <button onClick={salvarPlantao} disabled={saving} style={{background:"var(--dourado)",color:"#fff",border:"none",borderRadius:8,padding:"7px 18px",fontSize:13,fontWeight:600,cursor:"pointer"}}>{saving?"Salvando…":"Salvar"}</button>
+                    <button onClick={()=>setServicoEntradas([...servicoEntradas,{data:"",funcao:"Adjunto1",matricula:""}])} style={{background:"#e0e7ff",color:"var(--azul-profundo)",border:"none",borderRadius:6,padding:"7px 14px",fontSize:12,cursor:"pointer"}}>+ Linha</button>
+                    <button onClick={salvarServico} disabled={saving} style={{background:"var(--dourado)",color:"#fff",border:"none",borderRadius:8,padding:"7px 18px",fontSize:13,fontWeight:600,cursor:"pointer"}}>{saving?"Salvando…":"Salvar"}</button>
                   </div>
                 </div>
               )}
@@ -467,13 +511,15 @@ export function EscalasClient({
         <div>
           {funcoesDias.length===0&&<p style={{color:"var(--cinza-texto)",fontSize:13,marginBottom:16}}>Nenhuma função registrada.</p>}
           <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:28}}>
-            {Array.from(funcoesPorData.entries()).map(([dataKey,funcs])=>{
+            {Array.from(funcoesPorData.entries()).map(([dataKey,todasFuncs])=>{
+              const funcs=todasFuncs.filter(f=>(FUNCOES_DESTAQUE as readonly string[]).includes(f.funcao))
+              if(funcs.length===0) return null
               const d=new Date(dataKey+"T12:00:00");const euTenho=funcs.some(f=>f.matricula===minhaMatricula)
               return <div key={dataKey} style={{background:euTenho?"var(--azul-claro)":"#fff",border:`1.5px solid ${euTenho?"var(--azul-medio)":"var(--cinza-borda)"}`,borderRadius:12,padding:"12px 16px"}}>
                 <p style={{fontWeight:700,fontSize:13,color:"var(--azul-profundo)",marginBottom:8}}>{d.toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"})}{euTenho&&<span style={{marginLeft:8,fontSize:11,color:"var(--azul-medio)",fontWeight:600}}>← você tem função</span>}</p>
                 <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
                   {funcs.map(f=><div key={f.id} style={{background:f.matricula===minhaMatricula?"var(--azul-profundo)":"var(--creme)",color:f.matricula===minhaMatricula?"#fff":"var(--grafite)",borderRadius:8,padding:"6px 12px",fontSize:12,display:"flex",alignItems:"center",gap:8}}>
-                    <span style={{fontWeight:600}}>{f.funcao}</span><span>{nomesPorMat[f.matricula]??`Mat.${f.matricula}`}</span>
+                    <span style={{fontWeight:600}}>{LABEL_FUNCAO[f.funcao]??f.funcao}</span><span>{nomesPorMat[f.matricula]??`Mat.${f.matricula}`}</span>
                     {isAdmin&&<button onClick={()=>deletarFuncao(f.id)} style={{background:"none",border:"none",cursor:"pointer",color:f.matricula===minhaMatricula?"rgba(255,255,255,0.7)":"var(--cinza-texto)",fontSize:13,padding:0,lineHeight:1}}>×</button>}
                   </div>)}
                 </div>
