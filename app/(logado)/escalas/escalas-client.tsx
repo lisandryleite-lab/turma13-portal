@@ -424,6 +424,25 @@ export function EscalasClient({
                         </div>
                       </>
                     )}
+                    {/* Funções de destaque do dia */}
+                    {(()=>{
+                      const itensHoje=[...(servicoPorData.get(esteHoje.data.slice(0,10))??[])].sort((a,b)=>ordemFuncao(a.funcao)-ordemFuncao(b.funcao))
+                      if(itensHoje.length===0) return null
+                      return (
+                        <>
+                          <div style={{borderTop:"1px solid rgba(255,255,255,0.15)",margin:"14px 0 10px"}}/>
+                          <p style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.65)",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:8}}>
+                            Funções de Hoje
+                          </p>
+                          <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+                            {itensHoje.map(it=>{
+                              const euSou=it.matricula===minhaMatricula
+                              return <span key={it.funcao} style={{background:euSou?"var(--dourado)":"rgba(255,255,255,0.10)",color:"#fff",borderRadius:6,padding:"4px 10px",fontSize:12,fontWeight:euSou?700:400}}><b style={{fontWeight:700}}>{LABEL_FUNCAO[it.funcao]??it.funcao}:</b> {nomesPorMat[it.matricula]??`Mat.${it.matricula}`}{euSou?" ←":""}</span>
+                            })}
+                          </div>
+                        </>
+                      )
+                    })()}
                   </div>
                 )}
               </>
