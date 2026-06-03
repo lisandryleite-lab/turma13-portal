@@ -141,7 +141,7 @@ export default function LinksPage() {
         gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
         gap: 16,
       }}>
-        {LINKS.map(({ label, desc, url, bg, labelColor, Icon, emBreve }) => {
+        {LINKS.map(({ label, url, bg, labelColor, Icon }) => {
           const cardStyle: React.CSSProperties = {
             background: bg,
             borderRadius: 18,
@@ -153,7 +153,7 @@ export default function LinksPage() {
             justifyContent: "center",
             gap: 10,
             cursor: url ? "pointer" : "default",
-            opacity: emBreve ? 0.6 : 1,
+            opacity: 1,
             transition: "transform 0.15s, box-shadow 0.15s",
             boxShadow: "0 2px 10px rgba(0,0,0,0.07)",
             minHeight: 165,
@@ -165,11 +165,9 @@ export default function LinksPage() {
             <div
               style={cardStyle}
               onMouseEnter={e => {
-                if (!emBreve) {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.transform = "translateY(-4px)"
-                  el.style.boxShadow = "0 8px 24px rgba(0,0,0,0.13)"
-                }
+                const el = e.currentTarget as HTMLElement
+                el.style.transform = "translateY(-4px)"
+                el.style.boxShadow = "0 8px 24px rgba(0,0,0,0.13)"
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLElement
@@ -186,9 +184,6 @@ export default function LinksPage() {
                 }}>
                   {label}
                 </p>
-                {emBreve && (
-                  <p style={{ fontSize: 10, color: "#9CA3AF" }}>em breve</p>
-                )}
               </div>
             </div>
           )
