@@ -13,37 +13,43 @@ function IconSEI() {
   )
 }
 
-function IconPsicologo() {
-  return (
-    <svg viewBox="0 0 80 80" fill="none" width="72" height="72">
-      <circle cx="40" cy="40" r="30" fill="none" stroke="#1a7a3c" strokeWidth="3.5"/>
-      {/* Cérebro rosa */}
-      <ellipse cx="40" cy="43" rx="16" ry="12" fill="#F472B6" opacity="0.9"/>
-      <path d="M27 40c0-7 5.8-13 13-13s13 6 13 13" stroke="#DB2777" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-      <path d="M24 44c0 7 7 13 16 13s16-6 16-13" stroke="#DB2777" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-      <line x1="40" y1="27" x2="40" y2="57" stroke="#DB2777" strokeWidth="2" strokeLinecap="round"/>
-      <path d="M30 42c-4 0-6 2-6 5" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" fill="none"/>
-      <path d="M50 42c4 0 6 2 6 5" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" fill="none"/>
-      <circle cx="32" cy="35" r="2" fill="#EC4899"/>
-      <circle cx="48" cy="35" r="2" fill="#EC4899"/>
-    </svg>
-  )
-}
-
 function IconACIDES() {
   return (
     <svg viewBox="0 0 80 80" fill="none" width="72" height="72">
-      {/* Escudo */}
-      <path d="M40 8 L64 20 L64 46 C64 58 40 72 40 72 C40 72 16 58 16 46 L16 20 Z"
-        fill="#1A52A8" stroke="#0B2D5E" strokeWidth="1.5"/>
-      {/* Triângulo interno dourado */}
-      <path d="M40 26 L52 50 L28 50 Z" fill="#B8924A"/>
-      {/* Chama */}
-      <path d="M40 4 C40 4 44 10 40 15 C36 10 40 4 40 4Z" fill="#DDB876"/>
-      <path d="M40 8 C40 8 43 13 40 17 C37 13 40 8 40 8Z" fill="#F59E0B"/>
-      {/* Texto ACIDES */}
-      <text x="40" y="66" fontSize="9" fontWeight="800" fontFamily="Arial,sans-serif"
-        fill="#4A7C3F" textAnchor="middle" letterSpacing="1">ACIDES</text>
+      <defs>
+        <linearGradient id="acidesShield" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#3B82F6"/>
+          <stop offset="0.5" stopColor="#1A52A8"/>
+          <stop offset="1" stopColor="#0B2D5E"/>
+        </linearGradient>
+        <linearGradient id="acidesFlame" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#FDE68A"/>
+          <stop offset="0.5" stopColor="#F59E0B"/>
+          <stop offset="1" stopColor="#B8924A"/>
+        </linearGradient>
+      </defs>
+      {/* Escudo / livro aberto */}
+      <path d="M40 22 L66 30 L66 50 C66 62 40 74 40 74 C40 74 14 62 14 50 L14 30 Z"
+        fill="url(#acidesShield)" stroke="#0B2D5E" strokeWidth="1.5"/>
+      {/* Vinco central do livro */}
+      <line x1="40" y1="24" x2="40" y2="68" stroke="#0B2D5E" strokeWidth="1.5" opacity="0.5"/>
+      {/* Brilho lateral */}
+      <path d="M40 24 L18 31 L18 50 C18 58 30 65 36 68 L40 68 Z" fill="#ffffff" opacity="0.08"/>
+      {/* Chevron branco (A) */}
+      <path d="M40 36 L54 62 L46 62 L40 50 L34 62 L26 62 Z" fill="#F8FAFC"/>
+      {/* Chama dourada — três línguas de fogo */}
+      <path d="M40 2
+        C49 12 54 17 50 27
+        C49 23 47 21 45 20
+        C48 27 44 31 43 25
+        C44 31 39 33 39 27
+        C37 32 33 30 35 24
+        C33 26 31 28 32 31
+        C27 23 33 13 40 2Z"
+        fill="url(#acidesFlame)"/>
+      {/* Brilho interno da chama */}
+      <path d="M40 9 C44 15 46 19 43 25 C42 22 41 21 40 20 C40 24 38 25 38 22 C36 19 37 14 40 9Z"
+        fill="#FDE68A" opacity="0.7"/>
     </svg>
   )
 }
@@ -80,66 +86,6 @@ function IconDrive() {
   )
 }
 
-function IconMemento() {
-  return (
-    <svg viewBox="0 0 80 80" fill="none" width="72" height="72">
-      {/* Calendário */}
-      <rect x="10" y="18" width="60" height="52" rx="6" fill="white" stroke="#5B6CF0" strokeWidth="2.5"/>
-      <rect x="10" y="18" width="60" height="20" rx="6" fill="#5B6CF0"/>
-      <rect x="10" y="30" width="60" height="8" fill="#5B6CF0"/>
-      {/* Argolas */}
-      <rect x="24" y="12" width="6" height="14" rx="3" fill="#7C83E8"/>
-      <rect x="50" y="12" width="6" height="14" rx="3" fill="#7C83E8"/>
-      {/* Marcador amarelo */}
-      <rect x="52" y="14" width="8" height="20" rx="2" fill="#FBBF24"/>
-      {/* Letra M */}
-      <text x="40" y="56" fontSize="22" fontWeight="900" fontFamily="Arial Black,sans-serif"
-        fill="#3B3FB5" textAnchor="middle">M</text>
-    </svg>
-  )
-}
-
-function IconQuestoes() {
-  return (
-    <svg viewBox="0 0 80 80" fill="none" width="72" height="72">
-      {/* Monitor */}
-      <rect x="8" y="14" width="64" height="44" rx="5" fill="#7C3AED" opacity="0.9"/>
-      <rect x="12" y="18" width="56" height="36" rx="3" fill="#EDE9FE"/>
-      {/* ? central */}
-      <text x="28" y="44" fontSize="24" fontWeight="900" fontFamily="Arial Black,sans-serif"
-        fill="#7C3AED" textAnchor="middle">?</text>
-      {/* A B C */}
-      <circle cx="46" cy="29" r="4" fill="#7C3AED" opacity="0.3"/>
-      <text x="46" y="32" fontSize="8" fontWeight="700" fontFamily="Arial,sans-serif"
-        fill="#7C3AED" textAnchor="middle">A</text>
-      <circle cx="46" cy="40" r="4" fill="#7C3AED" opacity="0.3"/>
-      <text x="46" y="43" fontSize="8" fontWeight="700" fontFamily="Arial,sans-serif"
-        fill="#7C3AED" textAnchor="middle">B</text>
-      <circle cx="46" cy="51" r="4" fill="#7C3AED" opacity="0.3"/>
-      <text x="46" y="54" fontSize="8" fontWeight="700" fontFamily="Arial,sans-serif"
-        fill="#7C3AED" textAnchor="middle">C</text>
-      {/* Base monitor */}
-      <rect x="30" y="58" width="20" height="4" rx="2" fill="#7C3AED" opacity="0.5"/>
-      <rect x="26" y="62" width="28" height="3" rx="1.5" fill="#7C3AED" opacity="0.4"/>
-    </svg>
-  )
-}
-
-function IconFinanceiro() {
-  return (
-    <svg viewBox="0 0 80 80" fill="none" width="72" height="72">
-      <circle cx="40" cy="40" r="28" fill="none" stroke="#16A34A" strokeWidth="3"/>
-      {/* Gráfico linha crescente */}
-      <polyline points="20,55 32,42 44,48 60,28"
-        stroke="#16A34A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-      <circle cx="60" cy="28" r="3" fill="#16A34A"/>
-      {/* $ */}
-      <text x="28" y="46" fontSize="14" fontWeight="900" fontFamily="Arial Black,sans-serif"
-        fill="#15803D">$</text>
-    </svg>
-  )
-}
-
 // ─── Dados dos links ─────────────────────────────────────────────────────────
 
 const LINKS = [
@@ -150,14 +96,6 @@ const LINKS = [
     bg: "#ffffff",
     labelColor: "#0072CE",
     Icon: IconSEI,
-  },
-  {
-    label: "Psicólogo",
-    desc: "Agendamento APMP",
-    url: "https://agendamento-apmp.vercel.app/",
-    bg: "#F0FDF4",
-    labelColor: "#1a7a3c",
-    Icon: IconPsicologo,
   },
   {
     label: "ACIDES",
@@ -182,33 +120,6 @@ const LINKS = [
     bg: "#ffffff",
     labelColor: "#1a73e8",
     Icon: IconDrive,
-  },
-  {
-    label: "Memento",
-    desc: "Em breve",
-    url: null,
-    bg: "#EEF2FF",
-    labelColor: "#3B3FB5",
-    Icon: IconMemento,
-    emBreve: true,
-  },
-  {
-    label: "Questões",
-    desc: "Em breve",
-    url: null,
-    bg: "#F5F3FF",
-    labelColor: "#7C3AED",
-    Icon: IconQuestoes,
-    emBreve: true,
-  },
-  {
-    label: "Financeiro",
-    desc: "Em breve",
-    url: null,
-    bg: "#F0FDF4",
-    labelColor: "#15803D",
-    Icon: IconFinanceiro,
-    emBreve: true,
   },
 ]
 
