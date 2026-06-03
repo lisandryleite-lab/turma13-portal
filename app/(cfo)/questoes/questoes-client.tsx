@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 type Materia = { sigla: string; nome: string; total: number; modulos: string[] }
 
 const TIPOS: [string, string][] = [["", "Todos os tipos"], ["certo_errado", "Certo/Errado"], ["multipla", "Múltipla escolha"], ["dissertativa", "Dissertativa"]]
-const moduloLabel = (m: string) => (m === "" ? "Sem módulo" : `Módulo ${m}`)
+const moduloLabel = (m: string) => m === "" ? "Sem módulo" : /^\d+AE$/.test(m) ? `${m.replace("AE", "")}ª AE` : `Módulo ${m}`
 function buildQuery(materia: string, modulo: string, tipo: string, extra = "") {
   let q = `materia=${encodeURIComponent(materia)}${extra}`
   if (modulo !== "__all__") q += `&modulo=${encodeURIComponent(modulo)}`
