@@ -1,6 +1,6 @@
 import "dotenv/config"
 import { createHash } from "crypto"
-import { PrismaClient } from "../lib/generated/prisma/client"
+import { PrismaClient, Prisma } from "../lib/generated/prisma/client"
 import { PrismaNeon } from "@prisma/adapter-neon"
 import { neonConfig } from "@neondatabase/serverless"
 import ws from "ws"
@@ -259,7 +259,7 @@ async function main() {
       alternativas: q.tipo === "multipla" ? (q as { alternativas: Alt[] }).alternativas : [],
       gabarito: q.tipo !== "dissertativa" ? (q as { gabarito: string }).gabarito : "",
       explicacao: q.tipo !== "dissertativa" ? (q as { explicacao: string }).explicacao : null,
-      modelo: q.tipo === "dissertativa" ? (q as { modelo: object }).modelo : null,
+      modelo: q.tipo === "dissertativa" ? (q as { modelo: object }).modelo : Prisma.DbNull,
       fonte: FONTE,
       hash,
     }

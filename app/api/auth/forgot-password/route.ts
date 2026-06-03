@@ -3,9 +3,8 @@ import { prisma } from "@/lib/prisma"
 import { Resend } from "resend"
 import { randomBytes } from "crypto"
 
-const resend = new Resend(process.env.RESEND_API_KEY?.trim())
-
 export async function POST(req: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY?.trim())
   const body = await req.json()
   const matricula = Number(body.matricula)
   if (isNaN(matricula) || matricula <= 0)
