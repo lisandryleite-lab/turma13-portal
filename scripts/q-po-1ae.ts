@@ -24,31 +24,31 @@ const CTX3 = "3º Quesito (1ª AE — PO — CFO 2025) — Considerando as instr
 const QS: Q[] = [
   // ════════ 1º QUESITO — BOEPM Geração 2 (V/F) ════════
   {
-    modulo: "3", tipo: "certo_errado", contexto: CTX1,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX1,
     enunciado: "O aplicativo BOEPM Geração 2 foi desenvolvido exclusivamente por empresas privadas, sem a participação de policiais da ativa.",
     gabarito: "errado",
     explicacao: "Errado. O aplicativo foi desenvolvido pela área de tecnologia da SDS (GTI/SDS), com o processo conduzido por policiais da ativa e a execução técnica realizada por empresa privada de software.",
   },
   {
-    modulo: "3", tipo: "certo_errado", contexto: CTX1,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX1,
     enunciado: "O aplicativo BOEPM Geração 2, em relação ao boletim de papel, tem a vantagem da velocidade e da integração ao sistema.",
     gabarito: "certo",
     explicacao: "Correto. A geração eletrônica do BO proporciona velocidade de preenchimento, integração direta ao sistema e padronização das informações.",
   },
   {
-    modulo: "3", tipo: "certo_errado", contexto: CTX1,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX1,
     enunciado: "O aplicativo BOEPM Geração 2 requer smartphones de alta tecnologia para funcionar.",
     gabarito: "errado",
     explicacao: "Errado. O aplicativo foi concebido para funcionar em smartphones comuns, sem dependência de equipamentos especiais ou de alta tecnologia.",
   },
   {
-    modulo: "3", tipo: "certo_errado", contexto: CTX1,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX1,
     enunciado: "O login no BOEPM Geração 2 não é feito com usuário e senha do Expresso/SEI, sendo necessário um cadastramento específico realizado pela empresa privada desenvolvedora do aplicativo.",
     gabarito: "errado",
     explicacao: "Errado. O acesso ao sistema é feito com o usuário e senha do Expresso/SEI, aproveitando as credenciais já conhecidas pelos policiais.",
   },
   {
-    modulo: "3", tipo: "certo_errado", contexto: CTX1,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX1,
     enunciado: "O BOEPM Geração 2 simplifica o acesso utilizando informações de fácil memorização.",
     gabarito: "certo",
     explicacao: "Correto. O login com credenciais do Expresso/SEI (já conhecidas) simplifica o acesso e elimina a necessidade de novo cadastro.",
@@ -56,31 +56,31 @@ const QS: Q[] = [
 
   // ════════ 2º QUESITO — Imunidades / Autoridades (V/F) ════════
   {
-    modulo: "6", tipo: "certo_errado", contexto: CTX2,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX2,
     enunciado: "Nas ocorrências com autoridades diplomáticas na condição de acusados, a Polícia Militar não poderá prendê-los, ainda que em flagrante delito, exceto nos crimes hediondos.",
     gabarito: "errado",
     explicacao: "Errado. Autoridades diplomáticas gozam de imunidade absoluta (Convenção de Viena); a PM não pode prendê-las nem mesmo em flagrante de crime hediondo. A exceção (crimes hediondos) não existe para diplomatas — a regra é a imunidade total.",
   },
   {
-    modulo: "6", tipo: "certo_errado", contexto: CTX2,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX2,
     enunciado: "Deputados e Senadores gozam de imunidade absoluta decorrente do exercício do cargo eletivo, e a prisão só poderá ocorrer em flagrante de crime inafiançável, como racismo, tortura, tráfico de drogas, terrorismo e crimes hediondos.",
     gabarito: "errado",
     explicacao: "Errado. A imunidade parlamentar NÃO é absoluta; é formal (de prisão), e permite prisão apenas em flagrante de crime inafiançável. Contudo, o enunciado erra ao chamá-la de 'imunidade absoluta' e ao listar os crimes inafiançáveis de forma incompleta/imprecisa.",
   },
   {
-    modulo: "6", tipo: "certo_errado", contexto: CTX2,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX2,
     enunciado: "Magistrados e membros do Ministério Público só poderão ser presos no caso de flagrantes de crime inafiançável, e devem ser conduzidos para Delegacias Especializadas, sendo vedada a apresentação em Delegacia Comum.",
     gabarito: "errado",
     explicacao: "Errado. Membros do MP presos em flagrante de crime inafiançável devem ser apresentados ao Procurador-Geral de Justiça; magistrados, ao Presidente do respectivo Tribunal. Não há vedação absoluta à delegacia comum — o POP 0020 orienta a comunicação ao órgão competente, não necessariamente a 'Delegacia Especializada'.",
   },
   {
-    modulo: "6", tipo: "certo_errado", contexto: CTX2,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX2,
     enunciado: "Oficiais das Forças Armadas, Polícias e Bombeiros Militares, bem como Delegados de Polícia Federal e Civil gozam da Imunidade Relativa.",
     gabarito: "errado",
     explicacao: "Errado. Esses profissionais não gozam de 'imunidade relativa' enquanto categoria — possuem prerrogativas de foro e procedimentos específicos previstos em seus estatutos, mas não a imunidade (relativa ou absoluta) como instituto processual.",
   },
   {
-    modulo: "6", tipo: "certo_errado", contexto: CTX2,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX2,
     enunciado: "O repasse de informações para a Imprensa, acerca de ocorrências que envolvam autoridades, deverá ser centralizado na Assessoria de Comunicação Social da Corporação.",
     gabarito: "certo",
     explicacao: "Correto. O POP nº 0020 da PMPE determina que as informações à imprensa em ocorrências com autoridades sejam centralizadas na Assessoria de Comunicação Social (5ª EMG), evitando declarações individuais e exposição indevida.",
@@ -88,31 +88,31 @@ const QS: Q[] = [
 
   // ════════ 3º QUESITO — Grupos Vulneráveis (V/F) ════════
   {
-    modulo: "8", tipo: "certo_errado", contexto: CTX3,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX3,
     enunciado: "A conduta descrita como crime ou contravenção penal não é considerada ato infracional quando praticada por criança ou adolescente.",
     gabarito: "errado",
     explicacao: "Errado. O ECA (Lei nº 8.069/1990) estabelece que a conduta descrita como crime ou contravenção penal, quando praticada por criança ou adolescente, É considerada ato infracional (art. 103 do ECA).",
   },
   {
-    modulo: "8", tipo: "certo_errado", contexto: CTX3,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX3,
     enunciado: "Pessoas com deficiência devem ser abordadas de forma rápida e direta, sem considerar suas limitações físicas e cognitivas.",
     gabarito: "errado",
     explicacao: "Errado. A abordagem a pessoas com deficiência exige sensibilidade e adaptação às suas limitações físicas e cognitivas. O policial deve comunicar-se de forma acessível, respeitar o tempo de resposta e buscar apoio especializado quando necessário.",
   },
   {
-    modulo: "8", tipo: "certo_errado", contexto: CTX3,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX3,
     enunciado: "O atendimento de ocorrências com idosos deve ser prioritário, sendo que, em alguns casos, o mais importante é garantir a segurança do policiamento em detrimento das necessidades específicas dos idosos.",
     gabarito: "errado",
     explicacao: "Errado. O atendimento a idosos deve considerar suas necessidades específicas e limitações. A segurança do policiamento é importante, mas a abordagem deve ser adaptada às vulnerabilidades do idoso, não colocando-o em segundo plano.",
   },
   {
-    modulo: "8", tipo: "certo_errado", contexto: CTX3,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX3,
     enunciado: "A escuta ativa e respeitosa é um dos pilares do atendimento a ocorrências envolvendo mulheres. Confirmada a situação de violência, o protocolo determina que a vítima e o agressor sejam conduzidos à Delegacia da Mulher, ou, na ausência desta, à delegacia comum mais próxima.",
     gabarito: "certo",
     explicacao: "Correto. A escuta ativa, empatia e compromisso com a verdade dos fatos são pilares do atendimento (POP 0016). A Lei Maria da Penha e o POP determinam o encaminhamento à Delegacia da Mulher, ou à delegacia mais próxima na sua ausência.",
   },
   {
-    modulo: "8", tipo: "certo_errado", contexto: CTX3,
+    modulo: "1AE", tipo: "certo_errado", contexto: CTX3,
     enunciado: "Para os homens transexuais, a recomendação é para que a abordagem seja realizada por policiais femininas. Caso o homem transexual manifeste explicitamente sua identidade de gênero, solicitando ser abordado por policial masculino, essa preferência deve ser atendida em sua plenitude.",
     gabarito: "errado",
     explicacao: "Errado. O POP nº 0005 da PMPE orienta que a busca pessoal em homem transexual seja realizada por policial masculino (identidade de gênero masculina). Se o homem transexual solicitar policial masculino, a preferência deve ser respeitada, mas a premissa do enunciado (indicar policial feminino como padrão) é incorreta.",
@@ -120,7 +120,7 @@ const QS: Q[] = [
 
   // ════════ 4º QUESITO — BOEPM (múltipla, única VERDADEIRA) ════════
   {
-    modulo: "3", tipo: "multipla",
+    modulo: "1AE", tipo: "multipla",
     contexto: "4º Quesito (1ª AE — PO — CFO 2025) — No que concerne ao Preenchimento do BOEPM, assinale a única alternativa VERDADEIRA.",
     enunciado: "Assinale a única alternativa VERDADEIRA sobre o preenchimento do BOEPM.",
     alternativas: A(
@@ -136,7 +136,7 @@ const QS: Q[] = [
 
   // ════════ 5º QUESITO — Local de sinistro de trânsito (múltipla, única INCORRETA) ════════
   {
-    modulo: "5", tipo: "multipla",
+    modulo: "1AE", tipo: "multipla",
     contexto: "5º Quesito (1ª AE — PO — CFO 2025) — Dentro do conteúdo ministrado em relação à preservação de local de sinistro de trânsito com vítima ou sem vítima, foi verificado que é essencial a preservação da vida e da integridade física, bem como a fluidez viária. Face às providências a serem adotadas em local de acidente de trânsito, marque a alternativa INCORRETA.",
     enunciado: "Assinale a alternativa INCORRETA sobre as providências em local de acidente de trânsito.",
     alternativas: A(
@@ -152,7 +152,7 @@ const QS: Q[] = [
 
   // ════════ 6º QUESITO — Morte de integrante (múltipla, única ERRADA) ════════
   {
-    modulo: "7", tipo: "multipla",
+    modulo: "1AE", tipo: "multipla",
     contexto: "6º Quesito (1ª AE — PO — CFO 2025) — Considere as afirmações abaixo, tendo em vista a morte de um integrante da Corporação numa ocorrência, e assinale a única alternativa ERRADA.",
     enunciado: "Assinale a única alternativa ERRADA sobre os procedimentos em ocorrência de morte de policial militar.",
     alternativas: A(
@@ -168,7 +168,7 @@ const QS: Q[] = [
 
   // ════════ 7º QUESITO — Isolamento de Locais de Crime (múltipla, única VERDADEIRA) ════════
   {
-    modulo: "5", tipo: "multipla",
+    modulo: "1AE", tipo: "multipla",
     contexto: "7º Quesito (1ª AE — PO — CFO 2025) — Quanto ao Isolamento de Locais de Crime, marque a única afirmativa VERDADEIRA.",
     enunciado: "Assinale a única afirmativa VERDADEIRA sobre o isolamento de locais de crime.",
     alternativas: A(
@@ -184,7 +184,7 @@ const QS: Q[] = [
 
   // ════════ 8º QUESITO — Dissertativa: Local de homicídio ════════
   {
-    modulo: "5", tipo: "dissertativa",
+    modulo: "1AE", tipo: "dissertativa",
     contexto: "8º Quesito (1ª AE — PO — CFO 2025) — Dissertativa (mínimo 10 e máximo 15 linhas).",
     enunciado: "Discorra sobre os procedimentos básicos que uma guarnição deve adotar em local de um crime de homicídio.",
     modelo: {
@@ -205,7 +205,7 @@ const QS: Q[] = [
 
   // ════════ 9º QUESITO — Dissertativa: LGBTQIAPN+ e POP 005 ════════
   {
-    modulo: "8", tipo: "dissertativa",
+    modulo: "1AE", tipo: "dissertativa",
     contexto: "9º Quesito (1ª AE — PO — CFO 2025) — A abordagem a grupos vulneráveis requer sensibilidade, respeito e conhecimento das necessidades específicas de cada grupo. Para o caso das Pessoas LGBTQIAPN+, a Polícia Militar de Pernambuco editou e publicou o Procedimento Operacional Padrão (POP) de n.º 005. Estando você no comando do Policiamento Externo do Classic Hall, onde ocorre o Show de um artista nacional, na condição de Oficial de Operações do 1º BPM, dispondo de Patrulhas integradas por Policiais Militares Masculinos e Femininos, informe quais seriam as medidas a serem adotadas durante a realização de buscas pessoais (não minuciosa), baseadas em fundadas suspeitas, nas seguintes situações: a) Pessoa identificada como GAY; b) Pessoa identificada como TRAVESTI que se apresenta como mulher de nome social Sônia; c) Transexual que se utiliza de vestes masculinas, mas exige ser abordada por uma policial feminina; d) Pessoa identificada como TRAVESTI que se apresenta como mulher de nome social Sônia, contudo, todas as Policiais Femininas presentes alegam constrangimento e não desejam efetuar a abordagem pessoal. (Mínimo 07 e máximo 15 linhas.)",
     enunciado: "Com base no POP nº 005 da PMPE, discorra sobre os procedimentos de busca pessoal (não minuciosa) nas quatro situações descritas envolvendo pessoas LGBTQIAPN+.",
     modelo: {
@@ -223,7 +223,7 @@ const QS: Q[] = [
 
   // ════════ 10º QUESITO — Dissertativa: Violência doméstica / Maria da Penha ════════
   {
-    modulo: "8", tipo: "dissertativa",
+    modulo: "1AE", tipo: "dissertativa",
     contexto: "10º Quesito (1ª AE — PO — CFO 2025) — Durante o evento Galo da Madrugada, ocorrido no dia 14 de fevereiro de 2026, por volta das 14h00, o efetivo do BPChoque, escalado na Operação Galo da Madrugada, foi acionado por populares que informaram sobre uma agressão acontecendo em uma embarcação atracada em frente à plataforma 3, na Rua do Sol. O imputado, Sr. R.P.O.F., mordeu e agrediu fisicamente a sua esposa, a Sra. V.M.O., deixando-a com uma lesão no lábio inferior e no supercílio esquerdo. Para o atendimento da ocorrência o efetivo teve, inclusive, que usar uma embarcação de um popular para chegar ao local do fato. A Sra. V.M.O. não quis prestar queixa-crime formal contra o seu marido (agressor), uma vez que a vontade da vítima era não prosseguir com a denúncia.",
     enunciado: "Discorra sobre as diretrizes voltadas para o atendimento da ocorrência descrita, que envolve mulher em situação de vulnerabilidade no âmbito familiar. Aborde as providências a serem adotadas pelo policiamento, a atuação da PMPE em relação à rede de apoio à mulher em situação de violência, a questão da escuta ativa e da ação penal relativa à ocorrência. (Mínimo 10 e máximo 15 linhas.)",
     modelo: {
