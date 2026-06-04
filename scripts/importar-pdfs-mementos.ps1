@@ -58,7 +58,7 @@ if (-not (Test-Path $Origem)) {
 if (-not (Test-Path $Destino)) { New-Item -ItemType Directory -Force -Path $Destino | Out-Null }
 
 $pdfs = Get-ChildItem -Path $Origem -Recurse -Filter *.pdf |
-  Where-Object { (Normaliza $_.BaseName) -like "MEMENTO*" }
+  Where-Object { (Normaliza $_.BaseName) -match "MEMENTO" }
 
 $copiados = 0
 $naoMapeados = @()
