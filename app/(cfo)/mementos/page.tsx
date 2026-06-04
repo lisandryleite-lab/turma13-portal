@@ -1,3 +1,5 @@
+import { readdir } from "node:fs/promises"
+import path from "node:path"
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
@@ -18,6 +20,17 @@ export default async function MementosPage() {
   ])
 
   const nomeMap = new Map(disciplinas.map(d => [d.sigla, d.nome]))
+
+  // matérias que têm PDF original em /public/mementos/<SIGLA>.pdf
+  let pdfMaterias: { sigla: string; nome: string }[] = []
+  try {
+    const dir = path.join(process.cwd(), "public", "mementos")
+    const arquivos = await readdir(dir)
+    pdfMaterias = arquivos
+      .filter(f => f.toLowerCase().endsWith(".pdf"))
+      .map(f => f.slice(0, -4).toUpperCase())
+      .map(sigla => ({ sigla, nome: nomeMap.get(sigla) || sigla }))
+  } catch { /* pasta ausente — sem PDFs */ }
   // agrega total + módulos por matéria (flashcards)
   const matMap = new Map<string, { total: number; modulos: Set<string> }>()
   for (const g of fcGroups) {
@@ -45,6 +58,8 @@ export default async function MementosPage() {
       conteudoMaterias={conteudoMaterias}
       disciplinas={disciplinas}
       isAdmin={await adminAtivo(session.user.isAdmin)}
+      currentUser={{ matricula: session.user.matricula, nomeGuerra: session.user.nomeGuerra }}
+      pdfMaterias={pdfMaterias}
     />
   )
 }

@@ -411,6 +411,18 @@ model Flashcard {
   @@index([materia])
 }
 
+// ── CFO 2026 — Gaivotas (chat colaborativo por matéria) ──────────
+model Gaivota {
+  id         String   @id @default(cuid())
+  materia    String   // sigla da Disciplina
+  matricula  Int      // autor (snapshot)
+  nomeGuerra String   // autor (snapshot)
+  texto      String
+  createdAt  DateTime @default(now())
+
+  @@index([materia, createdAt])
+}
+
 // ── CFO 2026 — Log de acesso (LGPD / auditoria) ──────────────────
 model LogAcesso {
   id         String   @id @default(cuid())
