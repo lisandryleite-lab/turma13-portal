@@ -7,6 +7,8 @@ import { renderMarkdown } from "@/lib/markdown"
 
 type MementoMeta = { id: string; materia: string; modulo: string; titulo: string; nome: string }
 type CurrentUser = { matricula: number; nomeGuerra: string }
+type PdfPart = { file: string; label: string }
+type PdfMateria = { sigla: string; nome: string; parts: PdfPart[] }
 type GaivotaMsg = { id: string; matricula: number; nomeGuerra: string; texto: string; createdAt: string }
 type Mat = { sigla: string; nome: string; total: number; modulos: string[] }
 type Disc = { sigla: string; nome: string }
@@ -23,7 +25,7 @@ const inputStyle: React.CSSProperties = {
 }
 
 export function MementosClient({ mementos, flashMaterias, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias }: {
-  mementos: MementoMeta[]; flashMaterias: Mat[]; conteudoMaterias: ContMat[]; disciplinas: Disc[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: { sigla: string; nome: string }[]
+  mementos: MementoMeta[]; flashMaterias: Mat[]; conteudoMaterias: ContMat[]; disciplinas: Disc[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]
 }) {
   const router = useRouter()
   const [aba, setAba] = useState<Aba>("mementos")
@@ -161,10 +163,11 @@ function Gaivotas({ materia, isAdmin, currentUser }: { materia: string; isAdmin:
 type SubAba = "memento" | "pdf" | "flashcards" | "questoes" | "gaivotas"
 
 function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, flashMaterias }: {
-  mementos: MementoMeta[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: { sigla: string; nome: string }[]
+  mementos: MementoMeta[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]
   disciplinas: Disc[]; flashMaterias: Mat[]
 }) {
   const comPdf = new Set(pdfMaterias.map(p => p.sigla))
+  const pdfPartsMap = new Map(pdfMaterias.map(p => [p.sigla, p.parts]))
   const flashMap = new Map(flashMaterias.map(f => [f.sigla, f]))
   const [materiaSel, setMateriaSel] = useState<string | null>(null)
   const [subAba, setSubAba] = useState<SubAba>("memento")
@@ -255,7 +258,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
           </div>
         )}
 
-        {subAba === "pdf" && <PdfOriginal sigla={sigla} />}
+        {subAba === "pdf" && <PdfOriginal sigla={sigla} parts={pdfPartsMap.get(sigla) ?? []} />}
         {subAba === "flashcards" && <FlashcardsMateria flash={flash} sigla={sigla} />}
         {subAba === "questoes" && <QuestoesLink sigla={sigla} />}
         {subAba === "gaivotas" && <Gaivotas materia={sigla} isAdmin={isAdmin} currentUser={currentUser} />}
@@ -299,35 +302,45 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
   )
 }
 
-// Visualizador do PDF original (servido de /public/mementos/<sigla>.pdf)
-function PdfOriginal({ sigla }: { sigla: string }) {
-  const [erro, setErro] = useState(false)
-  const src = `/mementos/${encodeURIComponent(sigla)}.pdf`
-  if (erro) {
+// Visualizador do PDF Pernambuco Imortal (1 ou várias partes, rotuladas para impressão)
+function PdfOriginal({ sigla, parts }: { sigla: string; parts: PdfPart[] }) {
+  const [i, setI] = useState(0)
+
+  if (parts.length === 0) {
     return (
       <div style={cardBox}>
         <p style={{ margin: 0, fontSize: 14.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
-          O PDF Pernambuco Imortal de <strong>{sigla}</strong> ainda não foi adicionado.
-          <br />Coloque o arquivo em <code>/public/mementos/{sigla}.pdf</code>.
+          Não há PDF Pernambuco Imortal de <strong>{sigla}</strong>.
         </p>
       </div>
     )
   }
+
+  const sel = parts[Math.min(i, parts.length - 1)]
+  const src = `/mementos/${encodeURIComponent(sel.file)}`
+  const linkStyle: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }
+
   return (
     <div>
-      <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-        <a href={src} target="_blank" rel="noopener noreferrer"
-          style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
-          ↗ Abrir em nova aba
-        </a>
-        <a href={src} download
-          style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
-          ⬇ Baixar
-        </a>
+      {parts.length > 1 && (
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+          {parts.map((p, idx) => (
+            <button key={p.file} onClick={() => setI(idx)}
+              style={{ padding: "7px 13px", borderRadius: 999, border: "1px solid var(--olive)", cursor: "pointer", fontSize: 13.5, fontWeight: 600,
+                background: idx === i ? "var(--olive)" : "#fff", color: idx === i ? "var(--canvas)" : "var(--olive)" }}>
+              {p.label}
+            </button>
+          ))}
+        </div>
+      )}
+      <div style={{ display: "flex", gap: 8, marginBottom: 10, alignItems: "center", flexWrap: "wrap" }}>
+        {parts.length > 1 && <span style={{ fontSize: 13.5, color: "var(--ink-60)", fontWeight: 600 }}>{sel.label}:</span>}
+        <a href={src} target="_blank" rel="noopener noreferrer" style={linkStyle}>↗ Abrir em nova aba</a>
+        <a href={src} download style={linkStyle}>⬇ Baixar</a>
       </div>
-      <object data={src} type="application/pdf" onError={() => setErro(true)}
+      <object key={src} data={src} type="application/pdf"
         style={{ width: "100%", height: "70vh", borderRadius: 12, border: "1px solid rgba(58,74,58,0.15)" }}>
-        <iframe src={src} title={`PDF ${sigla}`} style={{ width: "100%", height: "70vh", border: "none", borderRadius: 12 }} />
+        <iframe src={src} title={`PDF ${sigla} ${sel.label}`} style={{ width: "100%", height: "70vh", border: "none", borderRadius: 12 }} />
       </object>
     </div>
   )

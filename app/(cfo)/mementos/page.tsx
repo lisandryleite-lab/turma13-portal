@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
+import { PDF_PARTS, type PdfPart } from "@/lib/mementos-pdfs"
 import { MementosClient } from "./mementos-client"
 
 export default async function MementosPage() {
@@ -21,15 +22,25 @@ export default async function MementosPage() {
 
   const nomeMap = new Map(disciplinas.map(d => [d.sigla, d.nome]))
 
-  // matérias que têm PDF original em /public/mementos/<SIGLA>.pdf
-  let pdfMaterias: { sigla: string; nome: string }[] = []
+  // matérias com PDF "Pernambuco Imortal" em /public/mementos/
+  // (1 arquivo = <SIGLA>.pdf; várias partes = <SIGLA>-N.pdf, rotuladas no manifesto)
+  let pdfMaterias: { sigla: string; nome: string; parts: PdfPart[] }[] = []
   try {
     const dir = path.join(process.cwd(), "public", "mementos")
-    const arquivos = await readdir(dir)
-    pdfMaterias = arquivos
-      .filter(f => f.toLowerCase().endsWith(".pdf"))
-      .map(f => f.slice(0, -4).toUpperCase())
-      .map(sigla => ({ sigla, nome: nomeMap.get(sigla) || sigla }))
+    const arquivos = (await readdir(dir)).filter(f => f.toLowerCase().endsWith(".pdf"))
+    const bySigla = new Map<string, string[]>()
+    for (const f of arquivos) {
+      const base = f.slice(0, -4)
+      const sigla = (base.includes("-") ? base.slice(0, base.indexOf("-")) : base).toUpperCase()
+      ;(bySigla.get(sigla) ?? bySigla.set(sigla, []).get(sigla)!).push(f)
+    }
+    pdfMaterias = [...bySigla.entries()].map(([sigla, files]) => {
+      const manifest = PDF_PARTS[sigla]
+      const parts: PdfPart[] = manifest
+        ? manifest.filter(p => files.includes(p.file))
+        : files.sort().map(file => ({ file, label: "PDF" }))
+      return { sigla, nome: nomeMap.get(sigla) || sigla, parts }
+    }).filter(m => m.parts.length > 0)
   } catch { /* pasta ausente — sem PDFs */ }
   // agrega total + módulos por matéria (flashcards)
   const matMap = new Map<string, { total: number; modulos: Set<string> }>()
