@@ -65,6 +65,7 @@ function NotaMaciel() {
       border: "1px solid var(--gold)", boxShadow: "0 4px 14px rgba(0,0,0,0.12)",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+        <span style={{ fontSize: 22 }}>🦅</span>
         <span style={{ fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "1.15rem", color: "var(--gold)" }}>
           Reconhecimento &amp; Gratidão
         </span>
@@ -118,7 +119,7 @@ function Gaivotas({ materia, isAdmin, currentUser }: { materia: string; isAdmin:
   return (
     <div>
       <p style={{ fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.5, marginTop: 0 }}>
-        Espaço colaborativo da turma — dúvidas, dicas e correções sobre <strong>{materia}</strong>.
+        🪶 Espaço colaborativo da turma — dúvidas, dicas e correções sobre <strong>{materia}</strong>.
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, margin: "14px 0" }}>
         {msgs === null && <p style={{ color: "var(--ink-60)", fontSize: 14 }}>Carregando…</p>}
@@ -188,7 +189,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
             ← Voltar
           </button>
           <button onClick={() => window.print()} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, cursor: "pointer" }}>
-            Imprimir
+            🖨 Imprimir
           </button>
         </div>
         <div className="memento-md memento-print" style={{ marginTop: 16 }}>
@@ -222,7 +223,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
     const subAbas: [SubAba, string][] = [
       ["memento", "Memento"], ["pdf", "PDF Pernambuco Imortal"],
       ["flashcards", `Flashcards${flash ? ` (${flash.total})` : ""}`],
-      ["questoes", "Questões"], ["gaivotas", "Gaivotas"],
+      ["questoes", "❓ Questões"], ["gaivotas", "🪶 Gaivotas"],
     ]
     return (
       <div>
@@ -317,11 +318,11 @@ function PdfOriginal({ sigla }: { sigla: string }) {
       <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
         <a href={src} target="_blank" rel="noopener noreferrer"
           style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
-          Abrir em nova aba
+          ↗ Abrir em nova aba
         </a>
         <a href={src} download
           style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
-          Baixar
+          ⬇ Baixar
         </a>
       </div>
       <object data={src} type="application/pdf" onError={() => setErro(true)}
@@ -411,7 +412,7 @@ function QuestoesLink({ sigla }: { sigla: string }) {
   return (
     <div style={cardBox}>
       <p style={{ margin: "0 0 12px", fontSize: 14.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
-        Resolva questões de <strong>{sigla}</strong> no banco de questões da turma.
+        ❓ Resolva questões de <strong>{sigla}</strong> no banco de questões da turma.
       </p>
       <Link href={`/questoes?materia=${encodeURIComponent(sigla)}`}
         style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
