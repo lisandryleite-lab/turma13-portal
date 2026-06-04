@@ -5,6 +5,10 @@
 
 export type PdfPart = { file: string; label: string }
 
+// Mementos PRÓPRIOS (produzidos pela turma, no padrão) → aba "PDF Memento".
+// Os demais PDFs são originais do "Pernambuco Imortal" → aba "PDF Pernambuco Imortal".
+export const MEMENTO_PROPRIO = new Set<string>(["ACE"])
+
 export const PDF_PARTS: Record<string, PdfPart[]> = {
   DADM: [
     { file: "DADM-1.pdf", label: "Parte I" },

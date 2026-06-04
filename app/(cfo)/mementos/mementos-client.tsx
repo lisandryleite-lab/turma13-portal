@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { renderMarkdown } from "@/lib/markdown"
+import { MEMENTO_PROPRIO } from "@/lib/mementos-pdfs"
 
 type MementoMeta = { id: string; materia: string; modulo: string; titulo: string; nome: string }
 type CurrentUser = { matricula: number; nomeGuerra: string }
@@ -223,8 +224,12 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
     const grupo = grupos.get(materiaSel)
     const sigla = materiaSel
     const flash = flashMap.get(sigla)
+    const parts = pdfPartsMap.get(sigla) ?? []
+    const temPdf = parts.length > 0
+    const pdfLabel = MEMENTO_PROPRIO.has(sigla) ? "PDF Memento" : "PDF Pernambuco Imortal"
+    const mementoLabel = temPdf ? pdfLabel : "Memento"
     const subAbas: [SubAba, string][] = [
-      ["memento", "Memento"], ["pdf", "PDF Pernambuco Imortal"],
+      ["memento", mementoLabel],
       ["flashcards", `Flashcards${flash ? ` (${flash.total})` : ""}`],
       ["questoes", "❓ Questões"], ["gaivotas", "🪶 Gaivotas"],
     ]
@@ -247,18 +252,20 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
         </div>
 
         {subAba === "memento" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {carregando && <p style={{ color: "var(--ink-60)" }}>Carregando…</p>}
-            {!grupo?.items.length && <p style={{ color: "var(--ink-60)" }}>Nenhum memento publicado para esta matéria ainda.</p>}
-            {grupo?.items.map(m => (
-              <button key={m.id} onClick={() => abrir(m)} style={{ textAlign: "left", padding: "12px 14px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.15)", background: "#fff", cursor: "pointer", fontSize: 15, color: "var(--ink)" }}>
-                <strong>{m.titulo}</strong>{m.modulo ? <span style={{ color: "var(--ink-60)", fontSize: 13 }}> · Mód. {m.modulo}</span> : null}
-              </button>
-            ))}
-          </div>
+          temPdf ? <PdfOriginal sigla={sigla} parts={parts} /> : (
+            grupo?.items.length ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {carregando && <p style={{ color: "var(--ink-60)" }}>Carregando…</p>}
+                {grupo.items.map(m => (
+                  <button key={m.id} onClick={() => abrir(m)} style={{ textAlign: "left", padding: "12px 14px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.15)", background: "#fff", cursor: "pointer", fontSize: 15, color: "var(--ink)" }}>
+                    <strong>{m.titulo}</strong>{m.modulo ? <span style={{ color: "var(--ink-60)", fontSize: 13 }}> · Mód. {m.modulo}</span> : null}
+                  </button>
+                ))}
+              </div>
+            ) : <div style={cardBox}><p style={{ margin: 0, color: "var(--ink-60)" }}>Memento desta matéria <em>em breve</em>.</p></div>
+          )
         )}
 
-        {subAba === "pdf" && <PdfOriginal sigla={sigla} parts={pdfPartsMap.get(sigla) ?? []} />}
         {subAba === "flashcards" && <FlashcardsMateria flash={flash} sigla={sigla} />}
         {subAba === "questoes" && <QuestoesLink sigla={sigla} />}
         {subAba === "gaivotas" && <Gaivotas materia={sigla} isAdmin={isAdmin} currentUser={currentUser} />}
@@ -281,7 +288,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
             const rodape = e.items.length > 0
               ? `${e.items.length} ${e.items.length === 1 ? "memento" : "mementos"}`
               : (temPdf ? "PDF Pernambuco Imortal" : (flash ? `${flash.total} flashcards` : "em breve"))
-            const subInicial: SubAba = e.items.length > 0 ? "memento" : temPdf ? "pdf" : flash ? "flashcards" : "memento"
+            const subInicial: SubAba = (e.items.length > 0 || temPdf) ? "memento" : flash ? "flashcards" : "memento"
             return (
               <button key={sigla} onClick={() => { setMateriaSel(sigla); setSubAba(subInicial) }}
                 style={{
