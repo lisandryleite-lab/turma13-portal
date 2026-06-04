@@ -4,10 +4,11 @@ import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { QuestoesClient } from "./questoes-client"
 
-export default async function QuestoesPage() {
+export default async function QuestoesPage({ searchParams }: { searchParams: Promise<{ materia?: string }> }) {
   const session = await auth()
   if (!session?.user) redirect("/login")
   const userId = session.user.id!
+  const initialMateria = ((await searchParams).materia || "").toUpperCase()
 
   const [combos, disciplinas, respostas] = await Promise.all([
     prisma.questao.groupBy({ by: ["materia", "modulo"], _count: { _all: true } }),
@@ -51,6 +52,7 @@ export default async function QuestoesPage() {
       stats={stats}
       totalResp={respostas.length}
       totalAcertos={respostas.filter(r => r.acertou).length}
+      initialMateria={initialMateria}
     />
   )
 }

@@ -46,7 +46,7 @@ export function MementosClient({ mementos, flashMaterias, conteudoMaterias, disc
         ))}
       </div>
 
-      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} />}
+      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} flashMaterias={flashMaterias} />}
       {aba === "flashcards" && <Flashcards materias={flashMaterias} />}
       {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} conteudoMaterias={conteudoMaterias} onImport={() => router.refresh()} />}
 
@@ -159,10 +159,14 @@ function Gaivotas({ materia, isAdmin, currentUser }: { materia: string; isAdmin:
 }
 
 // ── Mementos (grid de matérias → memento / PDF / gaivotas) ──
-type SubAba = "memento" | "pdf" | "gaivotas"
+type SubAba = "memento" | "pdf" | "flashcards" | "questoes" | "gaivotas"
 
-function Mementos({ mementos, isAdmin, currentUser, pdfMaterias }: { mementos: MementoMeta[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: { sigla: string; nome: string }[] }) {
+function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, flashMaterias }: {
+  mementos: MementoMeta[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: { sigla: string; nome: string }[]
+  disciplinas: Disc[]; flashMaterias: Mat[]
+}) {
   const comPdf = new Set(pdfMaterias.map(p => p.sigla))
+  const flashMap = new Map(flashMaterias.map(f => [f.sigla, f]))
   const [materiaSel, setMateriaSel] = useState<string | null>(null)
   const [subAba, setSubAba] = useState<SubAba>("memento")
   const [aberto, setAberto] = useState<{ titulo: string; html: string } | null>(null)
@@ -206,13 +210,22 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias }: { mementos: M
   for (const p of pdfMaterias) {
     if (!grupos.has(p.sigla)) grupos.set(p.sigla, { nome: p.nome, items: [] })
   }
+  // inclui TODAS as disciplinas do curso (mesmo sem memento/PDF → "em breve")
+  for (const d of disciplinas) {
+    if (!grupos.has(d.sigla)) grupos.set(d.sigla, { nome: d.nome, items: [] })
+  }
   const materias = [...grupos.entries()].sort((a, b) => a[0].localeCompare(b[0]))
 
   // ── detalhe de uma matéria (sub-abas) ──
   if (materiaSel) {
     const grupo = grupos.get(materiaSel)
     const sigla = materiaSel
-    const subAbas: [SubAba, string][] = [["memento", "📄 Memento"], ["pdf", "📕 PDF original"], ["gaivotas", "🪶 Gaivotas"]]
+    const flash = flashMap.get(sigla)
+    const subAbas: [SubAba, string][] = [
+      ["memento", "📄 Memento"], ["pdf", "📕 PDF original"],
+      ["flashcards", `🃏 Flashcards${flash ? ` (${flash.total})` : ""}`],
+      ["questoes", "❓ Questões"], ["gaivotas", "🪶 Gaivotas"],
+    ]
     return (
       <div>
         <button onClick={() => { setMateriaSel(null); setSubAba("memento") }} style={{ background: "none", border: "none", color: "var(--olive)", fontWeight: 600, cursor: "pointer", fontSize: 14, padding: 0 }}>
@@ -244,6 +257,8 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias }: { mementos: M
         )}
 
         {subAba === "pdf" && <PdfOriginal sigla={sigla} />}
+        {subAba === "flashcards" && <FlashcardsMateria flash={flash} sigla={sigla} />}
+        {subAba === "questoes" && <QuestoesLink sigla={sigla} />}
         {subAba === "gaivotas" && <Gaivotas materia={sigla} isAdmin={isAdmin} currentUser={currentUser} />}
       </div>
     )
@@ -259,22 +274,29 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias }: { mementos: M
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 12 }}>
           {materias.map(([sigla, e]) => {
             const temPdf = comPdf.has(sigla)
+            const flash = flashMap.get(sigla)
+            const vazio = e.items.length === 0 && !temPdf && !flash
             const rodape = e.items.length > 0
               ? `${e.items.length} ${e.items.length === 1 ? "memento" : "mementos"}`
-              : (temPdf ? "PDF original" : "")
+              : (temPdf ? "PDF original" : (flash ? `${flash.total} flashcards` : "em breve"))
+            const subInicial: SubAba = e.items.length > 0 ? "memento" : temPdf ? "pdf" : flash ? "flashcards" : "memento"
             return (
-              <button key={sigla} onClick={() => { setMateriaSel(sigla); setSubAba(e.items.length > 0 ? "memento" : "pdf") }}
+              <button key={sigla} onClick={() => { setMateriaSel(sigla); setSubAba(subInicial) }}
                 style={{
                   display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-between", gap: 10,
                   minHeight: 118, padding: "16px 14px", borderRadius: 16, cursor: "pointer", textAlign: "left",
-                  border: "1px solid rgba(58,74,58,0.15)", background: "#fff", boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+                  border: "1px solid rgba(58,74,58,0.15)", background: vazio ? "var(--surface)" : "#fff",
+                  boxShadow: vazio ? "none" : "0 2px 8px rgba(0,0,0,0.05)", opacity: vazio ? 0.72 : 1,
                 }}>
-                <span style={{ display: "flex", alignItems: "center", gap: 6, alignSelf: "stretch", justifyContent: "space-between" }}>
+                <span style={{ display: "flex", alignItems: "center", gap: 4, alignSelf: "stretch", justifyContent: "space-between" }}>
                   <span style={{ fontFamily: "var(--serif-cfo)", fontWeight: 700, fontSize: "1.35rem", color: "var(--olive)" }}>{sigla}</span>
-                  {temPdf && <span title="PDF original disponível" style={{ fontSize: 11 }}>📕</span>}
+                  <span style={{ display: "flex", gap: 3, fontSize: 11 }}>
+                    {temPdf && <span title="PDF original">📕</span>}
+                    {flash && <span title="Flashcards">🃏</span>}
+                  </span>
                 </span>
                 <span style={{ fontSize: 12.5, color: "var(--ink-60)", lineHeight: 1.35 }}>{e.nome !== sigla ? e.nome : "Memento"}</span>
-                <span style={{ fontSize: 11.5, color: "var(--gold)", fontWeight: 600 }}>{rodape} ›</span>
+                <span style={{ fontSize: 11.5, color: vazio ? "var(--ink-60)" : "var(--gold)", fontWeight: 600 }}>{rodape} ›</span>
               </button>
             )
           })}
@@ -314,6 +336,95 @@ function PdfOriginal({ sigla }: { sigla: string }) {
         style={{ width: "100%", height: "70vh", borderRadius: 12, border: "1px solid rgba(58,74,58,0.15)" }}>
         <iframe src={src} title={`PDF ${sigla}`} style={{ width: "100%", height: "70vh", border: "none", borderRadius: 12 }} />
       </object>
+    </div>
+  )
+}
+
+// Flashcards de UMA matéria (dentro do card)
+function FlashcardsMateria({ flash, sigla }: { flash: Mat | undefined; sigla: string }) {
+  const [modulo, setModulo] = useState("__all__")
+  const [cards, setCards] = useState<Card[] | null>(null)
+  const [i, setI] = useState(0)
+  const [virado, setVirado] = useState(false)
+
+  if (!flash) {
+    return (
+      <div style={cardBox}>
+        <p style={{ margin: 0, fontSize: 14.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
+          🃏 Ainda não há flashcards de <strong>{sigla}</strong>. <em>Em breve.</em>
+        </p>
+      </div>
+    )
+  }
+
+  async function iniciar() {
+    let url = `/api/flashcards?materia=${encodeURIComponent(sigla)}`
+    if (modulo !== "__all__") url += `&modulo=${encodeURIComponent(modulo)}`
+    const res = await fetch(url)
+    const data: Card[] = await res.json()
+    setCards(data.sort(() => Math.random() - 0.5)); setI(0); setVirado(false)
+  }
+
+  if (!cards) {
+    return (
+      <div style={cardBox}>
+        <p style={{ margin: "0 0 10px", fontSize: 14, color: "var(--ink-60)" }}>{flash.total} flashcards de {sigla}.</p>
+        {flash.modulos.length > 1 && (
+          <label style={{ display: "block", fontSize: 13, fontWeight: 600, marginBottom: 12 }}>Módulo
+            <select style={{ ...inputStyle, marginTop: 6 }} value={modulo} onChange={e => setModulo(e.target.value)}>
+              <option value="__all__">Todos os módulos</option>
+              {flash.modulos.map(md => <option key={md} value={md}>{moduloLabel(md)}</option>)}
+            </select>
+          </label>
+        )}
+        <button onClick={iniciar} style={{ padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>
+          Estudar
+        </button>
+      </div>
+    )
+  }
+  if (cards.length === 0) {
+    return <div><p style={{ color: "var(--ink-60)" }}>Sem cards nesse filtro.</p><button onClick={() => setCards(null)} style={{ marginTop: 10, padding: "9px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>Voltar</button></div>
+  }
+
+  const c = cards[i]
+  return (
+    <div>
+      <div style={{ fontSize: 13, color: "var(--ink-60)", marginBottom: 10 }}>Card {i + 1} de {cards.length}{c.modulo ? ` · Mód. ${c.modulo}` : ""}</div>
+      <button onClick={() => setVirado(v => !v)}
+        style={{ width: "100%", minHeight: 200, padding: "24px 20px", borderRadius: 16, border: `2px solid ${virado ? "var(--gold)" : "var(--olive)"}`,
+          background: virado ? "#fbf3e3" : "var(--olive)", color: virado ? "var(--ink)" : "var(--canvas)", cursor: "pointer",
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", gap: 10 }}>
+        <span style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: "0.08em", opacity: 0.8 }}>{virado ? "Verso" : "Frente"}</span>
+        <span style={{ fontSize: virado ? 15 : 19, fontWeight: virado ? 400 : 600, lineHeight: 1.55, fontFamily: virado ? "inherit" : "var(--serif-cfo)", whiteSpace: virado ? "pre-wrap" : "normal", textAlign: virado ? "left" : "center", width: virado ? "100%" : "auto" }}>
+          {virado ? c.verso : c.frente}
+        </span>
+        <span style={{ fontSize: 12, opacity: 0.7 }}>toque para virar</span>
+      </button>
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 14 }}>
+        <button onClick={() => { setI(x => Math.max(0, x - 1)); setVirado(false) }} disabled={i === 0}
+          style={{ padding: "9px 16px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, cursor: i === 0 ? "default" : "pointer", opacity: i === 0 ? 0.5 : 1 }}>Anterior</button>
+        {i + 1 < cards.length ? (
+          <button onClick={() => { setI(x => x + 1); setVirado(false) }} style={{ padding: "9px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>Próximo</button>
+        ) : (
+          <button onClick={() => setCards(null)} style={{ padding: "9px 16px", borderRadius: 8, border: "none", background: "var(--gold)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>Concluir</button>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// Link para as questões da matéria
+function QuestoesLink({ sigla }: { sigla: string }) {
+  return (
+    <div style={cardBox}>
+      <p style={{ margin: "0 0 12px", fontSize: 14.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
+        ❓ Resolva questões de <strong>{sigla}</strong> no banco de questões da turma.
+      </p>
+      <Link href={`/questoes?materia=${encodeURIComponent(sigla)}`}
+        style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
+        Ir para Questões de {sigla} →
+      </Link>
     </div>
   )
 }

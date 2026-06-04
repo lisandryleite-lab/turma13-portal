@@ -46,10 +46,10 @@ const inputStyle: React.CSSProperties = {
 }
 
 export function QuestoesClient({
-  materias, disciplinas, isAdmin, stats, totalResp, totalAcertos,
+  materias, disciplinas, isAdmin, stats, totalResp, totalAcertos, initialMateria = "",
 }: {
   materias: Materia[]; disciplinas: Disc[]; isAdmin: boolean
-  stats: Stat[]; totalResp: number; totalAcertos: number
+  stats: Stat[]; totalResp: number; totalAcertos: number; initialMateria?: string
 }) {
   const router = useRouter()
   const [aba, setAba] = useState<Aba>("resolver")
@@ -80,7 +80,7 @@ export function QuestoesClient({
         ))}
       </div>
 
-      {aba === "resolver" && <Resolver materias={materias} />}
+      {aba === "resolver" && <Resolver materias={materias} initialMateria={initialMateria} />}
       {aba === "simulado" && <Simulado materias={materias} />}
       {aba === "acerto" && <Acerto stats={stats} totalResp={totalResp} totalAcertos={totalAcertos} />}
       {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} materias={materias} onImport={() => router.refresh()} />}
@@ -119,8 +119,8 @@ function Opcoes({ q, escolhida, gabarito, onPick }: { q: Questao; escolhida: str
 }
 
 // ── Resolver ──
-function Resolver({ materias }: { materias: Materia[] }) {
-  const [materia, setMateria] = useState("")
+function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; initialMateria?: string }) {
+  const [materia, setMateria] = useState(materias.some(m => m.sigla === initialMateria) ? initialMateria : "")
   const [modulo, setModulo] = useState("__all__")
   const [tipo, setTipo] = useState("")
   const [qs, setQs] = useState<Questao[] | null>(null)
