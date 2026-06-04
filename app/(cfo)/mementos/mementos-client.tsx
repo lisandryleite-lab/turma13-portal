@@ -231,7 +231,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
     const subAbas: [SubAba, string][] = [
       ["memento", mementoLabel],
       ["flashcards", `Flashcards${flash ? ` (${flash.total})` : ""}`],
-      ["questoes", "❓ Questões"], ["gaivotas", "🪶 Gaivotas"],
+      ["questoes", "Questões"], ["gaivotas", "🪶 Gaivotas"],
     ]
     return (
       <div>
