@@ -14,6 +14,7 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
     { file: "DADM-1.pdf", label: "Parte I" },
     { file: "DADM-2.pdf", label: "Parte II" },
     { file: "DADM-3.pdf", label: "Parte III" },
+    { file: "DADM-4.pdf", label: "★ Memento Resumido (AL CFO 108)" },
   ],
   IG: [
     { file: "IG-1.pdf", label: "Parte I" },
