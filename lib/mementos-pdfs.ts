@@ -7,7 +7,7 @@ export type PdfPart = { file: string; label: string }
 
 // Mementos PRÓPRIOS (produzidos pela turma, no padrão) → aba "PDF Memento".
 // Os demais PDFs são originais do "Pernambuco Imortal" → aba "PDF Pernambuco Imortal".
-export const MEMENTO_PROPRIO = new Set<string>(["ACE"])
+export const MEMENTO_PROPRIO = new Set<string>(["ACE", "LPMO"])
 
 export const PDF_PARTS: Record<string, PdfPart[]> = {
   DADM: [
@@ -20,6 +20,15 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
     { file: "IG-1.pdf", label: "Parte I" },
     { file: "IG-2.pdf", label: "Parte II" },
     { file: "IG-3.pdf", label: "Parte III" },
+    { file: "IG-4.pdf", label: "★ Memento Resumido (AL CFO 108)" },
+  ],
+  GRAPP: [
+    { file: "GRAPP.pdf", label: "Pernambuco Imortal" },
+    { file: "GRAPP-2.pdf", label: "★ Memento Resumido (AL CFO 108)" },
+  ],
+  GPGA: [
+    { file: "GPGA.pdf", label: "Pernambuco Imortal" },
+    { file: "GPGA-2.pdf", label: "★ Memento Resumido (AL CFO 108)" },
   ],
   DPPM: [
     { file: "DPPM-1.pdf", label: "Parte I" },
@@ -32,6 +41,7 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
   PO: [
     { file: "PO-1.pdf", label: "Parte I" },
     { file: "PO-2.pdf", label: "Parte II" },
+    { file: "PO-3.pdf", label: "★ Memento Resumido (AL CFO 108)" },
   ],
   PJM: [
     { file: "PJM-1.pdf", label: "Parte I" },
