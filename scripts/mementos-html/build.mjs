@@ -9,9 +9,14 @@ if (!sigla || !src || !out || !titulo) {
 }
 
 const file = readFileSync(src, "utf8")
-const m = file.match(/const MD = `([\s\S]*?)`\s*\n/)
-if (!m) { console.error("MD nao encontrado em " + src); process.exit(1) }
-const md = m[1]
+let md
+if (src.toLowerCase().endsWith(".md")) {
+  md = file
+} else {
+  const m = file.match(/const MD = `([\s\S]*?)`\s*\n/)
+  if (!m) { console.error("MD nao encontrado em " + src); process.exit(1) }
+  md = m[1]
+}
 
 const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 function inline(s) {
