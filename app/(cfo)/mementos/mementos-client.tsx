@@ -226,8 +226,8 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
     const flash = flashMap.get(sigla)
     const parts = pdfPartsMap.get(sigla) ?? []
     const temPdf = parts.length > 0
-    const pdfLabel = MEMENTO_PROPRIO.has(sigla) ? "PDF Memento" : "PDF Pernambuco Imortal"
-    const mementoLabel = temPdf ? pdfLabel : "Memento"
+    const temMemento = temPdf || (grupo?.items.length ?? 0) > 0
+    const mementoLabel = MEMENTO_PROPRIO.has(sigla) ? "PDF Memento" : temMemento ? "PDF Pernambuco Imortal" : "Memento"
     const subAbas: [SubAba, string][] = [
       ["memento", mementoLabel],
       ["flashcards", `Flashcards${flash ? ` (${flash.total})` : ""}`],
@@ -285,9 +285,11 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
             const temPdf = comPdf.has(sigla)
             const flash = flashMap.get(sigla)
             const vazio = e.items.length === 0 && !temPdf && !flash
-            const rodape = e.items.length > 0
-              ? `${e.items.length} ${e.items.length === 1 ? "memento" : "mementos"}`
-              : (temPdf ? "PDF Pernambuco Imortal" : (flash ? `${flash.total} flashcards` : "em breve"))
+            const rodape = MEMENTO_PROPRIO.has(sigla) ? "PDF Memento"
+              : temPdf ? "PDF Pernambuco Imortal"
+              : e.items.length > 0 ? "PDF Pernambuco Imortal"
+              : flash ? `${flash.total} flashcards`
+              : "em breve"
             const subInicial: SubAba = (e.items.length > 0 || temPdf) ? "memento" : flash ? "flashcards" : "memento"
             return (
               <button key={sigla} onClick={() => { setMateriaSel(sigla); setSubAba(subInicial) }}
