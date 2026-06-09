@@ -42,6 +42,14 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
     { file: "PA.pdf", label: "Pernambuco Imortal" },
     { file: "PA-2.pdf", label: "★ Memento Resumido (AL CFO 108)" },
   ],
+  FPC: [
+    { file: "FPC.pdf", label: "Pernambuco Imortal" },
+    { file: "FPC-2.pdf", label: "★ Memento Resumido (AL CFO 108)" },
+  ],
+  SSP: [
+    { file: "SSP.pdf", label: "Pernambuco Imortal" },
+    { file: "SSP-2.pdf", label: "★ Memento Resumido (AL CFO 108)" },
+  ],
   DPPM: [
     { file: "DPPM-1.pdf", label: "Parte I" },
     { file: "DPPM-2.pdf", label: "Parte II" },
