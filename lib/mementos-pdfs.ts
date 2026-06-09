@@ -58,6 +58,10 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
     { file: "TGA.pdf", label: "Pernambuco Imortal" },
     { file: "TGA-2.pdf", label: "★ Memento Resumido (AL CFO 108)" },
   ],
+  SMQV: [
+    { file: "SMQV.pdf", label: "Pernambuco Imortal" },
+    { file: "SMQV-2.pdf", label: "★ Memento Resumido (AL CFO 108)" },
+  ],
   DPPM: [
     { file: "DPPM-1.pdf", label: "Parte I" },
     { file: "DPPM-2.pdf", label: "Parte II" },
