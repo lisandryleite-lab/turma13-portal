@@ -567,24 +567,11 @@ function Admin({ disciplinas, materias, onImport }: { disciplinas: Disc[]; mater
       </button>
       {genMsg && <p style={{ marginTop: 10, fontSize: 13.5, color: genMsg.startsWith("✓") ? "var(--olive)" : "var(--red)", lineHeight: 1.5 }}>{genMsg}</p>}
 
-      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 8 }}>Importar pacote</h2>
+      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 8 }}>Revisar e salvar</h2>
       <p style={{ fontSize: 14, color: "var(--ink-60)", lineHeight: 1.5, marginTop: 0 }}>
-        Cole o <strong>pacote JSON</strong> (ou use o gerador acima). A matéria precisa existir entre as {disciplinas.length} disciplinas (sigla). Importação idempotente (re-importar atualiza).
+        As questões geradas pela IA aparecem aqui para você <strong>revisar</strong> antes de salvar. A importação é idempotente (re-importar atualiza).
       </p>
-      <pre style={{ ...card, fontSize: 12, overflowX: "auto", color: "var(--ink-60)" }}>{`{
-  "materia": "LPMO", "modulo": "1",
-  "questoes": [
-    { "tipo": "multipla", "contexto": "(opcional) caso prático…",
-      "enunciado": "...", "alternativas": [{"id":"A","texto":"..."},{"id":"B","texto":"..."}],
-      "gabarito": "A", "explicacao": "gabarito comentado", "fonte": "Lei 14.751/23" },
-    { "tipo": "certo_errado", "enunciado": "...", "gabarito": "certo",
-      "explicacao": "justificativa (em F, explica o erro)" },
-    { "tipo": "dissertativa", "enunciado": "...",
-      "modelo": { "estrutura": "Intro → Desenv. → Conclusão",
-        "criterios": ["critério 1","critério 2"], "resposta": "modelo de resposta…" } }
-  ]
-}`}</pre>
-      <textarea value={json} onChange={e => setJson(e.target.value)} rows={10} placeholder="Cole o JSON aqui…"
+      <textarea value={json} onChange={e => setJson(e.target.value)} rows={10} placeholder="Gere questões acima para revisar aqui…"
         style={{ ...inputStyle, fontFamily: "monospace", fontSize: 13, marginTop: 8 }} />
       <button onClick={importar} disabled={enviando || !json.trim()} style={{ marginTop: 10, padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: enviando ? "default" : "pointer" }}>
         {enviando ? "Importando…" : "Importar questões"}
