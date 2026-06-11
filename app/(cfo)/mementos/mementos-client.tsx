@@ -161,7 +161,7 @@ function Gaivotas({ materia, isAdmin, currentUser }: { materia: string; isAdmin:
 }
 
 // ── Mementos (grid de matérias → memento / PDF / gaivotas) ──
-type SubAba = "memento" | "pdf" | "flashcards" | "questoes" | "gaivotas"
+type SubAba = "memento" | "pdf" | "flashcards" | "questoes" | "gaivotas" | "tutor"
 
 function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, flashMaterias }: {
   mementos: MementoMeta[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]
@@ -231,7 +231,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
     const subAbas: [SubAba, string][] = [
       ["memento", mementoLabel],
       ["flashcards", `Flashcards${flash ? ` (${flash.total})` : ""}`],
-      ["questoes", "Questões"], ["gaivotas", "🪶 Gaivotas"],
+      ["questoes", "Questões"], ["tutor", "✦ Tutor IA"], ["gaivotas", "🪶 Gaivotas"],
     ]
     return (
       <div>
@@ -268,6 +268,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, fl
 
         {subAba === "flashcards" && <FlashcardsMateria flash={flash} sigla={sigla} />}
         {subAba === "questoes" && <QuestoesLink sigla={sigla} />}
+        {subAba === "tutor" && <TutorIA materia={sigla} />}
         {subAba === "gaivotas" && <Gaivotas materia={sigla} isAdmin={isAdmin} currentUser={currentUser} />}
       </div>
     )
@@ -440,6 +441,79 @@ function QuestoesLink({ sigla }: { sigla: string }) {
         style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
         Ir para Questões de {sigla} →
       </Link>
+    </div>
+  )
+}
+
+// ── Tutor IA por matéria (chat com streaming) ──
+function TutorIA({ materia }: { materia: string }) {
+  const [msgs, setMsgs] = useState<{ role: "user" | "assistant"; content: string }[]>([])
+  const [input, setInput] = useState("")
+  const [streaming, setStreaming] = useState(false)
+  const [erro, setErro] = useState("")
+
+  async function enviar() {
+    const pergunta = input.trim()
+    if (!pergunta || streaming) return
+    setErro("")
+    const base = [...msgs, { role: "user" as const, content: pergunta }]
+    setMsgs([...base, { role: "assistant", content: "" }])
+    setInput(""); setStreaming(true)
+    try {
+      const res = await fetch("/api/ia/tutor", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ materia, messages: base }),
+      })
+      if (!res.ok || !res.body) {
+        const j = await res.json().catch(() => ({}))
+        throw new Error(j.error || "Erro ao consultar o tutor.")
+      }
+      const reader = res.body.getReader()
+      const dec = new TextDecoder()
+      let acc = ""
+      for (;;) {
+        const { done, value } = await reader.read()
+        if (done) break
+        acc += dec.decode(value, { stream: true })
+        setMsgs(m => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: acc }; return c })
+      }
+    } catch (e) {
+      setErro(e instanceof Error ? e.message : "Falha de conexão.")
+      setMsgs(m => m.slice(0, -1))
+    }
+    setStreaming(false)
+  }
+
+  return (
+    <div>
+      <p style={{ fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.5, marginTop: 0 }}>
+        ✦ Tire dúvidas de <strong>{materia}</strong> com a IA, que responde usando o <strong>memento da matéria</strong> como base. Pode conter imprecisões — confirme no material oficial.
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, margin: "12px 0" }}>
+        {msgs.length === 0 && <p style={{ color: "var(--ink-60)", fontSize: 14 }}>Ex.: “Explique a diferença entre detenção e prisão disciplinar.”</p>}
+        {msgs.map((m, k) => (
+          <div key={k} style={{
+            alignSelf: m.role === "user" ? "flex-end" : "flex-start",
+            maxWidth: "92%", padding: "10px 13px", borderRadius: 12, fontSize: 14.5, lineHeight: 1.55, whiteSpace: "pre-wrap",
+            background: m.role === "user" ? "var(--olive)" : "var(--surface)",
+            color: m.role === "user" ? "var(--canvas)" : "var(--ink)",
+            border: m.role === "user" ? "none" : "1px solid rgba(58,74,58,0.12)",
+          }}>
+            {m.content || (streaming ? "…" : "")}
+          </div>
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
+        <textarea value={input} onChange={e => setInput(e.target.value)} rows={2} placeholder={`Pergunte algo sobre ${materia}…`}
+          onKeyDown={e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) enviar() }}
+          style={{ ...inputStyle, resize: "vertical", flex: 1 }} />
+        <button onClick={enviar} disabled={streaming || !input.trim()}
+          style={{ padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: streaming || !input.trim() ? "default" : "pointer", opacity: !input.trim() ? 0.5 : 1, whiteSpace: "nowrap" }}>
+          {streaming ? "…" : "Enviar"}
+        </button>
+      </div>
+      {erro && <p style={{ marginTop: 8, fontSize: 13, color: "var(--red)" }}>{erro}</p>}
+      <p style={{ marginTop: 6, fontSize: 11.5, color: "var(--ink-60)" }}>Ctrl/⌘ + Enter para enviar.</p>
     </div>
   )
 }

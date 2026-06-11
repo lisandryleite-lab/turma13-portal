@@ -18,6 +18,11 @@ type Disc = { sigla: string; nome: string }
 type Stat = { sigla: string; nome: string; acertos: number; total: number }
 type Alt = { id: string; texto: string }
 type Modelo = { estrutura?: string; criterios?: string[]; resposta?: string }
+type Correcao = {
+  nota: number; veredito: string; resumo: string
+  criterios: { criterio: string; atendido: boolean; comentario: string }[]
+  pontosFortes: string[]; pontosAMelhorar: string[]
+}
 type Questao = {
   id: string; materia: string; modulo: string; tipo: string
   contexto: string | null
@@ -37,6 +42,47 @@ function Enunciado({ q }: { q: Questao }) {
     </>
   )
 }
+// Painel de correção da IA (dissertativa)
+function CorrecaoIA({ c }: { c: Correcao }) {
+  const cor = c.nota >= 7 ? "var(--olive)" : c.nota >= 5 ? "var(--gold)" : "var(--red)"
+  const nota = Number.isFinite(c.nota) ? (Math.round(c.nota * 10) / 10).toString().replace(".", ",") : "—"
+  return (
+    <div style={{ marginTop: 12, padding: "14px 16px", borderRadius: 12, background: "#fbf7ee", border: "1px solid var(--gold)" }}>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 6 }}>
+        <span style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.6rem", fontWeight: 700, color: cor }}>{nota}</span>
+        <span style={{ fontSize: 13, color: "var(--ink-60)" }}>/ 10</span>
+        <span style={{ fontSize: 12.5, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".04em", color: cor, marginLeft: "auto" }}>{c.veredito}</span>
+      </div>
+      <p style={{ margin: "0 0 10px", fontSize: 14, color: "var(--ink)", lineHeight: 1.5 }}>{c.resumo}</p>
+      {c.criterios?.length > 0 && (
+        <ul style={{ listStyle: "none", padding: 0, margin: "0 0 10px", display: "flex", flexDirection: "column", gap: 6 }}>
+          {c.criterios.map((cr, k) => (
+            <li key={k} style={{ fontSize: 13.5, lineHeight: 1.45 }}>
+              <span style={{ color: cr.atendido ? "var(--olive)" : "var(--red)", fontWeight: 700, marginRight: 6 }}>{cr.atendido ? "✓" : "✗"}</span>
+              <strong>{cr.criterio}</strong>{cr.comentario ? <span style={{ color: "var(--ink-60)" }}> — {cr.comentario}</span> : null}
+            </li>
+          ))}
+        </ul>
+      )}
+      <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+        {c.pontosFortes?.length > 0 && (
+          <div style={{ flex: "1 1 180px" }}>
+            <div style={{ fontSize: 12.5, fontWeight: 700, color: "var(--olive)", marginBottom: 3 }}>Pontos fortes</div>
+            <ul style={{ margin: 0, paddingLeft: 16, fontSize: 13, color: "var(--ink)" }}>{c.pontosFortes.map((p, k) => <li key={k}>{p}</li>)}</ul>
+          </div>
+        )}
+        {c.pontosAMelhorar?.length > 0 && (
+          <div style={{ flex: "1 1 180px" }}>
+            <div style={{ fontSize: 12.5, fontWeight: 700, color: "var(--red)", marginBottom: 3 }}>A melhorar</div>
+            <ul style={{ margin: 0, paddingLeft: 16, fontSize: 13, color: "var(--ink)" }}>{c.pontosAMelhorar.map((p, k) => <li key={k}>{p}</li>)}</ul>
+          </div>
+        )}
+      </div>
+      <p style={{ margin: "10px 0 0", fontSize: 11, color: "var(--ink-60)" }}>Correção gerada por IA — pode conter imprecisões; o modelo de resposta é a referência oficial.</p>
+    </div>
+  )
+}
+
 type Aba = "resolver" | "simulado" | "acerto" | "admin"
 
 const card: React.CSSProperties = { padding: 16, borderRadius: 12, background: "var(--surface)" }
@@ -131,13 +177,27 @@ function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; init
   const [feitas, setFeitas] = useState(0)
   const [disTexto, setDisTexto] = useState("")
   const [disRevelado, setDisRevelado] = useState(false)
+  const [corrigindo, setCorrigindo] = useState(false)
+  const [correcao, setCorrecao] = useState<Correcao | null>(null)
+  const [corrErro, setCorrErro] = useState("")
 
   const mAtual = materias.find(m => m.sigla === materia)
   async function iniciar() {
     if (!materia) return
     const res = await fetch(`/api/questoes?${buildQuery(materia, modulo, tipo, "&shuffle=1")}`)
     const data = await res.json()
-    setQs(data); setI(0); setEscolhida(null); setFeedback(null); setAcertos(0); setFeitas(0); setDisTexto(""); setDisRevelado(false)
+    setQs(data); setI(0); setEscolhida(null); setFeedback(null); setAcertos(0); setFeitas(0); setDisTexto(""); setDisRevelado(false); setCorrecao(null); setCorrErro("")
+  }
+  async function corrigirIA() {
+    if (!qs || !disTexto.trim()) return
+    setCorrigindo(true); setCorrErro(""); setCorrecao(null)
+    try {
+      const res = await fetch("/api/ia/corrigir", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ questaoId: qs[i].id, resposta: disTexto }) })
+      const j = await res.json()
+      if (!res.ok) setCorrErro(j.error || "Erro ao corrigir.")
+      else setCorrecao(j)
+    } catch { setCorrErro("Falha de conexão.") }
+    setCorrigindo(false)
   }
   async function responder(r: string) {
     if (!qs) return
@@ -146,7 +206,7 @@ function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; init
     const j = await res.json()
     setFeedback(j); setFeitas(f => f + 1); if (j.acertou) setAcertos(a => a + 1)
   }
-  function proxima() { setEscolhida(null); setFeedback(null); setDisTexto(""); setDisRevelado(false); setI(x => x + 1) }
+  function proxima() { setEscolhida(null); setFeedback(null); setDisTexto(""); setDisRevelado(false); setCorrecao(null); setCorrErro(""); setI(x => x + 1) }
 
   if (!qs) {
     return (
@@ -204,13 +264,22 @@ function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; init
         <Enunciado q={q} />
         {q.tipo === "dissertativa" ? (
           <>
-            <textarea value={disTexto} onChange={e => setDisTexto(e.target.value)} disabled={disRevelado} rows={6}
+            <textarea value={disTexto} onChange={e => setDisTexto(e.target.value)} disabled={corrigindo} rows={6}
               placeholder="Escreva sua resposta…" style={{ ...inputStyle, marginTop: 12, resize: "vertical" }} />
-            {!disRevelado && (
-              <button onClick={() => setDisRevelado(true)} style={{ marginTop: 10, padding: "9px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>
-                Ver modelo de resposta
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
+              <button onClick={corrigirIA} disabled={corrigindo || !disTexto.trim()}
+                style={{ padding: "9px 16px", borderRadius: 8, border: "none", background: "var(--gold)", color: "var(--canvas)", fontWeight: 600, cursor: corrigindo || !disTexto.trim() ? "default" : "pointer", opacity: !disTexto.trim() ? 0.5 : 1 }}>
+                {corrigindo ? "Corrigindo…" : "✦ Corrigir com IA"}
               </button>
-            )}
+              {!disRevelado && (
+                <button onClick={() => setDisRevelado(true)}
+                  style={{ padding: "9px 16px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, cursor: "pointer" }}>
+                  Ver modelo de resposta
+                </button>
+              )}
+            </div>
+            {corrErro && <p style={{ marginTop: 8, fontSize: 13, color: "var(--red)" }}>{corrErro}</p>}
+            {correcao && <CorrecaoIA c={correcao} />}
           </>
         ) : (
           <Opcoes q={q} escolhida={escolhida} gabarito={feedback?.gabarito ?? null} onPick={responder} />
@@ -407,6 +476,26 @@ function Admin({ disciplinas, materias, onImport }: { disciplinas: Disc[]; mater
   const [json, setJson] = useState("")
   const [msg, setMsg] = useState("")
   const [enviando, setEnviando] = useState(false)
+  // gerador IA
+  const [genMat, setGenMat] = useState("")
+  const [genMod, setGenMod] = useState("")
+  const [genQtd, setGenQtd] = useState("8")
+  const [genTipos, setGenTipos] = useState<string[]>(["certo_errado", "multipla", "dissertativa"])
+  const [genTexto, setGenTexto] = useState("")
+  const [gerando, setGerando] = useState(false)
+  const [genMsg, setGenMsg] = useState("")
+  function toggleTipo(t: string) { setGenTipos(ts => ts.includes(t) ? ts.filter(x => x !== t) : [...ts, t]) }
+  async function gerarIA() {
+    if (!genMat) return
+    setGerando(true); setGenMsg("")
+    try {
+      const res = await fetch("/api/ia/gerar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ materia: genMat, modulo: genMod.trim(), quantidade: Number(genQtd) || 8, tipos: genTipos, texto: genTexto.trim() }) })
+      const j = await res.json()
+      if (!res.ok) setGenMsg("✗ " + (j.error || "Erro"))
+      else { setJson(JSON.stringify(j.pacote, null, 2)); setGenMsg(`✓ ${j.total} questões geradas — revise abaixo e clique em Importar.`) }
+    } catch { setGenMsg("✗ Falha de conexão.") }
+    setGerando(false)
+  }
   // limpar
   const [limparMat, setLimparMat] = useState("")
   const [limparMod, setLimparMod] = useState("__all__")
@@ -444,8 +533,43 @@ function Admin({ disciplinas, materias, onImport }: { disciplinas: Disc[]; mater
 
   return (
     <div>
-      <p style={{ fontSize: 14, color: "var(--ink-60)", lineHeight: 1.5 }}>
-        Cole o <strong>pacote JSON</strong> gerado no Claude. A matéria precisa existir entre as {disciplinas.length} disciplinas (sigla). Importação idempotente (re-importar atualiza).
+      {/* Gerador de questões com IA */}
+      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 0, marginBottom: 8 }}>✦ Gerar questões com IA</h2>
+      <p style={{ fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.5, marginTop: 0 }}>
+        A IA gera questões a partir do <strong>memento da matéria</strong> (ou de um texto colado). O resultado cai no campo de import abaixo para você <strong>revisar antes</strong> de salvar.
+      </p>
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "end" }}>
+        <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 160px" }}>Matéria
+          <select style={{ ...inputStyle, marginTop: 6 }} value={genMat} onChange={e => setGenMat(e.target.value)}>
+            <option value="">— selecione —</option>
+            {disciplinas.map(d => <option key={d.sigla} value={d.sigla}>{d.sigla} — {d.nome}</option>)}
+          </select>
+        </label>
+        <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 110px" }}>Módulo <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>(opc.)</span>
+          <input style={{ ...inputStyle, marginTop: 6 }} value={genMod} onChange={e => setGenMod(e.target.value)} placeholder="ex.: 3" />
+        </label>
+        <label style={{ fontSize: 13, fontWeight: 600, flex: "0 1 90px" }}>Qtd
+          <input style={{ ...inputStyle, marginTop: 6 }} value={genQtd} onChange={e => setGenQtd(e.target.value)} inputMode="numeric" />
+        </label>
+      </div>
+      <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 10 }}>
+        {[["certo_errado", "Certo/Errado"], ["multipla", "Múltipla"], ["dissertativa", "Dissertativa"]].map(([v, l]) => (
+          <label key={v} style={{ fontSize: 13.5, display: "inline-flex", alignItems: "center", gap: 6, cursor: "pointer" }}>
+            <input type="checkbox" checked={genTipos.includes(v)} onChange={() => toggleTipo(v)} /> {l}
+          </label>
+        ))}
+      </div>
+      <textarea value={genTexto} onChange={e => setGenTexto(e.target.value)} rows={3} placeholder="(Opcional) Cole um texto-fonte. Vazio = usa o memento cadastrado da matéria."
+        style={{ ...inputStyle, marginTop: 10, resize: "vertical" }} />
+      <button onClick={gerarIA} disabled={gerando || !genMat || genTipos.length === 0}
+        style={{ marginTop: 10, padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--gold)", color: "var(--canvas)", fontWeight: 600, cursor: gerando || !genMat ? "default" : "pointer", opacity: !genMat || genTipos.length === 0 ? 0.6 : 1 }}>
+        {gerando ? "Gerando… (pode levar até 1 min)" : "✦ Gerar questões"}
+      </button>
+      {genMsg && <p style={{ marginTop: 10, fontSize: 13.5, color: genMsg.startsWith("✓") ? "var(--olive)" : "var(--red)", lineHeight: 1.5 }}>{genMsg}</p>}
+
+      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 8 }}>Importar pacote</h2>
+      <p style={{ fontSize: 14, color: "var(--ink-60)", lineHeight: 1.5, marginTop: 0 }}>
+        Cole o <strong>pacote JSON</strong> (ou use o gerador acima). A matéria precisa existir entre as {disciplinas.length} disciplinas (sigla). Importação idempotente (re-importar atualiza).
       </p>
       <pre style={{ ...card, fontSize: 12, overflowX: "auto", color: "var(--ink-60)" }}>{`{
   "materia": "LPMO", "modulo": "1",
