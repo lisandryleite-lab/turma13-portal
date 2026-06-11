@@ -1,46 +1,17 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { anthropic, MODEL, IA_HABILITADA } from "@/lib/claude"
+import { genai, MODEL, IA_HABILITADA, parseJsonLoose } from "@/lib/ai"
 
 export const runtime = "nodejs"
 export const maxDuration = 60
 
 type Modelo = { estrutura?: string; criterios?: string[]; resposta?: string }
 
-const FORMAT = {
-  type: "json_schema" as const,
-  schema: {
-    type: "object",
-    additionalProperties: false,
-    properties: {
-      nota: { type: "number", description: "Nota de 0 a 10 (pode ter 1 casa decimal)" },
-      veredito: { type: "string", enum: ["excelente", "boa", "regular", "insuficiente"] },
-      resumo: { type: "string", description: "1-2 frases resumindo a avaliação" },
-      criterios: {
-        type: "array",
-        items: {
-          type: "object",
-          additionalProperties: false,
-          properties: {
-            criterio: { type: "string" },
-            atendido: { type: "boolean" },
-            comentario: { type: "string" },
-          },
-          required: ["criterio", "atendido", "comentario"],
-        },
-      },
-      pontosFortes: { type: "array", items: { type: "string" } },
-      pontosAMelhorar: { type: "array", items: { type: "string" } },
-    },
-    required: ["nota", "veredito", "resumo", "criterios", "pontosFortes", "pontosAMelhorar"],
-  },
-}
-
 export async function POST(req: NextRequest) {
   const session = await auth()
   if (!session?.user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
-  if (!IA_HABILITADA) return NextResponse.json({ error: "IA não configurada (defina ANTHROPIC_API_KEY)." }, { status: 503 })
+  if (!IA_HABILITADA) return NextResponse.json({ error: "IA não configurada (defina GEMINI_API_KEY)." }, { status: 503 })
 
   const body = await req.json().catch(() => ({}))
   const resposta: string = (body.resposta || "").toString().trim()
@@ -51,7 +22,6 @@ export async function POST(req: NextRequest) {
   let modelo: Modelo | null = body.modelo ?? null
   let materia = (body.materia || "").toString()
 
-  // Preferir carregar do banco quando vier o id (garante enunciado/critérios fiéis)
   if (body.questaoId) {
     const q = await prisma.questao.findUnique({ where: { id: String(body.questaoId) } })
     if (!q) return NextResponse.json({ error: "Questão não encontrada." }, { status: 404 })
@@ -68,30 +38,26 @@ export async function POST(req: NextRequest) {
 
   const system =
     "Você é um examinador experiente do Curso de Formação de Oficiais da PMPE, corrigindo questões dissertativas. " +
-    "Avalie a resposta do aluno com justiça e rigor técnico, comparando-a com os critérios e o modelo de resposta fornecidos. " +
+    "Avalie a resposta do aluno com justiça e rigor técnico, comparando-a com os critérios e o modelo fornecidos. " +
     "Atribua nota de 0 a 10 considerando: aderência aos critérios (peso maior), correção técnica/jurídica, clareza e completude. " +
-    "Para CADA critério informado, diga se foi atendido e comente. Seja construtivo: aponte o que está certo e o que falta. " +
-    "Não invente fatos; baseie-se no modelo. Responda em português do Brasil."
+    "Para CADA critério, diga se foi atendido e comente. Seja construtivo. Não invente fatos. Português do Brasil.\n\n" +
+    "Responda APENAS com um objeto JSON válido (sem markdown), com EXATAMENTE estas chaves:\n" +
+    "{ \"nota\": número 0-10, \"veredito\": \"excelente\"|\"boa\"|\"regular\"|\"insuficiente\", " +
+    "\"resumo\": \"1-2 frases\", \"criterios\": [{\"criterio\": \"...\", \"atendido\": true|false, \"comentario\": \"...\"}], " +
+    "\"pontosFortes\": [\"...\"], \"pontosAMelhorar\": [\"...\"] }"
 
   const userMsg =
-    `MATÉRIA: ${materia || "—"}\n\n` +
-    `ENUNCIADO:\n${enunciado}\n\n` +
-    `ESTRUTURA ESPERADA: ${estruturaTxt}\n\n` +
-    `CRITÉRIOS DE CORREÇÃO:\n${criteriosTxt}\n\n` +
-    `MODELO DE RESPOSTA (referência):\n${respModelo}\n\n` +
-    `RESPOSTA DO ALUNO (corrija esta):\n${resposta}`
+    `MATÉRIA: ${materia || "—"}\n\nENUNCIADO:\n${enunciado}\n\n` +
+    `ESTRUTURA ESPERADA: ${estruturaTxt}\n\nCRITÉRIOS DE CORREÇÃO:\n${criteriosTxt}\n\n` +
+    `MODELO DE RESPOSTA (referência):\n${respModelo}\n\nRESPOSTA DO ALUNO (corrija esta):\n${resposta}`
 
   try {
-    const msg = await anthropic.messages.create({
+    const r = await genai.models.generateContent({
       model: MODEL,
-      max_tokens: 4000,
-      thinking: { type: "adaptive" },
-      output_config: { effort: "high", format: FORMAT },
-      system,
-      messages: [{ role: "user", content: userMsg }],
+      contents: userMsg,
+      config: { systemInstruction: system, responseMimeType: "application/json", temperature: 0.3, maxOutputTokens: 4000 },
     })
-    const texto = msg.content.find(b => b.type === "text")?.text ?? ""
-    const data = JSON.parse(texto)
+    const data = parseJsonLoose(r.text ?? "") as { nota?: number }
     if (typeof data.nota === "number") data.nota = Math.max(0, Math.min(10, data.nota))
     return NextResponse.json(data)
   } catch (e: unknown) {
