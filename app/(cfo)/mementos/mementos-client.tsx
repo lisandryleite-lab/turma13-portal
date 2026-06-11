@@ -10,6 +10,7 @@ type MementoMeta = { id: string; materia: string; modulo: string; titulo: string
 type CurrentUser = { matricula: number; nomeGuerra: string }
 type PdfPart = { file: string; label: string }
 type PdfMateria = { sigla: string; nome: string; parts: PdfPart[] }
+type ApostilaMateria = { sigla: string; parts: PdfPart[] }
 type GaivotaMsg = { id: string; matricula: number; nomeGuerra: string; texto: string; createdAt: string }
 type Disc = { sigla: string; nome: string }
 type ContMat = { sigla: string; nome: string; modulos: string[] }
@@ -23,8 +24,8 @@ const inputStyle: React.CSSProperties = {
   border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15,
 }
 
-export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias, apostilas }: {
-  mementos: MementoMeta[]; conteudoMaterias: ContMat[]; disciplinas: Disc[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]; apostilas: string[]
+export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias, apostilaMaterias }: {
+  mementos: MementoMeta[]; conteudoMaterias: ContMat[]; disciplinas: Disc[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]; apostilaMaterias: ApostilaMateria[]
 }) {
   const router = useRouter()
   const [aba, setAba] = useState<Aba>("mementos")
@@ -47,7 +48,7 @@ export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmi
         ))}
       </div>
 
-      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} apostilas={apostilas} />}
+      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} apostilaMaterias={apostilaMaterias} />}
       {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} conteudoMaterias={conteudoMaterias} onImport={() => router.refresh()} />}
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>
@@ -161,13 +162,14 @@ function Gaivotas({ materia, isAdmin, currentUser }: { materia: string; isAdmin:
 // ── Mementos (grid de matérias → memento / PDF / apostila / gaivotas) ──
 type SubAba = "memento" | "pdf" | "apostila" | "questoes" | "gaivotas" | "tutor"
 
-function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, apostilas }: {
+function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, apostilaMaterias }: {
   mementos: MementoMeta[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]
-  disciplinas: Disc[]; apostilas: string[]
+  disciplinas: Disc[]; apostilaMaterias: ApostilaMateria[]
 }) {
   const comPdf = new Set(pdfMaterias.map(p => p.sigla))
   const pdfPartsMap = new Map(pdfMaterias.map(p => [p.sigla, p.parts]))
-  const comApostila = new Set(apostilas)
+  const apostilaPartsMap = new Map(apostilaMaterias.map(a => [a.sigla, a.parts]))
+  const comApostila = new Set(apostilaMaterias.map(a => a.sigla))
   const [materiaSel, setMateriaSel] = useState<string | null>(null)
   const [subAba, setSubAba] = useState<SubAba>("memento")
   const [aberto, setAberto] = useState<{ titulo: string; html: string } | null>(null)
@@ -211,8 +213,8 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
   for (const p of pdfMaterias) {
     if (!grupos.has(p.sigla)) grupos.set(p.sigla, { nome: p.nome, items: [] })
   }
-  for (const sigla of apostilas) {
-    if (!grupos.has(sigla)) grupos.set(sigla, { nome: sigla, items: [] })
+  for (const a of apostilaMaterias) {
+    if (!grupos.has(a.sigla)) grupos.set(a.sigla, { nome: a.sigla, items: [] })
   }
   // inclui TODAS as disciplinas do curso (mesmo sem memento/PDF → "em breve")
   for (const d of disciplinas) {
@@ -267,7 +269,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
           )
         )}
 
-        {subAba === "apostila" && <ApostilaMateria sigla={sigla} />}
+        {subAba === "apostila" && <PdfOriginal sigla={sigla} parts={apostilaPartsMap.get(sigla) ?? []} base="apostilas" labelVazio="apostila" />}
         {subAba === "questoes" && <QuestoesLink sigla={sigla} />}
         {subAba === "tutor" && <TutorIA materia={sigla} />}
         {subAba === "gaivotas" && <Gaivotas materia={sigla} isAdmin={isAdmin} currentUser={currentUser} />}
@@ -313,22 +315,22 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
   )
 }
 
-// Visualizador do PDF Pernambuco Imortal (1 ou várias partes, rotuladas para impressão)
-function PdfOriginal({ sigla, parts }: { sigla: string; parts: PdfPart[] }) {
+// Visualizador de PDF (1 ou várias partes, rotuladas). base = pasta em /public.
+function PdfOriginal({ sigla, parts, base = "mementos", labelVazio = "PDF Pernambuco Imortal" }: { sigla: string; parts: PdfPart[]; base?: string; labelVazio?: string }) {
   const [i, setI] = useState(0)
 
   if (parts.length === 0) {
     return (
       <div style={cardBox}>
         <p style={{ margin: 0, fontSize: 14.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
-          Não há PDF Pernambuco Imortal de <strong>{sigla}</strong>.
+          Não há {labelVazio} de <strong>{sigla}</strong>.
         </p>
       </div>
     )
   }
 
   const sel = parts[Math.min(i, parts.length - 1)]
-  const src = `/mementos/${encodeURIComponent(sel.file)}`
+  const src = `/${base}/${encodeURIComponent(sel.file)}`
   const linkStyle: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }
 
   return (
@@ -352,28 +354,6 @@ function PdfOriginal({ sigla, parts }: { sigla: string; parts: PdfPart[] }) {
       <object key={src} data={src} type="application/pdf"
         style={{ width: "100%", height: "70vh", borderRadius: 12, border: "1px solid rgba(58,74,58,0.15)" }}>
         <iframe src={src} title={`PDF ${sigla} ${sel.label}`} style={{ width: "100%", height: "70vh", border: "none", borderRadius: 12 }} />
-      </object>
-    </div>
-  )
-}
-
-// Apostila completa (PDF original) de UMA matéria
-function ApostilaMateria({ sigla }: { sigla: string }) {
-  const src = `/apostilas/${encodeURIComponent(sigla)}.pdf`
-  const linkStyle: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }
-
-  return (
-    <div>
-      <p style={{ fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.5, marginTop: 0 }}>
-        📘 Apostila completa de <strong>{sigla}</strong> — material original do curso.
-      </p>
-      <div style={{ display: "flex", gap: 8, marginBottom: 10, alignItems: "center", flexWrap: "wrap" }}>
-        <a href={src} target="_blank" rel="noopener noreferrer" style={linkStyle}>↗ Abrir em nova aba</a>
-        <a href={src} download style={linkStyle}>⬇ Baixar</a>
-      </div>
-      <object key={src} data={src} type="application/pdf"
-        style={{ width: "100%", height: "70vh", borderRadius: 12, border: "1px solid rgba(58,74,58,0.15)" }}>
-        <iframe src={src} title={`Apostila ${sigla}`} style={{ width: "100%", height: "70vh", border: "none", borderRadius: 12 }} />
       </object>
     </div>
   )

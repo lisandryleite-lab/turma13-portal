@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { PDF_PARTS, type PdfPart } from "@/lib/mementos-pdfs"
+import { APOSTILA_PARTS, type ApostilaPart } from "@/lib/apostilas"
 import { MementosClient } from "./mementos-client"
 
 export default async function MementosPage() {
@@ -44,14 +45,25 @@ export default async function MementosPage() {
     }).filter(m => m.parts.length > 0)
   } catch { /* pasta ausente — sem PDFs */ }
 
-  // matérias com apostila completa em /public/apostilas/<SIGLA>.pdf
-  let apostilas: string[] = []
+  // matérias com apostila em /public/apostilas/ (1 arquivo = <SIGLA>.pdf;
+  // várias partes = <SIGLA>-N.pdf, rotuladas no manifesto APOSTILA_PARTS)
+  let apostilaMaterias: { sigla: string; parts: ApostilaPart[] }[] = []
   try {
     const dir = path.join(process.cwd(), "public", "apostilas")
-    apostilas = (await readdir(dir))
-      .filter(f => f.toLowerCase().endsWith(".pdf"))
-      .map(f => f.slice(0, -4).toUpperCase())
-      .sort()
+    const arquivos = (await readdir(dir)).filter(f => f.toLowerCase().endsWith(".pdf"))
+    const bySigla = new Map<string, string[]>()
+    for (const f of arquivos) {
+      const base = f.slice(0, -4)
+      const sigla = (base.includes("-") ? base.slice(0, base.indexOf("-")) : base).toUpperCase()
+      ;(bySigla.get(sigla) ?? bySigla.set(sigla, []).get(sigla)!).push(f)
+    }
+    apostilaMaterias = [...bySigla.entries()].map(([sigla, files]) => {
+      const manifest = APOSTILA_PARTS[sigla]
+      const parts: ApostilaPart[] = manifest
+        ? manifest.filter(p => files.includes(p.file))
+        : files.sort().map(file => ({ file, label: "Apostila" }))
+      return { sigla, parts }
+    }).filter(m => m.parts.length > 0).sort((a, b) => a.sigla.localeCompare(b.sigla))
   } catch { /* pasta ausente — sem apostilas */ }
 
   // matérias com conteúdo (mementos + flashcards) — para a área de limpar
@@ -70,7 +82,7 @@ export default async function MementosPage() {
       isAdmin={await adminAtivo(session.user.isAdmin)}
       currentUser={{ matricula: session.user.matricula, nomeGuerra: session.user.nomeGuerra }}
       pdfMaterias={pdfMaterias}
-      apostilas={apostilas}
+      apostilaMaterias={apostilaMaterias}
     />
   )
 }
