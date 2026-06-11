@@ -16,6 +16,7 @@ export default async function MementosPage() {
       select: { id: true, materia: true, modulo: true, titulo: true },
       orderBy: [{ materia: "asc" }, { modulo: "asc" }, { ordem: "asc" }],
     }),
+    // mantido apenas para a área "Limpar matéria" do admin (conteudoMaterias)
     prisma.flashcard.groupBy({ by: ["materia", "modulo"], _count: { _all: true } }),
     prisma.disciplina.findMany({ select: { sigla: true, nome: true }, orderBy: { sigla: "asc" } }),
   ])
@@ -42,17 +43,16 @@ export default async function MementosPage() {
       return { sigla, nome: nomeMap.get(sigla) || sigla, parts }
     }).filter(m => m.parts.length > 0)
   } catch { /* pasta ausente — sem PDFs */ }
-  // agrega total + módulos por matéria (flashcards)
-  const matMap = new Map<string, { total: number; modulos: Set<string> }>()
-  for (const g of fcGroups) {
-    const e = matMap.get(g.materia) || { total: 0, modulos: new Set<string>() }
-    e.total += g._count._all
-    e.modulos.add(g.modulo)
-    matMap.set(g.materia, e)
-  }
-  const flashMaterias = [...matMap.entries()]
-    .map(([sigla, e]) => ({ sigla, nome: nomeMap.get(sigla) || sigla, total: e.total, modulos: [...e.modulos].sort() }))
-    .sort((a, b) => a.sigla.localeCompare(b.sigla))
+
+  // matérias com apostila completa em /public/apostilas/<SIGLA>.pdf
+  let apostilas: string[] = []
+  try {
+    const dir = path.join(process.cwd(), "public", "apostilas")
+    apostilas = (await readdir(dir))
+      .filter(f => f.toLowerCase().endsWith(".pdf"))
+      .map(f => f.slice(0, -4).toUpperCase())
+      .sort()
+  } catch { /* pasta ausente — sem apostilas */ }
 
   // matérias com conteúdo (mementos + flashcards) — para a área de limpar
   const contMap = new Map<string, Set<string>>()
@@ -65,12 +65,12 @@ export default async function MementosPage() {
   return (
     <MementosClient
       mementos={mementos.map(m => ({ ...m, nome: nomeMap.get(m.materia) || m.materia }))}
-      flashMaterias={flashMaterias}
       conteudoMaterias={conteudoMaterias}
       disciplinas={disciplinas}
       isAdmin={await adminAtivo(session.user.isAdmin)}
       currentUser={{ matricula: session.user.matricula, nomeGuerra: session.user.nomeGuerra }}
       pdfMaterias={pdfMaterias}
+      apostilas={apostilas}
     />
   )
 }
