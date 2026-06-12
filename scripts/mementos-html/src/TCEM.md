@@ -69,3 +69,25 @@
 ## Diagnóstico
 - Ferramenta que **identifica problemas e necessidades** de uma comunidade/região — base para desenhar **planos, programas e projetos**, alocar recursos e **avaliar a eficácia** das ações de segurança pública.
 > 🔑 O **diagnóstico** antecede o Trabalho de Comando: sem identificar o problema corretamente, a estratégia falha.
+
+# 9. Documentos de Estado-Maior (Instruções Provisórias)
+- **Base normativa:** **Portaria CG nº 582, de 14/12/1981** (Instruções Provisórias de EM). São documentos escritos com **concisão e clareza**, seguindo mementos preestabelecidos, para viabilizar as atividades da Corporação.
+## Estudos
+- **Estudo:** aprecia **problemas administrativos simples** e suas soluções.
+- **Estudo de Situação:** método para resolver problemas, apreciando os fatores que influem numa atividade — feito **por seção** (Pessoal/PM1, Informações e Contrainformações/PM2, Operações/PM3, Logística/PM4, Assuntos Civis/PM5, Finanças/PM6).
+- **Estudo de Estado-Maior:** aprecia **problemas complexos e controvertidos**, com **parecer conclusivo** sobre a solução.
+## Diretriz, Plano e Ordem (distinção de prova)
+- **Diretriz:** estabelece **orientação por normas objetivas** para um trabalho; baixada por Comandante/Diretor/Chefe. Espécies: de **Planeja­mento**, de **Operações** e **Administrativa**.
+- **Plano:** dá forma ao **planejamento** (esquema imaginado para solucionar problemas); **baseia-se em HIPÓTESES**. Espécies: **Plano de Operações** e **Plano Administrativo**.
+- **Ordem:** documento pelo qual a autoridade **determina a execução** de um serviço ao subordinado; **baseia-se em FATOS**.
+> ⚠ **Plano = hipóteses; Ordem = fatos.** Pegadinha clássica.
+## Tipos de Ordem
+- **Preparatória** (informação antecipada para preparativos) · **de Operação** (missão operacional de envergadura, ≥1 OME — define SITUAÇÃO e MISSÃO) · **Administrativa** · **de Serviço** (serviço rotineiro, preventivo ou repressivo) · **Fragmentada/Complementar** (complementa ordem já expedida).
+## Notas e Relatórios
+- **Nota de Instrução (NI):** cria/altera **organização ou rotinas**; preparada a partir do escalão **Batalhão**.
+- **Nota de Serviço:** regula **cerimônias, formaturas, desfiles e solenidades** (eventos **não operacionais**).
+- **Nota de Segurança:** elaborada pela **2ª Seção**, para missões de segurança reservada.
+- **Nota Complementar (NC):** supre omissões ou retifica erros de uma Nota anterior.
+- **Anexo → Apêndice → Adendo → Aditamento:** cadeia de **detalhamento** de um documento básico.
+- **Relatório:** comando subordinado presta informações ao escalão superior (difunde informações).
+> 🔑 **Nota de Serviço** = solenidades/cerimônias; **Ordem de Serviço** = serviço operacional rotineiro. Não confundir.
