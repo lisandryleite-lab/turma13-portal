@@ -233,7 +233,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
     const mementoLabel = MEMENTO_PROPRIO.has(sigla) ? "PDF Memento" : temMemento ? "PDF Pernambuco Imortal" : "Memento"
     const subAbas: [SubAba, string][] = [
       ["memento", mementoLabel],
-      ...(temApostila ? [["apostila", "📘 Apostila"] as [SubAba, string]] : []),
+      ...(temApostila ? [["apostila", "Apostila"] as [SubAba, string]] : []),
       ["questoes", "Questões"], ["tutor", "✦ Tutor IA"], ["gaivotas", "🪶 Gaivotas"],
     ]
     return (
@@ -292,7 +292,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
             const rodape = MEMENTO_PROPRIO.has(sigla) ? "PDF Memento"
               : temPdf ? "PDF Pernambuco Imortal"
               : e.items.length > 0 ? "PDF Pernambuco Imortal"
-              : temApostila ? "📘 Apostila"
+              : temApostila ? "Apostila"
               : "em breve"
             const subInicial: SubAba = (e.items.length > 0 || temPdf) ? "memento" : temApostila ? "apostila" : "memento"
             return (
