@@ -36,9 +36,20 @@ const MD = `# Capítulo 1 — História e Conceito da Análise Criminal
 
 ## Definição e dimensões
 - A análise criminal é um **conjunto de processos sistemáticos** voltados a prover informação oportuna e pertinente sobre os padrões do crime e suas tendências, apoiando as áreas **operacional** e **administrativa** na distribuição de recursos para prevenção e supressão.
-- **Dimensão tática:** melhora investigações e patrulhamento.
-- **Dimensão estratégica:** permite aos gestores projetar cenários.
 - Em PE: o **DEACE (2001)**, hoje **GACE (Gerência de Análise Criminal e Estatística)**, da SDS, coleta dados e produz relatórios.
+
+## Os 3 tipos de análise criminal (Magalhães, 2007)
+São as três grandes vertentes do conhecimento produzido para a gestão da segurança pública:
+| Tipo | Prazo | Foco / objetivo |
+|---|---|---|
+| **ACE — Estratégica** | **Longo prazo** | Identificar **tendências** da criminalidade; formular **políticas públicas**, indicadores de desempenho, plano orçamentário e direcionamento de investimentos |
+| **ACT — Tática** | **Médio prazo** | Identificar **padrões** das atividades criminais; subsidiar a polícia **ostensiva** (pontos quentes, dia/horário crítico) e a **investigativa** (autoria e materialidade) |
+| **ACA — Administrativa** | — | **Estatística descritiva** e **divulgação** de informações sumarizadas ao público-alvo (cidadãos, gestores, ONGs), com comparações entre períodos e cidades |
+> 🔑 A própria sigla da disciplina (**ACE**) é a análise criminal **Estratégica** (tendências/longo prazo). Não confundir: **ACT** = padrões/médio prazo (rua); **ACA** = descritiva/divulgação (público).
+
+## Fluxo da execução da análise estatística (4 etapas)
+- **(1) Coleta** dos dados (após definir o problema e o projeto de pesquisa) → **(2) Crítica** dos dados (suprime valores estranhos e erros de preenchimento/digitação) → **(3) Apresentação** (organiza em **tabelas, gráficos e mapas**) → **(4) Análise** (lê os resultados e sistematiza as conclusões em **relatório**).
+> ⚠ Decore a ordem: **Coleta → Crítica → Apresentação → Análise**. A apresentação e a análise são **interligadas** (a análise pode exigir novas tabelas/mapas).
 
 ## Por que fazer análise criminal? (nova perspectiva)
 - Sair da ação **reativa** (cadeia sem fim de incidentes) para a **preventiva** (criar ambiente seguro).
@@ -166,6 +177,22 @@ const MD = `# Capítulo 1 — História e Conceito da Análise Criminal
 ## Representação dos dados
 - **Vetorial:** pontos, linhas e polígonos (sistema de coordenadas).
 - **Matricial (raster):** grade regular de elementos (células/pixels).
+> ⚠ **Vetorial = feições discretas** (ponto/linha/polígono); **matricial = superfície contínua** (imagem/pixels).
+
+## Arquitetura do SIG em 3 camadas (Câmara, 2005)
+- **Interface:** comunicação com o usuário — define como o sistema é operado e controlado.
+- **Camada intermediária:** (1) **entrada e integração** de dados (captação e conversão); (2) **consulta e análise espacial** (operações topológicas, visualização e plotagem); (3) **armazenamento/gerência** dos dados geográficos.
+- **Banco de dados geográfico:** guarda as **geometrias + atributos descritivos**.
+
+## Gerações dos SIG (Câmara)
+- **1ª — "CAD Cartográfico":** herdeira da cartografia; banco de dados limitado; paradigma = o **mapa**.
+- **2ª — "Banco de dados geográfico"** (início dos anos 1990): ambiente **cliente-servidor**, acoplado a bancos relacionais e a processamento de imagens.
+- **3ª — "Bibliotecas Geográficas Digitais"** (fim dos anos 1990): enormes bases, acesso por **redes e web**.
+
+## Mapas criminais e pontos quentes
+- **"Mapa de pinos" (alfinetes):** forma histórica de marcar a localização dos crimes no mapa.
+- **Pontos quentes (hot spots):** **concentrações espaciais** de crime — orientam o **policiamento direcionado**; é a ferramenta típica da **ACT** (correlaciona local com dia e horário críticos).
+- **Camadas (layers):** o SIG sobrepõe planos de informação (ruas, distritos, ocorrências) ligados a um **SGBD**.
 
 ---
 
