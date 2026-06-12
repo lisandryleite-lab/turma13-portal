@@ -235,3 +235,14 @@
   }
   .memento-md .md-table th { background: #000 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* Impressão das notas do aluno — esconde tudo, mostra só o boletim */
+.print-only { display: none; }
+@media print {
+  body * { visibility: hidden; }
+  .notas-print, .notas-print * { visibility: visible; }
+  .notas-print { position: absolute; left: 0; top: 0; width: 100%; padding: 0 8mm; }
+  .notas-print .no-print { display: none !important; }
+  .notas-print .print-only { display: block !important; }
+  .notas-print .nota-card { break-inside: avoid; border: 1px solid #ccc !important; background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

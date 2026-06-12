@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { calcularComponentes, calcularProjecaoConsolidada, calcularPosicaoHistorica, BASE_T1, BASE_T2, type Verificacao } from "@/lib/ranking"
@@ -50,6 +50,8 @@ export function RankingClient({
   const router = useRouter()
   const [notas, setNotas] = useState<Nota[]>(notasIniciais)
   const [aba, setAba] = useState<Aba>("lancar")
+  const [hoje, setHoje] = useState("")
+  useEffect(() => { setHoje(new Date().toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })) }, [])
 
   // form lançar
   const [disc, setDisc] = useState("")
@@ -195,29 +197,53 @@ export function RankingClient({
             <NfdcTccEditor nfdc={nfdcState} tcc={tccState} tccDefinido={tccReal != null} onSaveNfdc={salvarNfdc} onSaveTcc={salvarTcc} />
           </div>
 
-          <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 24, marginBottom: 10 }}>Minhas notas</h2>
+          <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: 24, marginBottom: 10, gap: 12 }}>
+            <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", margin: 0 }}>Minhas notas</h2>
+            {notas.filter(n => n.disciplina !== "TCC").length > 0 && (
+              <button onClick={() => window.print()}
+                style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 13.5, cursor: "pointer" }}>
+                🖨 Imprimir notas
+              </button>
+            )}
+          </div>
           {notas.filter(n => n.disciplina !== "TCC").length === 0 ? <p style={{ color: "var(--ink-60)" }}>Nenhuma nota de disciplina lançada ainda.</p> : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {[...grupos.entries()].filter(([d]) => d !== "TCC").map(([d, ns]) => {
-                const m = md(ns)
-                return (
-                  <div key={d} style={card}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-                      <strong style={{ color: "var(--olive)" }}>{d} <span style={{ fontWeight: 400, color: "var(--ink-60)", fontSize: 13 }}>{nomeDisc(d)}</span></strong>
-                      <span style={{ fontSize: 13 }}>MD: <strong style={{ color: "var(--olive)" }}>{m != null ? m.toFixed(2) : "—"}</strong></span>
+            <div className="notas-print">
+              {/* Cabeçalho que só aparece na impressão */}
+              <div className="print-only" style={{ marginBottom: 14 }}>
+                <h1 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.5rem", color: "#000", margin: "0 0 2px", borderBottom: "2px solid #000", paddingBottom: 6 }}>
+                  Boletim de Notas — {nomeGuerra}
+                </h1>
+                <p style={{ margin: "6px 0 0", fontSize: 12.5, color: "#333" }}>
+                  Portal CFO PM 2026 · emitido em {hoje} · <em>simulação não-oficial (notas informadas pelo aluno)</em>
+                </p>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {[...grupos.entries()].filter(([d]) => d !== "TCC").map(([d, ns]) => {
+                  const m = md(ns)
+                  return (
+                    <div key={d} className="nota-card" style={card}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+                        <strong style={{ color: "var(--olive)" }}>{d} <span style={{ fontWeight: 400, color: "var(--ink-60)", fontSize: 13 }}>{nomeDisc(d)}</span></strong>
+                        <span style={{ fontSize: 13 }}>MD: <strong style={{ color: "var(--olive)" }}>{m != null ? m.toFixed(2) : "—"}</strong></span>
+                      </div>
+                      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 5 }}>
+                        {ns.map(n => (
+                          <li key={n.id} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
+                            <span style={{ flex: 1 }}>{n.avaliacao}{n.ehAF ? " (AF)" : ""}{n.apto ? " · conceito" : ""}</span>
+                            <span style={{ fontWeight: 700, color: "var(--olive)" }}>{n.valor.toFixed(2)}</span>
+                            <button className="no-print" onClick={() => excluir(n.id)} style={{ background: "none", border: "none", color: "var(--red)", cursor: "pointer", fontSize: 12.5, fontWeight: 600 }}>excluir</button>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 5 }}>
-                      {ns.map(n => (
-                        <li key={n.id} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
-                          <span style={{ flex: 1 }}>{n.avaliacao}{n.ehAF ? " (AF)" : ""}{n.apto ? " · conceito" : ""}</span>
-                          <span style={{ fontWeight: 700, color: "var(--olive)" }}>{n.valor.toFixed(2)}</span>
-                          <button onClick={() => excluir(n.id)} style={{ background: "none", border: "none", color: "var(--red)", cursor: "pointer", fontSize: 12.5, fontWeight: 600 }}>excluir</button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )
-              })}
+                  )
+                })}
+              </div>
+              {/* Resumo que só aparece na impressão */}
+              <div className="print-only" style={{ marginTop: 16, paddingTop: 10, borderTop: "1px solid #ccc", fontSize: 13, color: "#000" }}>
+                <strong>Resumo:</strong> MFIC {mfic != null ? mfic.toFixed(3) : "—"} · NFDC {nfdcState.toFixed(1)} · TCC {tccState.toFixed(1)}{tccReal == null ? "*" : ""} · <strong>MGC {mgc != null ? mgc.toFixed(3) : "—"}</strong>
+                <div style={{ marginTop: 4, fontSize: 11, color: "#555" }}>MGC = (MFIC×6,5 + NFDC×2,5 + TCC×1) ÷ 10. {tccReal == null ? "* TCC ainda não lançado (10 por padrão). " : ""}Documento sem valor oficial.</div>
+              </div>
             </div>
           )}
         </>
