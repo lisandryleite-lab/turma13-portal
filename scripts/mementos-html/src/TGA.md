@@ -16,7 +16,8 @@
 - **Estudo de tempos e movimentos:** padroniza o trabalho para **maximizar a produtividade**.
 - **Abordagem microscópica e mecanicista:** vê o trabalhador como peça da engrenagem (homo economicus).
 - Princípios: planejamento, preparo/seleção, controle e execução; **ORT** (Organização Racional do Trabalho).
-> ⚠ Taylor = ênfase nas **TAREFAS** (visão de baixo para cima, do operário). Não confundir com Fayol (estrutura).
+- **Henry Ford** (Ford Motor Co.) — também ligado à gênese da adm. científica: criou a **linha de montagem móvel** e a **produção em massa**, popularizando um produto antes artesanal (carro a preço popular). Lema: produzir **mais com menos**, com qualidade e baixo custo.
+> ⚠ Taylor = ênfase nas **TAREFAS** (visão de baixo para cima, do operário). Não confundir com Fayol (estrutura). **Taylor + Ford** = pilares da Administração Científica.
 
 # MÓD. 4 — Teoria Clássica (Fayol)
 - **Henri Fayol** — ênfase na **ESTRUTURA** e na direção (visão de cima para baixo, da cúpula). Obra: *Administração Industrial e Geral (AIG)*.
