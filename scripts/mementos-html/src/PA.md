@@ -54,4 +54,14 @@
 - **Postura:** escuta ativa, presença calma, validar emoções, **não minimizar** nem julgar; respeitar o tempo da pessoa.
 - **Frases que ajudam:** "Estou aqui com você", "Você está seguro agora", "Faz sentido se sentir assim".
 - **Frases a evitar:** "Calma, não foi nada", "Eu sei como você se sente", "Podia ter sido pior" — invalidam o sofrimento.
+## As 8 ações do PSP
+- **(1) Contato e engajamento** — responder às necessidades dos afetados.
+- **(2) Segurança e conforto** — aumentar a segurança e o conforto.
+- **(3) Estabilização** (se necessário) — proporcionar estabilidade emocional.
+- **(4) Busca de informações** — identificar necessidades e adaptar a ajuda.
+- **(5) Assistência prática** — oferecer a ajuda necessária.
+- **(6) Conexão com apoio social** — estabelecer contatos e apoios.
+- **(7) Informações sobre coping** — orientar para diminuir o sofrimento.
+- **(8) Articulação com a rede** — conectar a pessoa aos serviços de apoio.
+> 🔑 Duas regras de ouro do socorrista: **ofereça suporte social** e **nunca se torne uma segunda vítima**.
 > ⚠ O PSP é **apoio inicial e pontual**; casos persistentes devem ser **encaminhados** a profissional especializado.
