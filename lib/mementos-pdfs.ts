@@ -86,5 +86,6 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
   TCEM: [
     { file: "TCEM-1.pdf", label: "Parte I" },
     { file: "TCEM-2.pdf", label: "Parte II" },
+    { file: "TCEM-3.pdf", label: "Memento Resumido" },
   ],
 }
