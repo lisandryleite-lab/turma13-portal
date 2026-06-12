@@ -107,7 +107,9 @@ const MD = `# 1. Introdução e Princípios
 - Todos têm **efeito suspensivo** (sobresta o recolhimento até o julgamento). A tramitação não pode exceder **15 dias**.
 
 - **Reconsideração de Ato (art. 52):** dirigida à **própria autoridade** que praticou o ato; prazo de **2 dias úteis** para apresentar; a autoridade despacha em até **4 dias úteis**.
-- **Queixa (art. 53):** dirigida ao **superior imediato** da autoridade; cabível **só após** a publicação da solução da reconsideração; prazo de **5 dias úteis**.
+- **Queixa (art. 53):** dirigida ao **superior imediato** da autoridade; cabível **só após** a publicação da solução da reconsideração; prazo de **5 dias úteis**. O queixoso é afastado da subordinação direta da autoridade até o julgamento.
+- **Representação (art. 54):** interposta **por uma autoridade em favor de um subordinado** vítima de injustiça ou prejudicado em seus direitos por ato de autoridade superior.
+- **Revisão Disciplinar (art. 55):** requerimento dirigido à **Comissão Recursal**, cabível **somente após esgotados os recursos anteriores**; prazo de **5 dias úteis** a contar do conhecimento do indeferimento do último recurso; ao ser protocolada, **suspende todos os efeitos da pena** até o julgamento.
 
 ## Medida cautelar — afastamento preventivo (art. 14 da Lei nº 11.929/01)
 - Determinado pelo **Secretário de Defesa Social, ouvido o Corregedor-Geral**, por portaria, **sem prejuízo da remuneração**.
@@ -127,7 +129,51 @@ const MD = `# 1. Introdução e Princípios
 | PAD / PAD Especial (PADE) | 60 dias | + igual período |
 | Sindicância | 20 dias | + igual período |
 
-> ⚠ Esses prazos são **meramente referenciais/impróprios**: o descumprimento **não gera perempção, prescrição ou decadência** — ou seja, não extingue o processo por excesso de prazo.`
+> ⚠ Esses prazos são **meramente referenciais/impróprios**: o descumprimento **não gera perempção, prescrição ou decadência** — ou seja, não extingue o processo por excesso de prazo.
+
+---
+
+# 9. Causas de Justificação, Atenuantes e Agravantes
+## Causas de justificação (art. 23) — afastam a punição
+- Transgressão cometida em **ação meritória**, no interesse do serviço ou da ordem pública.
+- Em **legítima defesa, estado de necessidade, exercício regular de direito ou estrito cumprimento do dever legal**.
+- Por **caso fortuito ou força maior**, plenamente comprovados.
+- Por **falta de melhores esclarecimentos** na emissão da ordem, ou **falta de meios** adequados ao cumprimento.
+
+## Circunstâncias atenuantes (art. 24)
+- Bons antecedentes nos assentamentos; relevância dos serviços prestados; falta de prática no serviço; influência de fatores diversos comprovados.
+
+## Circunstâncias agravantes (art. 25)
+- Maus antecedentes; prática simultânea/conexão de transgressões; **reincidência específica**; conluio de duas ou mais pessoas; abuso da autoridade hierárquica/funcional; durante a execução do serviço; na presença de subordinados; perante tropa ou público civil; desrespeito ao dever de continuidade/essencialidade do serviço.
+
+> ⚠ Se a circunstância da agravante **já integra o tipo** da transgressão, **não pode** ser considerada (ex.: em "abandonar o serviço" não cabe a agravante "durante a execução do serviço").
+
+---
+
+# 10. Comportamento das Praças (arts. 45–49)
+- **Oficiais têm conceito; praças têm comportamento.** Ao ser incluída na Corporação, a praça é classificada como **Bom**.
+
+| Comportamento | Critério |
+|---|---|
+| **Excepcional** | 6 anos de efetivo serviço **sem qualquer pena** |
+| **Ótimo** | 4 anos com **até 1 detenção** |
+| **Bom** | 2 anos com **1 prisão** ou **2 sanções menores** |
+| **Insuficiente** | 2 anos com **até 2 prisões** ou **4 sanções menores** |
+| **Mau** | 1 ano com **mais de 2 prisões** ou **4 sanções menores** |
+
+> 🔑 Para classificação: **duas detenções equivalem a uma prisão** (art. 49). Condenação transitada em julgado equipara-se a prisão (crime) ou detenção (contravenção). A contagem reinicia ao encerrar o cumprimento da pena.
+
+---
+
+# 11. Modificação e Cancelamento das Penas
+## Modificação da pena (art. 39) — quatro espécies
+- **Anulação (art. 40):** torna a pena **sem efeito** (injustiça ou ilegalidade comprovada) e elimina os registros. Prazo: **qualquer tempo** pelo Governador/Secretário de Defesa Social; **60 dias** para as demais autoridades. Concedida durante o cumprimento → **soltura imediata**.
+- **Relevação (art. 42):** **suspende o cumprimento** da pena — quando atingidos os objetivos da sanção, ou por passagem de comando/aniversário da OME/data nacional (cumprida ao menos **metade**).
+- **Atenuação (art. 43):** transforma a pena em uma **menos rigorosa**.
+- **Agravação (art. 44):** transforma a pena em uma **mais rigorosa**.
+
+## Cancelamento da pena (arts. 60–62)
+- Direito de cancelar a averbação na ficha disciplinar, concedido **automaticamente** (bons serviços e conceito favorável do comandante) após: **6 anos** de efetivo serviço para pena de **prisão** ou **4 anos** para pena de **detenção**, contados do cumprimento do último dia. O cancelamento de uma pena **não é prejudicado** pela superveniência de outra.`
 
 type Card = { modulo: string; frente: string; verso: string }
 

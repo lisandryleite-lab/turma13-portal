@@ -1,213 +1,32 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<title>Memento Resumido — DADM</title>
+<html lang="pt-BR"><head><meta charset="UTF-8"><title>Memento Resumido — DADM</title>
 <style>
   @page { size: A4; margin: 12mm 10mm 14mm 10mm; }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body {
-    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    font-size: 10.2px; line-height: 1.42; color: #1c1c1c;
-    column-count: 2; column-gap: 16px; column-fill: auto;
-    padding: 0 2px;
-  }
-  h1.capa {
-    column-span: all; margin: 0 0 8px; padding: 10px 14px;
-    background: #1A2A44; color: #fff; border-radius: 6px;
-    font-size: 16px; letter-spacing: .3px;
-  }
-  h1.capa small { display: block; font-size: 9.5px; font-weight: 400; opacity: .85; margin-top: 3px; }
-  h2 {
-    background: #1A2A44; color: #fff; margin: 9px 0 5px;
-    padding: 3px 7px; border-radius: 3px; font-size: 10.6px;
-    break-after: avoid; -webkit-column-break-after: avoid;
-  }
-  h3 {
-    color: #2C3E6B; font-size: 10.2px; margin: 7px 0 2px;
-    border-bottom: 1.4px solid #2C3E6B; padding-bottom: 1px;
-    break-after: avoid; -webkit-column-break-after: avoid;
-  }
+  body { font-family: "Segoe UI","Helvetica Neue",Arial,sans-serif; font-size: 10.1px; line-height: 1.4; color: #1c1c1c; column-count: 2; column-gap: 16px; column-fill: auto; padding: 0 2px; }
+  h1.capa { column-span: all; margin: 0 0 8px; padding: 10px 14px; background: #1A2A44; color: #fff; border-radius: 6px; font-size: 15px; letter-spacing: .3px; }
+  h1.capa small { display: block; font-size: 9.3px; font-weight: 400; opacity: .85; margin-top: 3px; }
+  h2 { background: #1A2A44; color: #fff; margin: 9px 0 5px; padding: 3px 7px; border-radius: 3px; font-size: 10.4px; break-after: avoid; -webkit-column-break-after: avoid; }
+  h3 { color: #2C3E6B; font-size: 10.1px; margin: 7px 0 2px; border-bottom: 1.4px solid #2C3E6B; padding-bottom: 1px; break-after: avoid; -webkit-column-break-after: avoid; }
   p { margin: 3px 0; }
-  ul { margin: 3px 0 3px 0; padding-left: 14px; }
+  ul { margin: 3px 0; padding-left: 14px; }
   li { margin: 1.5px 0; break-inside: avoid; }
   strong { color: #14213d; }
+  em { color: #444; }
   mark { background: #fff2a8; padding: 0 2px; border-radius: 2px; }
-  .warn {
-    background: #fbeae7; border-left: 3px solid #B23020;
-    color: #7d1f15; padding: 4px 7px; margin: 5px 0; border-radius: 3px;
-    break-inside: avoid;
-  }
-  .warn b { color: #B23020; }
-  .mn {
-    background: #eef4fb; border-left: 3px solid #2C6BB3;
-    padding: 4px 7px; margin: 5px 0; border-radius: 3px; break-inside: avoid;
-  }
+  .warn { background: #fbeae7; border-left: 3px solid #B23020; color: #7d1f15; padding: 4px 7px; margin: 5px 0; border-radius: 3px; break-inside: avoid; }
+  .warn strong { color: #B23020; }
+  .mn { background: #eef4fb; border-left: 3px solid #2C6BB3; padding: 4px 7px; margin: 5px 0; border-radius: 3px; break-inside: avoid; }
   .mn b { color: #2C6BB3; }
-  table { width: 100%; border-collapse: collapse; margin: 4px 0; font-size: 9.4px; break-inside: avoid; }
+  table { width: 100%; border-collapse: collapse; margin: 4px 0; font-size: 9.2px; break-inside: avoid; }
   th { background: #2C3E6B; color: #fff; padding: 2.5px 4px; text-align: left; }
   td { border: 0.6px solid #c9d2e0; padding: 2.5px 4px; vertical-align: top; }
   tr:nth-child(even) td { background: #f3f6fb; }
-  .sec { break-inside: auto; }
-  footer {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    font-size: 7.6px; color: #5a6678; text-align: center;
-    border-top: 0.6px solid #c9d2e0; padding-top: 2px;
-  }
+  footer { position: fixed; bottom: 0; left: 0; right: 0; font-size: 7.6px; color: #5a6678; text-align: center; border-top: 0.6px solid #c9d2e0; padding-top: 2px; }
   footer .ass { color: #1A2A44; font-weight: 600; }
-</style>
-</head>
-<body>
-
-<h1 class="capa">MEMENTO RESUMIDO — DIREITO ADMINISTRATIVO DISCIPLINAR MILITAR (DADM)
-  <small>CFO PM 2026 · Lei nº 11.817/2000 (CDMEPE) · revisão por módulos</small>
-</h1>
-
-<div class="sec">
-<h2>MÓD. 1 — Introdução e Princípios</h2>
-<ul>
-  <li>O <strong>DADM</strong> regula as relações jurídicas entre o <strong>Estado e seus servidores militares</strong> — trata das <strong>transgressões disciplinares</strong>.</li>
-  <li><strong>Norma principal em PE:</strong> <strong>Lei nº 11.817, de 24/07/2000</strong> — <strong>Código Disciplinar dos Militares do Estado de Pernambuco (CDMEPE)</strong>.</li>
-  <li><mark>Princípios aplicáveis:</mark> legalidade, impessoalidade, moralidade, publicidade, finalidade, motivação, eficiência e interesse público (art. 37, CF/88), + <strong>devido processo legal, contraditório e ampla defesa</strong>.</li>
-</ul>
-<div class="warn"><b>⚠ Verdade sabida:</b> a doutrina da <strong>"verdade sabida"</strong> foi <strong>SUPERADA</strong> pelos princípios do devido processo legal, contraditório, ampla defesa e possibilidade recursal.</div>
-<h3>DADM × Direito Penal Militar</h3>
-<ul>
-  <li><strong>DADM:</strong> relações entre o Estado e seus servidores — <strong>transgressões disciplinares</strong>.</li>
-  <li><strong>Direito Penal Militar:</strong> campo especial que <strong>capitula os crimes militares</strong>.</li>
-</ul>
-</div>
-
-<div class="sec">
-<h2>MÓD. 2 — Transgressão Disciplinar</h2>
-<h3>Conceito (art. 13 do CDMEPE)</h3>
-<ul>
-  <li><mark>Toda <strong>ação ou omissão</strong> do militar estadual</mark> que viole os preceitos da ética e os valores militares, ou contrarie deveres e obrigações.</li>
-  <li>Em manifestações <strong>elementares e simples que NÃO possam ser tipificadas como crime ou contravenção</strong>.</li>
-  <li>A aplicação deve ser <strong>necessariamente motivada</strong>, considerando a natureza e a gravidade da infração.</li>
-</ul>
-<h3>Submissão ao regime (art. 8º)</h3>
-<ul>
-  <li>Sujeitam-se ao CDMEPE os militares da <strong>ativa, da reserva remunerada e os reformados</strong>.</li>
-  <li>Os <strong>alunos</strong> de cursos militares também se submetem às normas da OME em que estejam matriculados.</li>
-</ul>
-<div class="mn"><b>CHAVE ▸</b> A apuração disciplinar dos <strong>inativos</strong> compete ao <strong>Comandante-Geral</strong> (art. 73) — pode ser delegada.</div>
-</div>
-
-<div class="sec">
-<h2>MÓD. 3 — Processo, Procedimento e Espécies de PADM</h2>
-<ul>
-  <li><strong>Processo:</strong> concatenação de atos voltada a alterar a natureza/forma de algo. <strong>Procedimento:</strong> maneira de organizar os atos dentro do processo. <em>Um processo é composto de vários procedimentos.</em></li>
-</ul>
-<h3>Espécies de PADM — caráter apuratório</h3>
-<ul>
-  <li><strong>SAD — Sindicância Administrativa Disciplinar:</strong> transgressões simples que <strong>NECESSITAM de instrução probatória</strong> (IN nº 002/2017 Cor.Ger.).</li>
-  <li><strong>PADS — Processo Apuratório Disciplinar Sumário:</strong> transgressões simples que <strong>NÃO necessitam de instrução probatória</strong> (Provimento Correicional nº 14/2019).</li>
-</ul>
-<h3>Espécies — caráter demissório</h3>
-<p>Processamento <strong>exclusivo na Corregedoria-Geral da SDS</strong>:</p>
-<ul>
-  <li><strong>Conselho de Disciplina:</strong> praças com e sem estabilidade (Decreto nº 3.639/1975).</li>
-  <li><strong>Conselho de Justificação:</strong> oficiais (Lei Federal nº 5.836/1972 e Lei Estadual nº 6.957/1975).</li>
-</ul>
-<div class="warn"><b>⚠ Não confundir:</b> a <strong>Investigação Preliminar</strong> enfrenta dúvidas de autoria/materialidade. O <strong>IPM</strong> (Inquérito Policial Militar) <strong>NÃO é peça do DADM</strong> — é procedimento de <strong>polícia judiciária militar</strong>.</div>
-</div>
-
-<div class="sec">
-<h2>MÓD. 4 — Poder Disciplinar e Competência</h2>
-<h3>Competência para aplicar penas (art. 10)</h3>
-<ul>
-  <li><mark>A competência é <strong>inerente ao cargo ou função ocupada, e NÃO ao grau hierárquico</strong>.</mark></li>
-  <li>Autoridades: Governador e Secretário de Defesa Social (todos os integrantes); Comandantes-Gerais; Chefe da Casa Militar; Chefes de Estado-Maior/Subcomandantes; Corregedores; Comandantes de OME; e quem receber <strong>delegação específica</strong>.</li>
-</ul>
-<h3>Teoria dos poderes implícitos</h3>
-<ul>
-  <li>Quando a Constituição concede uma função a um órgão, confere-lhe <strong>implicitamente os meios necessários</strong> para executá-la — fundamenta a competência para instaurar o PADM (<strong>RE 593.727/MG</strong>; origem norte-americana).</li>
-</ul>
-</div>
-
-<div class="sec">
-<h2>MÓD. 5 — Corregedoria, Inativos e Apreciação Judicial</h2>
-<h3>Corregedoria-Geral da SDS (Lei nº 11.929/2001)</h3>
-<ul>
-  <li><strong>Órgão superior de controle disciplinar interno.</strong> Instaura e acompanha sindicâncias e PADs, requisita a instauração de Conselhos de Disciplina e de Justificação e expede provimentos correicionais.</li>
-  <li>Suas requisições devem ser atendidas no <strong>prazo máximo de 15 dias</strong>.</li>
-</ul>
-<h3>Apuração dos inativos</h3>
-<ul>
-  <li>Compete ao <strong>Comandante-Geral</strong> (art. 73); por delegação (Portaria CG nº 399/2022) foi atribuída ao <strong>DPJM</strong> (Diretor de Polícia Judiciária Militar) e ao <strong>DIP</strong> (Diretor de Inativos e Pensionistas) — ambos criados pela <strong>LC nº 483/2022</strong>.</li>
-</ul>
-<h3>Apreciação pelo Judiciário (art. 125, §4º, CF)</h3>
-<ul>
-  <li>Compete à <strong>Justiça Militar estadual</strong>; o <strong>juiz julga de forma singular</strong> (sem Conselho de Justiça).</li>
-  <li>O ato disciplinar militar goza de <strong>presunção de legitimidade e veracidade</strong>.</li>
-</ul>
-</div>
-
-<div class="sec">
-<h2>MÓD. 6 — Penas Disciplinares</h2>
-<h3>Objetivo (art. 27)</h3>
-<ul>
-  <li>Sanção administrativa que visa <strong>fortalecer a disciplina</strong>, reeducando o transgressor e a coletividade, para evitar novas transgressões.</li>
-</ul>
-<h3>As penas (art. 28)</h3>
-<table>
-  <tr><th>Inc.</th><th>Pena</th><th>Observação</th></tr>
-  <tr><td>I</td><td>Repreensão</td><td><strong>Inaplicável</strong> hoje (vazio legal)</td></tr>
-  <tr><td>II</td><td>Detenção</td><td>Transgr. simples — privação <strong>relativa</strong> da liberdade</td></tr>
-  <tr><td>III</td><td>Prisão</td><td>Transgr. simples — privação <strong>absoluta</strong> (confinamento)</td></tr>
-  <tr><td>IV</td><td>Licenciamento a bem da disciplina</td><td>Praças <strong>sem estabilidade</strong> (&lt; 10 anos)</td></tr>
-  <tr><td>V</td><td>Exclusão a bem da disciplina</td><td>Aspirante a Oficial e praças <strong>com estabilidade</strong></td></tr>
-</table>
-<ul>
-  <li><strong>Oficial:</strong> a pena de caráter demissório é a <strong>demissão ex-officio</strong> (Lei Estadual nº 6.783/1974).</li>
-  <li><strong>Prisão e detenção:</strong> não podem ultrapassar <strong>30 dias</strong>. Detenção → recolhimento em dependência da OME; prisão → confinamento em local específico/estabelecimento prisional militar.</li>
-</ul>
-<h3>Medidas administrativas (§1º do art. 28)</h3>
-<ul>
-  <li>Alternativa ou cumulativamente às penas: cancelamento de matrícula; afastamento do cargo/função; movimentação de OME; suspensão de folga; suspensão de pagamento dos dias faltados injustificadamente.</li>
-</ul>
-<div class="warn"><b>⚠ Advertência (§3º):</b> é <strong>orientação verbal, SEM registro</strong> na ficha disciplinar; pode substituir a pena na <strong>primeira penalidade</strong>. <strong>NÃO é pena nem recurso</strong> em sentido estrito.</div>
-</div>
-
-<div class="sec">
-<h2>MÓD. 7 — Recursos e Medidas Cautelares</h2>
-<h3>Recursos disciplinares (arts. 50–51)</h3>
-<ul>
-  <li>São quatro: <strong>Reconsideração de Ato, Queixa, Representação e Revisão Disciplinar</strong>.</li>
-  <li><mark>Todos têm <strong>efeito suspensivo</strong></mark> (sobresta o recolhimento até o julgamento). Tramitação ≤ <strong>15 dias</strong>.</li>
-</ul>
-<div class="mn"><b>Mnemônico — 4 recursos:</b> <strong>R-Q-R-R</strong> → <strong>R</strong>econsideração · <strong>Q</strong>ueixa · <strong>R</strong>epresentação · <strong>R</strong>evisão.</div>
-<ul>
-  <li><strong>Reconsideração de Ato (art. 52):</strong> à <strong>própria autoridade</strong> que praticou o ato; prazo de <strong>2 dias úteis</strong> para apresentar; despacho em até <strong>4 dias úteis</strong>.</li>
-  <li><strong>Queixa (art. 53):</strong> ao <strong>superior imediato</strong> da autoridade; cabível <strong>só após</strong> a publicação da solução da reconsideração; prazo de <strong>5 dias úteis</strong>.</li>
-</ul>
-<h3>Medida cautelar — afastamento preventivo (art. 14, Lei 11.929/01)</h3>
-<ul>
-  <li>Determinado pelo <strong>Secretário de Defesa Social, ouvido o Corregedor-Geral</strong>, por portaria, <strong>sem prejuízo da remuneração</strong>.</li>
-  <li>Prazo de <strong>até 120 dias, prorrogável uma única vez</strong> por igual período.</li>
-</ul>
-</div>
-
-<div class="sec">
-<h2>MÓD. 8 — Prazos das Espécies de PADM</h2>
-<p><em>(Provimento Correicional nº 003/2018)</em></p>
-<table>
-  <tr><th>Espécie</th><th>Conclusão</th><th>Prorrogação</th></tr>
-  <tr><td>Conselho de Justificação (CJ)</td><td>30 dias (da nomeação)</td><td>+ 20 dias</td></tr>
-  <tr><td>Conselho de Disciplina (CD)</td><td>30 dias (da nomeação)</td><td>+ 20 dias</td></tr>
-  <tr><td>Processo de Licenciamento (PL)</td><td>40 dias corridos</td><td>máx. 90 dias</td></tr>
-  <tr><td>SAD</td><td>30 dias</td><td>+ igual período</td></tr>
-  <tr><td>PAD / PAD Especial (PADE)</td><td>60 dias</td><td>+ igual período</td></tr>
-  <tr><td>Sindicância</td><td>20 dias</td><td>+ igual período</td></tr>
-</table>
-<div class="warn"><b>⚠ Natureza dos prazos:</b> são <strong>meramente referenciais/impróprios</strong> — o descumprimento <strong>NÃO gera perempção, prescrição ou decadência</strong>; não extingue o processo por excesso de prazo.</div>
-</div>
-
-<footer>
-  MEMENTO RESUMIDO — DADM • CFO PM 2026 • Revisão por módulos &nbsp;·&nbsp; <span class="ass">AL CFO PM 108 LISANDRY</span>
-</footer>
-
-</body>
-</html>
+</style></head><body>
+<h1 class="capa">MEMENTO RESUMIDO — DIREITO ADMINISTRATIVO DISCIPLINAR MILITAR (DADM)<small>CFO PM 2026 · Lei nº 11.817/2000 (CDMEPE) · revisão por módulos</small></h1>
+<h2>1. INTRODUÇÃO E PRINCÍPIOS</h2><ul><li>O <strong>Direito Administrativo Disciplinar Militar (DADM)</strong> regula as relações jurídicas entre o Estado e seus servidores militares (transgressões disciplinares).</li><li><strong>Norma principal em PE:</strong> <strong>Lei nº 11.817, de 24/07/2000 — Código Disciplinar dos Militares do Estado de Pernambuco (CDMEPE)</strong>.</li><li>Princípios aplicáveis: legalidade, impessoalidade, moralidade, publicidade, finalidade, motivação, eficiência e interesse público (art. 37 da CF/88), além do devido processo legal, contraditório e ampla defesa.</li></ul><div class="warn">⚠ A doutrina da <strong>"verdade sabida"</strong> foi superada pelos princípios do devido processo legal, contraditório, ampla defesa e possibilidade recursal.</div><h3>DADM × Direito Penal Militar</h3><ul><li><strong>DADM:</strong> regula as relações entre o Estado e seus administrados/servidores — trata das <strong>transgressões disciplinares</strong>.</li><li><strong>Direito Penal Militar:</strong> campo especial que <strong>capitula os crimes militares</strong>.</li></ul><h2>2. TRANSGRESSÃO DISCIPLINAR E SUBMISSÃO AO REGIME</h2><h3>Transgressão disciplinar (art. 13 do CDMEPE)</h3><ul><li>É toda <strong>ação ou omissão</strong> do militar estadual que viole os preceitos da ética e os valores militares, ou contrarie deveres e obrigações — em manifestações <strong>elementares e simples que NÃO possam ser tipificadas como crime ou contravenção</strong>.</li><li>A aplicação deve ser <strong>necessariamente motivada</strong>, considerando a natureza e a gravidade da infração.</li></ul><h3>Submissão ao regime disciplinar (art. 8º)</h3><ul><li>Sujeitam-se ao CDMEPE os militares da <strong>ativa, da reserva remunerada e os reformados</strong>.</li><li>Os <strong>alunos</strong> de cursos militares também se submetem às normas da OME em que estejam matriculados.</li></ul><div class="mn"><b>CHAVE ▸</b> A apuração disciplinar dos <strong>inativos</strong> compete ao Comandante-Geral (art. 73), podendo ser delegada (ver Corregedoria).</div><h2>3. PROCESSO, PROCEDIMENTO E ESPÉCIES DE PADM</h2><ul><li><strong>Processo:</strong> concatenação de atos voltada a alterar a natureza/forma de algo. <strong>Procedimento:</strong> a maneira de organizar os atos dentro do processo (ou o ato unitário). Um processo é composto de vários procedimentos.</li></ul><h3>Espécies de PADM</h3><p><strong>A) Caráter apuratório</strong></p><ul><li><strong>Sindicância Administrativa Disciplinar (SAD):</strong> transgressões simples que <strong>necessitam de instrução probatória</strong> (IN nº 002/2017 Cor.Ger.).</li><li><strong>Processo Apuratório Disciplinar Sumário (PADS):</strong> transgressões simples que <strong>não necessitam de instrução probatória</strong> (Provimento Correicional nº 14/2019).</li></ul><p><strong>B) Caráter demissório</strong> (processamento exclusivo na Corregedoria-Geral da SDS)</p><ul><li><strong>Conselho de Disciplina:</strong> praças com e sem estabilidade (Decreto nº 3.639/1975).</li><li><strong>Conselho de Justificação:</strong> oficiais (Lei Federal nº 5.836/1972 e Lei Estadual nº 6.957/1975).</li></ul><div class="warn">⚠ A <strong>Investigação Preliminar</strong> enfrenta dúvidas de autoria/materialidade. O <strong>Inquérito Policial Militar (IPM)</strong> NÃO é peça do DADM — é procedimento de <strong>polícia judiciária militar</strong>.</div><h2>4. PODER DISCIPLINAR E COMPETÊNCIA</h2><h3>Competência para aplicar penas (art. 10)</h3><ul><li>A competência é <strong>inerente ao cargo ou função ocupada, e não ao grau hierárquico</strong>.</li><li>Autoridades competentes: o Governador e o Secretário de Defesa Social (todos os integrantes); os Comandantes-Gerais; o Chefe da Casa Militar; Chefes de Estado-Maior/Subcomandantes; Corregedores; Comandantes de OME; e outros que recebam delegação específica.</li></ul><h3>Teoria dos poderes implícitos</h3><ul><li>Quando a Constituição concede uma função a um órgão, confere-lhe <strong>implicitamente os meios necessários</strong> para executá-la — fundamenta a competência para instaurar o PADM (RE 593.727/MG).</li></ul><h2>5. CORREGEDORIA, INATIVOS E APRECIAÇÃO JUDICIAL</h2><h3>Corregedoria-Geral da SDS (Lei nº 11.929/2001)</h3><ul><li><strong>Órgão superior de controle disciplinar interno.</strong> Instaura e acompanha sindicâncias e PADs, requisita a instauração de Conselhos de Disciplina e de Justificação e expede provimentos correicionais.</li><li>Suas requisições devem ser atendidas no <strong>prazo máximo de 15 dias</strong>.</li></ul><h3>Apuração dos inativos</h3><ul><li>Compete ao <strong>Comandante-Geral</strong> (art. 73); por delegação (Portaria CG nº 399/2022), foi atribuída ao <strong>Diretor de Polícia Judiciária Militar (DPJM)</strong> e ao <strong>Diretor de Inativos e Pensionistas (DIP)</strong> — ambos criados pela LC nº 483/2022.</li></ul><h3>Apreciação pelo Poder Judiciário (art. 125, §4º, da CF)</h3><ul><li>Compete à <strong>Justiça Militar estadual</strong> processar e julgar as ações contra atos disciplinares militares; o <strong>juiz julga de forma singular</strong> (sem formação de Conselho de Justiça).</li><li>O ato disciplinar militar goza de <strong>presunção de legitimidade e veracidade</strong>.</li></ul><h2>6. PENAS DISCIPLINARES</h2><h3>Objetivo (art. 27)</h3><ul><li>Sanção administrativa que visa <strong>fortalecer a disciplina</strong>, reeducando o transgressor e a coletividade, para evitar novas transgressões.</li></ul><h3>As penas (art. 28)</h3><table><tr><th>Inciso</th><th>Pena</th><th>Observação</th></tr><tr><td>I</td><td>Repreensão</td><td><strong>Inaplicável</strong> atualmente (vazio legal)</td></tr><tr><td>II</td><td>Detenção</td><td>Transgressões simples — privação <strong>relativa</strong> da liberdade</td></tr><tr><td>III</td><td>Prisão</td><td>Transgressões simples — privação <strong>absoluta</strong> (confinamento)</td></tr><tr><td>IV</td><td>Licenciamento a bem da disciplina</td><td>Praças <strong>sem estabilidade</strong> (&lt; 10 anos de serviço)</td></tr><tr><td>V</td><td>Exclusão a bem da disciplina</td><td>Aspirante a Oficial e praças <strong>com estabilidade</strong></td></tr></table><ul><li><strong>Oficial:</strong> a pena de caráter demissório é a <strong>demissão ex-officio</strong> (Lei Estadual nº 6.783/1974).</li><li><strong>Prisão e detenção:</strong> não podem ultrapassar <strong>30 dias</strong>. Detenção → recolhimento em dependência da OME; prisão → confinamento em local específico da OME ou estabelecimento prisional militar.</li></ul><h3>Medidas administrativas (§1º do art. 28)</h3><ul><li>Aplicáveis alternativa ou cumulativamente às penas: cancelamento de matrícula; afastamento do cargo/função; movimentação de OME; suspensão de folga; suspensão de pagamento dos dias faltados injustificadamente.</li></ul><div class="warn">⚠ A <strong>advertência</strong> (§3º) é orientação verbal, <strong>sem registro</strong> na ficha disciplinar, e pode substituir a pena na <strong>primeira penalidade</strong>. NÃO é pena nem recurso em sentido estrito.</div><h2>7. RECURSOS E MEDIDAS CAUTELARES</h2><h3>Recursos disciplinares (arts. 50–51)</h3><ul><li>São quatro: <strong>Reconsideração de Ato, Queixa, Representação e Revisão Disciplinar</strong>.</li><li>Todos têm <strong>efeito suspensivo</strong> (sobresta o recolhimento até o julgamento). A tramitação não pode exceder <strong>15 dias</strong>.</li></ul><ul><li><strong>Reconsideração de Ato (art. 52):</strong> dirigida à <strong>própria autoridade</strong> que praticou o ato; prazo de <strong>2 dias úteis</strong> para apresentar; a autoridade despacha em até <strong>4 dias úteis</strong>.</li><li><strong>Queixa (art. 53):</strong> dirigida ao <strong>superior imediato</strong> da autoridade; cabível <strong>só após</strong> a publicação da solução da reconsideração; prazo de <strong>5 dias úteis</strong>. O queixoso é afastado da subordinação direta da autoridade até o julgamento.</li><li><strong>Representação (art. 54):</strong> interposta <strong>por uma autoridade em favor de um subordinado</strong> vítima de injustiça ou prejudicado em seus direitos por ato de autoridade superior.</li><li><strong>Revisão Disciplinar (art. 55):</strong> requerimento dirigido à <strong>Comissão Recursal</strong>, cabível <strong>somente após esgotados os recursos anteriores</strong>; prazo de <strong>5 dias úteis</strong> a contar do conhecimento do indeferimento do último recurso; ao ser protocolada, <strong>suspende todos os efeitos da pena</strong> até o julgamento.</li></ul><h3>Medida cautelar — afastamento preventivo (art. 14 da Lei nº 11.929/01)</h3><ul><li>Determinado pelo <strong>Secretário de Defesa Social, ouvido o Corregedor-Geral</strong>, por portaria, <strong>sem prejuízo da remuneração</strong>.</li><li>Prazo de <strong>até 120 dias, prorrogável uma única vez por igual período</strong>.</li></ul><h2>8. PRAZOS DAS ESPÉCIES DE PADM</h2><p><em>(Provimento Correicional nº 003/2018)</em></p><table><tr><th>Espécie</th><th>Conclusão</th><th>Prorrogação</th></tr><tr><td>Conselho de Justificação (CJ)</td><td>30 dias (da nomeação)</td><td>+ 20 dias</td></tr><tr><td>Conselho de Disciplina (CD)</td><td>30 dias (da nomeação)</td><td>+ 20 dias</td></tr><tr><td>Processo de Licenciamento (PL)</td><td>40 dias corridos</td><td>máx. 90 dias</td></tr><tr><td>Sindicância Administrativa Disciplinar (SAD)</td><td>30 dias</td><td>+ igual período</td></tr><tr><td>PAD / PAD Especial (PADE)</td><td>60 dias</td><td>+ igual período</td></tr><tr><td>Sindicância</td><td>20 dias</td><td>+ igual período</td></tr></table><div class="warn">⚠ Esses prazos são <strong>meramente referenciais/impróprios</strong>: o descumprimento <strong>não gera perempção, prescrição ou decadência</strong> — ou seja, não extingue o processo por excesso de prazo.</div><h2>9. CAUSAS DE JUSTIFICAÇÃO, ATENUANTES E AGRAVANTES</h2><h3>Causas de justificação (art. 23) — afastam a punição</h3><ul><li>Transgressão cometida em <strong>ação meritória</strong>, no interesse do serviço ou da ordem pública.</li><li>Em <strong>legítima defesa, estado de necessidade, exercício regular de direito ou estrito cumprimento do dever legal</strong>.</li><li>Por <strong>caso fortuito ou força maior</strong>, plenamente comprovados.</li><li>Por <strong>falta de melhores esclarecimentos</strong> na emissão da ordem, ou <strong>falta de meios</strong> adequados ao cumprimento.</li></ul><h3>Circunstâncias atenuantes (art. 24)</h3><ul><li>Bons antecedentes nos assentamentos; relevância dos serviços prestados; falta de prática no serviço; influência de fatores diversos comprovados.</li></ul><h3>Circunstâncias agravantes (art. 25)</h3><ul><li>Maus antecedentes; prática simultânea/conexão de transgressões; <strong>reincidência específica</strong>; conluio de duas ou mais pessoas; abuso da autoridade hierárquica/funcional; durante a execução do serviço; na presença de subordinados; perante tropa ou público civil; desrespeito ao dever de continuidade/essencialidade do serviço.</li></ul><div class="warn">⚠ Se a circunstância da agravante <strong>já integra o tipo</strong> da transgressão, <strong>não pode</strong> ser considerada (ex.: em "abandonar o serviço" não cabe a agravante "durante a execução do serviço").</div><h2>10. COMPORTAMENTO DAS PRAÇAS (ARTS. 45–49)</h2><ul><li><strong>Oficiais têm conceito; praças têm comportamento.</strong> Ao ser incluída na Corporação, a praça é classificada como <strong>Bom</strong>.</li></ul><table><tr><th>Comportamento</th><th>Critério</th></tr><tr><td><strong>Excepcional</strong></td><td>6 anos de efetivo serviço <strong>sem qualquer pena</strong></td></tr><tr><td><strong>Ótimo</strong></td><td>4 anos com <strong>até 1 detenção</strong></td></tr><tr><td><strong>Bom</strong></td><td>2 anos com <strong>1 prisão</strong> ou <strong>2 sanções menores</strong></td></tr><tr><td><strong>Insuficiente</strong></td><td>2 anos com <strong>até 2 prisões</strong> ou <strong>4 sanções menores</strong></td></tr><tr><td><strong>Mau</strong></td><td>1 ano com <strong>mais de 2 prisões</strong> ou <strong>4 sanções menores</strong></td></tr></table><div class="mn"><b>CHAVE ▸</b> Para classificação: <strong>duas detenções equivalem a uma prisão</strong> (art. 49). Condenação transitada em julgado equipara-se a prisão (crime) ou detenção (contravenção). A contagem reinicia ao encerrar o cumprimento da pena.</div><h2>11. MODIFICAÇÃO E CANCELAMENTO DAS PENAS</h2><h3>Modificação da pena (art. 39) — quatro espécies</h3><ul><li><strong>Anulação (art. 40):</strong> torna a pena <strong>sem efeito</strong> (injustiça ou ilegalidade comprovada) e elimina os registros. Prazo: <strong>qualquer tempo</strong> pelo Governador/Secretário de Defesa Social; <strong>60 dias</strong> para as demais autoridades. Concedida durante o cumprimento → <strong>soltura imediata</strong>.</li><li><strong>Relevação (art. 42):</strong> <strong>suspende o cumprimento</strong> da pena — quando atingidos os objetivos da sanção, ou por passagem de comando/aniversário da OME/data nacional (cumprida ao menos <strong>metade</strong>).</li><li><strong>Atenuação (art. 43):</strong> transforma a pena em uma <strong>menos rigorosa</strong>.</li><li><strong>Agravação (art. 44):</strong> transforma a pena em uma <strong>mais rigorosa</strong>.</li></ul><h3>Cancelamento da pena (arts. 60–62)</h3><ul><li>Direito de cancelar a averbação na ficha disciplinar, concedido <strong>automaticamente</strong> (bons serviços e conceito favorável do comandante) após: <strong>6 anos</strong> de efetivo serviço para pena de <strong>prisão</strong> ou <strong>4 anos</strong> para pena de <strong>detenção</strong>, contados do cumprimento do último dia. O cancelamento de uma pena <strong>não é prejudicado</strong> pela superveniência de outra.</li></ul>
+<footer>MEMENTO RESUMIDO — DADM • CFO PM 2026 • Revisão por módulos</footer>
+</body></html>

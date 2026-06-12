@@ -116,7 +116,7 @@ const tpl = `<!DOCTYPE html>
 </style></head><body>
 <h1 class="capa">MEMENTO RESUMIDO — ${esc(titulo)}<small>${esc(sub)}</small></h1>
 ${body}
-<footer>MEMENTO RESUMIDO — ${sigla} • CFO PM 2026 • Revisão por módulos &nbsp;·&nbsp; <span class="ass">AL CFO PM 108 LISANDRY</span></footer>
+<footer>MEMENTO RESUMIDO — ${sigla} • CFO PM 2026 • Revisão por módulos</footer>
 </body></html>`
 
 writeFileSync(out, tpl, "utf8")
