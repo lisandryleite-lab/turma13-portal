@@ -47,3 +47,14 @@
 - **ENASP (2010):** Estratégia Nacional de Justiça e Segurança Pública (CNJ + CNMP + MJ) — foco inicial nos **homicídios dolosos** (mais de 80% dos inquéritos eram arquivados).
 - **FUNPEN:** Fundo Penitenciário Nacional — discute-se sua transformação em **fundo de segurança pública** e a vedação ao **contingenciamento**.
 > ⚠ Cidadania na esfera penal: dados (IPEA, Defensoria) mostram **viés racial e social** na atuação penal — o respeito aos **direitos fundamentais** é parte do sistema de segurança.
+
+# MÓD. 7 — Poder de Polícia (art. 78 do CTN)
+- **Conceito:** atividade da administração pública que **limita ou disciplina** direito, interesse ou liberdade, em razão do **interesse público** (segurança, ordem, higiene, tranquilidade, propriedade etc.).
+- **Atributos (3):** **Discricionariedade** (juízo de conveniência/oportunidade, nos limites da lei); **Autoexecutoriedade** (independe de prévia autorização do Judiciário); **Coercibilidade** (é imperativo, admite uso da força — sem arbítrio/excesso).
+- **Modos de atuar (4):** **Ordem** de polícia (impõe limitação); **Consentimento** (licença — vinculada; autorização — discricionária e revogável); **Fiscalização** (verifica o cumprimento — previne e reprime); **Sanção** (punição da infração).
+> 🔑 Decore os 3 atributos (**D-A-C**: Discricionariedade, Autoexecutoriedade, Coercibilidade) e os 4 modos (**ordem → consentimento → fiscalização → sanção**).
+
+# MÓD. 8 — Controle da Atividade Policial
+- **Controle interno:** exercido **dentro da própria instituição** — Corregedorias e Ouvidorias — para apurar desvios e responsabilizar.
+- **Controle externo:** exercido por órgãos de **fora** — **Ministério Público** (controle externo da atividade policial, **art. 129, VII, da CF**), **Poder Judiciário**, Ouvidorias independentes e **controle social** (sociedade civil).
+> ⚠ O **controle externo da atividade policial** é função institucional do **Ministério Público** (art. 129, VII, CF) — não confundir com o controle interno (corregedorias).

@@ -43,8 +43,9 @@
 > ⚠ A **vitimização secundária** decorre da própria instituição/sistema — não do crime em si.
 
 # MÓD. 6 — Recursos de Apoio na PMPE
-- **Núcleo de Saúde Mental "Ten Cel PM Aline Maria Lopes dos Prazeres":** serviço de acolhimento e atendimento psicológico aos militares.
+- **Núcleo de Saúde Mental (NSM PMPE) "Ten Cel PM Aline Maria Lopes dos Prazeres de Luna":** criado pela **Portaria CG nº 562, de 23/03/2023** (inaugurado em 27/03/2023), subordinado à **Diretoria de Assistência Social** e regido pela **IN nº 564/2023**. Faz a **gestão da política de saúde mental** da Corporação (promoção, prevenção e assistência) para ativos e veteranos; sede no Derby, Recife.
+- **Policial Focal:** PM designado em cada **OME** como elo com o NSM — coleta dados mensais, **divulga** as ações de saúde mental, **assessora o comando na identificação e encaminhamento** das demandas e zela pelo **sigilo** das informações.
 - **FCAS — Fundação de Apoio ao CAS** (Centro de Apoio Social): apoio assistencial e psicossocial.
 - **Projeto Escuta SUSP** (Ministério da Justiça e Segurança Pública): canal de **escuta/apoio psicológico** aos profissionais de segurança.
 - **Promoção e prevenção:** programas de QVT, rodas de conversa, capacitação de líderes para identificar sinais e **encaminhar** (atuação preventiva, não só curativa).
-> ⚠ O papel do oficial-líder é **identificar sinais precoces** e **encaminhar** o subordinado aos serviços — não diagnosticar nem tratar.
+> ⚠ O papel do oficial-líder e do **policial focal** é **identificar sinais precoces** e **encaminhar** o subordinado aos serviços — não diagnosticar nem tratar.

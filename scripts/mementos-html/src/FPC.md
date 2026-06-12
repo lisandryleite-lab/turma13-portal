@@ -59,3 +59,9 @@
 - **Plano Nacional de Segurança Pública (2000):** 1º plano na vigência da Senasp (gov. FHC); ênfase em **cooperação** federativa e **modernização**.
 - **SDS de Pernambuco:** criada pela **Lei Complementar nº 49, de 31/01/2003** — integra as ações de defesa social do Estado.
 > ⚠ Desafios persistentes da segurança pública: **descontinuidade**, **falta de avaliação/monitoramento** e a **complexidade** do tema (violência, corrupção, direitos humanos).
+
+# MÓD. 8 — Gestão Integrada e Comunitária (GIC)
+- **GIC:** modelo de gestão da segurança pública que **integra** os diversos atores (polícia, órgãos governamentais, comunidade, empresas e instituições) para enfrentar as **causas multifatoriais** do crime — alinha-se à filosofia da polícia comunitária.
+- **Sociedade contemporânea (contexto):** globalizada, tecnológica, **complexa e interconectada**, marcada por **desigualdade social**, consumo, mudanças demográficas e novos padrões de trabalho — fatores que alimentam violência e criminalidade.
+- A segurança deixa de ser tarefa **exclusiva da polícia**: exige **integralidade** (ação conjunta de várias agências) e atenção ao **urbanismo** e às condições sociais.
+> 🔑 GIC = **integração + corresponsabilidade**: prevenir o crime tratando suas causas sociais, com a polícia como um dos atores — não o único.
