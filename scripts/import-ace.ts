@@ -20,10 +20,21 @@ const MD = `# Capítulo 1 — História e Conceito da Análise Criminal
 - Subsidia o **dimensionamento e o posicionamento de recursos** e a gestão do patrulhamento e da investigação.
 - A prática moderna é fundamentada no uso intensivo da **Tecnologia da Informação (TI)**: estatística computadorizada, Sistemas de Informação Geográfica (SIG) e inteligência artificial.
 
-## Raízes históricas
-- Tem raízes na atividade de **Inteligência** (estratégias chinesas, Sun Tzu).
-- **Henry Fielding (1707–1754)**, magistrado inglês, e seus *"Bow Street Runners"*: primeiros traços do uso estruturado de rudimentos da análise criminal.
-- A partir de **1800** as taxas de crime na Europa aumentaram fortemente, impulsionando o desenvolvimento da área (e o imaginário de Sherlock Holmes).
+## Raízes históricas — Linha do Tempo
+- Tem raízes na atividade de **Inteligência** (estratégias chinesas de guerra — Sun Tzu; batalhas descritas na Bíblia).
+- **Henry Fielding (1707–1754)**, magistrado inglês, criou os *"Bow Street Runners"* (~1750): pioneiro no uso sistemático de informações sobre crimes — primeiros traços estruturados da análise criminal.
+- A partir de **1800**: taxas de crime na Europa crescem fortemente; em 1840, estatísticas criminais passam a ser acessíveis à população londrina; em 1846 já havia 2 detetives por divisão na Polícia Metropolitana.
+- **Robert Peel (1788–1850)**: fundou a **Polícia Metropolitana de Londres em 1829** — marco do policiamento moderno e profissional. Seus princípios ressaltam que a polícia existe para **prevenir o crime** com apoio da comunidade.
+- **Século XIX**: surgimento formal do conceito de **Modus Operandi (MO)** — modo como o criminoso atua; instrumento de análise que permite identificar padrões e autores reincidentes.
+- **August Vollmer (1876–1955)**: chefe do Dep. de Polícia de Berkeley por 27 anos; considerado o **"pai da polícia americana"**. Contribuições: uso pioneiro do **mapa de pinos** (*pin map*) para registrar a localização geográfica dos crimes; organização do primeiro **serviço de chamada de emergência** (precursor do 911); profissionalização científica da polícia.
+- **O.W. Wilson (Orlando Winfield Wilson)**: em 1963, na 2ª edição de *"Administração Policial"*, **formalizou o termo "análise de crime"** — marco conceitual da disciplina.
+- **Consolidação nos EUA: década de 1960** — período em que a análise criminal se estrutura e consolida institucionalmente nas organizações policiais norte-americanas.
+- **Era de Ouro: década de 1990** — características:
+  - **CompStat** (NYPD, 1994): sistema de gestão policial baseado em mapas e análise criminal — modelo global.
+  - Fundação da **IACA** (International Association of Crime Analysts, 1990).
+  - Novos **fundos federais** para análise criminal nos EUA.
+  - Tecnologias de **mapeamento criminal** tornaram-se acessíveis.
+  - *(A IALEIA já havia sido fundada em 1980 — EUA e Canadá.)*
 
 ---
 
@@ -61,9 +72,45 @@ São as três grandes vertentes do conhecimento produzido para a gestão da segu
 
 > ⚠ Cerqueira e Lobão (2003): aumentar o gasto em segurança não reduz, por si, os homicídios — a **redução da desigualdade social** foi o único fator diretamente relacionado à queda.
 
-## Papel do analista criminal
+## Policiamento Orientado a Problemas (POP)
+- Objetivo central: atacar a **causa do problema**, em detrimento do **evento** pontual.
+- Em vez de responder reativamente a incidentes isolados, identifica padrões e intervém nas causas subjacentes.
+- Evidência (Skogan e Frydl, 2004): POP tem **fortes evidências** de redução da criminalidade.
+- PRONASCI (2007): 94 ações combinando intervenções policiais e sociais nessa perspectiva.
+
+## Problemática do Brasil
+- Principal desafio: **ausência de cultura técnica** — dificuldade de implementar métodos analíticos em organizações policiais que dependem da experiência intuitiva em vez de dados sistematizados.
+
+## Análise Criminal é Multidisciplinar
+- Integra diversas disciplinas: **estatística, geografia, ciências sociais, direito, tecnologia da informação, psicologia** e outras para compreender o fenômeno criminal em sua complexidade.
+
+## Papel do analista criminal e perfil esperado (pág. 21)
 - Mais que fonte de informação, deve atuar como **conselheiro** e **pesquisador**.
 - Não espera demanda: antecipa problemas, avalia causas, busca as respostas mais efetivas e aprende com os resultados (positivos ou negativos).
+- **Perfil esperado do bom analista:**
+  - **Proativo**: antecipa problemas sem esperar demanda externa.
+  - **Pesquisador**: busca, coleta e fundamenta análises em dados e evidências.
+  - **Bom avaliador**: interpreta resultados com rigor e espírito crítico.
+  - **Olhar investigativo**: questiona, correlaciona e aprofunda análises além do óbvio.
+
+## As 4 etapas do trabalho do analista criminal (pág. 25) ⚠ CAI DE CERTEZA
+1. **Sistematizar e analisar dados** — coletar, organizar e identificar padrões criminais.
+2. **Submeter esses padrões** — apresentar os padrões identificados aos tomadores de decisão.
+3. **Identificar formas de intervir** — propor estratégias baseadas nos padrões encontrados.
+4. **Avaliar o impacto das intervenções** — mensurar resultados e retroalimentar o ciclo analítico.
+> ⚠ Não confundir com o fluxo da **análise estatística** (Coleta → Crítica → Apresentação → Análise). Essas 4 etapas descrevem a **dinâmica do analista como agente de mudança**.
+
+## Focalização (pág. 26)
+- Consiste em **olhar o crime de forma separada** — analisar cada tipo de crime, local, horário e perfil de vítima/autor de modo individualizado e não agregado.
+- Permite direcionar recursos com precisão, evitando ações genéricas e dispersas.
+
+## A Pirâmide da Focalização (pág. 27)
+- Representa a **concentração do crime** (princípio de Pareto): poucos locais, ofensores e vítimas respondem pela maioria das ocorrências.
+- Estratos da pirâmide:
+  - **Base** (maioria dos casos): incidentes pontuais e difusos.
+  - **Meio**: padrões táticos (hot spots, séries criminais).
+  - **Topo** (minoria, maior impacto): criminosos, vítimas e locais prioritários.
+- Uso prático: orienta o **policiamento focalizado** — concentrar esforços onde o retorno é maior.
 
 ---
 
@@ -110,6 +157,15 @@ São as três grandes vertentes do conhecimento produzido para a gestão da segu
 - **Fontes de segurança pública** e a **qualidade da informação** (veracidade, precisão) são essenciais; o **sub-registro** de crimes pelas polícias é um problema reconhecido.
 - A categorização criminal segue o **Código Penal** e o **Sistema INFOPOL**, principal base de ocorrências em PE.
 
+## Identificação Cadavérica (pág. 49)
+- A **pulseira de identificação de cadáver** foi criada em Pernambuco para combater a **hiper-notificação** dos registros de CVLI (Crimes Violentos Letais Intencionais).
+- A cada morte violenta é atribuída uma **identificação numérica única**, evitando duplicidade de registros entre diferentes bases de dados (polícia, IML, SAMU, etc.).
+
+## Registros de Ocorrência — RO (pág. 52)
+- Em Pernambuco, a base estatística é coletada pela **Polícia Civil** por meio dos **Registros de Ocorrência (RO)**.
+- Os ROs são categorizados conforme o **Código Penal** e o **Sistema INFOPOL**.
+- Limitação: o **sub-registro** (cifra oculta) — crimes não registrados — é um problema reconhecido na gestão da informação criminal.
+
 ---
 
 # Capítulo 5 — Análise Estatística Criminal
@@ -130,6 +186,12 @@ São as três grandes vertentes do conhecimento produzido para a gestão da segu
 ## Apresentação dos dados
 - **Tabela/gráfico — elementos:** título (o quê? quando? onde?), corpo e rodapé (fonte, notas, chamadas).
 - **Tipos de gráfico:** colunas (verticais), barras (horizontais), setores (proporção do total), linhas/curvas (séries temporais), **histograma** (barras justapostas, área ∝ frequência) e **polígono de frequência**.
+
+## Gráfico de Linhas/Curvas (pág. 68/69)
+- Representam **séries temporais** — variação de um fenômeno ao longo do tempo.
+- Cada ponto conectado por linha/curva representa um valor em determinado período (dia, mês, ano).
+- Usos na análise criminal: identificar **tendências** (crescimento/queda), **sazonalidade** (picos em certas épocas) e **anomalias** nas séries criminais.
+- São o tipo de gráfico mais indicado para análise de **tendências ao longo do tempo** — comparar períodos e projetar comportamentos futuros.
 
 ## Parâmetros para comparação relativa
 - **Proporção:** parte ÷ total.
@@ -198,7 +260,8 @@ São as três grandes vertentes do conhecimento produzido para a gestão da segu
 
 # Capítulo 7 — Operacionalização: Ferramentas
 
-- **Excel / Calc:** planilhas eletrônicas para tratamento e cruzamento de dados; a **tabela dinâmica** é muito usada na produção do relatório operacional.
+- **Excel** (Microsoft) e **Calc** (LibreOffice/BrOffice): planilhas eletrônicas para tratamento e cruzamento de dados; a **tabela dinâmica** é muito usada na produção do relatório operacional.
+- **Diferença entre Excel e Calc**: Excel é **proprietário** (Microsoft, pago); Calc é **código aberto** e gratuito (LibreOffice/BrOffice). Conceitos, fórmulas e funcionalidades essenciais são praticamente idênticos — a mudança é principalmente no ambiente e no formato nativo (.xlsx vs .ods).
 - **SACE (Power BI):** Sistema de Análise Criminal e Estatística (desenvolvido pela GGACE); usa o **Power BI** — coleção de serviços, apps e conectores — para transformar dados em **insights** interativos.
 - **QlikView:** solução de BI usada nas reuniões do **Juntos pela Segurança** para monitorar indicadores; dashboards por "arrastar e soltar".
 - **Sistema INFOPOL:** ferramenta de **coleta e análise de ocorrências policiais**, administrada pela GGTI/SDS. Possui **visão de ocorrências** (todas as da Polícia Civil) e **visão de homicídio** (homicídio doloso, latrocínio, lesão seguida de morte, feminicídio, suicídio, acidentes de trânsito com vítima fatal, etc.).`
@@ -214,9 +277,14 @@ const CARDS: Card[] = [
 • Prática moderna fundamentada em TI: estatística computadorizada, SIG e inteligência artificial.` },
 
   { modulo: "1", frente: "Análise Criminal — Raízes Históricas", verso:
-`• Raízes na atividade de Inteligência (estratégias chinesas, Sun Tzu).
+`• Raízes na atividade de Inteligência (estratégias chinesas, Sun Tzu; batalhas bíblicas).
 • Henry Fielding (1707–1754) e os "Bow Street Runners": primeiros traços do uso estruturado.
-• A partir de 1800, forte aumento das taxas de crime na Europa impulsiona a área.` },
+• Robert Peel (1829): fundou a Polícia Metropolitana de Londres — policiamento moderno.
+• Século XIX: surge o conceito de Modus Operandi (MO).
+• August Vollmer: "pai da polícia americana"; mapa de pinos; serviço de emergência.
+• O.W. Wilson (1963): formalizou o termo "análise de crime".
+• Consolidação nos EUA: DÉCADA DE 60.
+• Era de Ouro: DÉCADA DE 90 (CompStat/NYPD 1994, IACA 1990, fundos federais, mapeamento acessível).` },
 
   // ── Cap. 2 — Fundamentos ──
   { modulo: "2", frente: "Para que servem os dados na segurança pública?", verso:
@@ -242,6 +310,31 @@ const CARDS: Card[] = [
   { modulo: "2", frente: "Papel do Analista Criminal", verso:
 `• Mais que fonte de informação: deve atuar como conselheiro e pesquisador.
 • Não espera demanda: antecipa problemas, avalia causas, busca respostas efetivas e aprende com os resultados.` },
+
+  { modulo: "2", frente: "Perfil esperado do bom analista criminal (pág. 21)", verso:
+`• Proativo: antecipa problemas sem esperar demanda.
+• Pesquisador: busca e fundamenta análises em dados e evidências.
+• Bom avaliador: interpreta resultados com rigor e espírito crítico.
+• Olhar investigativo: questiona, correlaciona e aprofunda além do óbvio.` },
+
+  { modulo: "2", frente: "4 etapas do trabalho do analista criminal (pág. 25)", verso:
+`1. Sistematizar e analisar dados (identificar padrões).
+2. Submeter esses padrões aos tomadores de decisão.
+3. Identificar formas de intervir (propor estratégias).
+4. Avaliar o impacto das intervenções (retroalimentar o ciclo).
+⚠ Diferente do fluxo estatístico (Coleta → Crítica → Apresentação → Análise).` },
+
+  { modulo: "2", frente: "Focalização e Pirâmide (pág. 26/27)", verso:
+`• Focalização: olhar o crime de forma SEPARADA — analisar tipo, local, horário e perfil individualmente.
+• Pirâmide: concentração do crime (Pareto): poucos locais/ofensores/vítimas = maioria das ocorrências.
+  - Base: incidentes pontuais/difusos.
+  - Meio: padrões táticos (hot spots).
+  - Topo: prioridades (criminosos/vítimas/locais críticos).` },
+
+  { modulo: "2", frente: "POP, Brasil e Multidisciplinaridade", verso:
+`• POP (Policiamento Orientado a Problemas): atacar a CAUSA, não o evento.
+• Problemática do Brasil: AUSÊNCIA DE CULTURA TÉCNICA nas organizações policiais.
+• Análise criminal é MULTIDISCIPLINAR: estatística, geografia, ciências sociais, direito, TI, psicologia.` },
 
   // ── Cap. 3 — Teorias ──
   { modulo: "3", frente: "Teoria da Escolha Racional (Cornish & Clarke)", verso:
@@ -284,6 +377,11 @@ const CARDS: Card[] = [
 • Qualidade depende de veracidade e precisão; o sub-registro de crimes pelas polícias é um problema reconhecido.
 • A categorização segue o Código Penal e o Sistema INFOPOL (principal base de ocorrências em PE).` },
 
+  { modulo: "4", frente: "Identificação Cadavérica e RO (pág. 49/52)", verso:
+`• Pulseira de identificação cadavérica (PE): combate a hiper-notificação de CVLI — ID numérica única por morte.
+• Registros de Ocorrência (RO): base estatística coletada pela Polícia Civil em PE; categorizados pelo Código Penal e INFOPOL.
+• Limitação: sub-registro (cifra oculta) — crimes não registrados.` },
+
   // ── Cap. 5 — Estatística ──
   { modulo: "5", frente: "Conceitos Básicos de Estatística", verso:
 `• População: conjunto com ao menos uma característica em comum.
@@ -301,6 +399,12 @@ const CARDS: Card[] = [
   { modulo: "5", frente: "Apresentação de Dados — Tabelas e Gráficos", verso:
 `• Elementos (tabela/gráfico): título (o quê? quando? onde?), corpo e rodapé (fonte, notas, chamadas).
 • Tipos de gráfico: colunas (verticais), barras (horizontais), setores (proporção do total), linhas/curvas (séries temporais), histograma (barras justapostas) e polígono de frequência.` },
+
+  { modulo: "5", frente: "Gráfico de Linhas/Curvas (pág. 68/69)", verso:
+`• Representam séries temporais: variação de fenômeno ao longo do tempo.
+• Cada ponto = valor num período (dia, mês, ano); pontos conectados por linha/curva.
+• Usos: identificar TENDÊNCIAS, SAZONALIDADE e ANOMALIAS nas séries criminais.
+• Tipo mais indicado para análise de tendências ao longo do tempo.` },
 
   { modulo: "5", frente: "Parâmetros para Comparação Relativa", verso:
 `• Proporção: parte ÷ total.
@@ -347,8 +451,10 @@ const CARDS: Card[] = [
 
   // ── Cap. 7 — Ferramentas ──
   { modulo: "7", frente: "Ferramentas — Excel / Calc e Tabela Dinâmica", verso:
-`• Excel e Calc: planilhas eletrônicas para tratamento e cruzamento de dados.
-• A tabela dinâmica é muito usada na produção do relatório operacional.` },
+`• Excel (Microsoft, proprietário/pago) e Calc (LibreOffice/BrOffice, código aberto/gratuito).
+• Mesmas funcionalidades essenciais: fórmulas, gráficos, tabela dinâmica.
+• A tabela dinâmica é muito usada na produção do relatório operacional.
+• Diferença prática: formato nativo (.xlsx vs .ods); custo (pago vs gratuito).` },
 
   { modulo: "7", frente: "SACE (Power BI)", verso:
 `• Sistema de Análise Criminal e Estatística, desenvolvido pela GGACE.
