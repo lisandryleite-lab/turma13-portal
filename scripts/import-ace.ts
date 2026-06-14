@@ -30,8 +30,14 @@ const MD = `# Capítulo 1 — História e Conceito da Análise Criminal
 - **Orlando W. Wilson**: o **termo "análise de crime"** (análise criminal) surgiu **formalmente** com ele.
 
 ## Consolidação e era de ouro (EUA)
-- **Consolidação** da análise criminal: **década de 1960**.
-- **Era de ouro**: **década de 1990** (forte difusão de tecnologia, mapeamento e policiamento orientado a problemas).
+- **Consolidação — anos 1960:** grandes departamentos passam a criar **unidades de análise criminal** (identificar MOs, padrões e relação entre criminosos e crimes). O livro **"Administração Policial" (O. W. Wilson)** vira o 1º livro-texto para executivos policiais. A **explosão** vem nos **anos 70** (financiamento da LEAA).
+- **Era de ouro — anos 1990 (Bruce, 2004).** Características/eventos marcantes:
+  - 1990: livro **"Policiamento Orientado para a Solução de Problemas"** (Herman Goldstein).
+  - 1990/91: criação da **IACA** (Associação Internacional de Analistas de Crime) e 1ª conferência.
+  - 1992: programa de **certificação** em Análise Criminal (Depto. de Justiça da Califórnia).
+  - Novos **fundos** federais para policiamento comunitário e orientado a problemas.
+  - **Tecnologias acessíveis** (mapeamento de crimes, bancos de dados relacionais).
+  - 1994: sistema **CompStat** (gestão por resultados, NYPD) baseado em mapeamento.
 > 🔑 Não inverter: **consolidação = anos 60**; **era de ouro = anos 90**.
 
 ---
@@ -69,9 +75,14 @@ São as três grandes vertentes do conhecimento produzido para a gestão da segu
 - Sair da ação **reativa** (cadeia sem fim de incidentes) para a **preventiva** (criar ambiente seguro).
 - A nova lógica exige: (1) examinar cada problema e suas causas; (2) considerar um leque amplo de opções; (3) escolher pela relação **custo × benefício**, orientada a resultados.
 
-## Efetividade das estratégias de policiamento (Skogan e Frydl, 2004)
-- **Tradicional** (sem foco, só reforço da lei): falta de evidência de redução da criminalidade.
-- **Comunitário** e **orientado a problemas**: o orientado a problemas (foco + estratégias diversas) tem **fortes evidências** de redução.
+## Quadro da efetividade das estratégias de policiamento (EUA, 2003) — DECORAR
+| Estratégia | Evidência de redução da criminalidade |
+|---|---|
+| **Orientada a Problemas** (investigação científica de problemas + gestão por resultados) | **Forte** ou moderada |
+| **Comunitário** (polícia a pé, contato com a comunidade, legitimidade) | Fraca ou moderada |
+| **Focado** (patrulhamento em áreas de concentração + crimes específicos) | Fraca ou moderada |
+| **Tradicional** (mais efetivo, menor tempo de atendimento, mais prisões) | **Falta** evidência |
+> 🔑 A única com **forte** evidência é a **orientada a problemas**. A tradicional **não tem** evidência.
 
 > ⚠ Cerqueira e Lobão (2003): aumentar o gasto em segurança não reduz, por si, os homicídios — a **redução da desigualdade social** foi o único fator diretamente relacionado à queda.
 
@@ -133,7 +144,28 @@ São as três grandes vertentes do conhecimento produzido para a gestão da segu
 # Capítulo 4 — Coleta de Informação
 
 - A **informação** é um ativo de grande valor e deve ser protegida (Segurança da Informação / Política de Segurança).
-- **Fontes de segurança pública** e a **qualidade da informação** (veracidade, precisão) são essenciais; o **sub-registro** de crimes pelas polícias é um problema reconhecido.
+- **Fonte primária:** você mesmo coleta. **Fonte secundária:** usa dados coletados por outro.
+
+## As 3 fontes de dados de violência/criminalidade
+1. **Polícia Civil** — Registros de Ocorrência (RO); base das estatísticas criminais em PE.
+2. **SIM** (Sistema de Informação sobre Mortalidade — Ministério da Saúde).
+3. **Pesquisas de vitimização** — levantamento na população sobre a experiência com o crime.
+
+## Identificação cadavérica (pág. 49)
+- **Pulseira de identificação de cadáver:** mecanismo **criado em Pernambuco** que atribui a cada **morte violenta** uma **identificação numérica**, permitindo registro **rápido e preciso** das ocorrências e evitando a **hiper notificação** (duplicidade).
+
+## SIM × Polícia (comparação importante)
+- **SIM:** classifica mortes como "Causas Externas" pela **CID** (CID-9 até 1995; **CID-10 desde 1996**); registra pelo **local do óbito**.
+- **Polícia:** classifica pelo **Código Penal**; registra pelo **local do fato**.
+- Por isso as taxas de homicídio da **saúde (SIM) são sempre maiores** que as das polícias e as fontes **não são diretamente comparáveis**.
+
+## Registro de Ocorrência (RO) e sub-registro (pág. 52)
+- O **RO** é o documento produzido pela **Polícia Civil** que pode **iniciar o inquérito policial** quando há indício de crime.
+- **Sub-registro** (Roberto Kant de Lima, 1995): o RO muitas vezes só é efetivado "quando a polícia deseja" — problema reconhecido.
+- O RO dá ênfase ao **modus operandi**, gerando mais títulos de ocorrência do que as classificações penais.
+
+## Qualidade da informação
+- Distorções da estatística vêm de: **amostras pequenas**, **distorções deliberadas**, **perguntas tendenciosas**, **gráficos enganosos** e **pressões políticas**.
 - A categorização criminal segue o **Código Penal** e o **Sistema INFOPOL**, principal base de ocorrências em PE.
 
 ---
@@ -268,10 +300,19 @@ const CARDS: Card[] = [
 `• Sair da ação reativa para a preventiva (criar ambiente seguro).
 • (1) Examinar cada problema e suas causas; (2) considerar leque amplo de opções; (3) escolher por custo × benefício, orientada a resultados.` },
 
-  { modulo: "2", frente: "Efetividade das Estratégias de Policiamento (Skogan e Frydl, 2004)", verso:
-`• Tradicional (sem foco, só reforço da lei): sem evidência de redução da criminalidade.
-• Orientado a problemas (foco + estratégias diversas): fortes evidências de redução.
+  { modulo: "2", frente: "Quadro Efetividade das Estratégias de Policiamento (EUA, 2003)", verso:
+`• Orientada a Problemas: evidência FORTE/moderada (única forte!).
+• Comunitário: fraca/moderada.
+• Focado: fraca/moderada.
+• Tradicional: FALTA evidência.
 ⚠ Cerqueira e Lobão (2003): mais gasto não reduz homicídio; a redução da desigualdade social foi o único fator diretamente ligado à queda.` },
+
+  { modulo: "1", frente: "Era de Ouro (anos 90) — características", verso:
+`• 1990: livro "Policiamento Orientado para a Solução de Problemas" (Goldstein).
+• 1990/91: criação da IACA + 1ª conferência.
+• 1992: certificação em Análise Criminal (Califórnia).
+• Fundos federais + tecnologias acessíveis (mapeamento, BD relacionais).
+• 1994: CompStat (NYPD), gestão por resultados.` },
 
   { modulo: "2", frente: "Papel do Analista Criminal", verso:
 `• Mais que fonte de informação: deve atuar como conselheiro e pesquisador.
@@ -334,6 +375,27 @@ const CARDS: Card[] = [
 `• A informação é ativo de grande valor e deve ser protegida (Segurança da Informação).
 • Qualidade depende de veracidade e precisão; o sub-registro de crimes pelas polícias é um problema reconhecido.
 • A categorização segue o Código Penal e o Sistema INFOPOL (principal base de ocorrências em PE).` },
+
+  { modulo: "4", frente: "As 3 Fontes de Dados de Criminalidade", verso:
+`1. Polícia Civil — Registros de Ocorrência (RO); base em PE.
+2. SIM — Sistema de Informação sobre Mortalidade (Min. Saúde).
+3. Pesquisas de vitimização — experiência da população com o crime.
+• Fonte primária: você coleta. Secundária: usa dados de outro.` },
+
+  { modulo: "4", frente: "Identificação Cadavérica (pulseira)", verso:
+`• Pulseira de identificação de cadáver: mecanismo criado em PERNAMBUCO.
+• Atribui a cada morte violenta uma identificação numérica.
+• Permite registro rápido e preciso e evita a hiper notificação (duplicidade).` },
+
+  { modulo: "4", frente: "SIM × Polícia", verso:
+`• SIM: classifica por CID (CID-10 desde 1996); registra pelo LOCAL DO ÓBITO.
+• Polícia: classifica pelo Código Penal; registra pelo LOCAL DO FATO.
+• Taxas da saúde (SIM) são sempre MAIORES; fontes não são diretamente comparáveis.` },
+
+  { modulo: "4", frente: "Registro de Ocorrência (RO) e Sub-registro", verso:
+`• RO: documento da Polícia Civil que pode iniciar o inquérito policial.
+• Sub-registro (Kant de Lima, 1995): RO só efetivado "quando a polícia deseja".
+• Ênfase no modus operandi → mais títulos de ocorrência que classificações penais.` },
 
   // ── Cap. 5 — Estatística ──
   { modulo: "5", frente: "Conceitos Básicos de Estatística", verso:
