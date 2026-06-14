@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { logAcesso } from "@/lib/log"
 import { LogsAdmin } from "./logs-admin"
+import { Recolhivel } from "./recolhivel"
 
 export default async function PainelPage() {
   const session = await auth()
@@ -66,13 +67,14 @@ export default async function PainelPage() {
         {stat("Pref. OPM", prefCount)}
       </div>
 
-      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>Logins no sistema</h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10 }}>
-        {stat("Logins (total)", acessosTotal)}
-      </div>
-      <p style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 8 }}>
-        Conta apenas <strong>logins</strong> (entradas com matrícula e senha), não visitas — a sessão fica salva por semanas, então quem já está logado navega sem gerar novo registro.
-      </p>
+      <Recolhivel titulo="Logins no sistema" resumo={`(${acessosTotal})`}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10 }}>
+          {stat("Logins (total)", acessosTotal)}
+        </div>
+        <p style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 8 }}>
+          Conta apenas <strong>logins</strong> (entradas com matrícula e senha), não visitas — a sessão fica salva por semanas, então quem já está logado navega sem gerar novo registro.
+        </p>
+      </Recolhivel>
 
       <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>Conteúdo por matéria</h2>
       {conteudo.length === 0 ? (
