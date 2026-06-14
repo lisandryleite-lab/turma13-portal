@@ -40,6 +40,36 @@ const MD = `# Capítulo 1 — História e Conceito da Análise Criminal
   - 1994: sistema **CompStat** (gestão por resultados, NYPD) baseado em mapeamento.
 > 🔑 Não inverter: **consolidação = anos 60**; **era de ouro = anos 90**.
 
+## Linha do tempo — marcos da análise criminal (EUA)
+- **Período feudal (Inglaterra):** em vilas pequenas todos se conheciam; o policial local já formava opinião sobre autor provável (Gottlieb, 1998).
+- **1707–1754 — Henry Fielding:** "Bow Street Runners"; sistematizava denúncias e descrições de criminosos.
+- **1829 — Robert Peel:** Polícia Metropolitana de Londres → modelo emulado pelo mundo.
+- **Anos 1920 (EUA):** reformadores oficializam a análise criminal. **Vollmer** importa da Inglaterra a classificação por **modus operandi (MO)**, analisa **chamadas de emergência** e cria o **mapa de pinos**.
+- **Anos 1920–30 — "Nova vertente":** polícia passa a coletar dados sobre anarquistas e **crime organizado**; a partir de 1950 as audiências do senador **Kefauver** popularizam o termo "Máfia".
+- **1922 — IACP** (Assoc. Internacional de Chefes de Polícia): inicia a discussão de um sistema nacional de registro de crimes.
+- **~1930 — UCR** (ver abaixo).
+- **1963 — O. W. Wilson:** o termo **"análise de crime"** aparece formalmente na 2ª edição de "Administração Policial".
+
+## UCR — Programa Padronizado de Registro de Crimes
+- **Uniform Crime Reporting Program (UCR)**, criado por volta de **1930**, administrado pelo **FBI** — até hoje o **indicador líder** das estatísticas criminais nos EUA.
+- Vollmer (membro da IACP) foi um dos instrumentalizadores.
+- **Mudança de paradigma:** tirou a polícia do raciocínio **jurídico** (cada tipo penal isolado) para **categorias amplas** ("roubo", "arrombamento"), permitindo **comparação** entre jurisdições — essencial para a análise criminal.
+> 🔑 No Brasil, paralelo ao UCR: a **SENASP** lançou em **2003** o **SINESPJC** (Sistema Nacional de Estatística de Segurança Pública e Justiça Criminal), buscando padronizar a categorização dos registros.
+
+## Wilson — "fórmulas de risco"
+- Wilson incluiu nas técnicas de Vollmer as **"fórmulas de risco"**: atribuía **pesos** a categorias de crimes e chamadas para alocar recursos de forma sistemática.
+- Base dos atuais **centros de despacho** (CIODS/COPOM): a classificação da chamada define tipo/quantidade de recurso enviado.
+
+## Outras vertentes (anos 60–70)
+- Além da análise tática/estratégica, surgiram linhas paralelas voltadas à investigação:
+  - **Análise Criminal Investigativa** (apoio à elucidação de crimes).
+  - **Análise Criminal de Inteligência** (crime organizado, terrorismo).
+
+## Novas abordagens em prevenção (Goldstein, 1990)
+- O **Policiamento Orientado para a Solução de Problemas (POP)** redescobre o papel da análise criminal.
+- Incidentes são **sintomas** de problemas profundos; a polícia deve atacar o **problema** (e suas causas), não só o **evento**.
+- Para solucionar, primeiro **identificar** e depois **analisar** os problemas — esse é o trabalho do analista criminal.
+
 ---
 
 # Capítulo 2 — Fundamentos Teóricos
@@ -167,6 +197,13 @@ São as três grandes vertentes do conhecimento produzido para a gestão da segu
 ## Qualidade da informação
 - Distorções da estatística vêm de: **amostras pequenas**, **distorções deliberadas**, **perguntas tendenciosas**, **gráficos enganosos** e **pressões políticas**.
 - A categorização criminal segue o **Código Penal** e o **Sistema INFOPOL**, principal base de ocorrências em PE.
+
+## Panorama das bases de dados
+- O Banco Mundial alerta: na América Latina os **dados são grosseiramente inadequados** (sub-registro, falta de levantamentos sistemáticos). A 1ª prioridade é **construir sistemas** que permitam saber o que está ocorrendo.
+- Por isso usa-se muito a **taxa de homicídio** (da saúde) como indicador comparativo — é o crime com **menor sub-registro**.
+- **Críticas (BID) ao uso do homicídio como medida única:** (a) ainda há sub-registro e inconsistência entre fontes; (b) muitas violências graves não terminam em morte (ex.: violência doméstica); (c) subestima outras formas (agressão, intimidação).
+- **Taxas iguais podem ocultar realidades diferentes:** em 1996, RJ (59,4) e SP (55,6) tinham taxas parecidas, mas composições distintas (mais jovens e armas de fogo no RJ).
+- Em PE há projeto de **integração dos bancos de dados da PC e da PM** para cruzar informações.
 
 ---
 
@@ -314,6 +351,21 @@ const CARDS: Card[] = [
 • Fundos federais + tecnologias acessíveis (mapeamento, BD relacionais).
 • 1994: CompStat (NYPD), gestão por resultados.` },
 
+  { modulo: "1", frente: "UCR — Programa Padronizado de Registro de Crimes", verso:
+`• Criado ~1930, administrado pelo FBI; indicador líder das estatísticas criminais nos EUA.
+• IACP (1922) iniciou a discussão; Vollmer foi um dos instrumentalizadores.
+• Mudou o paradigma JURÍDICO (tipo penal isolado) para CATEGORIAS AMPLAS (roubo), permitindo comparação.
+• Paralelo no Brasil: SINESPJC (SENASP, 2003).` },
+
+  { modulo: "1", frente: "Wilson — 'fórmulas de risco' e outras vertentes", verso:
+`• Fórmulas de risco: pesos a crimes/chamadas para alocar recursos (base dos centros de despacho).
+• Vertentes paralelas (anos 60–70): Análise Criminal Investigativa e Análise Criminal de Inteligência.` },
+
+  { modulo: "1", frente: "Novas abordagens em prevenção (Goldstein, 1990)", verso:
+`• Policiamento Orientado para a Solução de Problemas (POP).
+• Incidentes são sintomas de problemas profundos: atacar o PROBLEMA e as causas, não só o evento.
+• Para solucionar: 1º identificar, depois analisar — trabalho do analista criminal.` },
+
   { modulo: "2", frente: "Papel do Analista Criminal", verso:
 `• Mais que fonte de informação: deve atuar como conselheiro e pesquisador.
 • Bom analista: proativo, pesquisador, bom avaliador e olhar investigativo.
@@ -396,6 +448,12 @@ const CARDS: Card[] = [
 `• RO: documento da Polícia Civil que pode iniciar o inquérito policial.
 • Sub-registro (Kant de Lima, 1995): RO só efetivado "quando a polícia deseja".
 • Ênfase no modus operandi → mais títulos de ocorrência que classificações penais.` },
+
+  { modulo: "4", frente: "Panorama das bases de dados", verso:
+`• Dados na América Latina são grosseiramente inadequados (Banco Mundial): sub-registro.
+• Usa-se a taxa de homicídio (saúde) como indicador (menor sub-registro).
+• Críticas (BID): (a) ainda há sub-registro; (b) violências graves não viram morte; (c) subestima outras formas.
+• Taxas iguais ocultam composições diferentes (ex.: RJ x SP, 1996).` },
 
   // ── Cap. 5 — Estatística ──
   { modulo: "5", frente: "Conceitos Básicos de Estatística", verso:
