@@ -75,6 +75,80 @@ export function QtsPrint({
         </div>`
       : ""
 
+    // ── Acompanhamento do curso (2ª página, estilo cartaz) ──────────────────────
+    const totalH = disciplinas.reduce((a, d) => a + d.cargaTotal, 0)
+    const minH = disciplinas.reduce((a, d) => a + Math.min(d.cargaMinistrada, d.cargaTotal), 0)
+    const restanteH = Math.max(0, totalH - minH)
+    const pctCurso = totalH > 0 ? Math.round((minH / totalH) * 100) : 0
+    const concluidas = disciplinas.filter(d => d.status === "Concluída" || d.cargaMinistrada >= d.cargaTotal)
+    const emAndamento = disciplinas.filter(d => d.cargaMinistrada > 0 && d.cargaMinistrada < d.cargaTotal)
+    const aIniciar = disciplinas.filter(d => d.cargaMinistrada <= 0 && d.status !== "Concluída")
+    const semanasRestantes = Math.max(0, 52 - semana)
+
+    const card = (valor: string, label: string, cor: string) =>
+      `<div style="flex:1;min-width:120px;background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:14px 12px;text-align:center">
+        <div style="font-size:30px;font-weight:800;color:${cor};line-height:1">${valor}</div>
+        <div style="font-size:11px;color:#6b7a99;margin-top:5px">${label}</div>
+      </div>`
+
+    const chip = (d: Disciplina) =>
+      `<span style="display:inline-block;background:#dcfce7;color:#166534;border:1px solid #bbf7d0;border-radius:6px;padding:2px 8px;font-size:10.5px;font-weight:700;margin:2px">${esc(d.sigla)}</span>`
+
+    const barra = (d: Disciplina) => {
+      const p = d.cargaTotal > 0 ? Math.round((d.cargaMinistrada / d.cargaTotal) * 100) : 0
+      return `<div style="display:flex;align-items:center;gap:8px;margin:3px 0">
+        <span style="width:64px;font-size:10px;font-weight:700;color:#1A52A8">${esc(d.sigla)}</span>
+        <div style="flex:1;height:8px;background:#edf0f7;border-radius:99px;overflow:hidden">
+          <div style="height:100%;width:${p}%;background:#1A52A8;border-radius:99px"></div>
+        </div>
+        <span style="width:64px;text-align:right;font-size:9.5px;color:#6b7a99">${d.cargaMinistrada}/${d.cargaTotal}h</span>
+      </div>`
+    }
+
+    const acompanhamento = `
+      <div style="page-break-before:always"></div>
+      <div style="text-align:center;margin-bottom:12px">
+        <h1 style="font-weight:800;font-size:24px;color:#0B2D5E;margin:0">ACOMPANHAMENTO DO CURSO</h1>
+        <p style="font-size:11px;color:#444;margin:3px 0 0">CFO PM 2026 · Turma 13 — situação na Semana ${semana}/52</p>
+      </div>
+
+      <div style="background:linear-gradient(135deg,#0B2D5E,#1A52A8);border-radius:16px;padding:18px 22px;color:#fff;display:flex;align-items:center;gap:24px;margin-bottom:14px">
+        <div style="text-align:center">
+          <div style="font-size:54px;font-weight:800;line-height:1">${pctCurso}%</div>
+          <div style="font-size:11px;opacity:.85">do curso concluído</div>
+        </div>
+        <div style="flex:1">
+          <div style="height:16px;background:rgba(255,255,255,0.25);border-radius:99px;overflow:hidden">
+            <div style="height:100%;width:${pctCurso}%;background:#B8924A;border-radius:99px"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;opacity:.9">
+            <span>${minH}h ministradas</span>
+            <span>faltam ${restanteH}h · ~${semanasRestantes} semanas</span>
+            <span>${totalH}h totais</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-bottom:14px">
+        ${card(`${concluidas.length}/${disciplinas.length}`, "Disciplinas concluídas", "#15803d")}
+        ${card(String(emAndamento.length), "Em andamento", "#1A52A8")}
+        ${card(String(aIniciar.length), "A iniciar", "#9aa3b8")}
+        ${card(`${restanteH}h`, "Carga restante", "#B8924A")}
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:flex-start">
+        <div style="flex:1">
+          <h2 style="font-size:13px;color:#15803d;margin:0 0 6px;border-bottom:2px solid #dcfce7;padding-bottom:3px">✓ Concluídas (${concluidas.length})</h2>
+          <div>${concluidas.map(chip).join("") || '<span style="font-size:11px;color:#9aa3b8">Nenhuma ainda.</span>'}</div>
+          ${aIniciar.length ? `<h2 style="font-size:13px;color:#6b7a99;margin:12px 0 6px;border-bottom:2px solid #edf0f7;padding-bottom:3px">A iniciar (${aIniciar.length})</h2>
+          <div>${aIniciar.map(d => `<span style="display:inline-block;background:#f1f5f9;color:#64748b;border-radius:6px;padding:2px 8px;font-size:10.5px;font-weight:700;margin:2px">${esc(d.sigla)}</span>`).join("")}</div>` : ""}
+        </div>
+        <div style="flex:1">
+          <h2 style="font-size:13px;color:#1A52A8;margin:0 0 6px;border-bottom:2px solid #e0e7ff;padding-bottom:3px">Em andamento (${emAndamento.length})</h2>
+          ${emAndamento.map(barra).join("") || '<span style="font-size:11px;color:#9aa3b8">Nenhuma em andamento.</span>'}
+        </div>
+      </div>`
+
     const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
       <title>QTS Semana ${semana}</title>
       <style>
@@ -90,6 +164,7 @@ export function QtsPrint({
         </div>
         <table><thead>${cabecalho}</thead><tbody>${linhas}</tbody></table>
         ${legendaHtml}
+        ${acompanhamento}
         <script>window.onload = function(){ window.print(); };</script>
       </body></html>`
 
