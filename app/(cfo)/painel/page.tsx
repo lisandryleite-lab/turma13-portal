@@ -21,13 +21,9 @@ export default async function PainelPage() {
 
   await logAcesso(session.user as any, "painel-admin", "acessou o painel administrativo")
 
-  const agora = new Date()
-  const inicioHoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate())
-  const seteDias = new Date(agora.getTime() - 7 * 24 * 60 * 60 * 1000)
-
   const [
     alunos, qCount, mCount, fCount, prefCount, qPorMat, fPorMat, mPorMat, logs,
-    acessosTotal, acessosHoje, acessos7d,
+    acessosTotal,
   ] = await Promise.all([
     prisma.user.count({ where: { turma: 3 } }),
     prisma.questao.count(),
@@ -39,8 +35,6 @@ export default async function PainelPage() {
     prisma.memento.groupBy({ by: ["materia"], _count: { materia: true } }),
     prisma.logAcesso.findMany({ where: { area: { not: "login" } }, orderBy: { timestamp: "desc" }, take: 50 }),
     prisma.logAcesso.count({ where: { area: "login" } }),
-    prisma.logAcesso.count({ where: { area: "login", timestamp: { gte: inicioHoje } } }),
-    prisma.logAcesso.count({ where: { area: "login", timestamp: { gte: seteDias } } }),
   ])
 
   const mats = new Set<string>([...qPorMat, ...fPorMat, ...mPorMat].map(x => x.materia))
@@ -74,13 +68,9 @@ export default async function PainelPage() {
       <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>Logins no sistema</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10 }}>
         {stat("Logins (total)", acessosTotal)}
-        {stat("Hoje", acessosHoje)}
-        {stat("Últimos 7 dias", acessos7d)}
       </div>
       <p style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 8 }}>
-        Conta apenas <strong>logins</strong> (entradas com matrícula e senha), não visitas. Como a sessão fica salva por
-        semanas, quem já está logado navega sem gerar novo registro — por isso o número subestima o uso real e não é
-        exibido por aluno.
+        Conta apenas <strong>logins</strong> (entradas com matrícula e senha), não visitas — a sessão fica salva por semanas, então quem já está logado navega sem gerar novo registro.
       </p>
 
       <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>Conteúdo por matéria</h2>
