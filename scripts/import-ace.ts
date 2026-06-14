@@ -21,9 +21,18 @@ const MD = `# Capítulo 1 — História e Conceito da Análise Criminal
 - A prática moderna é fundamentada no uso intensivo da **Tecnologia da Informação (TI)**: estatística computadorizada, Sistemas de Informação Geográfica (SIG) e inteligência artificial.
 
 ## Raízes históricas
-- Tem raízes na atividade de **Inteligência** (estratégias chinesas, Sun Tzu).
+- Tem raízes na atividade de **Inteligência** (estratégias de batalhas **chinesas**, Sun Tzu).
 - **Henry Fielding (1707–1754)**, magistrado inglês, e seus *"Bow Street Runners"*: primeiros traços do uso estruturado de rudimentos da análise criminal.
+- **Robert Peel**: marco da **polícia moderna** (Polícia Metropolitana de Londres) e dos princípios do policiamento.
+- **Século XIX**: surge o conceito de **Modus Operandi** (padrão de atuação do criminoso).
 - A partir de **1800** as taxas de crime na Europa aumentaram fortemente, impulsionando o desenvolvimento da área (e o imaginário de Sherlock Holmes).
+- **August Vollmer** — *pai da polícia americana*: introduziu o **serviço de chamada de emergência** e o **mapa de pinos** (alfinetes).
+- **Orlando W. Wilson**: o **termo "análise de crime"** (análise criminal) surgiu **formalmente** com ele.
+
+## Consolidação e era de ouro (EUA)
+- **Consolidação** da análise criminal: **década de 1960**.
+- **Era de ouro**: **década de 1990** (forte difusão de tecnologia, mapeamento e policiamento orientado a problemas).
+> 🔑 Não inverter: **consolidação = anos 60**; **era de ouro = anos 90**.
 
 ---
 
@@ -36,7 +45,12 @@ const MD = `# Capítulo 1 — História e Conceito da Análise Criminal
 
 ## Definição e dimensões
 - A análise criminal é um **conjunto de processos sistemáticos** voltados a prover informação oportuna e pertinente sobre os padrões do crime e suas tendências, apoiando as áreas **operacional** e **administrativa** na distribuição de recursos para prevenção e supressão.
+- É uma atividade **multidisciplinar** (envolve várias áreas do conhecimento).
+- **Duas dimensões: tática e estratégica.** A tática melhora investigação/patrulhamento; a estratégica permite projetar cenários e tendências.
 - Em PE: o **DEACE (2001)**, hoje **GACE (Gerência de Análise Criminal e Estatística)**, da SDS, coleta dados e produz relatórios.
+
+## Problemática no Brasil
+- Principal entrave: a **ausência de cultura técnica** no uso dos dados.
 
 ## Os 3 tipos de análise criminal (Magalhães, 2007)
 São as três grandes vertentes do conhecimento produzido para a gestão da segurança pública:
@@ -63,7 +77,19 @@ São as três grandes vertentes do conhecimento produzido para a gestão da segu
 
 ## Papel do analista criminal
 - Mais que fonte de informação, deve atuar como **conselheiro** e **pesquisador**.
+- Características de um bom analista: **proativo**, **pesquisador**, **bom avaliador** e **olhar investigativo**.
 - Não espera demanda: antecipa problemas, avalia causas, busca as respostas mais efetivas e aprende com os resultados (positivos ou negativos).
+
+## As 4 etapas do trabalho do analista criminal
+1. **Sistematizar e analisar** os dados.
+2. **Submeter** esses dados para identificar os **padrões** criminais.
+3. **Identificar formas de intervir** sobre os problemas detectados.
+4. **Avaliar o impacto** das intervenções (realimenta o ciclo).
+> ⚠ Cai de certeza. Não confundir com o fluxo da análise **estatística** (Coleta → Crítica → Apresentação → Análise).
+
+## Focalização e pirâmide
+- **Focalização:** importância de **olhar o crime de forma separada** (focada), direcionando a ação aos pontos/problemas específicos.
+- **Pirâmide:** representa a concentração — poucos alvos/locais/ofensores respondem pela maior parte dos crimes (a base larga afunila no topo prioritário da intervenção).
 
 ---
 
@@ -198,7 +224,7 @@ São as três grandes vertentes do conhecimento produzido para a gestão da segu
 
 # Capítulo 7 — Operacionalização: Ferramentas
 
-- **Excel / Calc:** planilhas eletrônicas para tratamento e cruzamento de dados; a **tabela dinâmica** é muito usada na produção do relatório operacional.
+- **Excel / Calc:** planilhas eletrônicas para tratamento e cruzamento de dados; a **tabela dinâmica** é muito usada na produção do relatório operacional. **Diferença:** o **Excel** é da **Microsoft** (suíte Office, proprietário/pago); o **Calc** integra suítes **livres/gratuitas** (LibreOffice/OpenOffice) — funções semelhantes (cálculo, gráficos, tabela dinâmica).
 - **SACE (Power BI):** Sistema de Análise Criminal e Estatística (desenvolvido pela GGACE); usa o **Power BI** — coleção de serviços, apps e conectores — para transformar dados em **insights** interativos.
 - **QlikView:** solução de BI usada nas reuniões do **Juntos pela Segurança** para monitorar indicadores; dashboards por "arrastar e soltar".
 - **Sistema INFOPOL:** ferramenta de **coleta e análise de ocorrências policiais**, administrada pela GGTI/SDS. Possui **visão de ocorrências** (todas as da Polícia Civil) e **visão de homicídio** (homicídio doloso, latrocínio, lesão seguida de morte, feminicídio, suicídio, acidentes de trânsito com vítima fatal, etc.).`
@@ -214,9 +240,17 @@ const CARDS: Card[] = [
 • Prática moderna fundamentada em TI: estatística computadorizada, SIG e inteligência artificial.` },
 
   { modulo: "1", frente: "Análise Criminal — Raízes Históricas", verso:
-`• Raízes na atividade de Inteligência (estratégias chinesas, Sun Tzu).
+`• Raízes na atividade de Inteligência (estratégias de batalhas chinesas, Sun Tzu).
 • Henry Fielding (1707–1754) e os "Bow Street Runners": primeiros traços do uso estruturado.
+• Robert Peel: marco da polícia moderna e dos princípios do policiamento.
+• Século XIX: surge o conceito de Modus Operandi.
 • A partir de 1800, forte aumento das taxas de crime na Europa impulsiona a área.` },
+
+  { modulo: "1", frente: "Vollmer × Wilson × Consolidação/Era de ouro", verso:
+`• August Vollmer: pai da polícia AMERICANA — chamada de emergência e mapa de pinos.
+• Orlando W. Wilson: o TERMO "análise de crime" surgiu formalmente com ele.
+• Consolidação = década de 60.
+• Era de ouro = década de 90.` },
 
   // ── Cap. 2 — Fundamentos ──
   { modulo: "2", frente: "Para que servem os dados na segurança pública?", verso:
@@ -241,7 +275,24 @@ const CARDS: Card[] = [
 
   { modulo: "2", frente: "Papel do Analista Criminal", verso:
 `• Mais que fonte de informação: deve atuar como conselheiro e pesquisador.
+• Bom analista: proativo, pesquisador, bom avaliador e olhar investigativo.
 • Não espera demanda: antecipa problemas, avalia causas, busca respostas efetivas e aprende com os resultados.` },
+
+  { modulo: "2", frente: "As 4 Etapas do Analista Criminal", verso:
+`1. Sistematizar e analisar os dados.
+2. Submeter os dados → identificar os padrões.
+3. Identificar formas de intervir.
+4. Avaliar o impacto das intervenções (realimenta o ciclo).
+⚠ Não confundir com o fluxo estatístico (Coleta → Crítica → Apresentação → Análise).` },
+
+  { modulo: "2", frente: "Focalização e Pirâmide", verso:
+`• Focalização: olhar o crime de forma SEPARADA (focada), direcionando a ação.
+• Pirâmide: poucos alvos/locais/ofensores respondem pela maior parte dos crimes (base larga → topo prioritário).` },
+
+  { modulo: "2", frente: "Análise Criminal — multidisciplinar e suas dimensões", verso:
+`• É multidisciplinar (várias áreas do conhecimento).
+• Duas dimensões: TÁTICA e ESTRATÉGICA.
+• Problemática no Brasil: ausência de cultura técnica.` },
 
   // ── Cap. 3 — Teorias ──
   { modulo: "3", frente: "Teoria da Escolha Racional (Cornish & Clarke)", verso:
@@ -348,6 +399,7 @@ const CARDS: Card[] = [
   // ── Cap. 7 — Ferramentas ──
   { modulo: "7", frente: "Ferramentas — Excel / Calc e Tabela Dinâmica", verso:
 `• Excel e Calc: planilhas eletrônicas para tratamento e cruzamento de dados.
+• Diferença: Excel = Microsoft (Office, pago); Calc = suíte livre (LibreOffice/OpenOffice).
 • A tabela dinâmica é muito usada na produção do relatório operacional.` },
 
   { modulo: "7", frente: "SACE (Power BI)", verso:
