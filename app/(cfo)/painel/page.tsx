@@ -76,31 +76,32 @@ export default async function PainelPage() {
         </p>
       </Recolhivel>
 
-      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>Conteúdo por matéria</h2>
-      {conteudo.length === 0 ? (
-        <p style={{ color: "var(--ink-60)" }}>Nenhum conteúdo cadastrado ainda.</p>
-      ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
-          <thead>
-            <tr style={{ background: "var(--olive)", color: "var(--canvas)" }}>
-              <th style={{ textAlign: "left", padding: "8px 10px" }}>Matéria</th>
-              <th style={{ padding: "8px 10px" }}>Questões</th>
-              <th style={{ padding: "8px 10px" }}>Flashcards</th>
-              <th style={{ padding: "8px 10px" }}>Mementos</th>
-            </tr>
-          </thead>
-          <tbody>
-            {conteudo.map((c, i) => (
-              <tr key={c.sigla} style={{ background: i % 2 ? "#f4f1e8" : "#fff" }}>
-                <td style={{ padding: "7px 10px", fontWeight: 600 }}>{c.sigla}</td>
-                <td style={{ padding: "7px 10px", textAlign: "center" }}>{c.q}</td>
-                <td style={{ padding: "7px 10px", textAlign: "center" }}>{c.f}</td>
-                <td style={{ padding: "7px 10px", textAlign: "center" }}>{c.me}</td>
+      <Recolhivel titulo="Conteúdo por matéria" resumo={`(${conteudo.length} matérias)`}>
+        {conteudo.length === 0 ? (
+          <p style={{ color: "var(--ink-60)" }}>Nenhum conteúdo cadastrado ainda.</p>
+        ) : (
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+            <thead>
+              <tr style={{ background: "var(--olive)", color: "var(--canvas)" }}>
+                <th style={{ textAlign: "left", padding: "8px 10px" }}>Matéria</th>
+                <th style={{ padding: "8px 10px" }}>Questões</th>
+                <th style={{ padding: "8px 10px" }}>Flashcards</th>
+                <th style={{ padding: "8px 10px" }}>Mementos</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            <tbody>
+              {conteudo.map((c, i) => (
+                <tr key={c.sigla} style={{ background: i % 2 ? "#f4f1e8" : "#fff" }}>
+                  <td style={{ padding: "7px 10px", fontWeight: 600 }}>{c.sigla}</td>
+                  <td style={{ padding: "7px 10px", textAlign: "center" }}>{c.q}</td>
+                  <td style={{ padding: "7px 10px", textAlign: "center" }}>{c.f}</td>
+                  <td style={{ padding: "7px 10px", textAlign: "center" }}>{c.me}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </Recolhivel>
 
       <LogsAdmin logs={logs.map(l => ({
         id: l.id,
