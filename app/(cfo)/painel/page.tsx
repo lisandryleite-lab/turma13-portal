@@ -27,7 +27,7 @@ export default async function PainelPage() {
 
   const [
     alunos, qCount, mCount, fCount, prefCount, qPorMat, fPorMat, mPorMat, logs,
-    acessosTotal, acessosHoje, acessos7d, acessosPorAluno,
+    acessosTotal, acessosHoje, acessos7d,
   ] = await Promise.all([
     prisma.user.count({ where: { turma: 3 } }),
     prisma.questao.count(),
@@ -41,14 +41,6 @@ export default async function PainelPage() {
     prisma.logAcesso.count({ where: { area: "login" } }),
     prisma.logAcesso.count({ where: { area: "login", timestamp: { gte: inicioHoje } } }),
     prisma.logAcesso.count({ where: { area: "login", timestamp: { gte: seteDias } } }),
-    prisma.logAcesso.groupBy({
-      by: ["matricula", "nomeGuerra"],
-      where: { area: "login" },
-      _count: { _all: true },
-      _max: { timestamp: true },
-      orderBy: { _count: { matricula: "desc" } },
-      take: 40,
-    }),
   ])
 
   const mats = new Set<string>([...qPorMat, ...fPorMat, ...mPorMat].map(x => x.materia))
@@ -79,38 +71,17 @@ export default async function PainelPage() {
         {stat("Pref. OPM", prefCount)}
       </div>
 
-      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>Acessos ao site</h2>
+      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>Logins no sistema</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10 }}>
-        {stat("Acessos (total)", acessosTotal)}
+        {stat("Logins (total)", acessosTotal)}
         {stat("Hoje", acessosHoje)}
         {stat("Últimos 7 dias", acessos7d)}
-        {stat("Alunos que acessaram", acessosPorAluno.length)}
       </div>
-      <p style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 8 }}>Cada acesso corresponde a um login no sistema. A contagem começou a partir desta atualização.</p>
-
-      <h3 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.05rem", color: "var(--olive)", marginTop: 18, marginBottom: 8 }}>Acessos por aluno</h3>
-      {acessosPorAluno.length === 0 ? (
-        <p style={{ color: "var(--ink-60)" }}>Nenhum login registrado ainda.</p>
-      ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
-          <thead>
-            <tr style={{ background: "var(--olive)", color: "var(--canvas)" }}>
-              <th style={{ textAlign: "left", padding: "8px 10px" }}>Aluno</th>
-              <th style={{ padding: "8px 10px" }}>Acessos</th>
-              <th style={{ padding: "8px 10px" }}>Último acesso</th>
-            </tr>
-          </thead>
-          <tbody>
-            {acessosPorAluno.map((a, i) => (
-              <tr key={a.matricula} style={{ background: i % 2 ? "#f4f1e8" : "#fff" }}>
-                <td style={{ padding: "7px 10px", fontWeight: 600 }}>{a.nomeGuerra} <span style={{ color: "var(--ink-60)", fontWeight: 400 }}>({a.matricula})</span></td>
-                <td style={{ padding: "7px 10px", textAlign: "center" }}>{a._count._all}</td>
-                <td style={{ padding: "7px 10px", textAlign: "center", color: "var(--ink-60)" }}>{a._max.timestamp ? new Date(a._max.timestamp).toLocaleString("pt-BR") : "—"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <p style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 8 }}>
+        Conta apenas <strong>logins</strong> (entradas com matrícula e senha), não visitas. Como a sessão fica salva por
+        semanas, quem já está logado navega sem gerar novo registro — por isso o número subestima o uso real e não é
+        exibido por aluno.
+      </p>
 
       <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>Conteúdo por matéria</h2>
       {conteudo.length === 0 ? (

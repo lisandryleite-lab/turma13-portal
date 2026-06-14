@@ -10,7 +10,8 @@ export default async function XerifanciaPage() {
 
   const [alunos, xerifes] = await Promise.all([
     prisma.user.findMany({
-      where: { isAdmin: false, matricula: { gt: 0 } },
+      // inclui admins: um admin também pode ser xerife (antes ficavam de fora da lista)
+      where: { matricula: { gt: 0 } },
       orderBy: { matricula: "asc" },
       select: { matricula: true, nomeGuerra: true },
     }),
