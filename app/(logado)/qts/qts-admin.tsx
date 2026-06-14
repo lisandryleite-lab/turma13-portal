@@ -24,7 +24,8 @@ function diasDaSemana(semana: number): string[] {
     const labels = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"]
     return `${labels[d.getDay()]} ${dia}/${mes}`
   }
-  return Array.from({ length: 5 }, (_, i) => {
+  // 7 dias (Seg–Dom): há semanas com aula no domingo (ex.: OU-II, PO)
+  return Array.from({ length: 7 }, (_, i) => {
     const d = new Date(seg.getTime() + i * 24 * 60 * 60 * 1000)
     return fmt(d)
   })
@@ -240,7 +241,7 @@ export function QtsAdmin({
               onChange={e => trocarSemana(Number(e.target.value))}
               style={{ border: "1px solid #dde3ee", borderRadius: 6, padding: "5px 8px", fontSize: 14, fontWeight: 700, width: 60, textAlign: "center" }} />
           </div>
-          <span style={{ fontSize: 12, color: "#9aa3b8" }}>{dias[0].slice(4)} – {dias[4].slice(4)}/2026</span>
+          <span style={{ fontSize: 12, color: "#9aa3b8" }}>{dias[0].slice(4)} – {dias[dias.length - 1].slice(4)}/2026</span>
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {qtsList.length > 0 && (

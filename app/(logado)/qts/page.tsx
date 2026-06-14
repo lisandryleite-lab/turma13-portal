@@ -117,7 +117,7 @@ function QtsDisplay({ dados, disciplinas }: { dados: QtsDados; disciplinas: Disc
                     <td key={dia} style={{ padding: "6px 8px", textAlign: "center" }}>
                       {aula ? (
                         <div style={{ background: cores!.bg, color: cores!.cor, borderRadius: 6, padding: "3px 8px", fontSize: 11, fontWeight: 700, cursor: "default" }}
-                          title={disc ? `${disc.nome} · ${disc.cargaMinistrada + (horas[aula]||0)}h/${disc.cargaTotal}h` : aula}>
+                          title={disc ? `${disc.nome} · ${disc.cargaMinistrada}h/${disc.cargaTotal}h` : aula}>
                           {aula}
                         </div>
                       ) : (
