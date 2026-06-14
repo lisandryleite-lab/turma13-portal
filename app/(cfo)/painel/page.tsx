@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { logAcesso } from "@/lib/log"
+import { LogsAdmin } from "./logs-admin"
 
 export default async function PainelPage() {
   const session = await auth()
@@ -33,7 +34,7 @@ export default async function PainelPage() {
     prisma.questao.groupBy({ by: ["materia"], _count: { materia: true } }),
     prisma.flashcard.groupBy({ by: ["materia"], _count: { materia: true } }),
     prisma.memento.groupBy({ by: ["materia"], _count: { materia: true } }),
-    prisma.logAcesso.findMany({ where: { area: { not: "login" } }, orderBy: { timestamp: "desc" }, take: 50 }),
+    prisma.logAcesso.findMany({ where: { area: { not: "login" } }, orderBy: { timestamp: "desc" }, take: 200 }),
     prisma.logAcesso.count({ where: { area: "login" } }),
   ])
 
@@ -99,18 +100,14 @@ export default async function PainelPage() {
         </table>
       )}
 
-      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 10 }}>
-        Logs de ações administrativas <span style={{ fontSize: 13, fontWeight: 400, color: "var(--ink-60)" }}>(LGPD · últimos 50)</span>
-      </h2>
-      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 6 }}>
-        {logs.map(l => (
-          <li key={l.id} style={{ fontSize: 13, color: "var(--ink)", padding: "8px 12px", borderRadius: 8, background: "#fff", border: "1px solid rgba(58,74,58,0.12)" }}>
-            <span style={{ color: "var(--ink-60)" }}>{new Date(l.timestamp).toLocaleString("pt-BR")}</span>
-            {" · "}<strong>{l.nomeGuerra}</strong> ({l.matricula}){" · "}<span style={{ color: "var(--olive)" }}>{l.area}</span>{" — "}{l.acao}
-          </li>
-        ))}
-        {logs.length === 0 && <li style={{ color: "var(--ink-60)" }}>Sem registros ainda.</li>}
-      </ul>
+      <LogsAdmin logs={logs.map(l => ({
+        id: l.id,
+        timestamp: l.timestamp.toISOString(),
+        nomeGuerra: l.nomeGuerra,
+        matricula: l.matricula,
+        area: l.area,
+        acao: l.acao,
+      }))} />
 
       <p style={{ marginTop: 24 }}>
         <Link href="/ajuda-senha" style={{ color: "var(--gold)", fontWeight: 600 }}>Como resetar a senha de um aluno →</Link>
