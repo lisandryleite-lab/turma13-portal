@@ -30,12 +30,52 @@ type Questao = {
   modelo: Modelo | null; fonte: string | null
 }
 
+// Renderiza o contexto suportando tabelas em markdown (| a | b |) + linhas de texto.
+function ContextoView({ texto }: { texto: string }) {
+  const linhas = texto.split("\n")
+  const ehLinhaTabela = (l: string) => l.trim().startsWith("|") && l.includes("|", 1)
+  const ehSeparador = (l: string) => /^\s*\|?[\s:|-]*-{2,}[\s:|-]*\|?\s*$/.test(l)
+  const celulas = (l: string) => l.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(c => c.trim())
+
+  const blocos: React.ReactNode[] = []
+  let i = 0
+  while (i < linhas.length) {
+    if (ehLinhaTabela(linhas[i])) {
+      const rows: string[] = []
+      while (i < linhas.length && ehLinhaTabela(linhas[i])) { rows.push(linhas[i]); i++ }
+      const header = celulas(rows[0])
+      const body = rows.slice(ehSeparador(rows[1] || "") ? 2 : 1).map(celulas)
+      blocos.push(
+        <table key={`t${i}`} style={{ borderCollapse: "collapse", margin: "6px 0", fontSize: 13.5 }}>
+          <thead>
+            <tr>{header.map((c, k) => (
+              <th key={k} style={{ border: "1px solid var(--gold)", background: "var(--gold)", color: "#fff", padding: "3px 10px", textAlign: k === 0 ? "left" : "right" }}>{c}</th>
+            ))}</tr>
+          </thead>
+          <tbody>
+            {body.map((r, ri) => (
+              <tr key={ri}>{r.map((c, k) => (
+                <td key={k} style={{ border: "1px solid #e4d9bd", padding: "3px 10px", textAlign: k === 0 ? "left" : "right", fontWeight: k === 0 ? 600 : 400 }}>{c}</td>
+              ))}</tr>
+            ))}
+          </tbody>
+        </table>
+      )
+    } else {
+      const l = linhas[i]
+      if (l.trim()) blocos.push(<p key={`p${i}`} style={{ margin: "4px 0" }}>{l}</p>)
+      i++
+    }
+  }
+  return <>{blocos}</>
+}
+
 function Enunciado({ q }: { q: Questao }) {
   return (
     <>
       {q.contexto && (
-        <div style={{ padding: "10px 12px", borderRadius: 8, background: "#fbf3e3", border: "1px solid var(--gold)", fontSize: 14, color: "var(--ink)", marginBottom: 10, lineHeight: 1.5 }}>
-          {q.contexto}
+        <div style={{ padding: "10px 12px", borderRadius: 8, background: "#fbf3e3", border: "1px solid var(--gold)", fontSize: 14, color: "var(--ink)", marginBottom: 10, lineHeight: 1.5, overflowX: "auto" }}>
+          <ContextoView texto={q.contexto} />
         </div>
       )}
       <p style={{ fontSize: 15.5, lineHeight: 1.5, margin: 0, color: "var(--ink)" }}>{q.enunciado}</p>

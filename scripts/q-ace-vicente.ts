@@ -17,20 +17,54 @@ type Q =
   | { tipo: "dissertativa"; contexto?: string; enunciado: string; modelo: { estrutura: string; criterios: string[]; resposta: string } }
 const A = (...t: string[]): Alt[] => t.map((texto, i) => ({ id: "ABCDE"[i], texto }))
 
-// Contextos (dados dos exercícios)
+// Contextos (dados dos exercícios) — tabelas em markdown
 const C1 = `2º Ten Antônio (19º BPM – Boa Viagem), no planejamento de combate ao CVP, levantou os CVP por bairro:
-Boa Viagem 419 · Imbiribeira 189 · Ibura 108 · Pina 91 · Cohab 81 · Ipsep 70 · Jordão 31 · Brasília Teimosa 7. TOTAL: 996.`
+| Bairro | CVP |
+| --- | --- |
+| Boa Viagem | 419 |
+| Imbiribeira | 189 |
+| Ibura | 108 |
+| Pina | 91 |
+| Cohab | 81 |
+| Ipsep | 70 |
+| Jordão | 31 |
+| Brasília Teimosa | 7 |
+| TOTAL | 996 |`
 
 const C2 = `Ten Carneiro (CPO/DIM) estudou os MVI do 1º trimestre/2025, por AIS:
-AIS1 22 · AIS2 29 · AIS3 24 · AIS4 37 · AIS5 47 · AIS6 75 · AIS7 24 · AIS8 64 · AIS9 24 · AIS10 44.
-População (01/01/2025): AIS1 75.110 · AIS2 307.618 · AIS3 367.936 · AIS4 386.872 · AIS5 341.039 · AIS6 698.908 · AIS7 344.080 · AIS8 641.487 · AIS9 261.492 · AIS10 310.157.`
+| AIS | Nome | MVI | População (01/01/2025) |
+| --- | --- | --- | --- |
+| 1 | Santo Amaro | 22 | 75.110 |
+| 2 | Espinheiro | 29 | 307.618 |
+| 3 | Boa Viagem | 24 | 367.936 |
+| 4 | Várzea | 37 | 386.872 |
+| 5 | Apipucos | 47 | 341.039 |
+| 6 | Jaboatão | 75 | 698.908 |
+| 7 | Olinda | 24 | 344.080 |
+| 8 | Paulista | 64 | 641.487 |
+| 9 | S. Lourenço da Mata | 24 | 261.492 |
+| 10 | Cabo | 44 | 310.157 |`
 
 const C3 = `MVI no 1º trimestre/2024 na AIS 03, por bairro:
-Boa Viagem 4 · Imbiribeira 6 · Ibura 10 · Pina 3 · Cohab 8 · Ipsep 3 · Jordão 1 · Brasília Teimosa 1.`
+| Bairro | MVI |
+| --- | --- |
+| Boa Viagem | 4 |
+| Imbiribeira | 6 |
+| Ibura | 10 |
+| Pina | 3 |
+| Cohab | 8 |
+| Ipsep | 3 |
+| Jordão | 1 |
+| Brasília Teimosa | 1 |`
 
 const C4 = `Série mensal (JAN–MAI):
-MVI: 10, 12, 14, 10, 8.
-Encaminhados à DP por tráfico: 20, 16, 12, 21, 18.`
+| Mês | MVI | Encaminhados por tráfico |
+| --- | --- | --- |
+| JAN | 10 | 20 |
+| FEV | 12 | 16 |
+| MAR | 14 | 12 |
+| ABR | 10 | 21 |
+| MAI | 8 | 18 |`
 
 const QS: Q[] = [
   // ── Exercício 1 — CVP por bairro ──
