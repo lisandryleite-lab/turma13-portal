@@ -8,7 +8,7 @@ neonConfig.webSocketConstructor = ws
 const prisma = new PrismaClient({ adapter: new PrismaNeon({ connectionString: process.env.DATABASE_URL! }) })
 
 const MAT = 211
-const SENHA = "Dario@211" // senha provisória — orientar a trocar
+const SENHA = String(MAT) // padrão do portal: senha = matrícula; aluno troca depois
 
 async function main() {
   const existe = await prisma.user.findUnique({ where: { matricula: MAT } })
