@@ -14,6 +14,7 @@ type Alt = { id: string; texto: string }
 type Q =
   | { tipo: "certo_errado"; contexto?: string; enunciado: string; gabarito: "certo" | "errado"; explicacao: string }
   | { tipo: "multipla"; contexto?: string; enunciado: string; alternativas: Alt[]; gabarito: string; explicacao: string }
+  | { tipo: "dissertativa"; contexto?: string; enunciado: string; modelo: { estrutura: string; criterios: string[]; resposta: string } }
 const A = (...t: string[]): Alt[] => t.map((texto, i) => ({ id: "ABCDE"[i], texto }))
 
 // Contextos (dados dos exercícios)
@@ -53,6 +54,27 @@ const QS: Q[] = [
   { tipo: "multipla", contexto: C4, enunciado: "A associação linear entre MVI e pessoas encaminhadas por tráfico é:", alternativas: A("inversamente proporcional", "diretamente proporcional", "nula", "perfeita positiva", "exponencial"), gabarito: "A", explicacao: "Quando uma sobe a outra tende a cair → correlação negativa (inversamente proporcional)." },
   { tipo: "multipla", contexto: C4, enunciado: "Qual o grau (coeficiente) de associação linear entre as variáveis?", alternativas: A("−0,78", "+0,78", "−0,21", "+0,45", "−1,00"), gabarito: "A", explicacao: "r ≈ −0,78: correlação negativa forte (próxima de −1)." },
   { tipo: "certo_errado", contexto: C4, enunciado: "O maior número de pessoas encaminhadas à DP por tráfico ajuda na redução do MVI.", gabarito: "certo", explicacao: "Sim. A correlação negativa forte (r ≈ −0,78) indica que mais encaminhamentos acompanham menos MVI." },
+
+  // ── Dissertativas (resolução passo a passo) ──
+  { tipo: "dissertativa", contexto: C1, enunciado: "Com base nos CVP por bairro, responda, justificando os cálculos: (a) qual a área de maior incidência e quanto representa do total (%); (b) o número mínimo de bairros que, somados, representam mais da metade dos CVP; (c) quais bairros estão até o 3º quartil.", modelo: {
+    estrutura: "Resolver os 3 itens mostrando os cálculos.",
+    criterios: ["(a) Identificar Boa Viagem e calcular 419/996", "(b) Somar do maior para o menor até passar de 498", "(c) Apontar os bairros de maior incidência até o Q3"],
+    resposta: "(a) Boa Viagem é a maior incidência (419 CVP). Percentual = 419 ÷ 996 × 100 = 42,1% do total.\n(b) Somando do maior para o menor: Boa Viagem 419 (não passa de 498). Boa Viagem + Imbiribeira = 419 + 189 = 608 (passa de 498). Logo, o mínimo é 2 bairros (Boa Viagem e Imbiribeira).\n(c) Até o 3º quartil concentram-se os bairros de maior incidência: Boa Viagem, Imbiribeira e Ibura." } },
+
+  { tipo: "dissertativa", contexto: C2, enunciado: "Com base nos MVI e na população por AIS (DIM), calcule e justifique: (a) a taxa de MVI da AIS 5; (b) a AIS de maior incidência absoluta; (c) a amplitude; (d) a mediana; (e) a AIS mais violenta; (f) quantas vezes a mais violenta é em relação à menos violenta.", modelo: {
+    estrutura: "Resolver os 6 itens com fórmulas e valores.",
+    criterios: ["Aplicar a taxa = (vítimas/pop)×100.000", "Diferenciar incidência absoluta de taxa", "Calcular amplitude e mediana corretamente"],
+    resposta: "(a) Taxa AIS 5 = (47 ÷ 341.039) × 100.000 = 13,78 por 100 mil hab.\n(b) Maior incidência absoluta: AIS 6 (75 MVI).\n(c) Amplitude = 75 − 22 = 53.\n(d) Ordenando (22,24,24,24,29,37,44,47,64,75), mediana = (29 + 37) ÷ 2 = 33.\n(e) Mais violenta (maior taxa): AIS 1 = (22 ÷ 75.110) × 100.000 ≈ 29,3 — maior que as demais.\n(f) Razão = taxa AIS 1 (≈29,3) ÷ taxa da menos violenta AIS 3 (≈6,5) ≈ 4,5 vezes.\nObs.: a maior incidência ABSOLUTA (AIS 6) não é a maior TAXA (AIS 1)." } },
+
+  { tipo: "dissertativa", contexto: C3, enunciado: "Calcule, passo a passo, a variância e o desvio padrão dos MVI por bairro da AIS 03.", modelo: {
+    estrutura: "Média → desvios² → soma → variância (n−1) → raiz.",
+    criterios: ["Calcular a média", "Somar os quadrados dos desvios", "Usar variância amostral (n−1) e tirar a raiz"],
+    resposta: "Valores: 4, 6, 10, 3, 8, 3, 1, 1 (n = 8).\nMédia = 36 ÷ 8 = 4,5.\nQuadrados dos desvios: 0,25 + 2,25 + 30,25 + 2,25 + 12,25 + 2,25 + 12,25 + 12,25 = 74.\nVariância amostral = 74 ÷ (8 − 1) = 10,6.\nDesvio padrão = √10,6 ≈ 3,3." } },
+
+  { tipo: "dissertativa", contexto: C4, enunciado: "Analise a correlação entre MVI e pessoas encaminhadas por tráfico: (a) a associação é direta ou inversa; (b) qual o grau (r); (c) o aumento de encaminhamentos ajuda a reduzir o MVI?", modelo: {
+    estrutura: "Sentido da relação → valor de r → interpretação.",
+    criterios: ["Reconhecer a relação inversa", "Indicar r ≈ −0,78", "Concluir pela utilidade do encaminhamento"],
+    resposta: "(a) Inversamente proporcional: quando os encaminhamentos sobem, o MVI tende a cair.\n(b) Coeficiente de correlação r ≈ −0,78 — correlação negativa forte (próxima de −1).\n(c) Sim. Como a correlação é negativa e forte, o aumento dos encaminhamentos por tráfico acompanha a redução do MVI (lembrando que correlação não prova causalidade)." } },
 ]
 
 async function main() {
@@ -63,7 +85,8 @@ async function main() {
     const hash = createHash("sha1").update(`${MAT}|${MOD}|${q.enunciado}`).digest("hex")
     const base: any = { materia: MAT, modulo: MOD, tipo: q.tipo, contexto: q.contexto ?? null, enunciado: q.enunciado, hash }
     if (q.tipo === "multipla") { base.alternativas = q.alternativas; base.gabarito = q.gabarito; base.explicacao = q.explicacao }
-    else { base.alternativas = []; base.gabarito = q.gabarito; base.explicacao = q.explicacao }
+    else if (q.tipo === "certo_errado") { base.alternativas = []; base.gabarito = q.gabarito; base.explicacao = q.explicacao }
+    else { base.alternativas = []; base.gabarito = ""; base.modelo = q.modelo }
     const exists = await prisma.questao.findUnique({ where: { hash } })
     await prisma.questao.upsert({ where: { hash }, update: base, create: base })
     exists ? u++ : c++
