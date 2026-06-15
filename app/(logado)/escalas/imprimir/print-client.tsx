@@ -45,10 +45,10 @@ export function PrintClient({ semana, mes, ano, nomeMes, semanasServico, diasCal
       {/* Estilos de impressão */}
       <style>{`
         @media print {
-          .no-print { display: none !important; }
-          .sidebar, nav, footer, header { display: none !important; }
+          body * { visibility: hidden; }
+          .print-page, .print-page * { visibility: visible !important; }
+          .print-page { position: absolute; left: 0; top: 0; width: 100%; padding: 12mm 14mm !important; }
           body { margin: 0; }
-          .print-page { padding: 12mm 14mm !important; }
         }
         @page { size: A4; margin: 10mm; }
         body { font-family: Arial, sans-serif; }
