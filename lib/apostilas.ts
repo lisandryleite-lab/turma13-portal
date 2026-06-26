@@ -9,6 +9,8 @@ export const APOSTILA_PARTS: Record<string, ApostilaPart[]> = {
     { file: "AM-1.pdf", label: "Armamento e Munição" },
     { file: "AM-2.pdf", label: "Regras de Segurança" },
     { file: "AM-3.pdf", label: "Fundamentos do Tiro Policial" },
+    { file: "AM-4.pdf", label: "Procedimentos do Tiro Policial" },
+    { file: "AM-5.pdf", label: "Munição e Balística" },
   ],
   DPPM: [
     { file: "DPPM-1.pdf", label: "Direito Penal Militar" },
