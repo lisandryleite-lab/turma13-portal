@@ -13,7 +13,7 @@ export default async function DashboardPage() {
 
   const semana = semanaAtual()
 
-  const [aluno, aviso, xerife, disciplinas, todosComAniv] = await Promise.all([
+  const [aluno, aviso, xerife, disciplinas, todosComAniv, cotasPendentes] = await Promise.all([
     prisma.user.findUnique({
       where: { matricula },
       select: { id: true, nomeGuerra: true, nomeCompleto: true, email: true, canga: true, grupoPlantao: true, grupoFaxina: true, aniversario: true },
@@ -24,6 +24,10 @@ export default async function DashboardPage() {
     prisma.user.findMany({
       where: { isAdmin: false, aniversario: { not: null } },
       select: { nomeGuerra: true, aniversario: true, matricula: true },
+    }),
+    prisma.cotaFinanceira.findMany({
+      where: { ativa: true, pagamentos: { some: { pago: false, user: { matricula } } } },
+      select: { titulo: true, valor: true },
     }),
   ])
 
@@ -142,7 +146,24 @@ export default async function DashboardPage() {
           </Link>
         </div>
 
-        {/* ── Último aviso ── */}
+        {/* ── Pendências financeiras ── */}
+      {cotasPendentes.length > 0 && (
+        <div style={{ gridColumn: "1/-1", background: "#fdecec", border: "1.5px solid #e8a9a3", borderRadius: 14, padding: 20 }}>
+          <h2 style={{ fontSize: 13, fontWeight: 700, color: "#7d1f15", margin: "0 0 8px" }}>💰 Pendências financeiras</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 10 }}>
+            {cotasPendentes.map(c => (
+              <p key={c.titulo} style={{ fontSize: 13, color: "#7d1f15", margin: 0 }}>
+                <span style={{ fontWeight: 600 }}>{c.titulo}</span> — {c.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              </p>
+            ))}
+          </div>
+          <Link href="/financeiro" style={{ fontSize: 12, color: "#b23020", textDecoration: "none", fontWeight: 600 }}>
+            Ver detalhes e formas de pagamento →
+          </Link>
+        </div>
+      )}
+
+      {/* ── Último aviso ── */}
         {aviso && (
           <div style={{ gridColumn: "1/-1", background: "#fffbf0", border: "1.5px solid #f0c060", borderRadius: 14, padding: 20 }}>
             <h2 style={{ fontSize: 13, fontWeight: 700, color: "#92400e", margin: "0 0 6px" }}>📌 {aviso.titulo}</h2>

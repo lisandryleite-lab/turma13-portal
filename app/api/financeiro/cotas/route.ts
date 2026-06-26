@@ -1,0 +1,55 @@
+import { NextRequest, NextResponse } from "next/server"
+import { auth } from "@/lib/auth"
+import { prisma } from "@/lib/prisma"
+
+export async function POST(req: NextRequest) {
+  const session = await auth()
+  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+
+  const { titulo, valor, responsavel, instrucoes, prazo } = await req.json()
+  if (!titulo || isNaN(Number(valor))) return NextResponse.json({ error: "Dados inválidos" }, { status: 400 })
+
+  const alunos = await prisma.user.findMany({ where: { ativo: true, turma13: true }, select: { id: true } })
+
+  const cota = await prisma.cotaFinanceira.create({
+    data: {
+      titulo,
+      valor: Number(valor),
+      responsavel: responsavel || "",
+      instrucoes: instrucoes || null,
+      prazo: prazo ? new Date(prazo) : null,
+      pagamentos: { create: alunos.map(a => ({ userId: a.id })) },
+    },
+  })
+  return NextResponse.json(cota)
+}
+
+export async function PATCH(req: NextRequest) {
+  const session = await auth()
+  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+
+  const { id, titulo, valor, responsavel, instrucoes, prazo, ativa } = await req.json()
+  if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
+
+  const cota = await prisma.cotaFinanceira.update({
+    where: { id },
+    data: {
+      ...(titulo !== undefined && { titulo }),
+      ...(valor !== undefined && !isNaN(Number(valor)) && { valor: Number(valor) }),
+      ...(responsavel !== undefined && { responsavel }),
+      ...(instrucoes !== undefined && { instrucoes }),
+      ...(prazo !== undefined && { prazo: prazo ? new Date(prazo) : null }),
+      ...(ativa !== undefined && { ativa: Boolean(ativa) }),
+    },
+  })
+  return NextResponse.json(cota)
+}
+
+export async function DELETE(req: NextRequest) {
+  const session = await auth()
+  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+
+  const { id } = await req.json()
+  await prisma.cotaFinanceira.delete({ where: { id } })
+  return NextResponse.json({ ok: true })
+}

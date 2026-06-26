@@ -38,6 +38,7 @@ model User {
   escalasAluno     EscalaAluno[]
   missoesConcluidas MissaoConcluida[]
   nfdc              Float   @default(10)
+  pagamentosCota    PagamentoCota[]
 }
 
 model Account {
@@ -421,6 +422,38 @@ model Gaivota {
   createdAt  DateTime @default(now())
 
   @@index([materia, createdAt])
+}
+
+// ── CFO 2026 — Financeiro (cotas e cobranças do pelotão) ──────────
+model CotaFinanceira {
+  id          String   @id @default(cuid())
+  titulo      String
+  valor       Float
+  responsavel String   // quem recebe/centraliza (nome de guerra)
+  instrucoes  String?  // forma de pagamento + onde enviar comprovante
+  prazo       DateTime?
+  ativa       Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  pagamentos PagamentoCota[]
+}
+
+model PagamentoCota {
+  id            String    @id @default(cuid())
+  cotaId        String
+  userId        String
+  pago          Boolean   @default(false)
+  dataPagamento DateTime?
+  observacao    String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  cota CotaFinanceira @relation(fields: [cotaId], references: [id], onDelete: Cascade)
+  user User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([cotaId, userId])
+  @@index([userId])
 }
 
 // ── CFO 2026 — Log de acesso (LGPD / auditoria) ──────────────────
