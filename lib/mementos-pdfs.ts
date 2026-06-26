@@ -10,6 +10,10 @@ export type PdfPart = { file: string; label: string }
 export const MEMENTO_PROPRIO = new Set<string>(["ACE", "LPMO", "AP"])
 
 export const PDF_PARTS: Record<string, PdfPart[]> = {
+  AM: [
+    { file: "AM.pdf", label: "Pernambuco Imortal" },
+    { file: "AM-2.pdf", label: "Memento Resumido" },
+  ],
   DADM: [
     { file: "DADM-1.pdf", label: "Parte I" },
     { file: "DADM-2.pdf", label: "Parte II" },
