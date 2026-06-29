@@ -10,22 +10,29 @@ export default async function FinanceiroPage() {
   if (!session?.user) redirect("/login")
   const isAdmin = session.user.isAdmin ?? false
 
-  const cotas = await prisma.cotaFinanceira.findMany({
-    orderBy: [{ ativa: "desc" }, { createdAt: "desc" }],
-    include: {
-      pagamentos: {
-        include: { user: { select: { matricula: true, nomeGuerra: true } } },
-        orderBy: { user: { matricula: "asc" } },
+  const [cotas, alunos] = await Promise.all([
+    prisma.cotaFinanceira.findMany({
+      orderBy: [{ ativa: "desc" }, { createdAt: "desc" }],
+      include: {
+        pagamentos: {
+          include: { user: { select: { matricula: true, nomeGuerra: true } } },
+          orderBy: { user: { matricula: "asc" } },
+        },
       },
-    },
-  })
+    }),
+    prisma.user.findMany({
+      where: { ativo: true, turma13: true },
+      select: { id: true, matricula: true, nomeGuerra: true },
+      orderBy: { matricula: "asc" },
+    }),
+  ])
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-slate-900">Financeiro</h1>
       </div>
-      <FinanceiroClient cotas={cotas} isAdmin={isAdmin} minhaMatricula={session.user.matricula} />
+      <FinanceiroClient cotas={cotas} alunos={alunos} isAdmin={isAdmin} minhaMatricula={session.user.matricula} />
     </div>
   )
 }

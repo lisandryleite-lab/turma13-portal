@@ -3,8 +3,10 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
+type Aluno = { id: string; matricula: number; nomeGuerra: string }
 type Pagamento = {
   id: string
+  userId: string
   pago: boolean
   dataPagamento: string | Date | null
   observacao: string | null
@@ -25,13 +27,23 @@ type Cota = {
 const fmtMoeda = (v: number) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
 const fmtData = (d: string | Date | null) => (d ? new Date(d).toLocaleDateString("pt-BR") : "")
 
-export function FinanceiroClient({ cotas: inicial, isAdmin, minhaMatricula }: { cotas: Cota[]; isAdmin: boolean; minhaMatricula: number }) {
+export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricula }: { cotas: Cota[]; alunos: Aluno[]; isAdmin: boolean; minhaMatricula: number }) {
   const router = useRouter()
   const [cotas, setCotas] = useState(inicial)
   const [showForm, setShowForm] = useState(false)
   const [expandida, setExpandida] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState({ titulo: "", valor: "", responsavel: "", instrucoes: "", prazo: "" })
+  const [participantes, setParticipantes] = useState<Set<string>>(new Set(alunos.map(a => a.id)))
+  const [addAluno, setAddAluno] = useState<Record<string, string>>({})
+
+  function toggleParticipante(id: string) {
+    setParticipantes(prev => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
 
   async function criarCota(e: React.FormEvent) {
     e.preventDefault()
@@ -39,12 +51,35 @@ export function FinanceiroClient({ cotas: inicial, isAdmin, minhaMatricula }: { 
     await fetch("/api/financeiro/cotas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ ...form, participantes: [...participantes] }),
     })
     setSaving(false)
     setShowForm(false)
     setForm({ titulo: "", valor: "", responsavel: "", instrucoes: "", prazo: "" })
+    setParticipantes(new Set(alunos.map(a => a.id)))
     router.refresh()
+  }
+
+  async function adicionarAluno(cotaId: string) {
+    const userId = addAluno[cotaId]
+    if (!userId) return
+    await fetch("/api/financeiro/pagamentos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cotaId, userId }),
+    })
+    setAddAluno(prev => ({ ...prev, [cotaId]: "" }))
+    router.refresh()
+  }
+
+  async function removerPagamento(pagamentoId: string) {
+    if (!confirm("Remover este aluno desta cota? (ele não vai mais aparecer como pendente/pago aqui)")) return
+    await fetch("/api/financeiro/pagamentos", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: pagamentoId }),
+    })
+    setCotas(prev => prev.map(c => ({ ...c, pagamentos: c.pagamentos.filter(p => p.id !== pagamentoId) })))
   }
 
   async function excluirCota(id: string) {
@@ -117,6 +152,30 @@ export function FinanceiroClient({ cotas: inicial, isAdmin, minhaMatricula }: { 
               <textarea value={form.instrucoes} onChange={e => setForm({ ...form, instrucoes: e.target.value })}
                 placeholder="Instruções de pagamento (ex: Pix para Margareth, depois anexar comprovante no formulário)"
                 rows={2} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm resize-none" />
+
+              <div className="border border-slate-200 rounded-lg p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-slate-600">
+                    Quem participa desta cota? ({participantes.size}/{alunos.length})
+                  </span>
+                  <div className="flex gap-2">
+                    <button type="button" onClick={() => setParticipantes(new Set(alunos.map(a => a.id)))}
+                      className="text-xs text-blue-500 hover:text-blue-700">Marcar todos</button>
+                    <button type="button" onClick={() => setParticipantes(new Set())}
+                      className="text-xs text-slate-400 hover:text-slate-600">Limpar</button>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-400 mb-2">Por padrão, todos participam. Desmarque quem não entra nessa cobrança (ex: cota opcional como mochila/numéricas).</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 max-h-48 overflow-y-auto">
+                  {alunos.map(a => (
+                    <label key={a.id} className="flex items-center gap-1.5 text-xs py-0.5 cursor-pointer">
+                      <input type="checkbox" checked={participantes.has(a.id)} onChange={() => toggleParticipante(a.id)} />
+                      <span>{a.matricula} — {a.nomeGuerra}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
               <button type="submit" disabled={saving}
                 className="bg-yellow-500 text-black px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-50">
                 {saving ? "Salvando..." : "Criar cota"}
@@ -169,18 +228,37 @@ export function FinanceiroClient({ cotas: inicial, isAdmin, minhaMatricula }: { 
             </div>
 
             {isAdmin && expandida === c.id && (
-              <div className="mt-4 border-t border-slate-100 pt-3 grid grid-cols-1 sm:grid-cols-2 gap-1">
-                {c.pagamentos.map(p => (
-                  <label key={p.id} className="flex items-center gap-2 text-sm py-1 cursor-pointer">
-                    <input type="checkbox" checked={p.pago} onChange={() => togglePago(p)} />
-                    <span className={p.pago ? "text-green-700" : "text-slate-700"}>
-                      {p.user.matricula} — {p.user.nomeGuerra}
-                    </span>
-                    {p.pago && p.dataPagamento && (
-                      <span className="text-slate-400 text-xs">({fmtData(p.dataPagamento)})</span>
-                    )}
-                  </label>
-                ))}
+              <div className="mt-4 border-t border-slate-100 pt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                  {c.pagamentos.map(p => (
+                    <div key={p.id} className="flex items-center gap-2 text-sm py-1">
+                      <label className="flex items-center gap-2 cursor-pointer flex-1">
+                        <input type="checkbox" checked={p.pago} onChange={() => togglePago(p)} />
+                        <span className={p.pago ? "text-green-700" : "text-slate-700"}>
+                          {p.user.matricula} — {p.user.nomeGuerra}
+                        </span>
+                        {p.pago && p.dataPagamento && (
+                          <span className="text-slate-400 text-xs">({fmtData(p.dataPagamento)})</span>
+                        )}
+                      </label>
+                      <button onClick={() => removerPagamento(p.id)} title="Esta cota não se aplica a este aluno"
+                        className="text-slate-300 hover:text-red-500 text-xs shrink-0">✕</button>
+                    </div>
+                  ))}
+                </div>
+                {alunos.some(a => !c.pagamentos.find(p => p.userId === a.id)) && (
+                  <div className="flex items-center gap-2 mt-3 pt-2 border-t border-slate-100">
+                    <select value={addAluno[c.id] || ""} onChange={e => setAddAluno(prev => ({ ...prev, [c.id]: e.target.value }))}
+                      className="border border-slate-300 rounded-lg px-2 py-1 text-xs flex-1">
+                      <option value="">+ Incluir aluno nesta cota...</option>
+                      {alunos.filter(a => !c.pagamentos.find(p => p.userId === a.id)).map(a => (
+                        <option key={a.id} value={a.id}>{a.matricula} — {a.nomeGuerra}</option>
+                      ))}
+                    </select>
+                    <button onClick={() => adicionarAluno(c.id)} disabled={!addAluno[c.id]}
+                      className="text-blue-500 hover:text-blue-700 text-xs disabled:opacity-40">Adicionar</button>
+                  </div>
+                )}
               </div>
             )}
           </div>

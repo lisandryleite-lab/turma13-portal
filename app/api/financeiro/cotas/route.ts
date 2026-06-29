@@ -6,10 +6,13 @@ export async function POST(req: NextRequest) {
   const session = await auth()
   if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
-  const { titulo, valor, responsavel, instrucoes, prazo } = await req.json()
+  const { titulo, valor, responsavel, instrucoes, prazo, participantes } = await req.json()
   if (!titulo || isNaN(Number(valor))) return NextResponse.json({ error: "Dados inválidos" }, { status: 400 })
 
-  const alunos = await prisma.user.findMany({ where: { ativo: true, turma13: true }, select: { id: true } })
+  // participantes: lista opcional de ids de User — se omitida, vale para todos os ativos da Turma 13
+  const alunos = Array.isArray(participantes) && participantes.length > 0
+    ? await prisma.user.findMany({ where: { id: { in: participantes } }, select: { id: true } })
+    : await prisma.user.findMany({ where: { ativo: true, turma13: true }, select: { id: true } })
 
   const cota = await prisma.cotaFinanceira.create({
     data: {
