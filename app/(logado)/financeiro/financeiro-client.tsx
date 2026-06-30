@@ -149,6 +149,13 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
 
   return (
     <div className="space-y-5">
+      {isAdmin && (
+        <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg w-fit"
+          style={{ background: "var(--creme, #F4F7FC)", color: "var(--azul-profundo, #0B2D5E)", border: "1px solid var(--dourado, #B8924A)" }}>
+          <span style={{ color: "var(--dourado, #B8924A)" }}>★</span> Modo gestão — ADM do Financeiro
+        </div>
+      )}
+
       {minhasPendentes.length > 0 && (
         <div className="bg-amber-50 border border-amber-300 rounded-xl p-4">
           <p className="text-amber-800 text-sm font-semibold">
