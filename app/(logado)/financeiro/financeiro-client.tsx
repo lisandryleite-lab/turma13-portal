@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { LanchesClient, type Pedido } from "./lanches-client"
 
-type Aluno = { id: string; matricula: number; nomeGuerra: string }
+type Aluno = { id: string; matricula: number; nomeGuerra: string; turma13: boolean }
 type Pagamento = {
   id: string
   userId: string
@@ -41,7 +41,8 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
   const [saving, setSaving] = useState(false)
   const [copiado, setCopiado] = useState<string | null>(null)
   const [form, setForm] = useState({ titulo: "", valor: "", responsavel: "", instrucoes: "", prazo: "" })
-  const [participantes, setParticipantes] = useState<Set<string>>(new Set(alunos.map(a => a.id)))
+  const alunosT13 = alunos.filter(a => a.turma13)
+  const [participantes, setParticipantes] = useState<Set<string>>(new Set(alunosT13.map(a => a.id)))
   const [addAluno, setAddAluno] = useState<Record<string, string>>({})
 
   function linkPagamento(token: string) {
@@ -74,7 +75,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
     setSaving(false)
     setShowForm(false)
     setForm({ titulo: "", valor: "", responsavel: "", instrucoes: "", prazo: "" })
-    setParticipantes(new Set(alunos.map(a => a.id)))
+    setParticipantes(new Set(alunosT13.map(a => a.id)))
     router.refresh()
   }
 
@@ -136,6 +137,16 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
   const cotasEncerradas = cotas.filter(c => !c.ativa && c.tipo === aba)
   const minhasPendentes = cotas.filter(c => c.ativa && c.pagamentos.find(p => p.user.matricula === minhaMatricula && !p.pago))
 
+  // resumo da aba atual (cotas) — pra dar a visão sem rolar
+  let aReceber = 0, recebido = 0, totalPessoas = 0, pagosPessoas = 0
+  for (const c of cotasAtivas) {
+    for (const p of c.pagamentos) {
+      totalPessoas++
+      if (p.pago) { pagosPessoas++; recebido += c.valor } else aReceber += c.valor
+    }
+  }
+  const pctResumo = totalPessoas ? Math.round((pagosPessoas / totalPessoas) * 100) : 0
+
   return (
     <div className="space-y-5">
       {minhasPendentes.length > 0 && (
@@ -158,6 +169,29 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
 
       {aba === "lanche" && (
         <LanchesClient pedidos={lanches} isAdmin={isAdmin} minhaMatricula={minhaMatricula} minhaId={minhaId} />
+      )}
+
+      {/* Resumo da aba (cotas) */}
+      {aba !== "lanche" && cotasAtivas.length > 0 && (
+        <div className="rounded-xl p-4 text-white" style={{ background: "var(--azul-profundo, #0B2D5E)" }}>
+          <div className="grid grid-cols-3 gap-3 text-center">
+            <div>
+              <p className="text-[11px] uppercase tracking-wide opacity-70">Recebido</p>
+              <p className="text-lg font-bold">{fmtMoeda(recebido)}</p>
+            </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-wide opacity-70">A receber</p>
+              <p className="text-lg font-bold" style={{ color: "var(--dourado, #B8924A)" }}>{fmtMoeda(aReceber)}</p>
+            </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-wide opacity-70">Pagaram</p>
+              <p className="text-lg font-bold">{pagosPessoas}/{totalPessoas}</p>
+            </div>
+          </div>
+          <div className="h-1.5 bg-white/20 rounded-full overflow-hidden mt-3">
+            <div className="h-full rounded-full" style={{ width: `${pctResumo}%`, background: "var(--dourado, #B8924A)" }} />
+          </div>
+        </div>
       )}
 
       {aba !== "lanche" && isAdmin && (
@@ -188,21 +222,29 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
               <div className="border border-slate-200 rounded-lg p-3">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold text-slate-600">
-                    Quem participa desta cota? ({participantes.size}/{alunos.length})
+                    Quem participa? ({participantes.size} selecionado{participantes.size === 1 ? "" : "s"})
                   </span>
                   <div className="flex gap-2">
-                    <button type="button" onClick={() => setParticipantes(new Set(alunos.map(a => a.id)))}
-                      className="text-xs text-blue-500 hover:text-blue-700">Marcar todos</button>
+                    <button type="button" onClick={() => setParticipantes(new Set(alunosT13.map(a => a.id)))}
+                      className="text-xs text-blue-500 hover:text-blue-700">Turma 13</button>
+                    {aba === "extra" && (
+                      <button type="button" onClick={() => setParticipantes(new Set(alunos.map(a => a.id)))}
+                        className="text-xs text-blue-500 hover:text-blue-700">Todo o CFO</button>
+                    )}
                     <button type="button" onClick={() => setParticipantes(new Set())}
                       className="text-xs text-slate-400 hover:text-slate-600">Limpar</button>
                   </div>
                 </div>
-                <p className="text-xs text-slate-400 mb-2">Por padrão, todos participam. Desmarque quem não entra nessa cobrança.</p>
+                <p className="text-xs text-slate-400 mb-2">
+                  {aba === "extra"
+                    ? "Cota extra pode incluir todo o CFO. Marque quem entra nesta cobrança."
+                    : "Cota mensal do pelotão — Turma 13 por padrão. Desmarque quem não entra."}
+                </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 max-h-48 overflow-y-auto">
-                  {alunos.map(a => (
+                  {(aba === "extra" ? alunos : alunosT13).map(a => (
                     <label key={a.id} className="flex items-center gap-1.5 text-xs py-0.5 cursor-pointer">
                       <input type="checkbox" checked={participantes.has(a.id)} onChange={() => toggleParticipante(a.id)} />
-                      <span>{a.matricula} — {a.nomeGuerra}</span>
+                      <span>{a.matricula} — {a.nomeGuerra}{!a.turma13 && <span style={{ color: "var(--dourado)" }}> ·CFO</span>}</span>
                     </label>
                   ))}
                 </div>

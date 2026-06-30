@@ -38,6 +38,7 @@ export function LanchesClient({ pedidos, isAdmin, minhaMatricula, minhaId }: { p
   const [showForm, setShowForm] = useState(false)
   const [saving, setSaving] = useState(false)
   const [expandida, setExpandida] = useState<string | null>(null)
+  const [montando, setMontando] = useState<string | null>(null)
   const [copiado, setCopiado] = useState<string | null>(null)
 
   // form de novo pedido
@@ -136,8 +137,38 @@ export function LanchesClient({ pedidos, isAdmin, minhaMatricula, minhaId }: { p
   const abertos = pedidos.filter(p => p.aberto)
   const encerrados = pedidos.filter(p => !p.aberto)
 
+  // resumo dos lanches abertos
+  let lReceber = 0, lRecebido = 0, lTotal = 0, lPagos = 0
+  for (const p of abertos) for (const pa of p.pedidos) {
+    lTotal++
+    const t = totalAluno(p, pa)
+    if (pa.pago) { lPagos++; lRecebido += t } else lReceber += t
+  }
+  const lPct = lTotal ? Math.round((lPagos / lTotal) * 100) : 0
+
   return (
     <div className="space-y-5">
+      {abertos.length > 0 && (
+        <div className="rounded-xl p-4 text-white" style={{ background: "var(--azul-profundo, #0B2D5E)" }}>
+          <div className="grid grid-cols-3 gap-3 text-center">
+            <div>
+              <p className="text-[11px] uppercase tracking-wide opacity-70">Recebido</p>
+              <p className="text-lg font-bold">{fmtMoeda(lRecebido)}</p>
+            </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-wide opacity-70">A receber</p>
+              <p className="text-lg font-bold" style={{ color: "var(--dourado, #B8924A)" }}>{fmtMoeda(lReceber)}</p>
+            </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-wide opacity-70">Pagaram</p>
+              <p className="text-lg font-bold">{lPagos}/{lTotal}</p>
+            </div>
+          </div>
+          <div className="h-1.5 bg-white/20 rounded-full overflow-hidden mt-3">
+            <div className="h-full rounded-full" style={{ width: `${lPct}%`, background: "var(--dourado, #B8924A)" }} />
+          </div>
+        </div>
+      )}
       {isAdmin && (
         <div>
           <button onClick={() => setShowForm(!showForm)} className="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-slate-700">
@@ -220,28 +251,45 @@ export function LanchesClient({ pedidos, isAdmin, minhaMatricula, minhaId }: { p
 
             {/* montar meu pedido */}
             <div className="mt-4 border-t border-slate-100 pt-3">
-              <p className="text-xs font-semibold text-slate-600 mb-2">Meu pedido</p>
-              <div className="space-y-1.5">
-                {p.itens.map(i => (
-                  <div key={i.id} className="flex items-center justify-between gap-2 text-sm">
-                    <span className="text-slate-700">{i.nome} <span className="text-slate-400 text-xs">{fmtMoeda(i.preco)}</span></span>
-                    <div className="flex items-center gap-2">
-                      <button onClick={() => setQtd(p.id, i.id, qtdAtual(p, i.id) - 1)}
-                        className="w-6 h-6 rounded border border-slate-300 text-slate-600 leading-none">−</button>
-                      <span className="w-5 text-center">{qtdAtual(p, i.id)}</span>
-                      <button onClick={() => setQtd(p.id, i.id, qtdAtual(p, i.id) + 1)}
-                        className="w-6 h-6 rounded border border-slate-300 text-slate-600 leading-none">+</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center justify-between mt-3">
-                <span className="text-sm font-semibold text-slate-700">Total: {fmtMoeda(meuTotalForm(p))}</span>
-                <button onClick={() => salvarMeuPedido(p)} disabled={saving}
-                  className="bg-yellow-500 text-black px-3 py-1.5 rounded-lg text-xs font-semibold disabled:opacity-50">
-                  {meu ? "Atualizar pedido" : "Salvar pedido"}
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-semibold text-slate-600">Meu pedido</p>
+                <button onClick={() => setMontando(montando === p.id ? null : p.id)} className="text-xs text-blue-500 hover:text-blue-700">
+                  {montando === p.id ? "fechar" : meu ? "editar meu pedido" : "fazer meu pedido"}
                 </button>
               </div>
+
+              {/* resumo compacto quando não está montando */}
+              {montando !== p.id && (
+                meu
+                  ? <p className="text-sm text-slate-600 mt-1">{meu.linhas.reduce((s, l) => s + l.quantidade, 0)} item(ns) · <span className="font-semibold">{fmtMoeda(totalAluno(p, meu))}</span></p>
+                  : <p className="text-sm text-slate-400 mt-1">Você ainda não pediu.</p>
+              )}
+
+              {montando === p.id && (
+                <>
+                  <div className="space-y-1.5 mt-2">
+                    {p.itens.map(i => (
+                      <div key={i.id} className="flex items-center justify-between gap-2 text-sm">
+                        <span className="text-slate-700">{i.nome} <span className="text-slate-400 text-xs">{fmtMoeda(i.preco)}</span></span>
+                        <div className="flex items-center gap-2">
+                          <button onClick={() => setQtd(p.id, i.id, qtdAtual(p, i.id) - 1)}
+                            className="w-6 h-6 rounded border border-slate-300 text-slate-600 leading-none">−</button>
+                          <span className="w-5 text-center">{qtdAtual(p, i.id)}</span>
+                          <button onClick={() => setQtd(p.id, i.id, qtdAtual(p, i.id) + 1)}
+                            className="w-6 h-6 rounded border border-slate-300 text-slate-600 leading-none">+</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between mt-3">
+                    <span className="text-sm font-semibold text-slate-700">Total: {fmtMoeda(meuTotalForm(p))}</span>
+                    <button onClick={() => { salvarMeuPedido(p); setMontando(null) }} disabled={saving}
+                      className="bg-yellow-500 text-black px-3 py-1.5 rounded-lg text-xs font-semibold disabled:opacity-50">
+                      {meu ? "Atualizar pedido" : "Salvar pedido"}
+                    </button>
+                  </div>
+                </>
+              )}
 
               {meu && (
                 <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">

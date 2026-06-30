@@ -11,6 +11,7 @@ declare module "next-auth" {
       matricula: number
       nomeGuerra: string
       isAdmin: boolean
+      financeiroAdmin: boolean
     }
   }
 
@@ -20,6 +21,7 @@ declare module "next-auth" {
     matricula: number
     nomeGuerra: string
     isAdmin: boolean
+    financeiroAdmin?: boolean
   }
 }
 
@@ -29,5 +31,6 @@ declare module "next-auth/jwt" {
     matricula: number
     nomeGuerra: string
     isAdmin: boolean
+    financeiroAdmin: boolean
   }
 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { ehGestorFinanceiro } from "@/lib/financeiro"
 
 // Pedido individual do aluno dentro de um lanche coletivo.
 
@@ -51,7 +52,7 @@ export async function POST(req: NextRequest) {
 // PATCH: tesoureiro confirma pagamento.
 export async function PATCH(req: NextRequest) {
   const session = await auth()
-  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
   const { id, pago } = await req.json()
   if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
@@ -73,7 +74,7 @@ export async function DELETE(req: NextRequest) {
 
   const pa = await prisma.pedidoLancheAluno.findUnique({ where: { id }, select: { userId: true } })
   if (!pa) return NextResponse.json({ ok: true })
-  if (!session.user.isAdmin && pa.userId !== session.user.id) {
+  if (!ehGestorFinanceiro(session) && pa.userId !== session.user.id) {
     return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
   }
   await prisma.pedidoLancheAluno.delete({ where: { id } })

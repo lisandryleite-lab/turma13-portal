@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { ehGestorFinanceiro } from "@/lib/financeiro"
 
 // Admin gerencia o pedido coletivo (header + cardápio).
 
 export async function POST(req: NextRequest) {
   const session = await auth()
-  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
   const { titulo, restaurante, responsavel, instrucoes, prazo, itens } = await req.json()
   if (!titulo) return NextResponse.json({ error: "Título obrigatório" }, { status: 400 })
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   const session = await auth()
-  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
   const { id, aberto, titulo, restaurante, responsavel, instrucoes, prazo } = await req.json()
   if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
@@ -53,7 +54,7 @@ export async function PATCH(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   const session = await auth()
-  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
   const { id } = await req.json()
   await prisma.pedidoLanche.delete({ where: { id } })

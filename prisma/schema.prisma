@@ -15,6 +15,7 @@ model User {
   email        String    @unique
   password     String
   isAdmin      Boolean   @default(false)
+  financeiroAdmin Boolean @default(false) // gere o módulo Financeiro sem ser admin geral
   turma        Int?      // 1, 2 ou 3 — turma do CFO (pelotão é irrelevante, não modelado)
   turma13      Boolean   @default(false) // membro do pelotão "Turma 13" (1º Pelotão) — acesso ao portal T13
   ativo        Boolean   @default(true) // aluno ativo = consta na escala de plantão

@@ -30,6 +30,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           nomeGuerra: user.nomeGuerra,
           email: user.email,
           isAdmin: user.isAdmin,
+          financeiroAdmin: user.financeiroAdmin,
         }
       },
     }),
@@ -41,6 +42,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.matricula = user.matricula
         token.nomeGuerra = user.nomeGuerra
         token.isAdmin = user.isAdmin
+        token.financeiroAdmin = (user as { financeiroAdmin?: boolean }).financeiroAdmin ?? false
       }
       return token
     },
@@ -49,6 +51,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.user.matricula = token.matricula
       session.user.nomeGuerra = token.nomeGuerra
       session.user.isAdmin = token.isAdmin
+      session.user.financeiroAdmin = (token as { financeiroAdmin?: boolean }).financeiroAdmin ?? false
       return session
     },
   },

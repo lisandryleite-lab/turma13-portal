@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
+import { ehGestorFinanceiro } from "@/lib/financeiro"
 import { FinanceiroClient } from "./financeiro-client"
 
 export const dynamic = "force-dynamic"
@@ -8,7 +9,7 @@ export const dynamic = "force-dynamic"
 export default async function FinanceiroPage() {
   const session = await auth()
   if (!session?.user) redirect("/login")
-  const isAdmin = session.user.isAdmin ?? false
+  const gestor = ehGestorFinanceiro(session)
 
   const [cotas, alunos, lanches] = await Promise.all([
     prisma.cotaFinanceira.findMany({
@@ -21,8 +22,8 @@ export default async function FinanceiroPage() {
       },
     }),
     prisma.user.findMany({
-      where: { ativo: true, turma13: true },
-      select: { id: true, matricula: true, nomeGuerra: true },
+      where: { ativo: true },
+      select: { id: true, matricula: true, nomeGuerra: true, turma13: true },
       orderBy: { matricula: "asc" },
     }),
     prisma.pedidoLanche.findMany({
@@ -49,7 +50,7 @@ export default async function FinanceiroPage() {
         cotas={cotas}
         alunos={alunos}
         lanches={lanches}
-        isAdmin={isAdmin}
+        isAdmin={gestor}
         minhaMatricula={session.user.matricula}
         minhaId={session.user.id}
       />
