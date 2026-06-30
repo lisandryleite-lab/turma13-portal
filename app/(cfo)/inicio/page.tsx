@@ -66,7 +66,7 @@ const cards: {
   },
   {
     label: "Turma 13",
-    href: "/turma",
+    href: "/dashboard",
     bg: "gold",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
