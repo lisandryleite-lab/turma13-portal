@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { LanchesClient, type Pedido } from "./lanches-client"
 
 type Aluno = { id: string; matricula: number; nomeGuerra: string }
 type Pagamento = {
@@ -31,10 +32,10 @@ type Cota = {
 const fmtMoeda = (v: number) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
 const fmtData = (d: string | Date | null) => (d ? new Date(d).toLocaleDateString("pt-BR") : "")
 
-export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricula }: { cotas: Cota[]; alunos: Aluno[]; isAdmin: boolean; minhaMatricula: number }) {
+export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, minhaMatricula, minhaId }: { cotas: Cota[]; alunos: Aluno[]; lanches: Pedido[]; isAdmin: boolean; minhaMatricula: number; minhaId: string }) {
   const router = useRouter()
   const [cotas, setCotas] = useState(inicial)
-  const [aba, setAba] = useState<"mensal" | "extra">("mensal")
+  const [aba, setAba] = useState<"mensal" | "extra" | "lanche">("mensal")
   const [showForm, setShowForm] = useState(false)
   const [expandida, setExpandida] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
@@ -146,8 +147,8 @@ export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricu
       )}
 
       {/* Abas */}
-      <div className="flex gap-1 bg-slate-100 rounded-lg p-1 w-fit">
-        {([["mensal", "Cotas mensais"], ["extra", "Cotas extras"]] as const).map(([val, label]) => (
+      <div className="flex gap-1 bg-slate-100 rounded-lg p-1 w-fit flex-wrap">
+        {([["mensal", "Cotas mensais"], ["extra", "Cotas extras"], ["lanche", "Lanches coletivos"]] as const).map(([val, label]) => (
           <button key={val} onClick={() => { setAba(val); setShowForm(false); setExpandida(null) }}
             className={`px-4 py-1.5 rounded-md text-sm font-medium transition ${aba === val ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"}`}>
             {label}
@@ -155,7 +156,11 @@ export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricu
         ))}
       </div>
 
-      {isAdmin && (
+      {aba === "lanche" && (
+        <LanchesClient pedidos={lanches} isAdmin={isAdmin} minhaMatricula={minhaMatricula} minhaId={minhaId} />
+      )}
+
+      {aba !== "lanche" && isAdmin && (
         <div>
           <button onClick={() => setShowForm(!showForm)}
             className="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-slate-700">
@@ -212,7 +217,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricu
         </div>
       )}
 
-      {cotasAtivas.length === 0 && <p className="text-slate-500 text-sm">Nenhuma cota {aba === "extra" ? "extra" : "mensal"} em aberto.</p>}
+      {aba !== "lanche" && cotasAtivas.length === 0 && <p className="text-slate-500 text-sm">Nenhuma cota {aba === "extra" ? "extra" : "mensal"} em aberto.</p>}
 
       {cotasAtivas.map(c => {
         const meuPagamento = c.pagamentos.find(p => p.user.matricula === minhaMatricula)

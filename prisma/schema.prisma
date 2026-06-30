@@ -39,6 +39,7 @@ model User {
   missoesConcluidas MissaoConcluida[]
   nfdc              Float   @default(10)
   pagamentosCota    PagamentoCota[]
+  pedidosLanche     PedidoLancheAluno[]
 }
 
 model Account {
@@ -458,6 +459,69 @@ model PagamentoCota {
 
   @@unique([cotaId, userId])
   @@index([userId])
+}
+
+// ── CFO 2026 — Lanche coletivo (pedido em grupo) ─────────────────
+model PedidoLanche {
+  id          String   @id @default(cuid())
+  titulo      String
+  restaurante String?
+  responsavel String   // quem centraliza/recebe (nome de guerra)
+  instrucoes  String?  // forma de pagamento (Pix etc.)
+  prazo       DateTime?
+  aberto      Boolean  @default(true) // aceita novos pedidos?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  itens   ItemLanche[]
+  pedidos PedidoLancheAluno[]
+}
+
+model ItemLanche {
+  id       String  @id @default(cuid())
+  pedidoId String
+  nome     String
+  preco    Float
+  ordem    Int     @default(0)
+
+  pedido  PedidoLanche       @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  linhas  LinhaPedidoLanche[]
+
+  @@index([pedidoId])
+}
+
+model PedidoLancheAluno {
+  id            String    @id @default(cuid())
+  pedidoId      String
+  userId        String
+  pago          Boolean   @default(false) // confirmado pelo tesoureiro
+  dataPagamento DateTime?
+  declaradoPago Boolean   @default(false)
+  dataDeclarado DateTime?
+  token         String    @unique @default(cuid()) // link público (pagamento sem login)
+  observacao    String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  pedido PedidoLanche        @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  user   User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  linhas LinhaPedidoLanche[]
+
+  @@unique([pedidoId, userId])
+  @@index([userId])
+}
+
+model LinhaPedidoLanche {
+  id              String @id @default(cuid())
+  pedidoAlunoId   String
+  itemId          String
+  quantidade      Int    @default(1)
+
+  pedidoAluno PedidoLancheAluno @relation(fields: [pedidoAlunoId], references: [id], onDelete: Cascade)
+  item        ItemLanche        @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([pedidoAlunoId, itemId])
+  @@index([pedidoAlunoId])
 }
 
 // ── CFO 2026 — Log de acesso (LGPD / auditoria) ──────────────────
