@@ -2,16 +2,19 @@
 //  Cálculos automáticos de escalas — Turma 13 CFO PM 2026
 // ─────────────────────────────────────────────────────────────
 
-// Matrícula ordenada por antiguidade (menor = mais antigo) — 33 alunos (206 e 207 removidos)
+// Matrícula ordenada por antiguidade (menor = mais antigo) — 32 alunos
+// (206 e 207 removidos; 1 HELLTON FERNANDES e 54 ELDER CARVALHO saíram da Turma 13 em jun/2026;
+// 213 R SILVA entrou em jun/2026 — ver Mapa de Equipes JULHO/2026)
 export const MATRICULAS_ORDEM = [
-  1, 7, 13, 19, 23, 26, 37, 41, 45, 54, 55, 57, 60, 65,
+  7, 13, 19, 23, 26, 37, 41, 45, 55, 57, 60, 65,
   71, 76, 81, 94, 98, 105, 106, 108, 114, 116, 131, 143,
-  144, 153, 165, 167, 174, 186, 191,
+  144, 153, 165, 167, 174, 186, 191, 213,
 ]
 
-// Semana de referência: semana 20 → P1=65 KAUHANNI (idx 13), P3=71 LEIMIG (idx 14), P4=76 ARAUJO JUNIOR (idx 15)
+// Semana de referência: semana 20 → P1=65 KAUHANNI (idx 11), P3=71 LEIMIG (idx 12), P4=76 ARAUJO JUNIOR (idx 13)
+// (idx recalibrado em jun/2026 após remoção de 1 e 54 do array, que ficavam antes do índice original 13)
 const REF_SEMANA = 20
-const REF_P1_IDX = 13
+const REF_P1_IDX = 11
 
 export function calcularServico(semana: number): {
   p1: number | null
@@ -116,18 +119,19 @@ export const COMPOSICAO_FAXINA: Record<GrupoFaxina, { mat: number; nome: string 
   G4: [{ mat: 108, nome: "LISANDRY" }, { mat: 114, nome: "JOSIANE FARIAS" }, { mat: 81, nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }],
   G5: [{ mat: 98, nome: "JOSÉ MENEZES" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 71, nome: "LEIMIG" }, { mat: 76, nome: "ARAÚJO JR" }],
   G6: [{ mat: 55, nome: "SHIRLAYNE" }, { mat: 65, nome: "KAUHANNI" }, { mat: 41, nome: "ALAN SILVA" }, { mat: 60, nome: "JOÃO NUNES" }],
-  G7: [{ mat: 54, nome: "ELDER CARVALHO" }, { mat: 57, nome: "CLEYTON" }, { mat: 19, nome: "THAIS FIGUEIREDO" }, { mat: 45, nome: "GABRIELE COSTA" }],
+  G7: [{ mat: 213, nome: "R SILVA" }, { mat: 57, nome: "CLEYTON" }, { mat: 19, nome: "THAIS FIGUEIREDO" }, { mat: 45, nome: "GABRIELE COSTA" }],
   G8: [{ mat: 7, nome: "ALDO SILVA" }, { mat: 37, nome: "PABLO TORRES" }, { mat: 23, nome: "RODOLFO MOURA" }, { mat: 26, nome: "ANDRÉ" }],
 }
 
-// Composição dos grupos de plantão — atualizado maio/2026 (8 grupos)
+// Composição dos grupos de plantão — atualizado jul/2026 (Mapa de Equipes, escala 7x1 da 2ª CIA)
+// 1 HELLTON FERNANDES (GOLF) e 54 ELDER CARVALHO (MIKE) saíram da Turma 13; 213 R SILVA entrou (JULIETT)
 export const MEMBROS_PLANTAO: Record<GrupoPlantao, { mat: number; nome: string }[]> = {
-  GOLF:     [{ mat: 1,   nome: "HELLTON FERNANDES" }, { mat: 7,   nome: "ALDO SILVA" }, { mat: 19,  nome: "THAIS FIGUEIREDO" }, { mat: 57,  nome: "CLEYTON" }, { mat: 143, nome: "VIDAL" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
+  GOLF:     [{ mat: 7,   nome: "ALDO SILVA" }, { mat: 19,  nome: "THAIS FIGUEIREDO" }, { mat: 57,  nome: "CLEYTON" }, { mat: 143, nome: "VIDAL" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
   HOTEL:    [{ mat: 13,  nome: "JONAS" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 144, nome: "SAMUEL SANTOS" }],
   INDIA:    [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 116, nome: "BERTIPALHA" }],
-  JULIETT:  [{ mat: 94,  nome: "ANDRÉ CARDOSO" }],
+  JULIETT:  [{ mat: 94,  nome: "ANDRÉ CARDOSO" }, { mat: 213, nome: "R SILVA" }],
   KILO:     [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }],
   LIMA:     [{ mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 186, nome: "SAMUEL SILVA" }],
-  MIKE:     [{ mat: 45,  nome: "GABRIELE COSTA" }, { mat: 54,  nome: "ELDER CARVALHO" }, { mat: 81,  nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 108, nome: "LISANDRY" }, { mat: 153, nome: "HUGO" }, { mat: 165, nome: "KEVIN GOMES" }],
+  MIKE:     [{ mat: 45,  nome: "GABRIELE COSTA" }, { mat: 81,  nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 108, nome: "LISANDRY" }, { mat: 153, nome: "HUGO" }, { mat: 165, nome: "KEVIN GOMES" }],
   NOVEMBER: [{ mat: 55,  nome: "SHIRLAYNE" }, { mat: 71,  nome: "LEIMIG" }, { mat: 76,  nome: "ARAÚJO JR" }],
 }

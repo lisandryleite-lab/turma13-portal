@@ -109,23 +109,24 @@ Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 ⚠️ O código atual usa Jan 05 (gera semana 21). Ajuste pendente: mudar para Jan 06.
 
 ### Turma
-33 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
+32 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
+**1 (Hellton Fernandes) e 54 (Elder Carvalho) saíram** da Turma 13 em jun/2026; **213 (R Silva) entrou** — ver `scripts/update-roster-213.ts` e `scripts/update-roster-julho.ts`. Lista oficial de antiguidade em `lib/escalas.ts` (`MATRICULAS_ORDEM`).
 
-### Grupos de plantão — 8 grupos (atualizado maio/2026)
+### Grupos de plantão — 8 grupos (atualizado jul/2026 — Mapa de Equipes, escala 7x1)
 Ciclo **diário** (todos os dias, incluindo fins de semana).
 Ordem: GOLF → HOTEL → INDIA → JULIETT → KILO → LIMA → MIKE → NOVEMBER → (repete).
 Referência confirmada: **26/05/2026 = GOLF**. Verificação: 02/06/2026 = NOVEMBER.
 
-| Grupo    | Mats                           | Membros                                                                          |
-|----------|--------------------------------|----------------------------------------------------------------------------------|
-| GOLF     | 1, 7, 19, 57, 143, 191         | Hellton Fernandes, Aldo Silva, Thais Figueiredo, Cleyton, Vidal, Gomes Nascimento |
-| HOTEL    | 13, 23, 105, 144               | Jonas, Rodolfo Moura, Lucas Eduardo, Samuel Santos                               |
-| INDIA    | 41, 60, 116                    | Alan Silva, João Nunes, Bertipalha                                               |
-| JULIETT  | 94                             | André Cardoso                                                                    |
-| KILO     | 26, 37, 65, 98                 | André, Pablo Torres, Kauhanni, José Menezes                                      |
-| LIMA     | 114, 131, 167, 174, 186        | Josiane Farias, José Inácio, Gustavo Neto, Alexandre, Samuel Silva               |
-| MIKE     | 45, 54, 81, 106, 108, 153, 165 | Gabriele Costa, Elder Carvalho, Fernando Rocha, Rafael Ribeiro, Lisandry, Hugo, Kevin Gomes |
-| NOVEMBER | 55, 71, 76                     | Shirlayne, Leimig, Araújo Junior                                                 |
+| Grupo    | Mats                      | Membros                                                                          |
+|----------|---------------------------|----------------------------------------------------------------------------------|
+| GOLF     | 7, 19, 57, 143, 191       | Aldo Silva, Thais Figueiredo, Cleyton, Vidal, Gomes Nascimento                   |
+| HOTEL    | 13, 23, 105, 144          | Jonas, Rodolfo Moura, Lucas Eduardo, Samuel Santos                               |
+| INDIA    | 41, 60, 116               | Alan Silva, João Nunes, Bertipalha                                               |
+| JULIETT  | 94, 213                   | André Cardoso, R Silva                                                          |
+| KILO     | 26, 37, 65, 98            | André, Pablo Torres, Kauhanni, José Menezes                                      |
+| LIMA     | 114, 131, 167, 174, 186   | Josiane Farias, José Inácio, Gustavo Neto, Alexandre, Samuel Silva               |
+| MIKE     | 45, 81, 106, 108, 153, 165| Gabriele Costa, Fernando Rocha, Rafael Ribeiro, Lisandry, Hugo, Kevin Gomes      |
+| NOVEMBER | 55, 71, 76                | Shirlayne, Leimig, Araújo Junior                                                 |
 
 ## Autenticação — padrão de uso
 
