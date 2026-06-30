@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth"
 import { NextResponse } from "next/server"
 
-const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password"]
+const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/pagar", "/api/pagar"]
 
 export const authConfig: NextAuthConfig = {
   pages: { signIn: "/login" },

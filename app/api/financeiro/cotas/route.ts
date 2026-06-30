@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const session = await auth()
   if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
-  const { titulo, valor, responsavel, instrucoes, prazo, participantes } = await req.json()
+  const { titulo, tipo, valor, responsavel, instrucoes, prazo, participantes } = await req.json()
   if (!titulo || isNaN(Number(valor))) return NextResponse.json({ error: "Dados inválidos" }, { status: 400 })
 
   // participantes: lista opcional de ids de User — se omitida, vale para todos os ativos da Turma 13
@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
   const cota = await prisma.cotaFinanceira.create({
     data: {
       titulo,
+      tipo: tipo === "extra" ? "extra" : "mensal",
       valor: Number(valor),
       responsavel: responsavel || "",
       instrucoes: instrucoes || null,
@@ -31,13 +32,14 @@ export async function PATCH(req: NextRequest) {
   const session = await auth()
   if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
-  const { id, titulo, valor, responsavel, instrucoes, prazo, ativa } = await req.json()
+  const { id, titulo, tipo, valor, responsavel, instrucoes, prazo, ativa } = await req.json()
   if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
 
   const cota = await prisma.cotaFinanceira.update({
     where: { id },
     data: {
       ...(titulo !== undefined && { titulo }),
+      ...(tipo !== undefined && { tipo: tipo === "extra" ? "extra" : "mensal" }),
       ...(valor !== undefined && !isNaN(Number(valor)) && { valor: Number(valor) }),
       ...(responsavel !== undefined && { responsavel }),
       ...(instrucoes !== undefined && { instrucoes }),

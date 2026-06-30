@@ -428,6 +428,7 @@ model Gaivota {
 model CotaFinanceira {
   id          String   @id @default(cuid())
   titulo      String
+  tipo        String   @default("mensal") // mensal | extra
   valor       Float
   responsavel String   // quem recebe/centraliza (nome de guerra)
   instrucoes  String?  // forma de pagamento + onde enviar comprovante
@@ -443,8 +444,11 @@ model PagamentoCota {
   id            String    @id @default(cuid())
   cotaId        String
   userId        String
-  pago          Boolean   @default(false)
+  pago          Boolean   @default(false) // confirmado pelo tesoureiro
   dataPagamento DateTime?
+  declaradoPago Boolean   @default(false) // o aluno declarou "já fiz o Pix" (via link público) — aguarda confirmação
+  dataDeclarado DateTime?
+  token         String    @unique @default(cuid()) // link público de pagamento, sem login
   observacao    String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

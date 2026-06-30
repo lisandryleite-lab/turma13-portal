@@ -9,12 +9,16 @@ type Pagamento = {
   userId: string
   pago: boolean
   dataPagamento: string | Date | null
+  declaradoPago: boolean
+  dataDeclarado: string | Date | null
+  token: string
   observacao: string | null
   user: { matricula: number; nomeGuerra: string }
 }
 type Cota = {
   id: string
   titulo: string
+  tipo: string
   valor: number
   responsavel: string
   instrucoes: string | null
@@ -30,12 +34,25 @@ const fmtData = (d: string | Date | null) => (d ? new Date(d).toLocaleDateString
 export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricula }: { cotas: Cota[]; alunos: Aluno[]; isAdmin: boolean; minhaMatricula: number }) {
   const router = useRouter()
   const [cotas, setCotas] = useState(inicial)
+  const [aba, setAba] = useState<"mensal" | "extra">("mensal")
   const [showForm, setShowForm] = useState(false)
   const [expandida, setExpandida] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const [copiado, setCopiado] = useState<string | null>(null)
   const [form, setForm] = useState({ titulo: "", valor: "", responsavel: "", instrucoes: "", prazo: "" })
   const [participantes, setParticipantes] = useState<Set<string>>(new Set(alunos.map(a => a.id)))
   const [addAluno, setAddAluno] = useState<Record<string, string>>({})
+
+  function linkPagamento(token: string) {
+    return typeof window !== "undefined" ? `${window.location.origin}/pagar/${token}` : `/pagar/${token}`
+  }
+  async function copiarLink(token: string) {
+    try {
+      await navigator.clipboard.writeText(linkPagamento(token))
+      setCopiado(token)
+      setTimeout(() => setCopiado(c => (c === token ? null : c)), 2000)
+    } catch { /* clipboard indisponível */ }
+  }
 
   function toggleParticipante(id: string) {
     setParticipantes(prev => {
@@ -51,7 +68,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricu
     await fetch("/api/financeiro/cotas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, participantes: [...participantes] }),
+      body: JSON.stringify({ ...form, tipo: aba, participantes: [...participantes] }),
     })
     setSaving(false)
     setShowForm(false)
@@ -114,9 +131,9 @@ export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricu
     })
   }
 
-  const cotasAtivas = cotas.filter(c => c.ativa)
-  const cotasEncerradas = cotas.filter(c => !c.ativa)
-  const minhasPendentes = cotasAtivas.filter(c => c.pagamentos.find(p => p.user.matricula === minhaMatricula && !p.pago))
+  const cotasAtivas = cotas.filter(c => c.ativa && c.tipo === aba)
+  const cotasEncerradas = cotas.filter(c => !c.ativa && c.tipo === aba)
+  const minhasPendentes = cotas.filter(c => c.ativa && c.pagamentos.find(p => p.user.matricula === minhaMatricula && !p.pago))
 
   return (
     <div className="space-y-5">
@@ -128,16 +145,26 @@ export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricu
         </div>
       )}
 
+      {/* Abas */}
+      <div className="flex gap-1 bg-slate-100 rounded-lg p-1 w-fit">
+        {([["mensal", "Cotas mensais"], ["extra", "Cotas extras"]] as const).map(([val, label]) => (
+          <button key={val} onClick={() => { setAba(val); setShowForm(false); setExpandida(null) }}
+            className={`px-4 py-1.5 rounded-md text-sm font-medium transition ${aba === val ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"}`}>
+            {label}
+          </button>
+        ))}
+      </div>
+
       {isAdmin && (
         <div>
           <button onClick={() => setShowForm(!showForm)}
             className="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-slate-700">
-            {showForm ? "Cancelar" : "+ Nova Cota/Cobrança"}
+            {showForm ? "Cancelar" : `+ Nova cota ${aba === "extra" ? "extra" : "mensal"}`}
           </button>
           {showForm && (
             <form onSubmit={criarCota} className="mt-4 bg-white border border-slate-200 rounded-xl p-5 space-y-3">
               <input value={form.titulo} onChange={e => setForm({ ...form, titulo: e.target.value })}
-                placeholder="Título (ex: Cota mensal do pelotão — Junho)"
+                placeholder={aba === "extra" ? "Título (ex: Presente de formatura)" : "Título (ex: Cota mensal — Junho)"}
                 className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" required />
               <div className="flex gap-3">
                 <input value={form.valor} onChange={e => setForm({ ...form, valor: e.target.value })}
@@ -150,7 +177,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricu
                 placeholder="Responsável por arrecadar (nome de guerra)"
                 className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
               <textarea value={form.instrucoes} onChange={e => setForm({ ...form, instrucoes: e.target.value })}
-                placeholder="Instruções de pagamento (ex: Pix para Margareth, depois anexar comprovante no formulário)"
+                placeholder="Instruções de pagamento (ex: Pix chave 000.000... para Margareth)"
                 rows={2} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm resize-none" />
 
               <div className="border border-slate-200 rounded-lg p-3">
@@ -165,7 +192,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricu
                       className="text-xs text-slate-400 hover:text-slate-600">Limpar</button>
                   </div>
                 </div>
-                <p className="text-xs text-slate-400 mb-2">Por padrão, todos participam. Desmarque quem não entra nessa cobrança (ex: cota opcional como mochila/numéricas).</p>
+                <p className="text-xs text-slate-400 mb-2">Por padrão, todos participam. Desmarque quem não entra nessa cobrança.</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 max-h-48 overflow-y-auto">
                   {alunos.map(a => (
                     <label key={a.id} className="flex items-center gap-1.5 text-xs py-0.5 cursor-pointer">
@@ -185,12 +212,13 @@ export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricu
         </div>
       )}
 
-      {cotasAtivas.length === 0 && <p className="text-slate-500 text-sm">Nenhuma cota em aberto.</p>}
+      {cotasAtivas.length === 0 && <p className="text-slate-500 text-sm">Nenhuma cota {aba === "extra" ? "extra" : "mensal"} em aberto.</p>}
 
       {cotasAtivas.map(c => {
         const meuPagamento = c.pagamentos.find(p => p.user.matricula === minhaMatricula)
         const pagos = c.pagamentos.filter(p => p.pago).length
         const total = c.pagamentos.length
+        const pct = total > 0 ? Math.round((pagos / total) * 100) : 0
         return (
           <div key={c.id} className="bg-white border border-slate-200 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
@@ -202,51 +230,86 @@ export function FinanceiroClient({ cotas: inicial, alunos, isAdmin, minhaMatricu
                   {c.prazo && <> · Prazo: {fmtData(c.prazo)}</>}
                 </p>
                 {c.instrucoes && <p className="text-slate-500 text-xs mt-1 whitespace-pre-wrap">{c.instrucoes}</p>}
-                {!isAdmin && meuPagamento && (
-                  <p className={`text-sm mt-2 font-semibold ${meuPagamento.pago ? "text-green-600" : "text-red-500"}`}>
-                    {meuPagamento.pago ? `✓ Pago em ${fmtData(meuPagamento.dataPagamento)}` : "✗ Pendente"}
-                  </p>
+
+                {/* meu status + meu link de pagamento */}
+                {meuPagamento && (
+                  <div className="mt-2 flex flex-wrap items-center gap-3">
+                    <span className={`text-sm font-semibold ${meuPagamento.pago ? "text-green-600" : "text-red-500"}`}>
+                      {meuPagamento.pago ? `✓ Pago em ${fmtData(meuPagamento.dataPagamento)}` : "✗ Pendente"}
+                    </span>
+                    {!meuPagamento.pago && (
+                      <button onClick={() => copiarLink(meuPagamento.token)} className="text-xs text-blue-500 hover:text-blue-700">
+                        {copiado === meuPagamento.token ? "✓ link copiado" : "copiar meu link de pagamento"}
+                      </button>
+                    )}
+                  </div>
                 )}
-                {isAdmin && (
-                  <p className="text-slate-400 text-xs mt-2">{pagos}/{total} alunos pagaram</p>
-                )}
+
+                {/* progresso visível a todos */}
+                <div className="mt-3">
+                  <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
+                    <span>{pagos}/{total} pagaram</span>
+                    <button onClick={() => setExpandida(expandida === c.id ? null : c.id)}
+                      className="text-blue-500 hover:text-blue-700">
+                      {expandida === c.id ? "ocultar lista" : "ver quem pagou / falta"}
+                    </button>
+                  </div>
+                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-green-500" style={{ width: `${pct}%` }} />
+                  </div>
+                </div>
               </div>
               {isAdmin && (
                 <div className="flex flex-col gap-1 items-end shrink-0">
-                  <button onClick={() => setExpandida(expandida === c.id ? null : c.id)}
-                    className="text-blue-500 hover:text-blue-700 text-xs">
-                    {expandida === c.id ? "Ocultar lista" : "Ver/marcar pagamentos"}
-                  </button>
-                  <button onClick={() => encerrarCota(c)} className="text-slate-400 hover:text-slate-600 text-xs">
-                    Encerrar
-                  </button>
-                  <button onClick={() => excluirCota(c.id)} className="text-red-400 hover:text-red-600 text-xs">
-                    Excluir
-                  </button>
+                  <button onClick={() => encerrarCota(c)} className="text-slate-400 hover:text-slate-600 text-xs">Encerrar</button>
+                  <button onClick={() => excluirCota(c.id)} className="text-red-400 hover:text-red-600 text-xs">Excluir</button>
                 </div>
               )}
             </div>
 
-            {isAdmin && expandida === c.id && (
+            {expandida === c.id && (
               <div className="mt-4 border-t border-slate-100 pt-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                   {c.pagamentos.map(p => (
                     <div key={p.id} className="flex items-center gap-2 text-sm py-1">
-                      <label className="flex items-center gap-2 cursor-pointer flex-1">
-                        <input type="checkbox" checked={p.pago} onChange={() => togglePago(p)} />
-                        <span className={p.pago ? "text-green-700" : "text-slate-700"}>
-                          {p.user.matricula} — {p.user.nomeGuerra}
+                      {isAdmin ? (
+                        <label className="flex items-center gap-2 cursor-pointer flex-1">
+                          <input type="checkbox" checked={p.pago} onChange={() => togglePago(p)} />
+                          <span className={p.pago ? "text-green-700" : "text-slate-700"}>
+                            {p.user.matricula} — {p.user.nomeGuerra}
+                          </span>
+                          {p.pago && p.dataPagamento && (
+                            <span className="text-slate-400 text-xs">({fmtData(p.dataPagamento)})</span>
+                          )}
+                          {!p.pago && p.declaradoPago && (
+                            <span className="text-amber-600 text-xs" title={p.observacao || "declarou que pagou"}>● declarou pago</span>
+                          )}
+                        </label>
+                      ) : (
+                        <span className="flex items-center gap-2 flex-1">
+                          <span className={p.pago ? "text-green-600" : "text-slate-400"}>{p.pago ? "✓" : "○"}</span>
+                          <span className={p.pago ? "text-green-700" : "text-slate-600"}>
+                            {p.user.matricula} — {p.user.nomeGuerra}
+                          </span>
+                          {!p.pago && p.declaradoPago && <span className="text-amber-500 text-xs">(declarou pago)</span>}
                         </span>
-                        {p.pago && p.dataPagamento && (
-                          <span className="text-slate-400 text-xs">({fmtData(p.dataPagamento)})</span>
-                        )}
-                      </label>
-                      <button onClick={() => removerPagamento(p.id)} title="Esta cota não se aplica a este aluno"
-                        className="text-slate-300 hover:text-red-500 text-xs shrink-0">✕</button>
+                      )}
+                      {isAdmin && (
+                        <>
+                          {!p.pago && (
+                            <button onClick={() => copiarLink(p.token)} title="Copiar link de pagamento deste aluno"
+                              className="text-slate-300 hover:text-blue-500 text-xs shrink-0">
+                              {copiado === p.token ? "✓" : "🔗"}
+                            </button>
+                          )}
+                          <button onClick={() => removerPagamento(p.id)} title="Esta cota não se aplica a este aluno"
+                            className="text-slate-300 hover:text-red-500 text-xs shrink-0">✕</button>
+                        </>
+                      )}
                     </div>
                   ))}
                 </div>
-                {alunos.some(a => !c.pagamentos.find(p => p.userId === a.id)) && (
+                {isAdmin && alunos.some(a => !c.pagamentos.find(p => p.userId === a.id)) && (
                   <div className="flex items-center gap-2 mt-3 pt-2 border-t border-slate-100">
                     <select value={addAluno[c.id] || ""} onChange={e => setAddAluno(prev => ({ ...prev, [c.id]: e.target.value }))}
                       className="border border-slate-300 rounded-lg px-2 py-1 text-xs flex-1">
