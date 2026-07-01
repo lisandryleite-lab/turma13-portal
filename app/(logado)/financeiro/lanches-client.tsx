@@ -20,6 +20,7 @@ type PedidoAluno = {
 export type Pedido = {
   id: string
   titulo: string
+  token: string
   restaurante: string | null
   responsavel: string
   instrucoes: string | null
@@ -47,15 +48,34 @@ export function LanchesClient({ pedidos, isAdmin, minhaMatricula, minhaId }: { p
 
   // pedido do aluno: { [pedidoId]: { [itemId]: quantidade } }
   const [meuPedido, setMeuPedido] = useState<Record<string, Record<string, number>>>({})
+  const [obsCobranca, setObsCobranca] = useState<Record<string, string>>({})
 
   function linkPagamento(token: string) {
     return typeof window !== "undefined" ? `${window.location.origin}/pagar/${token}` : `/pagar/${token}`
   }
-  async function copiarLink(token: string) {
+  function linkColetivo(p: Pedido) {
+    return typeof window !== "undefined" ? `${window.location.origin}/pagar/l/${p.token}` : `/pagar/l/${p.token}`
+  }
+  async function copiar(texto: string, chave: string) {
     try {
-      await navigator.clipboard.writeText(linkPagamento(token))
-      setCopiado(token); setTimeout(() => setCopiado(c => (c === token ? null : c)), 2000)
+      await navigator.clipboard.writeText(texto)
+      setCopiado(chave); setTimeout(() => setCopiado(c => (c === chave ? null : c)), 2000)
     } catch { /* indisponível */ }
+  }
+  const copiarLink = (token: string) => copiar(linkPagamento(token), token)
+
+  // mensagem de cobrança do grupo (link coletivo — cada um acha o próprio nome)
+  function mensagemCobranca(p: Pedido) {
+    return [
+      `*Lanche coletivo — ${p.titulo}* (Turma 13)`,
+      p.restaurante ? `Restaurante: ${p.restaurante}` : "",
+      p.prazo ? `Prazo: ${fmtData(p.prazo)}` : "",
+      p.responsavel ? `Pagar para: ${p.responsavel}` : "",
+      p.instrucoes || "",
+      (obsCobranca[p.id] || "").trim(),
+      "",
+      `Acesse, ache seu nome e confirme o pagamento: ${linkColetivo(p)}`,
+    ].filter(l => l !== "").join("\n")
   }
 
   function totalAluno(p: Pedido, pa: PedidoAluno) {
@@ -319,6 +339,24 @@ export function LanchesClient({ pedidos, isAdmin, minhaMatricula, minhaId }: { p
 
               {expandida === p.id && (
                 <div className="mt-3 space-y-3">
+                  {isAdmin && (
+                    <div className="space-y-1.5">
+                      <input value={obsCobranca[p.id] || ""} onChange={e => setObsCobranca(prev => ({ ...prev, [p.id]: e.target.value }))}
+                        placeholder="Observação p/ a mensagem de cobrança (opcional)"
+                        className="w-full border border-slate-200 rounded-lg px-2 py-1.5 text-xs" />
+                      <div className="flex flex-wrap items-center gap-3">
+                        <button onClick={() => copiar(mensagemCobranca(p), "msg:" + p.id)}
+                          className="text-xs font-semibold text-white px-3 py-1.5 rounded-lg" style={{ background: "var(--azul-profundo, #0B2D5E)" }}>
+                          {copiado === "msg:" + p.id ? "✓ mensagem copiada" : "📋 copiar cobrança do grupo"}
+                        </button>
+                        <button onClick={() => copiar(linkColetivo(p), "link:" + p.id)}
+                          className="text-xs text-blue-500 hover:text-blue-700">
+                          {copiado === "link:" + p.id ? "✓ link copiado" : "copiar só o link"}
+                        </button>
+                      </div>
+                      <p className="text-[11px] text-slate-400">Um link só p/ o grupo: cada um acessa, acha o próprio nome e confirma.</p>
+                    </div>
+                  )}
                   {consolidado.length > 0 && (
                     <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
                       <p className="text-xs font-semibold text-slate-500 mb-1">Resumo p/ o restaurante</p>

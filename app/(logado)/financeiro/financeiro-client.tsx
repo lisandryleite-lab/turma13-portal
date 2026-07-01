@@ -19,6 +19,7 @@ type Pagamento = {
 type Cota = {
   id: string
   titulo: string
+  token: string
   tipo: string
   valor: number
   responsavel: string
@@ -57,19 +58,21 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
     } catch { /* clipboard indisponível */ }
   }
   const copiarLink = (token: string) => copiar(linkPagamento(token), token)
+  function linkColetivoCota(c: Cota) {
+    return typeof window !== "undefined" ? `${window.location.origin}/pagar/c/${c.token}` : `/pagar/c/${c.token}`
+  }
 
-  // monta a mensagem de cobrança pronta p/ WhatsApp (com link e observação opcional)
-  function mensagemCobranca(c: Cota, p: Pagamento) {
+  // mensagem de cobrança do GRUPO pronta p/ WhatsApp (link coletivo — cada um acha o próprio nome)
+  function mensagemCobranca(c: Cota) {
     return [
       `*Cobrança — ${c.titulo}* (Turma 13)`,
-      `Olá, ${p.user.nomeGuerra}!`,
       `Valor: ${fmtMoeda(c.valor)}`,
       c.prazo ? `Prazo: ${fmtData(c.prazo)}` : "",
       c.responsavel ? `Pagar para: ${c.responsavel}` : "",
       c.instrucoes || "",
       (obsCobranca[c.id] || "").trim(),
       "",
-      `Pague e confirme pelo link: ${linkPagamento(p.token)}`,
+      `Acesse, ache seu nome e confirme o pagamento: ${linkColetivoCota(c)}`,
     ].filter(l => l !== "").join("\n")
   }
 
@@ -336,9 +339,22 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
                 {c.instrucoes && <p className="text-slate-500 text-xs mb-2 whitespace-pre-wrap">{c.instrucoes}</p>}
 
                 {isAdmin && (
-                  <input value={obsCobranca[c.id] || ""} onChange={e => setObsCobranca(prev => ({ ...prev, [c.id]: e.target.value }))}
-                    placeholder="Observação p/ a mensagem de cobrança (opcional — ex: pagar até sexta)"
-                    className="w-full border border-slate-200 rounded-lg px-2 py-1.5 text-xs mb-2" />
+                  <div className="mb-2 space-y-1.5">
+                    <input value={obsCobranca[c.id] || ""} onChange={e => setObsCobranca(prev => ({ ...prev, [c.id]: e.target.value }))}
+                      placeholder="Observação p/ a mensagem de cobrança (opcional — ex: pagar até sexta)"
+                      className="w-full border border-slate-200 rounded-lg px-2 py-1.5 text-xs" />
+                    <div className="flex flex-wrap items-center gap-3">
+                      <button onClick={() => copiar(mensagemCobranca(c), "msg:" + c.id)}
+                        className="text-xs font-semibold text-white px-3 py-1.5 rounded-lg" style={{ background: "var(--azul-profundo, #0B2D5E)" }}>
+                        {copiado === "msg:" + c.id ? "✓ mensagem copiada" : "📋 copiar cobrança do grupo"}
+                      </button>
+                      <button onClick={() => copiar(linkColetivoCota(c), "link:" + c.id)}
+                        className="text-xs text-blue-500 hover:text-blue-700">
+                        {copiado === "link:" + c.id ? "✓ link copiado" : "copiar só o link"}
+                      </button>
+                    </div>
+                    <p className="text-[11px] text-slate-400">Um link só p/ o grupo: cada um acessa, acha o próprio nome e confirma o pagamento.</p>
+                  </div>
                 )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
@@ -363,12 +379,6 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
                           {!p.pago && p.declaradoPago && <span className="text-amber-500 text-xs shrink-0">declarou</span>}
                         </span>
                       )}
-                      {isAdmin && !p.pago && (
-                        <button onClick={() => copiar(mensagemCobranca(c, p), "msg:" + p.token)} title="Copiar mensagem de cobrança (com link)"
-                          className="text-slate-300 hover:text-blue-500 text-xs shrink-0">
-                          {copiado === "msg:" + p.token ? "✓" : "📋"}
-                        </button>
-                      )}
                       {isAdmin && (
                         <button onClick={() => removerPagamento(p.id)} title="Esta cota não se aplica a este aluno"
                           className="text-slate-300 hover:text-red-500 text-xs shrink-0">✕</button>
@@ -376,7 +386,6 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
                     </div>
                   ))}
                 </div>
-                {isAdmin && <p className="text-[11px] text-slate-400 mt-2">📋 copia a mensagem de cobrança pronta (com o link individual) pra colar no WhatsApp.</p>}
                 {isAdmin && alunos.some(a => !c.pagamentos.find(p => p.userId === a.id)) && (
                   <div className="flex items-center gap-2 mt-3 pt-2 border-t border-slate-100">
                     <select value={addAluno[c.id] || ""} onChange={e => setAddAluno(prev => ({ ...prev, [c.id]: e.target.value }))}

@@ -430,6 +430,7 @@ model Gaivota {
 model CotaFinanceira {
   id          String   @id @default(cuid())
   titulo      String
+  token       String   @unique @default(cuid()) // link coletivo público (todos acessam e acham o próprio nome)
   tipo        String   @default("mensal") // mensal | extra
   valor       Float
   responsavel String   // quem recebe/centraliza (nome de guerra)
@@ -466,6 +467,7 @@ model PagamentoCota {
 model PedidoLanche {
   id          String   @id @default(cuid())
   titulo      String
+  token       String   @unique @default(cuid()) // link coletivo público
   restaurante String?
   responsavel String   // quem centraliza/recebe (nome de guerra)
   instrucoes  String?  // forma de pagamento (Pix etc.)
