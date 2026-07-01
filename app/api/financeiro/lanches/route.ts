@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const session = await auth()
   if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
-  const { titulo, restaurante, responsavel, instrucoes, prazo, itens } = await req.json()
+  const { titulo, restaurante, responsavel, instrucoes, driveFolderUrl, prazo, itens } = await req.json()
   if (!titulo) return NextResponse.json({ error: "Título obrigatório" }, { status: 400 })
 
   const cardapio = (Array.isArray(itens) ? itens : [])
@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
       restaurante: restaurante || null,
       responsavel: responsavel || "",
       instrucoes: instrucoes || null,
+      driveFolderUrl: driveFolderUrl || null,
       prazo: prazo ? new Date(prazo) : null,
       itens: { create: cardapio },
     },
@@ -35,7 +36,7 @@ export async function PATCH(req: NextRequest) {
   const session = await auth()
   if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
-  const { id, aberto, titulo, restaurante, responsavel, instrucoes, prazo } = await req.json()
+  const { id, aberto, titulo, restaurante, responsavel, instrucoes, driveFolderUrl, prazo } = await req.json()
   if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
 
   const pedido = await prisma.pedidoLanche.update({
@@ -46,6 +47,7 @@ export async function PATCH(req: NextRequest) {
       ...(restaurante !== undefined && { restaurante }),
       ...(responsavel !== undefined && { responsavel }),
       ...(instrucoes !== undefined && { instrucoes }),
+      ...(driveFolderUrl !== undefined && { driveFolderUrl: driveFolderUrl || null }),
       ...(prazo !== undefined && { prazo: prazo ? new Date(prazo) : null }),
     },
   })

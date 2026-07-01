@@ -24,6 +24,7 @@ type Cota = {
   valor: number
   responsavel: string
   instrucoes: string | null
+  driveFolderUrl: string | null
   prazo: string | Date | null
   ativa: boolean
   createdAt: string | Date
@@ -33,6 +34,16 @@ type Cota = {
 const fmtMoeda = (v: number) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
 const fmtData = (d: string | Date | null) => (d ? new Date(d).toLocaleDateString("pt-BR") : "")
 
+function Metrica({ label, valor, bg = "#f4f7fc", border = "#e8edf6", labelColor = "#93a1ba", valorColor = "#1c2b45" }:
+  { label: string; valor: string; bg?: string; border?: string; labelColor?: string; valorColor?: string }) {
+  return (
+    <div className="rounded-[10px] px-3 py-1.5" style={{ background: bg, border: `1px solid ${border}`, minWidth: 90 }}>
+      <div className="text-[9.5px] font-bold uppercase tracking-wide" style={{ color: labelColor }}>{label}</div>
+      <div className="text-[14px] font-extrabold mt-px" style={{ color: valorColor }}>{valor}</div>
+    </div>
+  )
+}
+
 export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, minhaMatricula, minhaId }: { cotas: Cota[]; alunos: Aluno[]; lanches: Pedido[]; isAdmin: boolean; minhaMatricula: number; minhaId: string }) {
   const router = useRouter()
   const [cotas, setCotas] = useState(inicial)
@@ -41,7 +52,9 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
   const [expandida, setExpandida] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [copiado, setCopiado] = useState<string | null>(null)
-  const [form, setForm] = useState({ titulo: "", valor: "", responsavel: "", instrucoes: "", prazo: "" })
+  const [busca, setBusca] = useState("")
+  const [soFalta, setSoFalta] = useState<Record<string, boolean>>({})
+  const [form, setForm] = useState({ titulo: "", valor: "", responsavel: "", instrucoes: "", drive: "", prazo: "" })
   const alunosT13 = alunos.filter(a => a.turma13)
   const [participantes, setParticipantes] = useState<Set<string>>(new Set(alunosT13.map(a => a.id)))
   const [addAluno, setAddAluno] = useState<Record<string, string>>({})
@@ -90,11 +103,11 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
     await fetch("/api/financeiro/cotas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, tipo: aba, participantes: [...participantes] }),
+      body: JSON.stringify({ ...form, driveFolderUrl: form.drive, tipo: aba, participantes: [...participantes] }),
     })
     setSaving(false)
     setShowForm(false)
-    setForm({ titulo: "", valor: "", responsavel: "", instrucoes: "", prazo: "" })
+    setForm({ titulo: "", valor: "", responsavel: "", instrucoes: "", drive: "", prazo: "" })
     setParticipantes(new Set(alunosT13.map(a => a.id)))
     router.refresh()
   }
@@ -200,35 +213,50 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
 
       {/* Resumo da aba (cotas) */}
       {aba !== "lanche" && cotasAtivas.length > 0 && (
-        <div className="rounded-xl p-4 text-white" style={{ background: "var(--azul-profundo, #0B2D5E)" }}>
-          <div className="grid grid-cols-3 gap-3 text-center">
-            <div>
-              <p className="text-[11px] uppercase tracking-wide opacity-70">Recebido</p>
-              <p className="text-lg font-bold">{fmtMoeda(recebido)}</p>
-            </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-wide opacity-70">A receber</p>
-              <p className="text-lg font-bold" style={{ color: "var(--dourado, #B8924A)" }}>{fmtMoeda(aReceber)}</p>
-            </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-wide opacity-70">Pagaram</p>
-              <p className="text-lg font-bold">{pagosPessoas}/{totalPessoas}</p>
-            </div>
+        <div className="rounded-[16px] px-5 py-4 flex items-center gap-5 flex-wrap"
+          style={{ background: "linear-gradient(120deg,#14294e 0%,#1b3a6b 100%)", boxShadow: "0 8px 22px rgba(20,41,78,.22)" }}>
+          <div className="flex-1 min-w-[90px]">
+            <div className="text-[11px] font-bold uppercase tracking-wide" style={{ color: "#9db0d1" }}>Recebido</div>
+            <div className="text-[22px] font-extrabold mt-0.5" style={{ color: "#5fd39a" }}>{fmtMoeda(recebido)}</div>
           </div>
-          <div className="h-1.5 bg-white/20 rounded-full overflow-hidden mt-3">
-            <div className="h-full rounded-full" style={{ width: `${pctResumo}%`, background: "var(--dourado, #B8924A)" }} />
+          <div style={{ width: 1, height: 34, background: "rgba(255,255,255,.12)" }} />
+          <div className="flex-1 min-w-[90px]">
+            <div className="text-[11px] font-bold uppercase tracking-wide" style={{ color: "#9db0d1" }}>A receber</div>
+            <div className="text-[22px] font-extrabold mt-0.5" style={{ color: "#e6b23e" }}>{fmtMoeda(aReceber)}</div>
+          </div>
+          <div style={{ width: 1, height: 34, background: "rgba(255,255,255,.12)" }} />
+          <div className="flex-1 min-w-[80px]">
+            <div className="text-[11px] font-bold uppercase tracking-wide" style={{ color: "#9db0d1" }}>Pagaram</div>
+            <div className="text-[22px] font-extrabold mt-0.5 text-white">{pagosPessoas}/{totalPessoas}</div>
+          </div>
+          <div className="flex-[1.4] min-w-[140px]">
+            <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,.14)" }}>
+              <div className="h-full rounded-full" style={{ width: `${pctResumo}%`, background: "linear-gradient(90deg,#5fd39a,#37b37e)", transition: "width .4s" }} />
+            </div>
+            <div className="text-[11px] font-semibold mt-1.5 text-right" style={{ color: "#9db0d1" }}>{pctResumo}% arrecadado</div>
           </div>
         </div>
       )}
 
-      {aba !== "lanche" && isAdmin && (
-        <div>
-          <button onClick={() => setShowForm(!showForm)}
-            className="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-slate-700">
-            {showForm ? "Cancelar" : `+ Nova cota ${aba === "extra" ? "extra" : "mensal"}`}
-          </button>
-          {showForm && (
-            <form onSubmit={criarCota} className="mt-4 bg-white border border-slate-200 rounded-xl p-5 space-y-3">
+      {aba !== "lanche" && (
+        <div className="flex items-center gap-3 flex-wrap">
+          {isAdmin && (
+            <button onClick={() => setShowForm(!showForm)}
+              className="text-white px-4 py-2 rounded-lg text-sm font-semibold" style={{ background: "var(--azul-profundo, #0B2D5E)" }}>
+              {showForm ? "Cancelar" : `+ Nova cota ${aba === "extra" ? "extra" : "mensal"}`}
+            </button>
+          )}
+          <div className="flex-1" />
+          <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-3 py-2 min-w-[200px]">
+            <span className="text-slate-400 text-sm">⌕</span>
+            <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="Buscar cota…"
+              className="outline-none text-sm w-full bg-transparent" />
+          </div>
+        </div>
+      )}
+
+      {aba !== "lanche" && isAdmin && showForm && (
+            <form onSubmit={criarCota} className="bg-white border border-slate-200 rounded-xl p-5 space-y-3">
               <input value={form.titulo} onChange={e => setForm({ ...form, titulo: e.target.value })}
                 placeholder={aba === "extra" ? "Título (ex: Presente de formatura)" : "Título (ex: Cota mensal — Junho)"}
                 className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" required />
@@ -245,6 +273,9 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
               <textarea value={form.instrucoes} onChange={e => setForm({ ...form, instrucoes: e.target.value })}
                 placeholder="Instruções de pagamento (ex: Pix chave 000.000... para Margareth)"
                 rows={2} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm resize-none" />
+              <input value={form.drive} onChange={e => setForm({ ...form, drive: e.target.value })}
+                placeholder="📁 Link da pasta do Google Drive (comprovantes) — opcional" type="url"
+                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
 
               <div className="border border-slate-200 rounded-lg p-3">
                 <div className="flex items-center justify-between mb-2">
@@ -282,114 +313,132 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
                 {saving ? "Salvando..." : "Criar cota"}
               </button>
             </form>
-          )}
-        </div>
       )}
 
       {aba !== "lanche" && cotasAtivas.length === 0 && <p className="text-slate-500 text-sm">Nenhuma cota {aba === "extra" ? "extra" : "mensal"} em aberto.</p>}
 
-      {cotasAtivas.map(c => {
+      {cotasAtivas.filter(c => c.titulo.toLowerCase().includes(busca.trim().toLowerCase())).map(c => {
         const meuPagamento = c.pagamentos.find(p => p.user.matricula === minhaMatricula)
         const pagos = c.pagamentos.filter(p => p.pago).length
         const total = c.pagamentos.length
         const pct = total > 0 ? Math.round((pagos / total) * 100) : 0
+        const quitada = total > 0 && pagos === total
+        const vTotal = c.valor * total
+        const vArrecadado = c.valor * pagos
+        const vFalta = vTotal - vArrecadado
         const aberta = expandida === c.id
+        const soFaltaC = soFalta[c.id]
+        const lista = soFaltaC ? c.pagamentos.filter(p => !p.pago) : c.pagamentos
         return (
-          <div key={c.id} className="bg-white border border-slate-200 rounded-xl px-4 py-3">
-            {/* linha 1: título + valor */}
-            <div className="flex items-center justify-between gap-3">
-              <h3 className="font-semibold text-slate-800 text-sm truncate">{c.titulo}</h3>
-              <span className="font-bold text-slate-800 text-sm shrink-0">{fmtMoeda(c.valor)}</span>
-            </div>
-            {/* linha 2: meta */}
-            <p className="text-xs text-slate-500 mt-0.5 truncate">
-              {c.responsavel && <>{c.responsavel} · </>}{pagos}/{total} pagaram{c.prazo && <> · {fmtData(c.prazo)}</>}
-              {meuPagamento && (
-                <span className={`font-semibold ${meuPagamento.pago ? "text-green-600" : "text-red-500"}`}>
-                  {" · "}{meuPagamento.pago ? "✓ você pagou" : "✗ você deve"}
-                </span>
-              )}
-            </p>
-            {/* linha 3: barra + toggle */}
-            <div className="mt-2 flex items-center gap-2">
-              <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden flex-1">
-                <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "var(--dourado, #B8924A)" }} />
+          <div key={c.id} className="bg-white rounded-[14px] overflow-hidden" style={{ border: "1px solid #e4e9f2", boxShadow: "0 2px 8px rgba(20,41,78,.05)" }}>
+            {/* Header recolhido */}
+            <div onClick={() => setExpandida(aberta ? null : c.id)} className="flex items-center gap-4 px-4 py-3.5 cursor-pointer">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-[15px] font-extrabold truncate" style={{ color: "#14294e" }}>{c.titulo}</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0"
+                    style={quitada ? { background: "#eafaf1", color: "#1f9d63" } : { background: "#fdf0ec", color: "#d6553a" }}>
+                    {quitada ? "quitada" : "em aberto"}
+                  </span>
+                </div>
+                <div className="text-xs mt-0.5 truncate" style={{ color: "#8291ab" }}>
+                  {c.responsavel && <>{c.responsavel} · </>}{pagos}/{total} pagaram · {fmtMoeda(vArrecadado)} de {fmtMoeda(vTotal)}
+                </div>
+                <div className="h-1.5 rounded-full overflow-hidden mt-2" style={{ background: "#eef2f8", maxWidth: 340 }}>
+                  <div className="h-full rounded-full" style={{ width: `${pct}%`, background: quitada ? "#1f9d63" : "#e6b23e", transition: "width .4s" }} />
+                </div>
               </div>
-              <button onClick={() => setExpandida(aberta ? null : c.id)} className="text-[11px] text-blue-500 hover:text-blue-700 shrink-0">
-                {aberta ? "ocultar" : "detalhes"}
-              </button>
-            </div>
-            {/* linha 4: ações compactas */}
-            <div className="mt-1.5 flex items-center gap-3 text-[11px]">
-              {meuPagamento && !meuPagamento.pago && (
-                <button onClick={() => copiarLink(meuPagamento.token)} className="text-blue-500 hover:text-blue-700">
-                  {copiado === meuPagamento.token ? "✓ copiado" : "copiar meu link"}
-                </button>
-              )}
-              {isAdmin && (
-                <>
-                  <button onClick={() => encerrarCota(c)} className="text-slate-400 hover:text-slate-600">encerrar</button>
-                  <button onClick={() => excluirCota(c.id)} className="text-red-400 hover:text-red-600">excluir</button>
-                </>
-              )}
+              {/* Métricas */}
+              <div className="hidden sm:flex gap-2 shrink-0 flex-wrap justify-end" style={{ maxWidth: 420 }}>
+                <Metrica label="Individual" valor={fmtMoeda(c.valor)} />
+                <Metrica label="Total" valor={fmtMoeda(vTotal)} />
+                <Metrica label="Arrecadado" valor={fmtMoeda(vArrecadado)} bg="#eafaf1" border="#cdeedb" labelColor="#3a9d6d" valorColor="#1f9d63" />
+                <Metrica label="Falta" valor={fmtMoeda(vFalta)} bg="#fdf0ec" border="#f6d5c9" labelColor="#c76b4e" valorColor="#d6553a" />
+              </div>
+              <span className="shrink-0 text-slate-400 transition-transform" style={{ transform: aberta ? "rotate(180deg)" : "none" }}>⌄</span>
             </div>
 
             {aberta && (
-              <div className="mt-3 border-t border-slate-100 pt-3">
-                {c.instrucoes && <p className="text-slate-500 text-xs mb-2 whitespace-pre-wrap">{c.instrucoes}</p>}
+              <div className="px-4 pb-4 pt-3" style={{ borderTop: "1px solid #eef2f8" }}>
+                {/* Métricas no mobile */}
+                <div className="flex sm:hidden gap-2 flex-wrap mb-3">
+                  <Metrica label="Individual" valor={fmtMoeda(c.valor)} />
+                  <Metrica label="Total" valor={fmtMoeda(vTotal)} />
+                  <Metrica label="Arrecadado" valor={fmtMoeda(vArrecadado)} bg="#eafaf1" border="#cdeedb" labelColor="#3a9d6d" valorColor="#1f9d63" />
+                  <Metrica label="Falta" valor={fmtMoeda(vFalta)} bg="#fdf0ec" border="#f6d5c9" labelColor="#c76b4e" valorColor="#d6553a" />
+                </div>
+
+                {c.instrucoes && <p className="text-slate-500 text-xs mb-3 whitespace-pre-wrap">{c.instrucoes}</p>}
+
+                {/* Linha de ações */}
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  {isAdmin && (
+                    <button onClick={() => copiar(mensagemCobranca(c), "msg:" + c.id)}
+                      className="text-xs font-bold text-white px-3.5 py-2 rounded-[9px]" style={{ background: "#14294e" }}>
+                      {copiado === "msg:" + c.id ? "✓ copiada" : "📋 Copiar cobrança do grupo"}
+                    </button>
+                  )}
+                  {meuPagamento && !meuPagamento.pago && (
+                    <button onClick={() => copiarLink(meuPagamento.token)}
+                      className="text-xs font-bold px-3.5 py-2 rounded-[9px] bg-white" style={{ color: "#2c66c9", border: "1px solid #d3ddf0" }}>
+                      {copiado === meuPagamento.token ? "✓ copiado" : "Copiar meu link"}
+                    </button>
+                  )}
+                  {c.driveFolderUrl && (
+                    <a href={c.driveFolderUrl} target="_blank" rel="noopener noreferrer"
+                      className="text-xs font-bold px-3.5 py-2 rounded-[9px] no-underline" style={{ background: "#eafaf1", color: "#1f8a58", border: "1px solid #c7ead6" }}>
+                      📁 Pasta de comprovantes
+                    </a>
+                  )}
+                  <button onClick={() => setSoFalta(prev => ({ ...prev, [c.id]: !prev[c.id] }))}
+                    className="text-xs font-bold px-3.5 py-2 rounded-[9px]"
+                    style={soFaltaC ? { background: "#14294e", color: "#fff" } : { background: "#fff", color: "#8291ab", border: "1px solid #dde4ef" }}>
+                    Só quem falta
+                  </button>
+                  {isAdmin && (
+                    <>
+                      <div className="flex-1" />
+                      <button onClick={() => encerrarCota(c)} className="text-xs font-semibold" style={{ color: "#8291ab" }}>Encerrar</button>
+                      <button onClick={() => excluirCota(c.id)} className="text-xs font-semibold" style={{ color: "#d6553a" }}>Excluir</button>
+                    </>
+                  )}
+                </div>
 
                 {isAdmin && (
-                  <div className="mb-2 space-y-1.5">
-                    <input value={obsCobranca[c.id] || ""} onChange={e => setObsCobranca(prev => ({ ...prev, [c.id]: e.target.value }))}
-                      placeholder="Observação p/ a mensagem de cobrança (opcional — ex: pagar até sexta)"
-                      className="w-full border border-slate-200 rounded-lg px-2 py-1.5 text-xs" />
-                    <div className="flex flex-wrap items-center gap-3">
-                      <button onClick={() => copiar(mensagemCobranca(c), "msg:" + c.id)}
-                        className="text-xs font-semibold text-white px-3 py-1.5 rounded-lg" style={{ background: "var(--azul-profundo, #0B2D5E)" }}>
-                        {copiado === "msg:" + c.id ? "✓ mensagem copiada" : "📋 copiar cobrança do grupo"}
-                      </button>
-                      <button onClick={() => copiar(linkColetivoCota(c), "link:" + c.id)}
-                        className="text-xs text-blue-500 hover:text-blue-700">
-                        {copiado === "link:" + c.id ? "✓ link copiado" : "copiar só o link"}
-                      </button>
-                    </div>
-                    <p className="text-[11px] text-slate-400">Um link só p/ o grupo: cada um acessa, acha o próprio nome e confirma o pagamento.</p>
-                  </div>
+                  <input value={obsCobranca[c.id] || ""} onChange={e => setObsCobranca(prev => ({ ...prev, [c.id]: e.target.value }))}
+                    placeholder="Observação p/ a mensagem de cobrança (opcional)"
+                    className="w-full border rounded-lg px-2 py-1.5 text-xs mb-3" style={{ borderColor: "#dde4ef" }} />
+
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
-                  {c.pagamentos.map(p => (
-                    <div key={p.id} className="flex items-center gap-2 text-sm py-0.5">
-                      {isAdmin ? (
-                        <label className="flex items-center gap-2 cursor-pointer flex-1 min-w-0">
-                          <input type="checkbox" checked={p.pago} onChange={() => togglePago(p)} />
-                          <span className={`truncate ${p.pago ? "text-green-700" : "text-slate-700"}`}>
-                            {p.user.matricula} — {p.user.nomeGuerra}
-                          </span>
-                          {!p.pago && p.declaradoPago && (
-                            <span className="text-amber-600 text-xs shrink-0" title={p.observacao || "declarou que pagou"}>●</span>
-                          )}
-                        </label>
-                      ) : (
-                        <span className="flex items-center gap-2 flex-1 min-w-0">
-                          <span className={p.pago ? "text-green-600" : "text-slate-400"}>{p.pago ? "✓" : "○"}</span>
-                          <span className={`truncate ${p.pago ? "text-green-700" : "text-slate-600"}`}>
-                            {p.user.matricula} — {p.user.nomeGuerra}
-                          </span>
-                          {!p.pago && p.declaradoPago && <span className="text-amber-500 text-xs shrink-0">declarou</span>}
-                        </span>
+                {/* Grade densa de participantes */}
+                <div className="grid gap-1.5" style={{ gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))" }}>
+                  {lista.map(p => (
+                    <div key={p.id} onClick={isAdmin ? () => togglePago(p) : undefined}
+                      className={`flex items-center gap-2 px-2 py-1.5 rounded-lg ${isAdmin ? "cursor-pointer" : ""}`}
+                      style={{ background: p.pago ? "#eafaf1" : "#f7f9fc", border: "1px solid " + (p.pago ? "#cdeedb" : "#eaeef5") }}>
+                      <span className="inline-flex items-center justify-center w-4 h-4 rounded text-[10px] shrink-0"
+                        style={p.pago ? { background: "#1f9d63", color: "#fff" } : { background: "#fff", border: "1px solid #cdd6e5" }}>
+                        {p.pago ? "✓" : ""}
+                      </span>
+                      <span className="text-[11px] font-bold shrink-0" style={{ color: "#9aa8bf", minWidth: 24 }}>{p.user.matricula}</span>
+                      <span className="text-[12.5px] truncate flex-1" style={{ color: p.pago ? "#1f7d51" : "#3c4a63" }}>{p.user.nomeGuerra}</span>
+                      {!p.pago && p.declaradoPago && <span title={p.observacao || "declarou que pagou"} className="text-[11px] shrink-0" style={{ color: "#e6b23e" }}>●</span>}
+                      {p.pago && c.driveFolderUrl && (
+                        <a href={c.driveFolderUrl} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
+                          title="ver comprovante no Drive" className="text-xs shrink-0" style={{ color: "#1f9d63" }}>📎</a>
                       )}
                       {isAdmin && (
-                        <button onClick={() => removerPagamento(p.id)} title="Esta cota não se aplica a este aluno"
+                        <button onClick={e => { e.stopPropagation(); removerPagamento(p.id) }} title="Remover desta cota"
                           className="text-slate-300 hover:text-red-500 text-xs shrink-0">✕</button>
                       )}
                     </div>
                   ))}
                 </div>
                 {isAdmin && alunos.some(a => !c.pagamentos.find(p => p.userId === a.id)) && (
-                  <div className="flex items-center gap-2 mt-3 pt-2 border-t border-slate-100">
+                  <div className="flex items-center gap-2 mt-3 pt-2" style={{ borderTop: "1px solid #eef2f8" }}>
                     <select value={addAluno[c.id] || ""} onChange={e => setAddAluno(prev => ({ ...prev, [c.id]: e.target.value }))}
-                      className="border border-slate-300 rounded-lg px-2 py-1 text-xs flex-1">
+                      className="border rounded-lg px-2 py-1 text-xs flex-1" style={{ borderColor: "#dde4ef" }}>
                       <option value="">+ Incluir aluno nesta cota...</option>
                       {alunos.filter(a => !c.pagamentos.find(p => p.userId === a.id)).map(a => (
                         <option key={a.id} value={a.id}>{a.matricula} — {a.nomeGuerra}</option>

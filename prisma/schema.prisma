@@ -435,6 +435,7 @@ model CotaFinanceira {
   valor       Float
   responsavel String   // quem recebe/centraliza (nome de guerra)
   instrucoes  String?  // forma de pagamento + onde enviar comprovante
+  driveFolderUrl String? // pasta do Google Drive com os comprovantes da cota
   prazo       DateTime?
   ativa       Boolean  @default(true)
   createdAt   DateTime @default(now())
@@ -471,6 +472,7 @@ model PedidoLanche {
   restaurante String?
   responsavel String   // quem centraliza/recebe (nome de guerra)
   instrucoes  String?  // forma de pagamento (Pix etc.)
+  driveFolderUrl String? // pasta do Google Drive com os comprovantes
   prazo       DateTime?
   aberto      Boolean  @default(true) // aceita novos pedidos?
   createdAt   DateTime @default(now())

@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   const session = await auth()
   if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
-  const { titulo, tipo, valor, responsavel, instrucoes, prazo, participantes } = await req.json()
+  const { titulo, tipo, valor, responsavel, instrucoes, driveFolderUrl, prazo, participantes } = await req.json()
   if (!titulo || isNaN(Number(valor))) return NextResponse.json({ error: "Dados inválidos" }, { status: 400 })
 
   // participantes: lista opcional de ids de User — se omitida, vale para todos os ativos da Turma 13
@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
       valor: Number(valor),
       responsavel: responsavel || "",
       instrucoes: instrucoes || null,
+      driveFolderUrl: driveFolderUrl || null,
       prazo: prazo ? new Date(prazo) : null,
       pagamentos: { create: alunos.map(a => ({ userId: a.id })) },
     },
@@ -33,7 +34,7 @@ export async function PATCH(req: NextRequest) {
   const session = await auth()
   if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
-  const { id, titulo, tipo, valor, responsavel, instrucoes, prazo, ativa } = await req.json()
+  const { id, titulo, tipo, valor, responsavel, instrucoes, driveFolderUrl, prazo, ativa } = await req.json()
   if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
 
   const cota = await prisma.cotaFinanceira.update({
@@ -44,6 +45,7 @@ export async function PATCH(req: NextRequest) {
       ...(valor !== undefined && !isNaN(Number(valor)) && { valor: Number(valor) }),
       ...(responsavel !== undefined && { responsavel }),
       ...(instrucoes !== undefined && { instrucoes }),
+      ...(driveFolderUrl !== undefined && { driveFolderUrl: driveFolderUrl || null }),
       ...(prazo !== undefined && { prazo: prazo ? new Date(prazo) : null }),
       ...(ativa !== undefined && { ativa: Boolean(ativa) }),
     },
