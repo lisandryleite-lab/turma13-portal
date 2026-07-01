@@ -44,16 +44,33 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
   const alunosT13 = alunos.filter(a => a.turma13)
   const [participantes, setParticipantes] = useState<Set<string>>(new Set(alunosT13.map(a => a.id)))
   const [addAluno, setAddAluno] = useState<Record<string, string>>({})
+  const [obsCobranca, setObsCobranca] = useState<Record<string, string>>({}) // observação por cota p/ a mensagem
 
   function linkPagamento(token: string) {
     return typeof window !== "undefined" ? `${window.location.origin}/pagar/${token}` : `/pagar/${token}`
   }
-  async function copiarLink(token: string) {
+  async function copiar(texto: string, chave: string) {
     try {
-      await navigator.clipboard.writeText(linkPagamento(token))
-      setCopiado(token)
-      setTimeout(() => setCopiado(c => (c === token ? null : c)), 2000)
+      await navigator.clipboard.writeText(texto)
+      setCopiado(chave)
+      setTimeout(() => setCopiado(c => (c === chave ? null : c)), 2000)
     } catch { /* clipboard indisponível */ }
+  }
+  const copiarLink = (token: string) => copiar(linkPagamento(token), token)
+
+  // monta a mensagem de cobrança pronta p/ WhatsApp (com link e observação opcional)
+  function mensagemCobranca(c: Cota, p: Pagamento) {
+    return [
+      `*Cobrança — ${c.titulo}* (Turma 13)`,
+      `Olá, ${p.user.nomeGuerra}!`,
+      `Valor: ${fmtMoeda(c.valor)}`,
+      c.prazo ? `Prazo: ${fmtData(c.prazo)}` : "",
+      c.responsavel ? `Pagar para: ${c.responsavel}` : "",
+      c.instrucoes || "",
+      (obsCobranca[c.id] || "").trim(),
+      "",
+      `Pague e confirme pelo link: ${linkPagamento(p.token)}`,
+    ].filter(l => l !== "").join("\n")
   }
 
   function toggleParticipante(id: string) {
@@ -273,96 +290,93 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
         const pagos = c.pagamentos.filter(p => p.pago).length
         const total = c.pagamentos.length
         const pct = total > 0 ? Math.round((pagos / total) * 100) : 0
+        const aberta = expandida === c.id
         return (
-          <div key={c.id} className="bg-white border border-slate-200 rounded-xl p-5">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <h3 className="font-semibold text-slate-800">{c.titulo}</h3>
-                <p className="text-slate-600 text-sm mt-1">
-                  <span className="font-semibold">{fmtMoeda(c.valor)}</span>
-                  {c.responsavel && <> · Responsável: {c.responsavel}</>}
-                  {c.prazo && <> · Prazo: {fmtData(c.prazo)}</>}
-                </p>
-                {c.instrucoes && <p className="text-slate-500 text-xs mt-1 whitespace-pre-wrap">{c.instrucoes}</p>}
-
-                {/* meu status + meu link de pagamento */}
-                {meuPagamento && (
-                  <div className="mt-2 flex flex-wrap items-center gap-3">
-                    <span className={`text-sm font-semibold ${meuPagamento.pago ? "text-green-600" : "text-red-500"}`}>
-                      {meuPagamento.pago ? `✓ Pago em ${fmtData(meuPagamento.dataPagamento)}` : "✗ Pendente"}
-                    </span>
-                    {!meuPagamento.pago && (
-                      <button onClick={() => copiarLink(meuPagamento.token)} className="text-xs text-blue-500 hover:text-blue-700">
-                        {copiado === meuPagamento.token ? "✓ link copiado" : "copiar meu link de pagamento"}
-                      </button>
-                    )}
-                  </div>
-                )}
-
-                {/* progresso visível a todos */}
-                <div className="mt-3">
-                  <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
-                    <span>{pagos}/{total} pagaram</span>
-                    <button onClick={() => setExpandida(expandida === c.id ? null : c.id)}
-                      className="text-blue-500 hover:text-blue-700">
-                      {expandida === c.id ? "ocultar lista" : "ver quem pagou / falta"}
-                    </button>
-                  </div>
-                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-green-500" style={{ width: `${pct}%` }} />
-                  </div>
-                </div>
+          <div key={c.id} className="bg-white border border-slate-200 rounded-xl px-4 py-3">
+            {/* linha 1: título + valor */}
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="font-semibold text-slate-800 text-sm truncate">{c.titulo}</h3>
+              <span className="font-bold text-slate-800 text-sm shrink-0">{fmtMoeda(c.valor)}</span>
+            </div>
+            {/* linha 2: meta */}
+            <p className="text-xs text-slate-500 mt-0.5 truncate">
+              {c.responsavel && <>{c.responsavel} · </>}{pagos}/{total} pagaram{c.prazo && <> · {fmtData(c.prazo)}</>}
+              {meuPagamento && (
+                <span className={`font-semibold ${meuPagamento.pago ? "text-green-600" : "text-red-500"}`}>
+                  {" · "}{meuPagamento.pago ? "✓ você pagou" : "✗ você deve"}
+                </span>
+              )}
+            </p>
+            {/* linha 3: barra + toggle */}
+            <div className="mt-2 flex items-center gap-2">
+              <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden flex-1">
+                <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "var(--dourado, #B8924A)" }} />
               </div>
+              <button onClick={() => setExpandida(aberta ? null : c.id)} className="text-[11px] text-blue-500 hover:text-blue-700 shrink-0">
+                {aberta ? "ocultar" : "detalhes"}
+              </button>
+            </div>
+            {/* linha 4: ações compactas */}
+            <div className="mt-1.5 flex items-center gap-3 text-[11px]">
+              {meuPagamento && !meuPagamento.pago && (
+                <button onClick={() => copiarLink(meuPagamento.token)} className="text-blue-500 hover:text-blue-700">
+                  {copiado === meuPagamento.token ? "✓ copiado" : "copiar meu link"}
+                </button>
+              )}
               {isAdmin && (
-                <div className="flex flex-col gap-1 items-end shrink-0">
-                  <button onClick={() => encerrarCota(c)} className="text-slate-400 hover:text-slate-600 text-xs">Encerrar</button>
-                  <button onClick={() => excluirCota(c.id)} className="text-red-400 hover:text-red-600 text-xs">Excluir</button>
-                </div>
+                <>
+                  <button onClick={() => encerrarCota(c)} className="text-slate-400 hover:text-slate-600">encerrar</button>
+                  <button onClick={() => excluirCota(c.id)} className="text-red-400 hover:text-red-600">excluir</button>
+                </>
               )}
             </div>
 
-            {expandida === c.id && (
-              <div className="mt-4 border-t border-slate-100 pt-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+            {aberta && (
+              <div className="mt-3 border-t border-slate-100 pt-3">
+                {c.instrucoes && <p className="text-slate-500 text-xs mb-2 whitespace-pre-wrap">{c.instrucoes}</p>}
+
+                {isAdmin && (
+                  <input value={obsCobranca[c.id] || ""} onChange={e => setObsCobranca(prev => ({ ...prev, [c.id]: e.target.value }))}
+                    placeholder="Observação p/ a mensagem de cobrança (opcional — ex: pagar até sexta)"
+                    className="w-full border border-slate-200 rounded-lg px-2 py-1.5 text-xs mb-2" />
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
                   {c.pagamentos.map(p => (
-                    <div key={p.id} className="flex items-center gap-2 text-sm py-1">
+                    <div key={p.id} className="flex items-center gap-2 text-sm py-0.5">
                       {isAdmin ? (
-                        <label className="flex items-center gap-2 cursor-pointer flex-1">
+                        <label className="flex items-center gap-2 cursor-pointer flex-1 min-w-0">
                           <input type="checkbox" checked={p.pago} onChange={() => togglePago(p)} />
-                          <span className={p.pago ? "text-green-700" : "text-slate-700"}>
+                          <span className={`truncate ${p.pago ? "text-green-700" : "text-slate-700"}`}>
                             {p.user.matricula} — {p.user.nomeGuerra}
                           </span>
-                          {p.pago && p.dataPagamento && (
-                            <span className="text-slate-400 text-xs">({fmtData(p.dataPagamento)})</span>
-                          )}
                           {!p.pago && p.declaradoPago && (
-                            <span className="text-amber-600 text-xs" title={p.observacao || "declarou que pagou"}>● declarou pago</span>
+                            <span className="text-amber-600 text-xs shrink-0" title={p.observacao || "declarou que pagou"}>●</span>
                           )}
                         </label>
                       ) : (
-                        <span className="flex items-center gap-2 flex-1">
+                        <span className="flex items-center gap-2 flex-1 min-w-0">
                           <span className={p.pago ? "text-green-600" : "text-slate-400"}>{p.pago ? "✓" : "○"}</span>
-                          <span className={p.pago ? "text-green-700" : "text-slate-600"}>
+                          <span className={`truncate ${p.pago ? "text-green-700" : "text-slate-600"}`}>
                             {p.user.matricula} — {p.user.nomeGuerra}
                           </span>
-                          {!p.pago && p.declaradoPago && <span className="text-amber-500 text-xs">(declarou pago)</span>}
+                          {!p.pago && p.declaradoPago && <span className="text-amber-500 text-xs shrink-0">declarou</span>}
                         </span>
                       )}
+                      {isAdmin && !p.pago && (
+                        <button onClick={() => copiar(mensagemCobranca(c, p), "msg:" + p.token)} title="Copiar mensagem de cobrança (com link)"
+                          className="text-slate-300 hover:text-blue-500 text-xs shrink-0">
+                          {copiado === "msg:" + p.token ? "✓" : "📋"}
+                        </button>
+                      )}
                       {isAdmin && (
-                        <>
-                          {!p.pago && (
-                            <button onClick={() => copiarLink(p.token)} title="Copiar link de pagamento deste aluno"
-                              className="text-slate-300 hover:text-blue-500 text-xs shrink-0">
-                              {copiado === p.token ? "✓" : "🔗"}
-                            </button>
-                          )}
-                          <button onClick={() => removerPagamento(p.id)} title="Esta cota não se aplica a este aluno"
-                            className="text-slate-300 hover:text-red-500 text-xs shrink-0">✕</button>
-                        </>
+                        <button onClick={() => removerPagamento(p.id)} title="Esta cota não se aplica a este aluno"
+                          className="text-slate-300 hover:text-red-500 text-xs shrink-0">✕</button>
                       )}
                     </div>
                   ))}
                 </div>
+                {isAdmin && <p className="text-[11px] text-slate-400 mt-2">📋 copia a mensagem de cobrança pronta (com o link individual) pra colar no WhatsApp.</p>}
                 {isAdmin && alunos.some(a => !c.pagamentos.find(p => p.userId === a.id)) && (
                   <div className="flex items-center gap-2 mt-3 pt-2 border-t border-slate-100">
                     <select value={addAluno[c.id] || ""} onChange={e => setAddAluno(prev => ({ ...prev, [c.id]: e.target.value }))}
