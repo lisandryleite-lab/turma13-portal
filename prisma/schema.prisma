@@ -41,6 +41,9 @@ model User {
   nfdc              Float   @default(10)
   pagamentosCota    PagamentoCota[]
   pedidosLanche     PedidoLancheAluno[]
+  permutaOfertas           PermutaOferta[]
+  permutaSolicitacoesCriadas PermutaSolicitacao[]
+  permutaParticipacoes      PermutaParticipante[]
 }
 
 model Account {
@@ -527,6 +530,71 @@ model LinhaPedidoLanche {
 
   @@unique([pedidoAlunoId, itemId])
   @@index([pedidoAlunoId])
+}
+
+// ── CFO 2026 — Permuta de Plantões ──────────────────────────────
+// Lotação completa das 8 equipes de plantão (Turma 13 + demais militares da 2ª CIA).
+// Fonte: Mapa de Equipes de Plantão (PMPE/APMP/CFO 2026). Seedado uma vez; editável pelo admin.
+model MilitarPlantao {
+  id           String   @id @default(cuid())
+  matricula    Int      @unique
+  nome         String
+  grupoPlantao String   // GOLF | HOTEL | INDIA | JULIETT | KILO | LIMA | MIKE | NOVEMBER
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// Oferta aberta de um aluno Turma 13: "quero ceder este dia, gostaria de receber aquele"
+model PermutaOferta {
+  id        String   @id @default(cuid())
+  userId    String
+  cedeData  DateTime
+  querData  DateTime
+  status    String   @default("aberta") // aberta | fechada | cancelada
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, cedeData])
+  @@index([userId])
+}
+
+// Uma permuta (direta ou triangular) em construção/rastreamento.
+// Não altera PlantaoDia — é só documentação/combinado entre as partes,
+// formalizado depois via processo SEI (número preenchido manualmente).
+model PermutaSolicitacao {
+  id            String   @id @default(cuid())
+  criadoPorId   String
+  status        String   @default("pendente") // pendente | aceita | recusada | cancelada
+  seiNumero     String?
+  seiObservacao String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  criadoPor     User                  @relation(fields: [criadoPorId], references: [id])
+  participantes PermutaParticipante[]
+}
+
+// Cada perna da cadeia: esta pessoa cede cedeData (pra quem vem a seguir na ordem;
+// ordem 1 cede pro 2, o último fecha o ciclo cedendo pro 1º — direto = 2 pernas, triangular = 3).
+model PermutaParticipante {
+  id            String    @id @default(cuid())
+  solicitacaoId String
+  ordem         Int       // 1 = quem criou, 2 = parceiro, 3 = terceiro (triangular, opcional)
+  userId        String?   // preenchido só se for aluno Turma 13 com login
+  matricula     Int
+  nome          String    // snapshot (cobre militares externos sem User)
+  grupoPlantao  String    // snapshot no momento da criação
+  cedeData      DateTime
+  status        String    @default("pendente") // pendente | aceito | recusado
+  respondidoEm  DateTime?
+
+  solicitacao PermutaSolicitacao @relation(fields: [solicitacaoId], references: [id], onDelete: Cascade)
+  user        User?              @relation(fields: [userId], references: [id])
+
+  @@index([solicitacaoId])
+  @@index([userId])
 }
 
 // ── CFO 2026 — Log de acesso (LGPD / auditoria) ──────────────────

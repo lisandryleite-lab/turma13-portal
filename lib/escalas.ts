@@ -2,6 +2,14 @@
 //  Cálculos automáticos de escalas — Turma 13 CFO PM 2026
 // ─────────────────────────────────────────────────────────────
 
+// Converte "YYYY-MM-DD" em Date de meia-noite LOCAL — nunca usar `new Date(string)`
+// direto com uma data-only string: o JS interpreta como UTC e, em fuso negativo,
+// `.getDate()` depois volta um dia (mesmo problema já registrado em calendarioFaxinaMes).
+export function parseDataLocal(iso: string): Date {
+  const [ano, mes, dia] = iso.split("-").map(Number)
+  return new Date(ano, mes - 1, dia)
+}
+
 // Matrícula ordenada por antiguidade (menor = mais antigo) — 32 alunos
 // (206 e 207 removidos; 1 HELLTON FERNANDES e 54 ELDER CARVALHO saíram da Turma 13 em jun/2026;
 // 213 R SILVA entrou em jun/2026 — ver Mapa de Equipes JULHO/2026)
@@ -34,6 +42,12 @@ export function calcularServico(semana: number): {
 // ─────────────────────────────────────────────────────────────
 export const GRUPOS_PLANTAO = ["GOLF", "HOTEL", "INDIA", "JULIETT", "KILO", "LIMA", "MIKE", "NOVEMBER"] as const
 export type GrupoPlantao = typeof GRUPOS_PLANTAO[number]
+
+// Cor por grupo de plantão — fonte única (evita paletas divergentes entre telas)
+export const CORES_PLANTAO: Record<string, string> = {
+  GOLF: "#15803D", HOTEL: "#0369A1", INDIA: "#B45309", JULIETT: "#7C3AED",
+  KILO: "#B91C1C", LIMA: "#1D4ED8", MIKE: "#7E22CE", NOVEMBER: "#92400E",
+}
 
 // Referência: 26/05/2026 = GOLF (índice 0) — confirmado pela turma
 // Normaliza para UTC midnight para evitar problemas de fuso horário

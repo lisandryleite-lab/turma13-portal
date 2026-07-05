@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { CORES_PLANTAO } from "@/lib/escalas"
 import type { MEMBROS_PLANTAO, GrupoFaxina, GrupoPlantao } from "@/lib/escalas"
 
 const MESES = ["","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
@@ -31,11 +32,6 @@ const CORES_GRUPO: Record<string,string> = {
   G1:"#1D4ED8",G2:"#7C3AED",G3:"#B45309",G4:"#15803D",
   G5:"#B91C1C",G6:"#0369A1",G7:"#7E22CE",G8:"#92400E",
 }
-const CORES_PLANTAO: Record<string,string> = {
-  GOLF:"#15803D",HOTEL:"#0369A1",INDIA:"#B45309",JULIETT:"#7C3AED",
-  KILO:"#B91C1C",LIMA:"#1D4ED8",MIKE:"#7E22CE",NOVEMBER:"#92400E",
-}
-
 function TagGrupo({grupo,small}:{grupo:string;small?:boolean}) {
   const cor = CORES_GRUPO[grupo]||"#475569"
   return <span style={{background:cor+"18",color:cor,border:`1px solid ${cor}40`,borderRadius:6,padding:small?"1px 7px":"2px 10px",fontSize:small?11:12,fontWeight:600}}>{grupo}</span>

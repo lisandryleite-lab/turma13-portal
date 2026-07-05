@@ -51,6 +51,19 @@ const cards: {
     ),
   },
   {
+    label: "Permutas",
+    href: "/permutas",
+    bg: "olive",
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="m17 2 4 4-4 4" />
+        <path d="M3 6h18" />
+        <path d="m7 22-4-4 4-4" />
+        <path d="M21 18H3" />
+      </svg>
+    ),
+  },
+  {
     label: "Psicologia",
     href: "https://agendamento-apmp.vercel.app/",
     bg: "olive",
