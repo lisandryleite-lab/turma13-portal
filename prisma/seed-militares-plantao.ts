@@ -3,7 +3,8 @@
 //  Fonte: "MAPA DE EQUIPES - JULHO" — Escala de Serviço nº 1, PMPE/APMP/CFO 2026/3ªCIA
 //  (Paudalho/PE, 26/06/2026). Upsert por matrícula — idempotente, rodar quantas vezes precisar.
 //
-//  Uso: npx tsx prisma/seed-militares-plantao.ts
+//  Roda automaticamente como parte de `npm run db:seed` (encadeado após prisma/seed.ts).
+//  Uso isolado: npx tsx prisma/seed-militares-plantao.ts
 // ─────────────────────────────────────────────────────────────
 import "dotenv/config"
 import { PrismaClient } from "../lib/generated/prisma/client"
