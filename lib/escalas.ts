@@ -10,13 +10,13 @@ export function parseDataLocal(iso: string): Date {
   return new Date(ano, mes - 1, dia)
 }
 
-// Matrícula ordenada por antiguidade (menor = mais antigo) — 33 alunos
+// Matrícula ordenada por antiguidade (menor = mais antigo) — 34 alunos
 // (206 e 207 removidos; 1 HELLTON FERNANDES e 54 ELDER CARVALHO saíram da Turma 13 em jun/2026;
-// 213 R SILVA entrou em jun/2026; 212 CAMILA BUONORA entrou em jul/2026 — ver Mapa de Equipes JULHO/2026)
+// 213 R SILVA entrou em jun/2026; 211 DÁRIO e 212 CAMILA BUONORA entraram em jul/2026 — Mapa de Equipes JULHO/2026)
 export const MATRICULAS_ORDEM = [
   7, 13, 19, 23, 26, 37, 41, 45, 55, 57, 60, 65,
   71, 76, 81, 94, 98, 105, 106, 108, 114, 116, 131, 143,
-  144, 153, 165, 167, 174, 186, 191, 212, 213,
+  144, 153, 165, 167, 174, 186, 191, 211, 212, 213,
 ]
 
 // Semana de referência: semana 20 → P1=65 KAUHANNI (idx 11), P3=71 LEIMIG (idx 12), P4=76 ARAUJO JUNIOR (idx 13)
@@ -125,16 +125,17 @@ export function calendarioFaxinaMes(ano: number, mes: number): {
   return dias
 }
 
-// Composição dos grupos de faxina (estática, definida na turma)
+// Composição dos grupos de faxina — fallback quando FaxinaGrupoMembro (BD) está vazia.
+// Sincronizada com o BD em jul/2026 (211 DÁRIO e 213 R SILVA no G7; 212 CAMILA BUONORA no G8).
 export const COMPOSICAO_FAXINA: Record<GrupoFaxina, { mat: number; nome: string }[]> = {
-  G1: [{ mat: 191, nome: "GOMES NASCIMENTO" }, { mat: 143, nome: "VIDAL" }, { mat: 153, nome: "HUGO" }, { mat: 174, nome: "ALEXANDRE" }],
-  G2: [{ mat: 167, nome: "GUSTAVO NETO" }, { mat: 186, nome: "SAMUEL SILVA" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 13, nome: "JONAS" }],
-  G3: [{ mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 165, nome: "KEVIN GOMES" }, { mat: 144, nome: "SAMUEL SANTOS" }, { mat: 94, nome: "ANDRÉ CARDOSO" }],
-  G4: [{ mat: 108, nome: "LISANDRY" }, { mat: 114, nome: "JOSIANE FARIAS" }, { mat: 81, nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }],
-  G5: [{ mat: 98, nome: "JOSÉ MENEZES" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 71, nome: "LEIMIG" }, { mat: 76, nome: "ARAÚJO JR" }],
-  G6: [{ mat: 55, nome: "SHIRLAYNE" }, { mat: 65, nome: "KAUHANNI" }, { mat: 41, nome: "ALAN SILVA" }, { mat: 60, nome: "JOÃO NUNES" }],
-  G7: [{ mat: 213, nome: "R SILVA" }, { mat: 57, nome: "CLEYTON" }, { mat: 19, nome: "THAIS FIGUEIREDO" }, { mat: 45, nome: "GABRIELE COSTA" }],
-  G8: [{ mat: 7, nome: "ALDO SILVA" }, { mat: 37, nome: "PABLO TORRES" }, { mat: 23, nome: "RODOLFO MOURA" }, { mat: 26, nome: "ANDRÉ" }],
+  G1: [{ mat: 143, nome: "VIDAL" }, { mat: 153, nome: "HUGO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
+  G2: [{ mat: 13, nome: "JONAS" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 186, nome: "SAMUEL SILVA" }],
+  G3: [{ mat: 108, nome: "LISANDRY" }, { mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 165, nome: "KEVIN GOMES" }],
+  G4: [{ mat: 81, nome: "FERNANDO ROCHA" }, { mat: 94, nome: "ANDRÉ CARDOSO" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 144, nome: "SAMUEL SANTOS" }],
+  G5: [{ mat: 71, nome: "LEIMIG" }, { mat: 76, nome: "ARAÚJO JR" }, { mat: 98, nome: "JOSÉ MENEZES" }, { mat: 105, nome: "LUCAS EDUARDO" }],
+  G6: [{ mat: 41, nome: "ALAN SILVA" }, { mat: 55, nome: "SHIRLAYNE" }, { mat: 60, nome: "JOÃO NUNES" }, { mat: 65, nome: "KAUHANNI" }],
+  G7: [{ mat: 19, nome: "THAIS FIGUEIREDO" }, { mat: 45, nome: "GABRIELE COSTA" }, { mat: 57, nome: "CLEYTON" }, { mat: 211, nome: "DÁRIO" }, { mat: 213, nome: "R SILVA" }],
+  G8: [{ mat: 7, nome: "ALDO SILVA" }, { mat: 23, nome: "RODOLFO MOURA" }, { mat: 26, nome: "ANDRÉ" }, { mat: 37, nome: "PABLO TORRES" }, { mat: 212, nome: "CAMILA BUONORA" }],
 }
 
 // Composição dos grupos de plantão — atualizado jul/2026 (Mapa de Equipes, escala 7x1 da 2ª CIA)
@@ -142,7 +143,7 @@ export const COMPOSICAO_FAXINA: Record<GrupoFaxina, { mat: number; nome: string 
 // 213 R SILVA entrou (JULIETT); 212 CAMILA BUONORA entrou em jul/2026 (KILO)
 export const MEMBROS_PLANTAO: Record<GrupoPlantao, { mat: number; nome: string }[]> = {
   GOLF:     [{ mat: 7,   nome: "ALDO SILVA" }, { mat: 19,  nome: "THAIS FIGUEIREDO" }, { mat: 57,  nome: "CLEYTON" }, { mat: 143, nome: "VIDAL" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
-  HOTEL:    [{ mat: 13,  nome: "JONAS" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 144, nome: "SAMUEL SANTOS" }],
+  HOTEL:    [{ mat: 13,  nome: "JONAS" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 144, nome: "SAMUEL SANTOS" }, { mat: 211, nome: "DÁRIO" }],
   INDIA:    [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 116, nome: "BERTIPALHA" }],
   JULIETT:  [{ mat: 94,  nome: "ANDRÉ CARDOSO" }, { mat: 213, nome: "R SILVA" }],
   KILO:     [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }, { mat: 212, nome: "CAMILA BUONORA" }],

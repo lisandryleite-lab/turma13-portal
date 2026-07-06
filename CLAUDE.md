@@ -10,7 +10,7 @@
 | ORM | Prisma 7 com adapter Neon (PostgreSQL serverless) |
 | Autenticação | NextAuth v5 beta (next-auth@5.0.0-beta.31), estratégia JWT |
 | E-mail | Resend |
-| Deploy | Vercel — repo `lisandryleite-lab/turma13-portal` · https://turma13-portal.vercel.app |
+| Deploy | Vercel — repo `lisandryleite-lab/turma13-portal` · produção **https://portalcfo2026.com.br** (deploy MANUAL: `vercel --prod`; sem auto-deploy do GitHub) |
 
 ## Regras absolutas
 
@@ -31,7 +31,7 @@
 DATABASE_URL          # Neon PostgreSQL connection string
 AUTH_SECRET           # Segredo NextAuth (openssl rand -base64 32)
 RESEND_API_KEY        # API key do Resend para e-mails
-NEXTAUTH_URL          # URL base da aplicação — produção: https://turma13-portal.vercel.app
+NEXTAUTH_URL          # URL base da aplicação — produção: https://portalcfo2026.com.br
 ```
 
 ## Estrutura de páginas
@@ -50,16 +50,30 @@ NEXTAUTH_URL          # URL base da aplicação — produção: https://turma13-
 | `/xerifancia` | `xerifancia/page.tsx` + `xerifancia-admin.tsx` | Histórico e xerife atual |
 | `/aniversarios` | `aniversarios/page.tsx` | Aniversariantes do mês |
 | `/links` | `links/page.tsx` | Links úteis (cards estáticos) |
+| `/financeiro` | `financeiro/` | Cotas mensal/extra + lanche coletivo; pagamento em 2 níveis (aluno declara, tesoureiro confirma); gate por `ehGestorFinanceiro` (`lib/financeiro.ts`) |
+| `/comunicados` | `comunicados/` | Comunicados da turma |
+| `/alterar-senha` | `alterar-senha/` | Troca de senha do próprio usuário |
 | `/admin` | `admin/page.tsx` + `admin-client.tsx` | Painel admin: gerenciar alunos (CRUD) |
 
-### Área pública legada — `app/turma13cfo2026/`
+### Grupo CFO — `app/(cfo)/` (autenticado, layout próprio sem sidebar)
 
-Rota pública (sem autenticação obrigatória) com subconjunto de funcionalidades:
-`/ranking`, `/notas`, `/escalas`, `/avisos`, `/links`, `/admin/alunos`, `/admin/historico`
+| Rota | Função |
+|------|--------|
+| `/inicio`, `/painel` | Hub de estudo / painel geral |
+| `/mementos` | Mementos resumidos por disciplina + flashcards |
+| `/questoes` | Banco de questões por disciplina/bateria |
+| `/ranking` | Ranking da turma |
+| `/permutas` | Permuta de plantões (cadeia direta/triangular, transparente, SEI opcional) — usa `MilitarPlantao` |
+| `/psicologia` | Conteúdo de psicologia |
+| `/ajuda-senha`, `/trocar-senha` | Suporte de senha |
 
-### Autenticação pública
+### Área legada — `app/turma13cfo2026/`
 
-`/login`, `/forgot-password`, `/reset-password`
+Subconjunto antigo (`/ranking`, `/notas`, `/escalas`, `/avisos`, `/links`, `/admin/*`). **Hoje exige login** — não está em `PUBLIC_PATHS` do middleware. Candidata a remoção.
+
+### Rotas públicas (sem login)
+
+`/login`, `/forgot-password`, `/reset-password`, `/pagar/[token]` (pagamento por link único)
 
 ## Schema Prisma — modelos principais
 
@@ -102,15 +116,24 @@ Data de referência para cálculo automático da rotação de faxina.
 ### `Aviso`
 Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 
+### Demais modelos (schema tem 43 no total)
+- **Estudo**: `Memento`, `Flashcard`, `Questao`, `Resposta`, `Gaivota` (dúvidas), `NotaCFO`/`HistoricoNotaCFO`/`NotaHistorica` (notas oficiais do CFO)
+- **Financeiro**: `CotaFinanceira`, `PagamentoCota` (token público de pagamento), `PedidoLanche`, `ItemLanche`, `PedidoLancheAluno`, `LinhaPedidoLanche`
+- **Permutas**: `MilitarPlantao` (roster completo da CIA), `PermutaOferta`, `PermutaSolicitacao`, `PermutaParticipante`
+- **Faxina**: `FaxinaGrupoMembro` (composição viva dos grupos G1–G8)
+- **Outros**: `OPM`/`PreferenciaOPM` (batalhões RMR), `MissaoConcluida`, `LogAcesso`
+
 ## Dados operacionais da Turma — referências estáticas
 
 ### Semana atual (`lib/utils.ts`)
-`DATA_INICIO = new Date("2026-01-06")` → semana 20 = semana de 26/05/2026.
-⚠️ O código atual usa Jan 05 (gera semana 21). Ajuste pendente: mudar para Jan 06.
+`DATA_INICIO = new Date("2026-01-12")` (primeira segunda-feira do curso) → semana 20 = 25/05 a 31/05/2026. Consistente com a referência das escalas (`REF_SEMANA = 20` em `lib/escalas.ts`).
 
 ### Turma
-33 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
-**1 (Hellton Fernandes) e 54 (Elder Carvalho) saíram** da Turma 13 em jun/2026; **213 (R Silva) entrou** — ver `scripts/update-roster-213.ts` e `scripts/update-roster-julho.ts`. **212 (Camila Buonora) entrou** em jul/2026 (plantão KILO) — ver `scripts/add-212-camila.ts`. Lista oficial de antiguidade em `lib/escalas.ts` (`MATRICULAS_ORDEM`).
+34 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
+**1 (Hellton Fernandes) e 54 (Elder Carvalho) saíram** da Turma 13 em jun/2026; **213 (R Silva) entrou** em jun/2026 — ver `scripts/update-roster-213.ts` e `scripts/update-roster-julho.ts`. **211 (Dário)** e **212 (Camila Buonora) entraram** em jul/2026 — ver `scripts/add-dario.ts`, `scripts/add-212-camila.ts` e `scripts/integra-novatos-escalas.ts`. Lista oficial de antiguidade em `lib/escalas.ts` (`MATRICULAS_ORDEM`).
+
+### Grupos de faxina — fonte viva no banco
+A composição exibida em `/escalas` vem da tabela **`FaxinaGrupoMembro`** quando não vazia; `COMPOSICAO_FAXINA` em `lib/escalas.ts` é só fallback (mantida em sincronia). `User.grupoFaxina` (dashboard) deve espelhar a tabela — `scripts/integra-novatos-escalas.ts` sincroniza. Em jul/2026: G7 = Thais, Gabriele, Cleyton, 211 Dário, 213 R Silva; G8 = Aldo, Rodolfo, André, Pablo, 212 Camila (grupos com 5).
 
 ### Grupos de plantão — 8 grupos (atualizado jul/2026 — Mapa de Equipes, escala 7x1)
 Ciclo **diário** (todos os dias, incluindo fins de semana).
@@ -120,7 +143,7 @@ Referência confirmada: **26/05/2026 = GOLF**. Verificação: 02/06/2026 = NOVEM
 | Grupo    | Mats                      | Membros                                                                          |
 |----------|---------------------------|----------------------------------------------------------------------------------|
 | GOLF     | 7, 19, 57, 143, 191       | Aldo Silva, Thais Figueiredo, Cleyton, Vidal, Gomes Nascimento                   |
-| HOTEL    | 13, 23, 105, 144          | Jonas, Rodolfo Moura, Lucas Eduardo, Samuel Santos                               |
+| HOTEL    | 13, 23, 105, 144, 211     | Jonas, Rodolfo Moura, Lucas Eduardo, Samuel Santos, Dário                        |
 | INDIA    | 41, 60, 116               | Alan Silva, João Nunes, Bertipalha                                               |
 | JULIETT  | 94, 213                   | André Cardoso, R Silva                                                          |
 | KILO     | 26, 37, 65, 98, 212       | André, Pablo Torres, Kauhanni, José Menezes, Camila Buonora                      |
