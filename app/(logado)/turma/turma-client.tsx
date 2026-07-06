@@ -45,8 +45,8 @@ export function TurmaClient({ alunos, nomesPorMat, hierarquia, funcoesFixas, min
         Turma 13
       </h1>
 
-      {/* ── Alunos (expansível por aluno) ── */}
-      <Secao titulo={`Alunos (${alunos.length})`} defaultAberta>
+      {/* ── Alunos (expansível por aluno) — recolhida por padrão ── */}
+      <Secao titulo={`Alunos (${alunos.length})`}>
         <div style={{ padding: "8px 0" }}>
           {alunos.map(a => {
             const eu = a.matricula === minhaMatricula
