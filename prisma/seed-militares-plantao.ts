@@ -69,7 +69,7 @@ const ROSTER: Record<string, { mat: number; nome: string }[]> = {
     { mat: 169, nome: "HYGO CESÁRIO" }, { mat: 171, nome: "MAXWEL" }, { mat: 177, nome: "ROSÁRIO JÚNIOR" },
     { mat: 179, nome: "LEONARDO" }, { mat: 180, nome: "DANTAS" }, { mat: 188, nome: "ALBERTO" },
     { mat: 193, nome: "MÁRCIO LEITE" }, { mat: 198, nome: "MARCELO" }, { mat: 202, nome: "FERRAZ" },
-    { mat: 212, nome: "CAMILA BOUONORA" },
+    { mat: 212, nome: "CAMILA BUONORA" }, // mapa grafa "BOUONORA"; grafia correta: BUONORA
   ],
   LIMA: [
     { mat: 4, nome: "ANA SILVA" }, { mat: 14, nome: "WINNY" }, { mat: 40, nome: "ALMEIDA" },

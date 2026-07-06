@@ -109,8 +109,8 @@ Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 ⚠️ O código atual usa Jan 05 (gera semana 21). Ajuste pendente: mudar para Jan 06.
 
 ### Turma
-32 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
-**1 (Hellton Fernandes) e 54 (Elder Carvalho) saíram** da Turma 13 em jun/2026; **213 (R Silva) entrou** — ver `scripts/update-roster-213.ts` e `scripts/update-roster-julho.ts`. Lista oficial de antiguidade em `lib/escalas.ts` (`MATRICULAS_ORDEM`).
+33 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
+**1 (Hellton Fernandes) e 54 (Elder Carvalho) saíram** da Turma 13 em jun/2026; **213 (R Silva) entrou** — ver `scripts/update-roster-213.ts` e `scripts/update-roster-julho.ts`. **212 (Camila Buonora) entrou** em jul/2026 (plantão KILO) — ver `scripts/add-212-camila.ts`. Lista oficial de antiguidade em `lib/escalas.ts` (`MATRICULAS_ORDEM`).
 
 ### Grupos de plantão — 8 grupos (atualizado jul/2026 — Mapa de Equipes, escala 7x1)
 Ciclo **diário** (todos os dias, incluindo fins de semana).
@@ -123,7 +123,7 @@ Referência confirmada: **26/05/2026 = GOLF**. Verificação: 02/06/2026 = NOVEM
 | HOTEL    | 13, 23, 105, 144          | Jonas, Rodolfo Moura, Lucas Eduardo, Samuel Santos                               |
 | INDIA    | 41, 60, 116               | Alan Silva, João Nunes, Bertipalha                                               |
 | JULIETT  | 94, 213                   | André Cardoso, R Silva                                                          |
-| KILO     | 26, 37, 65, 98            | André, Pablo Torres, Kauhanni, José Menezes                                      |
+| KILO     | 26, 37, 65, 98, 212       | André, Pablo Torres, Kauhanni, José Menezes, Camila Buonora                      |
 | LIMA     | 114, 131, 167, 174, 186   | Josiane Farias, José Inácio, Gustavo Neto, Alexandre, Samuel Silva               |
 | MIKE     | 45, 81, 106, 108, 153, 165| Gabriele Costa, Fernando Rocha, Rafael Ribeiro, Lisandry, Hugo, Kevin Gomes      |
 | NOVEMBER | 55, 71, 76                | Shirlayne, Leimig, Araújo Junior                                                 |
