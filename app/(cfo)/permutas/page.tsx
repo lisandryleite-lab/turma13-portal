@@ -46,7 +46,7 @@ export default async function PermutasPage() {
     })
   }
 
-  const [militares, ofertas, minhasOfertas, enviadas, recebidas, todas] = await Promise.all([
+  const [militares, ofertas, minhasOfertas, enviadas, recebidas] = await Promise.all([
     prisma.militarPlantao.findMany({ orderBy: { matricula: "asc" } }),
     me
       ? prisma.permutaOferta.findMany({
@@ -72,15 +72,9 @@ export default async function PermutasPage() {
           orderBy: { createdAt: "desc" },
         })
       : Promise.resolve([]),
-    // Transparência: todas as permutas ficam visíveis pra qualquer aluno
-    prisma.permutaSolicitacao.findMany({
-      include: { participantes: true },
-      orderBy: { createdAt: "desc" },
-      take: 200,
-    }),
   ])
 
-  const serializar = (s: (typeof todas)[number]) => ({
+  const serializar = (s: (typeof enviadas)[number]) => ({
     ...s,
     createdAt: s.createdAt.toISOString(),
     updatedAt: s.updatedAt.toISOString(),
@@ -105,7 +99,6 @@ export default async function PermutasPage() {
       solicitacoesIniciais={{
         enviadas: enviadas.map(serializar),
         recebidas: recebidas.map(serializar),
-        todas: todas.map(serializar),
       }}
     />
   )

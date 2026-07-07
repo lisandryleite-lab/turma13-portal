@@ -106,7 +106,7 @@ export function PermutasClient({
   meses: Mes[]
   militares: Militar[]
   ofertasIniciais: Oferta[]
-  solicitacoesIniciais: { enviadas: Solicitacao[]; recebidas: Solicitacao[]; todas: Solicitacao[] }
+  solicitacoesIniciais: { enviadas: Solicitacao[]; recebidas: Solicitacao[] }
   minhasOfertasIniciais: string[]
 }) {
   const [aba, setAba] = useState<"escala" | "buscar" | "montar" | "solicitacoes">("escala")
@@ -119,7 +119,7 @@ export function PermutasClient({
   const [toast, setToast] = useState<string | null>(null)
   const [modalAberto, setModalAberto] = useState<Solicitacao | null>(null)
   const [enviando, setEnviando] = useState(false)
-  const [filtroSolic, setFiltroSolic] = useState<"recebidas" | "enviadas" | "todas">("recebidas")
+  const [filtroSolic, setFiltroSolic] = useState<"recebidas" | "enviadas">("recebidas")
   const [seiInputs, setSeiInputs] = useState<Record<string, string>>({})
   const [buscaMilitar, setBuscaMilitar] = useState("")
   const [adicionandoTerceiro, setAdicionandoTerceiro] = useState(false)
@@ -332,7 +332,7 @@ export function PermutasClient({
         return !match(builder.parceiro) && !match(builder.terceiro)
       })
     )
-    setSolicitacoes((s) => ({ ...s, enviadas: [nova, ...s.enviadas], todas: [nova, ...s.todas] }))
+    setSolicitacoes((s) => ({ ...s, enviadas: [nova, ...s.enviadas] }))
     setModalAberto(nova)
     setBuilder({ parceiro: null, terceiro: null })
     setCedeSelecionada(null)
@@ -355,7 +355,6 @@ export function PermutasClient({
     setSolicitacoes((s) => ({
       enviadas: s.enviadas.map((x) => (x.id === atualizada.id ? atualizada : x)),
       recebidas: s.recebidas.map((x) => (x.id === atualizada.id ? atualizada : x)),
-      todas: s.todas.map((x) => (x.id === atualizada.id ? atualizada : x)),
     }))
     showToast(acao === "aceitar" ? "Permuta aceita!" : "Permuta recusada")
   }
@@ -373,15 +372,11 @@ export function PermutasClient({
     setSolicitacoes((s) => ({
       enviadas: s.enviadas.map((x) => (x.id === atualizada.id ? { ...x, seiNumero: atualizada.seiNumero } : x)),
       recebidas: s.recebidas.map((x) => (x.id === atualizada.id ? { ...x, seiNumero: atualizada.seiNumero } : x)),
-      todas: s.todas.map((x) => (x.id === atualizada.id ? { ...x, seiNumero: atualizada.seiNumero } : x)),
     }))
     showToast("Número do SEI salvo")
   }
 
-  const listaSolic =
-    filtroSolic === "recebidas" ? solicitacoes.recebidas :
-    filtroSolic === "enviadas" ? solicitacoes.enviadas :
-    solicitacoes.todas
+  const listaSolic = filtroSolic === "recebidas" ? solicitacoes.recebidas : solicitacoes.enviadas
 
   // ── Render ──────────────────────────────────────────────────
   const mesAtualObj = meses[mesIdx]
@@ -733,19 +728,13 @@ export function PermutasClient({
       {aba === "solicitacoes" && (
         <div>
           <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
-            {(["recebidas", "enviadas", "todas"] as const).map((f) => (
+            {(["recebidas", "enviadas"] as const).map((f) => (
               <button key={f} onClick={() => setFiltroSolic(f)}
                 style={{ border: filtroSolic === f ? "none" : "1px solid var(--cinza-borda)", borderRadius: 999, padding: "8px 16px", fontWeight: 700, fontSize: 13, cursor: "pointer", background: filtroSolic === f ? "var(--azul-profundo)" : "#fff", color: filtroSolic === f ? "#fff" : "var(--cinza-texto)" }}>
-                {f === "recebidas" ? "Recebidas" : f === "enviadas" ? "Enviadas" : "Todas"}
+                {f === "recebidas" ? "Recebidas" : "Enviadas"}
               </button>
             ))}
           </div>
-
-          {filtroSolic === "todas" && (
-            <p style={{ fontSize: 12, color: "var(--cinza-texto)", marginBottom: 12 }}>
-              Transparência: todas as permutas registradas no portal ficam visíveis pra qualquer aluno, com o número do processo SEI quando houver.
-            </p>
-          )}
 
           {listaSolic.length === 0 && <p style={{ color: "var(--cinza-texto)", fontSize: 13 }}>Nada por aqui ainda.</p>}
 
