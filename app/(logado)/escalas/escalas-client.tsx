@@ -7,9 +7,11 @@ import { CORES_PLANTAO } from "@/lib/escalas"
 import type { MEMBROS_PLANTAO, GrupoFaxina, GrupoPlantao } from "@/lib/escalas"
 
 const MESES = ["","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
-// Escala de serviço unificada (aba Plantão): 6 funções, na ordem de exibição
-const FUNCOES_SERVICO = ["Adjunto1","Adjunto2","Mestre","Leitor","Discurso","Comandante"] as const
+// Escala de serviço unificada (aba Plantão): funções, na ordem de exibição
+// AuxiliarOD/AdjuntoOD = nomenclatura da 1ª CIA a partir de jul/2026; Adjunto1/Adjunto2 = legado (jun/2026)
+const FUNCOES_SERVICO = ["AuxiliarOD","AdjuntoOD","Adjunto1","Adjunto2","Mestre","Leitor","Discurso","Comandante"] as const
 const LABEL_FUNCAO: Record<string,string> = {
+  AuxiliarOD:"Auxiliar do Oficial de Dia", AdjuntoOD:"Adjunto ao Aux. do Oficial de Dia",
   Adjunto1:"Adjunto da 1ª CIA", Adjunto2:"Adjunto da 2ª CIA",
   Mestre:"Mestre de Cerimônia", Leitor:"Leitor de BI",
   Discurso:"Discurso ao CFO", Comandante:"Comandante da 2ª CIA",
@@ -90,7 +92,7 @@ export function EscalasClient({
 
   // Escala de serviço unificada (aba Plantão)
   const [showServicoForm,setShowServicoForm] = useState(false)
-  const [servicoEntradas,setServicoEntradas] = useState<{data:string;funcao:string;matricula:string}[]>([{data:"",funcao:"Adjunto1",matricula:""}])
+  const [servicoEntradas,setServicoEntradas] = useState<{data:string;funcao:string;matricula:string}[]>([{data:"",funcao:"AuxiliarOD",matricula:""}])
 
   // ── Faxina grupo admin ────────────────────────────────────────
   async function adicionarMembro() {
@@ -557,7 +559,7 @@ export function EscalasClient({
                     </div>
                   ))}
                   <div style={{display:"flex",gap:8,marginTop:8}}>
-                    <button onClick={()=>setServicoEntradas([...servicoEntradas,{data:"",funcao:"Adjunto1",matricula:""}])} style={{background:"#e0e7ff",color:"var(--azul-profundo)",border:"none",borderRadius:6,padding:"7px 14px",fontSize:12,cursor:"pointer"}}>+ Linha</button>
+                    <button onClick={()=>setServicoEntradas([...servicoEntradas,{data:"",funcao:"AuxiliarOD",matricula:""}])} style={{background:"#e0e7ff",color:"var(--azul-profundo)",border:"none",borderRadius:6,padding:"7px 14px",fontSize:12,cursor:"pointer"}}>+ Linha</button>
                     <button onClick={salvarServico} disabled={saving} style={{background:"var(--dourado)",color:"#fff",border:"none",borderRadius:8,padding:"7px 18px",fontSize:13,fontWeight:600,cursor:"pointer"}}>{saving?"Salvando…":"Salvar"}</button>
                   </div>
                 </div>
