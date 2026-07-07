@@ -208,6 +208,88 @@ const CATEGORIAS: Categoria[] = [
     ],
   },
   {
+    nome: "Folhas de alterações",
+    modelos: [
+      {
+        id: "folha-1-pel",
+        titulo: "Folha de alterações — 1º pelotão",
+        descricao: "Chamada/alterações do 1º pelotão da 1ª CIA. Efetivo já preenchido, editável.",
+        arquivo: "folha-alteracoes-1-pelotao.docx",
+        formato: "DOCX",
+        dicas: [
+          "Preencha DATA, HORA, FORMATURA e a SITUAÇÃO de cada aluno; some presentes/ausentes ao final.",
+          "A lista já vem com o efetivo atual — edite apenas quando houver mudança (é raro).",
+        ],
+      },
+      {
+        id: "folha-2-pel",
+        titulo: "Folha de alterações — 2º pelotão",
+        descricao: "Chamada/alterações do 2º pelotão. Efetivo pré-preenchido, editável.",
+        arquivo: "folha-alteracoes-2-pelotao.docx",
+        formato: "DOCX",
+        dicas: [
+          "Preencha DATA, HORA, FORMATURA e a SITUAÇÃO de cada aluno.",
+          "Efetivo com base na relação de referência da turma — confira e ajuste se alguém entrou/saiu.",
+        ],
+      },
+      {
+        id: "folha-3-pel",
+        titulo: "Folha de alterações — 3º pelotão",
+        descricao: "Chamada/alterações do 3º pelotão. Efetivo pré-preenchido, editável.",
+        arquivo: "folha-alteracoes-3-pelotao.docx",
+        formato: "DOCX",
+        dicas: [
+          "Preencha DATA, HORA, FORMATURA e a SITUAÇÃO de cada aluno.",
+          "Efetivo com base na relação de referência da turma — confira e ajuste se alguém entrou/saiu.",
+        ],
+      },
+      {
+        id: "folha-4-pel",
+        titulo: "Folha de alterações — 4º pelotão",
+        descricao: "Chamada/alterações do 4º pelotão. Efetivo pré-preenchido, editável.",
+        arquivo: "folha-alteracoes-4-pelotao.docx",
+        formato: "DOCX",
+        dicas: [
+          "Preencha DATA, HORA, FORMATURA e a SITUAÇÃO de cada aluno.",
+          "Efetivo com base na relação de referência da turma — confira e ajuste se alguém entrou/saiu.",
+        ],
+      },
+      {
+        id: "folha-5-pel",
+        titulo: "Folha de alterações — 5º pelotão",
+        descricao: "Chamada/alterações do 5º pelotão. Efetivo pré-preenchido, editável.",
+        arquivo: "folha-alteracoes-5-pelotao.docx",
+        formato: "DOCX",
+        dicas: [
+          "Preencha DATA, HORA, FORMATURA e a SITUAÇÃO de cada aluno.",
+          "Efetivo com base na relação de referência da turma — confira e ajuste se alguém entrou/saiu.",
+        ],
+      },
+      {
+        id: "folha-6-pel",
+        titulo: "Folha de alterações — 6º pelotão",
+        descricao: "Chamada/alterações do 6º pelotão. Efetivo pré-preenchido, editável.",
+        arquivo: "folha-alteracoes-6-pelotao.docx",
+        formato: "DOCX",
+        dicas: [
+          "Preencha DATA, HORA, FORMATURA e a SITUAÇÃO de cada aluno.",
+          "Efetivo com base na relação de referência da turma — confira e ajuste se alguém entrou/saiu.",
+        ],
+      },
+      {
+        id: "folha-plantao",
+        titulo: "Folha de alterações — plantão",
+        descricao: "Alterações organizadas pelos 8 grupos de plantão (GOLF a NOVEMBER).",
+        arquivo: "folha-alteracoes-plantao.docx",
+        formato: "DOCX",
+        dicas: [
+          "Preencha DATA, HORA, FORMATURA e a SITUAÇÃO de cada aluno, por grupo.",
+          "Grupos e efetivo conforme o mapa de equipes vigente — ajuste se houver remanejamento.",
+        ],
+      },
+    ],
+  },
+  {
     nome: "Acadêmico",
     modelos: [
       {
