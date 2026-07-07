@@ -73,6 +73,11 @@ type Modelo = {
 
 type Categoria = { nome: string; modelos: Modelo[] }
 
+const FOLHA_PLANTAO_DICAS = [
+  "Preencha DATA, HORA, FORMATURA e a SITUAÇÃO de cada aluno do grupo.",
+  "Efetivo conforme o mapa de equipes vigente — ajuste se houver remanejamento de grupo.",
+]
+
 const CATEGORIAS: Categoria[] = [
   {
     nome: "Ensino e avaliações",
@@ -208,7 +213,7 @@ const CATEGORIAS: Categoria[] = [
     ],
   },
   {
-    nome: "Folhas de alterações",
+    nome: "Folhas de alterações — pelotões",
     modelos: [
       {
         id: "folha-1-pel",
@@ -276,16 +281,74 @@ const CATEGORIAS: Categoria[] = [
           "Efetivo com base na relação de referência da turma — confira e ajuste se alguém entrou/saiu.",
         ],
       },
+    ],
+  },
+  {
+    nome: "Folhas de alterações — plantão",
+    modelos: [
       {
-        id: "folha-plantao",
-        titulo: "Folha de alterações — plantão",
-        descricao: "Alterações organizadas pelos 8 grupos de plantão (GOLF a NOVEMBER).",
-        arquivo: "folha-alteracoes-plantao.docx",
+        id: "folha-plantao-golf",
+        titulo: "Plantão — grupo GOLF",
+        descricao: "Folha de alterações do grupo GOLF do plantão.",
+        arquivo: "folha-alteracoes-plantao-golf.docx",
         formato: "DOCX",
-        dicas: [
-          "Preencha DATA, HORA, FORMATURA e a SITUAÇÃO de cada aluno, por grupo.",
-          "Grupos e efetivo conforme o mapa de equipes vigente — ajuste se houver remanejamento.",
-        ],
+        dicas: FOLHA_PLANTAO_DICAS,
+      },
+      {
+        id: "folha-plantao-hotel",
+        titulo: "Plantão — grupo HOTEL",
+        descricao: "Folha de alterações do grupo HOTEL do plantão.",
+        arquivo: "folha-alteracoes-plantao-hotel.docx",
+        formato: "DOCX",
+        dicas: FOLHA_PLANTAO_DICAS,
+      },
+      {
+        id: "folha-plantao-india",
+        titulo: "Plantão — grupo INDIA",
+        descricao: "Folha de alterações do grupo INDIA do plantão.",
+        arquivo: "folha-alteracoes-plantao-india.docx",
+        formato: "DOCX",
+        dicas: FOLHA_PLANTAO_DICAS,
+      },
+      {
+        id: "folha-plantao-juliett",
+        titulo: "Plantão — grupo JULIETT",
+        descricao: "Folha de alterações do grupo JULIETT do plantão.",
+        arquivo: "folha-alteracoes-plantao-juliett.docx",
+        formato: "DOCX",
+        dicas: FOLHA_PLANTAO_DICAS,
+      },
+      {
+        id: "folha-plantao-kilo",
+        titulo: "Plantão — grupo KILO",
+        descricao: "Folha de alterações do grupo KILO do plantão.",
+        arquivo: "folha-alteracoes-plantao-kilo.docx",
+        formato: "DOCX",
+        dicas: FOLHA_PLANTAO_DICAS,
+      },
+      {
+        id: "folha-plantao-lima",
+        titulo: "Plantão — grupo LIMA",
+        descricao: "Folha de alterações do grupo LIMA do plantão.",
+        arquivo: "folha-alteracoes-plantao-lima.docx",
+        formato: "DOCX",
+        dicas: FOLHA_PLANTAO_DICAS,
+      },
+      {
+        id: "folha-plantao-mike",
+        titulo: "Plantão — grupo MIKE",
+        descricao: "Folha de alterações do grupo MIKE do plantão.",
+        arquivo: "folha-alteracoes-plantao-mike.docx",
+        formato: "DOCX",
+        dicas: FOLHA_PLANTAO_DICAS,
+      },
+      {
+        id: "folha-plantao-november",
+        titulo: "Plantão — grupo NOVEMBER",
+        descricao: "Folha de alterações do grupo NOVEMBER do plantão.",
+        arquivo: "folha-alteracoes-plantao-november.docx",
+        formato: "DOCX",
+        dicas: FOLHA_PLANTAO_DICAS,
       },
     ],
   },
