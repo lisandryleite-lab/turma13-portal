@@ -188,6 +188,8 @@ const CATEGORIAS: Categoria[] = [
         destino: "Comandante do Pelotão / Oficial de Dia.",
         dicas: [
           "Informe destino, motivo, horário previsto de saída e de retorno.",
+          "Declare a(s) disciplina(s)/aula(s) que serão perdidas e a carga horária correspondente (em tempos de aula).",
+          "Limite de ausência: no máximo 25% da carga horária total da disciplina — acima disso, reprova por frequência. Confira quanto já faltou antes de solicitar.",
           "O retorno deve ser comunicado ao auxiliar, para ciência do Oficial de Dia e da Guarda.",
         ],
       },
