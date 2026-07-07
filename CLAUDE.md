@@ -63,8 +63,9 @@ NEXTAUTH_URL          # URL base da aplicação — produção: https://portalcf
 | `/mementos` | Mementos resumidos por disciplina + flashcards |
 | `/questoes` | Banco de questões por disciplina/bateria |
 | `/ranking` | Ranking da turma |
-| `/permutas` | Permuta de plantões (cadeia direta/triangular, transparente, SEI opcional) — usa `MilitarPlantao` |
+| `/permutas` | Permuta de plantões (cadeia direta/triangular, SEI opcional; cada aluno vê só as permutas de que participa) — usa `MilitarPlantao` |
 | `/psicologia` | Conteúdo de psicologia |
+| `/documentos` | Links institucionais (SEI, ACIDES, Decreto 57.694/2024) + modelos de documentos (.docx/.pdf/.xlsx) em `public/modelos/`, com instruções (prazo, destinatário, base legal). Server component, `<details>` nativo — sem `"use client"` |
 | `/ajuda-senha`, `/trocar-senha` | Suporte de senha |
 
 ### Área legada — `app/turma13cfo2026/`
