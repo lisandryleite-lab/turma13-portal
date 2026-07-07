@@ -199,58 +199,187 @@ Cerimonial nas OM:
 
 ---
 
-# Módulo 9 — Atribuições e Serviço Interno
+# Módulo 9 — Atribuições do Comandante de OME
 
-## Comandante de OME (atribuições — destaques)
-- Transcrever em BI as recompensas concedidas pelos comandos subordinados; conceder licenças conforme normas; dar ordens **por intermédio do Subcomandante**; atender ponderações justas dos subordinados.
-- **NÃO** é atribuição transferir o militar considerando a localização da sua residência.
+> **Base:** Regulamento Interno e dos Serviços Gerais (R-1/RISG). As atribuições do Cmt aplicam-se também a quem exerce função de **Chefe (Ch)** ou **Diretor (Dir)**.
 
-## Serviço interno — serviço de escala (compreende)
-- Guarda do quartel; Sgt Dia SU; Guarda das SU (alojamentos, garagens etc.); serviço-de-dia ao rancho (Sgt Dia, cozinheiro, cassineiro).
-- **NÃO** integra a escala: "portaria e serviços gerais".
-
-## Boletim Interno (BI) — conteúdo
-- Discriminação do serviço a executar; ordens/decisões do Cmt (mesmo já executadas); determinações de autoridades superiores (com citação da referência); alterações de pessoal e material.
-- **NÃO** se publicam em BI assuntos **sigilosos** transmitidos em caráter sigiloso.
+- **Comando** é função do grau hierárquico, da qualificação e das habilitações — prerrogativa **impessoal** com atribuições e deveres.
+- **Ação de comando:** planejar, orientar, coordenar, acompanhar, controlar, fiscalizar e **apurar responsabilidades** (exercida em todos os setores, com iniciativa e sob inteira responsabilidade).
+- Destaques: organizar o **horário da unidade**; conceder **dispensa, trânsito e férias**; autorizar trajes civis às praças; **estabelecer as NGA/U**; dar ordens **por intermédio do SCmt**; **anular ato em BI em até 180 dias**; designar para cargos (nenhum oficial, em princípio, **mais de 2 anos** no mesmo cargo).
+- **Pegadinha:** NÃO é atribuição transferir o militar considerando a **localização da residência**.
 
 ---
 
-# Módulo 10 — Precedência Hierárquica na PMPE (SUNOR nº 20/2022)
+# Módulo 10 — Atribuições do Subcomandante de OME
 
-Ordem (maior → menor precedência):
-1. **Comandante-Geral**
-2. **Subcomandante-Geral**
-3. **Chefe do Estado-Maior Geral**
-4. **Diretor Geral de Administração e Diretor de Planejamento Operacional**
-5. 1ª EMG a 8ª EMG, DIM, DIRESP, DINTER I e II, DF, DEIP, DASDH, DAL, DGP, DS, DTec, DASIS, AG
-6. APMP, CAS, CMH, CPM, COdonto, CFarm
-7. DEAJA, ACG, CPA, CPL, CPO, CPP
-8. Comandantes das Unidades Operacionais de Área e Especializadas
-9. CSM/Int, CSM/MB, CSM/Moto, CRESEP, CReed, CTT, CIMus, CEFD
-- Aos **Comandantes-Gerais de PM/CBM do Brasil**: tratamento, honras e precedência de **Oficial-General 2 estrelas**.
+- **Principal auxiliar e substituto imediato** do Cmt U; **Chefe do Estado-Maior** da OME; intermediário na expedição das ordens de **disciplina, instrução e serviços gerais**, cuja execução fiscaliza.
+- Em **Companhias independentes** pode **acumular** funções (p. ex., a de P1).
+- Atribuições: encaminhar ao Cmt os documentos que dependam de sua decisão; **assinar documentos urgentes na ausência do Cmt** (dando ciência depois); zelar pela conduta dos militares; **escalar oficiais e SU** para serviços gerais/extraordinários; **supervisionar o controle do armamento** (inspeções inopinadas). Autentica as cópias do BI.
 
 ---
 
-# Módulo 11 — Postos e Graduações das Forças Armadas
+# Módulo 11 — Atribuições do Ajudante-Secretário
 
-## Oficiais-Generais (equivalência entre as Forças)
-| Marinha | Exército | Aeronáutica |
-|---|---|---|
-| Almirante | Marechal | Marechal-do-Ar |
-| Almirante-de-Esquadra | General de Exército | Tenente-Brigadeiro |
-| Vice-Almirante | General de Divisão | Major-Brigadeiro |
-| Contra-Almirante | General de Brigada | Brigadeiro |
+- **Auxiliar imediato do Cmt U.**
+- Compete-lhe: dirigir a escrituração da correspondência, do arquivo e das **alterações dos oficiais**; redigir correspondência; **subscrever certidões**; **manter em dia o histórico da unidade**; conferir/autenticar cópias; manter o arquivo; responder pela carga do material do gabinete do Cmt/SCmt/Secretaria; **receber a correspondência externa**.
+- **Cópias autenticadas do BI** só podem ser emitidas pelo **ajudante-secretário** (determinação do Cmt).
+- **Art. 27:** sem cargo específico, a função é exercida cumulativamente pelo **P1**.
 
-## Oficiais Superiores
-| Marinha | Exército/Aeronáutica |
-|---|---|
-| Capitão-de-Mar-e-Guerra | Coronel |
-| Capitão-de-Fragata | Tenente-Coronel |
-| Capitão-de-Corveta | Major |
+---
 
-## Oficiais Intermediário e Subalternos
-- Intermediário: **Capitão-Tenente** (Marinha) = **Capitão** (Ex/Aer).
-- Subalternos: **1º Tenente**, **2º Tenente** (em todas); **Guarda-Marinha** (Marinha) ≈ Aspirante (Ex/Aer).`
+# Módulo 12 — Atribuições do P1
+
+- **Chefe da 1ª seção do EM/U** — pessoal, **BI**, justiça e disciplina, protocolo, arquivo da correspondência interna e **pagamento** do pessoal.
+- Compete-lhe: organizar as relações p/ **escalas**; **escalar as praças** para serviços normais e extraordinários; organizar fichários/mapas do efetivo; **organizar os boletins ostensivos**; preparar documentação de **promoção, reserva, reforma e medalhas**; controlar a escrituração das **alterações dos subtenentes e sargentos** (a dos oficiais é do ajudante-secretário).
+- **Art. 29:** nas Cias Independentes, sem cargo específico, a função de P1 pode ser exercida pelo **SCmt U**.
+
+---
+
+# Módulo 13 — Atribuições do P3
+
+- **Chefe da 3ª seção do EM/U** — **operações e estatística**.
+- Compete-lhe: **organizar as cerimônias militares** (com os demais oficiais do EM/U); preparar e coordenar a **documentação de operações**.
+- Nas **formaturas**, é o P3 quem **avisa o Cmt U** de que a tropa está pronta.
+- *Não* confundir: a **instrução** é do **SEI**.
+
+---
+
+# Módulo 14 — Atribuições do SEI (Seção de Ensino e Instrução)
+
+- **Chefe da seção de ensino e instrução do EM/U** — responsável pela **instrução**.
+- Compete-lhe: **planejar, organizar e coordenar toda a instrução** (determinação do Cmt + diretrizes do escalão superior); selecionar praças para cursos (com o P1); fiscalizar a instrução.
+- **SUNOR 034/2020:** a instrução tem **duas vertentes** — **IG (Instrução Geral)**, elaborada pela **DEIP**, e **IP (Instrução Particular)**, desenvolvida pelas OMEs.
+- **PgI (Programa de Instrução):** documento básico de planejamento, encaminhado à **DEIP** para aprovação.
+- **Direção da instrução em 3 níveis:** Geral, Setorial e **Execução** (esta pelas OMEs/SEIs e Campi).
+
+---
+
+# Módulo 15 — Atribuições do P4
+
+- **Chefe da 4ª seção do EM/U** (logística/administração); pode acumular **Fiscal Administrativo (Fisc Adm)**.
+- Principal responsável pela observância das disposições de **administração**.
+- Compete-lhe: coordenar e fiscalizar os serviços; manter ligação com o **P3** e o **Chefe da SEI** para o **apoio material** aos programas de instrução e planos de emprego; zelar pela prevenção de acidentes (EPI).
+- Quando acumula **Fisc Adm**, **não participa de serviços estranhos** à sua função e assessora o Cmt no **controle ambiental**.
+
+---
+
+# Módulo 16 — Do Boletim Interno (BI)
+
+- Documento em que o Cmt publica suas ordens, as das autoridades superiores e os fatos do conhecimento da unidade.
+- **4 partes:** 1ª **Serviços Diários**; 2ª **Instrução**; 3ª **Assuntos Gerais e Administrativos**; 4ª **Justiça e Disciplina**.
+- Publicado **diariamente ou não**, conforme as necessidades. Assuntos **sigilosos** → **boletim de acesso restrito** (não no ostensivo).
+- **Conterá:** discriminação do serviço; ordens/decisões do Cmt (mesmo executadas); determinações superiores (com referência); alterações de pessoal/material.
+- **Não publicará:** sigilosos (e referências a eles); assuntos não ligados ao serviço (salvo ordem ou comemoração cívica).
+- Cópias **autenticadas pelo SCmt**; **cópias autenticadas só pelo ajudante-secretário**. O **desconhecimento do BI não justifica** falta ou descumprimento de ordens.
+
+---
+
+# Módulo 17 — Trabalhos Diários, Instrução e Faxinas
+
+- **Horário** da vida diária estabelecido pelo **Cmt U**, por períodos que variam com estações, instrução e determinações superiores; publicado em **BI** (antecedência de 1 semana, sempre que possível).
+- A **instrução** é o **objeto principal** da vida da unidade e **não deve ser prejudicada** pelos demais trabalhos, salvo **justiça** e **situações anormais**.
+- **Militar gestante** (salvo recomendação médica) participa de tudo, **exceto** esforços físicos e jornadas/exercícios em **campanha**.
+- **Faxinas:** trabalhos de utilidade geral (limpeza, lavagem, capinação, arrumação, transporte, carga/descarga) **regulados pelas NGA/U**.
+
+---
+
+# Módulo 18 — Do Adjunto de Comando
+
+- Criado no **Exército** em caráter experimental (**22/05/2015**) — valoriza a carreira do graduado.
+- Recai sobre **subtenente ou primeiro sargento** de destacada **liderança**, competência e conduta **ilibada**.
+- Na **PMPE**: instituído em **janeiro de 2022** e, diferentemente do EB, **apenas no Comando Geral** (Comando Geral, **DGA** e **DPO**).
+- Atribuições: propagar valores éticos/militares; fortalecer o **comportamento militar**; **facilitar a comunicação entre o comando e as praças**; difundir missão/visão; assessorar o comando em assuntos das praças.
+
+---
+
+# Módulo 19 — Manual Básico de Comunicação Social da PMPE (SUNOR 20/2022)
+
+- **Todos** os integrantes são elementos da Comunicação Social (difusores dos valores).
+- **ASCOM = 5ª Seção do EMG**, responsável pela imagem da instituição.
+- **Oficial de Comunicação Social (P/5)** recai sobre o **Oficial Secretário** da OME.
+- **Entrevistas/esclarecimentos jornalísticos:** sob **orientação da Ascom/5ª EMG** (salvo autorização do Comando Geral). Comandantes podem dar **informações** sobre ocorrências **positivas e neutras**.
+- **Vedações:** divulgar imagens de **suspeitos** (salvo notório interesse público); imagens de PM em situações **vexatórias**; **criar perfis funcionais**; engajamento em **conteúdo político**; exposição **fardado em circunstância negativa**. Sanções: Código de Ética (Dec. 22.114/2000) e Código Disciplinar (Lei 11.817/2000).
+
+---
+
+# Módulo 20 — Do Expediente
+
+- Fase da jornada destinada à **administração** e ao funcionamento das repartições.
+- **Começa** com a **formatura geral** (= um tempo de instrução) e **termina** após a **leitura do BI**, com o **toque de fim do expediente**.
+- Serviços de **escala** e permanentes **independem** do horário do expediente.
+- **Toque de "ordem"** (fim) só após o **SCmt receber todos os mapas diários do armamento**.
+- Durante o expediente: oficiais saem com **permissão do Cmt** (delegável ao SCmt); praças, com autorização do Cmt de Cia/chefe de repartição.
+
+---
+
+# Módulo 21 — Das Escalas de Serviço
+
+- **Escala:** relação do pessoal/frações que concorrem a determinado serviço — finalidade: **distribuição equitativa**.
+- Regras-chave:
+  - **Externo antes do interno**; **extraordinário antes do ordinário**.
+  - Designação recai em quem **maior folga** tiver; em **igualdade de folga**, o de **menor posto/graduação** ou **mais moderno**.
+  - **Folgas contadas separadamente** para cada serviço; mínimo de **48 horas** entre dois serviços (sempre que possível).
+  - Só escalado **depois de pronto** à unidade.
+  - **Gestante não concorre** à escala durante a gravidez e até a criança completar **6 meses**.
+
+---
+
+# Módulo 22 — Do Serviço Interno
+
+- Abrange **todos os trabalhos** necessários ao funcionamento da unidade.
+- **Compreende:** serviço **permanente** + serviço de **escala**.
+- Determinado, quando possível, à **mesma fração de tropa** (entrosamento).
+- **Fiscalização dos serviços de escala:** **SCmt U**, **Of de Operações** e **Graduado de Operações**.
+- **Pegadinha:** "portaria e serviços gerais" **não** integra o serviço de escala.
+
+---
+
+# Módulo 23 — Do Oficial de Dia (de Operações)
+
+- **Fora do expediente**, é o **representante do Cmt U**.
+- Compete-lhe: assegurar o cumprimento das ordens do **serviço diário**; estar familiarizado com os planos de **segurança/incêndio/chamada**; **verificar as dependências** ao assumir (com o antecessor); **receber autoridade igual/superior** ao Cmt e acompanhá-la; **participar ao SCmt** as ocorrências extraordinárias; **permanecer no quartel**, pronto e uniformizado.
+
+---
+
+# Módulo 24 — Do Adjunto ao Oficial de Dia (Graduado de Operações)
+
+- **Sgt Adj = auxiliar imediato do Of Dia.**
+- Compete-lhe: executar/transmitir as ordens; **responder pela limpeza** do quartel a cargo do cabo da faxina; **acompanhar o Of Dia** nas visitas; **passar revista às Companhias** quando determinado; providenciar as **chaves no claviculário** após o toque de ordem; **responder pelo Of Dia** em impedimentos eventuais (participando-lhe as ocorrências, mesmo já providenciadas).
+
+---
+
+# Módulo 25 — Do Serviço de Guarda do Quartel
+
+- Normalmente comandada por **2º ou 3º Sargento**; constituída de cabos e soldados (sentinelas).
+- **Excepcionalmente** comandada por **oficial** → acrescida de **corneteiro/clarim**; o sargento passa a **auxiliar**.
+- Pessoal sempre **uniformizado, equipado e armado**; **rodízio de descanso** sob controle do Cmt Gd.
+- **Finalidades:** manter a **segurança** do quartel; impedir saída mal fardada; **não permitir** entrada de bebidas alcoólicas/inflamáveis/explosivos (salvo suprimento); impedir entrada de força estranha sem ordem do **Of Dia**; controlar entrada/saída de pessoas, viaturas e material; **prestar continências**.
+- No **corpo da guarda** é proibida a permanência de civis ou praças estranhas.
+
+---
+
+# Módulo 26 — Do Comandante da Guarda do Quartel
+
+- Responsável pela execução das ordens do serviço da guarda; **subordinado diretamente ao Of Dia**.
+- Compete-lhe: **formar a guarda** ao sinal de alarme; **conferir o material** ao assumir; **fechar os portões às 18h** (deixando só a passagem individual do portão principal); **conservar as chaves** e **entregá-las ao Of Dia às 21h** (exceto a do portão principal); **revistar viaturas estranhas** à entrada/saída; **entregar a parte da guarda** ao Of Dia (relação nominal, roteiros, ocorrências).
+
+---
+
+# Módulo 27 — Do Plantão
+
+- **Plantão da hora = sentinela da SU**; posto na **entrada do alojamento** (que percorre algumas vezes).
+- Compete-lhe: estar atento ao alojamento e **participar ao Cabo Dia** qualquer alteração; **fazer levantar** as praças à **alvorada**; **não consentir civis** sem oficial/sargento; **impedir conversa em voz alta após o silêncio**; dar o **sinal de silêncio**; **acender/apagar as luzes**.
+- Substituídos às **mesmas horas** que as sentinelas da guarda. Se não perceber a entrada de oficial, **qualquer praça** dá o sinal.
+
+---
+
+# Módulo 28 — Das Formaturas
+
+- **Formatura:** toda reunião do pessoal em forma, **armado ou desarmado**.
+- **Classificação:** **geral ou parcial** (unidade/Cia) e **ordinária ou extraordinária** (estas **previstas ou inopinadas**).
+- **Ordinárias:** revistas normais, **rancho**, **Parada**, **leitura do BI**, **instrução**.
+- **Origem na companhia:** subalternos revistam as frações; o mais antigo apresenta ao Cmt SU.
+- Reunidas as Cias, o **SCmt assume** o comando **até a chegada do Cmt U**; o **Cmt só se aproxima** após o **aviso do P3** de que a tropa está pronta.`
 
 type Card = { modulo: string; frente: string; verso: string }
 
@@ -356,29 +485,117 @@ const CARDS: Card[] = [
   { modulo: "8", frente: "Guarda Fúnebre — efetivo por posto", verso:
 `• Of-Gen/Cmt-Geral: 1 Batalhão • Of. Superior: 2 Cias • Of. Intermediário: 1 Cia • Of. Subalterno: 1 Pelotão • Aspirantes/Alunos: 18 homens • Subten/Sgt: 9 homens • Cabos/Sd: 4 homens.
 • "PREPARAR!": giro de 45° à direita; três descargas de fuzil.` },
-  { modulo: "9", frente: "Atribuições do Cmt de OME (pegadinha)", verso:
-`• NÃO é atribuição transferir o militar considerando a localização de sua residência.
-• É: transcrever recompensas em BI, conceder licenças, ordenar via Subcomandante, atender ponderações justas.` },
-  { modulo: "9", frente: "Serviço de escala e BI (exceções)", verso:
-`• Escala NÃO inclui "portaria e serviços gerais".
-• BI NÃO publica assuntos transmitidos em caráter SIGILOSO.
-• BI publica: discriminação do serviço, ordens do Cmt (mesmo executadas), determinações superiores (com referência), alterações de pessoal/material.` },
-  { modulo: "10", frente: "Precedência hierárquica PMPE (topo)", verso:
-`1. Comandante-Geral
-2. Subcomandante-Geral
-3. Chefe do Estado-Maior Geral
-4. Diretor Geral de Administração e Diretor de Planejamento Operacional
-... 8. Cmt das Unidades Operacionais ... 9. CSM/Int, CRESEP, CTT, CEFD etc.` },
-  { modulo: "11", frente: "Postos — Of-Generais (3 Forças)", verso:
-`• Almirante = Marechal = Marechal-do-Ar
-• Almirante-de-Esquadra = General de Exército = Tenente-Brigadeiro
-• Vice-Almirante = General de Divisão = Major-Brigadeiro
-• Contra-Almirante = General de Brigada = Brigadeiro` },
-  { modulo: "11", frente: "Postos — Of. Superiores e Intermediário", verso:
-`• Capitão-de-Mar-e-Guerra = Coronel
-• Capitão-de-Fragata = Tenente-Coronel
-• Capitão-de-Corveta = Major
-• Intermediário: Capitão-Tenente (Marinha) = Capitão (Ex/Aer).` },
+  { modulo: "9", frente: "Comandante de OME — ação de comando", verso:
+`• Comando = função do grau hierárquico, qualificação e habilitações (prerrogativa impessoal).
+• Ação de comando: planejar, orientar, coordenar, acompanhar, controlar, fiscalizar e apurar responsabilidades.
+• Aplica-se também a Chefe (Ch) e Diretor (Dir).` },
+  { modulo: "9", frente: "Cmt de OME — atribuições e pegadinha", verso:
+`• Estabelecer as NGA/U; dar ordens via SCmt; anular ato em BI em até 180 dias.
+• Designar p/ cargos: nenhum oficial, em princípio, mais de 2 anos no mesmo cargo.
+• NÃO é atribuição: transferir o militar pela localização da residência.` },
+  { modulo: "10", frente: "Subcomandante de OME — papel", verso:
+`• Principal auxiliar e substituto imediato do Cmt; Chefe do Estado-Maior da OME.
+• Intermediário nas ordens de disciplina, instrução e serviços gerais.
+• Em Cias independentes pode acumular funções (ex.: P1).` },
+  { modulo: "10", frente: "Subcomandante — atribuições", verso:
+`• Encaminhar ao Cmt documentos que dependam de sua decisão.
+• Assinar documentos urgentes na ausência do Cmt (dando ciência depois).
+• Escalar oficiais e SU p/ serviços gerais/extraordinários.
+• Supervisionar o controle do armamento (inspeções inopinadas).` },
+  { modulo: "11", frente: "Ajudante-Secretário — atribuições", verso:
+`• Auxiliar imediato do Cmt U.
+• Manter em dia o HISTÓRICO da unidade; redigir correspondência; subscrever certidões.
+• Escriturar as alterações dos OFICIAIS; receber a correspondência externa.
+• Cópias autenticadas do BI: só por ele. Sem cargo específico, função vai p/ o P1 (Art. 27).` },
+  { modulo: "12", frente: "P1 — 1ª seção", verso:
+`• Chefe da 1ª seção do EM/U: pessoal, BI, justiça e disciplina, protocolo, pagamento.
+• Escalar as praças; organizar relações p/ escalas; organizar boletins ostensivos.
+• Documentação de promoção/reserva/reforma/medalhas; alterações de SUBTENENTES e SARGENTOS.
+• Cias Independentes sem cargo: P1 pode ser exercido pelo SCmt (Art. 29).` },
+  { modulo: "13", frente: "P3 — 3ª seção (operações)", verso:
+`• Chefe da 3ª seção do EM/U: operações e estatística.
+• Organiza as CERIMÔNIAS MILITARES (com o EM/U); prepara a documentação de operações.
+• Nas formaturas, AVISA o Cmt que a tropa está pronta.
+• A instrução NÃO é do P3 (é do SEI).` },
+  { modulo: "14", frente: "SEI — instrução e vertentes (SUNOR 034/2020)", verso:
+`• Chefe da seção de ensino e instrução; planeja/organiza/coordena toda a instrução.
+• 2 vertentes: IG (Instrução Geral) elaborada pela DEIP; IP (Particular) pelas OMEs.
+• PgI (Programa de Instrução): documento básico, aprovado pela DEIP.
+• Direção da instrução em 3 níveis: Geral, Setorial e Execução.` },
+  { modulo: "15", frente: "P4 — 4ª seção e Fisc Adm", verso:
+`• Chefe da 4ª seção do EM/U (administração); pode acumular Fiscal Administrativo.
+• Mantém ligação com o P3 e o SEI p/ o APOIO MATERIAL à instrução e planos de emprego.
+• Acumulando Fisc Adm: não participa de serviços estranhos e assessora o Cmt no controle ambiental.` },
+  { modulo: "16", frente: "Boletim Interno — 4 partes", verso:
+`• 1ª Serviços Diários; 2ª Instrução; 3ª Assuntos Gerais e Administrativos; 4ª Justiça e Disciplina.
+• Publicado diariamente ou não. Sigilosos vão em boletim de acesso RESTRITO.
+• Cópias autenticadas pelo SCmt; cópias autenticadas só pelo ajudante-secretário.
+• O desconhecimento do BI NÃO justifica falta/descumprimento de ordens.` },
+  { modulo: "16", frente: "BI — o que conterá / não publicará", verso:
+`• Conterá: discriminação do serviço; ordens do Cmt (mesmo executadas); determinações superiores (c/ referência); alterações de pessoal/material.
+• NÃO publicará: assuntos sigilosos (e referências); assuntos não ligados ao serviço (salvo ordem ou comemoração cívica).` },
+  { modulo: "17", frente: "Trabalhos diários, instrução e faxinas", verso:
+`• Horário estabelecido pelo Cmt U, por períodos; publicado em BI (1 semana antes, se possível).
+• Instrução = objeto principal; não deve ser prejudicada (salvo justiça/situações anormais).
+• Gestante: participa de tudo, exceto esforços físicos e exercícios em campanha.
+• Faxinas: trabalhos de utilidade geral, regulados pelas NGA/U.` },
+  { modulo: "18", frente: "Adjunto de Comando", verso:
+`• Criado no Exército em 22/05/2015 (caráter experimental).
+• Recai sobre subtenente ou 1º sargento de destacada liderança e conduta ilibada.
+• PMPE: instituído em jan/2022, APENAS no Comando Geral (Cmdo Geral, DGA e DPO).
+• Facilita a comunicação entre o comando e as praças.` },
+  { modulo: "19", frente: "Comunicação Social — ASCOM e P/5", verso:
+`• Todos os PM são elementos da Comunicação Social.
+• ASCOM = 5ª Seção do EMG. Oficial de Com. Social (P/5) = Oficial Secretário da OME.
+• Entrevistas: sob orientação da Ascom/5ª EMG. Cmt fornece info de ocorrências positivas/neutras.` },
+  { modulo: "19", frente: "Comunicação Social — vedações em redes", verso:
+`• Vedado: imagens de suspeitos (salvo notório interesse público); PM em situação vexatória.
+• Vedado: criar perfis funcionais; engajamento em conteúdo político; exposição fardado em circunstância negativa.
+• Sanções: Cód. de Ética (Dec. 22.114/2000) e Cód. Disciplinar (Lei 11.817/2000).` },
+  { modulo: "20", frente: "Expediente — início e fim", verso:
+`• Começa com a FORMATURA GERAL (= um tempo de instrução).
+• Termina após a LEITURA DO BI, com o toque de fim do expediente.
+• Serviços de escala/permanentes independem do horário do expediente.
+• Toque de "ordem" só após o SCmt receber todos os mapas diários do armamento.` },
+  { modulo: "21", frente: "Escalas de serviço — regras", verso:
+`• Finalidade: distribuição equitativa. Externo antes do interno; extraordinário antes do ordinário.
+• Recai em quem maior folga tiver; em igualdade, o de MENOR posto/MAIS MODERNO.
+• Folgas separadas por serviço; mínimo 48h entre serviços (se possível).
+• Gestante não concorre à escala até a criança completar 6 meses.` },
+  { modulo: "22", frente: "Serviço interno", verso:
+`• Abrange todos os trabalhos para o funcionamento da unidade.
+• Compreende serviço PERMANENTE + serviço de ESCALA.
+• Fiscalização da escala: SCmt U, Of de Operações e Graduado de Operações.
+• Pegadinha: "portaria e serviços gerais" NÃO integra a escala.` },
+  { modulo: "23", frente: "Oficial de Dia (de Operações)", verso:
+`• FORA do expediente, é o representante do Cmt U.
+• Assegura o cumprimento das ordens do serviço diário; conhece os planos de segurança/incêndio/chamada.
+• Verifica as dependências ao assumir; recebe autoridade igual/superior ao Cmt.
+• Participa ao SCmt as ocorrências; permanece pronto e uniformizado no quartel.` },
+  { modulo: "24", frente: "Adjunto ao Of Dia (Graduado de Operações)", verso:
+`• Auxiliar imediato do Of Dia.
+• Responde pela limpeza do quartel (cabo da faxina); acompanha o Of Dia nas visitas.
+• Passa revista às Companhias quando determinado; cuida das chaves no claviculário.
+• Responde pelo Of Dia em impedimentos eventuais.` },
+  { modulo: "25", frente: "Serviço de Guarda do Quartel", verso:
+`• Normalmente comandada por 2º ou 3º Sgt; excepcionalmente por oficial (+ corneteiro/clarim).
+• Finalidades: segurança do quartel; barrar bebidas/inflamáveis/explosivos; controlar entradas/saídas; prestar continências.
+• Proibida a permanência de civis/praças estranhas no corpo da guarda.` },
+  { modulo: "26", frente: "Comandante da Guarda do Quartel", verso:
+`• Subordinado diretamente ao OF DIA.
+• Forma a guarda ao alarme; confere o material ao assumir.
+• Fecha os portões às 18h (deixa a passagem individual do portão principal).
+• Entrega as chaves ao Of Dia às 21h (exceto a do portão principal); revista viaturas estranhas.` },
+  { modulo: "27", frente: "Plantão (plantão da hora)", verso:
+`• Sentinela da SU; posto na entrada do alojamento.
+• Participa ao Cabo Dia qualquer alteração; faz levantar as praças à alvorada.
+• Não consente civis sem oficial/sargento; impede conversa em voz alta após o silêncio.
+• Substituído nas mesmas horas das sentinelas da guarda.` },
+  { modulo: "28", frente: "Formaturas — definição e classificação", verso:
+`• Reunião do pessoal em forma, armado ou desarmado.
+• Geral/parcial (unidade ou Cia); ordinária/extraordinária (previstas ou inopinadas).
+• Ordinárias: revistas, rancho, Parada, leitura do BI, instrução.
+• Origem na companhia; SCmt assume até a chegada do Cmt; o P3 avisa que a tropa está pronta.` },
 ]
 
 async function main() {
@@ -391,6 +608,11 @@ async function main() {
     create: { materia: MATERIA, modulo: "", titulo: TITULO, conteudoMd: MD, ordem: 0 },
   })
   console.log(`✓ Memento de ${MATERIA} salvo (${MD.length} caracteres).`)
+
+  // Remove flashcards IG obsoletos (de versões anteriores) que não fazem parte do novo conjunto
+  const novosHashes = CARDS.map(c => createHash("sha1").update(`${MATERIA}|${c.modulo}|${c.frente}`).digest("hex"))
+  const del = await prisma.flashcard.deleteMany({ where: { materia: MATERIA, hash: { notIn: novosHashes } } })
+  if (del.count > 0) console.log(`Removidos ${del.count} flashcards IG obsoletos.`)
 
   let n = 0
   for (const c of CARDS) {
