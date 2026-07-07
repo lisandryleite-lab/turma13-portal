@@ -50,3 +50,6 @@ next-env.d.ts
 
 # dados-fonte (PII — nunca commitar: planilhas/PDFs de alunos)
 /.dados-fonte/
+
+# insumos de conteúdo (texto bruto de apostilas p/ gerar questões/mementos)
+/_*.txt
