@@ -19,9 +19,9 @@ export async function POST(req: NextRequest) {
   const session = await auth()
   if (!session?.user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
 
-  const { cedeData, querData } = await req.json()
-  if (!cedeData || !querData) {
-    return NextResponse.json({ error: "cedeData e querData são obrigatórios" }, { status: 400 })
+  const { cedeData } = await req.json()
+  if (!cedeData) {
+    return NextResponse.json({ error: "cedeData é obrigatório" }, { status: 400 })
   }
 
   const me = await prisma.user.findUnique({ where: { id: session.user.id }, select: { grupoPlantao: true } })
@@ -45,21 +45,26 @@ export async function POST(req: NextRequest) {
 
   const oferta = await prisma.permutaOferta.upsert({
     where: { userId_cedeData: { userId: session.user.id, cedeData: dataCede } },
-    update: { querData: parseDataLocal(querData), status: "aberta" },
-    create: { userId: session.user.id, cedeData: dataCede, querData: parseDataLocal(querData) },
+    update: { status: "aberta" },
+    create: { userId: session.user.id, cedeData: dataCede },
   })
   return NextResponse.json(oferta)
 }
 
+// Despublica uma oferta. Aceita { id } ou { cedeData } (a data que o aluno tinha marcado).
 export async function DELETE(req: NextRequest) {
   const session = await auth()
   if (!session?.user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
 
-  const { id } = await req.json()
-  const oferta = await prisma.permutaOferta.findUnique({ where: { id } })
+  const { id, cedeData } = await req.json()
+  const oferta = id
+    ? await prisma.permutaOferta.findUnique({ where: { id } })
+    : cedeData
+      ? await prisma.permutaOferta.findUnique({ where: { userId_cedeData: { userId: session.user.id, cedeData: parseDataLocal(cedeData) } } })
+      : null
   if (!oferta || oferta.userId !== session.user.id) {
     return NextResponse.json({ error: "Oferta não encontrada" }, { status: 404 })
   }
-  await prisma.permutaOferta.update({ where: { id }, data: { status: "cancelada" } })
+  await prisma.permutaOferta.update({ where: { id: oferta.id }, data: { status: "cancelada" } })
   return NextResponse.json({ ok: true })
 }

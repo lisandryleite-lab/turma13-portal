@@ -90,11 +90,10 @@ export default async function PermutasPage() {
       militares={militares.map(m => ({ matricula: m.matricula, nome: m.nome, grupoPlantao: m.grupoPlantao }))}
       minhasOfertasIniciais={minhasOfertas.map(o => dOnlyServer(o.cedeData))}
       ofertasIniciais={ofertas.map(o => ({
-        ...o,
+        id: o.id,
+        userId: o.userId,
         cedeData: o.cedeData.toISOString(),
-        querData: o.querData.toISOString(),
-        createdAt: o.createdAt.toISOString(),
-        updatedAt: o.updatedAt.toISOString(),
+        user: o.user,
       }))}
       solicitacoesIniciais={{
         enviadas: enviadas.map(serializar),

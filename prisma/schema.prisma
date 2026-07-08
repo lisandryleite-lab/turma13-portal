@@ -549,7 +549,7 @@ model PermutaOferta {
   id        String   @id @default(cuid())
   userId    String
   cedeData  DateTime
-  querData  DateTime
+  querData  DateTime? // legado — não usado no fluxo simplificado (só marca o dia que quer largar)
   status    String   @default("aberta") // aberta | fechada | cancelada
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

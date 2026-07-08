@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useRef, useState } from "react"
+import { useMemo, useState } from "react"
 import Link from "next/link"
 import { CORES_PLANTAO, GRUPOS_PLANTAO } from "@/lib/escalas"
 
@@ -11,7 +11,7 @@ type DiaCal = { data: string; diaSemana: string; tipo: "util" | "fds"; grupoPlan
 type Mes = { ano: number; mes: number }
 type Militar = { matricula: number; nome: string; grupoPlantao: string }
 type Oferta = {
-  id: string; userId: string; cedeData: string; querData: string; status: string
+  id: string; userId: string; cedeData: string
   user: { matricula: number; nomeGuerra: string; grupoPlantao: string }
 }
 type Participante = {
@@ -25,15 +25,18 @@ type Solicitacao = {
   createdAt: string; updatedAt: string
   participantes: Participante[]
 }
-type Parte = { matricula: number; nome: string; grupoPlantao: string; cedeData: string }
 
 const dOnly = (iso: string) => iso.slice(0, 10)
 const fmtData = (iso: string) => {
   const [y, m, d] = dOnly(iso).split("-")
   return `${d}/${m}/${y}`
 }
+const DIAS_SEMANA = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+const diaSemanaDe = (iso: string) => {
+  const [y, m, d] = dOnly(iso).split("-").map(Number)
+  return DIAS_SEMANA[new Date(y, m - 1, d).getDay()]
+}
 
-// Logo "sei!" — mesmo estilo do card SEI em /links
 function IconSEI({ width = 44 }: { width?: number }) {
   return (
     <svg viewBox="0 0 80 60" fill="none" width={width} height={width * 0.75}>
@@ -51,16 +54,7 @@ function LinkSEI({ numero }: { numero: string }) {
       style={{
         display: "inline-flex", alignItems: "center", gap: 10,
         background: "#fff", border: "1.5px solid rgba(0,0,0,0.07)", borderRadius: 14,
-        padding: "8px 14px", textDecoration: "none",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.07)", transition: "transform 0.15s, box-shadow 0.15s",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateY(-3px)"
-        e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.13)"
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)"
-        e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,0.07)"
+        padding: "8px 14px", textDecoration: "none", boxShadow: "0 2px 10px rgba(0,0,0,0.07)",
       }}
     >
       <IconSEI width={40} />
@@ -76,6 +70,15 @@ function TagGrupo({ grupo }: { grupo: string }) {
   return (
     <span style={{ background: cor + "18", color: cor, border: `1px solid ${cor}40`, borderRadius: 6, padding: "2px 9px", fontSize: 11, fontWeight: 700, letterSpacing: "0.02em" }}>
       {grupo}
+    </span>
+  )
+}
+
+function TagTipo({ tipo }: { tipo: "util" | "fds" }) {
+  const fds = tipo === "fds"
+  return (
+    <span style={{ background: fds ? "#FBF0E4" : "#EAF0FB", color: fds ? "#B26A1B" : "#3A63B8", borderRadius: 6, padding: "2px 8px", fontSize: 11, fontWeight: 700 }}>
+      {fds ? "FDS/feriado" : "Dia útil"}
     </span>
   )
 }
@@ -109,36 +112,27 @@ export function PermutasClient({
   solicitacoesIniciais: { enviadas: Solicitacao[]; recebidas: Solicitacao[] }
   minhasOfertasIniciais: string[]
 }) {
-  const [aba, setAba] = useState<"escala" | "buscar" | "montar" | "solicitacoes">("escala")
+  const [aba, setAba] = useState<"escala" | "disponiveis" | "solicitacoes">("escala")
   const [mesIdx, setMesIdx] = useState(0)
   const [ofertas, setOfertas] = useState(ofertasIniciais)
   const [solicitacoes, setSolicitacoes] = useState(solicitacoesIniciais)
-  const [cedeSelecionada, setCedeSelecionada] = useState<string | null>(null)
-  const [swipeIdx, setSwipeIdx] = useState(0)
-  const [builder, setBuilder] = useState<{ parceiro: Parte | null; terceiro: Parte | null }>({ parceiro: null, terceiro: null })
+  const [minhasOfertas, setMinhasOfertas] = useState<Set<string>>(new Set(minhasOfertasIniciais))
+  const [publicandoData, setPublicandoData] = useState<string | null>(null)
+  const [propostaPara, setPropostaPara] = useState<Oferta | null>(null)
+  const [filtroTipo, setFiltroTipo] = useState<"todos" | "util" | "fds">("todos")
   const [toast, setToast] = useState<string | null>(null)
   const [modalAberto, setModalAberto] = useState<Solicitacao | null>(null)
   const [enviando, setEnviando] = useState(false)
   const [filtroSolic, setFiltroSolic] = useState<"recebidas" | "enviadas">("recebidas")
   const [seiInputs, setSeiInputs] = useState<Record<string, string>>({})
-  const [buscaMilitar, setBuscaMilitar] = useState("")
-  const [adicionandoTerceiro, setAdicionandoTerceiro] = useState(false)
-  const [querEscolhida, setQuerEscolhida] = useState("")
-  const [ofertasPublicadas, setOfertasPublicadas] = useState<Record<string, boolean>>(
-    Object.fromEntries(minhasOfertasIniciais.map((d) => [d, true]))
-  )
-  const [publicando, setPublicando] = useState(false)
   const [militaresLista, setMilitaresLista] = useState(militares)
   const [showAdminMilitares, setShowAdminMilitares] = useState(false)
   const [novoMilitar, setNovoMilitar] = useState({ matricula: "", nome: "", grupoPlantao: GRUPOS_PLANTAO[0] as string })
   const [salvandoMilitar, setSalvandoMilitar] = useState(false)
 
-  const dragRef = useRef({ originX: 0, active: false })
-  const [dragX, setDragX] = useState(0)
-
   function showToast(msg: string) {
     setToast(msg)
-    setTimeout(() => setToast((t) => (t === msg ? null : t)), 2200)
+    setTimeout(() => setToast((t) => (t === msg ? null : t)), 2400)
   }
 
   if (!me?.grupoPlantao) {
@@ -158,8 +152,9 @@ export function PermutasClient({
   }
 
   const meuGrupo = me.grupoPlantao
-  const meuNome = me.nomeGuerra
   const meuMat = me.matricula
+  const meId = me.id
+  const hojeISO = dOnly(new Date().toISOString())
 
   function tipoDiaLocal(iso: string): "util" | "fds" {
     return dias.find((d) => d.data === dOnly(iso))?.tipo ?? "util"
@@ -178,9 +173,10 @@ export function PermutasClient({
     return set
   }, [solicitacoes, meuMat])
 
-  const meusDiasDisponiveis = useMemo(
-    () => dias.filter((d) => d.grupoPlantao === meuGrupo && !datasComprometidas.has(d.data)),
-    [dias, meuGrupo, datasComprometidas]
+  // Meus dias de plantão futuros, ainda livres (não amarrados a permuta)
+  const meusDiasLivres = useMemo(
+    () => dias.filter((d) => d.grupoPlantao === meuGrupo && d.data >= hojeISO && !datasComprometidas.has(d.data)),
+    [dias, meuGrupo, hojeISO, datasComprometidas]
   )
 
   function statusParaData(iso: string): { status: string; contraparte: string } | null {
@@ -195,151 +191,71 @@ export function PermutasClient({
     return null
   }
 
-  // ── Buscar Permuta ──────────────────────────────────────────
-  const candidatos = useMemo(() => {
-    if (!cedeSelecionada) return []
-    const meuTipo = tipoDiaLocal(cedeSelecionada)
-    return ofertas.filter((o) => o.user.grupoPlantao !== meuGrupo && tipoDiaLocal(o.cedeData) === meuTipo)
-  }, [ofertas, cedeSelecionada, meuGrupo, dias])
-
-  const candidatoAtual = candidatos[swipeIdx] ?? null
-
-  function propor(o: Oferta) {
-    setBuilder({
-      parceiro: { matricula: o.user.matricula, nome: o.user.nomeGuerra, grupoPlantao: o.user.grupoPlantao, cedeData: dOnly(o.cedeData) },
-      terceiro: null,
-    })
-    showToast(`Proposta enviada a ${o.user.nomeGuerra}`)
-    setAba("montar")
-    setDragX(0)
-  }
-  function pular() {
-    setSwipeIdx((i) => i + 1)
-    setDragX(0)
-  }
-
-  async function publicarOferta() {
-    if (!cedeSelecionada || !querEscolhida) return
-    setPublicando(true)
+  // ── Marcar / desmarcar "quero trocar" ──────────────────────────
+  async function toggleOferta(data: string) {
+    const publicada = minhasOfertas.has(data)
+    setPublicandoData(data)
     const res = await fetch("/api/permutas/ofertas", {
-      method: "POST",
+      method: publicada ? "DELETE" : "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ cedeData: cedeSelecionada, querData: querEscolhida }),
+      body: JSON.stringify({ cedeData: data }),
     })
-    setPublicando(false)
+    setPublicandoData(null)
     if (!res.ok) {
       const e = await res.json().catch(() => ({}))
-      showToast(e.error || "Erro ao publicar oferta")
+      showToast(e.error || "Erro ao atualizar o dia")
       return
     }
-    setOfertasPublicadas((p) => ({ ...p, [cedeSelecionada]: true }))
-    setSwipeIdx(0)
-  }
-
-  function onPointerDown(e: React.PointerEvent) {
-    dragRef.current = { originX: e.clientX, active: true }
-  }
-  function onPointerMove(e: React.PointerEvent) {
-    if (!dragRef.current.active) return
-    setDragX(e.clientX - dragRef.current.originX)
-  }
-  function onPointerUp() {
-    if (!dragRef.current.active) return
-    dragRef.current.active = false
-    if (dragX > 100 && candidatoAtual) propor(candidatoAtual)
-    else if (dragX < -100) pular()
-    else setDragX(0)
-  }
-
-  // ── Montar Permuta ──────────────────────────────────────────
-  const militaresFiltrados = useMemo(() => {
-    if (!buscaMilitar.trim()) return []
-    const termo = buscaMilitar.trim().toLowerCase()
-    const excluir = new Set([meuGrupo, builder.parceiro?.grupoPlantao].filter(Boolean) as string[])
-    return militaresLista
-      .filter((m) => m.matricula !== meuMat && !excluir.has(m.grupoPlantao))
-      .filter((m) => m.nome.toLowerCase().includes(termo) || String(m.matricula).includes(termo))
-      .slice(0, 8)
-  }, [buscaMilitar, militaresLista, meuGrupo, builder.parceiro, meuMat])
-
-  async function salvarMilitar() {
-    const mat = Number(novoMilitar.matricula)
-    if (!mat || !novoMilitar.nome.trim()) return
-    setSalvandoMilitar(true)
-    const res = await fetch("/api/permutas/militares", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ matricula: mat, nome: novoMilitar.nome.trim(), grupoPlantao: novoMilitar.grupoPlantao }),
+    setMinhasOfertas((prev) => {
+      const n = new Set(prev)
+      if (publicada) n.delete(data)
+      else n.add(data)
+      return n
     })
-    setSalvandoMilitar(false)
-    if (!res.ok) {
-      const e = await res.json().catch(() => ({}))
-      showToast(e.error || "Erro ao salvar militar")
-      return
-    }
-    const salvo: Militar = await res.json()
-    setMilitaresLista((prev) => [...prev.filter((m) => m.matricula !== salvo.matricula), salvo].sort((a, b) => a.matricula - b.matricula))
-    setNovoMilitar({ matricula: "", nome: "", grupoPlantao: GRUPOS_PLANTAO[0] })
+    showToast(publicada ? "Dia removido da troca" : "Dia marcado — já aparece pra turma")
   }
 
-  async function removerMilitar(matricula: number) {
-    if (!confirm(`Remover a matrícula ${matricula} do cadastro de militares?`)) return
-    await fetch("/api/permutas/militares", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ matricula }),
-    })
-    setMilitaresLista((prev) => prev.filter((m) => m.matricula !== matricula))
+  // ── Propor troca a partir de um dia disponível ─────────────────
+  const ofertasVisiveis = useMemo(() => {
+    return ofertas
+      .filter((o) => o.user.grupoPlantao !== meuGrupo)
+      .filter((o) => filtroTipo === "todos" || tipoDiaLocal(o.cedeData) === filtroTipo)
+      .sort((a, b) => dOnly(a.cedeData).localeCompare(dOnly(b.cedeData)))
+  }, [ofertas, meuGrupo, filtroTipo, dias])
+
+  function meusDiasParaDar(tipo: "util" | "fds") {
+    return meusDiasLivres.filter((d) => d.tipo === tipo)
   }
 
-  function datasValidasPara(grupo: string): DiaCal[] {
-    if (!cedeSelecionada) return []
-    const meuTipo = tipoDiaLocal(cedeSelecionada)
-    const hojeISO = dOnly(new Date().toISOString())
-    return dias.filter((d) => d.grupoPlantao === grupo && d.tipo === meuTipo && d.data >= hojeISO)
-  }
-
-  function escolherParceiro(m: Militar, data: string, comoTerceiro: boolean) {
-    const parte: Parte = { matricula: m.matricula, nome: m.nome, grupoPlantao: m.grupoPlantao, cedeData: data }
-    if (comoTerceiro) setBuilder((b) => ({ ...b, terceiro: parte }))
-    else setBuilder((b) => ({ ...b, parceiro: parte }))
-    setBuscaMilitar("")
-    setAdicionandoTerceiro(false)
-  }
-
-  async function confirmarEnviarSEI() {
-    if (!cedeSelecionada || !builder.parceiro) return
+  async function proporTroca(o: Oferta, meuDia: string) {
     setEnviando(true)
     const res = await fetch("/api/permutas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        meuCedeData: cedeSelecionada,
-        parceiro: { matricula: builder.parceiro.matricula, cedeData: builder.parceiro.cedeData },
-        terceiro: builder.terceiro ? { matricula: builder.terceiro.matricula, cedeData: builder.terceiro.cedeData } : undefined,
+        meuCedeData: meuDia,
+        parceiro: { matricula: o.user.matricula, cedeData: dOnly(o.cedeData) },
       }),
     })
     setEnviando(false)
     if (!res.ok) {
       const e = await res.json().catch(() => ({}))
-      showToast(e.error || "Erro ao enviar permuta")
+      showToast(e.error || "Erro ao propor a troca")
       return
     }
     const nova: Solicitacao = await res.json()
-    setOfertas((prev) =>
-      prev.filter((o) => {
-        const match = (p: Parte | null) => p && o.user.matricula === p.matricula && dOnly(o.cedeData) === p.cedeData
-        return !match(builder.parceiro) && !match(builder.terceiro)
-      })
-    )
+    setOfertas((prev) => prev.filter((x) => x.id !== o.id))
+    setMinhasOfertas((prev) => {
+      const n = new Set(prev)
+      n.delete(meuDia)
+      return n
+    })
     setSolicitacoes((s) => ({ ...s, enviadas: [nova, ...s.enviadas] }))
+    setPropostaPara(null)
     setModalAberto(nova)
-    setBuilder({ parceiro: null, terceiro: null })
-    setCedeSelecionada(null)
-    setSwipeIdx(0)
   }
 
-  // ── Solicitações ──────────────────────────────────────────
+  // ── Solicitações ──────────────────────────────────────────────
   async function responder(sol: Solicitacao, acao: "aceitar" | "recusar") {
     const res = await fetch(`/api/permutas/${sol.id}`, {
       method: "PATCH",
@@ -376,35 +292,61 @@ export function PermutasClient({
     showToast("Número do SEI salvo")
   }
 
-  const listaSolic = filtroSolic === "recebidas" ? solicitacoes.recebidas : solicitacoes.enviadas
+  async function salvarMilitar() {
+    const mat = Number(novoMilitar.matricula)
+    if (!mat || !novoMilitar.nome.trim()) return
+    setSalvandoMilitar(true)
+    const res = await fetch("/api/permutas/militares", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ matricula: mat, nome: novoMilitar.nome.trim(), grupoPlantao: novoMilitar.grupoPlantao }),
+    })
+    setSalvandoMilitar(false)
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}))
+      showToast(e.error || "Erro ao salvar militar")
+      return
+    }
+    const salvo: Militar = await res.json()
+    setMilitaresLista((prev) => [...prev.filter((m) => m.matricula !== salvo.matricula), salvo].sort((a, b) => a.matricula - b.matricula))
+    setNovoMilitar({ matricula: "", nome: "", grupoPlantao: GRUPOS_PLANTAO[0] })
+  }
 
-  // ── Render ──────────────────────────────────────────────────
+  async function removerMilitar(matricula: number) {
+    if (!confirm(`Remover a matrícula ${matricula} do cadastro de militares?`)) return
+    await fetch("/api/permutas/militares", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ matricula }),
+    })
+    setMilitaresLista((prev) => prev.filter((m) => m.matricula !== matricula))
+  }
+
+  const listaSolic = filtroSolic === "recebidas" ? solicitacoes.recebidas : solicitacoes.enviadas
+  const pendentesRecebidas = solicitacoes.recebidas.filter((s) => s.participantes.some((p) => p.matricula === meuMat && p.status === "pendente")).length
+
+  // ── Calendário ──
   const mesAtualObj = meses[mesIdx]
   const diasDoMes = dias.filter((d) => {
     const [y, m] = d.data.split("-").map(Number)
     return y === mesAtualObj.ano && m === mesAtualObj.mes
   })
   const primeiroDiaSemana = diasDoMes.length ? new Date(mesAtualObj.ano, mesAtualObj.mes - 1, 1).getDay() : 0
-  const hojeISO = dOnly(new Date().toISOString())
 
   return (
     <div style={{ maxWidth: 920, margin: "0 auto", padding: "20px 16px 80px" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-        <Link href="/inicio" style={{ color: "var(--olive)", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>
-          ← Voltar
-        </Link>
-        <h1 style={{ fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: 22, color: "var(--olive)", margin: 0 }}>
-          Permuta de Plantões
-        </h1>
+        <Link href="/inicio" style={{ color: "var(--olive)", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>← Voltar</Link>
+        <h1 style={{ fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: 22, color: "var(--olive)", margin: 0 }}>Permuta de Plantões</h1>
         <span style={{ width: 60 }} />
       </div>
+
       {/* Abas */}
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
         {[
           { id: "escala", label: "Minha escala" },
-          { id: "buscar", label: "Buscar permuta" },
-          { id: "montar", label: "Montar permuta" },
-          { id: "solicitacoes", label: `Solicitações${solicitacoes.recebidas.filter((s) => s.participantes.some((p) => p.matricula === meuMat && p.status === "pendente")).length > 0 ? ` (${solicitacoes.recebidas.filter((s) => s.participantes.some((p) => p.matricula === meuMat && p.status === "pendente")).length})` : ""}` },
+          { id: "disponiveis", label: "Dias disponíveis" },
+          { id: "solicitacoes", label: `Solicitações${pendentesRecebidas > 0 ? ` (${pendentesRecebidas})` : ""}` },
         ].map((t) => (
           <button
             key={t.id}
@@ -420,7 +362,7 @@ export function PermutasClient({
         ))}
       </div>
 
-      {/* ── Minha Escala ── */}
+      {/* ── Minha escala ── */}
       {aba === "escala" && (
         <>
           <div style={{ background: "#fff", borderRadius: 16, padding: 20, border: "1px solid var(--cinza-borda)", boxShadow: "var(--shadow-sm)" }}>
@@ -430,9 +372,7 @@ export function PermutasClient({
                   PLANTÃO · {MESES_NOMES[mesAtualObj.mes]} {mesAtualObj.ano}
                 </span>
                 {mesIdx === 0 && (
-                  <span style={{ background: "#EED9A8", color: "#7A5A12", fontSize: 11, fontWeight: 800, borderRadius: 999, padding: "2px 10px" }}>
-                    MÊS ATUAL
-                  </span>
+                  <span style={{ background: "#EED9A8", color: "#7A5A12", fontSize: 11, fontWeight: 800, borderRadius: 999, padding: "2px 10px" }}>MÊS ATUAL</span>
                 )}
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -444,41 +384,42 @@ export function PermutasClient({
               </div>
             </div>
             <p style={{ fontSize: 13, color: "var(--cinza-texto)", marginBottom: 14 }}>
-              Seu grupo: <TagGrupo grupo={meuGrupo} /> — os dias destacados são seus.
+              Seu grupo: <TagGrupo grupo={meuGrupo} /> — toque num dia seu pra marcar <strong>&quot;quero trocar&quot;</strong>. Ele fica visível pra turma na aba <strong>Dias disponíveis</strong>.
             </p>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 8 }}>
-              {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((d) => (
+              {DIAS_SEMANA.map((d) => (
                 <div key={d} style={{ fontSize: 12, fontWeight: 700, color: "#8792A8", textAlign: "center" }}>{d}</div>
               ))}
               {Array.from({ length: primeiroDiaSemana }).map((_, i) => <div key={"pad" + i} />)}
               {diasDoMes.map((d) => {
                 const isMeu = d.grupoPlantao === meuGrupo
                 const isHoje = d.data === hojeISO
+                const passado = d.data < hojeISO
                 const lembrete = statusParaData(d.data)
+                const comprometido = datasComprometidas.has(d.data)
+                const publicada = minhasOfertas.has(d.data)
+                const podeToggle = isMeu && !passado && !comprometido
                 const diaNum = Number(d.data.split("-")[2])
                 return (
                   <div
                     key={d.data}
-                    onClick={() => {
-                      if (!isMeu || datasComprometidas.has(d.data)) return
-                      setCedeSelecionada(d.data)
-                      setSwipeIdx(0)
-                      setQuerEscolhida("")
-                      setAba("buscar")
-                    }}
+                    onClick={() => { if (podeToggle && publicandoData !== d.data) toggleOferta(d.data) }}
                     style={{
-                      borderRadius: 12, padding: "10px 8px", minHeight: 76,
-                      border: `1.5px solid ${isHoje ? "var(--azul-profundo)" : isMeu ? "#B9CCF0" : "var(--cinza-borda)"}`,
-                      background: isHoje ? "var(--azul-profundo)" : isMeu ? "#EFF4FE" : "#fff",
-                      cursor: isMeu && !datasComprometidas.has(d.data) ? "pointer" : "default",
+                      borderRadius: 12, padding: "8px 6px", minHeight: 78,
+                      border: `1.5px solid ${isHoje ? "var(--azul-profundo)" : publicada ? "#3F8C4A" : isMeu ? "#B9CCF0" : "var(--cinza-borda)"}`,
+                      background: isHoje ? "var(--azul-profundo)" : publicada ? "#EAF6EC" : isMeu ? "#EFF4FE" : "#fff",
+                      cursor: podeToggle ? "pointer" : "default",
+                      opacity: passado && !isHoje ? 0.5 : 1,
                     }}
                   >
                     <div style={{ fontWeight: 700, fontSize: 13, color: isHoje ? "#fff" : "var(--azul-profundo)" }}>{diaNum}</div>
                     {isHoje && <div style={{ fontSize: 9, fontWeight: 800, color: "#FFB74D" }}>HOJE</div>}
-                    <div style={{ marginTop: 4 }}><TagGrupo grupo={d.grupoPlantao} /></div>
-                    {isMeu && !datasComprometidas.has(d.data) && (
-                      <div style={{ fontSize: 11, fontWeight: 700, color: isHoje ? "#cfe0ff" : "#3568D4", marginTop: 4 }}>Trocar ⇄</div>
+                    <div style={{ marginTop: 3 }}><TagGrupo grupo={d.grupoPlantao} /></div>
+                    {podeToggle && (
+                      <div style={{ fontSize: 10.5, fontWeight: 800, marginTop: 4, color: publicada ? "#2E7D3A" : isHoje ? "#cfe0ff" : "#3568D4" }}>
+                        {publicandoData === d.data ? "…" : publicada ? "Trocando ✓" : "Quero trocar"}
+                      </div>
                     )}
                     {lembrete && (
                       <div style={{
@@ -496,10 +437,8 @@ export function PermutasClient({
           </div>
 
           <div style={{ background: "var(--azul-claro)", border: "1px solid var(--cinza-borda)", borderRadius: 14, padding: "14px 16px", fontSize: 13, color: "var(--azul-medio)", marginTop: 14 }}>
-            <strong>Regras da permuta:</strong> fim de semana só troca com fim de semana (feriado conta como fim de semana);
-            dia útil só com dia útil; as pessoas envolvidas precisam ser de equipes diferentes; e cada permuta aceita é
-            registrada e formalizada depois via processo SEI. O sininho 🔔 no dia indica uma permuta em andamento pra aquela data
-            (amarelo = aguardando resposta, verde = aceita).
+            <strong>Como funciona:</strong> marque o dia que você quer largar. Depois, na aba <strong>Dias disponíveis</strong>, veja os dias que a turma marcou e escolha um pra assumir — você dá um dos seus em troca.
+            Regras: fim de semana só troca com fim de semana (feriado conta como fim de semana), dia útil só com dia útil, e as pessoas precisam ser de equipes diferentes. Cada troca aceita é formalizada depois via processo SEI.
           </div>
 
           {isAdmin && (
@@ -511,7 +450,7 @@ export function PermutasClient({
               {showAdminMilitares && (
                 <div style={{ background: "#fff", border: "1px solid var(--cinza-borda)", borderRadius: 12, padding: 16, marginTop: 10 }}>
                   <p style={{ fontSize: 12, color: "var(--cinza-texto)", marginBottom: 10 }}>
-                    Lista completa das 8 equipes (Turma 13 + demais militares da 2ª CIA) usada pra buscar parceiros de permuta.
+                    Lista das 8 equipes (Turma 13 + demais militares da 2ª CIA), usada para identificar as equipes nas trocas.
                   </p>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
                     <input placeholder="Matrícula" value={novoMilitar.matricula} onChange={(e) => setNovoMilitar((v) => ({ ...v, matricula: e.target.value }))}
@@ -542,183 +481,59 @@ export function PermutasClient({
         </>
       )}
 
-      {/* ── Buscar Permuta ── */}
-      {aba === "buscar" && (
+      {/* ── Dias disponíveis ── */}
+      {aba === "disponiveis" && (
         <div style={{ background: "#fff", borderRadius: 16, padding: 20, border: "1px solid var(--cinza-borda)", boxShadow: "var(--shadow-sm)" }}>
-          <h3 style={{ fontWeight: 800, fontSize: 15, color: "var(--azul-profundo)", marginBottom: 12 }}>Qual dia você quer trocar?</h3>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
-            {meusDiasDisponiveis.length === 0 && <p style={{ fontSize: 13, color: "var(--cinza-texto)" }}>Nenhum dia seu disponível pra troca nesses 6 meses.</p>}
-            {meusDiasDisponiveis.map((d) => (
-              <button key={d.data} onClick={() => { setCedeSelecionada(d.data); setSwipeIdx(0); setQuerEscolhida("") }}
-                style={{
-                  border: `1px solid ${cedeSelecionada === d.data ? "var(--azul-profundo)" : "#D6DEEC"}`,
-                  background: cedeSelecionada === d.data ? "var(--azul-profundo)" : "#fff",
-                  color: cedeSelecionada === d.data ? "#fff" : "var(--azul-profundo)",
-                  borderRadius: 999, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer",
-                }}>
-                {fmtData(d.data)}
-              </button>
-            ))}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
+            <h3 style={{ fontWeight: 800, fontSize: 15, color: "var(--azul-profundo)", margin: 0 }}>Dias que a turma quer trocar</h3>
+            <div style={{ display: "flex", gap: 6 }}>
+              {([["todos", "Todos"], ["util", "Úteis"], ["fds", "FDS/feriado"]] as const).map(([v, label]) => (
+                <button key={v} onClick={() => setFiltroTipo(v)}
+                  style={{ border: filtroTipo === v ? "none" : "1px solid var(--cinza-borda)", background: filtroTipo === v ? "var(--azul-profundo)" : "#fff", color: filtroTipo === v ? "#fff" : "var(--cinza-texto)", borderRadius: 999, padding: "5px 12px", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {cedeSelecionada && !ofertasPublicadas[cedeSelecionada] && (
-            <div style={{ background: "#F7F9FD", borderRadius: 12, padding: 16, marginBottom: 20 }}>
-              <p style={{ fontSize: 13, marginBottom: 10 }}>
-                Antes de ver candidatos, diga que dia você prefere receber em troca de <strong>{fmtData(cedeSelecionada)}</strong>
-                (isso publica sua oferta pra outros alunos te encontrarem também):
-              </p>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-                <select value={querEscolhida} onChange={(e) => setQuerEscolhida(e.target.value)}
-                  style={{ border: "1px solid var(--cinza-borda)", borderRadius: 8, padding: "8px 10px", fontSize: 13 }}>
-                  <option value="">Selecione um dia…</option>
-                  {dias.filter((d) => d.tipo === tipoDiaLocal(cedeSelecionada) && d.data !== cedeSelecionada && d.data >= hojeISO).map((d) => (
-                    <option key={d.data} value={d.data}>{fmtData(d.data)} ({d.grupoPlantao})</option>
-                  ))}
-                </select>
-                <button disabled={!querEscolhida || publicando} onClick={publicarOferta}
-                  style={{ border: "none", background: "var(--azul-profundo)", color: "#fff", borderRadius: 8, padding: "8px 16px", fontWeight: 700, cursor: !querEscolhida || publicando ? "default" : "pointer", opacity: !querEscolhida || publicando ? 0.6 : 1 }}>
-                  {publicando ? "Publicando…" : "Publicar oferta e ver candidatos"}
-                </button>
-              </div>
+          {ofertasVisiveis.length === 0 ? (
+            <div style={{ border: "2px dashed var(--cinza-borda)", borderRadius: 14, padding: 30, textAlign: "center", color: "var(--cinza-texto)", fontSize: 13 }}>
+              Ninguém de outra equipe marcou dias pra trocar ainda.<br />Marque os seus em <strong>Minha escala</strong> pra abrir o jogo.
             </div>
-          )}
-
-          {cedeSelecionada && ofertasPublicadas[cedeSelecionada] && (
-            candidatoAtual ? (
-              <div style={{ position: "relative", height: 340 }}>
-                <div
-                  onPointerDown={onPointerDown}
-                  onPointerMove={onPointerMove}
-                  onPointerUp={onPointerUp}
-                  style={{
-                    position: "absolute", inset: 0, background: "#fff", borderRadius: 18, border: "1px solid var(--cinza-borda)",
-                    padding: 22, boxShadow: "0 10px 30px rgba(20,40,80,0.12)", touchAction: "none", cursor: "grab",
-                    transform: `translateX(${dragX}px) rotate(${dragX / 12}deg)`,
-                    transition: dragRef.current.active ? "none" : "transform .25s ease",
-                  }}
-                >
-                  <TagGrupo grupo={candidatoAtual.user.grupoPlantao} />
-                  <h4 style={{ fontWeight: 800, fontSize: 20, marginTop: 10, color: "var(--azul-profundo)" }}>{candidatoAtual.user.nomeGuerra}</h4>
-                  <p style={{ fontSize: 13, color: "var(--cinza-texto)", marginBottom: 14 }}>Equipe {candidatoAtual.user.grupoPlantao}</p>
-                  <div style={{ background: "#F7F9FD", borderRadius: 12, padding: 14, fontSize: 13 }}>
-                    <p>Cede: <strong>{fmtData(candidatoAtual.cedeData)}</strong></p>
-                    <p>Quer: <strong>{fmtData(candidatoAtual.querData)}</strong></p>
-                  </div>
-                  <div style={{ marginTop: 14 }}>
-                    {dOnly(candidatoAtual.querData) === cedeSelecionada ? (
-                      <span style={{ background: "#EAF6EC", color: "#3F8C4A", borderRadius: 999, padding: "4px 12px", fontSize: 12, fontWeight: 700 }}>✓ Troca direta possível</span>
-                    ) : (
-                      <span style={{ background: "#FBF3DC", color: "#B8860B", borderRadius: 999, padding: "4px 12px", fontSize: 12, fontWeight: 700 }}>△ Dia diferente — pode virar permuta triangular</span>
-                    )}
-                  </div>
-                  {dragX > 30 && <div style={{ position: "absolute", top: 20, right: 20, color: "#3F8C4A", fontWeight: 800, fontSize: 22, opacity: Math.min(dragX / 100, 1), transform: "rotate(12deg)" }}>PROPOR</div>}
-                  {dragX < -30 && <div style={{ position: "absolute", top: 20, left: 20, color: "#D64545", fontWeight: 800, fontSize: 22, opacity: Math.min(-dragX / 100, 1), transform: "rotate(-12deg)" }}>PULAR</div>}
-                </div>
-              </div>
-            ) : (
-              <div style={{ border: "2px dashed var(--cinza-borda)", borderRadius: 14, padding: 30, textAlign: "center", color: "var(--cinza-texto)" }}>
-                Sem mais candidatos por aqui
-              </div>
-            )
-          )}
-
-          {cedeSelecionada && ofertasPublicadas[cedeSelecionada] && candidatoAtual && (
-            <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 16 }}>
-              <button onClick={pular} style={{ width: 58, height: 58, borderRadius: 999, background: "#fff", border: "2px solid #D64545", color: "#D64545", fontSize: 22, cursor: "pointer" }}>✕</button>
-              <button onClick={() => propor(candidatoAtual)} style={{ width: 58, height: 58, borderRadius: 999, background: "var(--azul-profundo)", border: "none", color: "#fff", fontSize: 20, cursor: "pointer" }}>⇄</button>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ── Montar Permuta ── */}
-      {aba === "montar" && (
-        <div style={{ background: "#fff", borderRadius: 16, padding: 20, border: "1px solid var(--cinza-borda)", boxShadow: "var(--shadow-sm)" }}>
-          {!cedeSelecionada && (
-            <div style={{ marginBottom: 16 }}>
-              <p style={{ fontSize: 13, color: "var(--cinza-texto)", marginBottom: 8 }}>Escolha primeiro o dia que você quer ceder:</p>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                {meusDiasDisponiveis.map((d) => (
-                  <button key={d.data} onClick={() => setCedeSelecionada(d.data)}
-                    style={{ border: "1px solid #D6DEEC", background: "#fff", color: "var(--azul-profundo)", borderRadius: 999, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
-                    {fmtData(d.data)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {cedeSelecionada && !builder.parceiro && (
-            <div style={{ padding: "16px 0" }}>
-              <p style={{ fontSize: 13, color: "var(--cinza-texto)", marginBottom: 12 }}>
-                Cedendo o dia <strong>{fmtData(cedeSelecionada)}</strong>. Vá em "Buscar permuta" pra casar com alguém, ou busque
-                diretamente pelo nome/matrícula abaixo (inclui militares de fora da Turma 13):
-              </p>
-              <BuscaMilitar
-                busca={buscaMilitar} setBusca={setBuscaMilitar}
-                resultados={militaresFiltrados}
-                datasValidasPara={datasValidasPara}
-                onEscolher={(m, data) => escolherParceiro(m, data, false)}
-              />
-            </div>
-          )}
-
-          {cedeSelecionada && builder.parceiro && (
-            <div>
-              <div style={{ display: "flex", gap: 12, marginBottom: 16 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 999, background: "var(--azul-profundo)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, flexShrink: 0 }}>1</div>
-                <p style={{ fontSize: 14 }}>Você cede o dia <strong>{fmtData(cedeSelecionada)}</strong> para <strong>{builder.parceiro.nome}</strong>.</p>
-              </div>
-              <div style={{ display: "flex", gap: 12, marginBottom: 16 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 999, background: CORES_PLANTAO[builder.parceiro.grupoPlantao], color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, flexShrink: 0 }}>2</div>
-                <p style={{ fontSize: 14 }}>
-                  <strong>{builder.parceiro.nome}</strong> (equipe {builder.parceiro.grupoPlantao}) cede o dia <strong>{fmtData(builder.parceiro.cedeData)}</strong> para {builder.terceiro ? <strong>{builder.terceiro.nome}</strong> : "você"}.
-                </p>
-              </div>
-              {builder.terceiro && (
-                <div style={{ display: "flex", gap: 12, marginBottom: 16 }}>
-                  <div style={{ width: 28, height: 28, borderRadius: 999, background: CORES_PLANTAO[builder.terceiro.grupoPlantao], color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, flexShrink: 0 }}>3</div>
-                  <div>
-                    <p style={{ fontSize: 14 }}>
-                      <strong>{builder.terceiro.nome}</strong> (equipe {builder.terceiro.grupoPlantao}) cede o dia <strong>{fmtData(builder.terceiro.cedeData)}</strong> para você — fechando o ciclo triangular.
-                    </p>
-                    <button onClick={() => setBuilder((b) => ({ ...b, terceiro: null }))} style={{ border: "none", background: "none", color: "#C23B3B", fontSize: 12, fontWeight: 700, cursor: "pointer", padding: 0, marginTop: 4 }}>Remover pessoa</button>
-                  </div>
-                </div>
-              )}
-
-              {!builder.terceiro && !adicionandoTerceiro && (
-                <button onClick={() => setAdicionandoTerceiro(true)} style={{ border: "none", background: "none", color: "var(--azul-medio)", fontSize: 13, fontWeight: 700, cursor: "pointer", padding: 0, marginBottom: 16 }}>
-                  + Adicionar pessoa (permuta triangular)
-                </button>
-              )}
-              {adicionandoTerceiro && (
-                <div style={{ marginBottom: 16 }}>
-                  <BuscaMilitar
-                    busca={buscaMilitar} setBusca={setBuscaMilitar}
-                    resultados={militaresFiltrados}
-                    datasValidasPara={datasValidasPara}
-                    onEscolher={(m, data) => escolherParceiro(m, data, true)}
-                  />
-                </div>
-              )}
-
-              <div style={{ background: "#F7F9FD", borderRadius: 12, padding: 14, fontSize: 13, marginBottom: 16 }}>
-                <p>✓ Mesmo tipo de dia (útil/fim de semana) entre todos</p>
-                <p>✓ Equipes diferentes</p>
-                <p style={{ color: "#8792A8" }}>ℹ Será registrado internamente e formalizado via processo SEI ao confirmar.</p>
-              </div>
-
-              <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => { setBuilder({ parceiro: null, terceiro: null }); setCedeSelecionada(null) }}
-                  style={{ border: "1px solid var(--cinza-borda)", background: "#fff", color: "var(--cinza-texto)", borderRadius: 10, padding: "10px 18px", fontWeight: 700, cursor: "pointer" }}>
-                  Cancelar
-                </button>
-                <button disabled={enviando} onClick={confirmarEnviarSEI}
-                  style={{ border: "none", background: "var(--azul-profundo)", color: "#fff", borderRadius: 10, padding: "10px 18px", fontWeight: 700, cursor: enviando ? "default" : "pointer", opacity: enviando ? 0.6 : 1 }}>
-                  {enviando ? "Enviando…" : "Confirmar e enviar via SEI"}
-                </button>
-              </div>
+          ) : (
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13, minWidth: 460 }}>
+                <thead>
+                  <tr style={{ textAlign: "left", color: "#8792A8", fontSize: 12 }}>
+                    <th style={{ padding: "8px 10px", fontWeight: 700 }}>Data</th>
+                    <th style={{ padding: "8px 10px", fontWeight: 700 }}>Dia</th>
+                    <th style={{ padding: "8px 10px", fontWeight: 700 }}>Militar</th>
+                    <th style={{ padding: "8px 10px", fontWeight: 700 }}>Equipe</th>
+                    <th style={{ padding: "8px 10px", fontWeight: 700 }}>Tipo</th>
+                    <th style={{ padding: "8px 10px" }} />
+                  </tr>
+                </thead>
+                <tbody>
+                  {ofertasVisiveis.map((o) => {
+                    const tipo = tipoDiaLocal(o.cedeData)
+                    return (
+                      <tr key={o.id} style={{ borderTop: "1px solid var(--cinza-borda)" }}>
+                        <td style={{ padding: "10px", fontWeight: 700, color: "var(--azul-profundo)", whiteSpace: "nowrap" }}>{fmtData(o.cedeData)}</td>
+                        <td style={{ padding: "10px", color: "var(--cinza-texto)" }}>{diaSemanaDe(o.cedeData)}</td>
+                        <td style={{ padding: "10px" }}>{o.user.nomeGuerra}</td>
+                        <td style={{ padding: "10px" }}><TagGrupo grupo={o.user.grupoPlantao} /></td>
+                        <td style={{ padding: "10px" }}><TagTipo tipo={tipo} /></td>
+                        <td style={{ padding: "10px", textAlign: "right" }}>
+                          <button onClick={() => setPropostaPara(o)}
+                            style={{ border: "none", background: "var(--azul-profundo)", color: "#fff", borderRadius: 8, padding: "7px 14px", fontSize: 12.5, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap" }}>
+                            Propor troca
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
             </div>
           )}
         </div>
@@ -742,23 +557,21 @@ export function PermutasClient({
             {listaSolic.map((s) => {
               const outros = s.participantes.filter((p) => p.matricula !== meuMat)
               const meuLeg = s.participantes.find((p) => p.matricula === meuMat)
-              const souParticipante = !!meuLeg?.userId && meuLeg.userId === me.id
+              const souParticipante = !!meuLeg?.userId && meuLeg.userId === meId
               const podeResponder = filtroSolic === "recebidas" && meuLeg?.status === "pendente"
               return (
                 <div key={s.id} style={{ background: "#fff", borderRadius: 14, padding: 16, border: "1px solid var(--cinza-borda)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                    <div>
-                      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-                        {outros.map((o) => (
-                          <span key={o.id} style={{ fontWeight: 700, fontSize: 14 }}>{o.nome} <TagGrupo grupo={o.grupoPlantao} /></span>
-                        ))}
-                      </div>
+                    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+                      {outros.map((o) => (
+                        <span key={o.id} style={{ fontWeight: 700, fontSize: 14 }}>{o.nome} <TagGrupo grupo={o.grupoPlantao} /></span>
+                      ))}
                     </div>
                     <StatusPill status={s.status} />
                   </div>
                   <div style={{ background: "#F7F9FD", borderRadius: 10, padding: 12, fontSize: 13, marginTop: 10 }}>
                     {s.participantes.map((p, i) => (
-                      <div key={p.id}>{p.matricula === meuMat ? "Você" : p.nome} cede {fmtData(p.cedeData)} para {s.participantes[(i + 1) % s.participantes.length].matricula === meuMat ? "você" : s.participantes[(i + 1) % s.participantes.length].nome}</div>
+                      <div key={p.id}>{p.matricula === meuMat ? "Você" : p.nome} assume {fmtData(s.participantes[(i + 1) % s.participantes.length].cedeData)} ({s.participantes[(i + 1) % s.participantes.length].matricula === meuMat ? "seu dia" : s.participantes[(i + 1) % s.participantes.length].nome})</div>
                     ))}
                   </div>
 
@@ -788,82 +601,61 @@ export function PermutasClient({
         </div>
       )}
 
+      {/* Painel de proposta (escolher meu dia em troca) */}
+      {propostaPara && (() => {
+        const tipo = tipoDiaLocal(propostaPara.cedeData)
+        const meusDias = meusDiasParaDar(tipo)
+        return (
+          <div style={{ position: "fixed", inset: 0, background: "rgba(15,25,50,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200, padding: 16 }} onClick={() => setPropostaPara(null)}>
+            <div onClick={(e) => e.stopPropagation()} style={{ background: "#fff", borderRadius: 18, padding: 24, maxWidth: 440, width: "100%" }}>
+              <h3 style={{ fontWeight: 800, fontSize: 17, marginBottom: 6, color: "var(--azul-profundo)" }}>Propor troca</h3>
+              <p style={{ fontSize: 13.5, color: "var(--cinza-texto)", marginBottom: 4 }}>
+                Você assume <strong>{fmtData(propostaPara.cedeData)}</strong> ({diaSemanaDe(propostaPara.cedeData)}) de <strong>{propostaPara.user.nomeGuerra}</strong> <TagGrupo grupo={propostaPara.user.grupoPlantao} />.
+              </p>
+              <p style={{ fontSize: 13.5, marginBottom: 12, marginTop: 10, fontWeight: 700, color: "var(--azul-profundo)" }}>
+                Qual dos seus dias ({tipo === "fds" ? "FDS/feriado" : "úteis"}) você dá em troca?
+              </p>
+              {meusDias.length === 0 ? (
+                <p style={{ fontSize: 13, color: "#C23B3B", marginBottom: 14 }}>
+                  Você não tem um dia {tipo === "fds" ? "de fim de semana/feriado" : "útil"} livre nesses 6 meses pra oferecer.
+                </p>
+              ) : (
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
+                  {meusDias.map((d) => (
+                    <button key={d.data} disabled={enviando} onClick={() => proporTroca(propostaPara, d.data)}
+                      style={{ border: "1px solid #D6DEEC", background: "#F7F9FD", color: "var(--azul-profundo)", borderRadius: 999, padding: "8px 14px", fontSize: 13, fontWeight: 700, cursor: enviando ? "default" : "pointer", opacity: enviando ? 0.6 : 1 }}>
+                      {fmtData(d.data)} · {d.diaSemana}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <button onClick={() => setPropostaPara(null)} style={{ border: "none", background: "none", color: "var(--cinza-texto)", fontSize: 13, fontWeight: 700, cursor: "pointer", padding: 0 }}>Cancelar</button>
+            </div>
+          </div>
+        )
+      })()}
+
       {/* Toast */}
       {toast && (
-        <div style={{ position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)", background: "var(--azul-profundo)", color: "#fff", padding: "10px 20px", borderRadius: 999, fontSize: 13, fontWeight: 700, boxShadow: "0 6px 20px rgba(20,40,80,0.3)", zIndex: 100 }}>
+        <div style={{ position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)", background: "var(--azul-profundo)", color: "#fff", padding: "10px 20px", borderRadius: 999, fontSize: 13, fontWeight: 700, boxShadow: "0 6px 20px rgba(20,40,80,0.3)", zIndex: 300 }}>
           {toast}
         </div>
       )}
 
       {/* Modal de confirmação */}
       {modalAberto && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(15,25,50,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200 }} onClick={() => setModalAberto(null)}>
-          <div onClick={(e) => e.stopPropagation()} style={{ background: "#fff", borderRadius: 18, padding: 28, maxWidth: 420, width: "90%", textAlign: "center" }}>
+        <div style={{ position: "fixed", inset: 0, background: "rgba(15,25,50,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200, padding: 16 }} onClick={() => setModalAberto(null)}>
+          <div onClick={(e) => e.stopPropagation()} style={{ background: "#fff", borderRadius: 18, padding: 28, maxWidth: 420, width: "100%", textAlign: "center" }}>
             <div style={{ width: 56, height: 56, borderRadius: 999, background: "#EAF6EC", color: "#3F8C4A", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, margin: "0 auto 14px" }}>✓</div>
-            <h3 style={{ fontWeight: 800, fontSize: 18, marginBottom: 8, color: "var(--azul-profundo)" }}>Permuta enviada!</h3>
+            <h3 style={{ fontWeight: 800, fontSize: 18, marginBottom: 8, color: "var(--azul-profundo)" }}>Troca proposta!</h3>
             <p style={{ fontSize: 13, color: "var(--cinza-texto)", marginBottom: 16 }}>
-              Assim que todos aceitarem, você pode formalizar o processo SEI e colar o número dele em "Solicitações".
+              A pessoa vai receber sua proposta e aceitar ou recusar. Quando aceitar, vocês formalizam o processo SEI e colam o número em &quot;Solicitações&quot;.
             </p>
             <button onClick={() => { setModalAberto(null); setAba("solicitacoes"); setFiltroSolic("enviadas") }}
               style={{ border: "none", background: "var(--azul-profundo)", color: "#fff", borderRadius: 10, padding: "10px 20px", fontWeight: 700, cursor: "pointer" }}>
               Ver minhas solicitações
             </button>
           </div>
-        </div>
-      )}
-    </div>
-  )
-}
-
-function BuscaMilitar({
-  busca, setBusca, resultados, datasValidasPara, onEscolher,
-}: {
-  busca: string
-  setBusca: (v: string) => void
-  resultados: Militar[]
-  datasValidasPara: (grupo: string) => DiaCal[]
-  onEscolher: (m: Militar, data: string) => void
-}) {
-  const [selecionado, setSelecionado] = useState<Militar | null>(null)
-  const datasValidas = selecionado ? datasValidasPara(selecionado.grupoPlantao) : []
-
-  if (selecionado) {
-    return (
-      <div>
-        <p style={{ fontSize: 13, marginBottom: 8 }}>
-          <strong>{selecionado.nome}</strong> (equipe {selecionado.grupoPlantao}) — em que dia ele(a) cede?
-        </p>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
-          {datasValidas.length === 0 && <p style={{ fontSize: 12, color: "var(--cinza-texto)" }}>Nenhum dia compatível na janela de 6 meses.</p>}
-          {datasValidas.map((d) => (
-            <button key={d.data} onClick={() => onEscolher(selecionado, d.data)}
-              style={{ border: "1px solid #D6DEEC", background: "#fff", borderRadius: 999, padding: "6px 12px", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
-              {fmtData(d.data)}
-            </button>
-          ))}
-        </div>
-        <button onClick={() => setSelecionado(null)} style={{ border: "none", background: "none", color: "var(--cinza-texto)", fontSize: 12, cursor: "pointer", padding: 0 }}>← Escolher outra pessoa</button>
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      <input
-        value={busca}
-        onChange={(e) => setBusca(e.target.value)}
-        placeholder="Buscar por nome ou matrícula…"
-        style={{ border: "1px solid var(--cinza-borda)", borderRadius: 8, padding: "8px 12px", fontSize: 13, width: "100%", maxWidth: 320 }}
-      />
-      {resultados.length > 0 && (
-        <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
-          {resultados.map((m) => (
-            <button key={m.matricula} onClick={() => setSelecionado(m)}
-              style={{ display: "flex", justifyContent: "space-between", alignItems: "center", border: "1px solid var(--cinza-borda)", borderRadius: 8, padding: "8px 12px", background: "#fff", cursor: "pointer", textAlign: "left" }}>
-              <span style={{ fontSize: 13 }}>{m.nome} <span style={{ color: "var(--cinza-texto)" }}>· mat. {m.matricula}</span></span>
-              <TagGrupo grupo={m.grupoPlantao} />
-            </button>
-          ))}
         </div>
       )}
     </div>
