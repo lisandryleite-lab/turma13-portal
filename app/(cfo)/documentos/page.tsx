@@ -353,17 +353,45 @@ const CATEGORIAS: Categoria[] = [
     ],
   },
   {
+    nome: "Mestre de cerimônia",
+    modelos: [
+      {
+        id: "mestre-matinal",
+        titulo: "Roteiro — formatura matinal",
+        descricao: "Roteiro do mestre de cerimônia da formatura matinal (segunda a quinta).",
+        arquivo: "mestre-cerimonia-formatura-matinal.docx",
+        formato: "DOCX",
+        dicas: [
+          "Preencha o oficial de dia, quem lê o BI, quem faz a mensagem do dia e o tema.",
+          "A canção do dia segue o dia da semana — a tabela está no próprio roteiro.",
+          "Traz a lista dos oficiais da APMP como referência.",
+        ],
+      },
+      {
+        id: "mestre-geral",
+        titulo: "Roteiro — formatura geral",
+        descricao: "Roteiro do mestre de cerimônia da formatura geral (sexta; excepcionalmente quarta).",
+        arquivo: "mestre-cerimonia-formatura-geral.docx",
+        formato: "DOCX",
+        dicas: [
+          "Inclui incorporação e desincorporação do Pavilhão Nacional e a revista à tropa.",
+          "Canção do dia: Hino Nacional Brasileiro. A passagem de serviço é opcional na formatura geral.",
+        ],
+      },
+    ],
+  },
+  {
     nome: "Acadêmico",
     modelos: [
       {
-        id: "tcc",
-        titulo: "Modelo de TCC (padrão UFPE)",
-        descricao: "Template de TCC com artigo — Pós-graduação em Direito, Gestão e Governança Pública (UFPE/CCJ).",
-        arquivo: "modelo-tcc-ufpe.docx",
+        id: "projeto-pesquisa",
+        titulo: "Projeto de Pesquisa (CFO PM)",
+        descricao: "Modelo do Projeto de Pesquisa — disciplina de Metodologia da Pesquisa Científica do CFO PM.",
+        arquivo: "modelo-projeto-pesquisa-cfo.docx",
         formato: "DOCX",
         dicas: [
-          "Estrutura ABNT: capa, folha de rosto, folha de aprovação, resumo, sumário, introdução, revisão, objetivos, artigo, conclusão e referências.",
-          "As instruções de formatação (margens, citações, listas) já vêm no próprio documento.",
+          "Estrutura: dados de identificação, tema, delimitação, problema, justificativa, objetivos (geral e específicos), embasamento teórico, metodologia, cronograma e referências.",
+          "Cada seção traz instruções e exemplos no próprio documento; alinhe à linha de pesquisa da PMPE (Supl. Normativo nº 034/2020).",
         ],
       },
     ],
