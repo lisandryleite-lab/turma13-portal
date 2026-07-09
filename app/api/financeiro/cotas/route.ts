@@ -5,7 +5,15 @@ import { ehGestorFinanceiro } from "@/lib/financeiro"
 
 export async function POST(req: NextRequest) {
   const session = await auth()
-  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!session?.user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
+
+  // Criar cota: gestor financeiro OU qualquer membro da Turma 13.
+  let autorizado = ehGestorFinanceiro(session)
+  if (!autorizado) {
+    const eu = await prisma.user.findUnique({ where: { id: session.user.id }, select: { turma13: true } })
+    autorizado = !!eu?.turma13
+  }
+  if (!autorizado) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
   const { titulo, tipo, valor, responsavel, instrucoes, driveFolderUrl, prazo, participantes } = await req.json()
   if (!titulo || isNaN(Number(valor))) return NextResponse.json({ error: "Dados inválidos" }, { status: 400 })

@@ -44,7 +44,7 @@ function Metrica({ label, valor, bg = "#f4f7fc", border = "#e8edf6", labelColor 
   )
 }
 
-export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, minhaMatricula, minhaId }: { cotas: Cota[]; alunos: Aluno[]; lanches: Pedido[]; isAdmin: boolean; minhaMatricula: number; minhaId: string }) {
+export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, podeCriar, minhaMatricula, minhaId }: { cotas: Cota[]; alunos: Aluno[]; lanches: Pedido[]; isAdmin: boolean; podeCriar: boolean; minhaMatricula: number; minhaId: string }) {
   const router = useRouter()
   const [cotas, setCotas] = useState(inicial)
   const [aba, setAba] = useState<"mensal" | "extra" | "lanche">("mensal")
@@ -240,7 +240,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
 
       {aba !== "lanche" && (
         <div className="flex items-center gap-3 flex-wrap">
-          {isAdmin && (
+          {podeCriar && (
             <button onClick={() => setShowForm(!showForm)}
               className="text-white px-4 py-2 rounded-lg text-sm font-semibold" style={{ background: "var(--azul-profundo, #0B2D5E)" }}>
               {showForm ? "Cancelar" : `+ Nova cota ${aba === "extra" ? "extra" : "mensal"}`}
@@ -255,7 +255,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, min
         </div>
       )}
 
-      {aba !== "lanche" && isAdmin && showForm && (
+      {aba !== "lanche" && podeCriar && showForm && (
             <form onSubmit={criarCota} className="bg-white border border-slate-200 rounded-xl p-5 space-y-3">
               <input value={form.titulo} onChange={e => setForm({ ...form, titulo: e.target.value })}
                 placeholder={aba === "extra" ? "Título (ex: Presente de formatura)" : "Título (ex: Cota mensal — Junho)"}
