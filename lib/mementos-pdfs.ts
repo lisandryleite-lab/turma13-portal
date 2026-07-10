@@ -77,7 +77,7 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
   PO: [
     { file: "PO-1.pdf", label: "Parte I" },
     { file: "PO-2.pdf", label: "Parte II" },
-    { file: "PO-3.pdf", label: "Memento Resumido" },
+    { file: "PO-3.pdf", label: "Memento — AL CFO PM 108 LISANDRY" },
   ],
   PJM: [
     { file: "PJM-1.pdf", label: "Parte I" },
