@@ -27,6 +27,7 @@ type Cota = {
   driveFolderUrl: string | null
   prazo: string | Date | null
   ativa: boolean
+  criadoPorId: string | null
   createdAt: string | Date
   pagamentos: Pagamento[]
 }
@@ -165,6 +166,9 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
       body: JSON.stringify({ id: p.id, pago: novoPago }),
     })
   }
+
+  // Gerir a cota (encerrar/excluir): gestor OU quem criou a cota.
+  const podeGerir = (c: Cota) => isAdmin || c.criadoPorId === minhaId
 
   const cotasAtivas = cotas.filter(c => c.ativa && c.tipo === aba)
   const cotasEncerradas = cotas.filter(c => !c.ativa && c.tipo === aba)
@@ -395,7 +399,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
                     style={soFaltaC ? { background: "#14294e", color: "#fff" } : { background: "#fff", color: "#8291ab", border: "1px solid #dde4ef" }}>
                     Só quem falta
                   </button>
-                  {isAdmin && (
+                  {podeGerir(c) && (
                     <>
                       <div className="flex-1" />
                       <button onClick={() => encerrarCota(c)} className="text-xs font-semibold" style={{ color: "#8291ab" }}>Encerrar</button>
@@ -454,11 +458,11 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
         )
       })}
 
-      {isAdmin && cotasEncerradas.length > 0 && (
+      {cotasEncerradas.filter(c => podeGerir(c)).length > 0 && (
         <details className="text-sm">
-          <summary className="text-slate-500 cursor-pointer">Cotas encerradas ({cotasEncerradas.length})</summary>
+          <summary className="text-slate-500 cursor-pointer">Cotas encerradas ({cotasEncerradas.filter(c => podeGerir(c)).length})</summary>
           <div className="space-y-2 mt-2">
-            {cotasEncerradas.map(c => (
+            {cotasEncerradas.filter(c => podeGerir(c)).map(c => (
               <div key={c.id} className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg p-3">
                 <span className="text-slate-600">{c.titulo} — {fmtMoeda(c.valor)}</span>
                 <div className="flex gap-2">

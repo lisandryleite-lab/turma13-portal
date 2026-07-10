@@ -441,6 +441,7 @@ model CotaFinanceira {
   driveFolderUrl String? // pasta do Google Drive com os comprovantes da cota
   prazo       DateTime?
   ativa       Boolean  @default(true)
+  criadoPorId String?  // User.id de quem criou (pode gerir a própria cota, além do gestor)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

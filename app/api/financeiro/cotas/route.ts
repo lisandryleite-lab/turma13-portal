@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { ehGestorFinanceiro } from "@/lib/financeiro"
+import type { Session } from "next-auth"
 
 export async function POST(req: NextRequest) {
   const session = await auth()
@@ -32,18 +33,26 @@ export async function POST(req: NextRequest) {
       instrucoes: instrucoes || null,
       driveFolderUrl: driveFolderUrl || null,
       prazo: prazo ? new Date(prazo) : null,
+      criadoPorId: session.user.id,
       pagamentos: { create: alunos.map(a => ({ userId: a.id })) },
     },
   })
   return NextResponse.json(cota)
 }
 
+// Pode gerir a cota (editar/encerrar/excluir): gestor OU quem a criou.
+async function podeGerirCota(session: Session | null, id: string): Promise<boolean> {
+  if (ehGestorFinanceiro(session)) return true
+  if (!session?.user || !id) return false
+  const cota = await prisma.cotaFinanceira.findUnique({ where: { id }, select: { criadoPorId: true } })
+  return !!cota && cota.criadoPorId === session.user.id
+}
+
 export async function PATCH(req: NextRequest) {
   const session = await auth()
-  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
-
   const { id, titulo, tipo, valor, responsavel, instrucoes, driveFolderUrl, prazo, ativa } = await req.json()
   if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
+  if (!(await podeGerirCota(session, id))) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
   const cota = await prisma.cotaFinanceira.update({
     where: { id },
@@ -63,9 +72,10 @@ export async function PATCH(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   const session = await auth()
-  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
-
   const { id } = await req.json()
+  if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
+  if (!(await podeGerirCota(session, id))) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+
   await prisma.cotaFinanceira.delete({ where: { id } })
   return NextResponse.json({ ok: true })
 }
