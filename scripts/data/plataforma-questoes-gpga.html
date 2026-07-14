@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QUESTÕES — Gestão Pública Geral Aplicada · CFO PM 2026</title>
+<style>
+  :root{
+    --borgonha:#7d1f2b; --azul:#1f4e79; --verde:#2e6b3e; --dourado:#9a7b16; --cinza:#4a4a4a;
+    --borgonha-bg:#f6e9eb; --azul-bg:#e8eff6; --verde-bg:#e9f2ea; --dourado-bg:#f8f2dd; --cinza-bg:#efeeec;
+    --creme:#fbf9f3; --tinta:#2a2620; --certo:#2e6b3e; --errado:#a52833;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; background:#eceade; color:var(--tinta); font-size:14px; line-height:1.45;}
+  .top{background:var(--tinta); color:#f3efe6; padding:14px 16px; text-align:center;}
+  .top h1{font-size:16px; letter-spacing:.05em; text-transform:uppercase;}
+  .top .sub{font-size:11px; letter-spacing:.12em; text-transform:uppercase; opacity:.7; margin-top:2px;}
+  .tabs{display:flex; justify-content:center; gap:8px; background:var(--tinta); padding:0 10px 12px;}
+  .tab{background:#3a3630; color:#cfc9bd; border:1px solid #55504a; border-radius:20px; padding:8px 18px; cursor:pointer; font-size:13px; font-weight:600; font-family:inherit;}
+  .tab.on{background:var(--dourado); border-color:var(--dourado); color:#fff;}
+  .wrap{max-width:880px; margin:18px auto 80px; padding:0 12px;}
+  .paper{background:var(--creme); padding:22px 24px; border-radius:4px; box-shadow:0 2px 14px rgba(42,38,32,.15);}
+
+  .temasel{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;}
+  .tpill{border:1.5px solid var(--cinza); background:#fff; color:var(--tinta); border-radius:16px; padding:5px 13px; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit;}
+  .tpill.on{background:var(--borgonha); border-color:var(--borgonha); color:#fff;}
+  .tpill:disabled{opacity:.45; cursor:not-allowed; border-style:dashed;}
+
+  .tema-cab{display:flex; align-items:stretch; margin-bottom:14px;}
+  .tema-cab .n{background:#5e1620; color:#fff; font-weight:800; font-size:16px; display:flex; align-items:center; padding:6px 12px; border-radius:4px 0 0 4px;}
+  .tema-cab .t{flex:1; background:var(--borgonha); color:#fff; padding:5px 12px; border-radius:0 4px 4px 0;}
+  .tema-cab .t b{font-size:14px; text-transform:uppercase;}
+  .tema-cab .t span{display:block; font-size:11px; font-style:italic; opacity:.92;}
+
+  .sec-tit{display:flex; align-items:center; gap:10px; margin:20px 0 10px;}
+  .sec-tit .badge{color:#fff; font-weight:800; font-size:11.5px; padding:4px 12px; border-radius:3px; text-transform:uppercase; letter-spacing:.05em;}
+  .sec-tit .linha{flex:1; height:2px; background:#d9d4c5;}
+  .b-azul{background:var(--azul);} .b-cinza{background:var(--cinza);} .b-dourado{background:var(--dourado);}
+
+  .q{border:1.5px solid #d9d4c5; border-left:4px solid var(--azul); border-radius:5px; background:#fff; margin-bottom:12px; padding:10px 12px;}
+  .q .enun{font-size:13px; margin-bottom:8px;}
+  .q .enun b.rot{color:var(--borgonha);}
+  .q .valor{float:right; font-size:11px; font-weight:700; color:var(--dourado); background:var(--dourado-bg); border:1px solid var(--dourado); border-radius:3px; padding:1px 7px; margin-left:8px;}
+
+  .vf-item{display:flex; gap:8px; align-items:flex-start; padding:6px 4px; border-top:1px dashed #e3dfd2;}
+  .vf-item:first-of-type{border-top:0;}
+  .vf-btns{display:flex; gap:4px; flex:none;}
+  .vf-btn{width:30px; height:26px; border:1.5px solid var(--cinza); background:#fff; border-radius:4px; font-weight:800; cursor:pointer; color:var(--cinza); font-family:inherit;}
+  .vf-btn.sel{background:var(--azul); border-color:var(--azul); color:#fff;}
+  .vf-txt{font-size:12.5px;}
+  .just{display:none; font-size:11.5px; margin:4px 0 2px 0; padding:5px 8px; border-radius:4px;}
+  .ok > div > .just, .err > div > .just{display:block;}
+  .ok > div > .just{background:var(--verde-bg); border-left:3px solid var(--certo);}
+  .err > div > .just{background:var(--borgonha-bg); border-left:3px solid var(--errado);}
+  .ok .vf-txt::after{content:" ✔"; color:var(--certo); font-weight:800;}
+  .err .vf-txt::after{content:" ✘"; color:var(--errado); font-weight:800;}
+
+  .alt{display:flex; gap:8px; align-items:flex-start; padding:5px 4px; cursor:pointer; border-radius:4px;}
+  .alt:hover{background:var(--azul-bg);}
+  .alt input{margin-top:3px;}
+  .alt .letra{font-weight:800; color:var(--azul); flex:none;}
+  .alt span{font-size:12.5px;}
+  .alt.certa{background:var(--verde-bg);}
+  .alt.errada-sel{background:var(--borgonha-bg);}
+  .just-mc{display:none; font-size:11.5px; margin-top:6px; padding:5px 8px; border-radius:4px;}
+
+  .disc textarea{width:100%; min-height:130px; border:1.5px solid #d9d4c5; border-radius:5px; padding:8px 10px; font-family:inherit; font-size:13px; background:#fff; resize:vertical; line-height:1.5;}
+  .disc .linhas{font-size:11px; color:var(--cinza); font-style:italic; margin-bottom:5px;}
+  .espelho{display:none; margin-top:8px; border:2px dashed var(--dourado); border-radius:6px; background:var(--dourado-bg); padding:10px 12px;}
+  .espelho.mostrar{display:block;}
+  .espelho .esp-tit{font-size:10px; letter-spacing:.14em; text-transform:uppercase; font-weight:800; color:var(--dourado); margin-bottom:5px;}
+  .espelho .topico{margin:5px 0; font-size:12.5px; padding-left:10px; border-left:3px solid var(--dourado);}
+  .espelho .topico b{color:var(--azul);}
+  .auto{display:none; margin-top:8px; font-size:12px; align-items:center; gap:6px; flex-wrap:wrap;}
+  .auto.mostrar-flex{display:flex;}
+  .auto b{color:var(--borgonha);}
+  .auto button{border:1.5px solid var(--cinza); background:#fff; border-radius:14px; padding:3px 12px; cursor:pointer; font-size:12px; font-family:inherit;}
+  .auto button.sel{background:var(--verde); border-color:var(--verde); color:#fff;}
+
+  .acoes{position:sticky; bottom:0; background:var(--creme); border-top:2px solid #d9d4c5; margin:18px -24px -22px; padding:12px 24px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .btn-verificar{background:var(--borgonha); color:#fff; border:0; border-radius:22px; padding:11px 22px; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit;}
+  .btn-verificar:hover{background:#93303d;}
+  .placar{font-size:14px; font-weight:700; display:none;}
+  .placar b{color:var(--borgonha); font-size:17px;}
+
+  .timerbox{display:flex; align-items:center; gap:10px; background:var(--cinza-bg); border:1.5px solid var(--cinza); border-radius:6px; padding:8px 12px; margin-bottom:14px; flex-wrap:wrap;}
+  .timerbox .t{font-family:Georgia, serif; font-size:22px; font-weight:800; color:var(--borgonha); min-width:96px;}
+  .timerbox button{background:var(--azul); color:#fff; border:0; border-radius:16px; padding:7px 16px; font-weight:700; cursor:pointer; font-family:inherit; font-size:12.5px;}
+  .timerbox .info{font-size:11.5px; color:var(--cinza);}
+  .aba{display:none;} .aba.on{display:block;}
+  .tema-bloco{display:none;} .tema-bloco.on{display:block;}
+  .nota-etapa{font-size:11.5px; color:var(--cinza); font-style:italic; margin-top:10px;}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Questões — Gestão Pública Geral Aplicada · CFO PM 2026</h1>
+  <div class="sub">Fonte: Apostila GPGA (APMP) · Padrão de cobrança: AE GPGA — CFO 2025</div>
+</div>
+<div class="tabs">
+  <button class="tab on" data-aba="banco">Banco por Tema</button>
+  <button class="tab" data-aba="simulado">Simulado (10,0 pts · 100 min)</button>
+</div>
+
+<div class="wrap">
+  <div class="aba on" id="aba-banco">
+    <div class="paper">
+      <div class="temasel" id="temasel"></div>
+      <div id="temas-conteudo"></div>
+      <div class="nota-etapa">Plataforma completa: 11 temas (toda a apostila GPGA) + simulado no padrão da AE GPGA — CFO 2025.</div>
+    </div>
+  </div>
+
+  <div class="aba" id="aba-simulado">
+    <div class="paper">
+      <div class="timerbox">
+        <span class="t" id="timer">100:00</span>
+        <button id="btn-timer" onclick="iniciarTimer()">Iniciar prova</button>
+        <span class="info">Tempo para execução: 100 min · Valor total: 10,0 · Padrão AE GPGA — CFO 2025</span>
+      </div>
+      <div id="sim-quesitos"></div>
+      <div class="acoes">
+        <button class="btn-verificar" onclick="verificarSim()">Verificar gabarito</button>
+        <span class="placar" id="placar-sim"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ═════════════════════ DADOS — TEMAS ═════════════════════
+   Cada tema: {num, titulo, base, vf:[{t,g,j}], mc:[{enun,alts,g,j}], disc:[{enun,linhas,esp}]} */
+const TEMAS = [
+{num:"01", titulo:"Estado, Governo e Administração (conceitos gerais)", base:"Apostila GPGA, cap. 1 — CF/1988",
+vf:[
+ {t:"O Estado exerce seu poder através do Governo e com ele se confunde, pois ambos são entes permanentes.", g:false, j:"FALSO. O Estado NÃO se confunde com o Governo: o Estado é permanente; o Governo é transitório."},
+ {t:"A palavra Estado foi utilizada pela primeira vez na obra O Príncipe, de Maquiavel, em 1513.", g:true, j:"VERDADEIRO — cap. 1.1.1 da apostila."},
+ {t:"O Brasil adota a República como forma de governo e o Presidencialismo como sistema de governo.", g:true, j:"VERDADEIRO — cap. 1.1.2."},
+ {t:"Administração e gestão são palavras sinônimas, sendo gestão a denominação mais moderna, incrementada com medidas gerenciais mais efetivas.", g:true, j:"VERDADEIRO — conclusão do cap. 1.3."},
+ {t:"Os princípios do art. 37 da CF/1988 são obrigatórios tanto para a Administração Pública quanto, integralmente, para a administração privada.", g:false, j:"FALSO. São obrigatórios para a Administração Pública e não se aplicam à privada (ou se aplicam de forma diferenciada, como a legalidade)."},
+ {t:"Eficiência é a comparação entre o que se pretendia fazer e o que efetivamente se conseguiu.", g:false, j:"FALSO. Essa é a definição de EFICÁCIA. Eficiência é a relação entre resultados alcançados e recursos empregados."},
+ {t:"Efetividade são resultados que unem ações eficientes com o alcance de máximos resultados.", g:true, j:"VERDADEIRO — cap. 1.5."},
+ {t:"A centralização caracteriza-se por delegar as decisões aos níveis mais baixos da estrutura.", g:false, j:"FALSO. Essa é a DESCENTRALIZAÇÃO. A centralização localiza a autoridade decisória no topo, priorizando a cadeia escalar."},
+ {t:"A tendência, hoje, é centralizar para obter tomadas de decisões mais rápidas e melhor aproveitamento dos recursos humanos.", g:false, j:"FALSO. A tendência atual é DESCENTRALIZAR, justamente para esses fins."},
+ {t:"A desconcentração administrativa refere-se à transferência de competência dos órgãos superiores para os inferiores, dentro da mesma pessoa jurídica, mantendo-se a hierarquia.", g:true, j:"VERDADEIRO — cap. 1.7; utilizada na Administração direta."},
+ {t:"Governabilidade é a capacidade financeira e administrativa, em sentido amplo, de um governo implementar políticas.", g:false, j:"FALSO. Essa é a GOVERNANÇA (Bresser-Pereira, 1998). Governabilidade é a capacidade POLÍTICA de governar, derivada da legitimidade do Estado e do seu governo com a sociedade."},
+ {t:"Accountability inclui tanto o lado que delega responsabilidade quanto o lado que presta contas pelos recursos utilizados.", g:true, j:"VERDADEIRO — cap. 1.8."},
+ {t:"Compliance é conformidade: uma governança baseada no cumprimento de padrões normativos e legislativos, na busca pela eficiência, transparência, ética e bom serviço.", g:true, j:"VERDADEIRO — do inglês to comply; forma de evitar o \"jeitinho\" na gestão pública."},
+ {t:"Na Administração Pública, o \"cliente\" paga os serviços através de impostos, mesmo sem usar.", g:true, j:"VERDADEIRO — cap. 1.4; na iniciativa privada, paga-se apenas pelo que se compra ou utiliza."},
+ {t:"O cargo é o conjunto de tarefas e responsabilidades, e a função é a posição que a pessoa ocupa na estrutura organizacional.", g:false, j:"FALSO. Está invertido: CARGO é a posição na estrutura; FUNÇÃO é o conjunto de tarefas e responsabilidades do cargo, geralmente definidas em regimentos internos (cap. 1.9)."}
+],
+mc:[
+ {enun:"Sobre Estado, Governo e Administração, assinale a alternativa ERRADA:", alts:[
+  "O Estado é permanente, enquanto o Governo é transitório.",
+  "O Governo representa a parte política do Estado e define os objetivos nacionais a serem perseguidos.",
+  "A organização do Estado brasileiro é assunto tratado no Direito Constitucional.",
+  "O Estado detém o poder extroverso, e o Governo é quem exerce esse poder, de forma soberana.",
+  "O Governo é um ente moral e intangível, enquanto o Estado é um ente real e tangível."
+ ], g:4, j:"Alternativa E: está invertido — o ESTADO é o ente moral e intangível; o GOVERNO é o ente real e tangível."},
+ {enun:"Sobre eficiência, eficácia e efetividade, assinale a alternativa CORRETA:", alts:[
+  "Eficácia é a relação entre os resultados alcançados e os recursos empregados.",
+  "Eficiência indica que a organização utiliza produtivamente, ou de maneira econômica, seus recursos.",
+  "Efetividade limita-se à realização dos objetivos, sem relação com a eficiência.",
+  "Quanto maior a economia na utilização dos recursos, menos eficiente é a organização.",
+  "A eficiência e a eficácia das entidades públicas medem-se somente pela correta utilização dos recursos."
+ ], g:1, j:"Alternativa B. Eficácia compara o pretendido com o conseguido; efetividade une ações eficientes a máximos resultados; nas entidades públicas, a medição considera principalmente o cumprimento da missão e o atendimento ao cidadão."},
+ {enun:"Sobre as diferenças entre Gestão Pública e Gestão Privada, assinale a alternativa ERRADA:", alts:[
+  "A Administração Pública tem como objetivo maior o bem-estar da coletividade; a iniciativa privada, o lucro financeiro.",
+  "Normalmente, as atividades públicas são monopolistas, enquanto na iniciativa privada a livre concorrência proporciona várias opções.",
+  "O Governo responde à população pelas suas ações, sempre expostas à mídia e à crítica.",
+  "A cúpula da Administração Pública raramente se altera, sendo a continuidade da alta administração a regra.",
+  "O Governo é a instituição que detém a autoridade política suprema, sancionada pelo monopólio da violência."
+ ], g:3, j:"Alternativa D: é o inverso — a cúpula da Administração PÚBLICA é frequentemente substituída em função de eleições e coalizões (descontinuidade); nas organizações PRIVADAS a continuidade é a regra."},
+ {enun:"Sobre governança, governabilidade, accountability e compliance, assinale a alternativa CORRETA:", alts:[
+  "Governança refere-se ao poder político em si, que deve ser legítimo e contar com o apoio da população.",
+  "Compliance provém do inglês to comply e pode ser definido como uma governança baseada no cumprimento de padrões normativos e legislativos.",
+  "Accountability é a capacidade financeira e administrativa de um governo implementar políticas.",
+  "Governabilidade relaciona-se com a competência técnica, que abrange as capacidades gerencial, financeira e técnica.",
+  "O compliance estimula o \"jeitinho\" na gestão pública."
+ ], g:1, j:"Alternativa B. As alternativas A e D trocam governabilidade e governança entre si; C descreve governança; E é o oposto — o compliance é forma de EVITAR o jeitinho, na maioria das vezes pernicioso."},
+ {enun:"Sobre concentração e desconcentração, assinale a alternativa CORRETA:", alts:[
+  "A desconcentração cria uma nova pessoa jurídica para o exercício das competências.",
+  "A desconcentração é utilizada na Administração direta e representa simples divisão/repartição das funções públicas, mantendo-se a hierarquia.",
+  "A concentração consiste em delegar decisões aos níveis mais baixos da estrutura.",
+  "A descentralização caracteriza-se por priorizar a cadeia escalar da estrutura.",
+  "A desconcentração ocorre necessariamente entre pessoas jurídicas distintas."
+ ], g:1, j:"Alternativa B — cap. 1.7. A desconcentração ocorre DENTRO da mesma pessoa jurídica (trata-se de simples distribuição de competências); a concentração é o sentido inverso."}
+],
+disc:[
+ {enun:"Diferencie eficácia, eficiência e efetividade e explique como se medem a eficiência e a eficácia das entidades públicas, em contraste com a iniciativa privada.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Eficácia","Comparação entre o que se pretendia fazer e o que efetivamente se conseguiu; indica que a organização realiza seus objetivos."],
+  ["Eficiência","Relação entre os resultados alcançados e os recursos empregados; indica uso produtivo/econômico dos recursos."],
+  ["Efetividade","Resultados que unem ações eficientes com o alcance de máximos resultados."],
+  ["Medição no setor público","Nas entidades públicas, medem-se não somente pela correta utilização dos recursos, mas principalmente pelo cumprimento da missão e pelo atendimento, com qualidade, das necessidades do cidadão e da sociedade."],
+  ["Contraste com a privada","Na iniciativa privada, medem-se pelo aumento das receitas, pela redução dos gastos ou pela expansão dos mercados."]
+ ]},
+ {enun:"Conceitue governança, governabilidade, accountability e compliance, indicando a relevância desses instrumentos para o gestor público.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Governabilidade","Capacidade política de governar, derivada da relação de legitimidade do Estado e do seu governo com a sociedade (Bresser-Pereira, 1998)."],
+  ["Governança","Capacidade financeira e administrativa, em sentido amplo, de um governo implementar políticas (Bresser-Pereira, 1998); relaciona-se à competência técnica."],
+  ["Accountability","Capacidade do sistema político de prestar contas de suas promessas aos cidadãos; obrigação de responder por uma responsabilidade outorgada."],
+  ["Compliance","Conformidade (to comply): governança baseada no cumprimento de padrões normativos e legislativos — eficiência, transparência, ética e bom serviço; evita o \"jeitinho\"."],
+  ["Relevância","Na gestão pública tudo está (ou deveria estar) normatizado; cabe a toda a estrutura orgânica seguir e ajustar essas normatizações, garantindo legitimidade, implementação e prestação de contas."]
+ ]}
+]},
+
+{num:"02", titulo:"Administração Científica e Evolução Histórica da AP no Brasil", base:"Apostila GPGA, caps. 2 e 3 — KEINERT (1994)",
+vf:[
+ {t:"O patrimonialismo se caracterizava pela apropriação privada do que era público.", g:true, j:"VERDADEIRO — o gestor se apropria, como seu, do que é de todos (cap. 3). Assertiva cobrada na AE 2025."},
+ {t:"Na República, houve uma lenta evolução para uma gestão mais técnica.", g:true, j:"VERDADEIRO — com o início da república, começou a se ensaiar uma gestão pública mais técnica, mesmo que incipiente."},
+ {t:"Os paradigmas da gestão pública no Brasil sempre foram uniformes e estáveis.", g:false, j:"FALSO — houve vários estilos ao longo da história (paradigmas de KEINERT, 1994). Assertiva cobrada na AE 2025."},
+ {t:"O patrimonialismo era representado pela frase \"O Estado sou eu\".", g:true, j:"VERDADEIRO — cap. 3."},
+ {t:"Mesmo atualmente, podem existir práticas patrimonialistas em casos pontuais.", g:true, j:"VERDADEIRO — no presente ainda devem existir estilos de gestão, em casos pontuais, bem conservadores."},
+ {t:"Entre 1900 e 1929, o paradigma era a Administração Pública como ciência jurídica, com característica de legalismo (KEINERT, 1994).", g:true, j:"VERDADEIRO — quadro da Figura 01 (KEINERT, 1994)."},
+ {t:"No período de 1980 a 1989, o paradigma era a Administração Pública como ciência administrativa.", g:false, j:"FALSO — nesse período (mobilização social), o paradigma era a AP como ciência POLÍTICA; a AP como ciência administrativa corresponde a 1930–1979."},
+ {t:"A partir de 1990, com a redefinição do papel do Estado, a característica da AP passou a ser a capacidade política aliada à capacidade técnica.", g:true, j:"VERDADEIRO — última linha do quadro de KEINERT (1994)."}
+],
+mc:[
+ {enun:"Sobre o patrimonialismo, assinale a alternativa ERRADA:", alts:[
+  "É uma gestão pública em que a governança se confunde com a pessoalidade do governante.",
+  "Nele, não há separação do que é privado pelo que é público.",
+  "Foi a principal característica da gestão pública durante o domínio total ou parcial da colônia portuguesa.",
+  "Pode ser sintetizado pela frase \"O Estado sou eu\".",
+  "Foi definitivamente superado, não restando qualquer resquício em práticas atuais."
+ ], g:4, j:"Alternativa E: a apostila afirma que, no presente, ainda devem existir estilos de gestão bem conservadores em casos pontuais — práticas patrimonialistas podem persistir."},
+ {enun:"Segundo o quadro de KEINERT (1994), no período de 1930 a 1979 o paradigma da gestão pública brasileira era:", alts:[
+  "Administração Pública como ciência jurídica.",
+  "Administração Pública como ciência política.",
+  "Administração Pública como ciência administrativa.",
+  "Administração Pública como AP.",
+  "Mobilização social."
+ ], g:2, j:"Alternativa C. O período 1930–1979 (Estado administrativo, administração para desenvolvimento e Estado intervencionista) tem o paradigma da AP como ciência ADMINISTRATIVA, com fases de racionalização, desenvolvimentismo e racionalidade/tecnicismo."},
+ {enun:"Sobre o capítulo da Administração Científica e sua importância à Gestão Pública, é CORRETO afirmar que:", alts:[
+  "É tratado exclusivamente por meio do quadro de KEINERT (1994).",
+  "Será debatido sob o prisma de um artigo construído pelo próprio instrutor, entregue em sala de aula para discussão.",
+  "Não guarda qualquer relação com a gestão pública.",
+  "É objeto de aprofundamento em legislação específica indicada na apostila.",
+  "Refere-se apenas à gestão privada."
+ ], g:1, j:"Alternativa B — é exatamente o que consta no cap. 2 da apostila."}
+],
+disc:[
+ {enun:"Analise como o patrimonialismo marcou a evolução da administração pública no Brasil e como ele ainda pode aparecer em práticas atuais.", linhas:"Mínimo 07 e máximo 15 linhas. (Questão da AE GPGA — CFO 2025, 9º quesito)", esp:[
+  ["Caracterização","Gestão pública em que a governança se confunde com a pessoalidade do governante — \"O ESTADO SOU EU\": o gestor se apropria, como seu, do que é de todos; não há separação entre o privado e o público."],
+  ["Contexto histórico","A maior parte da história do Brasil se passou sob domínio total (pré-império) ou parcial (império) da colônia portuguesa, período em que o patrimonialismo era a principal característica da gestão pública."],
+  ["Evolução","Com o início da república, lentamente, começou a se ensaiar uma gestão pública mais técnica, mesmo que de forma incipiente — evolução retratada nos paradigmas de KEINERT (1994), até a capacidade política aliada à capacidade técnica (1990 em diante)."],
+  ["Práticas atuais","A divisão paradigmática é de caráter geral: assim como no passado houve casos pontuais de gestão moderna, no presente ainda devem existir estilos de gestão, em casos pontuais, bem conservadores — nos quais o patrimonialismo pode se manifestar."]
+ ]}
+]},
+
+{num:"03", titulo:"Princípios Gerais da Administração Pública", base:"Art. 37, caput, CF/1988 (EC nº 19/1998)",
+vf:[
+ {t:"Os princípios do art. 37 aplicam-se à administração pública direta e indireta de qualquer dos Poderes da União, dos Estados, do Distrito Federal e dos Municípios.", g:true, j:"VERDADEIRO — texto expresso do art. 37, caput, CF/88."},
+ {t:"A redação atual do caput do art. 37 da CF foi dada pela Emenda Constitucional nº 19, de 1998.", g:true, j:"VERDADEIRO — conforme transcrito na apostila."},
+ {t:"A legalidade permite ao gestor afastar-se dos mandamentos da lei por razões de conveniência.", g:false, j:"FALSO — a gestão está presa aos mandamentos da lei, deles não podendo se afastar, sob pena de invalidade do ato e responsabilização do autor."},
+ {t:"A impessoalidade determina que a atividade de gestão pública seja dirigida a todos os cidadãos, sem determinação de pessoa ou discriminação de qualquer natureza.", g:true, j:"VERDADEIRO — cap. 4."},
+ {t:"A moralidade está intimamente ligada ao conceito do bom administrador, que busca o melhor e mais útil para o interesse público.", g:true, j:"VERDADEIRO — cap. 4."},
+ {t:"A publicidade torna facultativa a divulgação dos atos, contratos e outros documentos da administração pública.", g:false, j:"FALSO — a publicidade torna OBRIGATÓRIA a divulgação, para conhecimento, controle e início dos efeitos."},
+ {t:"O instrumento oficial de publicação dos atos é o jornal, público ou privado; em geral, são utilizados os Diários Oficiais.", g:true, j:"VERDADEIRO — cap. 4."},
+ {t:"Pela eficiência, o servidor deve agir com presteza, visando a melhoria do serviço público e a qualidade dos serviços prestados.", g:true, j:"VERDADEIRO — cap. 4."},
+ {t:"São seis os princípios expressos no caput do art. 37 da CF/88.", g:false, j:"FALSO — são CINCO: legalidade, impessoalidade, moralidade, publicidade e eficiência."},
+ {t:"A divulgação exigida pela publicidade marca, entre outros efeitos, o início dos efeitos dos atos administrativos.", g:true, j:"VERDADEIRO — a divulgação serve para conhecimento, controle e início dos seus efeitos."}
+],
+mc:[
+ {enun:"Sobre os princípios do art. 37 da CF/1988, assinale a alternativa ERRADA:", alts:[
+  "A legalidade prende a gestão pública aos mandamentos da lei.",
+  "A impessoalidade veda a determinação de pessoa ou discriminação de qualquer natureza.",
+  "A moralidade exige que os atos obedeçam aos princípios morais.",
+  "A publicidade obriga a divulgação dos atos, em geral por Diários Oficiais.",
+  "A eficiência não guarda relação com a presteza do servidor."
+ ], g:4, j:"Alternativa E: a eficiência exige justamente que o servidor aja com PRESTEZA, visando a melhoria e a qualidade dos serviços."},
+ {enun:"O princípio que, se violado, acarreta a invalidade do ato e a responsabilização do seu autor, por afastamento dos mandamentos da lei, é a:", alts:[
+  "Moralidade.",
+  "Publicidade.",
+  "Legalidade.",
+  "Impessoalidade.",
+  "Eficiência."
+ ], g:2, j:"Alternativa C — descrição literal da LEGALIDADE no cap. 4 da apostila."},
+ {enun:"O princípio que torna obrigatória a divulgação dos atos, contratos e outros documentos da administração pública é a:", alts:[
+  "Publicidade.",
+  "Moralidade.",
+  "Legalidade.",
+  "Eficiência.",
+  "Impessoalidade."
+ ], g:0, j:"Alternativa A — PUBLICIDADE: divulgação para conhecimento, controle e início dos efeitos."},
+ {enun:"O princípio que preza pela eficácia e racionalidade do serviço público, exigindo que o servidor aja com presteza, é a:", alts:[
+  "Legalidade.",
+  "Impessoalidade.",
+  "Moralidade.",
+  "Publicidade.",
+  "Eficiência."
+ ], g:4, j:"Alternativa E — EFICIÊNCIA, conforme o cap. 4."}
+],
+disc:[
+ {enun:"Disserte sobre os princípios constitucionais previstos no art. 37 da CF/1988 aplicáveis à administração pública, conceituando cada um deles.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Previsão","Art. 37, caput, CF/88 (redação da EC nº 19/1998): a administração pública direta e indireta de qualquer dos Poderes da União, Estados, DF e Municípios obedecerá aos princípios de legalidade, impessoalidade, moralidade, publicidade e eficiência."],
+  ["Legalidade","Gestão presa aos mandamentos da lei, deles não podendo se afastar, sob pena de invalidade do ato e responsabilização do autor."],
+  ["Impessoalidade","Atividade dirigida a todos os cidadãos, sem determinação de pessoa ou discriminação de qualquer natureza."],
+  ["Moralidade","Atos e atividades devem obedecer aos princípios morais, ligados ao conceito do bom administrador — o que busca o melhor e mais útil para o interesse público."],
+  ["Publicidade","Divulgação obrigatória dos atos, contratos e documentos, para conhecimento, controle e início dos efeitos; em geral, via Diários Oficiais."],
+  ["Eficiência","Eficácia e racionalidade do serviço público; o servidor deve agir com presteza, visando a melhoria e a qualidade dos serviços prestados."]
+ ]}
+]},
+
+{num:"04", titulo:"Organização da Administração Pública Brasileira", base:"Apostila GPGA, cap. 5 — PALUDO (2010)",
+vf:[
+ {t:"A administração direta é formada pelos órgãos ligados diretamente ao ente central de cada um dos poderes, em cada uma das esferas governamentais.", g:true, j:"VERDADEIRO — cap. 5.1."},
+ {t:"Os órgãos da administração direta possuem personalidade jurídica própria.", g:false, j:"FALSO — não possuem personalidade jurídica própria e pertencem ao ente público maior (PALUDO, 2010)."},
+ {t:"Os órgãos são centros de competências despersonalizados, cuja atuação, na pessoa de seus agentes, é imputada à entidade estatal a que pertencem.", g:true, j:"VERDADEIRO — PALUDO (2010)."},
+ {t:"As entidades da administração indireta são pessoas jurídicas criadas pela gestão pública para determinado fim, objetivando maior eficiência administrativa.", g:true, j:"VERDADEIRO — cap. 5.2."},
+ {t:"As entidades da administração indireta encontram-se vinculadas aos órgãos da administração direta.", g:true, j:"VERDADEIRO — ao Ministério correspondente (PALUDO, 2010)."},
+ {t:"Quando exploram atividade econômica, as entidades da administração indireta denominam-se autarquias ou fundações.", g:false, j:"FALSO — quando exploram atividade econômica são EMPRESAS PÚBLICAS e SOCIEDADES DE ECONOMIA MISTA; autarquias e fundações prestam serviços públicos ou de interesse público."},
+ {t:"Os consórcios constituídos como associação pública integram a administração indireta.", g:true, j:"VERDADEIRO — quadro da Figura 02 (PALUDO, 2010)."},
+ {t:"O terceiro setor corresponde a órgãos onde entes privados agem em atividades de interesse público.", g:true, j:"VERDADEIRO — cap. 5.3; figura híbrida e paraestatal."},
+ {t:"As entidades do terceiro setor almejam lucros ao colaborarem com o Estado.", g:false, j:"FALSO — não almejam lucros, apenas colaboram com o Estado."},
+ {t:"O terceiro setor é composto por serviços sociais autônomos, entidades de apoio, organizações sociais, OSCIPs e ONGs diversas.", g:true, j:"VERDADEIRO — PALUDO (2010)."},
+ {t:"Agências executivas, agências reguladoras, consórcios públicos e organizações sociais são criados por lei, com especificidades bastante complexas.", g:true, j:"VERDADEIRO — cap. 5.3; didaticamente, novas derivações das administrações indiretas tradicionais."},
+ {t:"Por serem descentralizadas e autônomas, as entidades da administração indireta não se submetem aos princípios da administração pública.", g:false, j:"FALSO — apesar da autonomia, há controle do Estado e submissão aos princípios da administração pública."}
+],
+mc:[
+ {enun:"Sobre a administração direta, assinale a alternativa ERRADA:", alts:[
+  "É formada por órgãos ligados diretamente ao ente central de cada poder.",
+  "Existe em cada uma das esferas governamentais (União, Estados e Municípios).",
+  "Atua através de seus órgãos e agentes, que expressam a vontade política da pessoa jurídica a que estão ligados.",
+  "Seus órgãos têm capacidade jurídica e constituem pessoa jurídica própria.",
+  "Inclui órgãos da Presidência da República, dos Ministérios, dos Poderes Legislativo, Judiciário e do MPU, e Conselhos diversos."
+ ], g:3, j:"Alternativa D: os órgãos NÃO têm capacidade jurídica e NÃO constituem pessoa jurídica — apenas possuem competências (PALUDO, 2010)."},
+ {enun:"Em regra, quando prestam serviços públicos ou de interesse público, as entidades da administração indireta são denominadas:", alts:[
+  "Empresas públicas e sociedades de economia mista.",
+  "Autarquias ou fundações.",
+  "Organizações sociais e OSCIPs.",
+  "Consórcios públicos.",
+  "Serviços sociais autônomos."
+ ], g:1, j:"Alternativa B — PALUDO (2010). Empresas públicas e sociedades de economia mista referem-se à exploração de atividade econômica."},
+ {enun:"NÃO integra a composição do terceiro setor, segundo PALUDO (2010):", alts:[
+  "Serviços sociais autônomos.",
+  "Entidades de apoio (fundações privadas, associações, cooperativas).",
+  "Organizações sociais e organizações sociais de interesse público.",
+  "Sociedades de economia mista.",
+  "ONGs diversas."
+ ], g:3, j:"Alternativa D: sociedades de economia mista integram a administração INDIRETA, não o terceiro setor."},
+ {enun:"Sobre a administração indireta, assinale a alternativa CORRETA:", alts:[
+  "Seus órgãos não possuem personalidade jurídica própria.",
+  "São órgãos descentralizados e autônomos, submetidos aos princípios da administração pública e ao controle do Estado.",
+  "Suas entidades não se vinculam a qualquer órgão da administração direta.",
+  "É composta exclusivamente por autarquias.",
+  "Exerce suas atividades de forma centralizada."
+ ], g:1, j:"Alternativa B — cap. 5.2. As entidades exercem atividades de forma DESCENTRALIZADA e vinculam-se aos órgãos da administração direta."}
+],
+disc:[
+ {enun:"Diferencie administração direta e administração indireta, indicando os órgãos e entidades que compõem cada uma, conforme PALUDO (2010).", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Administração direta","Órgãos ligados diretamente ao ente central de cada poder (Executivo, Legislativo e Judiciário), em cada esfera (União, Estados e Municípios); não possuem personalidade jurídica própria — são centros de competências despersonalizados, cuja atuação é imputada à entidade estatal."],
+  ["Composição da direta","Órgãos da Presidência da República, dos Ministérios, dos Poderes Legislativo, Judiciário e do MPU, e Conselhos diversos."],
+  ["Administração indireta","Pessoas jurídicas descentralizadas e autônomas, criadas pela gestão pública para determinado fim, visando maior eficiência administrativa; submetem-se aos princípios da administração pública e vinculam-se aos órgãos da direta."],
+  ["Composição da indireta","Autarquias, fundações, empresas públicas, sociedades de economia mista e consórcios constituídos como associação pública; serviços públicos → autarquias/fundações; atividade econômica → empresas públicas/sociedades de economia mista."]
+ ]},
+ {enun:"Conceitue o terceiro setor, explicando por que a doutrina o considera uma figura híbrida e paraestatal, e indique sua composição.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Conceito","Considerando o primeiro setor como o Estatal e o segundo como o privado, o terceiro setor corresponde a órgãos onde entes privados agem em atividades de interesse público."],
+  ["Natureza híbrida e paraestatal","Não são entidades públicas, pois são pessoas de direito privado; e não são privadas em sentido estrito, pois não almejam lucros — apenas colaboram com o Estado."],
+  ["Composição","Serviços sociais autônomos, entidades de apoio (fundações privadas, associações, cooperativas), organizações sociais, organizações sociais de interesse público e ONGs diversas (PALUDO, 2010)."],
+  ["Figuras especiais","Agências executivas, agências reguladoras, consórcios públicos e organizações sociais são criados por lei, com especificidades complexas — didaticamente, novas derivações das administrações indiretas tradicionais."]
+ ]}
+]},
+
+{num:"05", titulo:"Ciclos de Gestão: PPA, LDO e LOA", base:"Art. 165, CF/1988; art. 35, §2º, ADCT",
+vf:[
+ {t:"No âmbito público, o ato de planejar, organizar, dirigir e controlar deve orbitar em face de apenas dois instrumentos: o PPA e a LOA.", g:false, j:"FALSO — são TRÊS instrumentos: PPA, LDO e LOA, que compõem o Ciclo de Gestão da Administração Pública. Assertiva falsa da AE GPGA 2025 (2º quesito)."},
+ {t:"O PPA é um planejamento da gestão pública que visa estabelecer objetivos, diretrizes e metas de cada ente federativo para um período de 04 (quatro) anos.", g:true, j:"VERDADEIRO — na AE 2025, a pegadinha foi \"02 (dois) anos\" (FALSA)."},
+ {t:"O PPA tem previsão constitucional no art. 165 da CF.", g:true, j:"VERDADEIRO — cap. 6."},
+ {t:"São características do PPA: dar transparência à utilização dos recursos públicos, definir claramente a execução dos programas do governo e fomentar a continuidade administrativa.", g:true, j:"VERDADEIRO — fomentar continuidade administrativa foi assertiva VERDADEIRA da AE 2025."},
+ {t:"O PPA deve ser enviado ao Legislativo até 31 de agosto do primeiro ano do mandato e devolvido até 22 de dezembro do mesmo ano.", g:true, j:"VERDADEIRO — art. 35, §2º, I, ADCT."},
+ {t:"A LDO é elaborada a cada quatro anos, acompanhando a vigência do PPA.", g:false, j:"FALSO — a LDO é elaborada ANUALMENTE."},
+ {t:"A LDO tem como objetivo detalhar as metas e prioridades da administração para o ano subsequente, bem como orientar a confecção da LOA.", g:true, j:"VERDADEIRO — cap. 6."},
+ {t:"A LDO é encaminhada pelo Executivo até 15 de abril e devolvida pelo Legislativo até 17 de julho do mesmo ano.", g:true, j:"VERDADEIRO — art. 35, §2º, II, ADCT."},
+ {t:"A LOA, obedecendo o planejamento da LDO e do PPA, fixa receitas e estima despesas na administração pública para o ano subsequente.", g:false, j:"FALSO — está invertido: a LOA ESTIMA receitas e FIXA despesas. Exatamente a pegadinha da AE 2025."},
+ {t:"O orçamento é um mecanismo que indica a alocação de recursos, em face dos diversos programas estabelecidos nos planejamentos do governo.", g:true, j:"VERDADEIRO — assertiva verdadeira da AE 2025."}
+],
+mc:[
+ {enun:"Sobre os prazos do ciclo de gestão (art. 35, §2º, ADCT), assinale a alternativa INCORRETA:", alts:[
+  "O PPA deve ser enviado ao Legislativo até 31 de agosto do primeiro ano do mandato.",
+  "O PPA deve ser devolvido para sanção até 22 de dezembro do mesmo ano.",
+  "A LDO é encaminhada pelo Executivo até o dia 15 de abril.",
+  "A LOA deve ser devolvida pelo Legislativo até 17 de julho do mesmo ano.",
+  "A LOA deve ser enviada ao Legislativo até 31 de agosto."
+ ], g:3, j:"Alternativa D é a INCORRETA: 17/07 é o prazo de devolução da LDO; a LOA é devolvida até 22 de dezembro."},
+ {enun:"Sobre o Plano Plurianual (PPA), assinale a alternativa CORRETA:", alts:[
+  "Estabelece objetivos, diretrizes e metas para um período de 02 (dois) anos.",
+  "Tem previsão constitucional no art. 165 da CF e vigência de 04 (quatro) anos.",
+  "É elaborado anualmente para orientar a LOA.",
+  "Estima receitas e fixa despesas para o ano subsequente.",
+  "Não guarda relação com a continuidade administrativa."
+ ], g:1, j:"Alternativa B — cap. 6. Quem orienta a LOA é a LDO; quem estima receitas e fixa despesas é a LOA; fomentar a continuidade administrativa é uma das características do PPA."},
+ {enun:"Sobre a função de cada instrumento no ciclo de gestão, assinale a alternativa CORRETA:", alts:[
+  "PPA: executar; LDO: planejar; LOA: orientar.",
+  "PPA: orientar; LDO: executar; LOA: planejar.",
+  "PPA: planejar; LDO: orientar; LOA: executar.",
+  "PPA: executar; LDO: orientar; LOA: planejar.",
+  "Os três instrumentos possuem a mesma função."
+ ], g:2, j:"Alternativa C — conforme o quadro didático do cap. 6: PPA (quadriênio) PLANEJAR → LDO ORIENTAR → LOA EXECUTAR."}
+],
+disc:[
+ {enun:"Explique as principais características do PPA e a relação entre PPA, LDO e LOA no Ciclo de Gestão da Administração Pública.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Ciclo de gestão","A boa governança requer decisões e atividades que visem a utilização otimizada de recursos; no âmbito público, planejar, organizar, dirigir e controlar orbitam em face de três instrumentos: PPA, LDO e LOA."],
+  ["PPA","Planejamento que estabelece OBJETIVOS, DIRETRIZES e METAS de cada ente federativo para 4 anos (art. 165, CF); características: dar transparência à utilização dos recursos, definir claramente a execução dos programas e fomentar a continuidade administrativa; envio até 31/08 do 1º ano do mandato e devolução até 22/12 (ADCT)."],
+  ["LDO","Elaborada anualmente, DETALHA as metas e prioridades para o ano subsequente e ORIENTA a confecção da LOA; envio até 15/04 e devolução até 17/07."],
+  ["LOA","Obedecendo o planejamento da LDO e do PPA, ESTIMA receitas e FIXA despesas para o ano subsequente; o orçamento indica a alocação de recursos em face dos programas do governo; envio até 31/08 e devolução até 22/12."]
+ ]}
+]},
+
+{num:"06", titulo:"Licitações e Contratos na Administração Pública", base:"Lei nº 14.133, de 1º de abril de 2021",
+vf:[
+ {t:"A Lei nº 14.133, de 1º de abril de 2021, estabelece as normas que regem as licitações e contratos no Brasil.", g:true, j:"VERDADEIRO — cap. 7."},
+ {t:"Pelo art. 1º, a lei estabelece normas gerais de licitação e contratação para as Administrações Públicas diretas, autárquicas e fundacionais da União, dos Estados, do DF e dos Municípios.", g:true, j:"VERDADEIRO — alternativa verdadeira da AE 2025 (5º quesito)."},
+ {t:"Contrato público é todo avençamento entre órgãos da gestão pública e particulares, com o objetivo de dispor serviços e/ou produtos por vontade mútua, ratificado em regras que vinculam as partes.", g:true, j:"VERDADEIRO — cap. 7."},
+ {t:"Licitação é o procedimento legal para selecionar as propostas de possíveis contratos com a gestão pública, disponíveis pelos particulares na execução de um serviço e/ou entrega de produtos.", g:true, j:"VERDADEIRO — cap. 7."},
+ {t:"A novel lei de licitação prevê cinco modalidades: concorrência, concurso, leilão, pregão e diálogo competitivo.", g:true, j:"VERDADEIRO — cap. 7."},
+ {t:"A tomada de preços é uma das modalidades previstas na Lei nº 14.133/2021.", g:false, j:"FALSO — a tomada de preços NÃO figura entre as cinco modalidades da nova lei."},
+ {t:"Uma das novidades trazidas pela Lei nº 14.133/2021, em relação às modalidades existentes na Lei nº 8.666/1993, foi o Pregão.", g:false, j:"FALSO — o Pregão NÃO é novidade da nova lei (já existia antes). Exatamente a alternativa INCORRETA da AE 2025 (5º quesito)."},
+ {t:"Em casos especiais, o procedimento de licitação poderá dispensar as modalidades previstas, ou serem passíveis de inexigibilidade.", g:true, j:"VERDADEIRO — cap. 7."},
+ {t:"Os contratos devem estabelecer com clareza e precisão as condições para sua execução, expressas em cláusulas que definam direitos, obrigações e responsabilidades, em conformidade com a licitação e a proposta (CHIAVENATTO, 2008).", g:true, j:"VERDADEIRO — citação do cap. 7."},
+ {t:"Os contratos decorrentes de dispensa ou de inexigibilidade devem atender aos termos do ato que os autorizou e da respectiva proposta.", g:true, j:"VERDADEIRO — cap. 7."}
+],
+mc:[
+ {enun:"Sobre as Noções Gerais de Licitações e Contratos, assinale a alternativa INCORRETA:", alts:[
+  "A Lei nº 14.133/2021 estabelece normas gerais para as Administrações Públicas diretas, autárquicas e fundacionais da União, dos Estados, do DF e dos Municípios.",
+  "Licitação é o procedimento legal para selecionar as propostas de possíveis contratos com a gestão pública.",
+  "Uma das novidades trazidas pela Lei nº 14.133/2021, em relação às modalidades da Lei nº 8.666/1993, foi o Pregão.",
+  "Em casos especiais, o procedimento poderá dispensar as modalidades previstas, ou serem passíveis de inexigibilidade.",
+  "Os contratos devem estabelecer com clareza e precisão as condições para sua execução."
+ ], g:2, j:"Alternativa C é a INCORRETA — mesma resposta da AE 2025 (5º quesito): o Pregão NÃO foi novidade da Lei 14.133/2021, pois já existia na legislação anterior."},
+ {enun:"NÃO é modalidade de licitação prevista na Lei nº 14.133/2021:", alts:[
+  "Concorrência.",
+  "Concurso.",
+  "Tomada de preços.",
+  "Pregão.",
+  "Diálogo competitivo."
+ ], g:2, j:"Alternativa C — as cinco modalidades são: concorrência, concurso, leilão, pregão e diálogo competitivo."},
+ {enun:"Sobre contratos administrativos, assinale a alternativa CORRETA:", alts:[
+  "As modalidades de licitação e seus procedimentos são objeto de aprofundamento na disciplina de GPGA.",
+  "Ao futuro oficial da PMPE, é condição essencial ter a noção de como proceder ao gerar um vínculo contratual com setores privados ou, em alguns casos, com outros setores públicos.",
+  "Os contratos dispensam a conformidade com os termos da licitação e da proposta.",
+  "A dispensa e a inexigibilidade eliminam a necessidade de ato autorizador.",
+  "Contrato público independe da vontade mútua das partes."
+ ], g:1, j:"Alternativa B — cap. 7. A disciplina NÃO se aprofunda nas modalidades (conteúdo de disciplinas apartadas); os contratos vinculam-se à licitação e à proposta; os de dispensa/inexigibilidade atendem ao ato que os autorizou."}
+],
+disc:[
+ {enun:"Os contratos trazem com clareza e precisão as condições para sua execução, expressas em cláusulas que definem os direitos, as obrigações e as responsabilidades das partes. Nesta perspectiva, disserte sobre a importância do Oficial da PMPE possuir conhecimentos básicos sobre contratos administrativos.", linhas:"Mínimo 07 e máximo 15 linhas. (Questão da AE GPGA — CFO 2025, 8º quesito)", esp:[
+  ["Contexto normativo","A Lei nº 14.133/2021 estabelece as normas gerais de licitação e contratação (art. 1º); contrato público é o avençamento entre a gestão pública e particulares, ratificado em regras que vinculam as partes, dentro das legislações vigentes e dos princípios da administração pública."],
+  ["Condição essencial","Ao futuro oficial da PMPE, como comandante e gestor, é condição essencial ter a noção de como proceder ao gerar um vínculo contratual com setores privados ou, em alguns casos, com outros setores públicos, dentro de suas esferas de atribuições."],
+  ["Atenção na construção","O oficial deverá estar atento à construção do contrato, que deve estabelecer com clareza e precisão as condições de execução, em cláusulas que definam direitos, obrigações e responsabilidades, em conformidade com a licitação e a proposta (CHIAVENATTO, 2008)."],
+  ["Legalidade e probidade","Deverá seguir os passos legais e probos, necessários ao ato administrativo perfeito e legítimo — respeitando as modalidades da lei, as hipóteses de dispensa e inexigibilidade e os princípios basilares e constitucionais para se gerir a coisa pública."]
+ ]}
+]},
+
+{num:"07", titulo:"Noções Gerais de Políticas Públicas", base:"Apostila GPGA, cap. 8 — FERRAREZI e SARAVIA (2006)",
+vf:[
+ {t:"Política pública é um fluxo de decisões públicas, orientado a manter o equilíbrio social ou a introduzir desequilíbrios destinados a modificar essa realidade (FERRAREZI e SARAVIA, 2006).", g:true, j:"VERDADEIRO — definição do cap. 8."},
+ {t:"No campo do estudo da TGA, seria uma abordagem contingencial, que insere o aspecto da visão social como medida para se tomar uma decisão.", g:true, j:"VERDADEIRO — cap. 8."},
+ {t:"São características predominantes das políticas públicas: institucional, decisório, comportamental e causal.", g:true, j:"VERDADEIRO — cap. 8."},
+ {t:"A política pública é causal porque necessita da \"vontade de fazer\".", g:false, j:"FALSO — a \"vontade de fazer\" caracteriza o aspecto COMPORTAMENTAL; é CAUSAL porque, quando implementada corretamente, promove impactos na sociedade, positivos ou negativos."},
+ {t:"O ciclo de construção de uma política pública é composto por: construção de agenda, formulação da política, processo decisório, implementação e avaliação.", g:true, j:"VERDADEIRO — as cinco fases do cap. 8."},
+ {t:"A construção da agenda parte da premissa da identificação de um problema social e da vontade de discuti-lo, colocando-o em pauta para o governo.", g:true, j:"VERDADEIRO — cap. 8."},
+ {t:"A avaliação é a primeira fase do ciclo das políticas públicas.", g:false, j:"FALSO — a avaliação é a ÚLTIMA fase: cabe ao gestor avaliar se foi eficiente e eficaz à sociedade e, caso não, ajustar a política implementada ou em implementação."},
+ {t:"Na implementação, as ações começam a acontecer e o problema passa a ser enfrentado no mundo real, e não das especulações e discussões.", g:true, j:"VERDADEIRO — cap. 8."},
+ {t:"A segurança pública é um tema de política pública eterno a todos os governos, sendo essencial ao futuro oficial da PMPE conhecer esse sistema.", g:true, j:"VERDADEIRO — cap. 8."},
+ {t:"A tomada de decisão é a fase em que se definem responsabilidades e os métodos que serão utilizados para o efetivo enfrentamento do problema.", g:true, j:"VERDADEIRO — cap. 8."}
+],
+mc:[
+ {enun:"Assinale a alternativa que apresenta a ordem CORRETA do ciclo das políticas públicas:", alts:[
+  "Formulação da política → construção de agenda → processo decisório → avaliação → implementação.",
+  "Construção de agenda → formulação da política → processo decisório → implementação → avaliação.",
+  "Processo decisório → construção de agenda → formulação da política → implementação → avaliação.",
+  "Construção de agenda → processo decisório → formulação da política → avaliação → implementação.",
+  "Avaliação → formulação da política → construção de agenda → implementação → processo decisório."
+ ], g:1, j:"Alternativa B — cap. 8: agenda → formulação → decisão → implementação → avaliação."},
+ {enun:"Sobre as características predominantes das políticas públicas, assinale a alternativa INCORRETA:", alts:[
+  "É institucional, pois o governo institui as políticas públicas em seus programas de governo.",
+  "É decisório, pois necessita de uma cadeia competente de decisões para se lograr eficácia.",
+  "É comportamental, pois necessita da \"vontade de fazer\".",
+  "É institucional, pois promove impactos na sociedade, positivos ou negativos.",
+  "É causal, pois quando implementada corretamente, promove impactos na sociedade."
+ ], g:3, j:"Alternativa D é a INCORRETA: promover impactos na sociedade é a característica CAUSAL, não a institucional."},
+ {enun:"Sobre as fases do ciclo das políticas públicas, assinale a alternativa CORRETA:", alts:[
+  "Na formulação da política, elabora-se um planejamento para resolver o problema detectado, e alternativas de soluções são elencadas.",
+  "Na construção da agenda, as ações começam a acontecer no mundo real.",
+  "Na avaliação, definem-se responsabilidades e métodos.",
+  "Na implementação, identifica-se o problema social.",
+  "No processo decisório, ajusta-se a política já implementada."
+ ], g:0, j:"Alternativa A — cap. 8. As demais trocam as fases: mundo real = implementação; responsabilidades e métodos = tomada de decisão; identificação do problema = agenda; ajuste = avaliação."}
+],
+disc:[
+ {enun:"Conceitue política pública, segundo FERRAREZI e SARAVIA (2006), e descreva as fases do ciclo de construção de uma política pública no governo.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Conceito","Fluxo de decisões públicas orientado a manter o equilíbrio social ou a introduzir desequilíbrios destinados a modificar essa realidade — decisões condicionadas pelo próprio fluxo, pelas reações que provocam no tecido social e pelos valores, ideias e visões dos que adotam ou influem na decisão (FERRAREZI e SARAVIA, 2006); na TGA, abordagem contingencial com visão social."],
+  ["Agenda e formulação","Construção de agenda: identificação de um problema social e vontade de colocá-lo em pauta para o governo; formulação da política: planejamento para resolver o problema detectado, com alternativas de soluções elencadas."],
+  ["Decisão e implementação","Processo decisório: fase em que se definem responsabilidades e métodos para o efetivo enfrentamento; implementação: as ações começam a acontecer e o problema é enfrentado no mundo real."],
+  ["Avaliação","Após a implementação, cabe ao gestor eficiente avaliar o que fora concebido — se foi eficiente e eficaz à sociedade e se os objetivos do planejamento foram alcançados — e, caso não, ajustar a política pública implementada ou em implementação."]
+ ]}
+]},
+
+{num:"08", titulo:"Instrumentos de Controle da Administração Pública", base:"Art. 70, CF/1988",
+vf:[
+ {t:"O art. 70 da CF trata da fiscalização contábil, financeira, orçamentária, operacional e patrimonial da União e das entidades da administração direta e indireta.", g:true, j:"VERDADEIRO — quanto à legalidade, legitimidade, economicidade, aplicação das subvenções e renúncia de receitas."},
+ {t:"A fiscalização será exercida pelo Congresso Nacional, mediante controle externo, e pelo sistema de controle interno de cada Poder.", g:true, j:"VERDADEIRO — texto do art. 70, CF."},
+ {t:"O principal, mas não único, cerne de controle da administração pública é a LEGALIDADE dos atos.", g:true, j:"VERDADEIRO — cap. 9."},
+ {t:"Quanto à origem, o controle classifica-se em interno e externo.", g:false, j:"Atenção: VERDADEIRO seria a classificação correta — mas a assertiva está correta! Revise: interno (dentro de cada poder) e externo (fora do poder controlado)."},
+ {t:"A CGU, no nível federal, é exemplo de controle externo.", g:false, j:"FALSO — a CGU é exemplo de controle INTERNO (exercido dentro do próprio poder, para controle dos próprios atos)."},
+ {t:"O STF julgando atos do Executivo é exemplo de controle externo.", g:true, j:"VERDADEIRO — exercido fora do poder a ser controlado."},
+ {t:"Alguns doutrinadores consideram como controle externo, também, o controle social (ONGs, conselhos, mídia), o Ministério Público e o controle judicial constitucional (HC, HD, mandados).", g:true, j:"VERDADEIRO — cap. 9."},
+ {t:"Quanto ao momento, o controle pode ser prévio/preventivo, concomitante ou posterior/corretivo.", g:true, j:"VERDADEIRO — antes, durante ou após o ato administrativo."},
+ {t:"Quanto ao aspecto, o controle de mérito confere a conformidade do ato com as legislações vigentes.", g:false, j:"FALSO — conformidade com a lei é o aspecto LEGALIDADE (compliance); o MÉRITO analisa a conveniência, eficiência e oportunidade do ato (subjetivo)."},
+ {t:"O controle finalístico ocorre quando órgãos da administração direta fiscalizam órgãos da administração indireta, sendo \"melindroso\" em face da autonomia destes.", g:true, j:"VERDADEIRO — pode, entretanto, ser previsto em legislação pertinente."},
+ {t:"Quanto aos órgãos, dependendo de quem exerce o controle, ele pode ser administrativo, legislativo ou judicial.", g:true, j:"VERDADEIRO — cap. 9."},
+ {t:"O controle constitui a primeira das funções administrativas, vindo antes do planejamento.", g:false, j:"FALSO — é a ÚLTIMA das funções administrativas, vindo depois do planejamento, da organização e da direção (Chiavenatto, 2021). Não há gestão sem controle."}
+],
+mc:[
+ {enun:"Sobre os Instrumentos de Controle da Administração Pública, assinale a única alternativa CORRETA:", alts:[
+  "Quanto à origem, o controle pode ser caracterizado como prévio ou preventivo.",
+  "Em relação ao aspecto, é correto afirmar que o controle é posterior/corretivo.",
+  "Quanto ao mérito, busca-se conferir a conformidade do ato com as legislações vigentes.",
+  "Em relação à legalidade, busca-se a análise da conveniência, eficiência e oportunidade do ato.",
+  "Quanto à amplitude, temos duas características: hierárquico, quando os órgãos superiores fiscalizam órgãos inferiores; e finalístico, quando os órgãos da administração direta fiscalizam órgãos da administração indireta."
+ ], g:4, j:"Alternativa E — gabarito da AE GPGA 2025 (7º quesito). Origem = interno/externo; momento = prévio/concomitante/posterior; aspecto = legalidade/mérito (A e B trocam as classificações; C e D invertem legalidade e mérito)."},
+ {enun:"Sobre as classificações didáticas do controle, assinale a alternativa INCORRETA:", alts:[
+  "Quanto à origem: interno e externo.",
+  "Quanto ao momento: prévio, concomitante e posterior.",
+  "Quanto à amplitude: prévio e posterior.",
+  "Quanto ao aspecto: legalidade e mérito.",
+  "Quanto aos órgãos: administrativos, legislativos ou judiciais."
+ ], g:2, j:"Alternativa C é a INCORRETA: quanto à AMPLITUDE, o controle é HIERÁRQUICO ou FINALÍSTICO; prévio e posterior são classificações quanto ao MOMENTO."},
+ {enun:"São exemplos corretos de controle, segundo a apostila:", alts:[
+  "CGU como controle interno no nível federal e STF julgando atos do Executivo como controle externo.",
+  "CGU como controle externo e STF como controle interno.",
+  "Ministério Público como controle interno dos poderes.",
+  "Controle social exercido exclusivamente pelos Tribunais de Contas.",
+  "Controle judicial constitucional exercido pelas ONGs."
+ ], g:0, j:"Alternativa A — cap. 9. O MP está FORA dos poderes; o controle social é o das ONGs, conselhos e mídia; HC, HD e mandados compõem o controle judicial constitucional."},
+ {enun:"Sobre o cerne do controle da administração pública, assinale a alternativa INCORRETA:", alts:[
+  "O principal cerne de controle é a legalidade dos atos.",
+  "A legalidade é o único cerne de controle da administração pública.",
+  "O controle dos gastos públicos, em qualquer poder e esfera, será submetido à atividade interna e externa do órgão controlado.",
+  "Controlar significa garantir que o planejamento seja bem executado e que os objetivos sejam alcançados (Chiavenatto, 2021).",
+  "Não há gestão sem controle — isso se aplica certamente à administração pública."
+ ], g:1, j:"Alternativa B é a INCORRETA: a legalidade é o PRINCIPAL, MAS NÃO ÚNICO, cerne de controle da administração pública."}
+],
+disc:[
+ {enun:"Classifique, para efeito didático, os controles da administração pública quanto à origem, ao momento, ao aspecto, à amplitude e aos órgãos, exemplificando quando possível.", linhas:"Mínimo 10 e máximo 15 linhas.", esp:[
+  ["Origem","INTERNO: exercido dentro de cada poder, para controle dos próprios atos (ex.: CGU, no nível federal); EXTERNO: exercido fora do poder controlado (ex.: STF julgando atos do Executivo); doutrina inclui o controle social (ONGs, conselhos, mídia), o MP e o controle judicial constitucional (HC, HD, mandados)."],
+  ["Momento","PRÉVIO/PREVENTIVO: antes de o ato administrativo ser construído (preparação); CONCOMITANTE: durante a execução; POSTERIOR/CORRETIVO: após o ato consumado."],
+  ["Aspecto","LEGALIDADE: conferir a conformidade do ato com as legislações vigentes (compliance); MÉRITO: análise da conveniência, eficiência e oportunidade do ato (subjetivo)."],
+  ["Amplitude","HIERÁRQUICO: órgãos superiores fiscalizam órgãos inferiores; FINALÍSTICO: administração direta fiscaliza a indireta — \"melindroso\" ante a autonomia administrativa desta, mas pode ser previsto em legislação pertinente."],
+  ["Órgãos","Dependendo de quem exerce o controle: administrativos, legislativos ou judiciais; fundamento maior no art. 70 da CF (controle externo pelo Congresso Nacional e sistema de controle interno de cada Poder)."]
+ ]}
+]},
+
+{num:"09", titulo:"Ferramentas Gerenciais Aplicadas à Gestão Pública", base:"Apostila GPGA, cap. 10 — PALUDO (2010); CHIAVENATTO (2022)",
+vf:[
+ {t:"O Benchmarking provém da palavra inglesa \"benchmark\", que significa \"referência\": o ato de comparar sua atividade e/ou produto com algum concorrente, sempre na busca de uma boa prática para melhoria constante.", g:true, j:"VERDADEIRO — cap. 10."},
+ {t:"O PDCA provém das siglas em inglês Plan, Do, Check e Action, é conhecido como ciclo Deming e tem origem em meados dos anos 50 do séc. XX.", g:true, j:"VERDADEIRO — ciclo constante de atividades gerenciais buscando maior efetividade."},
+ {t:"Segundo o Diagrama de Pareto, 20% do volume de problemas é constituído por 80% dos eventos causadores.", g:false, j:"FALSO — está invertido: \"80% do volume de problemas é constituído por apenas 20% de eventos causadores\" (Vilfredo Pareto)."},
+ {t:"O nome do Diagrama de Pareto foi uma homenagem do consultor Joseph Moses ao economista italiano Vilfredo Pareto.", g:true, j:"VERDADEIRO — cap. 10."},
+ {t:"A ferramenta Kaizen, ou melhoria contínua, insere numa organização o permanente princípio de envolvimento das pessoas em evoluir suas tarefas dia a dia.", g:true, j:"VERDADEIRO — assertiva verdadeira da AE 2025 (3º quesito)."},
+ {t:"A técnica de orçamento participativo não visa \"distribuir responsabilidades\" na decisão de alocação de recursos.", g:false, j:"FALSO — visa exatamente distribuir responsabilidades com os stakeholders envolvidos. Assertiva falsa da AE 2025."},
+ {t:"O aprimoramento constante não é um dever do gestor público que busca a excelência.", g:false, j:"FALSO — o aprimoramento constante É um dever do gestor público que busca a excelência. Assertiva falsa da AE 2025."},
+ {t:"São ferramentas aplicáveis à Gestão Pública: Brainstorming, Ishikawa e Downsizing (Enxugamento).", g:true, j:"VERDADEIRO — assertiva verdadeira da AE 2025."},
+ {t:"Pelo Diagrama de Pareto, dever-se-ia estratificar em um histograma os problemas/causas detectados na organização e focar nos prioritários.", g:true, j:"VERDADEIRO — cap. 10."},
+ {t:"Planejamento Estratégico e implementações de novas tecnologias poderiam ser temas de seminários de treinamentos bastante duradouros.", g:true, j:"VERDADEIRO — assertiva verdadeira da AE 2025."}
+],
+mc:[
+ {enun:"Sobre as ferramentas gerenciais aplicadas à gestão pública, assinale a alternativa ERRADA:", alts:[
+  "O Benchmarking é o ato de comparar sua atividade e/ou produto com algum concorrente, em busca de boa prática para melhoria constante.",
+  "O PDCA, também conhecido como ciclo Deming, tem origem em meados dos anos 50 do séc. XX.",
+  "O Diagrama de Pareto parte da ideia de que 80% do volume de problemas é constituído por apenas 20% de eventos causadores.",
+  "O Kaizen insere o permanente princípio de envolvimento das pessoas em evoluir suas tarefas dia a dia.",
+  "O orçamento participativo visa concentrar exclusivamente no gestor a decisão de alocação de recursos."
+ ], g:4, j:"Alternativa E é a ERRADA: o orçamento participativo visa \"distribuir responsabilidades\" com os stakeholders — a sociedade como um todo ou parcela significativa de interessados."},
+ {enun:"Sobre o ciclo PDCA, assinale a alternativa CORRETA:", alts:[
+  "Corresponde a Planejamento, Execução, Controle e Avaliação, em ciclo constante de atividades gerenciais.",
+  "É uma técnica extremamente complexa, criada no século XXI.",
+  "Não guarda relação com o ciclo Deming.",
+  "Aplica-se apenas a organizações privadas.",
+  "Substituiu integralmente o Diagrama de Pareto."
+ ], g:0, j:"Alternativa A — cap. 10: Plan, Do, Check e Action (Planejamento → Execução → Controle → Avaliação); técnica relativamente simples, de meados dos anos 50, conhecida como ciclo Deming."},
+ {enun:"Sobre o Diagrama de Pareto, assinale a alternativa CORRETA:", alts:[
+  "Parte da premissa de que os grandes gestores estão sempre envolvidos em diversos problemas simultaneamente, sendo necessário priorizar o mais danoso à organização.",
+  "Afirma que 20% dos problemas decorrem de 80% dos eventos causadores.",
+  "Foi criado pelo economista Joseph Moses.",
+  "Dispensa a estratificação dos problemas em histograma.",
+  "É sinônimo da ferramenta Kaizen."
+ ], g:0, j:"Alternativa A — cap. 10. A proporção correta é 80% dos problemas de 20% dos eventos; o criador foi o consultor Joseph Moses, em homenagem a Vilfredo Pareto; a técnica usa histograma para focar nos prioritários."}
+],
+disc:[
+ {enun:"Explique as ferramentas gerenciais Benchmarking, PDCA, Diagrama de Pareto, Kaizen e orçamento participativo, aplicadas à gestão pública.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Benchmarking","Do inglês benchmark (\"referência\"): comparar sua atividade e/ou produto com algum concorrente, sempre na busca de uma boa prática para melhoria constante."],
+  ["PDCA","Plan, Do, Check e Action — ciclo constante de atividades gerenciais buscando maior efetividade no produto/serviço final; técnica relativamente simples, de meados dos anos 50, conhecida como ciclo Deming (Planejamento → Execução → Controle → Avaliação)."],
+  ["Diagrama de Pareto","Prioriza o problema mais danoso: \"80% do volume de problemas é constituído por apenas 20% de eventos causadores\" (homenagem de Joseph Moses a Vilfredo Pareto); estratificam-se os problemas/causas em histograma, focando nos prioritários."],
+  ["Kaizen","Melhoria contínua: princípio permanente de envolvimento das pessoas em evoluir suas tarefas dia a dia — identificar problemas, discutir com a equipe, propor e aplicar soluções e rever resultados; processo permanente de resiliência organizacional."],
+  ["Orçamento participativo","Visa \"distribuir responsabilidades\" na decisão de alocação de recursos com os stakeholders envolvidos — a sociedade como um todo ou parcela significativa de interessados; o aprimoramento constante é um dever do gestor público que busca a excelência."]
+ ]}
+]},
+
+{num:"10", titulo:"Estrutura Organizacional da PMPE", base:"Lei nº 18.139/2023; Lei nº 11.328/1996; Lei nº 15.186/2013; Lei nº 16.279/2017",
+vf:[
+ {t:"Organizar a Administração significa organizar todo o seu aparato: estrutura e recursos; órgãos e agentes; serviços e atividades; bem como competências.", g:true, j:"VERDADEIRO — cap. 11.1."},
+ {t:"A estrutura organizacional corresponde ao modo pelo qual a autoridade é distribuída, as atividades são divididas e organizadas, e o sistema de comunicação é estabelecido.", g:true, j:"VERDADEIRO — cap. 11.1."},
+ {t:"Graficamente, o organograma representa a estrutura da organização.", g:true, j:"VERDADEIRO — cap. 11.1."},
+ {t:"Comportamento organizacional é o estudo da dinâmica das organizações e de como os grupos e indivíduos se comportam dentro delas, sendo uma ciência interdisciplinar.", g:true, j:"VERDADEIRO — cap. 11.2."},
+ {t:"Por ser sistema cooperativo racional, a organização somente pode alcançar seus objetivos se as pessoas coordenarem seus esforços; caracteriza-se por racional divisão do trabalho e hierarquia.", g:true, j:"VERDADEIRO — cap. 11.2."},
+ {t:"No processo de reciprocidade, a organização espera que as pessoas realizem suas tarefas e oferece-lhes incentivos e recompensas, enquanto as pessoas oferecem suas atividades e trabalho esperando obter certas satisfações pessoais.", g:true, j:"VERDADEIRO — cap. 11.2."},
+ {t:"A cultura organizacional representa as normas formais e escritas que orientam o comportamento dos membros da organização.", g:false, j:"FALSO — representa as normas INFORMAIS e NÃO ESCRITAS que orientam o comportamento no dia a dia."},
+ {t:"As culturas conservadoras caracterizam-se por serem flexíveis e maleáveis.", g:false, j:"FALSO — culturas CONSERVADORAS são rígidas e conservadoras; as ADAPTATIVAS é que são flexíveis e maleáveis."},
+ {t:"O ideal seria que as organizações adotassem culturas adaptativas e flexíveis, para obter maior eficiência e eficácia e alcançar a inovação necessária.", g:true, j:"VERDADEIRO — cap. 11.2."},
+ {t:"A Lei nº 18.139, de 18 de janeiro de 2023, define a atual estrutura organizacional do governo do estado de Pernambuco, dispondo sobre a estrutura e o funcionamento do Poder Executivo.", g:true, j:"VERDADEIRO — cap. 11.3."},
+ {t:"A Lei nº 16.279, de 27 de dezembro de 2017, cria as Organizações Militares Estaduais — OMEs da PMPE.", g:true, j:"VERDADEIRO — cap. 11.3; a Lei nº 15.186/2013 altera a estrutura organizacional da PMPE, e a Lei nº 11.328/1996 é a Lei de Organização Básica."}
+],
+mc:[
+ {enun:"Sobre cultura organizacional, assinale a alternativa CORRETA:", alts:[
+  "É o conjunto de normas formais e escritas da organização.",
+  "É o conjunto de hábitos, crenças, valores e tradições, interações e relacionamentos sociais típicos de cada organização — normas informais e não escritas que orientam o comportamento no dia a dia.",
+  "É idêntica em todas as organizações.",
+  "As culturas conservadoras são flexíveis e maleáveis.",
+  "As culturas adaptativas caracterizam-se pela rigidez."
+ ], g:1, j:"Alternativa B — cap. 11.2. Cada organização tem a sua própria cultura corporativa; conservadoras = rígidas; adaptativas = flexíveis e maleáveis (o ideal)."},
+ {enun:"Sobre a base legal da estrutura organizacional do Estado e da PMPE, assinale a alternativa INCORRETA:", alts:[
+  "A Lei nº 18.139/2023 dispõe sobre a estrutura e o funcionamento do Poder Executivo de Pernambuco.",
+  "A Lei nº 11.328/1996 é a Lei de Organização Básica da PMPE.",
+  "A Lei nº 15.186/2013 cria as Organizações Militares Estaduais (OMEs) da PMPE.",
+  "A Lei nº 16.279/2017 cria as Organizações Militares Estaduais (OMEs) da PMPE.",
+  "A estrutura da PMPE é performada pela lei de organização básica e pelas legislações seguintes que criaram ou extinguiram Organizações Militares."
+ ], g:2, j:"Alternativa C é a INCORRETA: a Lei nº 15.186/2013 ALTERA a estrutura organizacional da PMPE; quem CRIA as OMEs é a Lei nº 16.279/2017."},
+ {enun:"Sobre estrutura e comportamento organizacional, assinale a alternativa CORRETA:", alts:[
+  "A estrutura organizacional corresponde ao modo pelo qual a autoridade é distribuída, as atividades são divididas e organizadas, e o sistema de comunicação é estabelecido.",
+  "O organograma não guarda relação com a estrutura da organização.",
+  "O comportamento organizacional é uma ciência exclusivamente jurídica.",
+  "A organização alcança seus objetivos independentemente da coordenação de esforços das pessoas.",
+  "O processo de reciprocidade dispensa incentivos e recompensas."
+ ], g:0, j:"Alternativa A — cap. 11.1. O organograma representa graficamente a estrutura; o comportamento organizacional é ciência interdisciplinar; a organização é sistema cooperativo racional baseado na coordenação de esforços e na reciprocidade."}
+],
+disc:[
+ {enun:"Conceitue estrutura organizacional, comportamento organizacional e cultura organizacional, relacionando-os à realidade da PMPE e indicando a base legal da estrutura do Estado e da Corporação.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Estrutura organizacional","Modo pelo qual a autoridade é distribuída, as atividades são divididas e organizadas, e o sistema de comunicação é estabelecido; graficamente representada pelo organograma; organizar a Administração é organizar estrutura e recursos, órgãos e agentes, serviços, atividades e competências."],
+  ["Comportamento organizacional","Estudo da dinâmica das organizações e de como grupos e indivíduos se comportam dentro delas (ciência interdisciplinar); a organização é sistema cooperativo racional, com divisão do trabalho e hierarquia, e gera o processo de reciprocidade entre pessoas e organização."],
+  ["Cultura organizacional","Conjunto de hábitos, crenças, valores, tradições e relacionamentos típicos de cada organização — normas informais e não escritas; culturas conservadoras (rígidas) × adaptativas (flexíveis); o ideal são culturas adaptativas, para eficiência, eficácia e inovação; um Batalhão da PMPE possui cotidiano típico e afeto às suas peculiaridades."],
+  ["Base legal","Lei nº 18.139/2023 (estrutura e funcionamento do Poder Executivo de PE); Lei nº 11.328/1996 (Organização Básica da PMPE); Lei nº 15.186/2013 (altera a estrutura da PMPE); Lei nº 16.279/2017 (cria as OMEs da PMPE)."]
+ ]}
+]},
+
+{num:"11", titulo:"Gestão Pública de Excelência e a Busca pela Qualidade", base:"Apostila GPGA, cap. 12 — ISO 9000; Caderno FNQ (2009)",
+vf:[
+ {t:"O conceito de qualidade é originário das organizações privadas e varia bastante ao longo da literatura.", g:true, j:"VERDADEIRO — alternativa verdadeira da AE 2025 (4º quesito)."},
+ {t:"A qualidade era tida inicialmente como um conjunto de procedimentos para detectar desvios de especificações técnicas de um produto ou serviço: um produto \"sem defeitos\" era tido como um produto de qualidade.", g:true, j:"VERDADEIRO — AE 2025."},
+ {t:"Para José Vital (2003), o termo qualidade materializa-se através de ações e procedimentos em sintonia com a reestruturação do seu universo produtivo.", g:true, j:"VERDADEIRO — AE 2025."},
+ {t:"Pela ISO 9000, qualidade é a \"totalidade de características de um ente (organização, produto, processo etc.) que lhe confere a capacidade de satisfazer às necessidades explícitas e implícitas dos cidadãos\".", g:true, j:"VERDADEIRO — AE 2025."},
+ {t:"O conceito de qualidade não evoluiu para a visão da satisfação do cliente.", g:false, j:"FALSO — evoluiu para a visão da satisfação do cliente, sendo hoje definido como QUALIDADE TOTAL, com foco principal no cliente. Exatamente a alternativa ERRADA da AE 2025 (4º quesito)."},
+ {t:"Deming (1900–1993) passou a utilizar um conceito de qualidade que incluía o cliente: \"atender as necessidades e expectativas dos clientes e por um preço que eles estejam dispostos a pagar\".", g:true, j:"VERDADEIRO — cap. 12.1."},
+ {t:"A qualidade apresenta dois enfoques: o primeiro relacionado a resultados e o segundo relacionado a custos (ausência de erros ou defeitos).", g:true, j:"VERDADEIRO — cap. 12.1."},
+ {t:"O modelo de excelência da FNQ orienta a adoção de práticas de gestão apenas nas organizações privadas.", g:false, j:"FALSO — orienta práticas nas organizações PÚBLICAS E PRIVADAS, visando levar as organizações brasileiras a padrões de desempenho reconhecidos pela sociedade."},
+ {t:"O pensamento sistêmico, fundamento da FNQ, é o entendimento das relações de interdependência entre os diversos componentes de uma organização.", g:true, j:"VERDADEIRO — Caderno FNQ (2009)."},
+ {t:"A liderança e constância de propósitos consiste na atuação de forma aberta, democrática, inspiradora e motivadora das pessoas.", g:true, j:"VERDADEIRO — visando ao desenvolvimento da cultura organizacional da instituição."}
+],
+mc:[
+ {enun:"Assinale a alternativa ERRADA, quanto à Gestão Pública de excelência e à busca pela qualidade:", alts:[
+  "O conceito de qualidade (originário das organizações privadas) varia bastante ao longo da literatura.",
+  "Era tido inicialmente como um conjunto de procedimentos para detectar desvios de especificações técnicas de um produto ou serviço.",
+  "O termo qualidade materializa-se através de ações e procedimentos em sintonia com a reestruturação do seu universo produtivo.",
+  "Qualidade é a \"totalidade de características de um ente que lhe confere a capacidade de satisfazer às necessidades explícitas e implícitas dos cidadãos\" (ISO 9000).",
+  "O conceito de qualidade não evoluiu para a visão da satisfação do cliente."
+ ], g:4, j:"Alternativa E é a ERRADA — mesma resposta da AE GPGA 2025 (4º quesito): o conceito EVOLUIU para a satisfação do cliente e hoje é definido como qualidade total."},
+ {enun:"Sobre os fundamentos de excelência da FNQ (Caderno FNQ, 2009), assinale a alternativa CORRETA:", alts:[
+  "Aprendizado organizacional: busca o alcance de um novo patamar de conhecimento por meio de percepção, reflexão, avaliação e compartilhamento de experiências.",
+  "Visão de futuro: segmentação do conjunto das atividades e processos da organização.",
+  "Geração de valor: promoção de ambiente favorável à criatividade.",
+  "Valorização das pessoas: conhecimento e entendimento do cliente e do mercado.",
+  "Cultura de inovação: alcance de resultados consistentes e aumento de valores tangível e intangível."
+ ], g:0, j:"Alternativa A — as demais trocam os fundamentos: segmentação de processos = orientação por processos e informações; criatividade = cultura de inovação; cliente e mercado = conhecimento sobre o cliente e o mercado; resultados consistentes = geração de valor."},
+ {enun:"Sobre a evolução do conceito de qualidade, assinale a alternativa CORRETA:", alts:[
+  "Hoje a qualidade é definida como qualidade total, cujo foco principal das ações é o cliente.",
+  "Deming excluiu o cliente do conceito de qualidade.",
+  "A qualidade apresenta um único enfoque, relacionado a custos.",
+  "O conceito de qualidade originou-se nas organizações públicas.",
+  "Um produto \"sem defeitos\" nunca foi associado à qualidade."
+ ], g:0, j:"Alternativa A — cap. 12.1. Deming INCLUIU o cliente; são DOIS enfoques (resultados e custos); o conceito é originário das organizações PRIVADAS; inicialmente, produto \"sem defeitos\" era tido como produto de qualidade."}
+],
+disc:[
+ {enun:"Discorra sobre a evolução do conceito de qualidade e apresente fundamentos de excelência do modelo da FNQ (Caderno FNQ, 2009) aplicáveis à gestão pública.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Evolução do conceito","Originário das organizações privadas, o conceito variou ao longo da literatura: inicialmente, procedimentos para detectar desvios de especificações técnicas (produto \"sem defeitos\"); Deming (1900–1993) incluiu o cliente (\"atender as necessidades e expectativas dos clientes por um preço que estejam dispostos a pagar\"); hoje, QUALIDADE TOTAL, com foco principal no cliente; pela ISO 9000, é a totalidade de características de um ente capaz de satisfazer necessidades explícitas e implícitas dos cidadãos."],
+  ["Dois enfoques","Resultados (produtos que satisfazem às necessidades do cliente e proporcionam lucros) e custos (ausência de erros ou defeitos)."],
+  ["Modelo FNQ","Sistema gerencial constituído por diversos fundamentos e critérios que orientam práticas de gestão nas organizações públicas e privadas, com referência em organizações de classe mundial."],
+  ["Fundamentos","Pensamento sistêmico; orientação por processos e informações; visão de futuro; geração de valor; valorização das pessoas; conhecimento sobre o cliente e o mercado; desenvolvimento de parcerias; responsabilidade social; aprendizado organizacional; cultura de inovação; e liderança e constância de propósitos."]
+ ]}
+]}
+];
+
+const TEMAS_FUTUROS = [];
+
+/* ═════════════════════ DADOS — SIMULADO ═════════════════════ */
+const simQuesitos = [
+  {tipo:"vf", rot:"1º) QUESITO", valor:"Valor: 1,0 ponto · cada assertiva vale 0,20", enun:"Assinale (V) verdadeiro ou (F) falso, sobre Estado, Governo e Administração:", itens:[
+    {t:"A República Federativa do Brasil é formada pela união indissolúvel dos Estados e Municípios e do Distrito Federal.", g:true, j:"VERDADEIRO — cap. 1.1.1 da apostila."},
+    {t:"O Estado é um ente real e tangível, enquanto o Governo é um ente moral e intangível.", g:false, j:"FALSO — é o inverso: o Estado é moral e intangível; o Governo é real e tangível."},
+    {t:"O Governo representa a parte política do Estado que atua na condução da coisa pública, definindo os objetivos nacionais.", g:true, j:"VERDADEIRO — cap. 1.1.2."},
+    {t:"A Administração compreende todo o aparato existente à disposição dos governos para a promoção do bem comum da coletividade.", g:true, j:"VERDADEIRO — cap. 1.1.3."},
+    {t:"Estado, Governo e Administração são termos que não podem ser distinguidos de maneira segura.", g:false, j:"FALSO — a apostila afirma que é possível distingui-los de maneira segura."}
+  ]},
+  {tipo:"vf", rot:"2º) QUESITO", valor:"Valor: 1,0 ponto · cada assertiva vale 0,20", enun:"Sobre a Organização da Administração Pública brasileira, assinale (V) para as assertivas que julgar verdadeiras, e (F) para as que julgar falsas:", itens:[
+    {t:"Os órgãos da administração direta são centros de competências despersonalizados, cuja atuação é imputada à entidade estatal a que pertencem.", g:true, j:"VERDADEIRO — PALUDO (2010), cap. 5.1."},
+    {t:"Em regra, quando prestam serviços públicos ou de interesse público, as entidades da administração indireta são denominadas autarquias ou fundações.", g:true, j:"VERDADEIRO — PALUDO (2010), cap. 5.2."},
+    {t:"O terceiro setor é uma figura híbrida e paraestatal, na qual entes privados agem em atividades de interesse público.", g:true, j:"VERDADEIRO — cap. 5.3."},
+    {t:"As entidades da administração indireta não se submetem aos princípios da administração pública, por serem autônomas.", g:false, j:"FALSO — apesar de descentralizadas e autônomas, submetem-se ao controle do Estado e aos princípios da administração pública."},
+    {t:"Os consórcios constituídos como associação pública integram a administração direta.", g:false, j:"FALSO — integram a administração INDIRETA (quadro de PALUDO, 2010)."}
+  ]},
+  {tipo:"vf", rot:"3º) QUESITO", valor:"Valor: 1,0 ponto · cada assertiva vale 0,20", enun:"Sobre o Ciclo de Gestão da Administração Pública (PPA, LDO e LOA), assinale (V) ou (F):", itens:[
+    {t:"No âmbito público, planejar, organizar, dirigir e controlar devem orbitar em face de três instrumentos: PPA, LDO e LOA.", g:true, j:"VERDADEIRO — cap. 6. Atenção: na AE 2025 cobrou-se a versão falsa (\"apenas dois instrumentos: PPA e LOA\")."},
+    {t:"O PPA visa estabelecer objetivos, diretrizes e metas de cada ente federativo para um período de 04 (quatro) anos.", g:true, j:"VERDADEIRO — art. 165, CF. Na AE 2025, a pegadinha era \"02 (dois) anos\" (FALSA)."},
+    {t:"A LDO detalha as metas e prioridades da administração para o ano subsequente e orienta a confecção da LOA.", g:true, j:"VERDADEIRO — cap. 6."},
+    {t:"A LOA, obedecendo o planejamento da LDO e do PPA, estima receitas e fixa despesas para o ano subsequente.", g:true, j:"VERDADEIRO — atenção à inversão cobrada na AE 2025 (\"fixa receitas e estima despesas\"), que é FALSA."},
+    {t:"A LOA deve ser devolvida pelo Legislativo até 17 de julho do mesmo ano.", g:false, j:"FALSO — 17/07 é prazo de devolução da LDO; a LOA é devolvida até 22/12 (art. 35, §2º, ADCT)."}
+  ]},
+  {tipo:"mc", rot:"4º) QUESITO", valor:"Valor: 0,5 pontos", enun:"Assinale a alternativa ERRADA, quanto à Gestão Pública de excelência e à busca pela qualidade:", alts:[
+    "O conceito de qualidade é originário das organizações privadas e varia bastante ao longo da literatura.",
+    "Deming passou a utilizar um conceito de qualidade que incluía o cliente.",
+    "Hoje a qualidade é definida como qualidade total, cujo foco principal das ações é o cliente.",
+    "Pela ISO 9000, qualidade é a totalidade de características de um ente que lhe confere a capacidade de satisfazer às necessidades explícitas e implícitas dos cidadãos.",
+    "A qualidade apresenta um único enfoque, relacionado exclusivamente a custos."
+  ], g:4, j:"Alternativa E: a qualidade apresenta DOIS enfoques — resultados (satisfação do cliente e lucros) e custos (ausência de erros ou defeitos)."},
+  {tipo:"mc", rot:"5º) QUESITO", valor:"Valor: 0,5 pontos", enun:"Sobre as Noções Gerais de Licitações e Contratos, assinale a alternativa INCORRETA:", alts:[
+    "A Lei nº 14.133/2021 estabelece normas gerais de licitação e contratação para as Administrações Públicas diretas, autárquicas e fundacionais da União, dos Estados, do DF e dos Municípios.",
+    "Licitação é o procedimento legal para selecionar as propostas de possíveis contratos com a gestão pública.",
+    "A novel lei de licitação prevê cinco modalidades, entre elas o diálogo competitivo.",
+    "Em casos especiais, o procedimento de licitação poderá dispensar as modalidades previstas, ou serem passíveis de inexigibilidade.",
+    "O Pregão não figura entre as modalidades previstas na Lei nº 14.133/2021."
+  ], g:4, j:"Alternativa E: o Pregão É uma das cinco modalidades (concorrência, concurso, leilão, pregão e diálogo competitivo). Na AE 2025, a pegadinha foi afirmar que o Pregão era NOVIDADE da lei — também falso, pois já existia na legislação anterior."},
+  {tipo:"mc", rot:"6º) QUESITO", valor:"Valor: 0,5 pontos", enun:"Uma das principais diferenças entre gestão pública e privada é:", alts:[
+    "A gestão pública busca lucro, enquanto a privada busca bem-estar coletivo.",
+    "Na gestão pública, o cliente paga apenas se utilizar o serviço.",
+    "Na iniciativa privada, a livre concorrência proporciona várias opções ao usuário, enquanto as atividades públicas normalmente são monopolistas.",
+    "A gestão privada deve obedecer integralmente aos princípios do art. 37 da CF/88.",
+    "As empresas privadas não se submetem a qualquer forma de controle."
+  ], g:2, j:"Alternativa C — cap. 1.4 da apostila. As demais invertem ou distorcem as características comparadas."},
+  {tipo:"mc", rot:"7º) QUESITO", valor:"Valor: 0,5 pontos", enun:"Sobre os Instrumentos de Controle da Administração Pública, assinale a única alternativa CORRETA:", alts:[
+    "Quanto à origem, o controle pode ser caracterizado como prévio ou preventivo.",
+    "Quanto ao momento, o controle pode ser prévio/preventivo, concomitante ou posterior/corretivo.",
+    "Quanto ao mérito, busca-se conferir a conformidade do ato com as legislações vigentes.",
+    "O controle interno é aquele exercido fora do poder a ser controlado.",
+    "O controle hierárquico ocorre quando órgãos da administração direta fiscalizam órgãos da administração indireta."
+  ], g:1, j:"Alternativa B. Prévio/concomitante/posterior é classificação QUANTO AO MOMENTO; o mérito analisa conveniência/eficiência/oportunidade (conformidade com a lei é o aspecto LEGALIDADE); interno é DENTRO do poder; direta fiscalizando indireta é controle FINALÍSTICO."},
+  {tipo:"disc", rot:"8º) QUESITO", valor:"Valor: 1,5 pontos", enun:"Os instrumentos PPA, LDO e LOA compõem o chamado Ciclo de Gestão da Administração Pública. Nesta perspectiva, disserte sobre a importância do futuro Oficial da PMPE conhecer esse ciclo em sua atuação como gestor público.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+    ["Boa governança","A boa governança requer decisões e atividades que visem a utilização otimizada de recursos para proporcionar excelentes serviços/produtos; planejar, organizar, dirigir e controlar orbitam em face do PPA, da LDO e da LOA."],
+    ["PPA","Estabelece objetivos, diretrizes e metas do ente federativo para 4 anos (art. 165, CF); dá transparência ao uso dos recursos, define a execução dos programas e fomenta a continuidade administrativa."],
+    ["LDO e LOA","A LDO detalha metas e prioridades do ano subsequente e orienta a LOA; a LOA estima receitas e fixa despesas — o orçamento indica a alocação de recursos em face dos programas do governo."],
+    ["Aplicação ao Oficial","Como futuro comandante e gestor, o Oficial administra recursos públicos e deve compreender esses instrumentos para atuar dentro do planejamento e das dotações estabelecidas, com amparo nos princípios constitucionais."]
+  ]},
+  {tipo:"disc", rot:"9º) QUESITO", valor:"Valor: 1,5 pontos", enun:"Explique o que caracteriza o patrimonialismo na gestão pública brasileira e por que, mesmo atualmente, práticas patrimonialistas podem existir em casos pontuais.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+    ["Caracterização","Gestão pública em que a governança se confunde com a pessoalidade do governante — \"O ESTADO SOU EU\": o gestor se apropria, como seu, do que é de todos; não há separação entre o privado e o público."],
+    ["Contexto histórico","A maior parte da história do Brasil se passou sob domínio total (pré-império) ou parcial (império) da colônia portuguesa, período em que o patrimonialismo era a principal característica da gestão pública."],
+    ["Evolução","Com o início da república, lentamente, começou a se ensaiar uma gestão pública mais técnica, mesmo que de forma incipiente — evolução retratada nos paradigmas de KEINERT (1994)."],
+    ["Atualidade","A divisão paradigmática é de caráter geral: assim como no passado houve casos pontuais de gestão moderna, no presente ainda podem existir estilos de gestão, em casos pontuais, bem conservadores — nos quais práticas patrimonialistas se manifestam."]
+  ]},
+  {tipo:"disc", rot:"10º) QUESITO", valor:"Valor: 2,0 pontos", enun:"A fiscalização contábil, financeira, orçamentária, operacional e patrimonial da União e das entidades da administração direta e indireta será exercida pelo Congresso Nacional, mediante controle externo, e pelo sistema de controle interno de cada Poder (art. 70, CF). Sobre os tipos de controles enfatizados neste enunciado, defina-os e explique qual o impacto deles sobre a vida do Oficial da PMPE, enquanto Gestor Público.", linhas:"Mínimo 10 e máximo 15 linhas.", esp:[
+    ["Controle interno","Exercido DENTRO de cada poder, para controle dos próprios atos (exemplo: no nível federal, a CGU)."],
+    ["Controle externo","Exercido FORA do poder a ser controlado (exemplo: STF julgando atos do Executivo); doutrinadores incluem também o controle social (ONGs, conselhos, mídia), o Ministério Público e o controle judicial constitucional (HC, HD, mandados)."],
+    ["Cerne","O principal, mas não único, cerne de controle da administração pública é a LEGALIDADE dos atos; o controle dos gastos públicos, em qualquer poder e esfera, submete-se à atividade interna e externa do órgão controlado."],
+    ["Impacto sobre o Oficial","Como gestor público, os atos do Oficial da PMPE estarão permanentemente sujeitos a controle interno e externo; ele deve seguir os passos legais e probos necessários ao ato administrativo perfeito e legítimo, pois não há gestão sem controle — o que exige conformidade (compliance) e sujeita o gestor à responsabilização."]
+  ]}
+];
+
+/* ═════════════════════ RENDER ═════════════════════ */
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const LETRAS = ["A","B","C","D","E"];
+const respostas = {}, autoScores = {};
+
+function vfItemHtml(id, txt){
+  return `<div class="vf-item" id="${id}">
+    <div class="vf-btns">
+      <button class="vf-btn" onclick="selVF('${id}','V',this)">V</button>
+      <button class="vf-btn" onclick="selVF('${id}','F',this)">F</button>
+    </div>
+    <div style="flex:1"><span class="vf-txt">${txt}</span><div class="just" id="${id}-j"></div></div>
+  </div>`;
+}
+function mcHtml(id, q, rot, valor){
+  return `<div class="q" id="${id}">
+    <div class="enun">${valor?`<span class="valor">${valor}</span>`:""}<b class="rot">${rot}</b> ${esc(q.enun)}</div>
+    ${q.alts.map((a,i)=>`<label class="alt" id="${id}-a${i}"><input type="radio" name="${id}" value="${i}"><span class="letra">${LETRAS[i]})</span><span>${esc(a)}</span></label>`).join("")}
+    <div class="just-mc" id="${id}-j"></div>
+  </div>`;
+}
+function discHtml(id, q, rot, valor){
+  return `<div class="q disc" id="${id}">
+    <div class="enun">${valor?`<span class="valor">${valor}</span>`:""}<b class="rot">${rot}</b> ${esc(q.enun)}</div>
+    <div class="linhas">${esc(q.linhas)}</div>
+    <textarea placeholder="Escreva sua resposta aqui..."></textarea>
+    <div class="espelho" id="${id}-esp">
+      <div class="esp-tit">Modelo de resposta (espelho)</div>
+      ${q.esp.map(([t,x])=>`<div class="topico"><b>${esc(t)}.</b> ${esc(x)}</div>`).join("")}
+    </div>
+    <div class="auto" id="${id}-auto">
+      <b>Autoavaliação:</b>
+      <button onclick="autoAv('${id}',0,this)">Não atingi (0%)</button>
+      <button onclick="autoAv('${id}',0.5,this)">Parcial (50%)</button>
+      <button onclick="autoAv('${id}',1,this)">Atingi (100%)</button>
+    </div>
+  </div>`;
+}
+
+function renderTemas(){
+  const sel = document.getElementById("temasel");
+  const cont = document.getElementById("temas-conteudo");
+  sel.innerHTML = TEMAS.map((t,i)=>`<button class="tpill ${i===0?"on":""}" onclick="mostraTema(${i},this)">Tema ${t.num}</button>`).join("")
+    + TEMAS_FUTUROS.map(t=>`<button class="tpill" disabled title="${esc(t.titulo)} — próxima etapa">Tema ${t.num} ⏳</button>`).join("");
+  cont.innerHTML = TEMAS.map((t,ti)=>`
+    <div class="tema-bloco ${ti===0?"on":""}" id="tema-${ti}">
+      <div class="tema-cab"><div class="n">${t.num}</div><div class="t"><b>${esc(t.titulo)}</b><span>Base legal: ${esc(t.base)}</span></div></div>
+      <div class="sec-tit"><span class="badge b-azul">Parte 1 · ${t.vf.length} questões V ou F</span><span class="linha"></span></div>
+      <div class="q">${t.vf.map((q,i)=>vfItemHtml("t"+ti+"vf"+i, (i+1)+". "+esc(q.t))).join("")}</div>
+      <div class="sec-tit"><span class="badge b-cinza">Parte 2 · ${t.mc.length} múltipla escolha</span><span class="linha"></span></div>
+      ${t.mc.map((q,i)=>mcHtml("t"+ti+"mc"+i, q, (i+1)+"ª) QUESTÃO", "")).join("")}
+      <div class="sec-tit"><span class="badge b-dourado">Parte 3 · ${t.disc.length} discursiva${t.disc.length>1?"s":""} com espelho</span><span class="linha"></span></div>
+      ${t.disc.map((q,i)=>discHtml("t"+ti+"d"+i, q, (i+1)+"ª) DISCURSIVA", "")).join("")}
+      <div class="acoes">
+        <button class="btn-verificar" onclick="verificarTema(${ti})">Verificar gabarito do Tema ${t.num}</button>
+        <span class="placar" id="placar-t${ti}"></span>
+      </div>
+    </div>`).join("");
+}
+function mostraTema(i, btn){
+  document.querySelectorAll("#temasel .tpill").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");
+  document.querySelectorAll(".tema-bloco").forEach(b=>b.classList.remove("on"));
+  document.getElementById("tema-"+i).classList.add("on");
+}
+
+document.getElementById("sim-quesitos").innerHTML = simQuesitos.map((q,qi)=>{
+  if(q.tipo==="vf"){
+    return `<div class="q"><div class="enun"><span class="valor">${q.valor}</span><b class="rot">${q.rot}</b> ${esc(q.enun)}</div>
+      ${q.itens.map((it,ii)=>vfItemHtml("s"+qi+"i"+ii, esc(it.t))).join("")}</div>`;
+  }
+  if(q.tipo==="mc") return mcHtml("smc"+qi, q, q.rot, q.valor);
+  return discHtml("sd"+qi, q, q.rot, q.valor);
+}).join("");
+renderTemas();
+
+/* ═════════════════════ INTERAÇÃO / CORREÇÃO ═════════════════════ */
+function selVF(id, v, btn){
+  respostas[id]=v;
+  btn.parentElement.querySelectorAll(".vf-btn").forEach(b=>b.classList.remove("sel"));
+  btn.classList.add("sel");
+}
+function autoAv(id, f, btn){
+  autoScores[id]=f;
+  btn.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("sel"));
+  btn.classList.add("sel");
+  if(simVerificado) atualizarNotaSim();
+}
+function corrigeVF(id, q){
+  const el = document.getElementById(id);
+  const resp = respostas[id];
+  const certo = resp === (q.g ? "V":"F");
+  el.classList.remove("ok","err");
+  el.classList.add(certo && resp ? "ok":"err");
+  document.getElementById(id+"-j").textContent = q.j + (resp? "" : " (Não respondida.)");
+  return certo && !!resp;
+}
+function corrigeMC(id, q){
+  const sel = document.querySelector(`input[name="${id}"]:checked`);
+  const j = document.getElementById(id+"-j");
+  q.alts.forEach((_,i)=>{
+    const a = document.getElementById(id+"-a"+i);
+    a.classList.remove("certa","errada-sel");
+    if(i===q.g) a.classList.add("certa");
+  });
+  let certo=false;
+  if(sel){ if(+sel.value===q.g) certo=true; else document.getElementById(id+"-a"+sel.value).classList.add("errada-sel"); }
+  j.style.display="block";
+  j.style.background = certo? "var(--verde-bg)":"var(--borgonha-bg)";
+  j.style.borderLeft = "3px solid "+(certo? "var(--certo)":"var(--errado)");
+  j.textContent = "GABARITO: "+LETRAS[q.g]+". "+q.j + (sel? "":" (Não respondida.)");
+  return certo;
+}
+function revelaDisc(id){
+  document.getElementById(id+"-esp").classList.add("mostrar");
+  document.getElementById(id+"-auto").classList.add("mostrar-flex");
+}
+function verificarTema(ti){
+  const t = TEMAS[ti];
+  let pts=0, tot=t.vf.length+t.mc.length;
+  t.vf.forEach((q,i)=>{ if(corrigeVF("t"+ti+"vf"+i,q)) pts++; });
+  t.mc.forEach((q,i)=>{ if(corrigeMC("t"+ti+"mc"+i,q)) pts++; });
+  t.disc.forEach((q,i)=>revelaDisc("t"+ti+"d"+i));
+  const p=document.getElementById("placar-t"+ti);
+  p.style.display="inline";
+  p.innerHTML = `Objetivas: <b>${pts}</b> / ${tot} · compare suas discursivas com os espelhos`;
+}
+
+let simVerificado=false;
+function verificarSim(){
+  simVerificado=true;
+  pararTimer();
+  atualizarNotaSim();
+}
+function atualizarNotaSim(){
+  let nota=0;
+  simQuesitos.forEach((q,qi)=>{
+    if(q.tipo==="vf"){
+      q.itens.forEach((it,ii)=>{ if(corrigeVF("s"+qi+"i"+ii,it)) nota+=0.2; });
+    } else if(q.tipo==="mc"){
+      if(corrigeMC("smc"+qi,q)) nota+=0.5;
+    } else {
+      revelaDisc("sd"+qi);
+      const v = parseFloat(q.valor.replace(/[^\d,]/g,"").replace(",","."));
+      nota += (autoScores["sd"+qi]||0)*v;
+    }
+  });
+  const p=document.getElementById("placar-sim");
+  p.style.display="inline";
+  p.innerHTML = `Nota: <b>${nota.toFixed(2).replace(".",",")}</b> / 10,00 <span style="font-weight:400; font-size:11.5px">(discursivas por autoavaliação — marque abaixo de cada uma)</span>`;
+}
+
+/* ═════════════════════ TIMER ═════════════════════ */
+let restante=100*60, timerInt=null;
+function fmt(s){const m=Math.floor(s/60), ss=s%60; return String(m).padStart(2,"0")+":"+String(ss).padStart(2,"0");}
+function iniciarTimer(){
+  if(timerInt) return;
+  document.getElementById("btn-timer").textContent="Prova em andamento";
+  timerInt=setInterval(()=>{
+    restante--;
+    document.getElementById("timer").textContent=fmt(Math.max(restante,0));
+    if(restante<=0){ pararTimer(); alert("Tempo esgotado! (100 min) Clique em Verificar gabarito."); }
+  },1000);
+}
+function pararTimer(){ if(timerInt){clearInterval(timerInt); timerInt=null; document.getElementById("btn-timer").textContent="Prova encerrada";} }
+
+/* ═════════════════════ ABAS ═════════════════════ */
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+  t.classList.add("on");
+  document.querySelectorAll(".aba").forEach(a=>a.classList.remove("on"));
+  document.getElementById("aba-"+t.dataset.aba).classList.add("on");
+}));
+</script>
+</body>
+</html>
