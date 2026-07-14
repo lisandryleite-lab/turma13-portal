@@ -264,7 +264,7 @@ export function RankingClient({
       {aba === "batalhoes" && (
         <div style={{ marginTop: 20 }}>
           <p style={{ color: "var(--ink-60)", fontSize: 14, marginBottom: 14, lineHeight: 1.5 }}>
-            Escolha sua preferência de batalhão (DIM / RMR). 1ª obrigatória; 2ª e 3ª opcionais. O quadro de mais pedidos é <strong>anônimo</strong>.
+            Escolha sua preferência de batalhão (DIM / RMR). 1ª obrigatória; 2ª e 3ª opcionais. O ranking de mais pedidos (logo abaixo) é <strong>anônimo</strong> e visível para toda a turma.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[{ rot: "1ª opção", val: op1, set: setOp1, esp: true }, { rot: "2ª opção (opcional)", val: op2, set: setOp2, esp: false }, { rot: "3ª opção (opcional)", val: op3, set: setOp3, esp: false }].map((s, i) => (
@@ -280,10 +280,21 @@ export function RankingClient({
             {salvandoPref ? "Salvando…" : "Salvar preferência"}
           </button>
           {prefMsg && <p style={{ marginTop: 8, fontSize: 13.5, color: prefMsg.startsWith("✓") ? "var(--olive)" : "var(--red)" }}>{prefMsg}</p>}
-          <QuadroPedidos titulo="Mais pedidos como 1ª opção" dados={agregado1} />
-          <QuadroPedidos titulo="Mais pedidos no total (1ª + 2ª + 3ª)" dados={agregadoTotal} />
         </div>
       )}
+
+      {/* Ranking de batalhões — SEMPRE visível para todos os alunos (independe da aba) */}
+      <section style={{ marginTop: 36, paddingTop: 24, borderTop: "2px solid var(--surface)" }}>
+        <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.4rem", color: "var(--olive)", margin: 0 }}>
+          Ranking de batalhões da turma
+        </h2>
+        <p style={{ color: "var(--ink-60)", fontSize: 13.5, margin: "6px 0 0", lineHeight: 1.5 }}>
+          Batalhões mais pedidos pela turma (RMR / DIM). Contagem <strong>anônima</strong> — visível para todos os alunos.
+          {aba !== "batalhoes" && <> Para registrar a sua preferência, abra a aba <strong>Batalhões</strong>.</>}
+        </p>
+        <QuadroPedidos titulo="Mais pedidos como 1ª opção" dados={agregado1} />
+        <QuadroPedidos titulo="Mais pedidos no total (1ª + 2ª + 3ª)" dados={agregadoTotal} />
+      </section>
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>Desenvolvido por AL CFO PM 108 LISANDRY</footer>
     </main>
