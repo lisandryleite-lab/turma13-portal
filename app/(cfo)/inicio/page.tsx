@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { ViewToggle } from "../view-toggle"
+import { TREINO_ARMAMENTO_HREF, TREINO_ARMAMENTO_ATE, treinoArmamentoDisponivel } from "@/lib/treino-armamento"
 
 type Tile = "olive" | "gold"
 
@@ -11,6 +12,7 @@ const cards: {
   href: string
   bg: Tile
   externo?: boolean
+  nota?: string
   icon: React.ReactNode
 }[] = [
   {
@@ -52,9 +54,10 @@ const cards: {
   },
   {
     label: "Armamento",
-    href: "/treino-armamento/index.html",
+    href: TREINO_ARMAMENTO_HREF,
     bg: "gold",
     externo: true,
+    nota: `Disponível até ${TREINO_ARMAMENTO_ATE}`,
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <circle cx="12" cy="12" r="10" />
@@ -166,9 +169,15 @@ function CardTile({ card }: { card: (typeof cards)[number] }) {
           fontSize: 15,
           fontWeight: 600,
           color: "var(--ink)",
+          textAlign: "center",
         }}
       >
         {card.label}
+        {card.nota && (
+          <span style={{ display: "block", fontSize: 11.5, fontWeight: 600, color: "var(--gold)", marginTop: 2 }}>
+            {card.nota}
+          </span>
+        )}
       </span>
     </>
   )
@@ -196,7 +205,9 @@ export default async function PortalCfoHome() {
   const eu = session?.user?.id
     ? await prisma.user.findUnique({ where: { id: session.user.id }, select: { turma13: true } })
     : null
-  const cardsToShow = eu?.turma13 ? cards : [...cards, cardSenha]
+  // Armamento é temporário: some do menu após 17/07 (o middleware também bloqueia a URL).
+  const base = treinoArmamentoDisponivel() ? cards : cards.filter(c => c.href !== TREINO_ARMAMENTO_HREF)
+  const cardsToShow = eu?.turma13 ? base : [...base, cardSenha]
 
   return (
     <main
