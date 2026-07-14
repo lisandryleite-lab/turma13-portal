@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QUESTÕES — Procedimento em Ocorrências · CFO PM 2026</title>
+<style>
+  :root{
+    --borgonha:#7d1f2b; --azul:#1f4e79; --verde:#2e6b3e; --dourado:#9a7b16; --cinza:#4a4a4a;
+    --borgonha-bg:#f6e9eb; --azul-bg:#e8eff6; --verde-bg:#e9f2ea; --dourado-bg:#f8f2dd; --cinza-bg:#efeeec;
+    --creme:#fbf9f3; --tinta:#2a2620; --certo:#2e6b3e; --errado:#a52833;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; background:#eceade; color:var(--tinta); font-size:14px; line-height:1.45;}
+  .top{background:var(--tinta); color:#f3efe6; padding:14px 16px; text-align:center;}
+  .top h1{font-size:16px; letter-spacing:.05em; text-transform:uppercase;}
+  .top .sub{font-size:11px; letter-spacing:.12em; text-transform:uppercase; opacity:.7; margin-top:2px;}
+  .tabs{display:flex; justify-content:center; gap:8px; background:var(--tinta); padding:0 10px 12px;}
+  .tab{background:#3a3630; color:#cfc9bd; border:1px solid #55504a; border-radius:20px; padding:8px 18px; cursor:pointer; font-size:13px; font-weight:600; font-family:inherit;}
+  .tab.on{background:var(--dourado); border-color:var(--dourado); color:#fff;}
+  .wrap{max-width:880px; margin:18px auto 80px; padding:0 12px;}
+  .paper{background:var(--creme); padding:22px 24px; border-radius:4px; box-shadow:0 2px 14px rgba(42,38,32,.15);}
+
+  .temasel{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;}
+  .tpill{border:1.5px solid var(--cinza); background:#fff; color:var(--tinta); border-radius:16px; padding:5px 13px; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit;}
+  .tpill.on{background:var(--borgonha); border-color:var(--borgonha); color:#fff;}
+  .tpill:disabled{opacity:.45; cursor:not-allowed; border-style:dashed;}
+
+  .tema-cab{display:flex; align-items:stretch; margin-bottom:14px;}
+  .tema-cab .n{background:#5e1620; color:#fff; font-weight:800; font-size:16px; display:flex; align-items:center; padding:6px 12px; border-radius:4px 0 0 4px;}
+  .tema-cab .t{flex:1; background:var(--borgonha); color:#fff; padding:5px 12px; border-radius:0 4px 4px 0;}
+  .tema-cab .t b{font-size:14px; text-transform:uppercase;}
+  .tema-cab .t span{display:block; font-size:11px; font-style:italic; opacity:.92;}
+
+  .sec-tit{display:flex; align-items:center; gap:10px; margin:20px 0 10px;}
+  .sec-tit .badge{color:#fff; font-weight:800; font-size:11.5px; padding:4px 12px; border-radius:3px; text-transform:uppercase; letter-spacing:.05em;}
+  .sec-tit .linha{flex:1; height:2px; background:#d9d4c5;}
+  .b-azul{background:var(--azul);} .b-cinza{background:var(--cinza);} .b-dourado{background:var(--dourado);}
+
+  .q{border:1.5px solid #d9d4c5; border-left:4px solid var(--azul); border-radius:5px; background:#fff; margin-bottom:12px; padding:10px 12px;}
+  .q .enun{font-size:13px; margin-bottom:8px;}
+  .q .enun b.rot{color:var(--borgonha);}
+  .q .valor{float:right; font-size:11px; font-weight:700; color:var(--dourado); background:var(--dourado-bg); border:1px solid var(--dourado); border-radius:3px; padding:1px 7px; margin-left:8px;}
+
+  .vf-item{display:flex; gap:8px; align-items:flex-start; padding:6px 4px; border-top:1px dashed #e3dfd2;}
+  .vf-item:first-of-type{border-top:0;}
+  .vf-btns{display:flex; gap:4px; flex:none;}
+  .vf-btn{width:30px; height:26px; border:1.5px solid var(--cinza); background:#fff; border-radius:4px; font-weight:800; cursor:pointer; color:var(--cinza); font-family:inherit;}
+  .vf-btn.sel{background:var(--azul); border-color:var(--azul); color:#fff;}
+  .vf-txt{font-size:12.5px;}
+  .just{display:none; font-size:11.5px; margin:4px 0 2px 0; padding:5px 8px; border-radius:4px;}
+  .ok > div > .just, .err > div > .just{display:block;}
+  .ok > div > .just{background:var(--verde-bg); border-left:3px solid var(--certo);}
+  .err > div > .just{background:var(--borgonha-bg); border-left:3px solid var(--errado);}
+  .ok .vf-txt::after{content:" ✔"; color:var(--certo); font-weight:800;}
+  .err .vf-txt::after{content:" ✘"; color:var(--errado); font-weight:800;}
+
+  .alt{display:flex; gap:8px; align-items:flex-start; padding:5px 4px; cursor:pointer; border-radius:4px;}
+  .alt:hover{background:var(--azul-bg);}
+  .alt input{margin-top:3px;}
+  .alt .letra{font-weight:800; color:var(--azul); flex:none;}
+  .alt span{font-size:12.5px;}
+  .alt.certa{background:var(--verde-bg);}
+  .alt.errada-sel{background:var(--borgonha-bg);}
+  .just-mc{display:none; font-size:11.5px; margin-top:6px; padding:5px 8px; border-radius:4px;}
+
+  .disc textarea{width:100%; min-height:130px; border:1.5px solid #d9d4c5; border-radius:5px; padding:8px 10px; font-family:inherit; font-size:13px; background:#fff; resize:vertical; line-height:1.5;}
+  .disc .linhas{font-size:11px; color:var(--cinza); font-style:italic; margin-bottom:5px;}
+  .espelho{display:none; margin-top:8px; border:2px dashed var(--dourado); border-radius:6px; background:var(--dourado-bg); padding:10px 12px;}
+  .espelho.mostrar{display:block;}
+  .espelho .esp-tit{font-size:10px; letter-spacing:.14em; text-transform:uppercase; font-weight:800; color:var(--dourado); margin-bottom:5px;}
+  .espelho .topico{margin:5px 0; font-size:12.5px; padding-left:10px; border-left:3px solid var(--dourado);}
+  .espelho .topico b{color:var(--azul);}
+  .auto{display:none; margin-top:8px; font-size:12px; align-items:center; gap:6px; flex-wrap:wrap;}
+  .auto.mostrar-flex{display:flex;}
+  .auto b{color:var(--borgonha);}
+  .auto button{border:1.5px solid var(--cinza); background:#fff; border-radius:14px; padding:3px 12px; cursor:pointer; font-size:12px; font-family:inherit;}
+  .auto button.sel{background:var(--verde); border-color:var(--verde); color:#fff;}
+
+  .acoes{position:sticky; bottom:0; background:var(--creme); border-top:2px solid #d9d4c5; margin:18px -24px -22px; padding:12px 24px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .btn-verificar{background:var(--borgonha); color:#fff; border:0; border-radius:22px; padding:11px 22px; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit;}
+  .btn-verificar:hover{background:#93303d;}
+  .placar{font-size:14px; font-weight:700; display:none;}
+  .placar b{color:var(--borgonha); font-size:17px;}
+
+  .timerbox{display:flex; align-items:center; gap:10px; background:var(--cinza-bg); border:1.5px solid var(--cinza); border-radius:6px; padding:8px 12px; margin-bottom:14px; flex-wrap:wrap;}
+  .timerbox .t{font-family:Georgia, serif; font-size:22px; font-weight:800; color:var(--borgonha); min-width:96px;}
+  .timerbox button{background:var(--azul); color:#fff; border:0; border-radius:16px; padding:7px 16px; font-weight:700; cursor:pointer; font-family:inherit; font-size:12.5px;}
+  .timerbox .info{font-size:11.5px; color:var(--cinza);}
+  .aba{display:none;} .aba.on{display:block;}
+  .tema-bloco{display:none;} .tema-bloco.on{display:block;}
+  .nota-etapa{font-size:11.5px; color:var(--cinza); font-style:italic; margin-top:10px;}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Questões — Procedimento em Ocorrências · CFO PM 2026</h1>
+  <div class="sub">Fonte: Apostila PO (APMP, caps. 9–16) · Padrão de cobrança: 2ª AE de PO — CFO 2025</div>
+</div>
+<div class="tabs">
+  <button class="tab on" data-aba="banco">Banco por Tema</button>
+  <button class="tab" data-aba="simulado">Simulado (10,0 pts · 100 min)</button>
+</div>
+
+<div class="wrap">
+  <div class="aba on" id="aba-banco">
+    <div class="paper">
+      <div class="temasel" id="temasel"></div>
+      <div id="temas-conteudo"></div>
+      <div class="nota-etapa">Plataforma completa: 8 temas (caps. 9–16 da apostila) + simulado no padrão da 2ª AE de PO — CFO 2025.</div>
+    </div>
+  </div>
+
+  <div class="aba" id="aba-simulado">
+    <div class="paper">
+      <div class="timerbox">
+        <span class="t" id="timer">100:00</span>
+        <button id="btn-timer" onclick="iniciarTimer()">Iniciar prova</button>
+        <span class="info">Tempo para execução: 100 min · Valor total: 10,0 · Padrão 2ª AE de PO — CFO 2025</span>
+      </div>
+      <div id="sim-quesitos"></div>
+      <div class="acoes">
+        <button class="btn-verificar" onclick="verificarSim()">Verificar gabarito</button>
+        <span class="placar" id="placar-sim"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ═════════════════════ DADOS — TEMAS (Etapa 1: 01 a 04) ═════════════════════ */
+const TEMAS = [
+{num:"01", titulo:"Estatuto do Desarmamento e POP nº 0017", base:"Lei nº 10.826/2003; POP nº 0017/PMPE; SUNOR nº G 1.0.00.025",
+vf:[
+ {t:"O POP nº 0017 foi elaborado com base nos princípios da legalidade, proporcionalidade, necessidade, conveniência e moderação.", g:true, j:"VERDADEIRO — cap. 9 da apostila; o POP padroniza a conduta diante de situações potencialmente letais."},
+ {t:"O POP nº 0017 divide as ocorrências em quatro categorias principais.", g:false, j:"FALSO — divide em TRÊS categorias: porte de arma sem agressividade iminente, agressão iminente e agressão atual em curso. Pegadinha usada na 2ª AE 2025 (\"quatro categorias\")."},
+ {t:"Quando o suspeito está armado, mas sem agressividade, o policial deve se aproximar mantendo a arma em posição segura (posição 4 ou pronto-alto), com verbalização clara e assertiva.", g:true, j:"VERDADEIRO — primeiro cenário do POP 0017."},
+ {t:"O civil abordado sem documentação da arma deve ser conduzido à delegacia para possível autuação por porte ilegal.", g:true, j:"VERDADEIRO — cap. 9."},
+ {t:"Se o abordado se identificar como agente de segurança pública ou militar sem a documentação, o policial deve acionar o COPOM ou CIODS para notificar a instituição.", g:true, j:"VERDADEIRO — cap. 9."},
+ {t:"O porte ilegal está previsto no art. 12 e a posse irregular no art. 14 do Estatuto do Desarmamento.", g:false, j:"FALSO — está invertido: PORTE ilegal é o art. 14 (locais públicos); POSSE irregular é o art. 12 (guarda em local não permitido)."},
+ {t:"A posse ocorre quando a arma está em local de guarda (residência ou trabalho) sem autorização; o porte é a ação de transportar ou trazer consigo a arma em locais públicos ou acessíveis ao público.", g:true, j:"VERDADEIRO — cap. 9."},
+ {t:"A regulamentação de arma de fogo na PMPE é normatizada pela IN do Comando Geral nº 612/2024 — SUNOR nº G 1.0.00.025, que dispõe sobre compra, transferência, porte e posse, de uso permitido ou restrito, e aquisição de munições.", g:true, j:"VERDADEIRO — cap. 9.1."},
+ {t:"O diretor da Diretoria de Veteranos e Pensionistas (DVP) é a autoridade competente para permitir o porte de arma dos policiais militares inativos.", g:false, j:"FALSO — a autoridade é o diretor da Diretoria de INATIVOS e Pensionistas (DIP). A 2ª AE 2025 usou exatamente \"DVP\" como pegadinha."},
+ {t:"No roubo, furto ou extravio de arma da corporação, deve-se registrar BO e comunicar o fato à autoridade competente no prazo máximo de 03 dias, com posterior registro no SIGMA.", g:true, j:"VERDADEIRO — cap. 9.2; o SIGMA é banco de dados do Exército Brasileiro (inclui as armas de CACs)."},
+ {t:"O furto, roubo ou extravio de arma de PROPRIEDADE PARTICULAR do policial militar será objeto de procedimento investigativo, com registro definitivo do armamento no SIGMA ao término da instrução.", g:true, j:"VERDADEIRO — cap. 9.2."},
+ {t:"O porte de arma branca sem justa causa em locais públicos é crime previsto no Estatuto do Desarmamento.", g:false, j:"FALSO — é CONTRAVENÇÃO PENAL, regida pelo art. 19 da LCP (multa a prisão simples, em geral de 15 dias a 6 meses); o porte é permitido com justificativa razoável (trabalho, esporte)."}
+],
+mc:[
+ {enun:"Sobre o Estatuto do Desarmamento e o POP nº 0017, marque a afirmação CORRETA:", alts:[
+  "O POP divide as ocorrências em quatro categorias principais: porte putativo, porte sem agressividade, agressão iminente e agressão em curso.",
+  "O documento de identificação do indivíduo e a apresentação do porte de arma e do Certificado de Registro (CRAF) são etapas fundamentais para a liberação do abordado.",
+  "Apenas o diretor da Diretoria de Veteranos e Pensionistas (DVP) permite o porte de arma dos policiais militares inativos.",
+  "Diante de suspeito armado sem agressividade, o confronto deve ser a primeira opção do policial.",
+  "A verbalização deve ser evitada durante a abordagem a suspeito armado."
+ ], g:1, j:"Alternativa B — mesma resposta da 2ª AE 2025 (7º quesito). São três categorias (não quatro); a autoridade é a DIP; a abordagem exige cautela e verbalização clara e assertiva."},
+ {enun:"Sobre posse e porte de arma de fogo (Lei nº 10.826/2003), assinale a alternativa CORRETA:", alts:[
+  "O porte ilegal (art. 14) refere-se a ter a arma em locais públicos ou acessíveis ao público; a posse irregular (art. 12) refere-se à guarda em local não permitido.",
+  "A posse refere-se ao transporte da arma em ruas, praças e veículos.",
+  "O porte ocorre quando a arma está guardada na residência sem autorização.",
+  "Posse e porte são tipificações idênticas, com a mesma penalidade.",
+  "O Estatuto do Desarmamento não diferencia armas de uso permitido e restrito."
+ ], g:0, j:"Alternativa A — cap. 9. As tipificações diferenciam posse, porte, comércio e tráfico, bem como armas de uso permitido e restrito."},
+ {enun:"Sobre o extravio de arma de fogo carga da corporação, assinale a alternativa INCORRETA:", alts:[
+  "O fato deve ser registrado em Boletim de Ocorrência em uma circunscrição policial.",
+  "A comunicação à autoridade competente deve ocorrer no prazo máximo de 10 (dez) dias, a contar do conhecimento do fato.",
+  "A autoridade que receber a informação deverá encaminhar o expediente ao CSM/MB para registro no SIGMA.",
+  "O SIGMA é um banco de dados do Exército Brasileiro que registra as armas sob sua responsabilidade, incluindo as de CACs.",
+  "As providências administrativas disciplinares ou criminais independem do encaminhamento ao CSM/MB."
+ ], g:1, j:"Alternativa B é a INCORRETA: o prazo máximo de comunicação é de 03 (TRÊS) dias, a contar do conhecimento do roubo, furto ou extravio."},
+ {enun:"Sobre crimes e contravenções com arma branca, assinale a alternativa CORRETA:", alts:[
+  "O porte de arma branca sem justa causa é crime do Estatuto do Desarmamento.",
+  "O porte de arma branca é regido pelo art. 19 da LCP, com pena que pode variar de multa a prisão simples, sendo permitido quando há justificativa razoável, como trabalho ou atividade esportiva.",
+  "O uso de arma branca em crimes, como roubo, é irrelevante para a dosimetria da pena.",
+  "Facas e canivetes não são considerados armas brancas.",
+  "O porte de arma branca nunca gera abordagem policial."
+ ], g:1, j:"Alternativa B — cap. 9.3. O uso de arma branca em crimes é CIRCUNSTÂNCIA AGRAVANTE na dosimetria da pena (inclui objetos perfurocortantes ou contundentes, segundo o STJ)."}
+],
+disc:[
+ {enun:"Diferencie posse irregular e porte ilegal de arma de fogo (Lei nº 10.826/2003) e descreva as etapas fundamentais da abordagem a suspeito armado sem agressividade iminente, conforme o POP nº 0017 da PMPE.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Posse × porte","POSSE irregular (art. 12): guarda da arma em local não permitido, como a residência ou local de trabalho, sem autorização legal. PORTE ilegal (art. 14): transportar ou trazer consigo a arma em locais públicos ou acessíveis ao público (ruas, praças, veículos)."],
+  ["Aproximação","O policial deve se aproximar mantendo a arma em posição segura (posição 4 ou pronto-alto), com verbalização clara e assertiva, exigindo a colaboração do abordado."],
+  ["Controle da situação","Após o controle, realizar a busca pessoal e recolher a arma de forma segura, entregando-a ao policial de apoio."],
+  ["Identificação","A identificação do indivíduo e a apresentação do porte de arma e do CRAF são etapas fundamentais; civil sem documentação → conduzido à delegacia; agente de segurança/militar sem documentação → acionar COPOM ou CIODS."],
+  ["Liberação","Se a documentação estiver regular e nenhuma conduta ilícita for constatada, o indivíduo pode ser liberado após comunicação formal ao centro de operações."]
+ ]}
+]},
+
+{num:"02", titulo:"Lei de Drogas: usuário × traficante e critério do STF", base:"Lei nº 11.343/2006, arts. 28 e 33; decisão do STF (jun/2024)",
+vf:[
+ {t:"A Lei de Drogas define critérios objetivos para diferenciar o usuário do traficante.", g:false, j:"FALSO — a lei NÃO define critérios objetivos; estabelece critérios SUBJETIVOS, deixando a diferenciação para a análise judicial."},
+ {t:"O STF, em junho de 2024, estabeleceu que quem adquirir, guardar, depositar ou transportar até 40 gramas de maconha, ou seis plantas fêmeas, será presumido usuário.", g:true, j:"VERDADEIRO — critério objetivo fixado pelo STF para a maconha."},
+ {t:"A definição do STF de 40 gramas aplica-se a todas as drogas.", g:false, j:"FALSO — não se aplica a outras drogas; a diferenciação continua sendo um desafio na prática."},
+ {t:"O usuário, em geral, não é penalizado com prisão, mas com medidas educativas e de advertência.", g:true, j:"VERDADEIRO — enquanto o traficante está sujeito a reclusão e multa."},
+ {t:"As sanções previstas ao usuário são: advertência sobre os efeitos das drogas, prestação de serviços à comunidade e comparecimento obrigatório a cursos educativos.", g:true, j:"VERDADEIRO — o juiz pode aplicar uma ou mais medidas, conforme gravidade e antecedentes."},
+ {t:"A presunção de 40 gramas estabelecida pelo STF é absoluta.", g:false, j:"FALSO — a presunção é RELATIVA: outros fatores podem indicar tráfico, mesmo com quantidades menores; a polícia pode apreender a droga e encaminhar a pessoa à delegacia se houver indícios de tráfico."},
+ {t:"Com a decisão do STF, o porte de droga para uso pessoal deixou de ser ilícito.", g:false, j:"FALSO — o porte para uso pessoal CONTINUA ILÍCITO, sujeito a medidas administrativas, mas não é mais considerado crime penal (não tem sanção penal)."},
+ {t:"A pessoa flagrada com até 40 gramas de maconha será encaminhada à delegacia para apreensão da droga, mas não será presa em flagrante nem terá o caso encaminhado ao juizado criminal.", g:true, j:"VERDADEIRO — providência descrita no cap. 10."},
+ {t:"O tráfico de drogas (art. 33) tem pena de reclusão de 5 a 15 anos e pagamento de 500 a 1.500 dias-multa.", g:true, j:"VERDADEIRO — art. 33, caput, da Lei 11.343/2006."},
+ {t:"Oferecer droga, eventualmente e sem objetivo de lucro, a pessoa do relacionamento, para juntos a consumirem, tem pena de reclusão de 5 a 15 anos.", g:false, j:"FALSO — a conduta do §3º do art. 33 tem pena de DETENÇÃO de 6 meses a 1 ano e multa de 700 a 1.500 dias-multa, sem prejuízo do art. 28."}
+],
+mc:[
+ {enun:"Considerando que o STF estabeleceu que portar até 40 gramas de maconha ou cultivar até seis plantas fêmeas será presumido como uso pessoal, marque a alternativa CORRETA:", alts:[
+  "O efetivo da PM que abordar indivíduo portando até 40 gramas não deve encaminhar a ocorrência à delegacia, pois a conduta deixou de ser crime.",
+  "O efetivo da PM deverá encaminhar apenas o material apreendido, sem conduzir o indivíduo responsável.",
+  "Como os critérios do STF são de presunção relativa, o efetivo da PM poderá decidir se encaminha ou não a ocorrência à delegacia.",
+  "Um indivíduo abordado com até 40 gramas jamais poderá ter a conduta classificada como tráfico de drogas.",
+  "Um indivíduo abordado portando até 40 gramas de maconha deverá ser encaminhado para a delegacia e a droga deverá ser apreendida."
+ ], g:4, j:"Alternativa E — mesma resposta da 2ª AE 2025 (5º quesito). O porte para uso continua ilícito: a pessoa é encaminhada e a droga apreendida, sem prisão em flagrante; a presunção é relativa (indícios podem indicar tráfico), mas o encaminhamento não é discricionário."},
+ {enun:"Sobre o art. 33 da Lei nº 11.343/2006 (tráfico de drogas), assinale a alternativa INCORRETA:", alts:[
+  "Entre as condutas do caput estão importar, exportar, produzir, vender, transportar, guardar e entregar a consumo, ainda que gratuitamente.",
+  "A pena do caput é de reclusão de 5 a 15 anos e pagamento de 500 a 1.500 dias-multa.",
+  "Incorre nas mesmas penas quem semeia, cultiva ou faz a colheita de plantas que se constituam em matéria-prima para a preparação de drogas.",
+  "A pena do caput do art. 33 é de detenção de 1 a 3 anos e multa de 100 a 300 dias-multa.",
+  "Induzir, instigar ou auxiliar alguém ao uso indevido de droga tem pena de detenção de 1 a 3 anos e multa."
+ ], g:3, j:"Alternativa D é a INCORRETA: detenção de 1 a 3 anos é a pena do §2º (induzir, instigar ou auxiliar ao uso); o caput prevê RECLUSÃO de 5 a 15 anos e 500 a 1.500 dias-multa."},
+ {enun:"Sobre o objetivo da legislação de drogas, assinale a alternativa CORRETA:", alts:[
+  "Tratar o uso de drogas como problema de saúde pública, buscando a recuperação do usuário, e reprimir o tráfico como crime organizado.",
+  "Punir usuário e traficante com penas idênticas de reclusão.",
+  "Transferir integralmente à Polícia Militar a decisão final sobre a caracterização de usuário ou traficante.",
+  "Eliminar a análise judicial na aplicação das sanções.",
+  "Considerar o uso de drogas exclusivamente como questão criminal."
+ ], g:0, j:"Alternativa A — cap. 10. A decisão final sobre a caracterização do indivíduo fica a cargo do JUIZ; a decisão do STF visou evitar a discricionariedade da polícia e da justiça, buscando maior justiça e evitando racismo e preconceito."}
+],
+disc:[
+ {enun:"Explique como a Lei nº 11.343/2006 diferencia usuário e traficante, o critério objetivo estabelecido pelo STF em 2024 e as providências policiais no caso de abordagem de indivíduo portando até 40 gramas de maconha.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Critérios da lei","A Lei de Drogas estabelece critérios SUBJETIVOS para diferenciar usuário e traficante, deixando a tarefa para a análise judicial; prevê sanções distintas: usuário recebe medidas educativas e advertência; traficante, reclusão e multa (art. 33: 5 a 15 anos e 500 a 1.500 dias-multa)."],
+  ["Critério do STF","Em junho de 2024, o STF fixou critério objetivo para a maconha: até 40 gramas ou seis plantas fêmeas presume-se usuário; a presunção é RELATIVA e não se aplica a outras drogas; visou evitar a discricionariedade e situações de racismo e preconceito."],
+  ["Porte para uso","O porte para uso pessoal continua ilícito, sujeito a medidas administrativas, mas sem sanção penal."],
+  ["Providências policiais","A pessoa será encaminhada à delegacia para que a droga seja apreendida, mas não será presa em flagrante nem terá o caso encaminhado ao juizado criminal; havendo indícios de tráfico, a polícia pode apreender a droga e encaminhar mesmo com quantidades inferiores."]
+ ]}
+]},
+
+{num:"03", titulo:"Perturbação do sossego × poluição sonora", base:"Art. 42, LCP (DL 3.688/1941); art. 54, Lei nº 9.605/98; Lei estadual nº 12.789/2005",
+vf:[
+ {t:"A Polícia Militar tem papel relevante, atuando ostensivamente nas situações cotidianas que envolvem perturbação do sossego e poluição sonora.", g:true, j:"VERDADEIRO — assertiva da própria 2ª AE 2025 (1º quesito)."},
+ {t:"A poluição sonora é caracterizada pelo excesso de ruídos que afetam a saúde humana e o meio ambiente, e está prevista na Lei de Crimes Ambientais.", g:true, j:"VERDADEIRO — art. 54 da Lei nº 9.605/98."},
+ {t:"A perturbação do sossego é considerada um crime ambiental.", g:false, j:"FALSO — é CONTRAVENÇÃO PENAL (art. 42 da LCP). Pegadinha da 2ª AE 2025."},
+ {t:"A perturbação do sossego é uma contravenção que envolve situações como som alto, gritaria, brigas e outros comportamentos que afetam a tranquilidade pública ou individual.", g:true, j:"VERDADEIRO — talvez a contravenção mais comum nos centros urbanos."},
+ {t:"A perturbação do sossego é uma contravenção pouco comum nos centros urbanos.", g:false, j:"FALSO — é talvez a MAIS COMUM nos centros urbanos. Assertiva falsa da 2ª AE 2025."},
+ {t:"De acordo com a OMS, qualquer som que ultrapasse 50 decibéis pode ser considerado nocivo à saúde.", g:true, j:"VERDADEIRO — cap. 12."},
+ {t:"A poluição sonora difere da perturbação do sossego por seu potencial de causar danos à saúde humana e ao meio ambiente, enquanto a perturbação visa garantir o direito ao descanso e à tranquilidade.", g:true, j:"VERDADEIRO — cap. 12."},
+ {t:"A Lei do Silêncio é uma lei federal específica, aplicada de forma idêntica em todos os municípios.", g:false, j:"FALSO — não é lei federal específica, mas um conjunto de regras; cada município tem autonomia para criar suas próprias regras."},
+ {t:"Em Pernambuco, a Lei nº 12.789/2005 dispõe sobre ruídos urbanos, poluição sonora e proteção do bem-estar e do sossego público.", g:true, j:"VERDADEIRO — cap. 13.5."},
+ {t:"As pessoas começam a perder a audição quando expostas por períodos prolongados e repetidos a sons a partir de 85 decibéis, e a morte das células auditivas é lenta e irreversível.", g:true, j:"VERDADEIRO — cap. 13.6 (equivalente ao ruído do liquidificador)."}
+],
+mc:[
+ {enun:"Sobre a perturbação do sossego alheio, assinale a alternativa CORRETA:", alts:[
+  "É crime ambiental previsto na Lei nº 9.605/98.",
+  "É contravenção penal (art. 42 da LCP) que envolve som alto, gritaria, brigas e comportamentos que afetam a tranquilidade pública ou individual.",
+  "É punida com reclusão de 5 a 15 anos.",
+  "É pouco comum nos centros urbanos.",
+  "Não admite atuação da Polícia Militar."
+ ], g:1, j:"Alternativa B — art. 42 da LCP; a PM é essencial na mediação de conflitos e restauração da ordem."},
+ {enun:"Sobre as lesões à saúde pela intensidade dos decibéis, assinale a alternativa INCORRETA:", alts:[
+  "50-60 dB (conversa normal): não causa danos à saúde.",
+  "70-80 dB (rua movimentada): pode causar estresse e desconforto.",
+  "85-90 dB (fábrica ou serra circular): pode causar perda auditiva temporária ou permanente após exposição prolongada.",
+  "100-110 dB (discoteca ou show de rock): pode causar perda auditiva permanente após exposição breve.",
+  "50-60 dB (conversa normal): causa dor e perda auditiva imediata."
+ ], g:4, j:"Alternativa E é a INCORRETA: dor e perda auditiva imediata ocorrem a partir de 120 dB ou mais (avião a jato ou tiro); 50-60 dB não causa danos à saúde."},
+ {enun:"Sobre a fiscalização e a legislação municipal do Recife, assinale a alternativa CORRETA:", alts:[
+  "A fiscalização da poluição sonora é realizada por órgãos municipais, que podem ingressar em estabelecimentos e aplicar multas e outras sanções.",
+  "O Decreto nº 35.049/2021 autoriza fogos de artifício com estampido em eventos públicos.",
+  "O Decreto nº 8.185/1983 trata exclusivamente de trânsito.",
+  "Não há limites de ruído por horário nas áreas residenciais.",
+  "A legislação municipal não pode tratar de poluição sonora."
+ ], g:0, j:"Alternativa A — cap. 13.5. O Decreto 35.049/2021 PROÍBE fogos com estampido em eventos públicos; o Decreto 8.185/1983 define padrões de emissão de ruídos; áreas residenciais têm limites por horário (ex.: até 70 dB de dia, 60 dB à noite e 50 dB de madrugada)."},
+ {enun:"Assinale a alternativa INCORRETA sobre a diferenciação entre poluição sonora e perturbação do sossego:", alts:[
+  "A perturbação do sossego é caracterizada por ações que abusam de instrumentos sonoros e práticas que causam incômodo e prejudicam o trabalho ou o descanso alheio.",
+  "A poluição sonora é caracterizada pelo excesso de ruídos que afetam a saúde humana e o meio ambiente, podendo causar danos físicos e mentais.",
+  "A poluição sonora que cause danos à saúde ou ao meio ambiente pode configurar crime ambiental (art. 54 da Lei nº 9.605/98).",
+  "A perturbação do sossego visa garantir o direito ao descanso e à tranquilidade.",
+  "A perturbação do sossego é caracterizada por seu potencial de causar danos à saúde humana e ao meio ambiente, enquanto a poluição sonora visa garantir o direito ao descanso."
+ ], g:4, j:"Alternativa E é a INCORRETA: está invertida — é a POLUIÇÃO SONORA que se caracteriza pelo potencial de danos à saúde e ao meio ambiente. Essa mesma inversão foi cobrada como assertiva falsa na 2ª AE 2025."}
+],
+disc:[
+ {enun:"Diferencie a perturbação do sossego alheio da poluição sonora, indicando a natureza jurídica, a base legal e o papel da Polícia Militar em cada caso.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Perturbação do sossego","Contravenção penal prevista no art. 42 da LCP (DL nº 3.688/1941); talvez a mais comum nos centros urbanos; envolve som alto, gritaria, brigas e comportamentos que afetam a tranquilidade pública ou individual; visa garantir o direito ao descanso e à tranquilidade."],
+  ["Poluição sonora","Caracterizada pelo excesso de ruídos que afetam a saúde humana e o meio ambiente, podendo causar danos físicos e mentais; quando causa danos à saúde ou ao meio ambiente, configura crime ambiental (art. 54 da Lei nº 9.605/98); pela OMS, sons acima de 50 dB podem ser nocivos."],
+  ["Diferença central","A poluição sonora difere da perturbação por seu potencial de causar danos à saúde humana e ao meio ambiente, enquanto a perturbação do sossego tutela o descanso e a tranquilidade."],
+  ["Papel da PM","Papel relevante na prevenção e repressão dessas práticas, atuando de forma ostensiva nas situações cotidianas, com mediação de conflitos e restauração da ordem; a fiscalização da poluição sonora cabe a órgãos municipais, que podem aplicar multas e sanções."]
+ ]}
+]},
+
+{num:"04", titulo:"Crime, contravenção penal, crime ambiental e trânsito", base:"CP (DL 2.848/1940); LCP (DL 3.688/1941); Lei nº 9.605/98; CTB (Lei nº 9.503/1997)",
+vf:[
+ {t:"A doutrina penal brasileira adota, em geral, a teoria tripartida do crime: fato típico, antijuridicidade e culpabilidade.", g:true, j:"VERDADEIRO — cap. 13.1."},
+ {t:"O art. 1º do Código Penal consagra o princípio da legalidade penal: não há crime sem lei anterior que o defina, nem pena sem prévia cominação legal.", g:true, j:"VERDADEIRO — cláusula pétrea que assegura segurança jurídica."},
+ {t:"A contravenção penal é uma infração de menor potencial ofensivo, punida com penas mais brandas e procedimentos menos complexos.", g:true, j:"VERDADEIRO — cap. 13.2."},
+ {t:"A distinção entre crime e contravenção reside em critérios técnicos objetivos.", g:false, j:"FALSO — reside em uma OPÇÃO POLÍTICO-LEGISLATIVA; ambas são espécies do gênero \"infração penal\"."},
+ {t:"Pelo art. 61 da Lei nº 9.099/1995, são infrações de menor potencial ofensivo aquelas cujas penas máximas não ultrapassem dois anos, tratadas com procedimentos simplificados como o TCO.", g:true, j:"VERDADEIRO — o Termo Circunstanciado de Ocorrência evita a instauração de inquérito policial."},
+ {t:"O jogo do bicho e os caça-níqueis atualmente não são considerados contravenções penais, funcionando sem repressão policial.", g:false, j:"FALSO — jogos de azar são contravenção (art. 50 da LCP) e a PM atua em operações para coibir estabelecimentos clandestinos. Alternativa INCORRETA da 2ª AE 2025 (4º quesito)."},
+ {t:"A vadiagem (art. 59 da LCP) está em desuso prático, mas ainda vigente, podendo gerar abordagem policial.", g:true, j:"VERDADEIRO — cap. 13.2."},
+ {t:"Os crimes contra a fauna envolvem caça, pesca, transporte e comércio ilegal de animais silvestres, maus-tratos e experiências cruéis, além de agressões aos habitats.", g:true, j:"VERDADEIRO — categoria da Lei de Crimes Ambientais; o POP nº 0031 da PMPE norteia o combate aos crimes contra a fauna."},
+ {t:"Os crimes contra a flora incluem a poluição da água, do ar e do solo e o lançamento de substâncias tóxicas.", g:false, j:"FALSO — crimes contra a flora incluem desmatamento ilegal, queimadas não autorizadas e danos a florestas; a poluição é CATEGORIA PRÓPRIA. Mesma pegadinha do 3º quesito da 2ª AE 2025."},
+ {t:"Os crimes contra a administração ambiental envolvem ações que dificultam a fiscalização e o controle ambiental.", g:true, j:"VERDADEIRO — categoria da Lei de Crimes Ambientais, cobrada na 2ª AE 2025."},
+ {t:"As infrações de trânsito dividem-se em quatro categorias: leves, médias, graves e gravíssimas, com multas e pontos na CNH.", g:true, j:"VERDADEIRO — leves: 3 pontos; médias: 4; graves: 5; gravíssimas: 7 pontos na CNH."},
+ {t:"Os crimes de trânsito são punidos apenas com multas e advertências.", g:false, j:"FALSO — crimes de trânsito (arts. 302 a 312 do CTB) são punidos com DETENÇÃO ou RECLUSÃO, além de multas; infrações de trânsito é que são punidas com multas e advertências."}
+],
+mc:[
+ {enun:"Relativo às contravenções penais, marque a alternativa INCORRETA:", alts:[
+  "Perturbação do sossego alheio, embriaguez em via pública e jogos de azar são contravenções penais, conforme a LCP.",
+  "As contravenções penais, embora de menor potencial ofensivo, representam desafios constantes para a Polícia Militar, que deve atuar com firmeza, legalidade e equilíbrio.",
+  "A vadiagem (art. 59 da LCP) foi revogada e não pode mais gerar abordagem policial.",
+  "A embriaguez em via pública refere-se à permanência de indivíduos em estado de embriaguez que cause escândalo ou perturbe o ambiente público.",
+  "O exercício ilegal do comércio ambulante, em locais ou horários proibidos ou sem autorização, é alvo de fiscalização da PM em conjunto com a fiscalização urbana."
+ ], g:2, j:"Alternativa C é a INCORRETA: a vadiagem está em DESUSO PRÁTICO, mas AINDA VIGENTE, podendo gerar abordagem policial. (Na 2ª AE 2025, a incorreta era o jogo do bicho \"sem repressão\".)"},
+ {enun:"Sobre os elementos do crime na teoria tripartida, assinale a alternativa CORRETA:", alts:[
+  "Fato típico é a conduta que, embora ilícita, encontra causa legal de justificação.",
+  "Antijuridicidade ocorre quando a conduta, embora típica, não encontra nenhuma causa legal de justificação, como legítima defesa ou estado de necessidade.",
+  "Culpabilidade é o enquadramento perfeito da conduta em um tipo penal.",
+  "A legítima defesa afasta a culpabilidade do agente.",
+  "O dolo e a culpa são irrelevantes para a responsabilização penal."
+ ], g:1, j:"Alternativa B — cap. 13.1. Fato típico: conduta que se enquadra em tipo penal; culpabilidade: capacidade de entender o caráter ilícito e agir conforme esse entendimento, com dolo ou culpa; a legítima defesa é causa de justificação (exclui a antijuridicidade)."},
+ {enun:"Sobre as categorias de crimes da Lei de Crimes Ambientais, assinale a alternativa CORRETA:", alts:[
+  "Crimes contra a fauna incluem desmatamento ilegal e queimadas não autorizadas.",
+  "Crimes contra a flora incluem caça e pesca ilegais.",
+  "Crimes contra a administração ambiental envolvem ações que dificultam a fiscalização e o controle ambiental.",
+  "Crimes contra o ordenamento urbano referem-se ao lançamento de substâncias tóxicas.",
+  "A Lei nº 9.605/98 não prevê penas restritivas de direito."
+ ], g:2, j:"Alternativa C — cap. 13.3. Fauna: caça, pesca, comércio ilegal, maus-tratos; flora: desmatamento e queimadas; ordenamento urbano e patrimônio cultural: danos a construções históricas e monumentos; penas restritivas: prestação de serviços, interdição temporária, suspensão de atividades, prestação pecuniária e recolhimento domiciliar."},
+ {enun:"Sobre infrações e crimes de trânsito (CTB), assinale a alternativa INCORRETA:", alts:[
+  "As infrações de trânsito dividem-se em leves, médias, graves e gravíssimas.",
+  "As infrações gravíssimas geram 3 pontos na CNH.",
+  "Os crimes de trânsito estão previstos nos arts. 302 a 312 do CTB.",
+  "São crimes de trânsito, entre outros: homicídio culposo na direção de veículo, lesão corporal culposa, omissão de socorro e embriaguez ao volante.",
+  "Os crimes de trânsito são punidos com penas de detenção ou reclusão, além de multas."
+ ], g:1, j:"Alternativa B é a INCORRETA: infrações GRAVÍSSIMAS geram 7 pontos na CNH (R$ 293,47); 3 pontos correspondem às infrações LEVES (R$ 88,38)."}
+],
+disc:[
+ {enun:"Diferencie crime, contravenção penal, crime ambiental e infração/crime de trânsito, indicando a base legal de cada categoria e o papel da Polícia Militar nesse enfrentamento.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Crime","Definido principalmente pelo Código Penal (DL nº 2.848/1940); doutrina adota a teoria tripartida: fato típico, antijurídico e culpável; art. 1º consagra a legalidade penal; a PM é a linha de frente no enfrentamento das infrações penais (prisões em flagrante, abordagens preventivas, encaminhamento ao delegado)."],
+  ["Contravenção penal","Infração de menor potencial ofensivo, disciplinada pela LCP (DL nº 3.688/1941); a distinção em relação ao crime é opção político-legislativa; pelo art. 61 da Lei nº 9.099/95, infrações com pena máxima até 2 anos recebem procedimentos simplificados (TCO); exemplos: perturbação do sossego (art. 42), comércio ambulante ilegal (art. 47), jogos de azar (art. 50), vadiagem (art. 59), exibição obscena (art. 61), embriaguez em via pública (art. 62)."],
+  ["Crime ambiental","Lei nº 9.605/98; categorias: contra a fauna, contra a flora, poluição, ordenamento urbano e patrimônio cultural, e administração ambiental; penas incluem multas, prisão e restritivas de direito; POP nº 0031 da PMPE norteia o combate aos crimes contra a fauna."],
+  ["Trânsito","CTB (Lei nº 9.503/1997): INFRAÇÕES (leves, médias, graves e gravíssimas — multas e pontos na CNH: 3, 4, 5 e 7) × CRIMES de trânsito (arts. 302 a 312 — condutas mais graves, punidas com detenção ou reclusão, além de multas), como homicídio culposo na direção, embriaguez ao volante e omissão de socorro."]
+ ]}
+]},
+
+{num:"05", titulo:"Escolta, condução e custódia de presos — POP nº 0018", base:"POP nº 0018/PMPE (2018); POP nº 0033/PMPE",
+vf:[
+ {t:"As ações de escolta, condução e custódia de pessoas presas ou apreendidas estão entre as funções mais sensíveis e complexas da PMPE, reguladas pelo POP nº 0018.", g:true, j:"VERDADEIRO — o documento busca garantir eficiência operacional, segurança dos envolvidos e respeito aos direitos fundamentais das pessoas sob custódia do Estado."},
+ {t:"Os policiais escalados para escolta devem possuir, no mínimo, um ano de experiência em atividade operacional, bom condicionamento físico e domínio de técnicas de defesa pessoal e uso de armamento.", g:true, j:"VERDADEIRO — além de disciplina e proatividade."},
+ {t:"As escoltas devem ser realizadas prioritariamente em viaturas de quatro rodas; as de duas rodas podem ser empregadas apenas como apoio às demais.", g:true, j:"VERDADEIRO — cap. 13.1; as viaturas devem estar abastecidas, com planejamento de reabastecimento em longas distâncias."},
+ {t:"O armamento emprega o calibre fornecido pela Corporação: pistolas cal. 40, carabinas cal. 556 e, em casos mais complexos, fuzil calibre 762.", g:true, j:"VERDADEIRO — cap. 13.2; o número de presos e a quantidade de veículos definem armamento e equipamentos."},
+ {t:"O uso dissuasivo de arma de fogo é opção de posicionamento que o policial poderá adotar para criar efeito intimidativo, em condições de resposta rápida.", g:true, j:"VERDADEIRO — cap. 13.2."},
+ {t:"O itinerário da escolta deve ser o mais longo possível, para despistar possíveis ações criminosas.", g:false, j:"FALSO — deve ser o MAIS CURTO possível ou o de melhor fluidez do tráfego, definido previamente com rotas de fuga e itinerário alternativo."},
+ {t:"Nas escoltas diárias, deve-se manter sempre o mesmo percurso, para padronizar a operação.", g:false, j:"FALSO — devem ser adotados PERCURSOS DIFERENTES, a fim de dificultar e neutralizar possíveis resgates ou atentados."},
+ {t:"Deve ser evitada a passagem por locais ermos, com alto índice de violência, que facilitem ou encorajem ação delituosa.", g:true, j:"VERDADEIRO — cap. 13.3."},
+ {t:"Ao receber o preso, procede-se à identificação conferindo o documento de apresentação ao juízo, com inspeção visual e breve entrevista sobre o estado de saúde e a integridade física do escoltado.", g:true, j:"VERDADEIRO — cap. 13.4."},
+ {t:"Deve ser realizada busca pessoal e imobilização por algemas, sendo proibido algemar o preso em peças ou equipamentos da viatura; do local da algemação até a viatura, o preso é conduzido seguro pelo antebraço.", g:true, j:"VERDADEIRO — cap. 13.4."},
+ {t:"Antes de iniciar a escolta, o comandante da guarnição informa obrigatoriamente ao CIODS ou COPOM os dados pessoais do conduzido e o início do deslocamento; nas escoltas mais complexas, as comunicações devem ocorrer a cada 30 minutos.", g:true, j:"VERDADEIRO — cap. 13.5; ao chegar ao local previsto, certifica imediatamente o CIODS sobre o êxito."},
+ {t:"O giroflex da viatura deve ser evitado durante o deslocamento, para não chamar atenção do comboio.", g:false, j:"FALSO — em regra, o giroflex deve ser UTILIZADO EM TODO O DESLOCAMENTO, para facilitar a visualização do comboio; a SIRENE é que só deve ser usada quando efetivamente necessária."}
+],
+mc:[
+ {enun:"Sobre o desembarque da pessoa presa, assinale a alternativa CORRETA:", alts:[
+  "A viatura deve ser posicionada descoberta e de frente para o prédio de destino.",
+  "A viatura deve ser posicionada coberta e abrigada, de forma a deixar o local rapidamente se necessário, preferencialmente de ré para o prédio e de frente para uma via ou rota de fuga.",
+  "Todos os escoltados devem desembarcar simultaneamente, para agilizar a operação.",
+  "A busca 360° nos arredores é dispensável quando o local for conhecido.",
+  "Cada escoltado deve ser acompanhado por apenas um policial."
+ ], g:1, j:"Alternativa B — cap. 13.7 (mesma redação do gabarito da 2ª AE 2025). A equipe faz busca 360°; desembarca-se um escoltado por vez, mantendo cerca de um metro entre eles, sempre com DOIS policiais para cada escoltado."},
+ {enun:"Sobre a custódia de presos em hospitais, assinale a alternativa INCORRETA:", alts:[
+  "Esse tipo de escolta geralmente é realizado pelos integrantes da SERES, mas é comum a PMPE ser escalada após flagrantes e requisição de delegados.",
+  "A custódia do preso será realizada por, no mínimo, dois policiais militares.",
+  "Não é permitida a aproximação de terceiros junto à pessoa presa.",
+  "O escoltado permanecerá algemado, exceto em caso de extrema necessidade e por solicitação médica, com atenção redobrada aos pontos vulneráveis (janelas, portas, rotas de fuga).",
+  "O escoltado poderá receber visitas e aproximação de terceiros durante a internação, mediante simples autorização verbal."
+ ], g:4, j:"Alternativa E é a INCORRETA: o Oficial deve orientar e cobrar do policiamento que NÃO é permitida a aproximação de terceiros junto à pessoa presa; a escolta acompanha o preso em todos os deslocamentos na dependência do hospital (exames, banheiros etc.)."},
+ {enun:"Em caso de tentativa de emboscada durante a escolta, assinale a alternativa CORRETA:", alts:[
+  "A equipe deve parar imediatamente o deslocamento no ponto do atentado.",
+  "A equipe deve manter o deslocamento, procurando local onde tenha condições de se abrigar e defender a integridade física dos componentes, inclusive do preso, acionando o CIODS para informar e requisitar apoio.",
+  "A equipe deve abandonar o escoltado para perseguir os agressores.",
+  "A equipe deve aguardar ordens sem comunicar a central.",
+  "O preso deve ser liberado para preservar a equipe."
+ ], g:1, j:"Alternativa B — cap. 13.6. Na 2ª AE 2025, a alternativa que mandava PARAR o deslocamento era a errada."},
+ {enun:"Sobre a documentação e o planejamento da escolta, assinale a alternativa INCORRETA:", alts:[
+  "Ao iniciar o serviço, o comandante deve conferir toda a documentação pertinente e confirmar a conformidade com o planejamento.",
+  "Devem-se conhecer os antecedentes criminais e o contexto que envolveu a pessoa a ser escoltada, repassando as informações de inteligência à equipe.",
+  "Deve-se avaliar a possibilidade de resgate e/ou atentados contra o preso.",
+  "O planejamento do itinerário deve ser mantido em sigilo, inclusive dos policiais encarregados da escolta.",
+  "Deve-se definir previamente o itinerário, as rotas de fuga e o itinerário alternativo."
+ ], g:3, j:"Alternativa D é a INCORRETA: o planejamento do itinerário DEVE ser de conhecimento dos policiais encarregados da escolta (cap. 13.3)."}
+],
+disc:[
+ {enun:"Descreva as providências do Oficial e da equipe no recebimento do escoltado e no início da escolta, conforme o POP nº 0018 da PMPE.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Preparação","O Oficial orienta preliminarmente a equipe sobre o serviço e checa/inspeciona o armamento, o equipamento de proteção individual e os instrumentos e equipamentos de menor potencial ofensivo; o local da VTR destinado ao transporte deve ser previamente inspecionado, evitando objetos que possibilitem ato ilícito ou fuga."],
+  ["Recebimento","Identificação do escoltado conferindo o documento de apresentação ao juízo; verificação, por inspeção visual e breve entrevista, do estado de saúde e da integridade física."],
+  ["Busca e imobilização","Busca pessoal e imobilização através do emprego de algemas; é proibido algemar o preso em peças ou equipamentos da viatura; do local da algemação até a viatura, condução segura pelo antebraço por um dos policiais."],
+  ["Início do deslocamento","O comandante da guarnição informa obrigatoriamente ao CIODS/COPOM os dados pessoais do conduzido e o início do deslocamento; usa-se, sempre que possível, canal específico de rádio; nas escoltas mais complexas e de maior risco, comunicações a cada 30 minutos; o giroflex, em regra, é utilizado em todo o deslocamento, e a sirene apenas quando efetivamente necessária."]
+ ]}
+]},
+
+{num:"06", titulo:"Operação de Repressão Qualificada (ORQ) — Juntos pela Segurança", base:"Apostila PO, cap. 14 — SDS/PE; Plano Estadual de Segurança Pública",
+vf:[
+ {t:"A Operação de Repressão Qualificada da SDS de Pernambuco foi criada para combater o crime organizado e promover a segurança pública no estado.", g:true, j:"VERDADEIRO — assertiva verdadeira da 2ª AE 2025 (2º quesito)."},
+ {t:"Entre os principais objetivos destacam-se: desarticular organizações criminosas, prevenir e reprimir a criminalidade e integrar ações de segurança, como parte do Plano Estadual de Segurança Pública.", g:true, j:"VERDADEIRO — cap. 14."},
+ {t:"A coordenação das Operações de Repressão Qualificada é, prioritariamente, da Polícia Civil de Pernambuco.", g:true, j:"VERDADEIRO — a afirmação de competência EXCLUSIVA da PM foi assertiva FALSA na 2ª AE 2025."},
+ {t:"As operações são planejadas com base em inteligência policial, análise de dados de crimes anteriores e identificação de áreas de alta incidência criminal.", g:true, j:"VERDADEIRO — planejamento estratégico (cap. 14)."},
+ {t:"O GATE (Grupamento de Ações Táticas) é unidade especial da Polícia Civil.", g:false, j:"FALSO — o GATE é unidade especial da POLÍCIA MILITAR, que atua em situações de alto risco, como confrontos armados e resgates."},
+ {t:"O GOE (Grupo de Operações Especiais) é unidade da Polícia Civil acionada em resgate de vítimas de crimes como extorsão mediante sequestro e invasão de cativeiros.", g:true, j:"VERDADEIRO — cap. 14."},
+ {t:"O BOPE é unidade especial da Polícia Militar acionada para situações de alto risco, como buscas e apreensões em áreas de difícil acesso ou alto grau de periculosidade.", g:true, j:"VERDADEIRO — cap. 14."},
+ {t:"Dependendo da natureza e da localização da operação, podem ser acionados o BEPI, o BPRp e os BIESP.", g:true, j:"VERDADEIRO — Batalhão de Policiamento do Interior, de Radiopatrulha e Batalhões Integrados Especializados de Policiamento."},
+ {t:"As operações já combateram crimes como golpes contra idosos e beneficiários do INSS e esquemas de sonegação fiscal.", g:true, j:"VERDADEIRO — cap. 14."},
+ {t:"As Operações de Repressão Qualificada visam apenas a repressão ao crime, não tendo caráter preventivo.", g:false, j:"FALSO — visam também a PREVENÇÃO, através da presença ostensiva e da atuação estratégica em áreas críticas. Assertiva falsa da 2ª AE 2025."}
+],
+mc:[
+ {enun:"Sobre os órgãos envolvidos na Operação de Repressão Qualificada, assinale a alternativa CORRETA:", alts:[
+  "A Polícia Civil de Pernambuco é responsável pelas investigações criminais e pela coleta de provas para desarticular organizações criminosas.",
+  "A Polícia Militar é responsável pelas investigações criminais.",
+  "O GATE é unidade especial da Polícia Civil.",
+  "O GOE é unidade da Polícia Militar.",
+  "O DPE (Departamento de Polícia Especializada) integra a Polícia Militar."
+ ], g:0, j:"Alternativa A — cap. 14. A PM atua na segurança pública OSTENSIVA (patrulhamento e intervenções táticas); GATE e BOPE são unidades da PM; GOE e DPE são da Polícia Civil."},
+ {enun:"Sobre o funcionamento das Operações de Repressão Qualificada, assinale a alternativa INCORRETA:", alts:[
+  "O planejamento estratégico baseia-se em inteligência policial e análise de dados de crimes anteriores.",
+  "A coordenação interinstitucional envolve a colaboração entre Polícia Militar, Polícia Civil e outras unidades especializadas.",
+  "O uso de tecnologia, como câmeras de vigilância, drones e sistemas de monitoramento, pode apoiar as operações com informações em tempo real.",
+  "Após cada operação, é comum realizar avaliações para identificar o que funcionou bem e o que pode ser melhorado.",
+  "As operações dispensam componentes de abordagem comunitária, por serem incompatíveis com a repressão qualificada."
+ ], g:4, j:"Alternativa E é a INCORRETA: muitas vezes as operações INCLUEM componentes de abordagem comunitária, para fortalecer a confiança entre a população e as forças de segurança e promover a cooperação na prevenção do crime."},
+ {enun:"Sobre os objetivos das Operações de Repressão Qualificada, assinale a alternativa CORRETA:", alts:[
+  "Visam não apenas a repressão ao crime, mas também a prevenção, através da presença ostensiva e da atuação estratégica em áreas críticas.",
+  "Visam exclusivamente a repressão ao crime organizado.",
+  "Não integram o Plano Estadual de Segurança Pública.",
+  "Dispensam a coordenação entre as unidades envolvidas.",
+  "Limitam-se ao combate ao tráfico de drogas."
+ ], g:0, j:"Alternativa A — cap. 14. A eficácia depende de planejamento cuidadoso, execução precisa e avaliação contínua; a coordenação entre as unidades é fundamental para o sucesso."}
+],
+disc:[
+ {enun:"Disserte sobre os objetivos e o funcionamento da Operação de Repressão Qualificada da SDS de Pernambuco, indicando os principais órgãos envolvidos e suas colaborações.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Objetivos","Criada para combater o crime organizado e promover a segurança pública; principais objetivos: desarticular organizações criminosas, prevenir e reprimir a criminalidade (garantindo a ordem pública e os direitos dos cidadãos) e integrar ações de segurança, como parte do Plano Estadual de Segurança Pública."],
+  ["Funcionamento","Coordenação prioritariamente da Polícia Civil; pontos-chave: planejamento estratégico com base em inteligência; equipes especializadas; coordenação interinstitucional; uso de tecnologia (câmeras, drones, monitoramento); abordagem comunitária; e avaliação e ajuste após cada operação."],
+  ["Órgãos envolvidos","Polícia Civil (investigações e coleta de provas); Polícia Militar (segurança ostensiva, patrulhamento e intervenções táticas); GATE e BOPE (unidades especiais da PM para alto risco); GOE e DPE (unidades da Polícia Civil); conforme a localização, BEPI, BPRp e BIESP."],
+  ["Caráter preventivo","As operações visam não apenas a repressão, mas também a prevenção, pela presença ostensiva e atuação estratégica em áreas críticas — a coordenação entre as unidades é fundamental para maximizar o impacto na redução da criminalidade."]
+ ]}
+]},
+
+{num:"07", titulo:"Manifestações e protestos — POP nº 0049", base:"POP nº 0049/PMPE (2023); POP nº 002/PMPE (2014)",
+vf:[
+ {t:"O POP nº 0049 estabelece as diretrizes para a disposição dos meios e a atuação do efetivo policial em manifestações pacíficas e democráticas.", g:true, j:"VERDADEIRO — assegura gestão eficiente de multidões e cumprimento das leis de forma proporcional, legal e moderada."},
+ {t:"São princípios fundamentais da atuação: respeito aos direitos humanos, proporcionalidade, legalidade e transparência.", g:true, j:"VERDADEIRO — cap. 15."},
+ {t:"A estratégia envolve intervenções indiretas (presença policial, contenção, acompanhamento e negociação) e intervenções diretas (dissuasão, dispersão ou repressão).", g:true, j:"VERDADEIRO — sempre com o intuito de manter a ordem pública e garantir os direitos coletivos e individuais."},
+ {t:"Durante o planejamento e a execução, o comandante deve identificar lideranças e articular canais de comunicação com a imprensa, garantindo a liberdade de expressão e o direito de manifestação.", g:true, j:"VERDADEIRO — a atuação da imprensa é acompanhada por porta-voz oficial pertencente à 5ª EMG."},
+ {t:"A tropa de choque deve ser acionada logo no primeiro momento da manifestação, como medida preventiva.", g:false, j:"FALSO — a tropa de choque é acionada apenas em ÚLTIMO CASO, conforme os três níveis de resposta."},
+ {t:"Os três estágios de resposta são: policiamento ordinário (1º), choque ligeiro (2º) e tropa especializada (3º).", g:true, j:"VERDADEIRO — 1º: policiamento de área (Patrus a pé, GTs e GATI); 2º: BPRp/1º e 2º BIESP (tropa de apoio e choque ligeiro); 3º: BPChoque (controle de distúrbio)."},
+ {t:"As ações de \"envelopamento\" ou retenção são realizadas quando há risco de desordem, com técnicas de isolamento e posterior condução de infratores.", g:true, j:"VERDADEIRO — cap. 15."},
+ {t:"São erros operacionais recorrentes: ausência de preleção, uso de efetivo não treinado, distribuição incorreta de equipamentos, posicionamento equivocado da tropa e falha na identificação de lideranças.", g:true, j:"VERDADEIRO — o POP prevê ações corretivas, como readequação do efetivo e designação de policiais femininas para revistas em mulheres."},
+ {t:"O emprego de arma de fogo é vedado em qualquer hipótese durante a manifestação.", g:false, j:"FALSO — é possível a qualquer momento, porém CONDICIONADO à existência de ameaça à vida ou risco de lesões graves, sendo o ÚLTIMO RECURSO capaz de cessar a injusta agressão."},
+ {t:"As ações policiais devem observar os princípios do uso diferenciado da força: legalidade, necessidade, proporcionalidade, moderação e conveniência.", g:true, j:"VERDADEIRO — a escala vai da simples presença ao uso de força progressiva."},
+ {t:"Ao final da operação, o comandante deve elaborar um relatório circunstanciado, contendo imagens, nomes dos conduzidos, ocorrências registradas e materiais apreendidos.", g:true, j:"VERDADEIRO — serve de base para análise, estatísticas, estudo de caso e comunicação aos escalões superiores."},
+ {t:"O oficial designado, sempre que possível, fará uma rápida reunião (briefing) com o efetivo empregado, repassando os procedimentos e considerando as peculiaridades de cada intervenção.", g:true, j:"VERDADEIRO — cap. 15.2 (tipo de terreno, grupo social envolvido, fatores que levaram ao protesto)."}
+],
+mc:[
+ {enun:"Sobre as táticas de intervenção direta, assinale a alternativa CORRETA:", alts:[
+  "Repelir tem o objetivo de retirar a massa do local de forma definitiva.",
+  "Dispersar consiste em manter a multidão em área delimitada e pré-estabelecida.",
+  "Repelir faz a massa recuar a uma direção determinada até o limite pré-definido, afastando-a temporariamente; dispersar desloca e desagrega a massa, impedindo o reagrupamento, com retirada definitiva do local.",
+  "Conter e negociar são modalidades de intervenção direta.",
+  "A detenção de pessoas é vedada durante a operação."
+ ], g:2, j:"Alternativa C — cap. 15.3. Conter e negociar são ações de intervenção INDIRETA; a detenção de pessoas é possível paralelamente às ações, quando alguém comete crimes ou contravenções."},
+ {enun:"Sobre os três estágios do emprego da força, assinale a alternativa INCORRETA:", alts:[
+  "O 1º estágio consiste no emprego do policiamento de área (Patrus a pé, GTs e GATI).",
+  "O 2º estágio consiste no emprego do efetivo do BPRp/1º BIESP/2º BIESP, como tropa de apoio e choque ligeiro.",
+  "O 2º estágio consiste no emprego do BPChoque, como tropa de controle de distúrbio.",
+  "Antes de iniciar o segundo e o terceiro estágios, o comandante deve observar e adotar as providências no uso diferenciado da força.",
+  "Unidades como CIPMoto, BPTran, CBMPE, GTA, Polícia Civil e SAMU integram as ações como apoio complementar."
+ ], g:2, j:"Alternativa C é a INCORRETA: o BPChoque corresponde ao 3º ESTÁGIO (tropa de controle de distúrbio); o 2º estágio é o choque ligeiro (BPRp/BIESP)."},
+ {enun:"Sobre as ações do uso diferenciado da força na gestão de multidões, assinale a alternativa CORRETA:", alts:[
+  "Negociar é desestimular os líderes a não praticarem atos que quebrem a ordem pública.",
+  "Negociar é estabelecer vínculo de mediação com os manifestantes ou lideranças, na tentativa de convencer e influenciar para que deixem de tomar atitude que prejudique a ordem pública.",
+  "Dissuadir é manter a multidão em área delimitada.",
+  "Ação de presença dispensa a coleta de informações.",
+  "Acompanhar consiste em dividir e desagregar a massa."
+ ], g:1, j:"Alternativa B — cap. 15.3. Dissuadir é DESESTIMULAR os líderes e integrantes; conter é manter a multidão em área delimitada; a ação de presença também coleta informações e identifica interlocutores."},
+ {enun:"Sobre as condutas a serem adotadas na atuação em manifestações, assinale a alternativa INCORRETA:", alts:[
+  "Estabelecimento de canal de comunicação com as lideranças da manifestação.",
+  "Distribuição das equipes no terreno e obtenção de dados complementares junto à inteligência da corporação.",
+  "Readequação de efetivo em caso de quebra da ordem.",
+  "O oficial deve dispensar a reunião briefing sempre que houver urgência na intervenção.",
+  "Socorro dos policiais militares, manifestantes e populares lesionados, caso ocorra."
+ ], g:3, j:"Alternativa D é a INCORRETA: o oficial designado, SEMPRE QUE POSSÍVEL e tendo em vista a urgência, fará uma rápida reunião briefing com o efetivo — a urgência não a dispensa por padrão (cap. 15.2)."}
+],
+disc:[
+ {enun:"Descreva os três estágios do emprego da força previstos no POP nº 0049 e as principais ações do uso diferenciado da força na gestão de multidões.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+  ["Estágios","1º estágio: policiamento de área (Patrus a pé, GTs e GATI, conforme necessidade e viabilidade); 2º estágio: efetivo do BPRp/1º BIESP/2º BIESP, como tropa de apoio e choque ligeiro; 3º estágio: BPChoque, como tropa de controle de distúrbio; antes do 2º e 3º estágios, o comandante observa as providências do uso diferenciado da força."],
+  ["Intervenção indireta","Ação de presença (sensação de segurança, coleta de informações, identificação de interlocutores); acompanhar; conter (manter a multidão em área delimitada); negociar (mediação com lideranças); dissuadir (desestimular atos que quebrem a ordem)."],
+  ["Intervenção direta","Repelir (fazer a massa recuar até limite pré-definido, afastando-a temporariamente) e dispersar (deslocar e desagregar a massa, impedindo o reagrupamento, com retirada definitiva); paralelamente, detenção de pessoas que cometam crimes ou contravenções."],
+  ["Arma de fogo","O emprego é possível a qualquer momento, porém condicionado à existência de ameaça à vida ou risco de lesões graves de policiais, manifestantes e terceiros — último recurso capaz de cessar a injusta agressão."]
+ ]}
+]},
+
+{num:"08", titulo:"Ocorrências de alta complexidade — POPs nº 0025, 0015 e 0013", base:"POP nº 0025 (2018); POP nº 0015 (2018); POP nº 0013 (2018); Decreto nº 33.782/2009",
+vf:[
+ {t:"O POP nº 0025 (\"Ocorrências de Assaltos e Arrombamentos a Instituições Financeiras na RMR\") é documento normativo essencial para o gerenciamento de crises envolvendo crimes de alta complexidade.", g:true, j:"VERDADEIRO — com ênfase na proteção de vidas, preservação da ordem pública e atuação integrada das guarnições."},
+ {t:"Na sequência de ações, o COPOM deve enviar no mínimo duas guarnições do GATI ou duas GGUU para realizar exclusivamente a constatação do ilícito.", g:true, j:"VERDADEIRO — cap. 16.2.1."},
+ {t:"Confirmada a ação criminosa, as unidades devem partir imediatamente para o confronto direto com os criminosos.", g:false, j:"FALSO — devem relatar os detalhes ao COPOM EVITANDO O CONFRONTO DIRETO, salvo em legítima defesa; em seguida acionam-se BPRp e GTA para reforçar o cerco."},
+ {t:"O BOPE é mobilizado para a intervenção tática em situações com reféns ou explosivos, realizando varreduras no local e prisões com máxima segurança.", g:true, j:"VERDADEIRO — cap. 16.2.1."},
+ {t:"A doutrina adotada é respaldada pelo Decreto nº 33.782/2009, que institui o Gabinete de Crises no Estado de Pernambuco.", g:true, j:"VERDADEIRO — reforçada pelo uso seletivo da força e pela figura do \"primeiro interventor\"."},
+ {t:"Quando os criminosos estão homiziados no interior da agência bancária, a ocorrência deve ser classificada como de ALTO RISCO, estabelecendo-se a doutrina de gerenciamento de crise.", g:true, j:"VERDADEIRO — cap. 16.2.1."},
+ {t:"No POP nº 0015 (rebeliões em presídios), a atuação se inicia com o efetivo presente no estabelecimento prisional, que deve buscar conter a crise com os meios disponíveis.", g:true, j:"VERDADEIRO — resguardando a integridade física de policiais e internos; aciona-se o CIODS, a cadeia de comando e o Plano de Chamada."},
+ {t:"A condução operacional direta das ações nas rebeliões prisionais cabe ao GATE.", g:false, j:"FALSO — cabe ao Batalhão de Polícia de Choque (BPChoque), cujo oficial comandante reúne o Grupo de Gerenciamento de Crises."},
+ {t:"A equipe de \"tomada de cela\" é composta por policial com escudo balístico, sargento armado com pistola .40 e outro policial com espingarda calibre 12.", g:true, j:"VERDADEIRO — um dos momentos mais críticos; verbalização clara e autoritária (presos às celas, sentados, mãos na cabeça, trajando apenas cueca ou calção)."},
+ {t:"Em unidades prisionais femininas, a \"tomada de cela\" não é realizada da forma convencional, e a revista pessoal deve ser conduzida por policiais femininas, em espaço separado.", g:true, j:"VERDADEIRO — quando não houver essa possibilidade, a retirada das presas poderá ser feita por policiais masculinos, mantendo-se o restante idêntico."},
+ {t:"O POP nº 0013 parte de dois pilares: a preservação de vidas — incluindo as dos reféns, dos policiais e do causador do evento crítico (CEC) — e a aplicação da lei.", g:true, j:"VERDADEIRO — qualquer emprego da força, especialmente a letal, deve ser o último recurso."},
+ {t:"A invasão do ponto crítico pelo primeiro interventor é autorizada a qualquer momento da ocorrência.", g:false, j:"FALSO — só é autorizada em SITUAÇÕES EXTREMAS, como risco iminente de morte do refém."}
+],
+mc:[
+ {enun:"Nas ocorrências de alta complexidade, as medidas imediatas mais importantes a serem tomadas são:", alts:[
+  "Negociar, invadir, prender, comunicar e liberar.",
+  "Identificar, acionar, conter, isolar e verbalizar.",
+  "Cercar, invadir, verbalizar, negociar e prender.",
+  "Observar, aguardar, comunicar, dispersar e conter.",
+  "Identificar, negociar, invadir, isolar e prender."
+ ], g:1, j:"Alternativa B — cap. 16.2.1, item 9: identificar, acionar, conter, isolar e verbalizar."},
+ {enun:"Sobre o contato inicial do primeiro interventor com o causador do evento crítico (CEC), assinale a alternativa INCORRETA:", alts:[
+  "O contato deve ser preferencialmente verbal e em local seguro, com linguagem clara, serena e respeitosa.",
+  "O objetivo da comunicação não é negociar, mas acalmar ânimos e coletar informações úteis (número e estado dos reféns, motivações, armamento).",
+  "O policial pode se apresentar com frases como: \"Atenção, você aí dentro! Meu nome é [nome], sou policial militar. O que está acontecendo? Todos estão bem?\".",
+  "O objetivo do primeiro contato é negociar diretamente a rendição do CEC, dispensando o negociador treinado.",
+  "Caso não haja resposta, o contato deverá ser tentado novamente, sempre respeitando os protocolos de segurança."
+ ], g:3, j:"Alternativa D é a INCORRETA: o objetivo NÃO é negociar, mas estabilizar emocionalmente o autor e ganhar tempo; a negociação será conduzida a priori por NEGOCIADOR TREINADO em outra fase da ocorrência, caso evolua."},
+ {enun:"Sobre a ação de ISOLAR o ponto crítico, assinale a alternativa CORRETA:", alts:[
+  "Consiste em delimitar o local da ocorrência, interrompendo todo contato dos sequestradores e reféns com o exterior, com evacuação dos não envolvidos e definição dos perímetros interno e externo.",
+  "Consiste em impedir que os sequestradores aumentem o número de reféns.",
+  "Consiste em informar a central de operações sobre o acontecido.",
+  "Consiste no primeiro contato verbal com o CEC.",
+  "Consiste em reconhecer se é uma crise e sua modalidade."
+ ], g:0, j:"Alternativa A — cap. 16.2.1. A alternativa B descreve CONTER; a C, ACIONAR; a D, VERBALIZAR; a E, IDENTIFICAR."},
+ {enun:"Sobre os erros operacionais a serem evitados na primeira intervenção em tomada de reféns (POP nº 0013), assinale a alternativa INCORRETA:", alts:[
+  "Permitir o contato do CEC com terceiros.",
+  "Realizar concessões indevidas e agir sem proteção.",
+  "Deixar de informar a central de operações e perder o controle territorial.",
+  "Permitir a aproximação da imprensa à cena.",
+  "Divulgar imagens da ocorrência em redes sociais, desde que com autorização do comandante."
+ ], g:4, j:"Alternativa E é a INCORRETA: NENHUMA gravação, imagem ou informação deve ser divulgada em redes sociais — os registros são permitidos apenas para uso probatório; as demais alternativas são, de fato, erros a evitar."}
+],
+disc:[
+ {enun:"Explique o papel do primeiro interventor em ocorrências de tomada de reféns (POP nº 0013), desde a identificação da crise até a chegada das equipes especializadas.", linhas:"Mínimo 10 e máximo 15 linhas.", esp:[
+  ["Ações iniciais","A atuação inicia-se com a identificação da crise, a localização do ponto crítico (espaço físico dominado pelo CEC) e a confirmação da tomada de reféns, acompanhadas da imediata comunicação ao COPOM/CIODS, com detalhes que permitam o acionamento das equipes especializadas e de apoio (SAMU, Bombeiros, órgãos de trânsito)."],
+  ["Contenção e isolamento","Adotar medidas de contenção, impedindo que o CEC se desloque ou amplie a área de risco; isolar a cena com meios físicos adequados (fitas, cones, viaturas), garantindo que o autor não estabeleça contato com terceiros, ainda que visual."],
+  ["Contato inicial","Estabelecer contato com o CEC, preferencialmente verbal e em local seguro, com linguagem clara, serena e respeitosa; o objetivo não é negociar, mas acalmar ânimos e coletar informações (número e estado dos reféns, motivações, armamento) — a negociação caberá a negociador treinado."],
+  ["Levantamento técnico","Realizar levantamento minucioso do cenário (estrutura física, acessos, cômodos, posicionamento dos reféns, armas visíveis, histórico do CEC), sistematizando e repassando os dados às equipes especializadas tão logo cheguem."],
+  ["Segurança e restrições","Manter-se protegido (colete, capacete e escudo); posicionar a viatura com a retaguarda voltada para o ponto crítico; restringir o acesso de imprensa, familiares e curiosos; nenhuma imagem divulgada em redes sociais (registros só para uso probatório); a invasão do ponto crítico só é autorizada em situações extremas, como risco iminente de morte do refém."]
+ ]}
+]}
+];
+
+const TEMAS_FUTUROS = [];
+
+/* ═════════════════════ DADOS — SIMULADO (padrão 2ª AE PO - CFO 2025) ═════════════════════ */
+const simQuesitos = [
+  {tipo:"vf", rot:"1º) QUESITO", valor:"Valor: 1,0 ponto · cada assertiva vale 0,20", enun:"Com relação às infrações penais Perturbação de Sossego e Poluição Sonora, assinale as assertivas verdadeiras com (V) e as falsas com (F):", itens:[
+    {t:"A Polícia Militar tem papel relevante, atuando ostensivamente nas situações cotidianas que envolvem perturbação do sossego e poluição sonora.", g:true, j:"VERDADEIRO — cap. 12 da apostila."},
+    {t:"A poluição sonora é caracterizada pelo excesso de ruídos que afetam a saúde humana e o meio ambiente, prevista na Lei de Crimes Ambientais (art. 54, Lei 9.605/98).", g:true, j:"VERDADEIRO."},
+    {t:"A perturbação do sossego é considerada um crime ambiental.", g:false, j:"FALSO — é CONTRAVENÇÃO PENAL (art. 42 da LCP)."},
+    {t:"Segundo a OMS, qualquer som que ultrapasse 50 decibéis pode ser considerado nocivo à saúde.", g:true, j:"VERDADEIRO — cap. 12."},
+    {t:"A perturbação do sossego é uma contravenção pouco comum nos centros urbanos.", g:false, j:"FALSO — é talvez a contravenção MAIS COMUM nos centros urbanos."}
+  ]},
+  {tipo:"vf", rot:"2º) QUESITO", valor:"Valor: 1,0 ponto · cada assertiva vale 0,20", enun:"Sobre a Operação de Repressão Qualificada (ORQ), assinale as assertivas verdadeiras com (V) e as falsas com (F):", itens:[
+    {t:"A ORQ da Secretaria de Defesa Social (SDS) de Pernambuco foi criada para combater o crime organizado e promover a segurança pública no estado.", g:true, j:"VERDADEIRO — cap. 14."},
+    {t:"Entre os principais objetivos destacam-se: desarticular organizações criminosas, prevenir e reprimir a criminalidade e integrar ações de segurança.", g:true, j:"VERDADEIRO — as operações integram o Plano Estadual de Segurança Pública."},
+    {t:"A coordenação das Operações de Repressão Qualificada é de competência exclusiva da Polícia Militar.", g:false, j:"FALSO — prioritariamente a coordenação é da POLÍCIA CIVIL de Pernambuco, com colaboração das demais forças."},
+    {t:"Muitas vezes as operações incluem componentes de abordagem comunitária, visando fortalecer a confiança entre a população e as forças de segurança.", g:true, j:"VERDADEIRO — cap. 14."},
+    {t:"As Operações de Repressão Qualificada visam apenas a repressão ao crime, não tendo caráter preventivo.", g:false, j:"FALSO — visam também a PREVENÇÃO, através da presença ostensiva e da atuação estratégica em áreas críticas."}
+  ]},
+  {tipo:"vf", rot:"3º) QUESITO", valor:"Valor: 1,0 ponto · cada assertiva vale 0,20", enun:"Sobre os serviços de escolta, condução e custódia de presos (POP nº 0018), assinale (V) ou (F):", itens:[
+    {t:"Os policiais escalados para escolta devem possuir, no mínimo, um ano de experiência em atividade operacional, bom condicionamento físico e domínio de técnicas de defesa pessoal e armamento.", g:true, j:"VERDADEIRO — cap. 13 (escolta)."},
+    {t:"As viaturas de duas rodas podem ser empregadas nas escoltas, porém apenas como apoio às outras viaturas.", g:true, j:"VERDADEIRO — as escoltas devem ser realizadas prioritariamente em viaturas de quatro rodas."},
+    {t:"É permitido algemar o preso em peças ou equipamentos da viatura.", g:false, j:"FALSO — é PROIBIDO algemar o preso em peças ou equipamentos da viatura. Essa proibição foi cobrada na 2ª AE 2025 (6º quesito, alternativa E)."},
+    {t:"Nas escoltas diárias devem ser adotados percursos diferentes, a fim de dificultar e neutralizar possíveis ações de resgates ou atentados.", g:true, j:"VERDADEIRO — cap. 13.3."},
+    {t:"A custódia de preso em hospital será realizada por, no mínimo, um policial militar.", g:false, j:"FALSO — por no mínimo DOIS policiais militares (cap. 13.8)."}
+  ]},
+  {tipo:"mc", rot:"4º) QUESITO", valor:"Valor: 0,5 pontos", enun:"Relativo às contravenções penais, marque a alternativa INCORRETA:", alts:[
+    "Perturbação do sossego alheio, embriaguez em via pública e jogos de azar são considerados contravenções penais, conforme a Lei das Contravenções Penais.",
+    "As contravenções penais, embora de menor potencial ofensivo, representam desafios constantes para a Polícia Militar, que deve atuar com firmeza, legalidade e equilíbrio.",
+    "A vadiagem (art. 59 da LCP) foi revogada, não podendo mais gerar abordagem policial.",
+    "A embriaguez em via pública refere-se à permanência de indivíduos em estado de embriaguez que cause escândalo ou perturbe o ambiente público.",
+    "O exercício ilegal do comércio ambulante em locais ou horários proibidos, ou sem autorização, é alvo de fiscalização pela PM em conjunto com a fiscalização urbana."
+  ], g:2, j:"Alternativa C é a INCORRETA: a vadiagem está em desuso prático, mas AINDA VIGENTE, podendo gerar abordagem policial. (Na 2ª AE 2025, a incorreta era afirmar que jogo do bicho e caça-níqueis não são contravenções.)"},
+  {tipo:"mc", rot:"5º) QUESITO", valor:"Valor: 0,5 pontos", enun:"Considerando que o STF estabeleceu que portar até 40 gramas de maconha ou cultivar até seis plantas fêmeas será presumido como uso pessoal, não configurando tráfico de drogas, marque a alternativa CORRETA:", alts:[
+    "O efetivo da PM que abordar indivíduo portando até 40 gramas de maconha não deve encaminhar a ocorrência à delegacia, pois a conduta deixou de ser considerada como crime.",
+    "O efetivo da PM deverá encaminhar à delegacia apenas o material apreendido, não devendo conduzir o indivíduo responsável.",
+    "Considerando que os critérios do STF são de presunção relativa, o efetivo da PM poderá decidir se encaminha ou não a ocorrência à delegacia.",
+    "Um indivíduo abordado portando até 40 gramas de maconha, em todas as ocasiões, não poderá ter sua conduta classificada como tráfico de drogas.",
+    "Um indivíduo abordado portando até 40 gramas de maconha deverá ser encaminhado para a delegacia e a droga deverá ser apreendida."
+  ], g:4, j:"Alternativa E — gabarito da 2ª AE 2025. O porte para uso pessoal continua ilícito (sem sanção penal): a pessoa é encaminhada, a droga apreendida, sem prisão em flagrante; a presunção é RELATIVA (indícios podem indicar tráfico mesmo com quantidade menor), e o encaminhamento não é discricionário."},
+  {tipo:"mc", rot:"6º) QUESITO", valor:"Valor: 0,5 pontos", enun:"Marque a afirmação CORRETA no que se refere aos procedimentos a serem adotados em uma escolta policial:", alts:[
+    "Em caso de atentado ou resgate do escoltado, a equipe deverá parar o deslocamento para se abrigar e defender a integridade física dos componentes e do preso.",
+    "O efetivo não deve ter conhecimento antecipado do planejamento do itinerário, a fim de dificultar ações de resgate.",
+    "Antes de iniciar a escolta, o comandante da guarnição deverá informar, obrigatoriamente, ao Comandante de sua unidade os dados pessoais do conduzido e o início do deslocamento.",
+    "Na chegada ao destino final, a viatura deve ser posicionada coberta e abrigada, de forma a deixar o local rapidamente se necessário, preferencialmente de ré para o prédio e de frente para uma via ou rota de fuga.",
+    "No início da escolta, deverá ser realizada a busca pessoal e o emprego das algemas em peças ou equipamentos da viatura."
+  ], g:3, j:"Alternativa D — gabarito da 2ª AE 2025. Em atentado, a equipe MANTÉM o deslocamento buscando local de abrigo; o planejamento do itinerário deve ser de conhecimento dos policiais da escolta; a comunicação obrigatória é ao CIODS/COPOM; e é PROIBIDO algemar o preso em peças da viatura."},
+  {tipo:"mc", rot:"7º) QUESITO", valor:"Valor: 0,5 pontos", enun:"O Estatuto do Desarmamento (Lei nº 10.826/2003) estabelece diversas condutas criminosas relacionadas ao uso, posse e comércio de armas de fogo. Marque a afirmação CORRETA:", alts:[
+    "O POP nº 0017 divide as ocorrências em quatro categorias principais: porte de arma putativo, porte sem agressividade iminente, agressão iminente e agressão atual em curso.",
+    "Apenas o diretor da Diretoria de Veteranos e Pensionistas (DVP) será a autoridade competente para permitir o porte de arma de fogo dos policiais militares inativos.",
+    "O documento de identificação do indivíduo e a apresentação do porte de arma e do Certificado de Registro (CRAF) são etapas fundamentais para a liberação do abordado.",
+    "A posse ilegal (art. 14) refere-se a ter a arma em locais públicos ou acessíveis ao público.",
+    "Diante de suspeito armado sem agressividade iminente, a abordagem dispensa base legal e cautela."
+  ], g:2, j:"Alternativa C — gabarito da 2ª AE 2025. São TRÊS categorias; a autoridade dos inativos é o diretor da DIP; o art. 14 é o PORTE ilegal (a posse irregular é o art. 12); e a abordagem deve ser feita com cautela e base legal."},
+  {tipo:"disc", rot:"8º) QUESITO", valor:"Valor: 1,5 pontos", enun:"No tocante à atuação do policiamento em uma manifestação ou protesto, qual é a diferença entre intervenção direta e intervenção indireta?", linhas:"Mínimo 05 e máximo 10 linhas. (Questão da 2ª AE de PO — CFO 2025, 8º quesito)", esp:[
+    ["Intervenção indireta","Realizada por meio de ação de PRESENÇA policial, ACOMPANHAMENTO, CONTENÇÃO ou NEGOCIAÇÃO — gestão de multidões sem emprego de força direta, transmitindo sensação de segurança, coletando informações e estabelecendo mediação com lideranças (POP nº 0049)."],
+    ["Intervenção direta","Realizada por meio das táticas de REPELIR (fazer a massa recuar até limite pré-definido, afastando-a temporariamente) ou DISPERSAR (deslocar e desagregar a massa, impedindo o reagrupamento, com retirada definitiva do local)."],
+    ["Critério de emprego","Inicia-se pela intervenção indireta; caso ocorra mudança comportamental da manifestação da forma pacífica para a forma hostil, emprega-se a intervenção direta, com o desiderato de assegurar o cumprimento das leis e determinações das autoridades."]
+  ]},
+  {tipo:"disc", rot:"9º) QUESITO", valor:"Valor: 1,5 pontos", enun:"Nas ocorrências de alta complexidade, as medidas imediatas mais importantes a serem tomadas são: identificar, acionar, conter, isolar e verbalizar. Defina cada uma dessas medidas.", linhas:"Mínimo 07 e máximo 15 linhas.", esp:[
+    ["Identificar","Reconhecer se é uma crise e sua modalidade — ato dos mais importantes, pois torna o apoio mais eficiente no processo de comando e controle."],
+    ["Acionar","Simultaneamente à contenção, o primeiro policial informa a central de operações: ato criminoso cometido, quantidade de perpetradores, armas e reféns, local exato e melhores vias de acesso."],
+    ["Conter","Evitar que a crise se alastre: impedir que os sequestradores aumentem o número de reféns, ampliem a área sob seu controle, conquistem posições mais seguras ou tenham acesso a mais armamento e vias de escape — impedimento do deslocamento do ponto crítico."],
+    ["Isolar","Delimitar o local da ocorrência, interrompendo todo contato dos sequestradores e reféns com o exterior; a polícia passa a ser o único veículo de comunicação; inclui a evacuação de transeuntes e trabalhadores e a definição dos perímetros interno e externo."],
+    ["Verbalizar","Estabelecer o primeiro contato — o mais tenso (nos 45 primeiros minutos há maior probabilidade de ofensas, disparos e agressões aos reféns); o objetivo é acalmar o perpetrador, trazendo-o a um nível de racionalidade considerado normal, até a chegada do negociador treinado."]
+  ]},
+  {tipo:"disc", rot:"10º) QUESITO", valor:"Valor: 2,0 pontos", enun:"Sobre as rebeliões em estabelecimentos prisionais (POP nº 0015 da PMPE), explique como se dá o início da atuação policial, quem assume a condução operacional das ações e quais são as prioridades durante a intervenção, descrevendo a composição da equipe de \"tomada de cela\".", linhas:"Mínimo 10 e máximo 15 linhas.", esp:[
+    ["Início da atuação","A atuação se inicia com o efetivo presente no estabelecimento prisional, que deve buscar conter a crise com os meios disponíveis, resguardando a integridade física de policiais e internos; a partir daí, aciona-se o CIODS, a cadeia de comando e o Plano de Chamada do efetivo de apoio."],
+    ["Condução operacional","O Batalhão de Polícia de Choque (BPChoque) assume a condução operacional direta das ações; o oficial comandante reúne o Grupo de Gerenciamento de Crises, diagnostica a situação, define equipes e mantém contato com autoridades; são levantadas informações cruciais (causas da rebelião, presos, reféns, armamento, fugas, planta física, alimento e perfil dos líderes)."],
+    ["Prioridades","Durante a intervenção operacional, a prioridade é manter a ordem, preservar vidas e retomar o controle da unidade prisional."],
+    ["Tomada de cela","Um dos momentos mais críticos: equipe composta por policial com escudo balístico, sargento armado com pistola .40 e outro policial com espingarda calibre 12; verbalização clara e autoritária (presos às celas, sentados, mãos na cabeça, trajando apenas cueca ou calção); avanço progressivo nos pavilhões com cobertura lateral e frontal dos escudeiros."]
+  ]}
+];
+
+/* ═════════════════════ RENDER (mesmo motor da plataforma GPGA) ═════════════════════ */
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const LETRAS = ["A","B","C","D","E"];
+const respostas = {}, autoScores = {};
+
+function vfItemHtml(id, txt){
+  return `<div class="vf-item" id="${id}">
+    <div class="vf-btns">
+      <button class="vf-btn" onclick="selVF('${id}','V',this)">V</button>
+      <button class="vf-btn" onclick="selVF('${id}','F',this)">F</button>
+    </div>
+    <div style="flex:1"><span class="vf-txt">${txt}</span><div class="just" id="${id}-j"></div></div>
+  </div>`;
+}
+function mcHtml(id, q, rot, valor){
+  return `<div class="q" id="${id}">
+    <div class="enun">${valor?`<span class="valor">${valor}</span>`:""}<b class="rot">${rot}</b> ${esc(q.enun)}</div>
+    ${q.alts.map((a,i)=>`<label class="alt" id="${id}-a${i}"><input type="radio" name="${id}" value="${i}"><span class="letra">${LETRAS[i]})</span><span>${esc(a)}</span></label>`).join("")}
+    <div class="just-mc" id="${id}-j"></div>
+  </div>`;
+}
+function discHtml(id, q, rot, valor){
+  return `<div class="q disc" id="${id}">
+    <div class="enun">${valor?`<span class="valor">${valor}</span>`:""}<b class="rot">${rot}</b> ${esc(q.enun)}</div>
+    <div class="linhas">${esc(q.linhas)}</div>
+    <textarea placeholder="Escreva sua resposta aqui..."></textarea>
+    <div class="espelho" id="${id}-esp">
+      <div class="esp-tit">Modelo de resposta (espelho)</div>
+      ${q.esp.map(([t,x])=>`<div class="topico"><b>${esc(t)}.</b> ${esc(x)}</div>`).join("")}
+    </div>
+    <div class="auto" id="${id}-auto">
+      <b>Autoavaliação:</b>
+      <button onclick="autoAv('${id}',0,this)">Não atingi (0%)</button>
+      <button onclick="autoAv('${id}',0.5,this)">Parcial (50%)</button>
+      <button onclick="autoAv('${id}',1,this)">Atingi (100%)</button>
+    </div>
+  </div>`;
+}
+
+function renderTemas(){
+  const sel = document.getElementById("temasel");
+  const cont = document.getElementById("temas-conteudo");
+  sel.innerHTML = TEMAS.map((t,i)=>`<button class="tpill ${i===0?"on":""}" onclick="mostraTema(${i},this)">Tema ${t.num}</button>`).join("")
+    + TEMAS_FUTUROS.map(t=>`<button class="tpill" disabled title="${esc(t.titulo)} — próxima etapa">Tema ${t.num} ⏳</button>`).join("");
+  cont.innerHTML = TEMAS.map((t,ti)=>`
+    <div class="tema-bloco ${ti===0?"on":""}" id="tema-${ti}">
+      <div class="tema-cab"><div class="n">${t.num}</div><div class="t"><b>${esc(t.titulo)}</b><span>Base legal: ${esc(t.base)}</span></div></div>
+      <div class="sec-tit"><span class="badge b-azul">Parte 1 · ${t.vf.length} questões V ou F</span><span class="linha"></span></div>
+      <div class="q">${t.vf.map((q,i)=>vfItemHtml("t"+ti+"vf"+i, (i+1)+". "+esc(q.t))).join("")}</div>
+      <div class="sec-tit"><span class="badge b-cinza">Parte 2 · ${t.mc.length} múltipla escolha</span><span class="linha"></span></div>
+      ${t.mc.map((q,i)=>mcHtml("t"+ti+"mc"+i, q, (i+1)+"ª) QUESTÃO", "")).join("")}
+      <div class="sec-tit"><span class="badge b-dourado">Parte 3 · ${t.disc.length} discursiva${t.disc.length>1?"s":""} com espelho</span><span class="linha"></span></div>
+      ${t.disc.map((q,i)=>discHtml("t"+ti+"d"+i, q, (i+1)+"ª) DISCURSIVA", "")).join("")}
+      <div class="acoes">
+        <button class="btn-verificar" onclick="verificarTema(${ti})">Verificar gabarito do Tema ${t.num}</button>
+        <span class="placar" id="placar-t${ti}"></span>
+      </div>
+    </div>`).join("");
+}
+function mostraTema(i, btn){
+  document.querySelectorAll("#temasel .tpill").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");
+  document.querySelectorAll(".tema-bloco").forEach(b=>b.classList.remove("on"));
+  document.getElementById("tema-"+i).classList.add("on");
+}
+
+document.getElementById("sim-quesitos").innerHTML = simQuesitos.map((q,qi)=>{
+  if(q.tipo==="vf"){
+    return `<div class="q"><div class="enun"><span class="valor">${q.valor}</span><b class="rot">${q.rot}</b> ${esc(q.enun)}</div>
+      ${q.itens.map((it,ii)=>vfItemHtml("s"+qi+"i"+ii, esc(it.t))).join("")}</div>`;
+  }
+  if(q.tipo==="mc") return mcHtml("smc"+qi, q, q.rot, q.valor);
+  return discHtml("sd"+qi, q, q.rot, q.valor);
+}).join("");
+renderTemas();
+
+/* ═════════════════════ INTERAÇÃO / CORREÇÃO ═════════════════════ */
+function selVF(id, v, btn){
+  respostas[id]=v;
+  btn.parentElement.querySelectorAll(".vf-btn").forEach(b=>b.classList.remove("sel"));
+  btn.classList.add("sel");
+}
+function autoAv(id, f, btn){
+  autoScores[id]=f;
+  btn.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("sel"));
+  btn.classList.add("sel");
+  if(simVerificado) atualizarNotaSim();
+}
+function corrigeVF(id, q){
+  const el = document.getElementById(id);
+  const resp = respostas[id];
+  const certo = resp === (q.g ? "V":"F");
+  el.classList.remove("ok","err");
+  el.classList.add(certo && resp ? "ok":"err");
+  document.getElementById(id+"-j").textContent = q.j + (resp? "" : " (Não respondida.)");
+  return certo && !!resp;
+}
+function corrigeMC(id, q){
+  const sel = document.querySelector(`input[name="${id}"]:checked`);
+  const j = document.getElementById(id+"-j");
+  q.alts.forEach((_,i)=>{
+    const a = document.getElementById(id+"-a"+i);
+    a.classList.remove("certa","errada-sel");
+    if(i===q.g) a.classList.add("certa");
+  });
+  let certo=false;
+  if(sel){ if(+sel.value===q.g) certo=true; else document.getElementById(id+"-a"+sel.value).classList.add("errada-sel"); }
+  j.style.display="block";
+  j.style.background = certo? "var(--verde-bg)":"var(--borgonha-bg)";
+  j.style.borderLeft = "3px solid "+(certo? "var(--certo)":"var(--errado)");
+  j.textContent = "GABARITO: "+LETRAS[q.g]+". "+q.j + (sel? "":" (Não respondida.)");
+  return certo;
+}
+function revelaDisc(id){
+  document.getElementById(id+"-esp").classList.add("mostrar");
+  document.getElementById(id+"-auto").classList.add("mostrar-flex");
+}
+function verificarTema(ti){
+  const t = TEMAS[ti];
+  let pts=0, tot=t.vf.length+t.mc.length;
+  t.vf.forEach((q,i)=>{ if(corrigeVF("t"+ti+"vf"+i,q)) pts++; });
+  t.mc.forEach((q,i)=>{ if(corrigeMC("t"+ti+"mc"+i,q)) pts++; });
+  t.disc.forEach((q,i)=>revelaDisc("t"+ti+"d"+i));
+  const p=document.getElementById("placar-t"+ti);
+  p.style.display="inline";
+  p.innerHTML = `Objetivas: <b>${pts}</b> / ${tot} · compare suas discursivas com os espelhos`;
+}
+
+let simVerificado=false;
+function verificarSim(){
+  simVerificado=true;
+  pararTimer();
+  atualizarNotaSim();
+}
+function atualizarNotaSim(){
+  let nota=0;
+  simQuesitos.forEach((q,qi)=>{
+    if(q.tipo==="vf"){
+      q.itens.forEach((it,ii)=>{ if(corrigeVF("s"+qi+"i"+ii,it)) nota+=0.2; });
+    } else if(q.tipo==="mc"){
+      if(corrigeMC("smc"+qi,q)) nota+=0.5;
+    } else {
+      revelaDisc("sd"+qi);
+      const v = parseFloat(q.valor.replace(/[^\d,]/g,"").replace(",","."));
+      nota += (autoScores["sd"+qi]||0)*v;
+    }
+  });
+  const p=document.getElementById("placar-sim");
+  p.style.display="inline";
+  p.innerHTML = `Nota: <b>${nota.toFixed(2).replace(".",",")}</b> / 10,00 <span style="font-weight:400; font-size:11.5px">(discursivas por autoavaliação — marque abaixo de cada uma)</span>`;
+}
+
+/* ═════════════════════ TIMER ═════════════════════ */
+let restante=100*60, timerInt=null;
+function fmt(s){const m=Math.floor(s/60), ss=s%60; return String(m).padStart(2,"0")+":"+String(ss).padStart(2,"0");}
+function iniciarTimer(){
+  if(timerInt) return;
+  document.getElementById("btn-timer").textContent="Prova em andamento";
+  timerInt=setInterval(()=>{
+    restante--;
+    document.getElementById("timer").textContent=fmt(Math.max(restante,0));
+    if(restante<=0){ pararTimer(); alert("Tempo esgotado! (100 min) Clique em Verificar gabarito."); }
+  },1000);
+}
+function pararTimer(){ if(timerInt){clearInterval(timerInt); timerInt=null; document.getElementById("btn-timer").textContent="Prova encerrada";} }
+
+/* ═════════════════════ ABAS ═════════════════════ */
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+  t.classList.add("on");
+  document.querySelectorAll(".aba").forEach(a=>a.classList.remove("on"));
+  document.getElementById("aba-"+t.dataset.aba).classList.add("on");
+}));
+</script>
+</body>
+</html>
