@@ -120,7 +120,8 @@ async function main() {
     await prisma.questao.upsert({ where: { hash }, update: base, create: base })
     exists ? u++ : c++
   }
-  let fc = 0, fcBase = await prisma.flashcard.count({ where: { materia: MAT } })
+  let fc = 0
+  const fcBase = await prisma.flashcard.count({ where: { materia: MAT } })
   for (const card of CARDS) {
     const hash = createHash("sha1").update(`${MAT}|${card.modulo}|${card.frente}`).digest("hex")
     await prisma.flashcard.upsert({ where: { hash }, update: { verso: card.verso }, create: { materia: MAT, modulo: card.modulo, frente: card.frente, verso: card.verso, ordem: fcBase + fc, hash } })

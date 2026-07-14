@@ -135,6 +135,41 @@ export function PermutasClient({
     setTimeout(() => setToast((t) => (t === msg ? null : t)), 2400)
   }
 
+  const hojeISO = dOnly(new Date().toISOString())
+
+  function tipoDiaLocal(iso: string): "util" | "fds" {
+    return dias.find((d) => d.data === dOnly(iso))?.tipo ?? "util"
+  }
+
+  // Hooks precisam vir antes de qualquer return condicional (regras dos Hooks).
+  // Usam acesso opcional a `me`; se não houver grupo de plantão, o componente
+  // retorna o aviso logo abaixo e esses memos simplesmente não são usados.
+  const datasComprometidas = useMemo(() => {
+    const set = new Set<string>()
+    for (const s of [...solicitacoes.enviadas, ...solicitacoes.recebidas]) {
+      if (s.status === "recusada" || s.status === "cancelada") continue
+      for (const p of s.participantes) {
+        if (p.matricula === me?.matricula && (p.status === "pendente" || p.status === "aceito")) {
+          set.add(dOnly(p.cedeData))
+        }
+      }
+    }
+    return set
+  }, [solicitacoes, me?.matricula])
+
+  // Meus dias de plantão futuros, ainda livres (não amarrados a permuta)
+  const meusDiasLivres = useMemo(
+    () => dias.filter((d) => d.grupoPlantao === me?.grupoPlantao && d.data >= hojeISO && !datasComprometidas.has(d.data)),
+    [dias, me?.grupoPlantao, hojeISO, datasComprometidas]
+  )
+
+  const ofertasVisiveis = useMemo(() => {
+    return ofertas
+      .filter((o) => o.user.grupoPlantao !== me?.grupoPlantao)
+      .filter((o) => filtroTipo === "todos" || tipoDiaLocal(o.cedeData) === filtroTipo)
+      .sort((a, b) => dOnly(a.cedeData).localeCompare(dOnly(b.cedeData)))
+  }, [ofertas, me?.grupoPlantao, filtroTipo, dias])
+
   if (!me?.grupoPlantao) {
     return (
       <div style={{ maxWidth: 560, margin: "40px auto", textAlign: "center", padding: 24 }}>
@@ -154,30 +189,6 @@ export function PermutasClient({
   const meuGrupo = me.grupoPlantao
   const meuMat = me.matricula
   const meId = me.id
-  const hojeISO = dOnly(new Date().toISOString())
-
-  function tipoDiaLocal(iso: string): "util" | "fds" {
-    return dias.find((d) => d.data === dOnly(iso))?.tipo ?? "util"
-  }
-
-  const datasComprometidas = useMemo(() => {
-    const set = new Set<string>()
-    for (const s of [...solicitacoes.enviadas, ...solicitacoes.recebidas]) {
-      if (s.status === "recusada" || s.status === "cancelada") continue
-      for (const p of s.participantes) {
-        if (p.matricula === meuMat && (p.status === "pendente" || p.status === "aceito")) {
-          set.add(dOnly(p.cedeData))
-        }
-      }
-    }
-    return set
-  }, [solicitacoes, meuMat])
-
-  // Meus dias de plantão futuros, ainda livres (não amarrados a permuta)
-  const meusDiasLivres = useMemo(
-    () => dias.filter((d) => d.grupoPlantao === meuGrupo && d.data >= hojeISO && !datasComprometidas.has(d.data)),
-    [dias, meuGrupo, hojeISO, datasComprometidas]
-  )
 
   function statusParaData(iso: string): { status: string; contraparte: string } | null {
     for (const s of [...solicitacoes.enviadas, ...solicitacoes.recebidas]) {
@@ -214,14 +225,6 @@ export function PermutasClient({
     })
     showToast(publicada ? "Dia removido da troca" : "Dia marcado — já aparece pra turma")
   }
-
-  // ── Propor troca a partir de um dia disponível ─────────────────
-  const ofertasVisiveis = useMemo(() => {
-    return ofertas
-      .filter((o) => o.user.grupoPlantao !== meuGrupo)
-      .filter((o) => filtroTipo === "todos" || tipoDiaLocal(o.cedeData) === filtroTipo)
-      .sort((a, b) => dOnly(a.cedeData).localeCompare(dOnly(b.cedeData)))
-  }, [ofertas, meuGrupo, filtroTipo, dias])
 
   function meusDiasParaDar(tipo: "util" | "fds") {
     return meusDiasLivres.filter((d) => d.tipo === tipo)
