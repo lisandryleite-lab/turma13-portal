@@ -17,7 +17,8 @@ export const authConfig: NextAuthConfig = {
 
       if (isStatic || isApi || isPublic) return true
 
-      // Treino de Armamento é temporário: após 17/07 a URL direta some (mesmo logado).
+      // Treino de Armamento é temporário: passado o prazo (TREINO_ARMAMENTO_ATE),
+      // a URL direta some mesmo para quem está logado.
       if (pathname.startsWith(TREINO_ARMAMENTO_BASE) && !treinoArmamentoDisponivel()) {
         return NextResponse.redirect(new URL("/inicio", request.url))
       }
