@@ -8,6 +8,7 @@ type Aluno = { id: string; matricula: number; nomeGuerra: string; turma13: boole
 type Pagamento = {
   id: string
   userId: string
+  valor: number | null
   pago: boolean
   dataPagamento: string | Date | null
   declaradoPago: boolean
@@ -35,6 +36,11 @@ type Cota = {
 const fmtMoeda = (v: number) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
 const fmtData = (d: string | Date | null) => (d ? new Date(d).toLocaleDateString("pt-BR") : "")
 
+// Valor efetivo de um pagamento: o individual (cota de valor variável) sobrepõe o valor da cota.
+const valorPag = (c: Cota, p: Pagamento) => (p.valor != null ? p.valor : c.valor)
+// A cota tem valor por pessoa (algum pagamento com valor individual próprio)?
+const temValorVariavel = (c: Cota) => c.pagamentos.some(p => p.valor != null)
+
 function Metrica({ label, valor, bg = "#f4f7fc", border = "#e8edf6", labelColor = "#93a1ba", valorColor = "#1c2b45" }:
   { label: string; valor: string; bg?: string; border?: string; labelColor?: string; valorColor?: string }) {
   return (
@@ -60,6 +66,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
   const [participantes, setParticipantes] = useState<Set<string>>(new Set(alunosT13.map(a => a.id)))
   const [addAluno, setAddAluno] = useState<Record<string, string>>({})
   const [obsCobranca, setObsCobranca] = useState<Record<string, string>>({}) // observação por cota p/ a mensagem
+  const [driveEdit, setDriveEdit] = useState<Record<string, string>>({}) // edição do link do Drive por cota
 
   function linkPagamento(token: string) {
     return typeof window !== "undefined" ? `${window.location.origin}/pagar/${token}` : `/pagar/${token}`
@@ -80,7 +87,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
   function mensagemCobranca(c: Cota) {
     return [
       `*Cobrança — ${c.titulo}* (Turma 13)`,
-      `Valor: ${fmtMoeda(c.valor)}`,
+      temValorVariavel(c) ? `Valor: individual (ache seu nome no link)` : `Valor: ${fmtMoeda(c.valor)}`,
       c.prazo ? `Prazo: ${fmtData(c.prazo)}` : "",
       c.responsavel ? `Pagar para: ${c.responsavel}` : "",
       c.instrucoes || "",
@@ -145,6 +152,17 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
     setCotas(prev => prev.filter(c => c.id !== id))
   }
 
+  async function salvarDrive(c: Cota) {
+    const url = (driveEdit[c.id] ?? c.driveFolderUrl ?? "").trim()
+    await fetch("/api/financeiro/cotas", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: c.id, driveFolderUrl: url }),
+    })
+    setCotas(prev => prev.map(x => x.id === c.id ? { ...x, driveFolderUrl: url || null } : x))
+    setDriveEdit(prev => { const n = { ...prev }; delete n[c.id]; return n })
+  }
+
   async function encerrarCota(c: Cota) {
     await fetch("/api/financeiro/cotas", {
       method: "PATCH",
@@ -179,7 +197,8 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
   for (const c of cotasAtivas) {
     for (const p of c.pagamentos) {
       totalPessoas++
-      if (p.pago) { pagosPessoas++; recebido += c.valor } else aReceber += c.valor
+      const v = valorPag(c, p)
+      if (p.pago) { pagosPessoas++; recebido += v } else aReceber += v
     }
   }
   const pctResumo = totalPessoas ? Math.round((pagosPessoas / totalPessoas) * 100) : 0
@@ -327,8 +346,9 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
         const total = c.pagamentos.length
         const pct = total > 0 ? Math.round((pagos / total) * 100) : 0
         const quitada = total > 0 && pagos === total
-        const vTotal = c.valor * total
-        const vArrecadado = c.valor * pagos
+        const variavel = temValorVariavel(c)
+        const vTotal = c.pagamentos.reduce((s, p) => s + valorPag(c, p), 0)
+        const vArrecadado = c.pagamentos.reduce((s, p) => s + (p.pago ? valorPag(c, p) : 0), 0)
         const vFalta = vTotal - vArrecadado
         const aberta = expandida === c.id
         const soFaltaC = soFalta[c.id]
@@ -354,7 +374,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
               </div>
               {/* Métricas */}
               <div className="hidden sm:flex gap-2 shrink-0 flex-wrap justify-end" style={{ maxWidth: 420 }}>
-                <Metrica label="Individual" valor={fmtMoeda(c.valor)} />
+                <Metrica label="Individual" valor={variavel ? "vários" : fmtMoeda(c.valor)} />
                 <Metrica label="Total" valor={fmtMoeda(vTotal)} />
                 <Metrica label="Arrecadado" valor={fmtMoeda(vArrecadado)} bg="#eafaf1" border="#cdeedb" labelColor="#3a9d6d" valorColor="#1f9d63" />
                 <Metrica label="Falta" valor={fmtMoeda(vFalta)} bg="#fdf0ec" border="#f6d5c9" labelColor="#c76b4e" valorColor="#d6553a" />
@@ -366,7 +386,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
               <div className="px-4 pb-4 pt-3" style={{ borderTop: "1px solid #eef2f8" }}>
                 {/* Métricas no mobile */}
                 <div className="flex sm:hidden gap-2 flex-wrap mb-3">
-                  <Metrica label="Individual" valor={fmtMoeda(c.valor)} />
+                  <Metrica label="Individual" valor={variavel ? "vários" : fmtMoeda(c.valor)} />
                   <Metrica label="Total" valor={fmtMoeda(vTotal)} />
                   <Metrica label="Arrecadado" valor={fmtMoeda(vArrecadado)} bg="#eafaf1" border="#cdeedb" labelColor="#3a9d6d" valorColor="#1f9d63" />
                   <Metrica label="Falta" valor={fmtMoeda(vFalta)} bg="#fdf0ec" border="#f6d5c9" labelColor="#c76b4e" valorColor="#d6553a" />
@@ -415,6 +435,18 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
 
                 )}
 
+                {podeGerir(c) && (
+                  <div className="flex items-center gap-2 mb-3">
+                    <input value={driveEdit[c.id] ?? c.driveFolderUrl ?? ""} onChange={e => setDriveEdit(prev => ({ ...prev, [c.id]: e.target.value }))}
+                      placeholder="📁 Link da pasta do Google Drive (comprovantes)" type="url"
+                      className="flex-1 border rounded-lg px-2 py-1.5 text-xs" style={{ borderColor: "#dde4ef" }} />
+                    <button onClick={() => salvarDrive(c)}
+                      className="text-xs font-bold text-white px-3 py-1.5 rounded-lg shrink-0" style={{ background: "#14294e" }}>
+                      Salvar link
+                    </button>
+                  </div>
+                )}
+
                 {/* Grade densa de participantes */}
                 <div className="grid gap-1.5" style={{ gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))" }}>
                   {lista.map(p => (
@@ -427,6 +459,7 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
                       </span>
                       <span className="text-[11px] font-bold shrink-0" style={{ color: "#9aa8bf", minWidth: 24 }}>{p.user.matricula}</span>
                       <span className="text-[12.5px] truncate flex-1" style={{ color: p.pago ? "#1f7d51" : "#3c4a63" }}>{p.user.nomeGuerra}</span>
+                      {variavel && <span className="text-[11px] font-bold shrink-0" style={{ color: p.pago ? "#1f7d51" : "#6b7a94" }}>{fmtMoeda(valorPag(c, p))}</span>}
                       {!p.pago && p.declaradoPago && <span title={p.observacao || "declarou que pagou"} className="text-[11px] shrink-0" style={{ color: "#e6b23e" }}>●</span>}
                       {p.pago && c.driveFolderUrl && (
                         <a href={c.driveFolderUrl} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}

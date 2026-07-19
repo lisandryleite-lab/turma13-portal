@@ -41,7 +41,7 @@ export default async function PagarPage({ params }: { params: Promise<{ token: s
         <h1 className="text-xl font-bold text-slate-900 mt-1">{cota.titulo}</h1>
         <p className="text-slate-500 text-sm mt-1">{pag.user.matricula} — {pag.user.nomeGuerra}</p>
         <div className="my-5 text-center">
-          <p className="text-3xl font-bold" style={{ color: "var(--azul-profundo, #0B2D5E)" }}>{fmtMoeda(cota.valor)}</p>
+          <p className="text-3xl font-bold" style={{ color: "var(--azul-profundo, #0B2D5E)" }}>{fmtMoeda(pag.valor ?? cota.valor)}</p>
           {cota.prazo && <p className="text-xs text-slate-400 mt-1">Prazo: {fmtData(cota.prazo)}</p>}
         </div>
         {cota.responsavel && <p className="text-sm text-slate-600">Pagar para: <span className="font-semibold">{cota.responsavel}</span></p>}

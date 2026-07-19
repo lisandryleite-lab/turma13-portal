@@ -452,6 +452,7 @@ model PagamentoCota {
   id            String    @id @default(cuid())
   cotaId        String
   userId        String
+  valor         Float?    // valor individual (sobrepõe cota.valor) — p/ cotas de valor variável por pessoa
   pago          Boolean   @default(false) // confirmado pelo tesoureiro
   dataPagamento DateTime?
   declaradoPago Boolean   @default(false) // o aluno declarou "já fiz o Pix" (via link público) — aguarda confirmação

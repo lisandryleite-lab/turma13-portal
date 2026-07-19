@@ -20,12 +20,16 @@ export default async function PagarCotaColetivo({ params }: { params: Promise<{ 
   })
   if (!cota) notFound()
 
+  const variavel = cota.pagamentos.some(p => p.valor != null)
+  const total = cota.pagamentos.reduce((s, p) => s + (p.valor ?? cota.valor), 0)
+
   const pessoas: Pessoa[] = cota.pagamentos.map(p => ({
     token: p.token,
     nome: p.user.nomeGuerra,
     matricula: p.user.matricula,
     pago: p.pago,
     declaradoPago: p.declaradoPago,
+    detalhe: variavel ? fmtMoeda(p.valor ?? cota.valor) : undefined,
   }))
 
   return (
@@ -36,7 +40,14 @@ export default async function PagarCotaColetivo({ params }: { params: Promise<{ 
         </p>
         <h1 className="text-xl font-bold text-slate-900 mt-1">{cota.titulo}</h1>
         <div className="my-4 text-center">
-          <p className="text-3xl font-bold" style={{ color: "var(--azul-profundo, #0B2D5E)" }}>{fmtMoeda(cota.valor)}</p>
+          {variavel ? (
+            <>
+              <p className="text-3xl font-bold" style={{ color: "var(--azul-profundo, #0B2D5E)" }}>{fmtMoeda(total)}</p>
+              <p className="text-xs text-slate-500 mt-1">Valor individual — ache seu nome na lista abaixo</p>
+            </>
+          ) : (
+            <p className="text-3xl font-bold" style={{ color: "var(--azul-profundo, #0B2D5E)" }}>{fmtMoeda(cota.valor)}</p>
+          )}
           {cota.prazo && <p className="text-xs text-slate-400 mt-1">Prazo: {fmtData(cota.prazo)}</p>}
         </div>
         {cota.responsavel && <p className="text-sm text-slate-600">Pagar para: <span className="font-semibold">{cota.responsavel}</span></p>}
