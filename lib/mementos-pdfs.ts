@@ -23,6 +23,10 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
     { file: "IG-2.pdf", label: "Parte II" },
     { file: "IG-3.pdf", label: "Parte III" },
   ],
+  LPMO: [
+    { file: "LPMO.pdf", label: "Assunto 1" },
+    { file: "LPMO-2.pdf", label: "Assunto 2" },
+  ],
   GRAPP: [
     { file: "GRAPP.pdf", label: "Pernambuco Imortal" },
   ],
@@ -77,5 +81,6 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
   TCEM: [
     { file: "TCEM-1.pdf", label: "Parte I" },
     { file: "TCEM-2.pdf", label: "Parte II" },
+    { file: "TCEM-3.pdf", label: "Memento Resumido" },
   ],
 }
