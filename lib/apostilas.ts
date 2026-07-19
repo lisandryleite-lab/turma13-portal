@@ -11,6 +11,11 @@ export const APOSTILA_PARTS: Record<string, ApostilaPart[]> = {
     { file: "AM-3.pdf", label: "Fundamentos do Tiro Policial" },
     { file: "AM-4.pdf", label: "Procedimentos do Tiro Policial" },
     { file: "AM-5.pdf", label: "Munição e Balística" },
+    // Um armamento por apostila — decks do Maj PM Fragoso (ACIDES).
+    { file: "AM-6.pdf", label: "Revólver e Pistola" },
+    { file: "AM-7.pdf", label: "MT 40 FAMAE e SMT 40" },
+    { file: "AM-8.pdf", label: "Fuzil FAL, PARA-FAL e SAR" },
+    { file: "AM-9.pdf", label: "Espingarda Cal .12" },
   ],
   DPPM: [
     { file: "DPPM-1.pdf", label: "Direito Penal Militar" },
