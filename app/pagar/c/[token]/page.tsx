@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
+import { emLevantamento } from "@/lib/formulario-cota"
 import { ListaCobranca, type Pessoa } from "../../lista-cobranca"
 
 export const dynamic = "force-dynamic"
@@ -19,6 +20,8 @@ export default async function PagarCotaColetivo({ params }: { params: Promise<{ 
     },
   })
   if (!cota) notFound()
+  // Ainda em levantamento: quem cair aqui vai pro formulário, não pra cobrança.
+  if (emLevantamento(cota.formulario, cota.instrucoes)) redirect(`/pedido/c/${token}`)
 
   const variavel = cota.pagamentos.some(p => p.valor != null)
   const total = cota.pagamentos.reduce((s, p) => s + (p.valor ?? cota.valor), 0)

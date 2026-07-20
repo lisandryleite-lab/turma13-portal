@@ -2,7 +2,7 @@ import type { NextAuthConfig } from "next-auth"
 import { NextResponse } from "next/server"
 import { TREINO_ARMAMENTO_HREF, treinoArmamentoDisponivel } from "@/lib/treino-armamento"
 
-const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/pagar", "/api/pagar"]
+const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/pagar", "/api/pagar", "/pedido", "/api/pedido"]
 const TREINO_ARMAMENTO_BASE = TREINO_ARMAMENTO_HREF.replace(/\/index\.html$/, "") // "/treino-armamento"
 
 export const authConfig: NextAuthConfig = {

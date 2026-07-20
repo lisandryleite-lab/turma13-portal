@@ -33,10 +33,10 @@ async function main() {
         tipo: "extra",
         valor: VALOR,
         responsavel: RESPONSAVEL,
-        instrucoes:
-          "LEVANTAMENTO DE QUANTIDADE — ainda não pague nada.\n" +
-          "Preencha seu pedido abaixo (tipo sanguíneo, nome de guerra, número, modelo, tamanho e versão).\n" +
-          "As instruções de pagamento serão divulgadas depois, quando o total fechar com o fornecedor.",
+        // instrucoes fica VAZIO de propósito: é o que mantém a cota na fase de
+        // levantamento (ver emLevantamento em lib/formulario-cota.ts). Quando o
+        // responsável preencher o Pix aqui, ela vira cobrança sozinha.
+        instrucoes: null,
         formulario: FORMULARIO_CAMISA,
         pagamentos: { create: alunos.map(a => ({ userId: a.id })) },
       },

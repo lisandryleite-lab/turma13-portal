@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
+import { emLevantamento } from "@/lib/formulario-cota"
 import { ConfirmarPagamento } from "./confirmar"
 
 export const dynamic = "force-dynamic"
@@ -33,6 +34,8 @@ export default async function PagarPage({ params }: { params: Promise<{ token: s
 
   if (pag) {
     const { cota } = pag
+    // Ainda em levantamento: manda pro formulário do pedido, não pra cobrança.
+    if (emLevantamento(cota.formulario, cota.instrucoes)) redirect(`/pedido/${token}`)
     return (
       <Card>
         <p className="text-xs uppercase tracking-wide text-slate-400">

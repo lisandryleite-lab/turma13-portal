@@ -80,6 +80,15 @@ export function parseResposta(valor: unknown): RespostaFormulario {
 
 export const totalPecas = (r: RespostaFormulario) => r.itens.reduce((s, i) => s + i.quantidade, 0)
 
+/**
+ * A cota está na fase de LEVANTAMENTO (só coleta de quantidade, ninguém paga)
+ * enquanto tiver formulário e ainda não tiver instrução de pagamento.
+ * Assim que o responsável preencher as instruções (Pix etc.), a mesma cota
+ * vira cobrança normal — os links de /pagar voltam a valer sozinhos.
+ */
+export const emLevantamento = (formulario: unknown, instrucoes?: string | null) =>
+  !!parseFormulario(formulario) && !(instrucoes ?? "").trim()
+
 /** Consolidado por modelo × versão × tamanho — é o "levantamento" que vai pro fornecedor. */
 export function consolidar(respostas: RespostaFormulario[]) {
   const mapa = new Map<string, ItemPedido>()
