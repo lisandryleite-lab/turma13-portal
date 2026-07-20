@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   }
   if (!autorizado) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
 
-  const { titulo, tipo, valor, responsavel, instrucoes, driveFolderUrl, prazo, participantes } = await req.json()
+  const { titulo, tipo, valor, responsavel, instrucoes, driveFolderUrl, formulario, prazo, participantes } = await req.json()
   if (!titulo || isNaN(Number(valor))) return NextResponse.json({ error: "Dados inválidos" }, { status: 400 })
 
   // participantes: lista opcional de ids de User — se omitida, vale para todos os ativos da Turma 13
@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
       responsavel: responsavel || "",
       instrucoes: instrucoes || null,
       driveFolderUrl: driveFolderUrl || null,
+      formulario: formulario || undefined,
       prazo: prazo ? new Date(prazo) : null,
       criadoPorId: session.user.id,
       pagamentos: { create: alunos.map(a => ({ userId: a.id })) },

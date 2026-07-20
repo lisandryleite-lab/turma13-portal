@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { LanchesClient, type Pedido } from "./lanches-client"
+import { MeuPedido, ConsolidadoPedidos } from "./pedido-cota"
+import { parseFormulario, parseResposta } from "@/lib/formulario-cota"
 
 type Aluno = { id: string; matricula: number; nomeGuerra: string; turma13: boolean }
 type Pagamento = {
@@ -15,6 +17,7 @@ type Pagamento = {
   dataDeclarado: string | Date | null
   token: string
   observacao: string | null
+  respostas?: unknown
   user: { matricula: number; nomeGuerra: string }
 }
 type Cota = {
@@ -26,6 +29,7 @@ type Cota = {
   responsavel: string
   instrucoes: string | null
   driveFolderUrl: string | null
+  formulario?: unknown
   prazo: string | Date | null
   ativa: boolean
   criadoPorId: string | null
@@ -364,6 +368,12 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
                     style={quitada ? { background: "#eafaf1", color: "#1f9d63" } : { background: "#fdf0ec", color: "#d6553a" }}>
                     {quitada ? "quitada" : "em aberto"}
                   </span>
+                  {parseFormulario(c.formulario) && meuPagamento && parseResposta(meuPagamento.respostas).itens.length === 0 && (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0"
+                      style={{ background: "#fff6e0", color: "#a97c15" }}>
+                      responda o levantamento
+                    </span>
+                  )}
                 </div>
                 <div className="text-xs mt-0.5 truncate" style={{ color: "#8291ab" }}>
                   {c.responsavel && <>{c.responsavel} · </>}{pagos}/{total} pagaram · {fmtMoeda(vArrecadado)} de {fmtMoeda(vTotal)}
@@ -393,6 +403,22 @@ export function FinanceiroClient({ cotas: inicial, alunos, lanches, isAdmin, pod
                 </div>
 
                 {c.instrucoes && <p className="text-slate-500 text-xs mb-3 whitespace-pre-wrap">{c.instrucoes}</p>}
+
+                {/* Levantamento (cotas com formulário — ex.: camisa do pelotão) */}
+                {(() => {
+                  const form = parseFormulario(c.formulario)
+                  if (!form) return null
+                  return (
+                    <>
+                      {meuPagamento && (
+                        <MeuPedido cotaId={c.id} form={form} respostaAtual={meuPagamento.respostas} valorUnitario={c.valor} />
+                      )}
+                      {podeGerir(c) && (
+                        <ConsolidadoPedidos form={form} pagamentos={c.pagamentos} valorUnitario={c.valor} />
+                      )}
+                    </>
+                  )
+                })()}
 
                 {/* Linha de ações */}
                 <div className="flex flex-wrap items-center gap-2 mb-3">

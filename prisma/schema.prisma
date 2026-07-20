@@ -439,6 +439,7 @@ model CotaFinanceira {
   responsavel String   // quem recebe/centraliza (nome de guerra)
   instrucoes  String?  // forma de pagamento + onde enviar comprovante
   driveFolderUrl String? // pasta do Google Drive com os comprovantes da cota
+  formulario  Json?    // levantamento opcional: { campos[], modelos[], tamanhos[], versoes[] } — ver lib/formulario-cota.ts
   prazo       DateTime?
   ativa       Boolean  @default(true)
   criadoPorId String?  // User.id de quem criou (pode gerir a própria cota, além do gestor)
@@ -459,6 +460,7 @@ model PagamentoCota {
   dataDeclarado DateTime?
   token         String    @unique @default(cuid()) // link público de pagamento, sem login
   observacao    String?
+  respostas     Json?     // resposta do aluno ao formulario da cota: { campos: {}, itens: [] }
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
