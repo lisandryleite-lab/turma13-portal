@@ -9,6 +9,7 @@ const prisma = new PrismaClient({ adapter: new PrismaNeon({ connectionString: pr
 
 const TITULO = "Camisa do Pelotão — 1º Pelotão · Aspirantes 2027"
 const VALOR = 130
+const RESPONSAVEL = "LISANDRY (108)"
 
 async function main() {
   const existente = await prisma.cotaFinanceira.findFirst({ where: { titulo: TITULO } })
@@ -22,7 +23,7 @@ async function main() {
   if (existente) {
     await prisma.cotaFinanceira.update({
       where: { id: existente.id },
-      data: { valor: VALOR, formulario: FORMULARIO_CAMISA, ativa: true },
+      data: { valor: VALOR, responsavel: RESPONSAVEL, formulario: FORMULARIO_CAMISA, ativa: true },
     })
     console.log(`✓ Cota já existia — formulário e valor atualizados (${existente.id}).`)
   } else {
@@ -31,7 +32,7 @@ async function main() {
         titulo: TITULO,
         tipo: "extra",
         valor: VALOR,
-        responsavel: "",
+        responsavel: RESPONSAVEL,
         instrucoes:
           "LEVANTAMENTO DE QUANTIDADE — ainda não pague nada.\n" +
           "Preencha seu pedido abaixo (tipo sanguíneo, nome de guerra, número, modelo, tamanho e versão).\n" +
