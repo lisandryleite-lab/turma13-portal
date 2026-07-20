@@ -19,6 +19,7 @@ export type ModeloFormulario = {
   nome: string
   descricao?: string
   cor?: string             // hex p/ o chip do modelo na UI
+  imagem?: string          // caminho em /public — mockup mostrado no formulário
 }
 
 export type FormularioCota = {
@@ -119,8 +120,8 @@ export const FORMULARIO_CAMISA: FormularioCota = {
     { id: "numero", label: "Número", tipo: "texto", ajuda: "Número que vai na manga — ex.: 37", obrigatorio: true },
   ],
   modelos: [
-    { id: "preto", nome: "Preto", descricao: "Base preta + camuflagem digital", cor: "#1a1a1a" },
-    { id: "coyote", nome: "Coyote", descricao: "Base coyote + camuflagem areia", cor: "#A8895E" },
+    { id: "preto", nome: "Preto", descricao: "Base preta + camuflagem digital", cor: "#1a1a1a", imagem: "/camisa/preto.jpg" },
+    { id: "coyote", nome: "Coyote", descricao: "Base coyote + camuflagem areia", cor: "#A8895E", imagem: "/camisa/coyote.jpg" },
   ],
   tamanhos: ["P", "M", "G", "GG", "XGG"],
   versoes: ["Masculina/Unissex", "Feminina"],

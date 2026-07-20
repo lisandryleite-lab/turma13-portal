@@ -2,7 +2,73 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { parseResposta, type FormularioCota, type ItemPedido } from "@/lib/formulario-cota"
+import Image from "next/image"
+import { parseResposta, type FormularioCota, type ItemPedido, type ModeloFormulario } from "@/lib/formulario-cota"
+
+/**
+ * Mockups dos modelos. Clicar numa foto seleciona aquele modelo na última
+ * linha do pedido — assim dá pra escolher olhando a peça, não o texto do select.
+ */
+function GaleriaModelos({ modelos, selecionado, onEscolher }: {
+  modelos: ModeloFormulario[]
+  selecionado: string
+  onEscolher: (id: string) => void
+}) {
+  const [zoom, setZoom] = useState<ModeloFormulario | null>(null)
+  const comFoto = modelos.filter(m => m.imagem)
+  if (comFoto.length === 0) return null
+
+  return (
+    <>
+      <div className="grid gap-2 mb-3" style={{ gridTemplateColumns: `repeat(${comFoto.length > 1 ? 2 : 1},1fr)` }}>
+        {comFoto.map(m => {
+          const ativo = m.id === selecionado
+          return (
+            <div key={m.id} className="rounded-xl overflow-hidden cursor-pointer transition"
+              onClick={() => onEscolher(m.id)}
+              style={{ border: ativo ? "2px solid #14294e" : "1px solid #e2e8f4", background: "#fff" }}>
+              {/* priority: o mockup é o conteúdo principal da página — carregar
+                  sob demanda deixa o pedido sem imagem no primeiro paint. */}
+              <Image src={m.imagem!} alt={`Camisa ${m.nome}`} width={940} height={685} priority
+                sizes="(max-width: 640px) 50vw, 320px"
+                style={{ width: "100%", height: "auto", display: "block" }} />
+              <div className="px-2 py-1.5 flex items-center gap-1.5">
+                <span className="inline-block w-2.5 h-2.5 rounded-full shrink-0"
+                  style={{ background: m.cor || "#ccc", border: "1px solid rgba(0,0,0,.15)" }} />
+                <span className="text-[11.5px] font-bold truncate" style={{ color: ativo ? "#14294e" : "#6b7a94" }}>
+                  {m.nome}
+                </span>
+                <button onClick={e => { e.stopPropagation(); setZoom(m) }}
+                  title="Ampliar" className="ml-auto text-[10px] font-bold shrink-0" style={{ color: "#2c66c9" }}>
+                  ampliar
+                </button>
+              </div>
+              {m.descricao && (
+                <p className="px-2 pb-1.5 text-[10px] leading-tight" style={{ color: "#93a1ba" }}>{m.descricao}</p>
+              )}
+            </div>
+          )
+        })}
+      </div>
+
+      {zoom && (
+        <div onClick={() => setZoom(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: "rgba(10,20,40,.82)" }}>
+          <div className="w-full" style={{ maxWidth: 1000 }} onClick={e => e.stopPropagation()}>
+            <Image src={zoom.imagem!} alt={`Camisa ${zoom.nome}`} width={940} height={685}
+              style={{ width: "100%", height: "auto", borderRadius: 12 }} />
+            <button onClick={() => setZoom(null)}
+              className="mt-3 mx-auto block text-xs font-bold text-white px-4 py-2 rounded-lg"
+              style={{ background: "rgba(255,255,255,.16)" }}>
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
 
 const linhaVazia = (form: FormularioCota): ItemPedido => ({
   modelo: form.modelos[0]?.id ?? "",
@@ -72,6 +138,13 @@ export function FormularioPedido({
 
   return (
     <div>
+      {/* Mockups — clicar aplica o modelo na última linha do pedido */}
+      <GaleriaModelos
+        modelos={form.modelos}
+        selecionado={itens[itens.length - 1]?.modelo ?? ""}
+        onEscolher={id => atualizarItem(itens.length - 1, { modelo: id })}
+      />
+
       {/* Campos gerais */}
       <div className="grid gap-2 mb-3" style={{ gridTemplateColumns: compacto ? "1fr" : "repeat(auto-fit,minmax(160px,1fr))" }}>
         {form.campos.map(c => (

@@ -2,7 +2,10 @@ import type { NextAuthConfig } from "next-auth"
 import { NextResponse } from "next/server"
 import { TREINO_ARMAMENTO_HREF, treinoArmamentoDisponivel } from "@/lib/treino-armamento"
 
-const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/pagar", "/api/pagar", "/pedido", "/api/pedido"]
+// "/camisa": mockups da camisa do pelotão — precisam abrir sem login, senão o
+// formulário público de /pedido mostra imagem quebrada (o middleware redirecionava
+// os JPGs pra /login e o otimizador do Next devolvia 400).
+const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/pagar", "/api/pagar", "/pedido", "/api/pedido", "/camisa"]
 const TREINO_ARMAMENTO_BASE = TREINO_ARMAMENTO_HREF.replace(/\/index\.html$/, "") // "/treino-armamento"
 
 export const authConfig: NextAuthConfig = {
