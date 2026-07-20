@@ -22,6 +22,37 @@ export type ModeloFormulario = {
   imagem?: string          // caminho em /public — mockup mostrado no formulário
 }
 
+/** Tabela de medidas de referência, exibida como guia ao escolher o tamanho. */
+export type GuiaTamanhos = {
+  colunas: string[]                                  // ex.: ["Tam.", "Tórax", "Compr.", "Manga"]
+  grupos: { nome: string; linhas: string[][] }[]     // um grupo por versão (masc/fem)
+  nota?: string
+}
+
+/** Ficha técnica do produto, como veio do fornecedor. */
+export type EspecificacoesProduto = {
+  nome?: string
+  itens: string[]
+  composicao?: string
+}
+
+/** Condições comerciais acertadas com o fornecedor. */
+export type CondicoesComerciais = {
+  avista?: string
+  parcelado?: string
+  prazo?: string
+}
+
+/**
+ * Contato direto do fornecedor. Rende um botão wa.me no formulário pra quem
+ * tem dúvida de medida/prazo falar com ele sem passar pelo responsável.
+ */
+export type ContatoFornecedor = {
+  nome: string
+  whatsapp: string          // só dígitos, com DDI — é o formato que o wa.me aceita
+  mensagemPadrao?: string
+}
+
 export type FormularioCota = {
   titulo?: string
   descricao?: string
@@ -29,6 +60,18 @@ export type FormularioCota = {
   modelos: ModeloFormulario[]
   tamanhos: string[]
   versoes: string[]
+  guiaTamanhos?: GuiaTamanhos
+  especificacoes?: EspecificacoesProduto
+  condicoes?: CondicoesComerciais
+  fornecedor?: ContatoFornecedor
+}
+
+/** Link wa.me já com a mensagem padrão — undefined quando não há contato. */
+export function linkFornecedor(c?: ContatoFornecedor) {
+  if (!c?.whatsapp) return undefined
+  const num = c.whatsapp.replace(/\D/g, "")
+  const texto = c.mensagemPadrao ? `?text=${encodeURIComponent(c.mensagemPadrao)}` : ""
+  return `https://wa.me/${num}${texto}`
 }
 
 // ── Resposta (PagamentoCota.respostas) ────────────────────────────────────────
@@ -56,6 +99,10 @@ export function parseFormulario(valor: unknown): FormularioCota | null {
     modelos: f.modelos,
     tamanhos: f.tamanhos,
     versoes: f.versoes,
+    guiaTamanhos: f.guiaTamanhos,
+    especificacoes: f.especificacoes,
+    condicoes: f.condicoes,
+    fornecedor: f.fornecedor,
   }
 }
 
@@ -123,6 +170,54 @@ export const FORMULARIO_CAMISA: FormularioCota = {
     { id: "preto", nome: "Preto", descricao: "Base preta + camuflagem digital", cor: "#1a1a1a", imagem: "/camisa/preto.jpg" },
     { id: "coyote", nome: "Coyote", descricao: "Base coyote + camuflagem areia", cor: "#A8895E", imagem: "/camisa/coyote.jpg" },
   ],
-  tamanhos: ["P", "M", "G", "GG", "XGG"],
+  tamanhos: ["PP", "P", "M", "G", "GG", "EXG"],
   versoes: ["Masculina/Unissex", "Feminina"],
+  // Grade completa enviada pelo fornecedor no WhatsApp em 20/07/2026 — substitui
+  // a grade antiga da ficha, que vinha com M e GG em branco. Transcrita como veio:
+  // P e M repetem a largura (47) e GG e EXG repetem a manga (74). Pode ser real,
+  // pode ser erro de digitação dele — confirmar antes de fechar o pedido.
+  guiaTamanhos: {
+    colunas: ["Tam.", "Compr.", "Largura", "Manga", "Barra"],
+    grupos: [
+      {
+        nome: "Grade do fornecedor (cm)",
+        linhas: [
+          ["PP", "60", "45", "62", "33"],
+          ["P", "63", "47", "65", "36"],
+          ["M", "66", "47", "68", "39"],
+          ["G", "69", "50", "73", "41"],
+          ["GG", "73", "52", "74", "44"],
+          ["EXG", "75", "55", "74", "47"],
+        ],
+      },
+    ],
+    nota:
+      "Grade única do fornecedor — ele não mandou medidas separadas por versão masculina/feminina. " +
+      "O tamanho G é a referência dos pontos de medição (comprimento, largura, comprimento de manga e barra). " +
+      "Na dúvida entre dois tamanhos, fale direto com o fornecedor pelo botão acima antes de fechar.",
+  },
+  especificacoes: {
+    nome: "Camisa Híbrida Hiperion Multi Function",
+    itens: [
+      "Compressão: segunda pele, rashguard, running e aquática — ajusta ao corpo, posiciona a musculatura e reduz o tempo de recuperação.",
+      "Tecido HeatGear®, com os benefícios da compressão HPN para uso o dia todo.",
+      "Respiradores nas costas para ventilação estratégica (função chaminé).",
+      "Entrada de fone de ouvido com corte a laser na frente, próximo à gola.",
+      "FPS 50+ — protege a pele contra os raios solares.",
+      "Elasticidade em 4 direções, absorve o suor e seca rápido.",
+      "Tecnologia desodorante — impede a proliferação de bactérias que causam odor.",
+    ],
+    composicao: "90% poliéster + 10% lastol (fibra elástica)",
+  },
+  condicoes: {
+    avista: "R$ 120,00 à vista",
+    parcelado: "R$ 130,00 em 2x — 50% de entrada e 50% na entrega",
+    prazo: "Depende da quantidade fechada — ex.: 30 camisas levam de 25 a 30 dias",
+  },
+  fornecedor: {
+    nome: "Francisco Paulo Barreto",
+    whatsapp: "5527997668285",
+    mensagemPadrao:
+      "Olá! Sou do 1º Pelotão (Aspirantes 2027) e tenho uma dúvida sobre a camisa do pelotão:",
+  },
 }
