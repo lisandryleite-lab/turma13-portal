@@ -7,9 +7,23 @@ export type PdfPart = { file: string; label: string }
 
 // Mementos PRÓPRIOS (produzidos pela turma, no padrão) → aba "PDF Memento".
 // Os demais PDFs são originais do "Pernambuco Imortal" → aba "PDF Pernambuco Imortal".
-export const MEMENTO_PROPRIO = new Set<string>(["ACE", "LPMO", "AP"])
+export const MEMENTO_PROPRIO = new Set<string>(["ACE", "LPMO", "AP", "INTSISP"])
 
 export const PDF_PARTS: Record<string, PdfPart[]> = {
+  AP: [
+    { file: "AP.pdf", label: "Memento" },
+  ],
+  APHT: [
+    { file: "APHT.pdf", label: "Pernambuco Imortal" },
+    { file: "APHT-2.pdf", label: "Memento" },
+  ],
+  GC: [
+    { file: "GC.pdf", label: "Pernambuco Imortal" },
+    { file: "GC-2.pdf", label: "Memento" },
+  ],
+  INTSISP: [
+    { file: "INTSISP.pdf", label: "Memento" },
+  ],
   AM: [
     { file: "AM.pdf", label: "Pernambuco Imortal" },
   ],
@@ -22,6 +36,7 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
     { file: "IG-1.pdf", label: "Parte I" },
     { file: "IG-2.pdf", label: "Parte II" },
     { file: "IG-3.pdf", label: "Parte III" },
+    { file: "IG-4.pdf", label: "Memento" },
   ],
   LPMO: [
     { file: "LPMO.pdf", label: "Assunto 1" },
@@ -77,6 +92,7 @@ export const PDF_PARTS: Record<string, PdfPart[]> = {
   POE: [
     { file: "POE-1.pdf", label: "Parte I" },
     { file: "POE-2.pdf", label: "Parte II" },
+    { file: "POE-3.pdf", label: "Memento" },
   ],
   TCEM: [
     { file: "TCEM-1.pdf", label: "Parte I" },
