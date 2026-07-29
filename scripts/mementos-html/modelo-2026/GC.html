@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>MEMENTO — GERENCIAMENTO DE CRISES E DESASTRES · CFO PM 2026</title>
+<style>
+/* ===== MEMENTO CFO PM 2026 — identidade visual fixa ===== */
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: #fbf9f3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  background: #fbf9f3; color: #2a2620;
+  font-family: "Segoe UI", -apple-system, Arial, sans-serif;
+  font-size: 9.5pt; line-height: 1.42;
+}
+/* ---- Cabeçalho do documento ---- */
+.doc-header {
+  text-align: center; padding: 4mm 0 3mm;
+  border-bottom: 3px double #2a2620; margin-bottom: 5mm;
+}
+.doc-header h1 { font-size: 15pt; letter-spacing: .5px; }
+.doc-header .sub { font-size: 9pt; color: #4a4a4a; margin-top: 1mm; }
+
+/* ---- Tema (um por capítulo; cada tema inicia em nova página) ---- */
+.tema { break-before: page; padding-top: 2mm; }
+.tema:first-of-type { break-before: auto; }
+.tema-header { display: flex; align-items: stretch; gap: 0; margin-bottom: 1.5mm; }
+.tema-num {
+  background: #7d1f2b; color: #fff; font-weight: 800; font-size: 13pt;
+  min-width: 11mm; display: flex; align-items: center; justify-content: center;
+  border-radius: 2px 0 0 2px; padding: 1.5mm 2mm;
+}
+.tema-titulo {
+  background: #a3444f; color: #fff; font-weight: 700; font-size: 11.5pt;
+  flex: 1; display: flex; align-items: center; padding: 1.5mm 3mm;
+  border-radius: 0 2px 2px 0; letter-spacing: .3px;
+}
+.tema-base { font-style: italic; font-size: 8.5pt; color: #4a4a4a; margin: 0 0 3mm 1mm; }
+
+/* Variantes de cor do cabeçalho de tema (usar conforme a natureza dominante) */
+.tema-header.azul .tema-num { background: #1f4e79; } .tema-header.azul .tema-titulo { background: #4a749c; }
+.tema-header.verde .tema-num { background: #2e6b3e; } .tema-header.verde .tema-titulo { background: #578964; }
+.tema-header.dourado .tema-num { background: #9a7b16; } .tema-header.dourado .tema-titulo { background: #b39a4a; }
+.tema-header.cinza .tema-num { background: #4a4a4a; } .tema-header.cinza .tema-titulo { background: #757575; }
+
+/* ---- 1. Caixas coloridas ---- */
+.caixa { border-radius: 3px; padding: 2.2mm 3mm; margin-bottom: 2.6mm; break-inside: avoid; border-left: 3.5px solid; }
+.caixa .caixa-titulo { font-weight: 800; font-size: 9.5pt; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1mm; }
+.caixa p { margin-bottom: 1mm; } .caixa p:last-child { margin-bottom: 0; }
+.caixa ul, .caixa ol { padding-left: 5mm; } .caixa li { margin-bottom: .6mm; }
+.caixa.def     { background: #e8eef5; border-color: #1f4e79; } .caixa.def .caixa-titulo     { color: #1f4e79; }
+.caixa.atencao { background: #e9f2ea; border-color: #2e6b3e; } .caixa.atencao .caixa-titulo { color: #2e6b3e; }
+.caixa.prazo   { background: #f7f1dd; border-color: #9a7b16; } .caixa.prazo .caixa-titulo   { color: #9a7b16; }
+.caixa.fase    { background: #f6e8ea; border-color: #7d1f2b; } .caixa.fase .caixa-titulo    { color: #7d1f2b; }
+.caixa.neutra  { background: #efefef; border-color: #4a4a4a; } .caixa.neutra .caixa-titulo  { color: #4a4a4a; }
+
+/* ---- 2. Fluxo vertical com setas (ritos, etapas, ciclos) ---- */
+.fluxo-v { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-v .fv-titulo { font-weight: 800; font-size: 9.5pt; color: #7d1f2b; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-v .passo {
+  background: #f6e8ea; border: 1px solid #7d1f2b; border-radius: 3px;
+  padding: 1.6mm 2.6mm; text-align: center;
+}
+.fluxo-v .passo b { color: #7d1f2b; }
+.fluxo-v .seta { text-align: center; color: #7d1f2b; font-size: 10pt; line-height: 1.1; padding: .4mm 0; }
+.fluxo-v.azul .passo { background: #e8eef5; border-color: #1f4e79; } .fluxo-v.azul .seta, .fluxo-v.azul .fv-titulo, .fluxo-v.azul .passo b { color: #1f4e79; }
+
+/* ---- 3. Fluxo horizontal inline (categorias/espécies) ---- */
+.fluxo-h { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-h .fh-titulo { font-weight: 800; font-size: 9.5pt; color: #4a4a4a; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-h .linha { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2mm; }
+.fluxo-h .item {
+  background: #efefef; border: 1px solid #4a4a4a; border-radius: 3px;
+  padding: 1.2mm 2.4mm; font-size: 9pt; font-weight: 600;
+}
+.fluxo-h .seta-h { color: #4a4a4a; font-weight: 700; }
+
+/* ---- 4. Mnemônico ---- */
+.mnemo {
+  border: 2px dashed #9a7b16; background: #f7f1dd; border-radius: 4px;
+  padding: 2.4mm 3mm; margin-bottom: 2.6mm; break-inside: avoid;
+}
+.mnemo .palavra { font-size: 14pt; font-weight: 900; color: #9a7b16; letter-spacing: 1.5px; text-align: center; margin-bottom: 1.2mm; }
+.mnemo .exp { font-size: 9pt; }
+.mnemo .exp b { color: #9a7b16; }
+
+/* ---- 5. Tabela comparativa ---- */
+table.comp { width: 100%; border-collapse: collapse; margin-bottom: 2.6mm; break-inside: avoid; font-size: 8.8pt; }
+table.comp th { background: #4a4a4a; color: #fff; padding: 1.4mm 2mm; text-align: left; font-size: 8.8pt; }
+table.comp td { border: 1px solid #b9b4aa; padding: 1.3mm 2mm; vertical-align: top; background: #fffdf8; }
+table.comp tr:nth-child(even) td { background: #f4f1e9; }
+table.comp td:first-child { font-weight: 700; }
+
+/* ---- 6. Discursiva com espelho ---- */
+.discursiva { border: 1.5px solid #1f4e79; border-radius: 4px; margin-bottom: 2.6mm; break-inside: avoid; }
+.discursiva .enunciado { background: #1f4e79; color: #fff; padding: 2mm 3mm; font-weight: 600; }
+.discursiva .enunciado::before { content: "QUESTÃO DISCURSIVA — "; font-weight: 800; }
+.discursiva .espelho { padding: 2.2mm 3mm; background: #fffdf8; }
+.discursiva .espelho .esp-titulo { font-weight: 800; color: #1f4e79; text-transform: uppercase; font-size: 9pt; margin-bottom: 1mm; }
+.discursiva .espelho ul { padding-left: 5mm; } .discursiva .espelho li { margin-bottom: .6mm; }
+
+/* util */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; margin-bottom: 2.6mm; }
+.grid2 > * { margin-bottom: 0; }
+b.azul { color: #1f4e79; } b.borg { color: #7d1f2b; } b.verde { color: #2e6b3e; } b.ouro { color: #9a7b16; }
+</style>
+</head>
+<body>
+<div class="doc-header">
+  <h1>MEMENTO — GERENCIAMENTO DE CRISES E DESASTRES · CFO PM 2026</h1>
+  <div class="sub">Apostila de Gerenciamento de Crises e Desastres — Conteudista: 1º Ten QOPM Kemuel Vitorino de Lima (Recife-PE, setembro de 2025)</div>
+</div>
+
+<!-- ============================ TEMA 1 ============================ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">1</div>
+    <div class="tema-titulo">GESTÃO DE CONFLITOS E DE CRISES</div>
+  </div>
+  <div class="tema-base">Base: FEMA (2017); RACORT (2019); PERNAMBUCO (2009) — Dec. 33.782/09, Art. 1º, § 1º.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Gestão de Conflitos</div>
+    <p>Capacidade de <b class="azul">identificar e lidar com desacordos e disputas de forma construtiva</b>, buscando soluções que minimizem danos e, preferencialmente, resultem em acordos. No contexto policial, a gestão de conflitos <b class="azul">precede e, muitas vezes, previne a escalada para uma crise</b>. Envolve técnicas de comunicação, mediação e negociação.</p>
+    <p><b class="borg">Um conflito não se resolve, se gerencia</b>: um conflito bem gerenciado implica um processo e, dele, a “melhor solução”, que nem sempre, ou quase nunca, resolve.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Premissas da Gestão de Conflitos</div>
+    <ul>
+      <li><b class="borg">PROCESSO</b> — tem etapas a serem seguidas;</li>
+      <li><b class="borg">RITUAL</b> — tem início, meio e fim;</li>
+      <li><b class="borg">CONDUÇÃO</b> — uma ou mais pessoas, inclusive os envolvidos, fazem parte de sua condução e gestão.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Todo gestor é gestor de conflitos</div>
+    <p>Todo e qualquer gestor, de qualquer área organizacional, é também um Gestor de Conflitos: pais e mães de família (educam filhos), educadores, diretores de escola, supervisores de vendas.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Incidente</div>
+      <p>“Ocorrência natural ou de causas humanas que necessita de uma resposta para proteger a vida ou propriedade” <b class="azul">(FEMA, 2017)</b>.</p>
+      <p>Evento inicial, súbito e disruptivo, que exige resposta imediata. Poderá se tornar o <b class="azul">gatilho</b> que se transforma (ou não) em crise, dependendo da condução, do gerenciamento ou de fato superveniente. Ex.: abordagem policial a um ou mais suspeitos.</p>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Crise ou Incidente Crítico</div>
+      <p>Evento <b class="azul">súbito e inesperado</b> que gera instabilidade e alto risco, ameaçando a vida, a propriedade ou a ordem pública, e que demanda <b class="azul">resposta não-rotineira e especializada</b>. Não se resolve com os procedimentos operacionais padrão do dia a dia — exige técnicas especiais de condução e equipes especializadas.</p>
+    </div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Definições doutrinária e estadual de crise</div>
+    <p><b class="azul">RACORT (2019)</b>: “Qualquer incidente em que o resultado ou consequência possa resultar em: danos graves ao indivíduo, patrimônio ou ao meio ambiente, pode impactar significativamente na confiança da sociedade, exigindo arranjos especiais, emprego conjugado de meios e capacidade de gestão para responder.”</p>
+    <p><b class="azul">PERNAMBUCO (2009)</b>: “todo incidente ou situação crucial não rotineira, que exija uma resposta especial dos órgãos operativos de defesa social, em razão da possibilidade de agravamento conjuntural, com grande risco à vida e ao patrimônio.” Exemplos: assalto a banco com refém; motins em presídios; atos de terrorismo e/ou ocorrências envolvendo bombas e explosivos (Art. 1º, § 1º do Dec. 33.782/09).</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Critério</th><th>Incidente</th><th>Crise / Incidente Crítico</th></tr>
+    <tr><td>Natureza</td><td>Evento inicial, súbito e disruptivo</td><td>Situação de instabilidade e alto risco</td></tr>
+    <tr><td>Resposta</td><td>Resposta imediata para proteger vida ou propriedade</td><td>Resposta não-rotineira e especializada</td></tr>
+    <tr><td>Evolução</td><td>Pode ser o gatilho de uma crise (ou não)</td><td>Exige técnicas especiais e equipes especializadas</td></tr>
+  </table>
+</div>
+
+<!-- ============================ TEMA 2 ============================ -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">2</div>
+    <div class="tema-titulo">HISTÓRICO DA DOUTRINA DE GERENCIAMENTO DE CRISES (GC)</div>
+  </div>
+  <div class="tema-base">Base: doutrina do FBI/SWAT (EUA); De Souza (CAO-II/95 PMESP).</div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Linha do tempo da doutrina</div>
+    <div class="passo"><b>Rebelião de Watts (11 a 17 AGO 1965, Los Angeles/EUA)</b> — primeiros estudos; distúrbios civis após prisão violenta de jovem negro acusado de dirigir embriagado; 34 mortes, mais de 1.000 feridos; marco dos direitos civis e da necessidade de procedimentos mais técnicos e especializados</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>Cerco de Waco (1993, EUA)</b> — expôs a necessidade de abordagens que priorizassem a negociação antes da intervenção tática; FBI pioneiro: <b>Behavioral Science Unit</b> e programas de negociação com reféns; a <b>SWAT</b> (Special Weapons And Tactics) evoluiu como força de intervenção tática junto aos negociadores</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>Brasil — década de 1990</b> — formalização da doutrina: aumento da criminalidade organizada, sequestros e rebeliões prisionais; criação de unidades de operações especiais como o <b>BOPE (RJ)</b> e o <b>GATE (SP)</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>1990</b> — Delegado de Polícia Federal <b>Roberto das Chagas</b> realiza curso na Academia Nacional de Polícia do FBI e produz o primeiro documento (apostila), compartilhado na Academia Nacional de Polícia (ANP), Brasília-DF</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>1995</b> — Capitão PMESP <b>Wanderley Mascarenhas de Souza</b> (atualmente Coronel veterano) produz a monografia do CAO: “Gerenciamento de Crises: Negociação e atuação de grupos especiais de polícia na solução de eventos críticos”</div>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Principais fatos que marcaram o Brasil</div>
+    <ul>
+      <li><b>Caso Adriana Caringi (SP, 1990)</b> — morte acidental da refém em assalto: Furlan (Cabo da PM), atirador de elite, disparou tiro de fuzil que atingiu o assaltante e a refém; debate sobre o uso da força policial em crises.</li>
+      <li><b>Eldorado dos Carajás (17 ABR 1996, sul do Pará)</b> — confronto entre a PM do Pará e cerca de 1.500 trabalhadores rurais do MST que bloqueavam a rodovia PA-150; 19 sem-terra mortos no local e outros 2 posteriormente; comandantes da operação julgados e condenados.</li>
+      <li><b>Sequestro do ônibus 174 (RJ, 2000)</b> — sequestro televisionado que expôs deficiências no gerenciamento de crises e impulsionou a revisão de protocolos.</li>
+      <li><b>Caso Eloá Pimentel (Santo André/SP, 2008)</b> — sequestro que se arrastou por dias com desfecho trágico; debate sobre a atuação da mídia e os limites da negociação.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 3 ============================ -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">3</div>
+    <div class="tema-titulo">INCIDENTES COM REFÉNS E MODALIDADES DE OCORRÊNCIAS</div>
+  </div>
+  <div class="tema-base">Base: doutrina de GC; casos Eloá Pimentel (2008) e ônibus 174 (2000).</div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Identificar a modalidade — tarefa do 1º interventor</div>
+    <p>Identificar qual a modalidade da crise é uma das tarefas mais importantes para o <b class="verde">1º interventor</b>: ele empregará os recursos necessários para a estabilização da crise e, ao acionar as unidades competentes com detalhes do tipo de ocorrência, atua dentro do <b class="verde">princípio da eficiência</b>. Os órgãos operacionais empregarão de forma mais assertiva os meios necessários para a conclusão daquela crise.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Reféns</div>
+    <p>Indivíduos <b class="azul">mantidos contra sua vontade</b> por um agressor para alcançar um objetivo. A prioridade máxima é a sua <b class="azul">segurança e libertação</b>.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa neutra">
+      <div class="caixa-titulo">a) Reféns COM vínculo</div>
+      <p>Relação prévia (familiar, amorosa, profissional) com o agressor. Dinâmica mais complexa pelas emoções e históricos envolvidos.</p>
+      <p><b>Ex.:</b> Caso Eloá Pimentel (2008) — Eloá era ex-namorada do agressor Lindemberg Fernandes; o vínculo afetivo tornou a situação psicologicamente mais volátil e a negociação extremamente delicada.</p>
+    </div>
+    <div class="caixa neutra">
+      <div class="caixa-titulo">b) Reféns SEM vínculo</div>
+      <p>Escolhidos aleatoriamente, sem conexão anterior. Geralmente mais fáceis de negociar (sem laço emocional). São “<b>garantias emocionais</b>”, na percepção dos CECs.</p>
+      <p><b>Ex.:</b> Ônibus 174 (2000) — passageiros sem vínculo com Sandro Barbosa do Nascimento; a ausência de laço prévio, em tese, poderia facilitar a objetividade da negociação.</p>
+    </div>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Modalidades de ocorrências de crise</div>
+    <ul>
+      <li><b class="borg">Crises com Reféns</b> — pessoas mantidas em cativeiro sob ameaça de morte. Ex.: assalto a banco com reféns; homem mantém esposa e filhos sob ameaça com arma branca dentro de casa.</li>
+      <li><b class="borg">Crises com Barricadas</b> — agressores entrincheirados em um local, com ou sem reféns, impedindo a entrada ou saída. Ex.: criminoso armado escondido em uma casa após roubo, ameaçando atirar.</li>
+      <li><b class="borg">Crises com Suicidas</b> — indivíduos ameaçando tirar a própria vida, muitas vezes em locais públicos, armados ou não. Ex.: pessoa na beira de um viaduto ameaçando pular.</li>
+      <li><b class="borg">Crises de Agressor / Atirador Ativo (Massa)</b> — indivíduos buscando causar o máximo de vítimas em locais públicos ou privados. Ex.: massacre na Escola Tasso da Silveira (Realengo, RJ, 2011).</li>
+      <li><b class="borg">Crises Prisionais</b> — rebeliões ou sequestros dentro de unidades penitenciárias. Ex.: rebelião no presídio de Alcaçuz (RN, 2017), com reféns e grande violência entre facções.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 4 ============================ -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">4</div>
+    <div class="tema-titulo">INCIDENTES ESTÁTICOS E INCIDENTES DINÂMICOS</div>
+  </div>
+  <div class="tema-base">Base: doutrina de GC — distinção fundamental para a definição da estratégia tática.</div>
+
+  <table class="comp">
+    <tr><th>Critério</th><th>Incidente ESTÁTICO</th><th>Incidente DINÂMICO</th></tr>
+    <tr><td>Situação</td><td>Agressor (ou ameaça) contido em local específico</td><td>Ameaça em movimento ou ação em andamento</td></tr>
+    <tr><td>Tempo</td><td>Muitas vezes <b>aliado da polícia</b> — permite coleta de informações e preparação</td><td><b>Fator crítico, joga contra a polícia</b> — potencial de vítimas aumenta a cada segundo</td></tr>
+    <tr><td>Características</td><td>Ameaça contida; tempo para planejamento; <b>negociação é a primeira opção</b>; menor risco imediato de perda de vidas massiva; uso escalonado da força pelas alternativas táticas</td><td>Ameaça em curso; necessidade de resposta imediata; foco em <b>“parar o dano”</b>; prioridade de vidas das vítimas</td></tr>
+    <tr><td>Quem contém</td><td>Planejamento, negociação e intervenção gradual da Unidade Tática Especializada</td><td>Situação contida, geralmente, por efetivo policial ordinário (1ª Resposta)</td></tr>
+    <tr><td>Exemplo</td><td>Sequestro de Sílvio Santos (SP, 2001): Fernando Dutra Pinto, após roubo na casa de Patrícia Abravanel, barricou-se na residência de Sílvio Santos; longas horas de negociação lideradas pelo GATE, com cerco e gerenciamento do perímetro</td><td>Massacre na Escola Tasso da Silveira (Realengo, RJ, 2011): Wellington Menezes de Oliveira em movimento, disparando; o policial militar teve de entrar e confrontar imediatamente, sem tempo para negociação ou cerco</td></tr>
+  </table>
+</div>
+
+<!-- ============================ TEMA 5 ============================ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">5</div>
+    <div class="tema-titulo">CONCEITO DE CRISE: FBI × DECRETO ESTADUAL 33.782/09 E CARACTERÍSTICAS</div>
+  </div>
+  <div class="tema-base">Base: doutrina do FBI (clássica); Decreto Estadual de Pernambuco nº 33.782/09.</div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Crise pelo FBI (clássico)</div>
+      <p>“Um evento ou situação crucial, que exige uma <b class="azul">resposta especial da Polícia</b>, a fim de assegurar uma <b class="azul">solução aceitável</b>”. (FBI)</p>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Crise pelo Dec. 33.782/09</div>
+      <p>“todo incidente ou situação crucial não rotineira, que exija uma <b class="azul">resposta especial dos órgãos operativos de defesa social</b>, em razão da possibilidade de <b class="azul">agravamento conjuntural</b>, com grande risco à vida e ao patrimônio.” (PERNAMBUCO, 2009)</p>
+    </div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Críticas e observações aos conceitos</div>
+    <ul>
+      <li><b class="verde">FBI — “resposta especial da Polícia”</b>: coloca toda a responsabilidade da crise para a polícia; na prática, a responsabilidade recai sobre diversos órgãos.</li>
+      <li><b class="verde">FBI — “solução aceitável”</b>: por vezes coloca os órgãos responsáveis diretos pelo atendimento em situação de não cumprimento técnico da sua responsabilidade. <b class="verde">BINÔMIO: LEGALIDADE E OPINIÃO PÚBLICA FAVORÁVEL</b>. Ex.: se o tomador de refém tira a vida do refém, mesmo com trabalho técnico eficiente das autoridades, a conclusão será a de que não houve solução aceitável.</li>
+      <li><b class="verde">Decreto — “órgãos operativos de defesa social”</b>: abrange a responsabilidade para todos os órgãos operativos de defesa social, e não apenas para a polícia.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa fase">
+      <div class="caixa-titulo">Características — em relação à crise</div>
+      <ul>
+        <li><b class="borg">Imprevisibilidade</b> — surge de forma inesperada, sem aviso prévio (ex.: assaltante em fuga invade farmácia e faz reféns).</li>
+        <li><b class="borg">Compressão do tempo</b> — decisões sob extrema pressão e em curto espaço de tempo (ex.: agressor ativo, cada segundo conta).</li>
+        <li><b class="borg">Ameaça à vida</b> — risco elevado de lesões graves ou morte para reféns, vítimas, policiais e o próprio agressor.</li>
+      </ul>
+    </div>
+    <div class="caixa fase">
+      <div class="caixa-titulo">Características — em relação ao Estado</div>
+      <ul>
+        <li><b class="borg">Postura organizacional não-rotineira</b> — estrutura e procedimentos diários substituídos por sistema de gerenciamento de crise, com Posto de Comando e equipes especializadas.</li>
+        <li><b class="borg">Planejamento analítico especial</b> — não há “receita de bolo”: cada crise exige análise situacional única e plano adaptado.</li>
+        <li><b class="borg">Capacidade de implementação</b> — teoria e planejamento convertidos rapidamente em ação prática no terreno, com precisão e coordenação.</li>
+        <li><b class="borg">Considerações legais especiais</b> — estado de necessidade, legítima defesa, estrito cumprimento do dever legal, responsabilidade civil etc.; o aspecto da <b>competência para atuar</b> é o primeiro questionamento (“Quem ficará encarregado do gerenciamento?”).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Ameaça de vida — componente essencial (FBI)</div>
+    <p>Pela doutrina do FBI, a ameaça de vida deve ser observada como componente essencial do evento crítico, <b class="verde">mesmo quando a vida em risco é a do próprio causador da crise</b>. Ex.: quem ameaça se jogar do alto de um prédio, buscando suicidar-se, caracteriza uma crise, ainda que inexistam outras vidas em perigo.</p>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Outras características peculiares</div>
+    <ul>
+      <li>Necessidade de muitos recursos para sua solução;</li>
+      <li>Evento de baixa probabilidade de ocorrência e de graves consequências;</li>
+      <li>Ser desordenada;</li>
+      <li>Acompanhamento próximo e detalhado pelas autoridades, pela comunidade e pela mídia.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 6 ============================ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">6</div>
+    <div class="tema-titulo">ASPECTOS LEGAIS, CONCEITO, OBJETIVOS E CRITÉRIOS DE AÇÃO DO GC</div>
+  </div>
+  <div class="tema-base">Base legal: Art. 25 do CPB e parágrafo único (incluído pela Lei nº 13.964, de 2019); Decreto nº 33.782, de 14 AGO 2009 (PE), Art. 1º, § 2º.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Art. 25 do CPB e parágrafo único</div>
+    <p>O Art. 25 do Código Penal trata da <b class="azul">legítima defesa</b>: excludente de ilicitude que autoriza o uso da força para repelir injusta agressão, atual ou iminente, a direito próprio ou de terceiro.</p>
+    <p><b class="azul">Parágrafo único</b>: “Observados os requisitos previstos no caput deste artigo, considera-se também em legítima defesa o agente de segurança pública que repele agressão ou risco de agressão a vítima mantida refém durante a prática de crimes”. (Incluído pela Lei nº 13.964, de 2019)</p>
+    <p>No GC, o Art. 25 fundamenta a atuação policial: a intervenção tática é medida de legítima defesa da sociedade ou dos reféns, executada com <b class="azul">moderação dos meios necessários</b> (uso progressivo e proporcional da força). Ex.: tiro preciso em vez de disparos indiscriminados.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Decreto nº 33.782, de 14 AGO 2009 (PE)</div>
+    <p>Exemplo de legislação estadual que regulamenta a atuação das forças policiais em situações de crise, estabelecendo competências e procedimentos — reflete a tendência nacional de formalizar a doutrina (hierarquia de comando, Gerente de Crise, atribuições das equipes).</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Conceito de Gerenciamento de Crises</div>
+    <p>“Considera-se gerenciamento de crise o <b class="azul">processo eficaz de se identificar, obter e aplicar</b>, de conformidade com a legislação vigente e com emprego das técnicas especializadas, os <b class="azul">recursos estratégicos adequados</b> para a solução da crise, quer sejam medidas de <b class="azul">antecipação, prevenção ou resolução</b>, a fim de assegurar o completo restabelecimento da ordem pública e da segurança global da sociedade”. (PERNAMBUCO, 2009, Art. 1º, § 2º)</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Critério</th><th>Gerente EMERGENCIAL</th><th>Gerente EFETIVO/TÉCNICO</th></tr>
+    <tr><td>Quem é</td><td>Primeiro policial mais graduado ou oficial de maior patente que chega ao local</td><td>Oficial especializado e treinado para a função de Gerente de Crise</td></tr>
+    <tr><td>Função</td><td>Estabilizar a situação inicial, estabelecer o primeiro perímetro, coletar informações básicas, garantir a segurança primária — “controlador de danos” inicial</td><td>Assume o comando ao chegar, estabelece o Posto de Comando; responsável por todas as decisões estratégicas e táticas; coordena negociação e intervenção; decide momento e forma de resolução</td></tr>
+    <tr><td>Exemplo</td><td>Sargento PM que atende assalto a banco com reféns: isola a área, tenta contato inicial, mas não assume a negociação efetiva</td><td>Tenente, Capitão ou Major do BOPE com formação em GC assume o Posto de Comando</td></tr>
+  </table>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Funções do Gerente</div>
+    <ul>
+      <li>Representar o GGCrises;</li>
+      <li>Exercer o papel de autoridade máxima em todas as ações no local da crise;</li>
+      <li>Determinar estratégias;</li>
+      <li>Rever ou decidir sobre os planos;</li>
+      <li>Estabelecer a cadeia de comando;</li>
+      <li>Autorizar todas as ações táticas;</li>
+      <li>Orientar e disciplinar o efetivo, quando da execução das chamadas ações de emergência;</li>
+      <li>Decidir sobre o emprego do Grupo de Ações Táticas Especiais.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa atencao">
+      <div class="caixa-titulo">Objetivos principais do GC</div>
+      <ol>
+        <li><b class="verde">Preservar vidas</b> — prioridade máxima e inegociável: reféns, vítimas, policiais e, sempre que possível, o próprio agressor.</li>
+        <li><b class="verde">Aplicar a lei</b> — procedimentos legais seguidos e autoridade policial mantida; negociação e demais alternativas táticas, seguindo o escalonamento da força, até o uso letal pelo Estado, cumpridos os requisitos do Art. 25 do CPB.</li>
+        <li><b class="verde">Restabelecer a ordem pública</b> — reduzir prejuízos materiais e emocionais (ex.: construção de abrigos após enchente ou catástrofe).</li>
+      </ol>
+    </div>
+    <div class="caixa atencao">
+      <div class="caixa-titulo">Critérios de ação</div>
+      <ul>
+        <li><b class="verde">Necessidade</b> — a ação é realmente necessária para resolver a crise ou proteger vidas? É proporcional à ameaça e aos objetivos?</li>
+        <li><b class="verde">Validade do risco/segurança</b> — a ação minimiza riscos para todos os envolvidos?</li>
+        <li><b class="verde">Aceitabilidade (ética, moral e legal)</b> — conformidade com a ética, a moral e a lei (CONFORMAÇÃO SOCIAL E JURÍDICA).</li>
+      </ul>
+      <p>Ex.: força letal só se absolutamente necessária (agressor prestes a executar refém), razoável, segura e legal (legítima defesa).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ TEMA 7 ============================ -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">7</div>
+    <div class="tema-titulo">INTELIGÊNCIA E FASES DO GERENCIAMENTO</div>
+  </div>
+  <div class="tema-base">Base: doutrina de GC — a inteligência é a espinha dorsal do gerenciamento de crises.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Elementos essenciais de inteligência</div>
+    <ul>
+      <li><b class="azul">Causador do Evento Crítico (CEC)</b> — identidade, histórico criminal, motivações, estado psicológico, posse de armas;</li>
+      <li><b class="azul">Reféns/vítimas</b> — número, identidade, estado de saúde, condição psicológica;</li>
+      <li><b class="azul">Local</b> — plantas, acessos, pontos cegos, estrutura, iluminação, ventilação;</li>
+      <li><b class="azul">Ambiente externo</b> — condições climáticas, presença da mídia, público, apoio disponível.</li>
+    </ul>
+    <p>Ex.: no sequestro do empresário Abílio Diniz (SP, 1989), a inteligência identificou os sequestradores como membros de grupo estrangeiro (MRLA) e suas motivações ideológicas, influenciando a abordagem tática e negocial.</p>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Fontes de informação</div>
+    <ul>
+      <li>Vítimas libertadas ou que conseguiram escapar;</li>
+      <li>Familiares e amigos do agressor (personalidade, histórico, motivações);</li>
+      <li>Testemunhas (viram o início do incidente);</li>
+      <li>Sistemas de informações policiais (antecedentes criminais);</li>
+      <li>Mídia social e internet (informações públicas sobre agressor ou local);</li>
+      <li>Monitoramento ambiental (áudio, vídeo, drones);</li>
+      <li>Negociadores — ótimos observadores do ambiente, capazes de analisar o discurso dos CEC e reféns, muitas vezes de forma não verbal.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Fases do Gerenciamento de Crises (ciclo contínuo)</div>
+    <div class="passo"><b>1. Pré-Confrontação ou Pré-crise</b> — fase do planejamento e da prevenção (preparação): treinamento de equipes, desenvolvimento de protocolos, aquisição de equipamentos, planos de contingência</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2. Confrontação — 2.1 Resposta Imediata</b> — atendimento inicial, estabelecimento de perímetros, gerenciamento emergencial; geralmente realizado pelo efetivo da unidade de área onde ocorreu o fato</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2.2 Plano Específico</b> — Gerente e equipe especializada decidem a sequência de ações/alternativas a serem empregadas no terreno; conservação e/ou ampliação dos perímetros táticos; posicionamento de equipes</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2.3 Resolução</b> — tomada de decisões pelo Gerente Efetivo; forma de sair, para onde e como irá; emprego da alternativa de solução; protocolo de rendição e desfecho</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3. Pós-confrontação / Pós-Crise</b> — debriefing, análise das ações, identificação de lições aprendidas, assistência às vítimas e agentes envolvidos</div>
+  </div>
+</div>
+
+<!-- ============================ TEMA 8 ============================ -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">8</div>
+    <div class="tema-titulo">TIPOLOGIA DOS CAUSADORES (CEC), PERÍMETROS E POSTO DE COMANDO</div>
+  </div>
+  <div class="tema-base">Base: doutrina de GC — compreender a motivação do agressor é vital para a negociação.</div>
+
+  <table class="comp">
+    <tr><th>Tipo de CEC</th><th>Perfil</th><th>Negociação / Exemplo</th></tr>
+    <tr><td>MENTALMENTE PERTURBADO</td><td>Distúrbios mentais; pode agir sob delírios ou alucinações</td><td>Complexa — exige paciência e linguagem simples. Ex.: indivíduo com esquizofrenia que se tranca em casa acreditando ser perseguido por demônios</td></tr>
+    <tr><td>EMOCIONALMENTE PERTURBADO</td><td>Ameaça tirar a própria vida; ou motivado por ressentimento, frustração ou fúria contra alguém ou instituição</td><td>Objetivo: restaurar a esperança e convencê-lo a desistir. Ex.: pessoa em crise depressiva em torre de alta tensão — foco em empatia e conexão com a vida</td></tr>
+    <tr><td>CRIMINOSO</td><td>Motivos materiais (dinheiro, fuga, drogas)</td><td>Geralmente mais racional e propenso à negociação. Ex.: assaltante que faz reféns para negociar fuga; exigências claras</td></tr>
+    <tr><td>TERRORISTA / IDEOLÓGICO</td><td>Causas políticas, religiosas ou ideológicas</td><td>Mais intransigente; pode estar disposto a morrer pela causa, o que dificulta a negociação. Ex.: atentado às Olimpíadas de Munique (1972)</td></tr>
+  </table>
+
+  <div class="grid2">
+    <div class="caixa fase">
+      <div class="caixa-titulo">Perímetro interno</div>
+      <p>Área mais próxima e perigosa da crise, chamada de <b class="borg">Ponto Crítico</b>, controlada por equipes táticas e de intervenção. <b class="borg">Ninguém entra sem autorização explícita do GC</b>.</p>
+      <p>Ex.: a rua onde o ônibus com reféns está parado, controlada pelo BOPE.</p>
+    </div>
+    <div class="caixa fase">
+      <div class="caixa-titulo">Perímetro externo</div>
+      <p>Área de segurança mais ampla, controlada pela <b class="borg">polícia ostensiva</b>. Objetivo: conter população, mídia e tráfego, garantindo ambiente tranquilo. Ali ficam as demais estruturas à disposição do GC: ambulâncias, demais policiais, o Posto de Comando etc.</p>
+      <p>Ex.: ruas e quarteirões ao redor bloqueados pela PM/CTTU.</p>
+    </div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Posto de Comando (PC)</div>
+    <p><b class="azul">a)</b> Organização de pessoas, em cadeia hierárquica, baseada em divisão de trabalho e tarefas previamente estabelecidas.</p>
+    <p><b class="azul">b)</b> Local onde o Gerente de Crise e sua equipe (negociadores, inteligência, equipe tática, comunicação social) se reúnem para coordenar as ações, tomar decisões e monitorar a evolução da crise. Deve ser <b class="azul">seguro, discreto e com boa infraestrutura de comunicação</b>.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Quando instalar um PC?</div>
+    <p>Quando o número de pessoas envolvidas na operação <b class="verde">exceder a capacidade de controle do gerente da crise</b> — número máximo de pessoas que um indivíduo pode pessoalmente dirigir e controlar de maneira eficiente e eficaz. Essa capacidade pode ser <b class="verde">reduzida pelo efeito do estresse</b>. Ex.: PC montado em casa vizinha ou viatura adaptada, com rádios, telefones e mapas; decisões colegiadas, sob a liderança do Gerente de Crise.</p>
+  </div>
+</div>
+
+<!-- ============================ TEMA 9 ============================ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">9</div>
+    <div class="tema-titulo">PRIMEIRA INTERVENÇÃO EM CRISES POLICIAIS</div>
+  </div>
+  <div class="tema-base">Base: Dec. 33.782/2009; POP 003/2018/PMPE — Primeira intervenção em ocorrência de tomada de reféns.</div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Primeira intervenção</div>
+      <p>Conjunto de ações técnicas aplicado pelo agente de segurança ou por sua equipe que primeiramente se deparou com a ocorrência de crise — <b class="azul">medidas iniciais de controle e condução da crise</b> ou primeira resposta à crise — com o objetivo de dar os passos iniciais à operacionalização do GC.</p>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Primeiro interventor</div>
+      <p>Profissional de Segurança Pública que se depara com uma Ocorrência Policial de Crise ou de Defesa Social de Crise (Dec. 33.782/2009). É o policial ou equipe que primeiro chegar ou se deparar com a crise, <b class="azul">independentemente da capacitação técnica individual</b>. Deve informar imediatamente aos escalões superiores o estado do evento.</p>
+    </div>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">A — Medidas iniciais no GC ESTÁTICO</div>
+    <div class="passo"><b>IDENTIFICAR</b> — verificar se realmente se trata de ocorrência de crise e qual a sua modalidade, conforme a doutrina vigente no País e o Dec. 33.782/2009</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>ACIONAR</b> — informar aos escalões superiores o evento e suas características, para designação do efetivo especializado</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>CONTER</b> — não permitir que o evento se torne móvel ou tome maiores proporções; restringir a crise ao local de origem ou reduzir seus espaços físicos, se possível</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>ISOLAR</b> — estabelecer imediatamente um isolamento mínimo e seguro: curiosos não podem interferir nem se tornar parte da crise; impedir contato dos CEC com terceiros</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>MANTER CONTATO (sem fazer concessão)</b> — contato com o CEC e/ou reféns para compreender o animus da situação e acalmar os envolvidos, informando que está ali para ajudar a resolver o caso</div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Dialogar não é negociar</div>
+    <p>Estabelecer um diálogo com o CEC <b class="verde">não é o mesmo que negociar</b>: a negociação pressupõe técnicas e dinâmicas específicas, apreendidas e empregadas por negociadores profissionais.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">POP 003/2018/PMPE — Sequência de ações em ocorrências com reféns</div>
+    <ol>
+      <li>Identificar, com as medidas de segurança necessárias, se o caso é ocorrência de crise na modalidade “tomada de refém”;</li>
+      <li>Localizar o ponto exato da crise (ponto crítico) e verificar se ela está realmente ocorrendo;</li>
+      <li>Informar e solicitar apoio à Central de Operações (COPOM) com detalhes, para acionamento das equipes especializadas da PMPE e do CBMPE e de órgãos externos (autarquias de trânsito, SAMU, concessionária de energia etc.); se necessário, solicitar representante da assessoria de comunicação social;</li>
+      <li>Tentar conter a crise no local em que se estabeleceu;</li>
+      <li>Isolar imediatamente o ponto crítico (CEC sem contato com terceiros e vice-versa), com apoio de outras guarnições da área;</li>
+      <li>Estabelecer contato verbal ou telefônico com o CEC, <b class="borg">sem fazer qualquer concessão</b>, observando as regras de proteção individual e da equipe;</li>
+      <li>Coletar, obrigatoriamente, informações sobre ponto crítico, reféns, CEC, armas e motivações;</li>
+      <li>Ficar sempre em local seguro para manter contato verbal e visual, evitando ser surpreendido;</li>
+      <li>Adotar medidas para a fluidez do trânsito (deslocamento das equipes de resposta e apoio);</li>
+      <li>Manter terceiros (imprensa, familiares, curiosos) afastados do local;</li>
+      <li>Repassar o máximo de informações quando da chegada das Unidades Especializadas.</li>
+    </ol>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Detalhamentos técnicos (POP 003) — destaques</div>
+    <ul>
+      <li>Obrigatório o acionamento de equipe do CBMPE especializada em atendimento pré-hospitalar;</li>
+      <li>Na contenção, cuidar para que o CEC não se sinta acuado; se o ponto crítico for veículo (carro, ônibus, embarcação), impedir seu deslocamento;</li>
+      <li>Isolamento com meios físicos (fita zebrada, cordas, cones, gradis, cavaletes, viaturas, corrente humana); na dúvida, área de isolamento ampla, reajustável depois;</li>
+      <li>Primeiro contato por <b>um policial apenas</b>, no momento oportuno e sem concessões: “Atenção você aí dentro! meu nome é FULANO, sou policial militar. O que está acontecendo? Todos estão bem?” (se souber o nome do CEC, chame-o pelo nome). Sem resposta: reportar ao escalão superior e tentar novo contato após alguns minutos. Não é seguro invadir o ponto crítico, salvo imperiosa necessidade de evitar a morte do refém por ação deliberada do CEC;</li>
+      <li>Se o CEC fizer exigências: informar que não é autoridade competente, que as levará a quem compete decidir e que será o único canal de comunicação;</li>
+      <li>Observar detalhamento do ponto crítico (edificação, planta baixa/croqui, entradas, câmeras, circunvizinhança), do refém, do CEC, da arma e da motivação (crime frustro, passional, surto psicológico, desespero etc.);</li>
+      <li>Segurança pessoal constante: colete, capacete e escudo balísticos (se houver), posicionamento abrigado; atenção a possíveis ações de equipes de apoio ao CEC;</li>
+      <li>Viaturas estacionadas com a retaguarda voltada para o ponto crítico (rotas de entrada e saída); agentes de trânsito desviam a via interditada;</li>
+      <li>Imprensa na área destinada ao público; fotos/filmagens pela equipe só para produção de provas — proibida a divulgação em redes sociais e veículos de comunicação;</li>
+      <li>Familiares fora do isolamento, mas sob atenção (entrevista e possível participação na interlocução);</li>
+      <li>Com a chegada da equipe especializada, o primeiro interventor poderá permanecer com função definida pelo Gerente da crise (inclusive na conversação), considerando o vínculo estabelecido.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Dicas gerais para o contato com o CEC</div>
+    <ul>
+      <li><b class="verde">a) Apresentação/identificação do PM</b> — nome; posto ou graduação; instituição; perguntar como pode chamá-lo; dizer que está ali para ajudar;</li>
+      <li><b class="verde">b) Estabilizar e conter a situação</b> — acalmar o ânimo do CEC (não significa atender exigências); mostrar as mãos (passa confiança); sensação psicológica de que o CEC tem o controle da situação (evitar violência); perguntar o que o levou à situação e como se sente; comunicação não agressiva;</li>
+      <li><b class="verde">c) Procurar ganhar tempo</b> — evita soluções precipitadas; instalação da Síndrome de Estocolmo; deixar o CEC falar (falar reduz a ansiedade); coleta de informações e dados.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa prazo">
+      <div class="caixa-titulo">Itens negociáveis</div>
+      <ul>
+        <li>COMIDA</li>
+        <li>ÁGUA</li>
+        <li>REMÉDIO (com prescrição médica)</li>
+        <li>CIGARRO</li>
+      </ul>
+    </div>
+    <div class="caixa prazo">
+      <div class="caixa-titulo">Itens NÃO-negociáveis</div>
+      <ul>
+        <li>ARMAS</li>
+        <li>DROGAS</li>
+        <li>TROCA DE REFÉNS</li>
+        <li>COLETE BALÍSTICO</li>
+        <li>LIBERTAÇÃO DE PRESOS</li>
+        <li>TRANSPORTE*</li>
+        <li>PRESENÇA DE TERCEIROS*</li>
+        <li>DINHEIRO*</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fluxo-v azul">
+    <div class="fv-titulo">B — Medidas iniciais no GC DINÂMICO</div>
+    <div class="passo"><b>IDENTIFICAR</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>INFORMAR</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>ISOLAR</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>DISTRAIR</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>NEUTRALIZAR</b></div>
+  </div>
+
+  <div class="discursiva">
+    <div class="enunciado">Durante o policiamento ordinário, uma guarnição da PMPE depara-se com um homem que mantém a esposa sob ameaça com arma branca dentro da residência. Considerando a doutrina de gerenciamento de crises, o Dec. 33.782/2009 e o POP 003/2018/PMPE, discorra sobre as medidas iniciais de controle e condução da crise que competem ao primeiro interventor no GC estático, abordando ainda os limites do contato inicial com o causador do evento crítico.</div>
+    <div class="espelho">
+      <div class="esp-titulo">Espelho de resposta</div>
+      <ul>
+        <li>Conceituar primeira intervenção (medidas iniciais de controle e condução da crise) e primeiro interventor — policial ou equipe que primeiro se depara com a crise, independentemente da capacitação técnica individual (Dec. 33.782/2009; POP 003/2018);</li>
+        <li>IDENTIFICAR: verificar se é ocorrência de crise e sua modalidade (tomada de refém), conforme a doutrina e o Dec. 33.782/2009;</li>
+        <li>ACIONAR/INFORMAR: comunicar o COPOM com detalhes para acionamento das equipes especializadas da PMPE/CBMPE e órgãos externos;</li>
+        <li>CONTER: impedir que a crise se torne móvel ou tome maiores proporções, restringindo-a ao local de origem;</li>
+        <li>ISOLAR: isolamento mínimo e seguro do ponto crítico, impedindo o contato do CEC com terceiros;</li>
+        <li>MANTER CONTATO SEM FAZER CONCESSÃO: contato por um policial apenas, em local seguro, para acalmar os envolvidos e coletar informações (ponto crítico, reféns, CEC, armas, motivações);</li>
+        <li>Distinguir diálogo de negociação: negociar exige técnicas específicas de negociadores profissionais; informar ao CEC que não é autoridade competente e que será o único canal de comunicação;</li>
+        <li>Vedação de invasão do ponto crítico pelo primeiro interventor, salvo imperiosa necessidade de evitar a morte do refém por ação deliberada do CEC;</li>
+        <li>Repassar as informações às Unidades Especializadas na chegada, podendo permanecer com função definida pelo Gerente da crise.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ TEMA 10 ============================ -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">10</div>
+    <div class="tema-titulo">ALTERNATIVAS TÁTICAS NO GC ESTÁTICO</div>
+  </div>
+  <div class="tema-base">Base: Monteiro (1994); De Souza (1995); De Souza e Riani (2007); Lucca (2002).</div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">Alternativas táticas no GC estático</div>
+    <div class="linha"><span class="item">Negociação</span><span class="seta-h">→</span><span class="item">Técnicas não-letais</span><span class="seta-h">→</span><span class="item">Tiro de comprometimento</span><span class="seta-h">→</span><span class="item">Invasão tática</span></div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">A — Negociação</div>
+    <p>Segundo Monteiro (1994), a negociação é quase tudo no gerenciamento de crises: “gerenciar crises é negociar, negociar é negociar. E quando ocorre de se esgotarem todas as chances de negociações, deve-se ainda tentar negociar mais um pouquinho...”.</p>
+    <p>A tarefa não pode ser confiada a qualquer um: fica a cargo de policial com treinamento específico — o <b class="azul">negociador</b>. Seu papel mais específico é ser <b class="azul">intermediário entre os causadores da crise e o comandante do teatro de operações ou o Gerente da Crise</b> — canal de conversação entre as exigências dos CEC e a postura das autoridades, na busca de uma solução aceitável.</p>
+    <p>Monteiro (1994, p. 45) e De Souza (1995, p. 56): a utilização de religiosos, psicólogos, políticos e até secretários de Segurança Pública como negociadores é prática <b class="azul">inteiramente condenável</b>, com resultados prejudiciais ao gerenciamento — explica-se pela falta de equipes de negociadores constantemente treinadas na maioria das organizações policiais.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Gerente não negocia</div>
+    <p><b class="verde">O Gerente da crise não pode negociar</b>, enquanto <b class="verde">o Negociador não pode exercer o papel de Gerente da Crise</b>.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Síndrome de Estocolmo</div>
+    <p>Perturbação de ordem psicológica detectada em inúmeras vítimas de sequestro que, mesmo tendo sofrido violências no cativeiro, passaram a olhar seus algozes com simpatia e até com amor. Explica-se pela forte tensão emocional: imaginando a proximidade da morte, a vítima apega-se a qualquer coisa que indique possibilidade de sobrevivência (tábua de salvação) — psiquicamente, o CEC tem em suas mãos o poder de decidir entre a vida e a morte. <b class="azul">O estabelecimento da síndrome produzirá informações importantes para a condução da negociação.</b></p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">B — Técnicas não-letais (De Souza e Riani, 2007)</div>
+    <ul>
+      <li><b class="azul">Não-letal</b> — conceito que rege toda a produção, utilização e aplicação de técnicas, tecnologias, armas, munições e equipamentos não-letais em atuações policiais;</li>
+      <li><b class="azul">Técnicas não-letais</b> — conjunto de métodos para resolver um litígio ou realizar diligência policial preservando as vidas envolvidas, somente utilizando a arma de fogo após esgotar tais recursos;</li>
+      <li><b class="azul">Tecnologias não-letais</b> — conhecimentos e princípios científicos utilizados na produção e emprego de equipamentos não-letais;</li>
+      <li><b class="azul">Armas não-letais</b> — projetadas e empregadas para incapacitar pessoal ou material, minimizando mortes, ferimentos permanentes, danos à propriedade e comprometimento do meio ambiente;</li>
+      <li><b class="azul">Munições não-letais</b> — desenvolvidas para reduzir a capacidade operativa e/ou combativa do agressor; podem ser empregadas em armas convencionais ou específicas;</li>
+      <li><b class="azul">Equipamentos não-letais</b> — todos os artefatos, inclusive os não classificados como armas, com finalidade de preservar vidas, e os equipamentos de proteção individual (EPIs).</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Mau emprego pode matar — exemplo do elastômero</div>
+    <p>Equipamentos não-letais mal-empregados podem ocasionar a morte, além de não produzir o efeito desejado. Ex.: cartucho plástico calibre 12, modelo <b class="verde">AM 403 (Condor)</b>, de elastômero — usado a <b class="verde">distância inferior a 20 metros</b> pode produzir ferimentos graves ou letais; acima da distância recomendada, não produz o efeito de intimidação/dissuasão desejado.</p>
+    <p>As terminologias <b class="verde">“não-letal”, “menos letal” e “menos que letal”</b> podem ser usadas: referem-se ao objetivo a ser alcançado, e não ao resultado incondicional do uso.</p>
+    <p>As armas não-letais atuam por ruído, irritação da pele, mucosas e sistema respiratório, privação visual por fumaça e luz, limitação de movimentos, choque elétrico e impacto controlado, objetivando inibir ou neutralizar temporariamente a agressividade (De Souza e Riani, 2007, p. 7). É o time tático que conjuga armas não-letais com a invasão tática (ex.: granadas com gás lacrimogêneo).</p>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">Exemplos de meios não-letais citados</div>
+    <div class="linha"><span class="item">TASER</span><span class="item">AGENTES QUÍMICOS</span><span class="item">IMOBILIZAÇÃO</span><span class="item">TONFA</span><span class="item">ELASTÔMERO</span><span class="item">GRANADA</span></div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">C — Tiro de comprometimento (Lucca, 2002)</div>
+    <p>Alternativa tática de fundamental importância para crises com <b class="azul">reféns localizados</b>. Exige avaliação minuciosa de todo o contexto, sobretudo do <b class="azul">polígono formado por treinamento, armamento, munição e equipamento</b> — elementos fundamentais para o objetivo idealizado.</p>
+    <p>Decisão de grande responsabilidade do gerente: emprega-se quando <b class="azul">todas as outras alternativas forem inadequadas</b> e o cenário for favorável. A atuação do atirador de elite é difícil e complexa (mais ainda com mais de um sequestrador), havendo polêmica em seu emprego mesmo quando não entra em ação.</p>
+    <p>O atirador está sempre em contato com o gerente da crise via rádio: <b class="azul">não está somente para atirar</b> — dá apoio e suporte ao gerente, ao Time Tático e aos negociadores, repassando informações e dando cobertura de segurança tática.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">D — Invasão tática</div>
+    <p>Em geral, a <b class="azul">última alternativa</b> em ocorrência com reféns localizados: seu emprego acentua o risco da operação (para refém, policial e transgressor), o que vai de encontro ao objetivo de preservação da vida.</p>
+    <p>Só se admite quando o risco aos reféns se torna <b class="azul">ameaçador à sua integridade física</b> ou quando houver <b class="azul">grande possibilidade de sucesso do time tático</b>.</p>
+    <p>É a alternativa <b class="azul">mais treinada</b> de qualquer equipe tática, porém nem sempre utilizada: o cenário real terá característica própria, mantendo o risco elevado; o treinamento incessante e diversificado aumenta a chance de acerto sem eliminar o risco.</p>
+    <p>O uso da força letal não deve ultrapassar o limite do <b class="azul">estrito cumprimento do dever legal e da legítima defesa</b> (excludentes de ilicitude), que legitimam a ação policial ainda que resulte na morte do transgressor. Os policiais do grupo de invasão compõem um <b class="azul">TIME</b>, cada um com função específica, como em um esporte coletivo.</p>
+  </div>
+</div>
+
+<!-- ============================ TEMA 11 ============================ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">11</div>
+    <div class="tema-titulo">A NOVA AMBIÊNCIA DAS CRISES POLICIAIS — SISTEMA DINÂMICO E AGRESSOR ATIVO</div>
+  </div>
+  <div class="tema-base">Base: doutrina do Sistema Dinâmico de Gerenciamento de Crises; casos Realengo (2011) e boate Pulse (2016).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Sistema Dinâmico de Gerenciamento de Crises</div>
+    <p>A evolução da criminalidade e novos padrões de violência (agressor ativo) levaram a um modelo focado na <b class="azul">velocidade de resposta e na intervenção proativa para parar o dano em andamento</b>, em contraste com o modelo estático, que prioriza negociação e contenção a longo prazo. Ex.: da doutrina que esperava negociadores e grupos táticos, para a doutrina em que a primeira patrulha é treinada e autorizada a entrar em uma escola com atirador ativo para neutralizá-lo.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Momento da intervenção</div>
+    <p>Diferente das outras modalidades, aqui o causador tem por característica <b class="verde">causar pânico e desestruturar o Estado</b>, buscando, na maior parte das vezes, o maior número possível de vítimas fatais. Se o causador tem possibilidade de fazer mais vítimas, a ação deve ser <b class="verde">rápida, direcionada e agressiva</b>, diminuindo as chances de reação do causador.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Prioridade de vidas no Sistema Dinâmico</div>
+    <ol>
+      <li><b class="borg">Vítimas inocentes</b> — sob ameaça imediata;</li>
+      <li><b class="borg">Policiais</b> — segurança dos operadores;</li>
+      <li><b class="borg">Agressores</b> — se possível, preservando suas vidas.</li>
+    </ol>
+    <p>No contexto de agressor ativo, a prioridade máxima e inegociável passa a ser <b class="borg">parar o assassinato e salvar as vítimas sob ataque</b> (ex.: Realengo, 2011 — o PM que primeiro entrou na escola confrontou o atirador, mesmo sem ser da equipe tática).</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Agressor ativo</div>
+    <p>Indivíduo (ou grupo) <b class="azul">ativamente envolvido em matar ou tentar matar pessoas em área confinada ou populosa</b>. Característica definidora: ação contínua, sem negociação ou barricada inicial, buscando o maior número de vítimas. Exige resposta imediata e direta para neutralização, pelos primeiros interventores, eliminando o risco e preservando vidas. Ex.: ataque à boate Pulse, Orlando (EUA, 2016).</p>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa neutra">
+      <div class="caixa-titulo">Causas</div>
+      <ul>
+        <li>Religiosa</li>
+        <li>Ideológica</li>
+        <li>Trabalho</li>
+        <li>Terrorista</li>
+        <li>Bullyng</li>
+      </ul>
+    </div>
+    <div class="caixa neutra">
+      <div class="caixa-titulo">Características dos ataques</div>
+      <ul>
+        <li>Imprevisível;</li>
+        <li>Dispara ou ataca diversas pessoas em áreas confinadas ou populares;</li>
+        <li>Usa arma(s) de fogo, arma branca ou explosivos;</li>
+        <li><b>A vida é inversamente proporcional ao tempo</b>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">PIC dinâmica × PIC estática e Equipes de Resposta</div>
+    <p><b class="azul">Primeira Intervenção em Crise/Dinâmica (PIC)</b>: diferente da PIC estática (contenção e espera), a primeira patrulha a chegar a incidente de agressor ativo <b class="azul">deve entrar e confrontar a ameaça imediatamente</b>, mesmo em menor número ou sem equipamento tático completo — o objetivo é parar o dano (informando inicialmente, via rádio, o contexto da situação no local).</p>
+    <p><b class="azul">Equipes de Resposta</b>: todas as equipes policiais (Gts, patrulhas, trânsito etc.) devem ser treinadas para atuar como primeiras equipes de resposta em incidentes dinâmicos, capacitadas a engajar a ameaça.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Equipes de resposta — procedimentos (a–i)</div>
+    <ul>
+      <li>Constatada a veracidade da ocorrência com potencial de mais vítimas: informar de imediato à Central de Polícia e solicitar apoio da equipe especializada e viaturas de resgate;</li>
+      <li>A primeira equipe deve agir de pronto para cessar a agressão, informando à rede rádio que está adentrando o ponto crítico, com <b class="borg">mínimo de 02 (dois) operadores</b>, deslocando-se em direção ao causador conforme informações e análise do cenário;</li>
+      <li>Em contato com o causador: aproximação em segurança com objetivo de neutralização das ações, evitando aumento de vítimas;</li>
+      <li>Cessada a injusta agressão (rendição ou neutralização): <b class="borg">não se aproximar</b> — permanecer abrigada ou a distância segura até chegada do apoio e análise do cenário, garantindo que não há acionador de explosivos com o causador; havendo essa possibilidade, aguardar o Esquadrão de Bombas;</li>
+      <li>Equipes territoriais de apoio informam que estão adentrando, direção do deslocamento e tipo de ação (apoio direto, cerco, resgate de vítimas etc.);</li>
+      <li>Todas as equipes no ponto crítico portam rádio e informam a todo momento ações e deslocamentos;</li>
+      <li>Cabe ao Gestor ou autoridade mais graduada no local gerenciar as ações, limitar o número de equipes no ponto crítico, distribuir funções e delimitar perímetros interno e externo;</li>
+      <li>Cessada a agressão: o oficial restringe o número de operacionais dentro do ponto crítico (apenas o suficiente para a segurança dos especialistas em pronto socorro), evitando atrapalhar o resgate e destruir provas periciais;</li>
+      <li>Todos os cômodos da edificação devem ser verificados.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa neutra">
+      <div class="caixa-titulo">Velocidade da ação</div>
+      <ul>
+        <li><b>Causador contido e isolado</b> — se possível, evitar o adentramento; se necessário, velocidade <b>lenta e progressiva</b>;</li>
+        <li><b>Possibilidade de mais vítimas</b> — velocidade <b>rápida e direcionada</b>.</li>
+      </ul>
+    </div>
+    <div class="caixa neutra">
+      <div class="caixa-titulo">Equipamentos e armamento</div>
+      <ul>
+        <li>Mínimo de dois operacionais;</li>
+        <li>Escudo balístico — proteção e distração;</li>
+        <li>Granadas de luz e som — distrativo e atordoamento;</li>
+        <li>Submetralhadora ou fuzil, com munição não perfurante;</li>
+        <li>EPI completo;</li>
+        <li>Rádio comunicadores.</li>
+      </ul>
+    </div>
+  </div>
+
+  <table class="comp">
+    <tr><th>Formação</th><th>Técnica</th><th>Observações</th></tr>
+    <tr><td>02 operadores</td><td>Formação “siamesa”: proteção (bloqueio) mútua na passagem das aberturas (corredores e cômodos); passo tático acelerado em direção ao causador (informações ou som dos disparos)</td><td>Equipe mínima para atirador ativo; a retaguarda é suprimida pela necessidade de velocidade e pela prioridade de vida das vítimas; deslocamento rápido e direcionado; na intervenção os operacionais se afastam</td></tr>
+    <tr><td>03 operadores SEM escudo</td><td>Mesma técnica siamesa, com o segurança (retaguarda) afastado dos dois pontas/assaltos; passo tático acelerado</td><td>O retaguarda passa informações à rede rádio (localização, feridos, circunstâncias), direciona vítimas em retirada, dá apoio/cobertura aos pontas e segurança à retaguarda; desloca-se com o corpo voltado para a direção da equipe, por vezes visualizando a retaguarda</td></tr>
+    <tr><td>03 operadores COM escudo</td><td>Mesma técnica siamesa, com a segurança de um escudo à frente; passo tático acelerado</td><td>O uso do escudo depende da análise das informações sobre o armamento do causador; na intervenção os operacionais se afastam; o escudo permanece no centro com função de distração</td></tr>
+  </table>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Suicide by Cop</div>
+    <p>Fenômeno em que o indivíduo intencionalmente se comporta de maneira ameaçadora e perigosa (ex.: portando arma, ameaçando inocentes) para <b class="azul">provocar os policiais a usar força letal contra ele</b>. Deseja morrer, mas não quer ou não consegue cometer suicídio diretamente. Os policiais devem tentar desescalar; se o risco for iminente, podem ser forçados a reagir.</p>
+  </div>
+</div>
+
+<!-- ============================ TEMA 12 ============================ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">12</div>
+    <div class="tema-titulo">DECRETO Nº 33.782, DE 14 AGO 2009 — GABINETE DE GERENCIAMENTO DE CRISES (GCRISES)</div>
+  </div>
+  <div class="tema-base">Base legal: Decreto Estadual nº 33.782/2009 (PE); Constituição do Estado, Art. 37, II e IV; Lei nº 13.205, de 19 JAN 2007. Revoga o Decreto nº 24.029, de 20 FEV 2002.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Art. 1º — Criação e finalidade</div>
+    <p>Cria o <b class="azul">Gabinete de Gerenciamento de Crises – GCRISES</b>, órgão <b class="azul">permanente subordinado à Secretaria de Defesa Social</b>, com a finalidade de estabelecer a política de gerenciamento de crises no Estado de Pernambuco e implementar o regime de cooperação entre as instituições do Sistema de Defesa Social.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Art. 1º, § 1º — Crise e exemplos (I a XIV)</div>
+    <p>Crise: todo incidente ou situação crucial não rotineira, que exija resposta especial dos órgãos operativos de defesa social, em razão da possibilidade de agravamento conjuntural, com grande risco à vida e ao patrimônio, tais como:</p>
+    <ul>
+      <li>I – motins em presídios; II – assaltos com reféns; III – sequestros; IV – atos de terrorismo e/ou ocorrências envolvendo bombas e explosivos;</li>
+      <li>V – grave distúrbio civil; VI – ocupação ilegal de terra; VII – bloqueio de estradas; VIII – enchentes;</li>
+      <li>IX – desabamentos de grandes estruturas; X – graves vazamentos de produtos perigosos; XI – grandes deslizamentos de encostas;</li>
+      <li>XII – acidentes massivos envolvendo transporte aéreo e ferroviário; XIII – grandes incêndios; XIV – outros desastres naturais e tecnológicos.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Art. 2º — Composição do GCRISES</div>
+    <ul>
+      <li>I – Secretário de Defesa Social, <b>que o presidirá</b>;</li>
+      <li>II – Secretário Especial da Casa Militar;</li>
+      <li>III – Secretário Executivo de Defesa Social;</li>
+      <li>IV – Secretário Executivo de Ressocialização da Secretaria de Desenvolvimento Social;</li>
+      <li>V – Comandante Geral da Polícia Militar;</li>
+      <li>VI – Comandante Geral do Corpo de Bombeiros Militar;</li>
+      <li>VII – Chefe Geral de Polícia Civil;</li>
+      <li>VIII – Secretário Executivo de Gestão Integrada da Secretaria de Defesa Social;</li>
+      <li>IX – Coordenador do Centro Integrado de Inteligência de Defesa Social;</li>
+      <li>X – Gerente Geral de Polícia Científica.</li>
+    </ul>
+    <p>Parágrafo único: poderá convidar, temporariamente, representantes de outros órgãos ou entidades (federais, estaduais, municipais e sociedade civil organizada) relacionados ao problema conjuntural específico.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Art. 3º — Atribuições do GCRISES (destaques)</div>
+    <ul>
+      <li>Assessorar o Governador em assuntos de eventos críticos; aplicar as medidas para resolução de crise específica;</li>
+      <li>Manter equipes de <b class="borg">Assessoramento Especializado</b> — jurídica, psicológica, de inteligência, de comunicação social e de resposta especializada;</li>
+      <li>Designar, <b class="borg">por portaria do seu Presidente</b>: o <b class="borg">Gerente de Crises</b> (atua no local, recebendo as orientações do GCRISES), o <b class="borg">porta-voz</b> (presta informações aos veículos de comunicação conforme diretrizes da Gerência da Crise) e equipe com Coordenador para os feitos administrativos;</li>
+      <li>Supervisionar a execução das ações e assegurar ao Gerente todos os recursos necessários;</li>
+      <li>Propor a especialização de policiais civis, militares e bombeiros militares e a aquisição de equipamentos específicos;</li>
+      <li>Exigir o fiel cumprimento das normas, considerando a <b class="borg">ordem axiológica de preservação de vidas, do patrimônio e de aplicação das leis</b>.</li>
+    </ul>
+    <p><b class="borg">§ 2º</b>: o Gerente de Crises deverá ser, obrigatoriamente, <b class="borg">Oficial da PM, do CBM ou Delegado de Polícia Civil</b>, com comprovado conhecimento em GC e habilitado por instituições estaduais, nacionais e/ou internacionais. <b class="borg">§ 3º</b>: estabelecerá seu Posto de Comando no local do evento crítico, informando diretamente ao GCRISES. <b class="borg">§ 4º</b>: somente o porta-voz está autorizado a se manifestar sobre a crise e o gerenciamento.</p>
+  </div>
+
+  <div class="caixa prazo">
+    <div class="caixa-titulo">Ativação, prazos e disposições</div>
+    <ul>
+      <li><b class="ouro">Art. 4º</b> — ativação: <b class="ouro">ordinariamente, com reunião interna trimestral</b>; extraordinariamente, por convocação do Presidente, no surgimento ou previsão de crises, e para criar situações fictícias de treinamento/avaliação. A critério do Governador, pode apoiar Governos Federal e/ou Municipal;</li>
+      <li><b class="ouro">Art. 5º</b> — equipes táticas da PM, PC e CBM, veículos especiais e/ou aeronaves podem ser requisitados pelo GCRISES;</li>
+      <li><b class="ouro">Art. 7º</b> — assessoramento jurídico: Gerência Geral de Assuntos Jurídicos da SDS;</li>
+      <li><b class="ouro">Art. 8º</b> — outros órgãos estaduais podem ser requisitados, com máxima urgência; <b class="ouro">Art. 9º</b> — cadastro especial de dispositivos operacionais de PE e estados vizinhos;</li>
+      <li><b class="ouro">Art. 15</b> — Regimento Interno no prazo de <b class="ouro">90 (noventa) dias</b> da publicação; <b class="ouro">Art. 16</b> — funciona na sede da SDS; <b class="ouro">Art. 20</b> — revoga o Decreto nº 24.029, de 20 FEV 2002.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Art. 10 — Unidades de área e autoridade do Gerente</div>
+    <ul>
+      <li>Unidades regulares da área da crise: <b class="verde">isolar e conter completamente o local</b>, adotar medidas de resposta imediata e comunicar às autoridades superiores, conforme fluxo do GCRISES;</li>
+      <li>§ 1º — vedado o acesso de pessoas estranhas à operação no local;</li>
+      <li>§ 2º — <b class="verde">em hipótese alguma a autoridade do Gerente de Crises poderá ser confrontada</b>, salvo por deliberação do GCRISES;</li>
+      <li>§ 3º — instalada a crise, as demais unidades não podem tomar iniciativas ou interferir sem autorização do Gerente (permitido o estado de prontidão nas sedes);</li>
+      <li>§ 4º — o descumprimento dos §§ 2º e 3º sujeita o infrator às penalidades legais (responsabilidade civil, administrativa e penal).</li>
+    </ul>
+  </div>
+
+  <table class="comp">
+    <tr><th>Situação</th><th>Gerente da crise (Art. 11 — preferencialmente)</th><th>Ações táticas principais (Art. 12)</th></tr>
+    <tr><td>Sequestro com cativeiro em local desconhecido</td><td>Integrante do Grupo de Operações Especiais – GOE – da Polícia Civil</td><td>Polícia Civil – GOE (resgate de reféns)</td></tr>
+    <tr><td>Tomada de reféns em local conhecido pelo público (continuação de outros crimes); ocorrências terroristas (ressalvadas as atribuições federais) e com artefatos explosivos</td><td>Integrante da 1ª Companhia Independente de Operações Especiais – 1ª CIOE – da Polícia Militar</td><td>Polícia Militar, por intermédio da 1ª CIOE (resgate de reféns); terroristas/explosivos: 1ª CIOE</td></tr>
+    <tr><td>Rebelião em unidades prisionais, graves distúrbios civis e ocupações ilegais com alto risco potencial</td><td>Integrante do Batalhão de Polícia de Choque – BPChoque – da Polícia Militar</td><td>Controle de tumulto, desinterdição de vias, reintegração de terra, controle de distúrbio civil: BPChoque da PMPE</td></tr>
+    <tr><td>Suicidas</td><td>—</td><td>Causador com arma branca ou de fogo: <b>1ª CIOE</b>; desarmado: <b>Corpo de Bombeiros Militar</b></td></tr>
+    <tr><td>Desastres naturais, grandes incêndios industriais, vazamentos de produtos perigosos, desabamentos, enchentes, acidentes massivos (transportes marítimos, aéreos e ferroviários), deslizamentos de grandes proporções</td><td>Integrante do Corpo de Bombeiros Militar</td><td>Ocorrências típicas de salvamento e combate a incêndio: todas as ações táticas principais a cargo do CBM</td></tr>
+  </table>
+</div>
+
+<!-- ============================ TEMA 13 ============================ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">13</div>
+    <div class="tema-titulo">POP Nº 0054 — OCORRÊNCIA COM AGRESSOR ATIVO EM ATAQUE MASSIVO</div>
+  </div>
+  <div class="tema-base">Base: PMPE — POP nº 0054 – Agressor ativo em ataque massivo (SEI 3900032516.000034/2023); Decreto Estadual 33.782/2009; POP GC 003 e POP GC 005.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Definição (item 5.1)</div>
+    <p>Ocorrência de crise com Agressor Ativo: elemento armado (arma de fogo ou quaisquer armas brancas) que age com <b class="azul">intento letal a um grande conjunto de pessoas</b> em determinado local, <b class="azul">sem direcionamento específico a um único indivíduo</b>, com o objetivo de causar o maior dano letal possível num curto espaço de tempo — ação normalmente tolhida por neutralização de outrem.</p>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Avaliação dos pontos críticos (destaques)</div>
+    <ul>
+      <li>Tempo de resposta: o tempo é <b>inversamente proporcional à quantidade de vidas perdidas</b>;</li>
+      <li>Coleta de informações rápida e precisa (identificação do agressor);</li>
+      <li>Acionamento da unidade de último recurso – <b>BOPE</b>;</li>
+      <li>Diferenciação entre crise dinâmica (agressor ativo) e estática (refém e suicida);</li>
+      <li>Varredura pós-neutralização; identificação de artefato explosivo; estabelecimento de Posto de Comando; isolamento e controle do local; preservação da cena do crime; acionamento de viaturas de socorro.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Sequência de ações (POP 0054)</div>
+    <div class="passo"><b>4.1 ACIONAMENTO</b> — COPOM determina o deslocamento de todas as Gu possíveis ou de no mínimo 02 (duas) Gu de área ou especializadas de recobrimento mais próximas; atendimento priorizado em detrimento das demais ocorrências</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4.2 IDENTIFICAR</b> — verificar se realmente é ocorrência de crise com Agressor Ativo, avaliando as circunstâncias</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4.3 INFORMAR/COMUNICAR</b> — rapidamente e com precisão ao COPOM via rádio; levar o rádio no adentramento. Perguntas básicas: “Onde estão?”, “Quantos agressores?”, “Como estão vestidos?”, “O que falam (qual o objetivo)?”, “Qual o armamento/explosivo?”</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4.4 MONTAR equipe de primeira intervenção</b> — no mínimo 02 (dois) e preferencialmente 04 (quatro) policiais; entrada orientada no terreno por barulhos de disparos/explosões e gritos; em caso de retardo do apoio, a Gu procede a entrada com segurança e cautela</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4.5 Equipe secundária</b> — segunda equipe de intervenção adentra em suporte, com informações básicas (local de entrada da primeira, características do CEC, ruídos de disparo), evitando fogo-amigo</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4.6 ISOLAMENTO</b> — pelas equipes que chegarem após a equipe secundária, com apoio de demais policiais ou mesmo civis em condições de segurança (seguranças privados, civis locais)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4.7 DISTRAÇÃO</b> — voltar a atenção do CEC para outro sentido, auxiliando prisão ou neutralização (granadas de efeito moral ou luz e som, sirene, megafone, outro ruído seguro)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4.8 NEUTRALIZAÇÃO</b> — com equipamentos de menor potencial ofensivo ou meios letais, conforme a proporcionalidade da força do agressor, buscando cessar a agressão (objetivo primordial)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4.9 Buscas</b> — demais equipes de apoio verificam todos os ambientes (outros agressores) e, se necessário, evacuam o local</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4.10 CONCLUSÃO</b> — primeiros socorros a todos, com prioridade: <b>vítimas → policiais → CEC</b> (equipe médica pode definir outras prioridades); equipes secundárias separam local seguro para concentração das vítimas</div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Detalhamento técnico (destaques)</div>
+    <ul>
+      <li>BOPE = <b class="verde">Unidade Especializada de última resposta</b>, acionado para apoio sem prejuízo das ações das demais Gu; persistindo a ação do agressor e chegando o BOPE, <b class="verde">este assume o gerenciamento</b>, auxiliado pelo Cmt do policiamento da área e demais equipes;</li>
+      <li>Policial de folga: informar pelo atendimento de emergência <b class="verde">190</b> ou solicitar que outrem o faça;</li>
+      <li>Termo na rede-rádio pelo primeiro policial que identificar: <b class="verde">“OCORRÊNCIA COM AGRESSOR ATIVO, PRIORIDADE!”</b>, em seguida citar LOCAL, NOME DA ESCOLA (ou outro local específico) E BAIRRO;</li>
+      <li>Confirmar se não há policiais/agentes de segurança (mesmo à paisana) dentro do ponto crítico agindo contra o agressor — evitar fogo-amigo;</li>
+      <li>Abordagens ligeiras com atenção à segurança: tomada de ângulo rápida em <b class="verde">cones da morte</b> (portas, corredores e janelas); deslocamento em patrulha com conduta tática, <b class="verde">preferencialmente na formação diamante, cobertura 360°</b>, também em partes superiores;</li>
+      <li>Policial sozinho/de folga: em inferioridade numérica, aguardar ao menos mais um policial; em igualdade numérica e tática, intervenção imediata; em inferioridade, mas em situação necessária de legítima defesa (própria ou de terceiros), realizar a ação;</li>
+      <li>O <b class="verde">Uso Diferenciado da Força (UDF)</b> obedece ao nível de força empregado pelo agressor, considerando os meios existentes para cessar a agressão;</li>
+      <li>Após a neutralização: varredura de todos os locais, preferencialmente por equipe especializada, com preservação do local do crime; a equipe que realizou a ação principal segue à Delegacia de Polícia Civil com material apreendido, agressor (se contido), vítimas e testemunhas;</li>
+      <li>O policial mais antigo na área externa organiza o cenário (triagem: vítimas em estado crítico × em condições de aguardar), delegando funções, inclusive a civis;</li>
+      <li>Se a crise se tornar <b class="verde">estática</b> (reféns ou suicida armado): acionar o BOPE via COPOM (Dec. 33.782/2009) e iniciar a primeira intervenção (conter, isolar e verbalizar), conforme <b class="verde">POP GC 003</b>;</li>
+      <li>Identificado artefato explosivo: acionar o BOPE (Esquadrão de Bombas), conforme <b class="verde">POP GC 005</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Gerente da crise — controle da ocorrência (5.20–5.21)</div>
+    <ul>
+      <li>Identificar e anotar nominalmente as vítimas (no local e as conduzidas ao pronto-socorro), auxiliando parentes e autoridades;</li>
+      <li>Estabelecer Posto de Comando;</li>
+      <li>Estabelecer local para imprensa (fora do perímetro de isolamento);</li>
+      <li>Acionar quantas ambulâncias forem necessárias;</li>
+      <li>Desobstruir vias de acesso e saídas (viaturas e ambulâncias);</li>
+      <li>Acionar os órgãos competentes afetos ao local, a autoridade policial local e a perícia.</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

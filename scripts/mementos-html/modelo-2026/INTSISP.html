@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>MEMENTO — INTELIGÊNCIA POLICIAL MILITAR · CFO PM 2026</title>
+<style>
+/* ===== MEMENTO CFO PM 2026 — identidade visual fixa ===== */
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: #fbf9f3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  background: #fbf9f3; color: #2a2620;
+  font-family: "Segoe UI", -apple-system, Arial, sans-serif;
+  font-size: 9.5pt; line-height: 1.42;
+}
+/* ---- Cabeçalho do documento ---- */
+.doc-header {
+  text-align: center; padding: 4mm 0 3mm;
+  border-bottom: 3px double #2a2620; margin-bottom: 5mm;
+}
+.doc-header h1 { font-size: 15pt; letter-spacing: .5px; }
+.doc-header .sub { font-size: 9pt; color: #4a4a4a; margin-top: 1mm; }
+
+/* ---- Tema (um por capítulo; cada tema inicia em nova página) ---- */
+.tema { break-before: page; padding-top: 2mm; }
+.tema:first-of-type { break-before: auto; }
+.tema-header { display: flex; align-items: stretch; gap: 0; margin-bottom: 1.5mm; }
+.tema-num {
+  background: #7d1f2b; color: #fff; font-weight: 800; font-size: 13pt;
+  min-width: 11mm; display: flex; align-items: center; justify-content: center;
+  border-radius: 2px 0 0 2px; padding: 1.5mm 2mm;
+}
+.tema-titulo {
+  background: #a3444f; color: #fff; font-weight: 700; font-size: 11.5pt;
+  flex: 1; display: flex; align-items: center; padding: 1.5mm 3mm;
+  border-radius: 0 2px 2px 0; letter-spacing: .3px;
+}
+.tema-base { font-style: italic; font-size: 8.5pt; color: #4a4a4a; margin: 0 0 3mm 1mm; }
+
+/* Variantes de cor do cabeçalho de tema (usar conforme a natureza dominante) */
+.tema-header.azul .tema-num { background: #1f4e79; } .tema-header.azul .tema-titulo { background: #4a749c; }
+.tema-header.verde .tema-num { background: #2e6b3e; } .tema-header.verde .tema-titulo { background: #578964; }
+.tema-header.dourado .tema-num { background: #9a7b16; } .tema-header.dourado .tema-titulo { background: #b39a4a; }
+.tema-header.cinza .tema-num { background: #4a4a4a; } .tema-header.cinza .tema-titulo { background: #757575; }
+
+/* ---- 1. Caixas coloridas ---- */
+.caixa { border-radius: 3px; padding: 2.2mm 3mm; margin-bottom: 2.6mm; break-inside: avoid; border-left: 3.5px solid; }
+.caixa .caixa-titulo { font-weight: 800; font-size: 9.5pt; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1mm; }
+.caixa p { margin-bottom: 1mm; } .caixa p:last-child { margin-bottom: 0; }
+.caixa ul, .caixa ol { padding-left: 5mm; } .caixa li { margin-bottom: .6mm; }
+.caixa.def     { background: #e8eef5; border-color: #1f4e79; } .caixa.def .caixa-titulo     { color: #1f4e79; }
+.caixa.atencao { background: #e9f2ea; border-color: #2e6b3e; } .caixa.atencao .caixa-titulo { color: #2e6b3e; }
+.caixa.prazo   { background: #f7f1dd; border-color: #9a7b16; } .caixa.prazo .caixa-titulo   { color: #9a7b16; }
+.caixa.fase    { background: #f6e8ea; border-color: #7d1f2b; } .caixa.fase .caixa-titulo    { color: #7d1f2b; }
+.caixa.neutra  { background: #efefef; border-color: #4a4a4a; } .caixa.neutra .caixa-titulo  { color: #4a4a4a; }
+
+/* ---- 2. Fluxo vertical com setas (ritos, etapas, ciclos) ---- */
+.fluxo-v { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-v .fv-titulo { font-weight: 800; font-size: 9.5pt; color: #7d1f2b; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-v .passo {
+  background: #f6e8ea; border: 1px solid #7d1f2b; border-radius: 3px;
+  padding: 1.6mm 2.6mm; text-align: center;
+}
+.fluxo-v .passo b { color: #7d1f2b; }
+.fluxo-v .seta { text-align: center; color: #7d1f2b; font-size: 10pt; line-height: 1.1; padding: .4mm 0; }
+.fluxo-v.azul .passo { background: #e8eef5; border-color: #1f4e79; } .fluxo-v.azul .seta, .fluxo-v.azul .fv-titulo, .fluxo-v.azul .passo b { color: #1f4e79; }
+
+/* ---- 3. Fluxo horizontal inline (categorias/espécies) ---- */
+.fluxo-h { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-h .fh-titulo { font-weight: 800; font-size: 9.5pt; color: #4a4a4a; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-h .linha { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2mm; }
+.fluxo-h .item {
+  background: #efefef; border: 1px solid #4a4a4a; border-radius: 3px;
+  padding: 1.2mm 2.4mm; font-size: 9pt; font-weight: 600;
+}
+.fluxo-h .seta-h { color: #4a4a4a; font-weight: 700; }
+
+/* ---- 4. Mnemônico ---- */
+.mnemo {
+  border: 2px dashed #9a7b16; background: #f7f1dd; border-radius: 4px;
+  padding: 2.4mm 3mm; margin-bottom: 2.6mm; break-inside: avoid;
+}
+.mnemo .palavra { font-size: 14pt; font-weight: 900; color: #9a7b16; letter-spacing: 1.5px; text-align: center; margin-bottom: 1.2mm; }
+.mnemo .exp { font-size: 9pt; }
+.mnemo .exp b { color: #9a7b16; }
+
+/* ---- 5. Tabela comparativa ---- */
+table.comp { width: 100%; border-collapse: collapse; margin-bottom: 2.6mm; break-inside: avoid; font-size: 8.8pt; }
+table.comp th { background: #4a4a4a; color: #fff; padding: 1.4mm 2mm; text-align: left; font-size: 8.8pt; }
+table.comp td { border: 1px solid #b9b4aa; padding: 1.3mm 2mm; vertical-align: top; background: #fffdf8; }
+table.comp tr:nth-child(even) td { background: #f4f1e9; }
+table.comp td:first-child { font-weight: 700; }
+
+/* ---- 6. Discursiva com espelho ---- */
+.discursiva { border: 1.5px solid #1f4e79; border-radius: 4px; margin-bottom: 2.6mm; break-inside: avoid; }
+.discursiva .enunciado { background: #1f4e79; color: #fff; padding: 2mm 3mm; font-weight: 600; }
+.discursiva .enunciado::before { content: "QUESTÃO DISCURSIVA — "; font-weight: 800; }
+.discursiva .espelho { padding: 2.2mm 3mm; background: #fffdf8; }
+.discursiva .espelho .esp-titulo { font-weight: 800; color: #1f4e79; text-transform: uppercase; font-size: 9pt; margin-bottom: 1mm; }
+.discursiva .espelho ul { padding-left: 5mm; } .discursiva .espelho li { margin-bottom: .6mm; }
+
+/* util */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; margin-bottom: 2.6mm; }
+.grid2 > * { margin-bottom: 0; }
+b.azul { color: #1f4e79; } b.borg { color: #7d1f2b; } b.verde { color: #2e6b3e; } b.ouro { color: #9a7b16; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <h1>MEMENTO — INTELIGÊNCIA POLICIAL MILITAR · CFO PM 2026</h1>
+  <div class="sub">Apostila da disciplina — APMP / CFO PM (Paudalho, 2024)</div>
+</div>
+
+<!-- ============ TEMA 1 ============ -->
+<div class="tema">
+  <div class="tema-header dourado">
+    <div class="tema-num">1</div>
+    <div class="tema-titulo">FUNDAMENTOS HISTÓRICOS DA INTELIGÊNCIA NO BRASIL E O SISBIN</div>
+  </div>
+  <div class="tema-base">Base legal: Lei nº 9.883, de 7 de dezembro de 1999 (institui o SISBIN e cria a ABIN); Lei nº 13.241, de 29 de maio de 2007 (SEINSP-PE); Decreto nº 30.847, de 1 de outubro de 2007.</div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Linha do tempo — marcos históricos</div>
+    <div class="passo"><b>1927</b> — Criação do Conselho de Defesa Nacional (CDN), precursor do SISBIN</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>1944</b> — Formação do Serviço de Informações e Contrainformações (SIC)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>1946</b> — Implementação do Serviço Federal de Informações e Contrainformações (SFICI)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>1964</b> — Substituição do SFICI pelo Serviço Nacional de Informações (SNI)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>1995</b> — Criação da Agência Brasileira de Inteligência (ABIN) e do Sistema Brasileiro de Inteligência (SISBIN)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2016</b> — Aprovação da Política Nacional de Inteligência (PNI): diretrizes e objetivos para a atividade de inteligência no Brasil</div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Sistema Brasileiro de Inteligência — Lei nº 9.883/1999</div>
+    <ul>
+      <li><b class="azul">Objetivo do SISBIN</b>: integrar as ações de planejamento e execução das atividades de inteligência do país, fornecendo subsídios ao <b class="azul">Presidente da República</b> em assuntos de interesse nacional.</li>
+      <li><b class="azul">Inteligência</b>: obtenção, análise e disseminação de conhecimentos sobre fatos e situações relevantes para o processo decisório e a segurança do Estado.</li>
+      <li><b class="azul">Contrainteligência</b>: visa neutralizar a inteligência adversa.</li>
+      <li>Compõem o SISBIN: órgãos e entidades da Administração Pública Federal que produzem conhecimentos de interesse para as atividades de inteligência, especialmente os responsáveis pela <b>defesa externa</b>, <b>segurança interna</b> e <b>relações exteriores</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">ABIN — órgão central do sistema</div>
+    <ul>
+      <li>Responsável por <b class="verde">planejar, executar, coordenar, supervisionar e controlar</b> as atividades de inteligência do país, conforme políticas e diretrizes estabelecidas.</li>
+      <li>Também responsável por: proteção de conhecimentos sensíveis do Estado e da sociedade; avaliação de ameaças à ordem constitucional; desenvolvimento de recursos humanos e estudos de inteligência.</li>
+      <li>Executa a <b>Política Nacional de Inteligência</b> (estabelecida pelo Presidente da República), sob supervisão da <b>Câmara de Relações Exteriores e Defesa Nacional do Conselho de Governo</b>.</li>
+      <li><b class="verde">Controle e fiscalização externos</b>: realizados pelo <b>Poder Legislativo</b>, conforme ato do Congresso Nacional.</li>
+      <li>Dirigida por um <b>Diretor-Geral</b> (funções em decreto presidencial); cargos de Diretor-Geral e Diretor-Adjunto são de natureza especial e de livre nomeação pelo Presidente da República.</li>
+      <li>Atos relacionados a atividades sigilosas publicados <b>em extrato</b>; divulgação de informações restrita às autoridades competentes, observados os graus de sigilo da legislação.</li>
+      <li>Só pode se comunicar com outros órgãos da administração pública com <b>conhecimento prévio da autoridade superior</b> do órgão respectivo; pode firmar convênios, acordos e contratos.</li>
+      <li>Controle interno (incl. contabilidade analítica): <b>Secretaria de Controle Interno da Presidência da República</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Sistema Estadual de Inteligência — SEINSP (Lei nº 13.241/2007)</div>
+    <ul>
+      <li>Cria o <b class="azul">Sistema Estadual de Inteligência de Segurança Pública do Estado de Pernambuco — SEINSP</b>, com o <b class="azul">Centro Integrado de Inteligência de Defesa Social — CIIDS</b> como órgão responsável pela coordenação, planejamento e execução.</li>
+      <li><b class="borg">Chefe do CIIDS → DELEGADO da Polícia Civil.</b></li>
+      <li>Cria também: Subsistema de Inteligência da Polícia Civil, Sistema de Inteligência do Sistema Prisional e Subsistema de Inteligência do Sistema Socioeducativo.</li>
+      <li>Autoriza a criação de <b>Núcleos de Inteligência</b> nas delegacias especializadas da polícia judiciária, conforme necessidade da Polícia Civil.</li>
+      <li>O SEINSP é composto por diversos subsistemas: Polícia Militar, Sistema Prisional, Corpo de Bombeiros, Casa Militar, entre outros — cada subsistema com uma <b>Agência Central de Inteligência</b> responsável pela coordenação.</li>
+    </ul>
+  </div>
+
+  <div class="caixa prazo">
+    <div class="caixa-titulo">GEAI — Gratificação por exercício na atividade de inteligência</div>
+    <ul>
+      <li>Concedida aos servidores lotados nos Subsistemas de Inteligência da Polícia Civil, Polícia Militar, Casa Militar, Corpo de Bombeiros Militar, Secretaria Executiva de Ressocialização ou na Agência Central da Secretaria de Defesa Social.</li>
+      <li>Concedida a servidores que atuem em <b class="ouro">escala de sobreaviso</b> ou realizem trabalhos de <b class="ouro">monitoramento relacionados à análise de interceptação telefônica</b>, conforme critérios da lei.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">SIPOM — Subsistema da Polícia Militar de Pernambuco</div>
+    <ul>
+      <li>Integra o SEINSP, instituído pela <b>Lei nº 13.241, de 29 de maio de 2007</b>, e regulamentado pelo <b>Decreto nº 30.847, de 1 de outubro de 2007</b>.</li>
+      <li><b class="verde">Função</b>: coordenar e executar atividades de inteligência e contrainteligência, visando à coleta, análise e disseminação de informações estratégicas para a <b>prevenção e repressão de crimes</b>.</li>
+      <li>Atua de forma integrada com outros órgãos de segurança pública, buscando otimizar as operações de segurança e garantir a eficácia nas ações de proteção da sociedade.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ TEMA 2 ============ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">2</div>
+    <div class="tema-titulo">FUNDAMENTOS DOUTRINÁRIOS DA ATIVIDADE DE INTELIGÊNCIA</div>
+  </div>
+  <div class="tema-base">Base legal/doutrinária: Constituição de 1988; Doutrina da Atividade de Inteligência (ABIN, 2023); Decreto 11693 (Conselho Consultivo).</div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">Estrutura doutrinária da atividade de inteligência</div>
+    <div class="linha"><span class="item">RAMOS: Inteligência</span><span class="item">Contrainteligência</span></div>
+    <div class="linha"><span class="item">PROCESSOS: Análise</span><span class="item">Operações</span><span class="item">Buscas</span><span class="item">Coletas</span></div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Fundamento constitucional</div>
+    <ul>
+      <li>A atividade de inteligência busca identificar oportunidades para a realização dos objetivos das políticas públicas essenciais à segurança e ao bem-estar da sociedade.</li>
+      <li>A preservação da <b class="azul">soberania popular e nacional</b> justifica a necessidade de serviços de inteligência, em paralelo às forças armadas e à diplomacia.</li>
+      <li>A Constituição de 1988 estabelece a República Federativa do Brasil como <b class="azul">Estado Democrático de Direito</b>, baseado na soberania, cidadania, dignidade da pessoa humana, valores sociais, pluralismo político e promoção do bem de todos.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">2.1 Especialização</div>
+      <ul>
+        <li>Organismos de inteligência classificam-se em <b class="azul">serviços de inteligência</b> ou <b class="azul">frações de inteligência</b>, conforme a finalidade principal.</li>
+        <li><b>Inteligência</b>: produção e disseminação de conhecimento sobre eventos e situações que possam influenciar o processo decisório e a ação governamental.</li>
+        <li><b>Contrainteligência</b>: prevenir, detectar e neutralizar atividades de inteligência adversa.</li>
+        <li><b>Ação adversa</b>: ação intencional que busca ilegitimamente acessar informações sensíveis, ameaçando a segurança de pessoas e instituições do Brasil.</li>
+        <li><b>Eventos</b>: produzidos por mecanismos que envolvem contextos, estruturas e atores. <b>Fenômenos</b>: processos compostos por evolução de fatos, eventos e situações ao longo do tempo.</li>
+      </ul>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">2.2 Democracia e controle</div>
+      <ul>
+        <li>Organismos de inteligência brasileiros (ex.: ABIN) estão no <b class="azul">Poder Executivo</b>.</li>
+        <li>Diretor-Geral da ABIN: nomeado pelo Presidente, com aprovação do Congresso e do Senado.</li>
+        <li>Controles da ABIN: internos e externos — supervisão, ouvidoria e auditoria, além do <b>Tribunal de Contas</b>, <b>Poder Judiciário</b> e <b>CCAI</b>.</li>
+        <li>A <b class="azul">CCAI</b> tem amplos poderes para fiscalizar a inteligência e contrainteligência, nacional e internacional; pode inspecionar instalações e acessar documentos.</li>
+        <li>Supervisão da PNI e da ABIN: Presidente, ministro da Casa Civil e <b>CREDEN</b>.</li>
+        <li><b class="azul">PNI, ENINT e PLANINT</b> guiam as ações da ABIN e do Sisbin.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">2.3 Organização</div>
+    <ul>
+      <li>A <b>comunidade de inteligência</b> de um país é composta pelos organismos de inteligência; pode ser informal ou formal, formando um sistema de inteligência.</li>
+      <li>No Brasil, os órgãos federais integram o Sisbin, com subsistemas setoriais regulados por normativas específicas; ABIN e demais órgãos cooperam com a comunidade internacional de inteligência (troca de dados e informações).</li>
+      <li>Papel da ABIN: central no Sisbin — promove cooperação entre órgãos e coordena ações integradas.</li>
+      <li><b>Conselho Consultivo</b>: reformulado pelo Decreto 11693 para analisar relatórios de gestão e propor atualizações à PNI.</li>
+      <li>Categorização dos órgãos: <b>permanentes</b> (expressam funções essenciais do Estado, como defesa externa e segurança interna); órgãos sem unidades de inteligência podem ingressar como <b>associados</b>, seguindo procedimentos da ABIN. O ingresso como <b>dedicado ou associado</b> promove profissionalização e segurança, permitindo a incorporação de órgãos estaduais.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">2.4 Ética na atividade de inteligência</div>
+    <ul>
+      <li>O comportamento ético permite o <b class="verde">controle interno exercido pelo próprio profissional</b>, baseado em sua consciência; deve alcançar a vida profissional e a pessoal.</li>
+      <li>A ética garante a confidencialidade, a prestação de contas e a competência técnica; <b>veracidade e metodologia</b> na produção do conhecimento são aspectos éticos cruciais.</li>
+      <li>Todos os servidores devem agir conforme a legislação vigente e <b class="verde">rejeitar ordens manifestamente ilegais</b>.</li>
+      <li>Conduta ética em operações: proibição de uso pessoal de ferramentas e sistemas e do atendimento a demandas externas às missões institucionais; dados pessoais não relacionados à ação sigilosa devem ser <b>descartados de forma segura</b>; instrumentos de checagem e prestação de contas em todas as etapas.</li>
+      <li>Deveres éticos: representar a verdade, aplicar métodos rigorosos, promover o país e respeitar os direitos humanos. Foco nas pessoas (não apenas na sociedade e Estado), para evitar viés político.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">2.5 Princípios gerais da atividade de inteligência</div>
+    <div class="linha"><span class="item">Controle</span><span class="item">Cooperação</span><span class="item">Objetividade</span><span class="item">Oportunidade</span><span class="item">Rastreabilidade</span><span class="item">Segurança</span><span class="item">Simplicidade</span><span class="item">Utilidade</span></div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Significado de cada princípio</div>
+    <ul>
+      <li><b class="azul">Controle</b> — exige supervisão para garantir conformidade e finalidade correta.</li>
+      <li><b class="azul">Cooperação</b> — promove o trabalho em equipe e a otimização de esforços.</li>
+      <li><b class="azul">Objetividade</b> — atuação com objetivos claros, para evitar desperdício de recursos.</li>
+      <li><b class="azul">Oportunidade</b> — determina resultados em prazo adequado.</li>
+      <li><b class="azul">Rastreabilidade</b> — exige registros para auditoria.</li>
+      <li><b class="azul">Segurança</b> — protege informações e ações.</li>
+      <li><b class="azul">Simplicidade</b> — minimizar complexidade, custos e riscos desnecessários.</li>
+      <li><b class="azul">Utilidade</b> — atender às necessidades do usuário, gerando um produto útil.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Princípios setoriais (por componente)</div>
+    <ul>
+      <li>Além dos princípios gerais, cada componente possui princípios orientadores próprios: no <b>elemento de análise</b>, a objetividade evita vieses na produção de conhecimento; nas <b>operações</b>, a oportunidade é crucial para comunicar resultados em tempo hábil; a <b>segurança</b> na execução de ações sigilosas protege a equipe e o órgão de inteligência.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">2.6 Valores da atividade de inteligência</div>
+    <ul>
+      <li><b>Formação contínua dos profissionais</b> — processos contínuos de ensino, pesquisa e extensão; capacitação periódica; estímulo à criatividade, criticidade reflexiva e atitude aberta a novas perspectivas. A qualificação técnica do elemento de operações é imprescindível (atuação em ambiente hostil).</li>
+      <li><b>Confiabilidade da segurança</b> — indispensável para a reputação da instituição; fator dissuasório ao adversário e favorece a cooperação entre órgãos de inteligência (mais dados disponíveis, medidas de contraposição mais efetivas).</li>
+      <li><b>Pensamento crítico</b> — forma de pensar na qual o sujeito questiona constantemente o próprio ato de pensar enquanto pensa; melhora o padrão mental e mitiga os efeitos dos vieses (consciência da influência de história pessoal, tendências políticas/ideológicas, condição social e formação).</li>
+      <li><b>Orientação a resultados</b> — ações direcionadas a objetivos claros e pré-determinados por autoridade competente; duas funções: <b>informar e executar</b>. Ação analítica balizada pela utilidade aos objetivos do Estado; ação operacional balizada pelos princípios de <b>eficácia, efetividade, eficiência e legitimidade</b> dos atos da administração pública. A transparência ativa deve ser assegurada sempre que não comprometer as ações de inteligência.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ TEMA 3 ============ -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">3</div>
+    <div class="tema-titulo">INTELIGÊNCIA — CLASSIFICAÇÃO, ATUAÇÃO E CICLO</div>
+  </div>
+  <div class="tema-base">Base doutrinária: Doutrina da Atividade de Inteligência (ABIN, 2023).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">O ramo de inteligência</div>
+    <ul>
+      <li>Focado na <b class="azul">função informacional</b>: obter, processar e difundir dados e conhecimentos sobre fatos, eventos e situações que podem afetar os objetivos do Estado.</li>
+      <li>Propósito principal: <b>assessorar o Estado na proteção dos objetivos nacionais</b> e oferecer vantagens de decisão ao governante, respeitando o Estado Democrático de Direito e as relações internacionais do Brasil.</li>
+      <li>A produção de conhecimento pode ser classificada por <b>propósito</b>, <b>tempo</b> (recorte temporal) e <b>natureza dos dados reunidos</b> (fontes) — classificações não excludentes, permitindo várias combinações.</li>
+    </ul>
+  </div>
+
+  <table class="comp">
+    <tr><th>Classificação por PROPÓSITO</th><th>Definição</th></tr>
+    <tr><td>Inteligência de Base</td><td>Visa compreensão e contextualização de temas acompanhados</td></tr>
+    <tr><td>Inteligência Estratégica</td><td>Analisa fenômenos com potencial para impactar objetivos do Estado</td></tr>
+    <tr><td>Inteligência Tática</td><td>Reúne dados e conhecimentos para assessorar decisões sobre políticas governamentais</td></tr>
+    <tr><td>Inteligência Operacional</td><td>Oferece contextualização para ação pontual do Estado</td></tr>
+  </table>
+
+  <table class="comp">
+    <tr><th>Classificação por RECORTE TEMPORAL</th><th>Definição</th></tr>
+    <tr><td>Inteligência de Alerta</td><td>Antecipar eventos que possam impactar objetivos constitucionais, ordem nacional e segurança</td></tr>
+    <tr><td>Inteligência Corrente</td><td>Mantém autoridades atualizadas sobre eventos em progresso e sua evolução</td></tr>
+    <tr><td>Inteligência Explanativa</td><td>Assessorar o processo decisório sobre fatos, eventos, situações e fenômenos</td></tr>
+    <tr><td>Inteligência Prospectiva</td><td>Oferece cenários futuros para assessorar a ação estatal</td></tr>
+  </table>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Classificação por FONTES (origem do dado)</div>
+    <ul>
+      <li><b>Inteligência de Fontes Humanas (Human Intelligence)</b> — dados obtidos de pessoas; desafios: tratar falhas de percepção e simplificações heurísticas.</li>
+      <li><b>Inteligência de Fontes Técnicas (Technical Intelligence)</b> — dados obtidos por meios técnicos; limitações que exigem capacidade específica de operação dos equipamentos. Subcategorias: <b>Sigint, Imint, Geoint e Masint</b>.</li>
+      <li><b>Inteligência de Fontes Abertas (Open Source Intelligence)</b> — dados disponíveis; demanda muito tempo de pesquisa e constante atualização.</li>
+      <li>O tipo de documento produzido depende do uso previsto — a pedido do demandante ou escolhido pelo profissional, considerando a função de assessoramento ao processo decisório nacional.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">3.2 Áreas de atuação da inteligência no Brasil</div>
+    <div class="linha"><span class="item">Externa</span><span class="item">Interna</span><span class="item">Transnacional</span><span class="item">Cibernética</span></div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Áreas de atuação — definições</div>
+    <ul>
+      <li><b class="azul">Inteligência externa</b> — temas globais e impacto na atuação do Brasil no cenário internacional.</li>
+      <li><b class="azul">Inteligência interna</b> — temas sob competência de intervenção do Estado no território nacional.</li>
+      <li><b class="azul">Inteligência transnacional</b> — temas que transcendem o ambiente nacional, exigindo parcerias internacionais.</li>
+      <li><b class="azul">Inteligência cibernética</b> — vulnerabilidades e ameaças cibernéticas, informando políticas e planos estatais.</li>
+      <li>Cada área envolve recorte e abordagem próprios para contextualizar e informar o usuário.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">3.3–3.5 Ameaças, oportunidades e objetivos</div>
+    <ul>
+      <li><b class="verde">Oportunidades</b>: circunstâncias favoráveis que podem impulsionar os interesses nacionais e garantir vantagens ao país; incluem a interpretação de fatos e eventos que auxiliem o país a alcançar seus objetivos fundamentais.</li>
+      <li><b class="verde">Ameaças</b>: podem ser <b>intencionais (antagonismos)</b> ou <b>fortuitas (óbices)</b> — diferenciá-las é necessário para estimar sua persistência e delinear a melhor forma de contraposição.</li>
+      <li><b>Atuação</b>: dupla perspectiva — perceber e explorar oportunidades; assinalar e se contrapor a ameaças — propiciando a ação política capaz de gerar o bem comum.</li>
+      <li><b>Objetivo da atividade</b>: reconhecer ameaças e oportunidades que afetam a consecução dos interesses nacionais, materializados nas políticas públicas e no planejamento de ações que viabilizem vantagens competitivas pelo Brasil.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">3.6 Ciclo de Inteligência — 5 fases (retroalimentam-se)</div>
+    <div class="passo"><b>1. Objetivar</b> — determinação dos temas, recortes e abordagens; definição das áreas a serem cobertas pelo ramo de inteligência</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2. Acompanhar</b> — ocorre de forma permanente; constante planejamento, reunião e processamento de dados e conhecimentos</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3. Informar</b> — formatação e difusão do conhecimento produzido para assessorar as instâncias governamentais</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4. Decidir</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>5. Agir</b></div>
+  </div>
+</div>
+
+<!-- ============ TEMA 4 ============ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">4</div>
+    <div class="tema-titulo">CONTRAINTELIGÊNCIA</div>
+  </div>
+  <div class="tema-base">Base doutrinária: Doutrina da Atividade de Inteligência (ABIN, 2023).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Conceito e vertentes do ramo</div>
+    <p>O Ramo da Contrainteligência dedica-se a <b class="azul">prevenir, detectar e neutralizar</b> ameaças à segurança do Estado e da sociedade, atuando em <b>duas vertentes</b>:</p>
+    <ul>
+      <li><b class="azul">Contrainteligência preventiva</b> — focada na salvaguarda de conhecimentos sensíveis e infraestruturas críticas.</li>
+      <li><b class="azul">Contrainteligência ativa</b> — busca contrapor ameaças.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">4.1 Contrainteligência preventiva — objetivos e ações</div>
+    <ul>
+      <li>Visa proteger conhecimentos sensíveis, infraestruturas críticas e prevenir ações de interferência sobre a decisão.</li>
+      <li>Ações: identificação de alvos da inteligência adversa; avaliação de riscos percebidos por esses alvos; proposição de medidas de prevenção e segurança.</li>
+      <li>Busca garantir <b class="verde">disponibilidade, integridade, sigilo e autenticidade</b> dos conhecimentos.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">4.2 Prevenção a ações de interferência sobre a decisão</div>
+    <ul>
+      <li>Medidas para evitar ações da inteligência adversa que visam influenciar o processo decisório nacional — podem ser <b>diretas, indiretas ou violentas</b>.</li>
+      <li>Busca mapear os atores, compreender suas técnicas operacionais e orientar os possíveis alvos para medidas de impedimento ou dificultação.</li>
+      <li>Critérios de avaliação das potenciais ações adversas: <b class="verde">Abrangência, Grau de influência, Grau de violência, Potencial de coerção</b>.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">4.3 Vertentes da contrainteligência ativa</div>
+    <div class="linha"><span class="item">Contraespionagem</span><span class="item">Contrainterferência</span><span class="item">Contrainsurgência</span><span class="item">Contraterrorismo</span></div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Contrainteligência ativa — definições</div>
+    <p>Ações destinadas a detectar ação adversa, identificar agente e avaliar, obstruir e neutralizar a atuação da inteligência adversa:</p>
+    <ul>
+      <li><b class="azul">Contraespionagem</b> — detectar e neutralizar ações de espionagem.</li>
+      <li><b class="azul">Contrainterferência</b> — neutralizar ações de interferência externa.</li>
+      <li><b class="azul">Contrainsurgência</b> — neutralizar ações adversas de pessoas e grupos insurgentes.</li>
+      <li><b class="azul">Contraterrorismo</b> — neutralizar ações de pessoas e grupos extremistas violentos.</li>
+    </ul>
+  </div>
+
+  <table class="comp">
+    <tr><th>Critério</th><th>Segurança</th><th>Contrainteligência</th></tr>
+    <tr><td>Foco</td><td>Manutenção do equilíbrio para a realização de ações cotidianas ou extraordinárias</td><td>Prevenir e contrapor-se a ações de inteligência adversa</td></tr>
+    <tr><td>Alcance</td><td>Abrange diversas áreas; não se restringe ao profissional de inteligência; cultura de segurança contra ameaças intencionais e não intencionais (multidisciplinar)</td><td>Conceito relacionado, mas distinto da segurança</td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">4.4.2 Segurança orgânica</div>
+    <ul>
+      <li>Segurança <b>interna às organizações</b>: implementa medidas de segurança, prevenção e contraposição, promovendo a cultura de segurança institucional.</li>
+      <li>Incorpora as vertentes da contrainteligência e <b class="verde">coordena a gestão da segurança em uma instituição</b>.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">4.5 Ciclo de Contrainteligência — 6 fases</div>
+    <div class="passo"><b>1. Acompanhar</b> — permanente</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2. Orientar</b> — permanente</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3. Detectar</b> — acionada quando uma ação adversa é percebida</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4. Avaliar</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>5. Decidir</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>6. Agir</b> — as fases 3 a 6 estabelecem um caso concreto a ser trabalhado</div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Aplicação do ciclo e elementos de análise e operações</div>
+    <ul>
+      <li>O ciclo oferece arcabouço metodológico, sistematizando os procedimentos em fases que se <b>intercambiam e retroalimentam</b>; é o ponto inicial para políticas de prevenção às ameaças adversas e de salvaguarda de conhecimentos, informações, dados e meios de interesse do Estado e da sociedade.</li>
+      <li>Os <b class="verde">elementos de análise e operações</b> constituem o exercício prático da atividade; na contrainteligência, a atuação requer integração entre análise e operações — o direcionamento da contraposição é feito pela interação entre ambos, avaliando a efetividade das medidas e considerando novas linhas de atuação.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ TEMA 5 ============ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">5</div>
+    <div class="tema-titulo">ELEMENTO DE ANÁLISE E PRODUÇÃO DO CONHECIMENTO</div>
+  </div>
+  <div class="tema-base">Base doutrinária: Doutrina da Atividade de Inteligência (ABIN, 2023); Calaça (TAD, Revista Brasileira de Inteligência, 2023).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Papel do elemento de análise</div>
+    <ul>
+      <li>Responsável por <b class="azul">transformar dados e informações em produtos úteis para o processo decisório nacional</b>.</li>
+      <li>O processo de análise envolve identificação, obtenção, seleção e processamento de insumos, visando a geração de conhecimento de inteligência para a tomada de decisão.</li>
+      <li>Fundamentado em princípios racionais e lógicos, buscando a verdade e a superação de suposições, conforme critérios de <b>racionalidade, verdade e demonstrabilidade</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">5.1 Aspectos teóricos do conhecimento</div>
+    <ul>
+      <li>O conhecimento deriva da combinação de <b class="azul">três elementos</b>: realidade, perspectiva do sujeito e intersubjetividade.</li>
+      <li>A validação das conclusões <b>por pares</b> oferece garantia sobre a representação da realidade; a perspectiva do sujeito é limitada pela sua capacidade de apreensão da realidade.</li>
+      <li>A busca da verdade depende de três concepções: <b class="azul">correspondência, coerência e consenso</b>.</li>
+      <li>Estados da mente perante a verdade: <b class="azul">certeza, probabilidade, possibilidade e ignorância</b>.</li>
+    </ul>
+  </div>
+
+  <table class="comp">
+    <tr><th>Insumo</th><th>Definição</th></tr>
+    <tr><td>Dado</td><td>Representação registrada ou não de aspecto da realidade com significado descontextualizado; menor unidade de representação qualitativa ou quantitativa; na computação/ciência de dados, qualquer registro unitário em sistema computacional</td></tr>
+    <tr><td>Informação</td><td>Representação com significado contextualizado conforme processamento metódico, racional e objetivo; resulta do processamento e interpretação de dados; pode ser gerada por pessoas ou por meios computacionais sem intervenção humana</td></tr>
+    <tr><td>Conhecimento</td><td>Representação com significado contextualizado assumido como verdadeiro e validado; justificadamente plausível; produzido por especialistas dedicados ao estudo metódico e sistemático</td></tr>
+    <tr><td>Conhecimento de inteligência</td><td>Representação contextualizada e assumida como verdadeira conforme procedimentos metódicos da atividade de inteligência, útil ao processo decisório; é insumo E produto do trabalho analítico</td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">5.3 Conhecimento de inteligência — requisitos e tipos</div>
+    <ul>
+      <li>Deve ser <b class="verde">verdadeiro, oportuno e útil</b>. Há relação de progressão e regressão entre os quatro insumos.</li>
+      <li><b>Narrativo-descritivo</b> — fruto de juízos sobre fatos passados ou presentes.</li>
+      <li><b>Interpretativo</b> — fruto de juízos e raciocínios sobre fatos passados ou presentes.</li>
+      <li><b>Interpretativo-prospectivo</b> — fruto de juízos e raciocínios sobre a evolução futura de fatos, eventos, situações ou fenômenos.</li>
+      <li>Quatro situações temporais: <b>passado</b> (evolução julgada concluída), <b>presente</b> (estado temporal atual), <b>futuro imediato</b> e <b>futuro distante</b> (probabilidade de ocorrer em momentos próximos ou distantes).</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">5.4 O ciclo de análise</div>
+    <ul>
+      <li>Processo cíclico que transforma dados, informações e conhecimentos em conhecimento de inteligência; descreve o desenvolvimento lógico do conhecimento, da produção à avaliação pelo usuário.</li>
+      <li>Situações de produção iniciadas por: <b class="azul">acionamento externo</b>, <b class="azul">previsão em plano de inteligência</b> ou <b class="azul">iniciativa da própria unidade</b>.</li>
+      <li>Retroalimentado pela geração histórica de conteúdo (novas demandas e planejamentos); efetivado pela <b>MPC</b>.</li>
+      <li>Inicia com a identificação de uma demanda por assessoramento (externa, interna ou por iniciativa própria) e segue com planejamento, execução e difusão do conhecimento.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v azul">
+    <div class="fv-titulo">5.5 MPC — Metodologia de Produção de Conhecimento de Inteligência (6 fases)</div>
+    <div class="passo"><b>1. Planejamento</b> — proposição e aprovação de definições: assunto, usuário, finalidade, limites temporais de estudo, prazo de entrega e proposta de equipe</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2. Reunião</b> — obtenção e preparo dos insumos para responder às perguntas do planejamento; divide-se em formulação e execução do plano de reunião</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3. Avaliação</b> — validação da pertinência e significância dos insumos, verificação da credibilidade, validação dos metadados e aplicação da Técnica de Avaliação de Dados, Informações e Conhecimentos (TAD)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4. Integração e interpretação</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>5. Formalização e validação</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>6. Difusão e resultados</b></div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Atenção — natureza das fases da MPC</div>
+    <p>As fases da MPC se <b class="verde">interpenetram, inter-relacionam e interdependem</b>; TODAS devem ser cumpridas para a realização plena do conhecimento de inteligência.</p>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">5.6 Técnicas de apoio à análise (complementares à MPC)</div>
+    <ul>
+      <li>Exemplos: técnicas analíticas estruturadas, métodos de consulta a especialistas, recursos de análise visual e técnicas de coleta — sempre de forma complementar, respeitando os procedimentos da MPC.</li>
+      <li><b>Técnicas Analíticas Estruturadas (TAE)</b> — ferramentas adicionais aos métodos tradicionais; proporcionam meios sistemáticos para submeter o trabalho analítico ao controle e escrutínio, tornando o processo mais transparente e menos exposto a vieses cognitivos.</li>
+      <li><b>Consulta a especialistas</b> — para questões complexas que ultrapassam os conhecimentos da equipe; exemplos: <b>Método Delphi</b> e <b>Inferência Bayesiana</b> (comunicação coletiva, construção gradual de consensos e decisões com base em dados diante da incerteza).</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">5.7 Linguagem de inteligência</div>
+    <ul>
+      <li>O conhecimento de inteligência é expresso por linguagem oral ou escrita, que dá forma discursiva ao pensamento.</li>
+      <li>Características próprias: <b class="azul">simplicidade, objetividade, concisão e neutralidade</b> — permitem distinguir um relatório de inteligência de outros tipos de produção escrita.</li>
+      <li>A representação fiel e confiável da realidade depende da qualidade da linguagem, que confere <b>precisão, coerência, objetividade e imparcialidade</b> ao processo e a seu resultado.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ TEMA 6 ============ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">6</div>
+    <div class="tema-titulo">POLICIAMENTO ORIENTADO PELA INTELIGÊNCIA (POI)</div>
+  </div>
+  <div class="tema-base">Base doutrinária: Silva et al. (2021); Frazão Neto (2020).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">6.1 Conceito e fundamentos do POI</div>
+    <ul>
+      <li>Segundo <b>Silva et al. (2021)</b>, o POI envolve a <b class="azul">coleta, análise e disseminação de informações</b> com o objetivo de apoiar as operações policiais e a formulação de políticas de segurança.</li>
+      <li>Baseado no uso sistemático de informações e análises de inteligência para nortear a tomada de decisões e otimizar o emprego dos recursos policiais.</li>
+      <li>Diferente do policiamento tradicional (reativo aos crimes já cometidos), o POI adota postura <b class="azul">proativa</b>: antecipa tendências criminosas e identifica alvos de interesse antes que os crimes ocorram.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Os 3 pilares essenciais do POI</div>
+    <div class="passo"><b>1. Coleta de dados</b> — reunião de informações de diversas fontes: denúncias anônimas, monitoramento de redes sociais, estatísticas criminais e informações de campo</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2. Análise de dados</b> — especialistas em inteligência identificam padrões de comportamento criminoso, locais de maior incidência de crimes e perfis de indivíduos ou grupos criminosos</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3. Disseminação de inteligência</b> — a inteligência gerada é compartilhada com os órgãos e agentes responsáveis, permitindo ações mais precisas e direcionadas</div>
+  </div>
+
+  <table class="comp">
+    <tr><th>Critério</th><th>Inteligência Policial</th><th>Investigação Policial</th></tr>
+    <tr><td>Postura</td><td>Proativa</td><td>Reativa</td></tr>
+    <tr><td>Foco temporal</td><td>Prevenir a ocorrência de crimes; antecipar ações criminosas</td><td>Resolução de crimes que já ocorreram; reconstrução dos eventos passados</td></tr>
+    <tr><td>Objetivo</td><td>Entender padrões e apoiar a formulação de políticas públicas; guiar operações preventivas e estratégicas</td><td>Reunir evidências para identificar autores e determinar responsabilidades; obter provas que levem à condenação dos culpados</td></tr>
+    <tr><td>Fonte doutrinária</td><td colspan="2">Frazão Neto (2020) — ambas produzem conhecimento sobre crimes e criminosos, mas com abordagens e objetivos distintos</td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">6.3 Importância do POI no cenário brasileiro</div>
+    <ul>
+      <li>Resposta aos desafios crescentes de violência urbana e à necessidade de uso mais eficiente dos recursos disponíveis.</li>
+      <li>Apoio de tecnologias: câmeras de vigilância, sistemas de monitoramento de dados e integração de bases de dados criminais (Silva et al., 2021).</li>
+      <li>Enfrentamento da criminalidade organizada, do tráfico de drogas e de armas e de atividades criminosas complexas, com olhar estratégico e coordenado entre forças e órgãos de segurança.</li>
+      <li>A <b class="verde">centralização das informações em centros de inteligência</b> permite melhor coordenação entre polícias civis e militares e resposta mais rápida e eficaz a situações de crise.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">6.4 Iniciativas no Brasil</div>
+    <ul>
+      <li><b>COPE — Centro de Operações Policiais Especiais</b>: plataforma de integração de dados em tempo real; análise de grande volume de dados para identificar e prever ameaças à segurança pública (exemplo destacado por Silva et al., 2021).</li>
+      <li><b>SISP — Sistema de Inteligência de Segurança Pública</b>: promove a integração de informações entre as diversas polícias e órgãos de inteligência, proporcionando visão mais completa e estratégica do panorama criminal no Brasil.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">6.5 Conclusão</div>
+    <p>O POI representa uma evolução significativa no modo como a segurança pública é conduzida no Brasil: abordagem mais estratégica, baseada na análise de dados e informações, permitindo atuação mais eficiente e proativa das forças de segurança — na direção de uma política de segurança mais moderna, eficaz e capaz de responder aos desafios complexos do século XXI.</p>
+  </div>
+
+  <div class="discursiva">
+    <div class="enunciado">É comum a confusão entre inteligência policial e investigação policial. Com base na doutrina apresentada na disciplina (Frazão Neto, 2020), diferencie as duas atividades quanto à postura, ao foco temporal e aos objetivos, e explique como o Policiamento Orientado pela Inteligência (POI) se apoia na atividade de inteligência por meio de seus três pilares (Silva et al., 2021).</div>
+    <div class="espelho">
+      <div class="esp-titulo">Espelho de resposta</div>
+      <ul>
+        <li>Reconhecer que ambas se relacionam com a produção de conhecimento sobre crimes e criminosos, mas têm abordagens e objetivos distintos (Frazão Neto, 2020).</li>
+        <li>Inteligência policial: atuação <b>proativa</b> — coleta e analisa informações para <b>prevenir</b> a ocorrência de crimes, antecipar ações criminosas, entender padrões e apoiar a formulação de políticas públicas, guiando operações preventivas e estratégicas.</li>
+        <li>Investigação policial: processo <b>reativo</b> — voltada à resolução de crimes que já ocorreram; reúne evidências para identificar autores e determinar responsabilidades, com foco na reconstrução dos eventos passados e na obtenção de provas que levem à condenação dos culpados.</li>
+        <li>POI: uso sistemático de informações e análises de inteligência para nortear a tomada de decisões e otimizar o emprego dos recursos policiais (Silva et al., 2021).</li>
+        <li>Três pilares do POI: (1) coleta de dados (denúncias anônimas, monitoramento de redes sociais, estatísticas criminais, informações de campo); (2) análise de dados (padrões de comportamento criminoso, locais de maior incidência, perfis de indivíduos ou grupos); (3) disseminação de inteligência (compartilhamento com órgãos e agentes responsáveis, permitindo ações mais precisas e direcionadas).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

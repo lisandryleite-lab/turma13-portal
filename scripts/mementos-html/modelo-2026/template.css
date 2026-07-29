@@ -1,0 +1,99 @@
+/* ===== MEMENTO CFO PM 2026 — identidade visual fixa ===== */
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: #fbf9f3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  background: #fbf9f3; color: #2a2620;
+  font-family: "Segoe UI", -apple-system, Arial, sans-serif;
+  font-size: 9.5pt; line-height: 1.42;
+}
+/* ---- Cabeçalho do documento ---- */
+.doc-header {
+  text-align: center; padding: 4mm 0 3mm;
+  border-bottom: 3px double #2a2620; margin-bottom: 5mm;
+}
+.doc-header h1 { font-size: 15pt; letter-spacing: .5px; }
+.doc-header .sub { font-size: 9pt; color: #4a4a4a; margin-top: 1mm; }
+
+/* ---- Tema (um por capítulo; cada tema inicia em nova página) ---- */
+.tema { break-before: page; padding-top: 2mm; }
+.tema:first-of-type { break-before: auto; }
+.tema-header { display: flex; align-items: stretch; gap: 0; margin-bottom: 1.5mm; }
+.tema-num {
+  background: #7d1f2b; color: #fff; font-weight: 800; font-size: 13pt;
+  min-width: 11mm; display: flex; align-items: center; justify-content: center;
+  border-radius: 2px 0 0 2px; padding: 1.5mm 2mm;
+}
+.tema-titulo {
+  background: #a3444f; color: #fff; font-weight: 700; font-size: 11.5pt;
+  flex: 1; display: flex; align-items: center; padding: 1.5mm 3mm;
+  border-radius: 0 2px 2px 0; letter-spacing: .3px;
+}
+.tema-base { font-style: italic; font-size: 8.5pt; color: #4a4a4a; margin: 0 0 3mm 1mm; }
+
+/* Variantes de cor do cabeçalho de tema (usar conforme a natureza dominante) */
+.tema-header.azul .tema-num { background: #1f4e79; } .tema-header.azul .tema-titulo { background: #4a749c; }
+.tema-header.verde .tema-num { background: #2e6b3e; } .tema-header.verde .tema-titulo { background: #578964; }
+.tema-header.dourado .tema-num { background: #9a7b16; } .tema-header.dourado .tema-titulo { background: #b39a4a; }
+.tema-header.cinza .tema-num { background: #4a4a4a; } .tema-header.cinza .tema-titulo { background: #757575; }
+
+/* ---- 1. Caixas coloridas ---- */
+.caixa { border-radius: 3px; padding: 2.2mm 3mm; margin-bottom: 2.6mm; break-inside: avoid; border-left: 3.5px solid; }
+.caixa .caixa-titulo { font-weight: 800; font-size: 9.5pt; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1mm; }
+.caixa p { margin-bottom: 1mm; } .caixa p:last-child { margin-bottom: 0; }
+.caixa ul, .caixa ol { padding-left: 5mm; } .caixa li { margin-bottom: .6mm; }
+.caixa.def     { background: #e8eef5; border-color: #1f4e79; } .caixa.def .caixa-titulo     { color: #1f4e79; }
+.caixa.atencao { background: #e9f2ea; border-color: #2e6b3e; } .caixa.atencao .caixa-titulo { color: #2e6b3e; }
+.caixa.prazo   { background: #f7f1dd; border-color: #9a7b16; } .caixa.prazo .caixa-titulo   { color: #9a7b16; }
+.caixa.fase    { background: #f6e8ea; border-color: #7d1f2b; } .caixa.fase .caixa-titulo    { color: #7d1f2b; }
+.caixa.neutra  { background: #efefef; border-color: #4a4a4a; } .caixa.neutra .caixa-titulo  { color: #4a4a4a; }
+
+/* ---- 2. Fluxo vertical com setas (ritos, etapas, ciclos) ---- */
+.fluxo-v { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-v .fv-titulo { font-weight: 800; font-size: 9.5pt; color: #7d1f2b; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-v .passo {
+  background: #f6e8ea; border: 1px solid #7d1f2b; border-radius: 3px;
+  padding: 1.6mm 2.6mm; text-align: center;
+}
+.fluxo-v .passo b { color: #7d1f2b; }
+.fluxo-v .seta { text-align: center; color: #7d1f2b; font-size: 10pt; line-height: 1.1; padding: .4mm 0; }
+.fluxo-v.azul .passo { background: #e8eef5; border-color: #1f4e79; } .fluxo-v.azul .seta, .fluxo-v.azul .fv-titulo, .fluxo-v.azul .passo b { color: #1f4e79; }
+
+/* ---- 3. Fluxo horizontal inline (categorias/espécies) ---- */
+.fluxo-h { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-h .fh-titulo { font-weight: 800; font-size: 9.5pt; color: #4a4a4a; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-h .linha { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2mm; }
+.fluxo-h .item {
+  background: #efefef; border: 1px solid #4a4a4a; border-radius: 3px;
+  padding: 1.2mm 2.4mm; font-size: 9pt; font-weight: 600;
+}
+.fluxo-h .seta-h { color: #4a4a4a; font-weight: 700; }
+
+/* ---- 4. Mnemônico ---- */
+.mnemo {
+  border: 2px dashed #9a7b16; background: #f7f1dd; border-radius: 4px;
+  padding: 2.4mm 3mm; margin-bottom: 2.6mm; break-inside: avoid;
+}
+.mnemo .palavra { font-size: 14pt; font-weight: 900; color: #9a7b16; letter-spacing: 1.5px; text-align: center; margin-bottom: 1.2mm; }
+.mnemo .exp { font-size: 9pt; }
+.mnemo .exp b { color: #9a7b16; }
+
+/* ---- 5. Tabela comparativa ---- */
+table.comp { width: 100%; border-collapse: collapse; margin-bottom: 2.6mm; break-inside: avoid; font-size: 8.8pt; }
+table.comp th { background: #4a4a4a; color: #fff; padding: 1.4mm 2mm; text-align: left; font-size: 8.8pt; }
+table.comp td { border: 1px solid #b9b4aa; padding: 1.3mm 2mm; vertical-align: top; background: #fffdf8; }
+table.comp tr:nth-child(even) td { background: #f4f1e9; }
+table.comp td:first-child { font-weight: 700; }
+
+/* ---- 6. Discursiva com espelho ---- */
+.discursiva { border: 1.5px solid #1f4e79; border-radius: 4px; margin-bottom: 2.6mm; break-inside: avoid; }
+.discursiva .enunciado { background: #1f4e79; color: #fff; padding: 2mm 3mm; font-weight: 600; }
+.discursiva .enunciado::before { content: "QUESTÃO DISCURSIVA — "; font-weight: 800; }
+.discursiva .espelho { padding: 2.2mm 3mm; background: #fffdf8; }
+.discursiva .espelho .esp-titulo { font-weight: 800; color: #1f4e79; text-transform: uppercase; font-size: 9pt; margin-bottom: 1mm; }
+.discursiva .espelho ul { padding-left: 5mm; } .discursiva .espelho li { margin-bottom: .6mm; }
+
+/* util */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; margin-bottom: 2.6mm; }
+.grid2 > * { margin-bottom: 0; }
+b.azul { color: #1f4e79; } b.borg { color: #7d1f2b; } b.verde { color: #2e6b3e; } b.ouro { color: #9a7b16; }

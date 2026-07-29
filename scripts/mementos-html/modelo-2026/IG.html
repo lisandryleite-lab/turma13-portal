@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>MEMENTO — INSTRUÇÃO GERAL · CFO PM 2026</title>
+<style>
+/* ===== MEMENTO CFO PM 2026 — identidade visual fixa ===== */
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: #fbf9f3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  background: #fbf9f3; color: #2a2620;
+  font-family: "Segoe UI", -apple-system, Arial, sans-serif;
+  font-size: 9.5pt; line-height: 1.42;
+}
+/* ---- Cabeçalho do documento ---- */
+.doc-header {
+  text-align: center; padding: 4mm 0 3mm;
+  border-bottom: 3px double #2a2620; margin-bottom: 5mm;
+}
+.doc-header h1 { font-size: 15pt; letter-spacing: .5px; }
+.doc-header .sub { font-size: 9pt; color: #4a4a4a; margin-top: 1mm; }
+
+/* ---- Tema (um por capítulo; cada tema inicia em nova página) ---- */
+.tema { break-before: page; padding-top: 2mm; }
+.tema:first-of-type { break-before: auto; }
+.tema-header { display: flex; align-items: stretch; gap: 0; margin-bottom: 1.5mm; }
+.tema-num {
+  background: #7d1f2b; color: #fff; font-weight: 800; font-size: 13pt;
+  min-width: 11mm; display: flex; align-items: center; justify-content: center;
+  border-radius: 2px 0 0 2px; padding: 1.5mm 2mm;
+}
+.tema-titulo {
+  background: #a3444f; color: #fff; font-weight: 700; font-size: 11.5pt;
+  flex: 1; display: flex; align-items: center; padding: 1.5mm 3mm;
+  border-radius: 0 2px 2px 0; letter-spacing: .3px;
+}
+.tema-base { font-style: italic; font-size: 8.5pt; color: #4a4a4a; margin: 0 0 3mm 1mm; }
+
+/* Variantes de cor do cabeçalho de tema (usar conforme a natureza dominante) */
+.tema-header.azul .tema-num { background: #1f4e79; } .tema-header.azul .tema-titulo { background: #4a749c; }
+.tema-header.verde .tema-num { background: #2e6b3e; } .tema-header.verde .tema-titulo { background: #578964; }
+.tema-header.dourado .tema-num { background: #9a7b16; } .tema-header.dourado .tema-titulo { background: #b39a4a; }
+.tema-header.cinza .tema-num { background: #4a4a4a; } .tema-header.cinza .tema-titulo { background: #757575; }
+
+/* ---- 1. Caixas coloridas ---- */
+.caixa { border-radius: 3px; padding: 2.2mm 3mm; margin-bottom: 2.6mm; break-inside: avoid; border-left: 3.5px solid; }
+.caixa .caixa-titulo { font-weight: 800; font-size: 9.5pt; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1mm; }
+.caixa p { margin-bottom: 1mm; } .caixa p:last-child { margin-bottom: 0; }
+.caixa ul, .caixa ol { padding-left: 5mm; } .caixa li { margin-bottom: .6mm; }
+.caixa.def     { background: #e8eef5; border-color: #1f4e79; } .caixa.def .caixa-titulo     { color: #1f4e79; }
+.caixa.atencao { background: #e9f2ea; border-color: #2e6b3e; } .caixa.atencao .caixa-titulo { color: #2e6b3e; }
+.caixa.prazo   { background: #f7f1dd; border-color: #9a7b16; } .caixa.prazo .caixa-titulo   { color: #9a7b16; }
+.caixa.fase    { background: #f6e8ea; border-color: #7d1f2b; } .caixa.fase .caixa-titulo    { color: #7d1f2b; }
+.caixa.neutra  { background: #efefef; border-color: #4a4a4a; } .caixa.neutra .caixa-titulo  { color: #4a4a4a; }
+
+/* ---- 2. Fluxo vertical com setas (ritos, etapas, ciclos) ---- */
+.fluxo-v { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-v .fv-titulo { font-weight: 800; font-size: 9.5pt; color: #7d1f2b; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-v .passo {
+  background: #f6e8ea; border: 1px solid #7d1f2b; border-radius: 3px;
+  padding: 1.6mm 2.6mm; text-align: center;
+}
+.fluxo-v .passo b { color: #7d1f2b; }
+.fluxo-v .seta { text-align: center; color: #7d1f2b; font-size: 10pt; line-height: 1.1; padding: .4mm 0; }
+.fluxo-v.azul .passo { background: #e8eef5; border-color: #1f4e79; } .fluxo-v.azul .seta, .fluxo-v.azul .fv-titulo, .fluxo-v.azul .passo b { color: #1f4e79; }
+
+/* ---- 3. Fluxo horizontal inline (categorias/espécies) ---- */
+.fluxo-h { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-h .fh-titulo { font-weight: 800; font-size: 9.5pt; color: #4a4a4a; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-h .linha { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2mm; }
+.fluxo-h .item {
+  background: #efefef; border: 1px solid #4a4a4a; border-radius: 3px;
+  padding: 1.2mm 2.4mm; font-size: 9pt; font-weight: 600;
+}
+.fluxo-h .seta-h { color: #4a4a4a; font-weight: 700; }
+
+/* ---- 4. Mnemônico ---- */
+.mnemo {
+  border: 2px dashed #9a7b16; background: #f7f1dd; border-radius: 4px;
+  padding: 2.4mm 3mm; margin-bottom: 2.6mm; break-inside: avoid;
+}
+.mnemo .palavra { font-size: 14pt; font-weight: 900; color: #9a7b16; letter-spacing: 1.5px; text-align: center; margin-bottom: 1.2mm; }
+.mnemo .exp { font-size: 9pt; }
+.mnemo .exp b { color: #9a7b16; }
+
+/* ---- 5. Tabela comparativa ---- */
+table.comp { width: 100%; border-collapse: collapse; margin-bottom: 2.6mm; break-inside: avoid; font-size: 8.8pt; }
+table.comp th { background: #4a4a4a; color: #fff; padding: 1.4mm 2mm; text-align: left; font-size: 8.8pt; }
+table.comp td { border: 1px solid #b9b4aa; padding: 1.3mm 2mm; vertical-align: top; background: #fffdf8; }
+table.comp tr:nth-child(even) td { background: #f4f1e9; }
+table.comp td:first-child { font-weight: 700; }
+
+/* ---- 6. Discursiva com espelho ---- */
+.discursiva { border: 1.5px solid #1f4e79; border-radius: 4px; margin-bottom: 2.6mm; break-inside: avoid; }
+.discursiva .enunciado { background: #1f4e79; color: #fff; padding: 2mm 3mm; font-weight: 600; }
+.discursiva .enunciado::before { content: "QUESTÃO DISCURSIVA — "; font-weight: 800; }
+.discursiva .espelho { padding: 2.2mm 3mm; background: #fffdf8; }
+.discursiva .espelho .esp-titulo { font-weight: 800; color: #1f4e79; text-transform: uppercase; font-size: 9pt; margin-bottom: 1mm; }
+.discursiva .espelho ul { padding-left: 5mm; } .discursiva .espelho li { margin-bottom: .6mm; }
+
+/* util */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; margin-bottom: 2.6mm; }
+.grid2 > * { margin-bottom: 0; }
+b.azul { color: #1f4e79; } b.borg { color: #7d1f2b; } b.verde { color: #2e6b3e; } b.ouro { color: #9a7b16; }
+</style>
+</head>
+<body>
+<div class="doc-header">
+  <h1>MEMENTO — INSTRUÇÃO GERAL · CFO PM 2026</h1>
+  <div class="sub">Apostila "Instrução Geral CFO 2024" — APMP / CFO PM</div>
+</div>
+
+<!-- ==================== TEMA 1 ==================== -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">1</div>
+    <div class="tema-titulo">CONTINÊNCIA INDIVIDUAL — SINAIS DE RESPEITO E PROCEDIMENTO</div>
+  </div>
+  <div class="tema-base">Base legal: Portaria GM-MD nº 1.143, de 3 de março de 2022 (Regulamento de Continências, Honras, Sinais de Respeito e Cerimonial Militar das Forças Armadas); Lei nº 14.751, de 12 de dezembro de 2023 (Lei Orgânica Nacional das PM e CBM).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Tratamento entre militares (Art. 3º)</div>
+    <ul>
+      <li><b class="azul">Superiores hierárquicos</b> — com respeito e consideração, como tributo à autoridade de que se encontram investidos por lei;</li>
+      <li><b class="azul">Pares</b> — com afeição e camaradagem;</li>
+      <li><b class="azul">Subordinados</b> — com bondade, dignidade e urbanidade.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Reciprocidade obrigatória (§ 2º do Art. 3º)</div>
+    <p>As demonstrações de respeito, cordialidade e consideração devidas entre os membros das Forças Armadas <b class="verde">também o são</b> aos integrantes das Polícias Militares, dos Corpos de Bombeiros Militares e aos Militares das Nações Estrangeiras — há reciprocidade obrigatória entre militares estaduais e federais.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Sinais de respeito ≠ continência</div>
+    <p>Os <b class="verde">sinais de respeito são obrigatórios em todas as situações</b> (§ 3º do art. 4º); a <b class="verde">continência</b> é apenas um deles e poderá não ser obrigatória a depender da situação. A continência individual é devida a qualquer hora do dia ou da noite, só dispensada em situação especial regulamentada pela própria instituição.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Deslocamento em grupo</th><th>Regra</th></tr>
+    <tr><td>2 militares (Art. 5º)</td><td>O de menor antiguidade dá a <b>direita</b> ao superior; em via com lado interno e externo, dá o <b>lado interno</b> ao superior.</td></tr>
+    <tr><td>3 ou mais (Art. 6º)</td><td>O mais antigo fica no <b>centro</b>, distribuindo-se os demais, segundo suas precedências, alternadamente à direita e à esquerda do mais antigo.</td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Outros sinais de respeito</div>
+    <ul>
+      <li>Na entrada de uma porta, o militar franqueia-a ao superior; se fechada, abre-a, dá passagem e torna a fechá-la depois;</li>
+      <li>Se o mais moderno estiver ocupando o melhor local, deve cedê-lo ao mais antigo;</li>
+      <li>Em local público sem solenidade cívico-militar e em reuniões sociais, cumprimenta os superiores tão logo possível; com dificuldade de aproximação, cumprimento por <b class="verde">movimento de cabeça</b>;</li>
+      <li>Chamado por superior, atende o mais rápido possível, apressando o passo em deslocamento; para sentar-se ao lado de mais antigo, pede previamente permissão.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Termos de tratamento (art. 9º)</div>
+    <ul>
+      <li>Para falar a um superior: sempre <b class="azul">"Senhor"</b> ou <b class="azul">"Senhora"</b>. O termo <b class="borg">"COMANDO" é gíria</b> — NÃO constitui sinal de respeito e não substitui o tratamento regulamentar;</li>
+      <li>Oficial-general: "Vossa Excelência", "Senhor Almirante", "Senhor General" ou "Senhor Brigadeiro"; nas relações correntes de serviço admite-se "Almirante", "General", "Brigadeiro" ou "Senhor";</li>
+      <li>Comandante, Diretor ou Chefe: "Senhor Comandante", "Senhor Diretor", "Senhor Chefe"; nas relações correntes de serviço admite-se "Comandante", "Diretor" ou "Chefe".</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Conceito de continência</div>
+    <p>Saudação militar adotada em âmbito internacional, que remonta aos cavaleiros medievais (levantar a viseira do elmo em sinal de respeito). Pode ser prestada de forma <b class="azul">individual ou por tropa</b> e tornou-se um <b class="azul">gesto impessoal</b> — respeito à autoridade militar investida na função, não à pessoa. Todo militar, em serviço ativo ou na inatividade, deve <b class="azul">retribuir</b> a continência que lhe é prestada.</p>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Uniformizado × trajes civis</div>
+    <p>Se <b>uniformizado</b> (independente de qual uniforme, inclusive TFM): <b>obrigado</b> a prestar o gesto da continência. Em <b>trajes civis</b> (ativo ou reserva):</p>
+    <ul>
+      <li>I - presta continência individual ou assume posição respeitosa em cerimônias oficiais, hasteamento ou arriação da Bandeira, quando esta se apresentar em marcha ou cortejo e durante a execução do Hino Nacional;</li>
+      <li>II - nas demais situações, se estiver de cobertura, descobre-se e assume atitude respeitosa;</li>
+      <li>III - ao encontrar superior, pode saudá-lo com continência individual ou cumprimento verbal, conforme as convenções sociais;</li>
+      <li>IV - ao receber continência ou cumprimento de subordinado, pode responder com continência individual ou cumprimento verbal.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Quem faz jus à continência (art. 16)</div>
+    <p>A Bandeira Nacional; o Hino Nacional; o Presidente e o Vice-Presidente da República; os Presidentes do Senado Federal, da Câmara dos Deputados e do STF; o Ministro de Estado da Defesa; os demais Ministros de Estado em visita oficial; os Governadores dos Estados e do DF (nos respectivos territórios, ou, quando reconhecidos/identificados, em qualquer parte do País em visita oficial); o Ministro-Presidente e os Ministros Militares do STM; os militares da ativa das Forças Armadas (mesmo em traje civil, quando obrigatório o reconhecimento pelo cargo ou quando reconhecidos/identificados); os militares da reserva ou reformados, quando reconhecidos/identificados; a tropa quando formada; as Bandeiras e os Hinos das Nações Estrangeiras; as autoridades civis estrangeiras correspondentes (incisos III a VIII do art. 16) em visita oficial; os militares das Forças Armadas estrangeiras; e os <b class="azul">integrantes das Polícias Militares e dos Corpos de Bombeiros Militares</b>, forças auxiliares e reserva do Exército.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Aperto de mão</div>
+    <p>Cumprimento que o <b class="verde">superior pode conceder</b> ao mais moderno. O mais moderno <b class="verde">não toma a iniciativa</b> de estender a mão; mas, se o superior a estender, <b class="verde">não pode recusar</b> o cumprimento.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Elementos essenciais da continência individual</div>
+    <ul>
+      <li><b class="azul">ATITUDE</b> — postura marcial e comportamento respeitoso e adequado às circunstâncias e ao ambiente;</li>
+      <li><b class="azul">GESTO</b> — conjunto de movimentos do corpo, braços e mãos, com ou sem armas;</li>
+      <li><b class="azul">DURAÇÃO</b> — tempo durante o qual o militar assume a atitude e executa o gesto.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Continência com espada desembainhada</div>
+    <p>1º toma posição de sentido; 2º <b class="borg">perfila a espada</b> (ombro-arma); para os símbolos e autoridades dos incisos I a VIII e XII do art. 16 e para oficiais-generais, <b class="borg">abate a espada</b> (apresentar-arma).</p>
+    <p><b class="borg">Comandante Geral da PMPE:</b> regulamentação interna prevê honras de Oficial General para todos os Comandantes de PM e CBM do Brasil — logo, a continência com espada desembainhada é o <b class="borg">apresentar-arma (abater espada)</b>. A Lei nº 14.751, de 12 de dezembro de 2023 (Lei Orgânica Nacional) ampliou a obrigatoriedade para o público externo da PMPE.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Arma longa a tiracolo / em bandoleira</div>
+    <p>Erro comum: erguer a mão direita. O correto é <b class="verde">apenas tomar a posição de sentido</b>, com a frente voltada para a direção perpendicular à do deslocamento do superior.</p>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Bandeira, viatura e entrada em OM</div>
+    <ul>
+      <li>Todo militar deve <b>fazer alto</b> para prestar continência à Bandeira Nacional;</li>
+      <li>Cerimônia da Bandeira ou Hino Nacional no interior de OM: condutor e passageiro <b>saltam do veículo</b> e fazem continência individual; em via pública, procedem do mesmo modo, sempre que viável;</li>
+      <li>Ao entrar em OM, o oficial em princípio é conduzido ao Comandante, Chefe ou Diretor (ou à autoridade designada) para participar os motivos da ida; antes de se retirar, despede-se dessa autoridade. Onde a apresentação não seja possível, dirige-se ao de maior posto ou graduação presente;</li>
+      <li><b>Reconhecimento obrigatório:</b> Presidente e Vice-Presidente da República, Ministro da Defesa, Comandante da sua Força, Comandantes/Chefes/Diretores da cadeia de comando e oficiais da sua OM; os oficiais reconhecem também os Comandantes das demais Forças e o Chefe do Estado-Maior da respectiva Força; todo militar deve saber identificar as insígnias dos postos e graduações das Forças Armadas.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 2 ==================== -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">2</div>
+    <div class="tema-titulo">APRESENTAÇÃO INDIVIDUAL E CONTINÊNCIA DA TROPA</div>
+  </div>
+  <div class="tema-base">Base legal: Portaria GM-MD nº 1.143, de 3 de março de 2022 (arts. 57 a 62).</div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Apresentação individual</div>
+    <div class="passo"><b>1º</b> — aproxima-se do superior até a distância do aperto de mão</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2º</b> — toma "Sentido", faz a continência individual e diz, em voz claramente audível, seu grau hierárquico, nome de guerra e OM a que pertence (ou função, se no interior da sua OM)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3º</b> — desfaz a continência e diz o motivo da apresentação, permanecendo em "Sentido" até autorização para "Descansar" ou "À Vontade"</div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Retirada da presença de superior</div>
+    <p>Faz continência individual idêntica à da apresentação e pede permissão para se retirar. Concedida: o <b class="verde">oficial</b> retira-se normalmente; a <b class="verde">praça</b>, depois de fazer "Meia Volta", rompe a marcha com o <b class="verde">pé esquerdo</b>.</p>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">As 4 continências prestadas pela tropa</div>
+    <div class="linha"><span class="item">01 - Tropa a Pé Firme</span><span class="item">02 - Tropa em deslocamento</span><span class="item">03 - Tropa em Desfile</span><span class="item">04 - Continência da Guarda</span></div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Conceito de tropa (para efeito de continência)</div>
+    <p>Reunião de dois ou mais militares <b class="azul">devidamente comandados</b> — ou seja, o efetivo mínimo para se considerar tropa é o composto por <b class="azul">03 (três) militares</b>. Têm direito à continência da tropa os símbolos e autoridades dos incisos I a X e XII a XVI do art. 16.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Oficial em função de posto superior</div>
+    <p>Tem direito à continência desse posto <b class="verde">apenas na OM onde a exerce e nas que lhe são subordinadas</b>. A continência de uma tropa para outra depende de conduzirem ou não a Bandeira Nacional ou do grau hierárquico dos Comandantes.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Tropa a pé firme</div>
+    <p>À passagem de outra tropa, a tropa em forma e parada volta-se para ela e toma posição de sentido. Comandantes do mesmo posto/graduação e tropa que passa sem Bandeira Nacional: <b class="borg">apenas os Comandantes fazem a continência</b>. Se a tropa que passa conduz a Bandeira, ou seu Comandante é de posto/graduação superior:</p>
+    <ul>
+      <li>I - a oficial subalterno e intermediário: <b class="borg">"Sentido!"</b>;</li>
+      <li>II - a oficial-superior: <b class="borg">"Sentido! Ombro Arma!"</b>;</li>
+      <li>III - aos símbolos e autoridades dos incisos I a VIII do art. 16, a Oficiais-Generais ou equivalentes: <b class="borg">"Sentido! Ombro Arma! Apresentar Arma! Olhar à Direita (Esquerda)!"</b>.</li>
+    </ul>
+    <p>Tropa desarmada: ao comando de "Apresentar Arma!" todos fazem continência individual e a desfazem ao comando de "Descansar Arma!".</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Tropa em deslocamento</div>
+    <ul>
+      <li>I - unidades nos escalões <b class="borg">batalhão e superiores</b> repetem "Sentido! - Em Continência à Direita (Esquerda)!";</li>
+      <li>II - Cmt de <b class="borg">subunidades</b>, a <b class="borg">20 passos</b> da autoridade ou da Bandeira: "Companhia Sentido! Em Continência à Direita (Esquerda)!";</li>
+      <li>III - Cmt de <b class="borg">pelotão (seção)</b>, a <b class="borg">10 passos</b>: "Pelotão (Seção) Sentido! Olhar à Direita (Esquerda)!"; logo que a testa ultrapasse 10 passos, independente de ordem superior: "Pelotão (seção) Olhar em Frente!";</li>
+      <li>Formações emassadas de batalhão e companhia: comando de execução só por toque de corneta ou à viva voz dos respectivos comandantes.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Determinações durante a continência (§ 3º)</div>
+    <ul>
+      <li>A Bandeira <b>não é desfraldada, exceto para outra Bandeira</b>; a Guarda-Bandeira não olha para a direita (esquerda);</li>
+      <li>O estandarte <b>não é abatido, exceto</b> para a Bandeira Nacional, o Hino Nacional ou o Presidente da República;</li>
+      <li>Oficiais de espada desembainhada no comando de pelotão (seção) perfilam espada e não olham para a direita (esquerda);</li>
+      <li>Oficiais sem espada ou com ela embainhada fazem continência individual sem olhar para a direita (esquerda), exceto o Cmt da fração;</li>
+      <li>O Porta-Bandeira, em viatura, levanta-se; a Guarda permanece sentada;</li>
+      <li>Oficiais em viaturas (inclusive Cmt de unidades e subunidades) fazem a continência sentados, sem olhar para a direita (esquerda);</li>
+      <li>Músicos, corneteiros e tamboreiros, condutores, porta-símbolos e porta-flâmulas, homens da coluna da direita (esquerda) e da fileira da frente não olham para a direita (esquerda) e, quando sentados, não se levantam.</li>
+    </ul>
+  </div>
+
+  <table class="comp">
+    <tr><th>Continência a outra tropa (Art. 58)</th><th>Quem presta</th></tr>
+    <tr><td>Nenhuma conduz Bandeira Nacional</td><td>Inicia a tropa cujo Comandante for de menor hierarquia; igual hierarquia → ambas as tropas.</td></tr>
+    <tr><td>Só uma conduz Bandeira Nacional</td><td>Continência prestada à Bandeira, independente da hierarquia dos Comandantes.</td></tr>
+    <tr><td>Ambas conduzem Bandeira Nacional</td><td>Prestada por ambas, independentemente da hierarquia dos comandantes.</td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Arts. 59 e 60</div>
+    <ul>
+      <li>Tropa em deslocamento <b class="verde">faz alto</b> para a continência ao Hino Nacional e aos Hinos das Nações Estrangeiras em solenidade militar ou cívica;</li>
+      <li>Em <b class="verde">passo acelerado ou sem cadência</b>: continência às autoridades dos incisos III a IX e XIII a XV do art. 16 e a outra tropa formada ao comando de "Batalhão (Companhia, Pelotão, Seção) Atenção!".</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Tropa em desfile</div>
+    <p><b class="azul">Desfile</b> é a passagem da tropa diante da Bandeira Nacional ou da maior autoridade presente a uma cerimônia a fim de lhe prestar homenagem (procedimento no Art. 62). A tropa a pé desfila em "Ombro Arma", com a arma cruzada ou em bandoleira — nos dois primeiros casos, de baioneta armada. A autoridade homenageada responde às continências dos oficiais da tropa que desfila; os demais oficiais que assistem fazem continência <b class="azul">apenas à passagem da Bandeira</b>.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Tropa em instrução / faxina</div>
+    <ul>
+      <li>Continências de tropa <b class="verde">dispensáveis</b>; o comandante, instrutor ou encarregado presta a continência ao superior que se dirija ao local e dá as informações necessárias; se o superior se dirigir pessoalmente a um integrante, este presta a continência regulamentar;</li>
+      <li>Tropa reunida para instrução, conferência ou preleção — chegada do comandante ou autoridade de posto superior ao mais antigo presente: "Companhia (Escola, Turma, etc.) - Sentido! Comandante da Companhia (ou função de quem chega)!"; todos se levantam energicamente; correspondido o sinal, "Companhia (Escola, Turma, etc.) - À vontade!". Aplica-se igualmente à saída da autoridade;</li>
+      <li>Reuniões de oficiais: "Atenção! Comandante de Batalhão (ou Exmo. Sr. Almirante, General, Brigadeiro, Comandante)!" e "À vontade!", dados pelo instrutor ou oficial mais antigo presente;</li>
+      <li>OM de ensino: alunos aguardam nas salas a chegada dos professores/instrutores — as instruções internas estabelecem o procedimento em minúcias;</li>
+      <li>Alojamento/vestiário — oficial entra: o militar de serviço ou o primeiro a avistar comanda "Alojamento (Vestiário) - Atenção! Comandante da Companhia (ou função correspondente)!"; todos suspendem conversas <b class="verde">sem interromper as atividades</b>, mantendo postura de respeito até o "À vontade!".</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Continência da Guarda</div>
+    <p>A guarda em forma presta continência: I - aos símbolos, autoridades e tropa formada (incisos I a X, XII e XIII do art. 16); II - aos Almirantes de Esquadra, Generais de Exército e Tenentes-Brigadeiros, nas sedes dos Comandos das respectivas Forças; III - aos Oficiais-Generais, nas sedes de Comando, Chefia ou Direção privativos de oficial-general; IV - aos Oficiais-Generais, oficiais superiores e ao comandante, chefe ou diretor, qualquer que seja o posto, nas OM; V - aos Oficiais-Generais e oficiais superiores das Forças Armadas estrangeiras, uniformizados, nas condições dos incisos I a IV; VI - <b class="azul">à guarda que venha rendê-la</b>. A guarda presta a continência na <b class="azul">entrada e na saída</b> da autoridade da OME.</p>
+  </div>
+</div>
+
+<!-- ==================== TEMA 3 ==================== -->
+<div class="tema">
+  <div class="tema-header dourado">
+    <div class="tema-num">3</div>
+    <div class="tema-titulo">CULTO À BANDEIRA E HASTEAMENTO EM DATAS COMEMORATIVAS</div>
+  </div>
+  <div class="tema-base">Base legal: Portaria GM-MD nº 1.143, de 3 de março de 2022.</div>
+
+  <div class="caixa prazo">
+    <div class="caixa-titulo">19 de novembro — Dia da Bandeira</div>
+    <p>Data consagrada à Bandeira Nacional; entre outros atos, destaca-se a <b class="ouro">incineração das Bandeiras Nacionais inservíveis</b>.</p>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Cerimonial das OM no Dia da Bandeira</div>
+    <div class="passo"><b>I</b> — hasteamento da Bandeira Nacional, em ato solene <b>às doze horas</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>II</b> — canto do Hino à Bandeira e, se for o caso, incineração de Bandeiras</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>III</b> — desfile em continência à Bandeira Nacional</div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Efetivo em forma e dispositivo</div>
+    <ul>
+      <li>I - uma <b class="azul">"Guarda de Honra" a pé, sem Bandeira Nacional</b> (uma companhia nas unidades de valor regimento ou batalhão), com banda de música e/ou corneteiros ou clarins e tambores, posicionada no centro do dispositivo e em frente ao mastro;</li>
+      <li>II - <b class="azul">dois grupamentos</b> com o restante da tropa disponível, a pé e sem armas (um à direita e outro à esquerda da Guarda de Honra, formação idêntica, comandados por oficiais);</li>
+      <li>III - a <b class="azul">Guarda da Organização Militar</b>;</li>
+      <li>Guarda de Honra: linha de companhias ou equivalentes (OM nível batalhão/grupo) ou linha de pelotões nas demais; oficiais: em uma ou mais fileiras, três passos à frente do comandante da Guarda de Honra.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Cerimonial da incineração de bandeiras</div>
+    <ul>
+      <li>I - as Bandeiras a incinerar são depositadas em pira ou receptáculo de metal, nas proximidades do mastro;</li>
+      <li>II - o Comandante faz ler a Ordem do Dia alusiva à data;</li>
+      <li>III - terminada a leitura, uma praça antecipadamente escolhida — em princípio a <b class="borg">mais antiga e de ótimo comportamento</b> — ateia fogo às Bandeiras previamente embebidas em álcool;</li>
+      <li>IV - segue o canto do Hino à Bandeira, regido pelo mestre da Banda de Música, com a tropa em "Sentido";</li>
+      <li>As cinzas são depositadas em caixa e <b class="borg">enterradas em local apropriado no interior das OM ou lançadas ao mar</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Desfile em continência à Bandeira</div>
+    <ul>
+      <li>I - a Bandeira da OM, diante da qual desfila a tropa, fica em local de destaque, em correspondência com a que foi hasteada;</li>
+      <li>II - os oficiais que não desfilam formam à retaguarda da Bandeira, constituindo sua "Guarda de Honra";</li>
+      <li>III - o Comandante da OM toma posição <b class="borg">à esquerda da Bandeira</b>, na mesma linha desta;</li>
+      <li>IV - terminado o desfile, retira-se a Bandeira Nacional, acompanhada do Comandante da OM e de sua "Guarda de Honra", até a entrada do edifício onde é guardada.</li>
+    </ul>
+  </div>
+
+  <div class="caixa prazo">
+    <div class="caixa-titulo">Hasteamento com maior gala</div>
+    <ul>
+      <li>a) <b class="ouro">7 de setembro</b> - Dia da Independência do Brasil;</li>
+      <li>b) <b class="ouro">15 de novembro</b> - Dia da Proclamação da República;</li>
+      <li>c) <b class="ouro">1º de janeiro</b> - Dia da Fraternidade Universal;</li>
+      <li>d) <b class="ouro">21 de abril</b> - Inconfidência Mineira;</li>
+      <li>e) <b class="ouro">1º de maio</b> - Dia do Trabalhador;</li>
+      <li>f) <b class="ouro">12 de outubro</b> - Dia da Padroeira do Brasil;</li>
+      <li>g) <b class="ouro">25 de dezembro</b> - Dia de Natal;</li>
+      <li>h) <b class="ouro">Aniversário da Organização Militar</b>.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Incorporação</div>
+      <p>Ato solene do <b class="azul">recebimento</b> da Bandeira Nacional pela tropa: o Porta-Bandeira, com sua Guarda, vai buscá-la onde estiver guardada; o Cmt comanda "Sentido", "Ombro Arma" e "Bandeira Avançar"; a Guarda-Bandeira posiciona-se a cerca de <b class="azul">30 passos</b> do lugar que ocupará; comando "Em Continência à Bandeira" - "Apresentar Armas"; a Bandeira desfraldada recebe a continência e se incorpora, permanecendo a tropa em "Apresentar Arma" até a Bandeira ocupar seu lugar. Cada Força Armada regula as continências previstas.</p>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Desincorporação</div>
+      <p>Ato solene da <b class="azul">retirada</b> da Bandeira da formatura: com a tropa em "Ombro Arma", o Comandante comanda "Bandeira fora de forma"; a Bandeira, com sua Guarda, posiciona-se a <b class="azul">30 passos</b> da tropa e de frente para esta; toques de "Em Continência à Bandeira" - "Apresentar Arma"; desfraldada, recebe a continência; terminada, toque de "Ombro Arma" e a Bandeira retira-se com sua Guarda.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TEMA 4 ==================== -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">4</div>
+    <div class="tema-titulo">BANDEIRAS-INSÍGNIAS, DISTINTIVOS E HONRAS DE RECEPÇÃO E DESPEDIDA</div>
+  </div>
+  <div class="tema-base">Base legal: Portaria GM-MD nº 1.143, de 3 de março de 2022 (bandeiras-insígnias e art. 101); Vade-Mécum de Cerimonial Militar do Exército – Honras de Recepção e Despedida de Autoridade (EB10-VM-12.003) – 2ª edição, 2022 (procedimentos de recepção e despedida).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Bandeiras-insígnias e distintivos</div>
+    <ul>
+      <li>Indicam a presença de determinadas autoridades civis e militares na OM, hasteados em <b class="azul">mastro próprio</b> na área da organização;</li>
+      <li>Hasteada quando a autoridade <b class="azul">entra</b> na OM e arriada <b class="azul">logo após a sua saída</b>;</li>
+      <li>Na solenidade de hasteamento ou arriação da Bandeira Nacional, a bandeira-insígnia/distintivo deve ser <b class="azul">arriado</b>, sendo hasteado novamente após o término;</li>
+      <li>No mastro em que estiver a Bandeira Nacional, <b class="azul">nenhuma</b> bandeira, insígnia ou distintivo fica acima dela, mesmo nas adriças da verga de sinais;</li>
+      <li>Várias OM no mesmo edifício: no mastro, só a bandeira-insígnia/distintivo da <b class="azul">mais alta autoridade presente</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Honras de recepção e despedida — conceito</div>
+    <p>Honras prestadas às autoridades definidas no <b class="azul">art. 101</b>, ao chegarem ou saírem da organização militar, e por ocasião de visitas e inspeções.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Visitas e inspeções</div>
+    <ul>
+      <li><b class="verde">Sem aviso prévio:</b> não implicam alteração da rotina de trabalho; informado da presença, o comandante/chefe/diretor vai ao encontro, apresenta-se e acompanha a autoridade; em cada local de serviço ou instrução, o responsável apresenta-se e presta as informações solicitadas; terminada a visita, a autoridade é acompanhada até a saída pelo Cmt/Ch/Dir e pelos oficiais da equipe visitante;</li>
+      <li><b class="verde">Programadas:</b> a autoridade visitante/inspecionadora indica finalidade, local e hora, especificando, se for o caso, as disposições a serem tomadas; é recebida pelo comandante, diretor ou chefe, em conjunto com o oficial de serviço, com as continências devidas.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Dispositivo de recepção (EB10-VM-12.003)</div>
+    <ul>
+      <li>Guarda do quartel em <b>uma fileira</b>, no interior do quartel, logo após o portão de entrada, com efetivo <b>igual ou maior que 6 (seis) soldados</b>, dando a direita para a direção de onde vem a autoridade (pode formar antes da entrada, se a instalação exigir); o clarim ou corneteiro precede o Cmt da guarda;</li>
+      <li>Cmt/Ch/Dir da OM a <b>3 passos</b> do último soldado da guarda; Of Dia a <b>1 passo à esquerda e 1 passo à retaguarda</b> do Cmt/Ch/Dir; havendo Adjunto de Comando, o Of Dia posiciona-se à direita do Cmt.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Rito de recepção da autoridade</div>
+    <div class="passo">Autoridade ocupa o local de recebimento da continência → Cmt da guarda toma "sentido", executa ombro-arma e comanda: <b>"GUARDA, SENTIDO! OMBRO-ARMA!"</b></div>
+    <div class="seta">▼</div>
+    <div class="passo">Corneteiro/clarim toca o <b>toque indicativo do posto e função</b> da autoridade, sem comando à voz</div>
+    <div class="seta">▼</div>
+    <div class="passo">Se Of Gen ou Comandante Geral: <b>"APRESENTAR-ARMA! OLHAR À DIREITA!"</b> + exórdio (banda, fanfarra ou marcha batida), sem comando à voz</div>
+    <div class="seta">▼</div>
+    <div class="passo">A autoridade responde à continência <b>no início do exórdio</b> (ou marcha batida); comitiva à retaguarda faz continência individual; Cmt, Of Dia, Adj Cmdo e assistência executam continência individual; ao término do exórdio, todos desfazem</div>
+    <div class="seta">▼</div>
+    <div class="passo">Breve saudação à guarda (facultativa) → <b>revista à guarda</b> → apresentações do Cmt OM e do Of Dia</div>
+    <div class="seta">▼</div>
+    <div class="passo">Cmt da guarda comanda à voz: <b>"OLHAR FRENTE!, OMBRO-ARMA!, DESCANSAR-ARMA! DESCANSAR!"</b> (ou apenas os dois últimos, se oficial superior)</div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Apresentações após a revista</div>
+    <p>Cmt/Ch/Dir OM, Of Dia e Adj Cmdo (quando houver) apresentam-se sucessivamente, ex.: "TEN CEL JOSÉ, COMANDANTE DO 1º BATALHÃO DE POLÍCIA MILITAR, BATALHÃO DUARTE COELHO!". <b class="verde">O Of Dia não deve informar se o serviço está ou não com alteração.</b></p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Despedida da autoridade</div>
+    <ul>
+      <li>Oficiais, ao comando do SCmt, postam-se em uma ou mais fileiras, o mais antigo à direita, próximos ao local onde a autoridade recebe a continência da guarda; a autoridade e comitiva despedem-se <b class="borg">do oficial mais moderno para o mais antigo</b>;</li>
+      <li>Saída de autoridade de precedência superior à do Cmt OME (com direito à continência da guarda): o Cmt/Ch/Dir posiciona-se dentro do quartel, <b class="borg">à esquerda e a um passo à retaguarda</b> do local da continência, acompanhando-a na revista;</li>
+      <li>Cmt comanda à voz: "GUARDA, SENTIDO!" ("OMBRO-ARMA!", se oficial superior); toque indicativo; se Of Gen ou Comandante Geral: "GUARDA, APRESENTAR-ARMA! OLHAR À DIREITA!" + exórdio;</li>
+      <li>Na revista, a guarda encara a autoridade e a acompanha com a vista até estar totalmente voltada para a esquerda; a autoridade passa <b class="borg">silenciosamente e sem prestar continência</b>; a guarda só desfaz depois que a autoridade a ultrapassar (a pé: quando embarcar na viatura); comandos: "OLHAR FRENTE!", "OMBRO-ARMA!", "DESCANSAR-ARMA" e "DESCANSAR!";</li>
+      <li>A critério da autoridade e em situações excepcionais, a continência da guarda na saída poderá ser <b class="borg">dispensada</b>.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 5 ==================== -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">5</div>
+    <div class="tema-titulo">GUARDA-BANDEIRA — NORMAS E PROCEDIMENTOS</div>
+  </div>
+  <div class="tema-base">Base legal: Vade-Mécum de Cerimonial Militar do Exército – Guarda Bandeira (EB10-VM-12.004) – 2ª edição, 2022 (referência bibliográfica da apostila).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Missão e exemplares da Bandeira</div>
+    <ul>
+      <li>A Guarda-Bandeira tem a honrosa missão de <b class="azul">transportar e proteger</b> o Pavilhão Nacional e os Estandartes;</li>
+      <li>A Bandeira Nacional <b class="azul">não deve ser utilizada em treinamento</b> nem sem as formalidades legais — em instruções e treinamentos usam-se <b class="azul">estandartes</b>;</li>
+      <li>Cada OM deve possuir <b class="azul">no mínimo 2 exemplares</b> da Bandeira Nacional: um hasteado no mastro principal e outro para formaturas e desfiles — este guardado com mastro e talabarte, na vertical, em armário envidraçado, em local visível e de destaque no gabinete do Cmt/Ch/Dir.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Composição da Guarda-Bandeira</div>
+    <ul>
+      <li>Porta-Bandeira + Porta-Estandarte (se a OM possuir estandarte) + <b class="azul">5 ou 6 guardas, sendo 2 cabos e os demais soldados</b>, dentre os cabos e soldados mais distintos da OM;</li>
+      <li>Porta-Bandeira: selecionado no âmbito dos <b class="azul">oficiais ou aspirantes a oficial mais modernos</b> da OM;</li>
+      <li>Praças selecionadas entre as mais distintas, harmonizando a Guarda à base da <b class="azul">estatura do Porta-Bandeira</b>; os cabos posicionam-se na fileira da frente, ao lado do Porta-Bandeira e/ou Porta-Estandarte.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Armamento</div>
+    <ul>
+      <li>Oficiais Porta-Bandeira: <b>pistola e espada</b>;</li>
+      <li>Sargentos Porta-Estandarte: <b>pistola</b>;</li>
+      <li>Demais integrantes: <b>fuzil com baioneta armada</b>;</li>
+      <li>Tropas com uniformes históricos: armamento utilizado à época ou similar.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Movimentos e desfraldamento</div>
+    <ul>
+      <li>Incorporada, a Guarda-Bandeira executa "SENTIDO", "DESCANSAR", "OMBRO-ARMA", "DESCANSAR-ARMA" e "ORDINÁRIO, MARCHE" determinados pelo Cmt da tropa; <b class="verde">apenas o Porta-Bandeira e o Porta-Estandarte executam também o "APRESENTAR-ARMA"</b>;</li>
+      <li>A Bandeira Nacional é sempre desfraldada na <b class="verde">posição vertical</b>: quando a tropa "APRESENTAR-ARMA" e, em marcha, quando "OLHAR À DIREITA";</li>
+      <li>Nas passagens de comando em <b class="verde">recinto coberto</b>, a Bandeira Nacional NÃO é desfraldada.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Incorporação da Bandeira Nacional</div>
+    <div class="passo">Cmt da tropa, a toque de corneta/clarim: <b>"SENTIDO", "OMBRO-ARMA" e "BANDEIRA, AVANÇAR"</b></div>
+    <div class="seta">▼</div>
+    <div class="passo">Porta-Bandeira comanda "SENTIDO!" e "OMBRO-ARMA!" → banda executa a <b>Alvorada de "Lo Schiavo"</b> (Guarda imóvel, em espera)</div>
+    <div class="seta">▼</div>
+    <div class="passo">Banda inicia a <b>"Canção do Expedicionário"</b> → "MARCAR-PASSO" → interrupção, solo de pratos e forte batida de bumbo → segue em frente na cadência oficial de <b>100 passos por minuto</b></div>
+    <div class="seta">▼</div>
+    <div class="passo">Posiciona-se a cerca de <b>30 passos</b> do lugar que ocupará → conversão à esquerda, marca passo e faz alto ao término do refrão, em "OMBRO-ARMA"</div>
+    <div class="seta">▼</div>
+    <div class="passo">Cmt: <b>"EM CONTINÊNCIA À BANDEIRA – APRESENTAR-ARMA"</b> → Porta-Bandeira desfralda o Pavilhão; estandartes desfraldados e abatidos; cabos e soldados permanecem em "OMBRO-ARMA" → banda executa o <b>Hino Nacional</b></div>
+    <div class="seta">▼</div>
+    <div class="passo">Findo o Hino, tropa permanece em "APRESENTAR-ARMA"; Porta-Bandeira comanda "MARCAR-PASSO" e "EM FRENTE" → ocupa o lugar no dispositivo, faz conversão à esquerda e "ALTO"</div>
+    <div class="seta">▼</div>
+    <div class="passo">Cmt determina: "OMBRO-ARMA", "DESCANSAR-ARMA" e "DESCANSAR" — encerrando o ato; a Guarda-Bandeira passa ao comando do Cmt da tropa</div>
+  </div>
+
+  <table class="comp">
+    <tr><th>Baliza (desfile)</th><th>Cor / posição</th><th>Procedimento</th></tr>
+    <tr><td>1ª</td><td>Branca — 30 m aquém do homenageado</td><td>Cmt da tropa ordena "SENTIDO! EM CONTINÊNCIA À DIREITA!" (alerta para toda a tropa, inclusive Guarda-Bandeira) — marca o início da continência.</td></tr>
+    <tr><td>2ª</td><td>Azul — 20 m aquém</td><td>Guarda-Bandeira não adota qualquer procedimento.</td></tr>
+    <tr><td>3ª</td><td>Vermelha — 10 m aquém</td><td>Ao comando do Porta-Bandeira, a Bandeira Nacional é desfraldada e os estandartes (se houver) são abatidos.</td></tr>
+    <tr><td>4ª</td><td>Vermelha — 10 m além</td><td>Porta-Bandeira e Porta-Estandartes retornam à posição de "OMBRO-ARMA".</td></tr>
+    <tr><td>5ª</td><td>Azul — 15 m além</td><td>Nenhum procedimento.</td></tr>
+    <tr><td>6ª</td><td>Branca — 40 m além</td><td>Nenhum procedimento; passo ordinário e "OMBRO-ARMA" até nova ordem do Cmt.</td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Distâncias no desfile</div>
+    <p>A Guarda-Bandeira desloca-se a <b class="verde">10 passos</b> da fração que a antecede (estado-maior ou porta-bandeira-insígnia) e a <b class="verde">10 passos</b> à frente da fração que a sucede (Cmt da 1ª subunidade ou do 1º pelotão).</p>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Desincorporação</div>
+    <div class="passo">Tropa em "OMBRO-ARMA" → Cmt ordena à voz: <b>"BANDEIRA, FORA DE FORMA"</b> → Porta-Bandeira comanda "MARCAR-PASSO" e "EM FRENTE"</div>
+    <div class="seta">▼</div>
+    <div class="passo">Guarda-Bandeira posiciona-se a cerca de <b>30 passos</b> à frente da tropa, conversão à esquerda, volta-se para ela, "ALTO", em "OMBRO-ARMA"</div>
+    <div class="seta">▼</div>
+    <div class="passo">Cmt, a toque: "EM CONTINÊNCIA À BANDEIRA – APRESENTAR-ARMA" → Pavilhão desfraldado, estandarte abatido → banda executa o <b>Hino Nacional</b></div>
+    <div class="seta">▼</div>
+    <div class="passo">Findo o Hino, Cmt comanda a toque "OMBRO-ARMA" → o <b>Porta-Bandeira (não mais o Cmt)</b> comanda e executa "OMBRO-ARMA" com o Porta-Estandarte</div>
+    <div class="seta">▼</div>
+    <div class="passo">Alvorada de "Lo Schiavo" → "Canção do Expedicionário" → "MARCAR-PASSO" → solo de pratos e batida de bumbo → "DIREÇÃO À DIREITA (ou à ESQUERDA)", cadência de 100 passos por minuto, até local próximo ao Gab Cmt da OM, onde é comandado "ALTO"</div>
+  </div>
+</div>
+
+<!-- ==================== TEMA 6 ==================== -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">6</div>
+    <div class="tema-titulo">COMPROMISSO DOS OFICIAIS E PROMOÇÃO AO PRIMEIRO POSTO</div>
+  </div>
+  <div class="tema-base">Base legal: Estatuto dos Militares do Estado de Pernambuco (arts. 31 e 32); regulamento de cada Força Armada (arts. 182 e 183).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Regras gerais</div>
+    <ul>
+      <li>Todo militar nomeado ao primeiro posto prestará o <b class="azul">compromisso de oficial</b>, conforme o regulamento de cada Força Armada;</li>
+      <li>A cerimônia é presidida pelo <b class="azul">Comandante da OM ou pela mais alta autoridade militar presente</b>;</li>
+      <li>Art. 31 (Estatuto): todo cidadão, após ingressar na PM mediante inclusão, matrícula ou nomeação, prestará <b class="azul">compromisso de honra</b>, afirmando a aceitação consciente das obrigações e deveres policiais-militares;</li>
+      <li>Art. 32: o compromisso terá <b class="azul">caráter solene</b> e será prestado na presença de tropa, tão logo o policial-militar tenha adquirido grau de instrução compatível com o perfeito entendimento de seus deveres.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Dizeres — compromisso de ingresso (Art. 32)</div>
+    <p>"Ao ingressar na Polícia Militar do Estado de Pernambuco, prometo regular a minha conduta pelos preceitos da moral, cumprir rigorosamente as ordens das autoridades a que estiver subordinado e dedicar-me inteiramente ao serviço policial-militar, à manutenção da ordem pública e à segurança da comunidade, mesmo com o risco da própria vida".</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Dizeres — Aspirante-a-Oficial PM (§ 1º)</div>
+    <p>Prestado de acordo com o cerimonial do regulamento da Academia de Polícia Militar: "Ao ser declarado Aspirante-a-Oficial da Polícia Militar, assumo o compromisso de cumprir rigorosamente as ordens das autoridades a que estiver subordinado e de me dedicar inteiramente ao serviço policial-militar, à manutenção da ordem pública e á segurança da comunidade, mesmo com o risco da própria vida".</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Dizeres — compromisso de oficial (§ 2º)</div>
+    <p>Ao ser promovido ao primeiro posto, em solenidade especialmente programada: "Perante a Bandeira do Brasil e pela minha honra prometo cumprir os deveres de oficial da Polícia Militar do Estado de Pernambuco e dedicar-me ao seu serviço".</p>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Cerimonial do compromisso</div>
+    <ul>
+      <li>I - prestado na <b>primeira oportunidade</b> após a nomeação; tropa armada e equipada, em linha de pelotões ou equivalentes; Bandeira Nacional à frente, a <b>20 passos</b> do centro da tropa; comandante diante de todo o dispositivo, frente para a Bandeira, a <b>5 passos</b> desta;</li>
+      <li>II - os compromitentes, com a frente para a tropa e para a Bandeira, a 5 passos desta, à esquerda e a 2 passos do comandante;</li>
+      <li>III - a tropa toma "Sentido"; os compromitentes desembainham e perfilam as espadas;</li>
+      <li>IV - os demais oficiais da OM, a 2 passos atrás da Bandeira, em duas fileiras, espadas perfiladas, assistem ao compromisso;</li>
+      <li>V - a comando, a tropa apresenta arma e o comandante faz a continência individual;</li>
+      <li>VI - os compromitentes, olhos fitos na Bandeira Nacional, depois de abaterem espadas, prestam, em voz alta e pausada, o compromisso.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Situações especiais (arts. 182 e 183)</div>
+    <ul>
+      <li>Art. 182 - oficial promovido que sirva em Estabelecimento ou Repartição: compromisso prestado no <b class="verde">gabinete do diretor ou chefe</b>, assistido por todos os oficiais que ali servem, com as mesmas formalidades do art. 179;</li>
+      <li>Art. 183 - compromisso de declaração a Guarda-Marinha e Aspirante-a-Oficial: prestado nas <b class="verde">Escolas de Formação</b>, conforme os regulamentos dos respectivos órgãos de ensino.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 7 ==================== -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">7</div>
+    <div class="tema-titulo">SOLENIDADES EM GERAL E PASSAGEM DE COMANDO</div>
+  </div>
+  <div class="tema-base">Base legal: SUNOR Nº 20, de 26 de abril de 2022 (Manual Básico de Comunicação Social da PMPE); Vade-Mécum de Cerimonial Militar do Exército – Passagem de Comando (EB10-VM-12.002) – 2ª edição, 2022.</div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Roteiro básico da solenidade — 12 pontos (SUNOR 20)</div>
+    <ul>
+      <li>I - Chegada da Autoridade;</li>
+      <li>II - Honras Militares — prestadas à maior autoridade civil ou maior autoridade militar presente;</li>
+      <li>III - Formalidades Militares — a maior autoridade militar da ativa que presidir deve pedir permissão para iniciar e encerrar à autoridade de maior precedência;</li>
+      <li>IV - Composição do Dispositivo de Honra — da maior para a menor autoridade, pela ordem de precedência; o representante de autoridade tem lugar de destaque, mas <b class="borg">não a precedência</b> da autoridade ausente; demais autoridades fora da mesa de honra são apenas citadas; não se citam autoridades retardatárias;</li>
+      <li>V - Hino Nacional ou de Pernambuco ou outro alusivo à data — só inicia depois que todas as autoridades da mesa de honra ocuparem seus lugares;</li>
+      <li>VI - Leitura do objetivo da cerimônia (breve histórico);</li>
+      <li>VII - Homenagens, apresentações culturais, condecorações, descerramento de placas (a mesa pode ser desfeita e depois refeita);</li>
+      <li>VIII - Pronunciamentos — ordem <b class="borg">da menor para a maior autoridade</b>;</li>
+      <li>IX - Canção da PMPE;</li>
+      <li>X - Autorização para encerrar a solenidade;</li>
+      <li>XI - Saída da autoridade com honras militares regulamentares;</li>
+      <li>XII - Encerramento.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Precedência na PMPE (SUNOR 020)</div>
+    <p>Obedecem-se rigorosamente a precedência funcional e a antiguidade nos postos: I - Comandante-Geral; II - Subcomandante-Geral; III - Chefe do Estado-Maior Geral; IV - Diretor Geral de Administração e Diretor de Planejamento Operacional; V - 1ª EMG a 8ª EMG, DIM, DIRESP, DINTER I e II, DF, DEIP, DASDH, DAL, DGP, DS, DTec, DASIS, AG; VI - APMP, CAS, CMH, CPM, COdonto, CFarm; VII - DEAJA, ACG, CPA, CPL, CPO, CPP; VIII - Comandantes das Unidades Operacionais de Área e Especializadas; IX - CSM/Int, CSM/MB, CSM/Moto, CRESEP, CReed, CTT, CIMus, CEFD — dos itens V a IX, regidos pela precedência hierárquica e antiguidade no posto.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Precedência × honras militares</div>
+    <ul>
+      <li>Maior precedência <b class="verde">não significa</b> direito às honras militares; cabe à maior autoridade militar da ativa presidir a solenidade e receber a apresentação da tropa;</li>
+      <li>Aos Comandantes Gerais das PM e CBM de todo o Brasil: tratamento protocolar, honras militares e precedência compatíveis com posto de <b class="verde">Oficial General 2 Estrelas</b> das Forças Armadas;</li>
+      <li>O Comandante-Geral da PM, o Chefe da Casa Militar do Governador e o Subcomandante-Geral da PM têm, nesta ordem, precedência sobre os demais Coronéis;</li>
+      <li>Precedência entre Cmt-Geral da PM e Cmt-Geral do CBM: estabelecida pela <b class="verde">data de criação da Corporação mais antiga</b> no Estado;</li>
+      <li>Ex-Comandantes-Gerais e Ex-Chefes da Casa Militar (sem outra função pública): precedência, nesta ordem, logo após o Comandante-Geral; Ex-Subcomandantes-Gerais, após o Subcomandante-Geral;</li>
+      <li>O Comandante Geral preside todas as cerimônias militares da PM a que comparecer, exceto quando presente o Secretário de Defesa Social, o Secretário-Executivo de Defesa Social e demais autoridades com previsão para tal.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Passagem de comando ≠ transmissão do cargo</div>
+    <p>A <b class="azul">passagem de comando</b> é realizada em cerimônia militar constituída de vários eventos, dentre os quais se destaca a <b class="azul">transmissão do cargo</b> — este último é <b class="azul">parte enquadrante</b> do primeiro. Fora da cerimônia militar, ocorrem outros eventos que complementam a passagem de comando. Recomenda-se convidar os ex-integrantes da OME, em especial os ex-comandantes (coesão, confiança na instituição, laços afetivos).</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Dois boletins na data da passagem de comando</div>
+    <ul>
+      <li><b class="verde">Boletim de numeração normal</b> — último assinado pelo Cmt sucedido; transcreve o ato de <b class="verde">exoneração</b> e publica as palavras de despedida;</li>
+      <li><b class="verde">Boletim especial</b> — primeiro assinado pelo Cmt sucessor; transcreve o ato de <b class="verde">nomeação</b>. A seção de pessoal guarda toda a documentação pertinente.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Eventos da solenidade de passagem de comando</div>
+    <div class="passo"><b>1</b> — Chegada das principais autoridades · <b>2</b> — Continência e toque correspondente à maior autoridade · <b>3</b> — Apresentação da tropa</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4</b> — Leitura da finalidade do evento · <b>5</b> — Canto do Hino Nacional ou da Canção da PMPE</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>6</b> — Exoneração do Cmt sucedido (ato oficial, palavras de despedida e referência elogiosa) · <b>7</b> — Nomeação do Cmt sucessor (ato oficial e currículo)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>8</b> — Evento de transmissão do cargo · <b>9</b> — Apresentação dos Cmt sucedido e sucessor à autoridade que conduz e cumprimento aos antigos Cmt</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>10</b> — Revista da tropa (passagens de comando de unidade e companhia independente) · <b>11</b> — Desfile da tropa em continência ao Cmt sucessor · <b>12</b> — Saída da maior autoridade</div>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Transmissão do cargo</div>
+    <ul>
+      <li>Conduzida pela <b class="borg">autoridade imediatamente superior na cadeia de comando</b>; antigos Cmt/Ch/Dir presentes ocupam lugar de destaque, à retaguarda dessa autoridade;</li>
+      <li>Currículo do sucessor (lido, escrito em prosa): posto, quadro e nome completo; procedência; data e local de nascimento; filiação; data de praça; data de declaração de aspirante a oficial; data da última promoção; cursos militares com anos de conclusão; principais medalhas e condecorações de uso autorizado; funções mais expressivas; estado civil, cônjuge e filhos; outros dados relevantes;</li>
+      <li>Disposição: sucedido e sucessor (este à esquerda daquele) voltados para a Bandeira Nacional e para a tropa, distanciados de <b class="borg">3 metros</b>; a autoridade ao centro, <b class="borg">3 metros à retaguarda</b> da linha dos 2 oficiais — formando um <b class="borg">triângulo isósceles</b>;</li>
+      <li>Os três desembainham as espadas e seguem os toques de "SENTIDO" e "OMBRO-ARMA" determinados à tropa;</li>
+      <li>Sucedido: <b class="borg">"ENTREGO O COMANDO (CHEFIA, DIRETORIA ETC.) DO ... AO SENHOR ... (posto e nome completo)!"</b>; Sucessor: <b class="borg">"ASSUMO O COMANDO (CHEFIA, DIRETORIA ETC.) DO ...!"</b>;</li>
+      <li>Sucedido e sucessor, voltando-se um para o outro, abatem as espadas; a autoridade permanece com espada perfilada; Porta-Bandeira e Porta-Estandarte em "OMBRO-ARMA";</li>
+      <li>"EM CONTINÊNCIA À BANDEIRA, APRESENTAR-ARMA!" — executado somente pela autoridade e pelos Cmt sucedido e sucessor; a Bandeira é desfraldada, o estandarte abatido, e a banda toca os compassos do <b class="borg">Hino a Caxias</b>;</li>
+      <li>Após: "OMBRO-ARMA!", embainham as espadas (luvas calçadas); a Bandeira retorna ao dispositivo; toques de "DESCANSAR-ARMA" e "DESCANSAR"; sucedido e sucessor, nessa ordem, apresentam-se à autoridade ("...APRESENTO-ME AO SENHOR, POR HAVER ENTREGUE/ASSUMIDO O COMANDO...").</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Revista da tropa e desfile</div>
+    <ul>
+      <li>a) revista realizada <b>apenas nas passagens de comando de unidade e subunidade isolada</b>;</li>
+      <li>b) toques de "SENTIDO" e "OMBRO-ARMA", seguidos de "OLHAR À DIREITA" quando os comandantes atingem a testa da tropa;</li>
+      <li>c) o sucessor, com espada <b>perfilada</b>, desloca-se pela frente da tropa acompanhado do sucedido, à sua direita, com espada <b>embainhada</b> (simboliza o cumprimento da missão);</li>
+      <li>d) na altura da Bandeira Nacional, os 2 Cmt fazem alto e prestam continência individual à Bandeira (Porta-Bandeira e Porta-Estandarte em "OMBRO-ARMA");</li>
+      <li>e) bandas tocam a marcha correspondente à arma, quadro ou serviço do sucessor, na cadência de <b>116 passos por minuto</b>; sem banda de música, dobrado da banda de corneteiros ou clarins;</li>
+      <li>g) finalizado o dobrado: "OLHAR FRENTE", "DESCANSAR-ARMA" e "DESCANSAR";</li>
+      <li>Após a revista, a tropa desfila em continência ao Cmt sucessor; "OLHAR À DIREITA" e "OLHAR FRENTE", para subunidade e pelotão, dados à voz; não havendo revista, o sucedido retorna ao palanque e o sucessor recebe a continência do desfile.</li>
+    </ul>
+  </div>
+
+  <div class="discursiva">
+    <div class="enunciado">Diferencie a passagem de comando do ato de transmissão do cargo e indique as providências documentais adotadas pela OME na data da passagem de comando, bem como a autoridade competente para conduzir a transmissão.</div>
+    <div class="espelho">
+      <div class="esp-titulo">Espelho de resposta</div>
+      <ul>
+        <li>Passagem de comando: cerimônia militar constituída de vários eventos; a transmissão do cargo é um desses eventos — parte enquadrante da passagem (EB10-VM-12.002, 2ª ed., 2022);</li>
+        <li>Fora da cerimônia militar ocorrem outros eventos que complementam a passagem de comando;</li>
+        <li>Providências documentais: confecção de dois boletins — um de numeração normal, último assinado pelo Cmt sucedido, com o ato de exoneração e as palavras de despedida; e um boletim especial, primeiro assinado pelo Cmt sucessor, com o ato de nomeação; a seção de pessoal guarda a documentação pertinente;</li>
+        <li>A transmissão do cargo é conduzida pela autoridade imediatamente superior na cadeia de comando;</li>
+        <li>Palavras rituais: "ENTREGO O COMANDO..." (sucedido) e "ASSUMO O COMANDO..." (sucessor).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TEMA 8 ==================== -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">8</div>
+    <div class="tema-titulo">HONRAS FÚNEBRES E CONDECORAÇÕES</div>
+  </div>
+  <div class="tema-base">Base legal: Vade-Mécum de Cerimonial Militar do Exército - Honras Fúnebres (EB10-VM-12.009), 2ª Edição, 2016; Portaria GM-MD nº 1.143, de 3 de março de 2022 (condecorações).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Conceito e espécies</div>
+    <p><b class="azul">Honras Fúnebres</b> são homenagens póstumas prestadas diretamente pela tropa aos despojos mortais de alta autoridade ou de militar da ativa, de acordo com a posição hierárquica que ocupava.</p>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">Os 3 tipos de honras fúnebres</div>
+    <div class="linha"><span class="item">01 - Guarda Fúnebre</span><span class="item">02 - Escolta Fúnebre</span><span class="item">03 - Salvas Fúnebres</span></div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Ataúde e Bandeira Nacional</div>
+    <ul>
+      <li>O ataúde ("caixão"), depois de fechado e até o início do ato de inumação, é <b class="verde">coberto com a Bandeira Nacional</b>;</li>
+      <li>Antes do sepultamento, a Bandeira é <b class="verde">dobrada, mediante ordem</b>, e <b class="verde">entregue à família</b> do falecido (dobradura deve ser treinada antes da cerimônia);</li>
+      <li>No sepultamento: cobertura do ataúde com a Bandeira e <b class="verde">toque de silêncio</b> ao descer o corpo à sepultura, executado por corneteiro ou clarim.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Guarda Fúnebre — conceito e dispositivo</div>
+    <p>Tropa armada especialmente postada para render honras aos despojos mortais de militares da ativa e de altas autoridades. Posta-se no trajeto do cortejo, de preferência na vizinhança da casa mortuária ou da necrópole, com a <b class="azul">direita voltada para o lado de onde virá o cortejo</b>, em local adequado à formatura e à execução de salvas, sem interromper o trânsito do público.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Posto / Graduação do falecido</th><th>Efetivo da Guarda Fúnebre</th></tr>
+    <tr><td>Of. Gen ou Cmt Geral</td><td>01 (um) Batalhão</td></tr>
+    <tr><td>Of. Superior</td><td>02 (duas) Companhias</td></tr>
+    <tr><td>Of. Intermediário</td><td>01 (uma) Companhia</td></tr>
+    <tr><td>Of. Subalterno</td><td>01 (um) Pelotão</td></tr>
+    <tr><td>Aspirantes e Alunos de Academia de Formação de Oficiais</td><td>02 (dois) Grupos de Combate (dezoito homens)</td></tr>
+    <tr><td>Subtenentes e Sargentos</td><td>01 (um) Grupo de Combate (nove homens)</td></tr>
+    <tr><td>Cabos e Soldados</td><td>01 (uma) Esquadra de Grupo de Combate (quatro homens)</td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Formação da tropa</div>
+    <p><b class="verde">Linha em uma fileira</b> se o efetivo corresponder a 01 grupo de combate (nove homens) ou esquadra (quatro homens); nas demais composições, <b class="verde">Linha em 03 fileiras</b>. O cortejo fúnebre deve <b class="verde">parar</b>, ao alcançar a Guarda Fúnebre, para receber as homenagens.</p>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Salvas — as três descargas de fuzil</div>
+    <div class="passo">Cortejo a cerca de <b>20 passos</b>: comando <b>"EM FUNERAL! PREPARAR!"</b> — ao "EM FUNERAL", os homens da 2ª fileira (se for o caso) fazem "Arma Suspensa", passo oblíquo à frente e à direita (intervalos da 1ª fileira) e "DESCANSAR-ARMA"</div>
+    <div class="seta">▼</div>
+    <div class="passo">"PREPARAR" — movimento em 2 tempos: 1º tempo do "APRESENTAR-ARMA" partindo de "SENTIDO"; giro de 45 graus à direita, cano inclinado para o solo, coronha entre o braço e o corpo</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>"CARREGAR!"</b> — registro de segurança da letra "S" para a letra "R" e carregamento das armas</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>"APONTAR!"</b> — braços distendidos obliquamente à esquerda, soleira no cavado do ombro, sem visada, cano apontado para o solo e para a esquerda</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>"FOGO!"</b> — disparo; repete-se "CARREGAR!", "APONTAR!", "FOGO!" até completar as <b>três descargas regulamentares</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>"DESCANSAR, ARMA!"</b> (2 tempos) → "OMBRO-ARMA" → o comandante do Destacamento da Guarda Fúnebre comanda <b>"APRESENTAR-ARMA"</b>; durante as descargas, o restante da tropa permanece em "Ombro-Arma"</div>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Luto Nacional e Finados</div>
+    <ul>
+      <li>Bandeira Nacional transportada por tropa: <b>laço de crepe negro na lança</b>; a tropa não canta hinos ou canções militares; Bandeira mantida a <b>meio mastro</b>;</li>
+      <li>Hasteamento: a Bandeira é conduzida ao <b>topo do mastro, descendo em seguida</b> até meio mastro; arriação: <b>sobe ao topo</b>, sendo em seguida arriada;</li>
+      <li>Símbolos e insígnias de comando permanecem também a meio mastro;</li>
+      <li>Bandas de música em silêncio, <b>exceto para marcação de cadência por tarol e bombo</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Condecorações</div>
+    <ul>
+      <li>Cerimônia realizada em data festiva, feriado nacional ou dia designado pelo Comandante e, em princípio, na <b class="borg">presença de tropa armada</b>;</li>
+      <li>Sempre presentes: <b class="borg">Bandeira Nacional</b> e banda de corneteiros ou clarins e tambores (banda de música, quando a unidade dispuser);</li>
+      <li>Ao defrontar o paraninfo: <b class="borg">oficiais abatem as espadas</b>; <b class="borg">praças fazem continência individual</b>;</li>
+      <li>O paraninfo responde à saudação com continência individual e coloca a medalha no peito dos agraciados de sua fileira; os agraciados permanecem com espada abatida ou em continência até o término, quando retornam a "Perfilar-Espada" ou desfazem a continência;</li>
+      <li>Terminada a entrega, ao comando de "Em Continência à Bandeira, Apresentar Arma", paraninfos e agraciados abatem espadas ou fazem continência individual.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 9 ==================== -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">9</div>
+    <div class="tema-titulo">ATRIBUIÇÕES DO COMANDANTE DE OME</div>
+  </div>
+  <div class="tema-base">Base legal: Regulamento Interno e dos Serviços Gerais do Exército Brasileiro (R-1 ou RISG); SUNOR 020 de 26 de Abril de 2022. As atribuições aplicam-se também aos que exercem função de Chefe (Ch) ou Diretor (Dir).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Comando e ação de comando</div>
+    <p>O comando é função do <b class="azul">grau hierárquico, da qualificação e das habilitações</b> — prerrogativa <b class="azul">impessoal</b> com atribuições e deveres. A <b class="azul">ação de comando</b> caracteriza-se, principalmente, pelos atos de <b class="azul">planejar, orientar, coordenar, acompanhar, controlar, fiscalizar e apurar responsabilidades</b>. O Cmt U deve exercê-la em todos os setores da unidade, com a iniciativa necessária e sob sua inteira responsabilidade.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Principais atribuições e deveres do Cmt U</div>
+    <ul>
+      <li>I - superintender todas as atividades e serviços da unidade, facilitando o livre exercício das funções dos subordinados (espírito de iniciativa);</li>
+      <li>II - esforçar-se para que os subordinados façam do cumprimento do dever militar um verdadeiro culto e pautem a conduta civil pela mais severa moral, compelindo-os a satisfazer compromissos morais e pecuniários, inclusive assistência à família, punindo os recalcitrantes;</li>
+      <li>III - imprimir a todos os seus atos, como exemplo, a máxima correção, pontualidade e justiça;</li>
+      <li>IV - velar para que os oficiais sob seu comando sirvam de exemplo aos subordinados;</li>
+      <li>XI - organizar o horário da unidade;</li>
+      <li>XIII - prestar honras fúnebres aos subordinados, quando a elas fizerem jus;</li>
+      <li>XV / XVI / XVIII - conceder dispensa do serviço, períodos de trânsito e férias, nas condições da legislação;</li>
+      <li>XXI - autorizar o uso do traje civil pelas praças (entrada, saída e permanência na OM), em situações excepcionais e em missão que assim o recomende;</li>
+      <li>XXIII - lançar, <b class="verde">de próprio punho</b>, seu juízo a respeito dos militares da unidade em fichas de avaliação e documentos análogos;</li>
+      <li>XXIV - providenciar o "Atestado de Origem" nos casos de ferimentos ou doenças adquiridas em ato de serviço ou na instrução;</li>
+      <li>XXVII - corresponder-se diretamente com autoridades civis ou militares, quando o assunto não exigir intervenção da autoridade superior;</li>
+      <li>XXVIII - participar imediatamente à autoridade superior fatos de natureza grave ocorridos na unidade;</li>
+      <li>XLVIII - assegurar boas condições de uso, manutenção, guarda e controle do material e equipamento distribuídos;</li>
+      <li>XLIX - designar oficiais, praças e servidores civis para os cargos da unidade (QCP/QLPC);</li>
+      <li>LII - dar ordens e instruções, sempre que possível, <b class="verde">por intermédio do SCmt U</b> (quem as receber diretamente dá ciência ao SCmt na primeira oportunidade);</li>
+      <li>LVIII - fornecer, mediante requerimento do interessado, certidão do que constar nos arquivos da unidade;</li>
+      <li>LX - providenciar elaboração/atualização dos planos de segurança e defesa do aquartelamento, de combate a incêndios, de chamada e outros;</li>
+      <li>LXIII - estabelecer as NGA/U;</li>
+      <li>LXVII - orientar e coordenar o processo de arquivamento, análise, avaliação e seleção de documentos.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa prazo">
+      <div class="caixa-titulo">Prazo — anulação de ato</div>
+      <p>LIX - anular em BI, quando houver razões, qualquer ato seu ou de seus subordinados, dentro do prazo de <b class="ouro">cento e oitenta dias</b>.</p>
+    </div>
+    <div class="caixa prazo">
+      <div class="caixa-titulo">Prazo — rodízio de cargos</div>
+      <p>XLIX - nenhum oficial deve, em princípio, ser mantido no mesmo cargo por mais de <b class="ouro">dois anos consecutivos</b>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TEMA 10 ==================== -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">10</div>
+    <div class="tema-titulo">SUBCOMANDANTE DE OME E AJUDANTE-SECRETÁRIO</div>
+  </div>
+  <div class="tema-base">Base legal: Regulamento Interno e dos Serviços Gerais (R-1 / RISG). Capítulos 10 e 11 da apostila.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Subcomandante (SCmt) — conceito</div>
+    <p><b class="azul">Principal auxiliar e substituto imediato do Cmt U</b>, seu intermediário na expedição de todas as ordens relativas à disciplina, à instrução e aos serviços gerais, cuja execução cumpre-lhe fiscalizar. É também o <b class="azul">Chefe do Estado-Maior da OME</b>; em Companhias independentes, pode acumular suas funções com outros encargos.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Atribuições do SCmt</div>
+    <ul>
+      <li>I - encaminhar ao Cmt U, com as informações necessárias, todos os documentos que dependam da decisão deste;</li>
+      <li>IV - assinar documentos ou tomar providências de caráter urgente na ausência ou impedimento ocasional do comandante, dando-lhe conhecimento na primeira oportunidade;</li>
+      <li>V - zelar assiduamente pela conduta civil e militar dos oficiais e das praças da unidade;</li>
+      <li>VI - escalar os oficiais e a SU ou as subunidades que fornecerão pessoal para os serviços gerais e extraordinários;</li>
+      <li>X - exercer rigorosa supervisão das normas de controle do armamento, introduzindo modificações para aperfeiçoamento da verificação e acompanhamento do material bélico, além de realizar <b class="verde">inspeções inopinadas</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Ajudante-Secretário — auxiliar imediato do Cmt U</div>
+    <ul>
+      <li>I - dirigir a escrituração referente à correspondência, ao arquivo e ao registro das alterações <b class="azul">dos oficiais</b>;</li>
+      <li>II - redigir toda a correspondência cuja natureza assim o exigir;</li>
+      <li>III - subscrever certidões e papéis análogos;</li>
+      <li>IV - manter em dia o histórico da unidade;</li>
+      <li>V - conferir e autenticar as cópias de documentos do arquivo, mandadas extrair por autoridade competente;</li>
+      <li>VI - manter em dia e em ordem o arquivo da documentação da unidade;</li>
+      <li>VII - responder pela carga do material distribuído ao gabinete do Cmt U, do SCmt U e da Secretaria;</li>
+      <li>VIII - receber toda a correspondência externa destinada à unidade.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Acumulação (Art. 27)</div>
+    <p>Quando não houver cargo específico, a função do ajudante-secretário será exercida <b class="verde">cumulativamente pelo P1</b>.</p>
+  </div>
+</div>
+
+<!-- ==================== TEMA 11 ==================== -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">11</div>
+    <div class="tema-titulo">ATRIBUIÇÕES DO P1, P3, SEI E P4</div>
+  </div>
+  <div class="tema-base">Base legal: R-1 / RISG; SUNOR Nº 034, de 13 de maio de 2020 (atribuições do Chefe da SEI). Capítulos 12 a 15 da apostila.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">P1 — chefe da 1ª seção do EM/U</div>
+    <p>Responsável pela coordenação e controle das atividades de <b class="azul">pessoal, BI, justiça e disciplina, protocolo e arquivo da correspondência interna e pagamento do pessoal</b>. Compete-lhe, entre outros:</p>
+    <ul>
+      <li>II/III - organizar e manter em dia as relações de oficiais e praças para as escalas de serviço; escalar as praças para os serviços normais e extraordinários;</li>
+      <li>V - receber a documentação diária interna, mandar protocolá-la e levá-la ao SCmt U;</li>
+      <li>VI - organizar fichários, mapas, relações e documentos referentes ao efetivo;</li>
+      <li>X - manter relação nominal dos oficiais, com residências e telefones, destinando uma via ao SCmt U;</li>
+      <li>XI - organizar, sob orientação do SCmt U, o livro de ordens do serviço (ordens internas gerais fora das NGA/U + cópia da planta do quartel e terrenos);</li>
+      <li>XII - organizar os boletins ostensivos da unidade;</li>
+      <li>XV - sugerir transferências, designações, preenchimento de claros, qualificação e requalificação;</li>
+      <li>XVI/XVII - zelar pelo <b class="azul">moral da tropa</b> e estar em condições de informar ao Cmt U sobre o estado moral e disciplinar;</li>
+      <li>XVIII - preparar documentação de promoção, transferência para a reserva, reforma e concessão de medalhas;</li>
+      <li>XIX - controlar a escrituração das alterações <b class="azul">dos subtenentes e sargentos</b>;</li>
+      <li>Art. 29 - nas Companhias Independentes, sem cargo específico, a função de P1 poderá ser exercida cumulativamente pelo <b class="azul">SCmt U</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">P3 — chefe da 3ª seção do EM/U</div>
+    <p>Responsável pelas atividades relativas às <b class="azul">operações e estatística</b>. Compete-lhe: VI - organizar as <b class="azul">cerimônias militares</b>, em coordenação com outros oficiais do EM/U; XVII - preparar a documentação de operações e coordenar a elaboração daquela que não for de sua responsabilidade direta.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">SEI — chefe da seção de ensino e instrução do EM/U</div>
+    <ul>
+      <li>I - planejar, organizar e coordenar, mediante determinação do Cmt U e com base nas diretrizes do escalão superior, toda a instrução da unidade;</li>
+      <li>II - organizar e manter em dia o registro da instrução de quadros;</li>
+      <li>V - planejar e realizar a seleção das praças para matrícula nos cursos, em colaboração com o P1;</li>
+      <li>VIII - reunir dados para o Cmt U acompanhar e avaliar o desenvolvimento da instrução;</li>
+      <li>X - fiscalizar a instrução, propondo medidas para o melhor rendimento.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">SEI segundo o SUNOR nº 034/2020</div>
+    <ul>
+      <li><b class="verde">Coordenação de Instrução (CI):</b> instruções continuadas e de atualização a cargo das SEIs das OMEs e das Divisões de Ensino dos Campi — foco em condicionamento, disseminação de doutrinas e nivelamento de procedimentos;</li>
+      <li>A Instrução tem duas vertentes: <b class="verde">Instrução Geral (IG)</b>, elaborada pela DEIP, e <b class="verde">Instrução Particular (IP)</b>, contida no Plano de Instrução Continuada, concebida e executada pelas seções de ensino e instrução das OMEs e centros de formação;</li>
+      <li>A IP é desenvolvida por todas as OME da Capital e do Interior, formalizada no <b class="verde">Programa de Instrução (PgI)</b> — documento básico de planejamento, encaminhado à DEIP para apreciação e aprovação (função de supervisão);</li>
+      <li>Direção da instrução estruturada nos níveis <b class="verde">Geral, Setorial e Execução</b> — a execução é realizada pelas OMEs através das SEIs (e Seções de Ensino nos Campi), consoante às NPCIs;</li>
+      <li>As SEIs encaminham <b class="verde">mensalmente</b> à DEIP (seção de Coordenação de Monitoramento, com cópia às diretorias) relatório sobre suas atividades: público-alvo, ementa, avaliações da tropa sobre disciplina e instrutor, local, aplicação prática e demais informações.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">P4 — chefe da 4ª seção do EM/U</div>
+    <ul>
+      <li>Pode acumular os encargos de <b class="azul">Fisc Adm</b>; auxiliar imediato do Cmt U na administração, principal responsável pela observância das disposições regulamentares administrativas;</li>
+      <li>I - coordenar e fiscalizar os serviços dos seus elementos de execução;</li>
+      <li>II - manter estreita ligação com o P3 e com o Chefe da SEI para o apoio material à instrução e aos planos de emprego;</li>
+      <li>III - zelar pelas normas de prevenção de acidentes na instrução e atividades de risco, verificando condições de segurança e uso correto de EPI;</li>
+      <li>Quando acumular Fisc Adm, o P4 <b class="azul">não participa dos serviços estranhos à sua função</b>;</li>
+      <li>O Fisc Adm assessora o Cmt U no <b class="azul">controle ambiental</b>: elaboração, atualização e difusão das normas de controle ambiental (legislação federal, estadual e municipal) e fiscalização do cumprimento, com colaboração do P3 e dos Cmt de Companhia, em exercícios e manobras.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 12 ==================== -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">12</div>
+    <div class="tema-titulo">BOLETIM INTERNO (BI)</div>
+  </div>
+  <div class="tema-base">Base legal: R-1 / RISG; Portaria nº 795-C, de 29 JUL 14 (boletim de acesso restrito e cópias autenticadas).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Conceito</div>
+    <p>Documento em que o Cmt U publica <b class="azul">todas as suas ordens, as ordens das autoridades superiores e os fatos que devam ser do conhecimento de toda a unidade</b>. Publicado diariamente ou não, conforme as necessidades e o vulto das matérias.</p>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">As 4 partes do BI</div>
+    <div class="linha"><span class="item">1ª - Serviços Diários</span><span class="item">2ª - Instrução</span><span class="item">3ª - Assuntos Gerais e Administrativos</span><span class="item">4ª - Justiça e Disciplina</span></div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Boletim de acesso restrito e outros pontos</div>
+    <ul>
+      <li>Assuntos sob restrição de acesso: publicados em <b class="verde">boletim de acesso restrito</b>, organizado pela seção ou divisão de inteligência da OM, de formato semelhante ao ostensivo (Portaria nº 795-C, de 29 JUL 14);</li>
+      <li>Sábados, domingos e feriados: havendo expediente na unidade, também poderá ser publicado o BI;</li>
+      <li>Cópias autenticadas de BI, ou de partes, somente emitidas pelo <b class="verde">ajudante-secretário</b>, conforme determinação do Cmt U (Portaria nº 795-C, de 29 JUL 14).</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">O BI conterá</div>
+      <ul>
+        <li>I - discriminação do serviço a executar;</li>
+        <li>II - ordens e decisões do Cmt U, mesmo já executadas;</li>
+        <li>III - determinações das autoridades superiores, mesmo já cumpridas, com citação do documento de referência;</li>
+        <li>IV - alterações do pessoal e do material;</li>
+        <li>V - ordens e disposições gerais de interesse e referência sucinta a novos manuais, regulamentos ou instruções;</li>
+        <li>VI - referências a oficiais e praças falecidos que mereçam ser apontados como exemplo;</li>
+        <li>VII - apreciação do Cmt U ou autoridade superior sobre a instrução;</li>
+        <li>VIII - fatos extraordinários de interesse da unidade;</li>
+        <li>IX - assuntos de publicação obrigatória por regulamentos.</li>
+      </ul>
+    </div>
+    <div class="caixa neutra">
+      <div class="caixa-titulo">Não serão publicados</div>
+      <ul>
+        <li>I - assuntos transmitidos à unidade em <b>caráter sigiloso</b> ou quaisquer referências a eles;</li>
+        <li>II - ocorrências ou assuntos não relacionados com o serviço do Exército, salvo se tiverem dado lugar à expedição de alguma ordem ou estiverem ligados a comemoração de caráter cívico.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Distribuição e ciência — incisos importantes</div>
+    <ul>
+      <li>Do original são extraídas cópias, <b class="verde">todas autenticadas pelo SCmt U</b>, distribuídas às SU, dependências internas e autoridade a que a unidade estiver imediatamente subordinada;</li>
+      <li>Cmt SU incorporadas podem anexar <b class="verde">aditamento</b> com minúcias, ordens de instrução, serviços especiais e emprego do tempo no dia seguinte; BI e aditamento são lidos à SU em formatura de todo o pessoal, ao toque respectivo;</li>
+      <li>O Cmt U, em casos excepcionais, pode reunir os oficiais para ouvirem a leitura do BI em sua presença;</li>
+      <li><b class="verde">IV</b> - o BI deve ser conhecido <b class="verde">no mesmo dia de sua publicação</b> por todos os oficiais e praças (aditamento pelos da respectiva SU); oficiais apõem o ciente na última página das cópias; praças que faltarem à leitura informam-se na primeira oportunidade;</li>
+      <li>V - ordens urgentes de interesse dos que estão em serviço externo são dadas a conhecer imediatamente, pelo meio mais rápido, via SU ou P1 (quando do EM);</li>
+      <li><b class="verde">VI - o desconhecimento do BI não justifica a falta ou o cumprimento de ordens</b>;</li>
+      <li>VII/VIII - os originais (assinatura de próprio punho do comandante) são colecionados e periodicamente encadernados com índice de nomes e de assuntos, organizado pela 1ª seção, guardados no arquivo da unidade — o mesmo fazem as SU com as cópias e aditamentos;</li>
+      <li>Boletins disponibilizados em rede: o <b class="verde">SCmt U os autentica eletronicamente</b> e não é obrigatória a distribuição de cópias impressas.</li>
+    </ul>
+  </div>
+
+  <div class="caixa prazo">
+    <div class="caixa-titulo">Prazos do BI</div>
+    <p>Normalmente o BI estará pronto <b class="ouro">meia hora antes do fim do último tempo de instrução</b> (havendo acúmulo de matéria, a parte sem urgência pode ficar para o BI seguinte) e será distribuído <b class="ouro">antes do término do último tempo de instrução</b>.</p>
+  </div>
+</div>
+
+<!-- ==================== TEMA 13 ==================== -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">13</div>
+    <div class="tema-titulo">TRABALHOS DIÁRIOS, INSTRUÇÃO, FAXINAS E ADJUNTO DE COMANDO</div>
+  </div>
+  <div class="tema-base">Base legal: R-1 / RISG; instrução normativa comando geral nº 483, de 07 JAN 2022 (Adjunto de Comando na PMPE). Capítulos 17 e 18 da apostila.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Horário da vida diária</div>
+    <p>O horário (serviços, instrução, expediente, rancho etc.) é estabelecido pelo <b class="azul">Cmt U</b>, por períodos que podem variar com as estações do ano, os interesses da instrução e determinações superiores. Publicado em BI, sempre que possível com antecedência de <b class="azul">uma semana</b>, assim como as alterações.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Instrução e gestante</div>
+    <ul>
+      <li>A instrução é o <b class="verde">objeto principal da vida da unidade</b> — não deve ser prejudicada pelos demais trabalhos, salvo o serviço de justiça e as atividades decorrentes de situações anormais; ministrada conforme programas, quadros de trabalho, manuais e regulamentos;</li>
+      <li>A militar <b class="verde">gestante</b>, salvo dispensa por recomendação médica, participa de todas as atividades militares, <b class="verde">exceto</b> as que envolvam esforços físicos e jornadas ou exercícios em campanha.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Faxinas — conceito</div>
+    <p>Todos os trabalhos de utilidade geral, executados no quartel ou fora dele, compreendendo limpeza, lavagem, capinação, arrumação, transporte, carga ou descarga de material e outros semelhantes, regulados pelas <b class="azul">NGA/U</b>.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Adjunto de Comando — origem e instituição</div>
+    <ul>
+      <li>Criado no <b class="azul">Exército Brasileiro, em caráter experimental, em 22 de maio de 2015</b> — objetivos: valorizar a carreira do graduado, atrair, motivar e manter recursos humanos e fortalecer a Dimensão Humana do Exército; distingue o <b class="azul">subtenente ou primeiro sargento</b> de destacada liderança, reconhecida competência profissional e ilibada conduta pessoal;</li>
+      <li>Na PMPE: instituído em janeiro de 2022 pela <b class="azul">instrução normativa comando geral nº 483, de 07 JAN 2022</b>;</li>
+      <li>Diferente do Exército (que o instituiu nas unidades), a PM instituiu o encargo apenas nos órgãos: <b class="azul">I - Comando Geral; II - DGA; III - DPO</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Atribuições do Adjunto de Comando (Art. 2º)</div>
+    <ul>
+      <li>I - exercitar e propagar os valores éticos e militares da corporação;</li>
+      <li>II - fortalecer os padrões do comportamento militar;</li>
+      <li>III - facilitar a comunicação entre o comando e as praças;</li>
+      <li>IV - difundir a missão e a visão da Corporação entre as praças e replicar os conceitos de comando;</li>
+      <li>V - assessorar o Comando e os Diretores em assuntos disciplinares, de instrução, do bem-estar (incluindo a família militar), da saúde, da assistência social, da justiça e da disciplina, e em processos decisórios atinentes às praças;</li>
+      <li>VI - participar de reuniões de staff, quando requisitado;</li>
+      <li>VII - participar do planejamento e supervisão de instruções e cooperar para o correto entendimento e execução das ordens do Comando e das Diretorias;</li>
+      <li>VIII - ser o interlocutor das preocupações e necessidades pessoais e profissionais das praças, incentivando ambiente saudável e o desenvolvimento da Liderança Militar;</li>
+      <li>IX - cultuar, disseminar e estimular Valores, Deveres e Ética Militar;</li>
+      <li>X - acompanhar o desempenho das praças, fomentando aprimoramento e aperfeiçoamento profissional.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 14 ==================== -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">14</div>
+    <div class="tema-titulo">MANUAL BÁSICO DE COMUNICAÇÃO SOCIAL DA PMPE</div>
+  </div>
+  <div class="tema-base">Base legal: SUNOR Nº 20, de 26 de abril de 2022 (Manual Básico de Comunicação Social da PMPE); Decreto nº 22.114/2000 (Código de Ética); Lei nº 11.817/2000 (Código Disciplinar dos Militares do Estado de Pernambuco).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">ASCOM e P/5</div>
+    <ul>
+      <li>Todos os integrantes da PMPE, em qualquer situação, são <b class="azul">elementos fundamentais da Comunicação Social</b> na preservação da imagem institucional — difusores dos valores organizacionais;</li>
+      <li><b class="azul">ASCOM = 5ª Seção do Estado-Maior Geral</b>: responsável pela imagem da instituição; planeja, orienta, coordena, controla, promove e supervisiona as atividades de Comunicação Social; divulga ações positivas e diminui o impacto de fatos negativos; engloba produção de conteúdo e gerenciamento de eventos (cerimônias, formaturas e solenidades);</li>
+      <li><b class="azul">Oficial de Comunicação Social (P/5)</b>: encargo do Quadro Organizacional que recai sobre o <b class="azul">Oficial Secretário da OME</b> ou equivalente; executa as atividades de Comunicação Social na área de sua atribuição.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Atributos desejáveis do P/5</div>
+    <p>I – Comprometimento; II – Objetividade; III - Compreensão e Acessibilidade; IV – Comunicabilidade; V - Visão Integradora; VI - Percepção Crítica das Mídias; VII - Interesse pelas Demandas Sociais; VIII - Desprendimento; IX - Discrição.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Principais atribuições do P/5</div>
+    <ul>
+      <li>Assessorar o comando em informação pública, divulgação institucional, cerimonial militar e relações públicas;</li>
+      <li>Preservar o "sentimento de pertencimento" à PMPE; conservar material histórico e a galeria de ex-comandantes;</li>
+      <li>Garantir a correta utilização da identidade visual da PMPE;</li>
+      <li>Manter bom relacionamento com a imprensa e relação atualizada dos contatos dos veículos locais;</li>
+      <li>Informar à 5ª EMG ocorrência policial bem-sucedida (princípio da oportunidade junto à imprensa);</li>
+      <li>Manter o comandante informado sobre reflexos e repercussões de notícias; coordenar registro de fotos/filmagens nos padrões da 5ª EMG;</li>
+      <li>Supervisionar e coordenar os conteúdos dos perfis oficiais da unidade em redes sociais.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Ações pendentes de autorização da 5ª EMG</div>
+    <ul>
+      <li>a) produção de vídeos e áudios institucionais;</li>
+      <li>b) resposta a ocorrências negativas;</li>
+      <li>c) entrevistas nos meios de comunicação;</li>
+      <li>d) cessão de imagens coletadas nas operações;</li>
+      <li>e) uso da imagem da Instituição, viaturas, emblemas, uniformes e afins em qualquer evento de mídia;</li>
+      <li>f) transporte e acompanhamento de profissional de mídia em viaturas, embarcações e aeronaves;</li>
+      <li>g) tomada de imagem e depoimento de pessoas sob custódia da polícia militar;</li>
+      <li>h) permitir a entrada do profissional de mídia em local de crime.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Relacionamento com a imprensa</div>
+    <ul>
+      <li><b class="verde">Cuidado com o "off"</b>: evite falar "em off" o que não puder ser publicado — a câmera e o gravador podem estar ligados desde o primeiro contato;</li>
+      <li><b class="verde">Use ideias-força</b>: argumento usado para fortalecer o que se quer evidenciar, de forma natural (ex.: "A Polícia Militar tem atuado firme para garantir a segurança nesta área");</li>
+      <li><b class="verde">Entrevistas e esclarecimentos jornalísticos</b>: sob orientação e designação da Ascom/5ª EMG, ressalvados os casos autorizados pelo Comando Geral; os comandantes das OMEs podem fornecer <b class="verde">informações jornalísticas</b> sobre ocorrências positivas e neutras, designando um policial militar, desde que não haja orientação em contrário;</li>
+      <li>Veda-se a divulgação de <b class="verde">imagens de suspeitos</b>, salvo notório interesse público (nas proibições, mostrar apenas material apreendido e local do fato); veda-se a divulgação de imagens de policiais em situações vexatórias ou degradantes;</li>
+      <li>A <b class="verde">Resenha de Ocorrências</b> das Unidades não deve ser repassada aos órgãos de imprensa; ocorrências relevantes são enviadas à Ascom/5ª EMG pelos canais oficiais.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Redes sociais — disciplinamento (item 12.5)</div>
+    <ul>
+      <li>I - o perfil pessoal fica a critério particular do autor, que responde por todo o conteúdo (Estatuto dos Militares e Código Disciplinar);</li>
+      <li>II - <b>veda-se a criação de perfis funcionais</b>;</li>
+      <li>III - veda-se compartilhar ou seguir publicações de perfis pessoais nas mídias institucionais, assim como engajamento em conteúdo político;</li>
+      <li>IV - publicações das unidades: foco nas atividades-fim e assuntos institucionais de interesse público, caráter informativo ou educativo;</li>
+      <li>V - cuidado para não comprometer a segurança orgânica das Unidades;</li>
+      <li>VI/VII - vedada exposição fardado com descompostura ou circunstância negativa; conduta inconveniente nas redes causa repercussão desfavorável e risco à segurança pessoal e familiar;</li>
+      <li>XII - vedada exposição com uso da imagem institucional (símbolos, fardamentos, distintivos, insígnias, viaturas, armamento, equipamentos) em circunstâncias de: violação da moral e bons costumes; discriminação (raça, orientação sexual, religião); vulgaridades, obscenidades, incitação à violência e à criminalidade; violações à ética profissional, honra, decoro da classe, hierarquia, disciplina e pundonor militar, crítica pública de ato de superior; propagandas com fins lucrativos, ideológicos ou políticos; uniforme em desacordo com o Regulamento de Uniformes; imagem em companhia de pessoa com registro policial na condição de autor/réu, mesmo à paisana;</li>
+      <li>XIII - publicação indevida: <b>imediata remoção</b> do conteúdo, sem isentar o autor de responsabilização civil, criminal e disciplinar (Decreto nº 22.114/2000; Lei nº 11.817/2000).</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 15 ==================== -->
+<div class="tema">
+  <div class="tema-header dourado">
+    <div class="tema-num">15</div>
+    <div class="tema-titulo">EXPEDIENTE, ESCALAS DE SERVIÇO E SERVIÇO INTERNO</div>
+  </div>
+  <div class="tema-base">Base legal: R-1 / RISG. Capítulos 20 a 22 da apostila.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Expediente — conceito e limites</div>
+    <ul>
+      <li>Fase da jornada destinada à preparação e execução dos trabalhos normais da administração e ao funcionamento das repartições e dependências internas;</li>
+      <li><b class="azul">Começa</b> normalmente com a formatura geral (da unidade ou de companhia) e <b class="azul">termina</b> depois da leitura do BI do dia, com o toque ou sinal de fim do expediente; interrompido para o almoço em horário das NGA/U;</li>
+      <li>Serviços de escala e de natureza permanente <b class="azul">independem</b> do horário do expediente;</li>
+      <li>A formatura geral da unidade corresponde a <b class="azul">um tempo de instrução</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Toque de "ordem" e permanência</div>
+    <ul>
+      <li>O toque de "ordem" (fim do expediente) é executado, por ordem do Cmt U, <b class="verde">somente após o recebimento, pelo SCmt U, de todos os mapas diários do armamento</b> emitidos pelos Cmt SU e demais responsáveis;</li>
+      <li>Oficiais e praças prontos no serviço permanecem no quartel durante o expediente: oficiais só se afastam com permissão do Cmt U (delegável ao SCmt); praças com autorização dos Cmt de companhia ou chefes de repartição interna (dando ciência às companhias, para controle);</li>
+      <li>Durante o expediente: uniforme previsto e dedicação exclusiva às funções; entrada e permanência de civis fora do expediente reguladas pelas NGA/U.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Escala de serviço — conceitos</div>
+    <p><b class="azul">Escala de serviço</b>: relação do pessoal ou frações de tropa que concorrem na execução de determinado serviço; finalidade principal: <b class="azul">distribuição equitativa</b> de todos os serviços da OME. As escalas são reunidas em um só documento, rigorosamente escrituradas e mantidas em dia. <b class="azul">Serviço de escala</b>: todo serviço não atribuído permanentemente à mesma pessoa ou fração, e que não importe delegação pessoal ou escolha.</p>
+  </div>
+
+  <div class="caixa prazo">
+    <div class="caixa-titulo">Regras da escala</div>
+    <ul>
+      <li>I - o serviço <b class="ouro">externo é escalado antes do interno</b> e o <b class="ouro">extraordinário antes do ordinário</b>;</li>
+      <li>II - a designação recai em quem, no mesmo serviço, <b class="ouro">maior folga</b> tiver;</li>
+      <li>III - em igualdade de folga, designa-se primeiro o de <b class="ouro">menor posto ou graduação, ou mais moderno</b>;</li>
+      <li>IV - as folgas são contadas separadamente para cada serviço;</li>
+      <li>V - entre dois serviços (mesma natureza ou não), no mínimo <b class="ouro">folga de quarenta e oito horas</b>, sempre que possível;</li>
+      <li>VI - é considerado mais folgado o último incluído na escala;</li>
+      <li>VII - designação para o serviço ordinário feita <b class="ouro">de véspera</b>; para o extraordinário, conforme a urgência;</li>
+      <li>VIII - quem entrou de serviço em dia sem expediente: evita-se nova designação em dia assim (podem existir escalas especiais paralelas à comum);</li>
+      <li>IX - a <b class="ouro">troca de serviço não altera as folgas</b> da escala;</li>
+      <li>X - só depois de <b class="ouro">apresentado pronto</b> à unidade pode o militar ser escalado;</li>
+      <li>XI - o serviço individual conta como executado desde que iniciado; o coletivo, desde que a tropa tenha entrado em forma;</li>
+      <li>XIII - a designação para os serviços da unidade é publicada, de véspera, no BI (companhias: nos aditamentos);</li>
+      <li>XIV - durante a gravidez e <b class="ouro">até que a criança atinja a idade de seis meses</b>, a militar não concorre aos serviços de escala.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Serviço interno</div>
+    <p>Abrange todos os trabalhos necessários ao funcionamento da unidade e compreende o <b class="azul">serviço permanente</b> e o <b class="azul">serviço de escala</b>. Determinado, quando possível, à mesma fração de tropa em sua totalidade (entrosamento do convívio diário). A fiscalização dos serviços de escala compete ao <b class="azul">SCmt U, ao Of de Operações e ao Graduado de Operações</b>.</p>
+  </div>
+</div>
+
+<!-- ==================== TEMA 16 ==================== -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">16</div>
+    <div class="tema-titulo">OFICIAL DE DIA (DE OPERAÇÕES) E ADJUNTO AO OFICIAL DE DIA</div>
+  </div>
+  <div class="tema-base">Base legal: R-1 / RISG. Capítulos 23 e 24 da apostila.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Oficial de Dia — conceito</div>
+    <p>O Of Dia é, <b class="azul">fora do expediente, o representante do Cmt U</b>.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Principais atribuições do Of Dia</div>
+    <ul>
+      <li>I - assegurar o exato cumprimento das ordens da unidade e das disposições regulamentares do serviço diário;</li>
+      <li>II - estar familiarizado com os planos de segurança do aquartelamento, combate a incêndio, chamada e sinais de alarme (e Ordens de Serviço em vigência);</li>
+      <li>IV - verificar, ao assumir o serviço, em companhia do antecessor, se todas as dependências do quartel estão em ordem;</li>
+      <li>VI - participar ao SCmt U todas as ocorrências extraordinárias (mencionando-as no relatório diário); se antes encontrar o Cmt U, presta-lhe as mesmas informações, sem dispensa de fazê-lo ao SCmt U;</li>
+      <li>VIII - receber autoridade civil ou militar de categoria igual ou superior à do Cmt U e acompanhá-la à presença deste ou do oficial de maior posto no quartel;</li>
+      <li>X - estar ciente da entrada, permanência e saída de pessoas estranhas à unidade;</li>
+      <li>XIX/XX - na ausência dos Cmt ou autoridade superior, em casos extraordinários, determinar às companhias a apresentação de praças para serviço urgente não previsto e providenciar a substituição das que faltem, adoeçam ou se ausentem;</li>
+      <li>XXI - atender com presteza, na ausência do Cmt U ou SCmt U, às determinações de autoridade com ação de comando sobre a unidade (ordens sempre objeto de autenticação);</li>
+      <li>XXIV - <b class="verde">permanecer no quartel</b> durante as horas determinadas, sempre pronto e uniformizado;</li>
+      <li>XXIX - impedir a abertura de qualquer dependência fora das horas de expediente, sem ser pelo respectivo chefe ou mediante ordem escrita deste, com declaração do motivo.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Adjunto ao Oficial de Dia (Graduado de Operações)</div>
+    <p>O Sgt Adj é o <b class="azul">auxiliar imediato do Of Dia</b>, competindo-lhe:</p>
+    <ul>
+      <li>I - apresentar-se ao Of Dia após receber o serviço, executar e fazer executar suas determinações;</li>
+      <li>II/III - transmitir as ordens recebidas e secundá-lo, por iniciativa própria, na fiscalização;</li>
+      <li>IV - responder, perante o Of Dia, pela perfeita execução da limpeza do quartel a cargo do cabo da faxina;</li>
+      <li>V - participar ao Of Dia todas as ocorrências e providências tomadas;</li>
+      <li>VI - acompanhar o Of Dia nas visitas às dependências, salvo quando dispensado;</li>
+      <li>VII - passar revista às Companhias, quando determinado;</li>
+      <li>VIII - organizar e escriturar os papéis do serviço, concluídos <b class="azul">no máximo uma hora depois do Lançamento do efetivo</b>, à disposição do SCmt U;</li>
+      <li>XI - fiscalizar os serviços das Companhias, na ausência dos respectivos Cmt ou substitutos;</li>
+      <li>XIII - providenciar que as chaves de todas as dependências estejam no <b class="azul">claviculário</b> logo após o toque de ordem, informando faltas ao Of Dia;</li>
+      <li>XIV - responder pelo Of Dia em seus impedimentos eventuais — participando-lhe depois as ocorrências havidas, mesmo que já comunicadas à autoridade superior.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 17 ==================== -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">17</div>
+    <div class="tema-titulo">SERVIÇO DE GUARDA DO QUARTEL E COMANDANTE DA GUARDA</div>
+  </div>
+  <div class="tema-base">Base legal: R-1 / RISG. Capítulos 25 e 26 da apostila.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Constituição da guarda do quartel</div>
+    <ul>
+      <li>Normalmente comandada por um <b class="azul">2º ou 3º Sgt</b>, constituída dos cabos e soldados necessários ao serviço de sentinelas;</li>
+      <li><b class="azul">Excepcionalmente comandada por oficial</b> — neste caso, acrescida de um corneteiro ou clarim, passando o sargento às funções de auxiliar do Cmt Gd;</li>
+      <li>Todo o pessoal mantém-se corretamente uniformizado, equipado e armado, pronto para entrar rapidamente em forma;</li>
+      <li><b class="azul">Rodízio de descanso</b> entre os homens menos folgados, sob controle do Cmt Gd (soldados descansados, vigilantes e alertas nos postos, particularmente à noite); descanso gozado no alojamento da guarda, com autorização para afrouxar o equipamento e dormir; condições podem ser pormenorizadas nas NGA/U.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Principais finalidades da guarda do quartel</div>
+    <ul>
+      <li>I - manter a <b class="verde">segurança do quartel</b>;</li>
+      <li>III/IV - impedir a saída de praças não convenientemente fardadas (trajes civis só com competente autorização); saída de praças durante o expediente só mediante ordem ou licença especial e pelos locais estabelecidos;</li>
+      <li>V - não permitir a entrada de bebidas alcoólicas, inflamáveis, explosivos e artigos proibidos pelo Cmt U (exceto suprimento da unidade);</li>
+      <li>VII - impedir a saída de animais, viaturas ou material sem ordem de autoridade competente;</li>
+      <li>VIII - impedir a entrada de força não pertencente à unidade sem conhecimento e ordem do Of Dia (à noite, reconhecer à distância);</li>
+      <li>X/XI - comunicar imediatamente ao Of Dia a entrada de oficial estranho à unidade; levar à presença do Adj as praças de outras OM;</li>
+      <li>XII/XIII - impedir a entrada de civis estranhos ao serviço sem autorização do Of Dia; civis empregados na unidade só com cartão de identidade em vigor fornecido pelo SCmt U;</li>
+      <li>XIV - viatura à noite: entrada só depois de reconhecida à distância, quando necessário;</li>
+      <li>XVI - relacionar as praças que se recolherem após o fechamento do portão principal;</li>
+      <li>XVII - prestar as continências regulamentares.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Corpo da guarda</div>
+    <ul>
+      <li>Proibida a permanência de civis ou de praças estranhas à guarda do quartel;</li>
+      <li>Afixados quadros com relações de material carga distribuído, deveres gerais do pessoal da guarda e ordens particulares do Cmt U;</li>
+      <li>Postos de sentinela (especialmente das armas e das prisões) ligados ao corpo da guarda por campainha elétrica ou outros meios de comunicação.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Comandante da Guarda (Cmt Gd)</div>
+    <p>Responsável pela execução de todas as ordens do serviço da guarda; subordinado, para esse efeito, <b class="azul">diretamente ao Of Dia</b>. Compete-lhe, entre outros:</p>
+    <ul>
+      <li>I - formar a guarda rapidamente ao sinal de alarme das sentinelas, reconhecer o motivo e agir por iniciativa própria, se for o caso;</li>
+      <li>II/III - responder pelo asseio, ordem e disciplina no corpo da guarda; conferir, ao assumir, o material distribuído, comunicando faltas e estragos ao Of Dia;</li>
+      <li>V/IX/XV - velar pela fiel execução do serviço com atenção às normas de segurança; dar conhecimento às praças das ordens e instruções particulares a cada posto; verificar frequentemente se as sentinelas conhecem as ordens dos seus postos;</li>
+      <li>VI - organizar e controlar o rodízio de descanso; X - passar em revista o pessoal da guarda, constantemente;</li>
+      <li>XVIII/XXI/XXII - comunicar imediatamente ao Of Dia qualquer ocorrência extraordinária; a presença de militar estranho à unidade e de oficiais e praças da unidade que nela entrem após o toque de silêncio/fim do expediente; estar sempre a par da entrada, permanência e saída de pessoas estranhas, cientificando o Adj e o Of Dia;</li>
+      <li>XIX/XX - entregar ao Of Dia, logo depois de substituído, a <b class="azul">parte da guarda</b> (relação nominal das praças, roteiros das sentinelas e rondas, ocorrências e situação do material), anexando relação das praças que entraram após a revista do recolher e das saídas/entradas de viaturas civis ou militares com horários e motivos;</li>
+      <li>XXIII/XXIV - só permitir saída de praças nos horários previstos ou com autorização, corretamente fardadas (trajes civis: autorizadas e bem trajadas);</li>
+      <li>XXV - <b class="azul">revistar as viaturas estranhas</b>, militares e civis, à entrada e à saída do quartel.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa prazo">
+      <div class="caixa-titulo">18 horas — portões</div>
+      <p>XVI - fechar os portões do quartel <b class="ouro">às dezoito horas</b>, deixando aberta apenas a passagem individual do portão principal.</p>
+    </div>
+    <div class="caixa prazo">
+      <div class="caixa-titulo">21 horas — chaves</div>
+      <p>XVII - conservar em seu poder, durante o dia, as chaves das entradas do quartel, entregando-as ao Of Dia <b class="ouro">às vinte e uma horas</b>, com exceção das chaves do portão principal.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TEMA 18 ==================== -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">18</div>
+    <div class="tema-titulo">PLANTÃO E FORMATURAS</div>
+  </div>
+  <div class="tema-base">Base legal: R-1 / RISG (o plantão procede, na entrada de oficial no alojamento, como estabelece o R-2). Capítulos 27 e 28 da apostila.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Plantão (plantão da hora) — a sentinela da SU</div>
+    <ul>
+      <li>I - estar atento a tudo o que ocorrer no alojamento, participando imediatamente ao Cb Dia qualquer alteração;</li>
+      <li>II - proceder como estabelece o <b class="azul">R-2</b> na entrada de qualquer oficial no alojamento;</li>
+      <li>IV/V - zelar pelo asseio do alojamento e dependências e pela arrumação das camas;</li>
+      <li>VI - impedir, durante o expediente, a entrada de praças no dormitório, quando houver vestiário separado ou local apropriado às horas de folga;</li>
+      <li>VII - fazer levantar as praças ao findar o toque de alvorada, nos dias com expediente, coadjuvando o Cb Dia;</li>
+      <li>VIII - não consentir a entrada de civis no alojamento sem acompanhamento de oficial ou sargento;</li>
+      <li>IX/X/XI - examinar volumes retirados do alojamento não verificados pelo Sgt Dia ou Cb Dia; impedir retirada de objetos sem autorização do dono/responsável e do Sgt Dia ou Cb Dia; não consentir uso ou apoderamento de objeto alheio;</li>
+      <li>XII - impedir a entrada de praças de outras SU depois da revista do recolher (antes dela, das que não possuam autorização);</li>
+      <li>XIII/XV - não permitir conversa em voz alta ou perturbação do silêncio após o toque; dar o sinal de "silêncio" imediatamente após a última nota do respectivo toque;</li>
+      <li>XIV - relacionar as praças do pernoite que se recolherem depois do toque de silêncio, entregando a relação ao Cb Dia;</li>
+      <li>XVI/XVII - acender e apagar as luzes nas horas determinadas; apresentar-se aos oficiais que entrarem no alojamento, quando ausente o Cb Dia.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Regras complementares do plantão</div>
+    <ul>
+      <li>Substituídos, ordinariamente, às mesmas horas que as sentinelas da guarda do quartel;</li>
+      <li>Se o plantão não perceber a entrada de um oficial, <b class="verde">qualquer praça</b> dará o sinal ou a voz que àquele compete;</li>
+      <li>Os plantões fazem a limpeza do alojamento e dependências a cargo da guarda, sob direção do Cb Dia;</li>
+      <li>O posto localiza-se, normalmente, na <b class="verde">entrada do alojamento</b>, devendo o plantão percorrer algumas vezes a dependência.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Formatura — conceito e classificação</div>
+    <p>Toda reunião do pessoal em forma, armado ou desarmado. Pode ser: I - <b class="azul">geral ou parcial</b>, da unidade ou da Companhia; e II - <b class="azul">ordinária ou extraordinária</b>. Toda formatura terá origem, em regra, na companhia, pela reunião dos oficiais e praças que dela devam participar.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Espécie</th><th>Caracterização</th></tr>
+    <tr><td>Ordinárias</td><td>Destinadas às revistas normais do pessoal, ao rancho, à Parada, à leitura do BI e à instrução.</td></tr>
+    <tr><td>Extraordinárias previstas</td><td>Determinadas nos programas da unidade ou Companhia, para revistas de material ou animais, ou ordenadas em BI, destinadas a solenidades internas ou externas.</td></tr>
+    <tr><td>Extraordinárias inopinadas</td><td>Impostas pelas circunstâncias do momento, em virtude de anormalidades ou medidas comuns de caráter interno.</td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Formatura geral e ordens</div>
+    <ul>
+      <li>Nas unidades operacionais, durante a semana, <b class="verde">pelo menos uma formatura geral</b> de toda a unidade para o início das atividades do dia, com canto do Hino Nacional, outro hino ou canção militar; o horário pode ser alterado pelo comandante por necessidade do serviço ou condições climáticas/meteorológicas;</li>
+      <li>A formatura geral de Companhia é realizada nos dias em que não houver formatura geral de unidade;</li>
+      <li>Nas ordens para formaturas: hora, local da reunião, formação, uniforme e outros esclarecimentos, com precisão;</li>
+      <li>I - na Companhia, os oficiais subalternos passam em revista suas frações e o mais antigo apresenta a tropa ao Cmt SU, que a conduz ao local da reunião;</li>
+      <li>II - reunidas as Companhias, o <b class="verde">SCmt U assume o comando de toda a tropa até a chegada do Cmt U</b>;</li>
+      <li>III - o Cmt U só se aproxima do local da formatura depois de <b class="verde">avisado, pelo P3</b>, que a tropa está pronta para recebê-lo.</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>MEMENTO — ATENDIMENTO PRÉ-HOSPITALAR TÁTICO · CFO PM 2026</title>
+<style>
+/* ===== MEMENTO CFO PM 2026 — identidade visual fixa ===== */
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: #fbf9f3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  background: #fbf9f3; color: #2a2620;
+  font-family: "Segoe UI", -apple-system, Arial, sans-serif;
+  font-size: 9.5pt; line-height: 1.42;
+}
+/* ---- Cabeçalho do documento ---- */
+.doc-header {
+  text-align: center; padding: 4mm 0 3mm;
+  border-bottom: 3px double #2a2620; margin-bottom: 5mm;
+}
+.doc-header h1 { font-size: 15pt; letter-spacing: .5px; }
+.doc-header .sub { font-size: 9pt; color: #4a4a4a; margin-top: 1mm; }
+
+/* ---- Tema (um por capítulo; cada tema inicia em nova página) ---- */
+.tema { break-before: page; padding-top: 2mm; }
+.tema:first-of-type { break-before: auto; }
+.tema-header { display: flex; align-items: stretch; gap: 0; margin-bottom: 1.5mm; }
+.tema-num {
+  background: #7d1f2b; color: #fff; font-weight: 800; font-size: 13pt;
+  min-width: 11mm; display: flex; align-items: center; justify-content: center;
+  border-radius: 2px 0 0 2px; padding: 1.5mm 2mm;
+}
+.tema-titulo {
+  background: #a3444f; color: #fff; font-weight: 700; font-size: 11.5pt;
+  flex: 1; display: flex; align-items: center; padding: 1.5mm 3mm;
+  border-radius: 0 2px 2px 0; letter-spacing: .3px;
+}
+.tema-base { font-style: italic; font-size: 8.5pt; color: #4a4a4a; margin: 0 0 3mm 1mm; }
+
+/* Variantes de cor do cabeçalho de tema (usar conforme a natureza dominante) */
+.tema-header.azul .tema-num { background: #1f4e79; } .tema-header.azul .tema-titulo { background: #4a749c; }
+.tema-header.verde .tema-num { background: #2e6b3e; } .tema-header.verde .tema-titulo { background: #578964; }
+.tema-header.dourado .tema-num { background: #9a7b16; } .tema-header.dourado .tema-titulo { background: #b39a4a; }
+.tema-header.cinza .tema-num { background: #4a4a4a; } .tema-header.cinza .tema-titulo { background: #757575; }
+
+/* ---- 1. Caixas coloridas ---- */
+.caixa { border-radius: 3px; padding: 2.2mm 3mm; margin-bottom: 2.6mm; break-inside: avoid; border-left: 3.5px solid; }
+.caixa .caixa-titulo { font-weight: 800; font-size: 9.5pt; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1mm; }
+.caixa p { margin-bottom: 1mm; } .caixa p:last-child { margin-bottom: 0; }
+.caixa ul, .caixa ol { padding-left: 5mm; } .caixa li { margin-bottom: .6mm; }
+.caixa.def     { background: #e8eef5; border-color: #1f4e79; } .caixa.def .caixa-titulo     { color: #1f4e79; }
+.caixa.atencao { background: #e9f2ea; border-color: #2e6b3e; } .caixa.atencao .caixa-titulo { color: #2e6b3e; }
+.caixa.prazo   { background: #f7f1dd; border-color: #9a7b16; } .caixa.prazo .caixa-titulo   { color: #9a7b16; }
+.caixa.fase    { background: #f6e8ea; border-color: #7d1f2b; } .caixa.fase .caixa-titulo    { color: #7d1f2b; }
+.caixa.neutra  { background: #efefef; border-color: #4a4a4a; } .caixa.neutra .caixa-titulo  { color: #4a4a4a; }
+
+/* ---- 2. Fluxo vertical com setas (ritos, etapas, ciclos) ---- */
+.fluxo-v { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-v .fv-titulo { font-weight: 800; font-size: 9.5pt; color: #7d1f2b; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-v .passo {
+  background: #f6e8ea; border: 1px solid #7d1f2b; border-radius: 3px;
+  padding: 1.6mm 2.6mm; text-align: center;
+}
+.fluxo-v .passo b { color: #7d1f2b; }
+.fluxo-v .seta { text-align: center; color: #7d1f2b; font-size: 10pt; line-height: 1.1; padding: .4mm 0; }
+.fluxo-v.azul .passo { background: #e8eef5; border-color: #1f4e79; } .fluxo-v.azul .seta, .fluxo-v.azul .fv-titulo, .fluxo-v.azul .passo b { color: #1f4e79; }
+
+/* ---- 3. Fluxo horizontal inline (categorias/espécies) ---- */
+.fluxo-h { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-h .fh-titulo { font-weight: 800; font-size: 9.5pt; color: #4a4a4a; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-h .linha { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2mm; }
+.fluxo-h .item {
+  background: #efefef; border: 1px solid #4a4a4a; border-radius: 3px;
+  padding: 1.2mm 2.4mm; font-size: 9pt; font-weight: 600;
+}
+.fluxo-h .seta-h { color: #4a4a4a; font-weight: 700; }
+
+/* ---- 4. Mnemônico ---- */
+.mnemo {
+  border: 2px dashed #9a7b16; background: #f7f1dd; border-radius: 4px;
+  padding: 2.4mm 3mm; margin-bottom: 2.6mm; break-inside: avoid;
+}
+.mnemo .palavra { font-size: 14pt; font-weight: 900; color: #9a7b16; letter-spacing: 1.5px; text-align: center; margin-bottom: 1.2mm; }
+.mnemo .exp { font-size: 9pt; }
+.mnemo .exp b { color: #9a7b16; }
+
+/* ---- 5. Tabela comparativa ---- */
+table.comp { width: 100%; border-collapse: collapse; margin-bottom: 2.6mm; break-inside: avoid; font-size: 8.8pt; }
+table.comp th { background: #4a4a4a; color: #fff; padding: 1.4mm 2mm; text-align: left; font-size: 8.8pt; }
+table.comp td { border: 1px solid #b9b4aa; padding: 1.3mm 2mm; vertical-align: top; background: #fffdf8; }
+table.comp tr:nth-child(even) td { background: #f4f1e9; }
+table.comp td:first-child { font-weight: 700; }
+
+/* ---- 6. Discursiva com espelho ---- */
+.discursiva { border: 1.5px solid #1f4e79; border-radius: 4px; margin-bottom: 2.6mm; break-inside: avoid; }
+.discursiva .enunciado { background: #1f4e79; color: #fff; padding: 2mm 3mm; font-weight: 600; }
+.discursiva .enunciado::before { content: "QUESTÃO DISCURSIVA — "; font-weight: 800; }
+.discursiva .espelho { padding: 2.2mm 3mm; background: #fffdf8; }
+.discursiva .espelho .esp-titulo { font-weight: 800; color: #1f4e79; text-transform: uppercase; font-size: 9pt; margin-bottom: 1mm; }
+.discursiva .espelho ul { padding-left: 5mm; } .discursiva .espelho li { margin-bottom: .6mm; }
+
+/* util */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; margin-bottom: 2.6mm; }
+.grid2 > * { margin-bottom: 0; }
+b.azul { color: #1f4e79; } b.borg { color: #7d1f2b; } b.verde { color: #2e6b3e; } b.ouro { color: #9a7b16; }
+</style>
+</head>
+<body>
+<div class="doc-header">
+  <h1>MEMENTO — ATENDIMENTO PRÉ-HOSPITALAR TÁTICO · CFO PM 2026</h1>
+  <div class="sub">Apostila da disciplina de Atendimento Pré-Hospitalar Tático — APMP / Curso de Formação de Oficiais · PMPE (Recife, 2025)</div>
+</div>
+
+<!-- ==================== TEMA 1 ==================== -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">1</div>
+    <div class="tema-titulo">HISTÓRICO DO APH-TÁTICO, NORMAS E LEGISLAÇÕES</div>
+  </div>
+  <div class="tema-base">Base legal: Portaria do Ministério da Defesa 16/2018 (Portaria Normativa nº 16/MD, de 12 de abril de 2018) e Portaria do Ministério da Justiça e Segurança Pública 098/2022 (Portaria MJSP Nº 98, de 1º de julho de 2022).</div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Ambulâncias Voadoras — Século XVIII</div>
+    <ul>
+      <li>Treinamento para <b class="borg">tratamento e transporte de feridos</b>;</li>
+      <li><b class="borg">Triagem</b> de feridos;</li>
+      <li><b class="borg">Hospitais de campanha</b>;</li>
+      <li><b class="borg">Controle rápido de hemorragias externas</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Terceira era — Era Farrington (1950–1970)</div>
+    <ul>
+      <li><b class="azul">Farrington</b>: médico da cidade de Chicago — Estados Unidos da América/EUA;</li>
+      <li>Precursor nos EUA na <b class="azul">padronização de materiais e equipamentos de APH nas ambulâncias</b>;</li>
+      <li>Criou o <b class="azul">1º Curso de APH nos EUA</b>, buscando a uniformização de procedimentos no atendimento pré-hospitalar, com foco na <b class="azul">desobstrução de vias aéreas</b> e no <b class="azul">controle de hemorragias</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Quarta era — implementação da medicina tática</div>
+    <p>Invasão do Kwait / <b class="azul">Guerra do Golfo 1990–1991</b>.</p>
+    <p>Antes dela, fato histórico que deu o "start" nas mudanças de protocolos de atendimento de militares feridos em combate: a <b class="azul">Guerra do Vietnã (1955–1975)</b>.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Lição do Vietnã — mortes evitáveis</div>
+    <ul>
+      <li>Aproximadamente <b class="verde">2500 (duas mil e quinhentas) mortes</b> decorrentes de <b class="verde">hemorragias em extremidades</b> (membros inferiores e superiores) — ou seja, mortes evitáveis;</li>
+      <li>Grande repercussão e pressão interna nos EUA sobre os jovens mortos no Vietnã, que, com outros fatores, levou à saída e derrota dos EUA na guerra;</li>
+      <li>Após a guerra, verificou-se o uso de <b class="verde">equipamentos inapropriados para a realidade tática</b>, sem atentar para o ambiente hostil e as dificuldades do terreno;</li>
+      <li>A redução deu-se com a implementação do APH-Tático nas tropas americanas — atualmente <b class="verde">100% dos militares americanos</b> (Exército, Marinha, Forças Aérea, Força Nacional) são formados no <b class="verde">TCCC</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Normas e legislações do APH-Tático no Brasil</div>
+    <p>Considerando a idade dos conflitos armados no mundo, o APH-Tático é temática recente — <b class="azul">após 1975</b>.</p>
+    <ul>
+      <li><b class="azul">Portaria do Ministério da Defesa 16/2018</b> — trata das questões do APH-Tático para as <b>Forças Armadas</b>;</li>
+      <li><b class="azul">Portaria do Ministério da Justiça e Segurança Pública 098/2022</b> — cria a <b>Diretriz Nacional de Atendimento Pré-hospitalar Tático para profissionais de Segurança Pública</b>.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v azul">
+    <div class="fv-titulo">Surgimento do APH-Tático no Brasil</div>
+    <div class="passo"><b>1995 — Rio de Janeiro/RJ</b> — surge o Grupo de Paramédicos de Apoio Operacional – Resgate e Salvamento – <b>GPAO/RS</b>, dentro do Batalhão de Operações Policiais Especiais da Polícia Militar do Estado do Rio de Janeiro – <b>BOPE/PMERJ</b></div>
+    <div class="seta">▼</div>
+    <div class="passo">Crescimento e importância do APH-Tático para a Segurança Pública; criação e execução de cursos dedicados; inclusão no <b>Curso de Operações Especiais Policiais – Coesp</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2006</b> — o GPAO-RS deixa o BOPE e se torna o <b>Grupamento Especial de Salvamento e Ações de resgate – GESAR</b>, Organização Militar Estadual – <b>OME</b> independente</div>
+  </div>
+</div>
+
+<!-- ==================== TEMA 2 ==================== -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">2</div>
+    <div class="tema-titulo">ATENDIMENTO SOB CONFRONTO ARMADO — 1ª FASE DO APHT</div>
+  </div>
+  <div class="tema-base">Capítulo 02 da apostila. Referência doutrinária: TCCC (Butler, FK. Two Decades of Saving Lives on the battlefield: Tatical Combat Casual Care Turns 20, 2017).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Nomenclaturas sinônimas</div>
+    <p><b class="azul">Atendimento Pré-hospitalar Tático</b> = <b class="azul">APHt</b> = <b class="azul">APH-Tático</b> = <b class="azul">TCCC</b> = <b class="azul">TC3</b> — todas essas nomenclaturas são sinônimos.</p>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Fases do APH-Tático</div>
+    <div class="passo"><b>1ª Fase</b> — Atendimento Sob Confronto Armado ou Atendimento Sob Fogo — <b>Área Vermelha</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2ª Fase</b> — Cuidados em Campo Tático ou Atendimento em Campo Tático — <b>Área Amarela</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3ª Fase</b> — Atendimento em Evacuação Tática — <b>Área Verde</b></div>
+  </div>
+
+  <div class="mnemo">
+    <div class="palavra">F.A.C.</div>
+    <div class="exp"><b>F</b> — Fogo; <b>A</b> — Abrigo; <b>C</b> — Comunicação. Buscar sempre abrigo para evitar novas vítimas, revidar a injusta agressão assim que possível e se comunicar sempre com os demais membros da equipe. A <b>ordem das ações é definida pela situação/ocorrência</b>: pode-se comunicar → abrigar; responder com arma de fogo → comunicar → abrigar; ou abrigar → comunicar.</div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Confronto em andamento — NÃO se aproximar</div>
+    <p>Se o confronto ainda estiver em andamento, <b class="verde">NÃO tente de maneira nenhuma se aproximar (atender) da vítima</b> — alta probabilidade de ser mais uma vítima. Nesse caso, a <b class="verde">supressão de fogo ao "inimigo", a resposta à agressão e a cobertura da vítima já fazem parte do 1º Atendimento</b>.</p>
+    <p>Exemplo histórico: <b class="verde">Batalha de Fallujah — Iraque (2004)</b>, considerada a maior batalha urbana após o fim da Segunda Guerra Mundial: uma patrulha inteira foi alvejada e neutralizada após 01 militar ter sido atingido.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Procedimentos da 1ª Fase (únicos realizados no atendimento ao ferido)</div>
+    <ul>
+      <li>Resposta a Agressão/Cobertura de Fogo;</li>
+      <li>Comunicação/Orientação ao ferido;</li>
+      <li>Autoaplicação de Torniquete Tático;</li>
+      <li>Aplicação de Torniquete Tático;</li>
+      <li>Técnicas de Arrasto para o abrigo.</li>
+    </ul>
+    <p>Após a neutralização ou fuga da ameaça: o socorrista <b class="borg">se comunica e orienta a vítima</b>; conforme as respostas, aproxima-se, identifica sangramentos nas extremidades (membros superiores e inferiores), aplica o torniquete tático e <b class="borg">arrasta a vítima até um abrigo</b>.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Situação do operador ferido</th><th>Conduta do socorrista</th></tr>
+    <tr><td>Consciente e responsivo</td><td>Realizar o atendimento remoto; orientar na identificação do ferimento; orientar a autoaplicação do torniquete tático, se indicado.</td></tr>
+    <tr><td>Inconsciente e não responsivo</td><td>Considerar que o ferimento é grave; continuar abrigado, coberto e revidando a agressão (caso necessário); preparar o plano de resgate para chegar ao operador ferido. Ao chegar na vítima: retirar o armamento da vítima; Prioridade 1 — controle de sangramentos maciços nas extremidades; aplicar o torniquete tático.</td></tr>
+  </table>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Torniquete Tático (TQ) — conceito</div>
+      <p>Dispositivo de <b class="azul">oclusão externa temporário</b>, que visa evitar a <b class="azul">exsanguinação</b> da vítima.</p>
+    </div>
+    <div class="caixa prazo">
+      <div class="caixa-titulo">Tiro na perna mata?</div>
+      <p>Rompimento de artéria por ferimento de arma branca ou por projétil de arma de fogo (PAF) pode levar à morte em <b class="ouro">menos de 5 (cinco) minutos</b>. Ex.: artéria femural e artéria braquial.</p>
+    </div>
+  </div>
+
+  <table class="comp">
+    <tr><th>Modo de aplicação do TQ</th><th>Quando</th><th>Como</th></tr>
+    <tr><td>Emergencial ou policial</td><td>Socorrista NÃO consegue identificar bem a origem do sangramento</td><td>"Alto e apertado", na parte mais <b>proximal</b> do membro</td></tr>
+    <tr><td>Deliberada</td><td>Socorrista consegue identificar a origem do sangramento</td><td>De <b>05 a 07 cm acima do ferimento</b></td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Aplicação por cima da farda + escopo da 1ª fase</div>
+    <ul>
+      <li>Na 1ª Fase, a autoaplicação ou aplicação do TQ é realizada <b class="verde">por cima do fardamento</b>, atentando apenas para a retirada de objetos que possam atrapalhar o aperto (ex.: coldre, objetos nos bolsos, braçal etc.);</li>
+      <li>Na 1ª Fase <b class="verde">NÃO se trata todo sangramento</b>: apenas os <b class="verde">sangramentos maciços nas extremidades</b>, via aplicação do Torniquete Tático.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Erros a serem evitados com o Torniquete Tático</div>
+    <ul>
+      <li>Não usar o TQ quando precisar;</li>
+      <li>Usá-lo em sangramentos mínimos, não maciços;</li>
+      <li>Retirá-lo quando a vítima estiver em choque;</li>
+      <li>Afrouxá-lo periodicamente;</li>
+      <li>Não apertá-lo o suficiente;</li>
+      <li>Não utilizar um 2º Torniquete, quando necessário.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 3 ==================== -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">3</div>
+    <div class="tema-titulo">CUIDADOS EM CAMPO TÁTICO — M.A.R.C.H. · LETRA M</div>
+  </div>
+  <div class="tema-base">Capítulo 03 da apostila — 2ª Fase do APHT, Área Amarela, ênfase na letra "M".</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Cuidados em Campo Tático — conceito</div>
+    <p><b class="azul">2ª Fase do APH-Tático (Área Amarela)</b>: após delimitar uma <b class="azul">área segura (1º abrigo)</b>, consiste no <b class="azul">tratamento rápido dos ferimentos mais graves</b>.</p>
+  </div>
+
+  <div class="mnemo">
+    <div class="palavra">M.A.R.C.H.</div>
+    <div class="exp"><b>M</b> — Maciças hemorragias: contenção de hemorragias maciças; <b>A</b> — Aéreas: desobstrução de vias aéreas; <b>R</b> — Respiração: manutenção da respiração; <b>C</b> — Circulação e Choque: "re-check" dos procedimentos, identificar sinais de choque; <b>H</b> — Hipotermia: prevenção da hipotermia.</div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Letra M — hemorragia maciça</div>
+    <p><b class="verde">Maciça hemorragia é a principal causa de mortes evitáveis.</b></p>
+    <p>Métodos de contenção de hemorragias:</p>
+    <ul>
+      <li>Pressão direta;</li>
+      <li>Autoaplicação e Aplicação de Torniquete Tático;</li>
+      <li>Preenchimento e empacotamento de Ferida.</li>
+    </ul>
+    <p>Na letra M realiza-se <b class="verde">varredura</b> em busca de sangramentos não identificados/tratados na 1ª Fase, ou que não estavam em extremidades e sim em <b class="verde">regiões juncionais (hemorragias compressíveis)</b>. Caso necessário, <b class="verde">expor a vítima cortando-lhe as vestes</b> com <b class="verde">tesoura de ponta romba</b>, com a devida técnica.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Critério</th><th>Sangue venoso</th><th>Sangue arterial</th></tr>
+    <tr><td>Composição</td><td>Maior concentração de dióxido de carbono (CO2)</td><td>Rico em oxigênio (O2)</td></tr>
+    <tr><td>Coloração</td><td>Mais escura</td><td>Mais avermelhada (vermelho vibrante)</td></tr>
+    <tr><td>Vaso</td><td>Passa pelas veias</td><td>Passa pelas artérias</td></tr>
+  </table>
+
+  <div class="caixa prazo">
+    <div class="caixa-titulo">Preenchimento de ferida — tempos de pressão</div>
+    <ul>
+      <li>Material <b class="ouro">SEM agentes hemostáticos</b>: após o preenchimento, pressão de <b class="ouro">05 a 10 minutos</b> sobre a ferida (ex.: gaze de metro, ou gaze de rolo tipo queijo);</li>
+      <li>Material <b class="ouro">COM agentes hemostáticos</b>: após o preenchimento, pressão de <b class="ouro">02 a 03 minutos</b> sobre a ferida.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Regras do preenchimento e falha na contenção</div>
+    <ul>
+      <li>Para preenchimento de feridas, <b class="verde">sempre utilizar materiais contínuos</b>;</li>
+      <li>Falha com material <b class="verde">COM agente hemostático</b>: retira-se tudo e recomeça com um material novo;</li>
+      <li>Falha com material <b class="verde">SEM agente hemostático</b>: mantém-se a pressão direta no local.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Empacotamento de ferida</div>
+    <p>Após o preenchimento, realiza-se o empacotamento da ferida — técnica que <b class="azul">simula a pressão direta realizada pelo socorrista</b>. Materiais:</p>
+    <ul>
+      <li>Ataduras crepom;</li>
+      <li>Ataduras elásticas;</li>
+      <li>Bandagem tática (tipo israelense).</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 4 ==================== -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">4</div>
+    <div class="tema-titulo">M.A.R.C.H. — LETRAS A E R (VIAS AÉREAS E RESPIRAÇÃO)</div>
+  </div>
+  <div class="tema-base">Capítulo 04 da apostila — 2ª Fase do APHT, Área Amarela, ênfase nas letras "A" e "R".</div>
+
+  <div class="fluxo-v azul">
+    <div class="fv-titulo">Letra A — Abertura de vias aéreas (socorrista lateralmente à vítima)</div>
+    <div class="passo"><b>1º passo</b> — Inspeção visual: verificar se existe objeto ou secreção (sangue, vômito, fragmentos de dentes quebrados, chiclete etc.)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2º passo</b> — Desobstrução: retirar com o dedo em forma de gancho (com luvas calçadas), impedindo a broncoaspiração</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3º passo</b> (na medida do possível) — Lateralização: manter a cabeça da vítima lateralizada</div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Chin Lift e posição de recuperação</div>
+    <p>Outra manobra de abertura das vias aéreas: <b class="azul">elevação do queixo</b> da vítima, conhecida como <b class="azul">Chin Lift</b>. Em seguida, na medida do possível, deixar a vítima <b class="azul">lateralizada em posição de recuperação</b>.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Letra R — sistema respiratório</div>
+    <ul>
+      <li><b class="azul">Brônquios</b> — iniciam na traqueia e vão se ramificando, originando os bronquíolos e alvéolos;</li>
+      <li><b class="azul">Pulmões</b> — divididos em lóbulos que contêm brônquios, bronquíolos e alvéolos.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Pneumotórax / pneumotórax hipertensivo</div>
+    <p><b class="verde">Pneumotórax</b>: presença de <b class="verde">ar livre na cavidade pleural</b> (membrana interna do tórax), causando diferença de pressão na cavidade pulmonar, impedindo o pulmão de se expandir e causando muita dificuldade na respiração da vítima.</p>
+    <p>O <b class="verde">pneumotórax hipertensivo é causa prevenível de morte no ambiente tático</b> — decorrente de ferimentos penetrantes (perfuração por arma de fogo – PAF e/ou arma branca) ou de trauma fechado (explosão, PAF no colete balístico, entre outros).</p>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Diagnóstico</div>
+      <ul>
+        <li>Dificuldade respiratória;</li>
+        <li>Turgência jugular;</li>
+        <li>Hipóxia.</li>
+      </ul>
+    </div>
+    <div class="caixa atencao">
+      <div class="caixa-titulo">Tratamento</div>
+      <p>Utilização do <b class="verde">selo de tórax valvulado e/ou oclusivo</b>. O selo valvulado industrializado é vendido em par: 01 selo valvulado (com válvula) + 01 selo oclusivo (sem válvula).</p>
+    </div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Uso dos selos de tórax + manobra de Burp</div>
+    <ul>
+      <li>Selo <b class="verde">com válvula</b>: colocado na lesão onde o socorrista identificar que está <b class="verde">saindo o "ar"</b> — visto por bolhas de ar junto com secreção e pelo som (pequeno chiado ou assobio leve). A <b class="verde">válvula deve ser posicionada em cima da lesão</b>;</li>
+      <li>Selo <b class="verde">oclusivo</b>: colocado na <b class="verde">lesão de saída</b> (caso tenha);</li>
+      <li><b class="verde">Manobra de Burp</b>: abrir periodicamente o selo para limpeza da válvula e da lesão com gaze comum estéril (impedindo a criação de coágulos) e a espera da saída de mais ar; em seguida, fechar novamente o selo.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 5 ==================== -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">5</div>
+    <div class="tema-titulo">M.A.R.C.H. — LETRAS C E H (CIRCULAÇÃO/CHOQUE E HIPOTERMIA)</div>
+  </div>
+  <div class="tema-base">Capítulo 05 da apostila — 2ª Fase do APHT, Área Amarela, ênfase nas letras "C" e "H".</div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Letra C — circulação e choque ("re-check")</div>
+    <p>O socorrista busca <b class="verde">ferimentos e hemorragias não maciças</b> e as trata; em seguida <b class="verde">checa todos os procedimentos já realizados</b> nas "letras" anteriores do M.A.R.C.H.:</p>
+    <ul>
+      <li>Reajuste do Torniquete Tático;</li>
+      <li>Verificação dos empacotamentos já realizados (se foram efetivos e sanaram a hemorragia);</li>
+      <li>Verificação das vias aéreas;</li>
+      <li>Manutenção da respiração (checagem e limpeza do selo de Tórax).</li>
+    </ul>
+    <p><b class="verde">O socorrista só para de verificar e "trabalhar" no paciente quando o entregar no hospital, no ambiente intra-hospitalar.</b></p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Sinais de choque (identificar na Letra C)</div>
+    <ul>
+      <li>Checar pulso radial;</li>
+      <li>Perfusão capilar lenta (tempo de preenchimento);</li>
+      <li>Sudorese (podendo ser fria ou não);</li>
+      <li>Confusão mental (nível de consciência);</li>
+      <li>Palidez.</li>
+    </ul>
+    <p><b class="azul">Vítima com sinais de choque</b> → dar celeridade ao atendimento e levá-la para o ambiente intra-hospitalar o mais breve possível.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Hipotermia — conceito</div>
+    <p>Perda involuntária do calor corporal para <b class="azul">abaixo de 35ºC</b>. Pode estar associada ao <b class="azul">choque hemorrágico</b>, que desestabiliza a capacidade termorreguladora do corpo (uma das funções do sangue é aquecer nosso corpo).</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Letra H — prevenção da hipotermia</div>
+    <ul>
+      <li>Isolar a vítima do solo (sempre que possível);</li>
+      <li>Retirar vestes molhadas (quando possível e indicado);</li>
+      <li>Utilizar bolsas de calor instantâneo;</li>
+      <li>Utilizar manta aluminizada;</li>
+      <li>Quando em deslocamento em viatura convencional: a) fechar os vidros do veículo; b) ligar o ventilador do carro no modo "aquecedor"; c) seguir com brevidade para o hospital, para entregar a vítima no ambiente intra-hospitalar.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TEMA 6 ==================== -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">6</div>
+    <div class="tema-titulo">ATENDIMENTO EM EVACUAÇÃO TÁTICA — 3ª FASE DO APHT</div>
+  </div>
+  <div class="tema-base">Capítulo 06 da apostila — 3ª Fase do APHT (Área Verde). Referência: NAENT. PHTL: Prehospital Trauma Life Support, Military Edition, 9th ed., 2019.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Atendimento em Evacuação Tática — conceito</div>
+    <p><b class="azul">3ª Fase (ou fase 3) do APH-Tático</b>: compreende <b class="azul">técnicas específicas para transferência adequada do ferido</b>, minimizando os riscos durante o transporte, enquanto os demais membros da equipe policial mantêm a capacidade de confronto caso necessário.</p>
+    <p>Como fazer? Utilizando técnicas específicas de transporte de feridos; técnicas de patrulha policial; e, na maioria das vezes, <b class="azul">veículos não projetados</b> (ex.: veículos comuns e viaturas policiais convencionais).</p>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">A evacuação começa desde a saída da área vermelha</div>
+    <div class="passo"><b>Área Vermelha (Fase 1)</b> — do confronto armado para o abrigo</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>Área Amarela (Fase 2)</b> — do abrigo até o veículo de transporte</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>Área Verde (Fase 3)</b> — do veículo de transporte até a unidade hospitalar adequada</div>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">Técnicas de transporte de feridos</div>
+    <div class="linha">
+      <span class="item">Carregando pelos ombros</span>
+      <span class="item">Técnica com 02 operadores</span>
+      <span class="item">Técnicas com 03 operadores</span>
+      <span class="item">Técnicas de mochilamento</span>
+    </div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Material dedicado — maca tática</div>
+    <p><b class="azul">Maca dobrável de transporte de ferido</b>, também conhecida como <b class="azul">maca tática</b> ou <b class="azul">maca de extração rápida</b>.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Embarque de ferido em plataformas elevadas (com a maca tática)</div>
+    <p>A equipe (de acordo com a disponibilidade de efetivo) se divide lateralmente — ex.: 02 socorristas de cada lado da maca. O <b class="borg">líder da equipe fica sempre à frente, próximo da cabeça da vítima</b>.</p>
+    <ul>
+      <li><b class="borg">Passo 01</b> — chegando ao local de embarque, o líder comanda o posicionamento da vítima na altura correta do embarque (linha da cintura ou linha dos ombros);</li>
+      <li><b class="borg">Passo 02</b> — sob comando do líder, a equipe insere/coloca aos poucos a vítima na plataforma elevada;</li>
+      <li><b class="borg">Importante</b> — caso não haja socorrista dentro do veículo (plataforma elevada), um socorrista da equipe deve embarcar (subir) para puxar e ajudar no embarque da vítima.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Por que é considerada a fase mais complexa? Riscos após a estabilização (Fase 2)</div>
+    <ul>
+      <li>Risco de agravamento das lesões da vítima;</li>
+      <li>Risco de novos confrontos com marginais após a saída do abrigo;</li>
+      <li>Dificuldades de locomoção com a vítima — trajeto, terreno, meios e número de policiais da equipe.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Antes de sair do abrigo — deveres do líder da equipe de socorristas</div>
+    <ul>
+      <li>Planejar a evacuação tática;</li>
+      <li>Definir o meio de transporte mais adequado;</li>
+      <li>Definir a melhor técnica de transporte de ferido naquela ocasião, de acordo com terreno, meios e pessoal disponível.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Proatividade — briefing no início de cada serviço (mais antigo da equipe)</div>
+    <ul>
+      <li>Verificar rotas de emergência para um possível socorro de urgência;</li>
+      <li>Quem irá dirigir a viatura, caso o motorista tenha um mal súbito ou venha a ser ferido?</li>
+      <li>Onde ficam as chaves da viatura?</li>
+      <li>Para qual unidade de saúde deslocar? É necessário um <b class="verde">centro cirúrgico, unidade de trauma de grande porte</b>; se a vítima já está estabilizada, <b class="verde">não adianta levar para Unidades Básicas</b> (ex.: Unidades de Pronto Atendimento – UPA);</li>
+      <li>Em deslocamento em viatura convencional (prevenção da hipotermia): fechar os vidros; ligar o ventilador no modo "aquecedor"; seguir com brevidade para o hospital;</li>
+      <li>Seguir durante todo o deslocamento <b class="verde">monitorando, rechecando e trabalhando na vítima</b>: letras C e H do M.A.R.C.H., e reavaliar periodicamente os procedimentos já feitos (letras M.A.R.);</li>
+      <li>O socorrista só para de monitorar e trabalhar na vítima quando a entregar no ambiente intra-hospitalar.</li>
+    </ul>
+  </div>
+
+  <div class="discursiva">
+    <div class="enunciado">Cite e explique as três fases do Atendimento Pré-hospitalar Tático (APH-Tático/TCCC), indicando a área correspondente a cada fase e os procedimentos de atendimento ao ferido admitidos na 1ª Fase.</div>
+    <div class="espelho">
+      <div class="esp-titulo">Espelho de resposta</div>
+      <ul>
+        <li>Nomenclaturas sinônimas: APH-Tático = APHt = TCCC = TC3 (apostila APHT/CFO; Portaria MJSP 098/2022 — Diretriz Nacional de APH Tático para profissionais de Segurança Pública; Portaria MD 16/2018 — Forças Armadas);</li>
+        <li>1ª Fase — Atendimento Sob Confronto Armado ou Atendimento Sob Fogo (Área Vermelha): resposta à agressão/cobertura de fogo já é parte do 1º atendimento; não se aproximar da vítima com confronto em andamento;</li>
+        <li>Procedimentos admitidos na 1ª Fase: resposta a agressão/cobertura de fogo; comunicação/orientação ao ferido; autoaplicação de Torniquete Tático; aplicação de Torniquete Tático; técnicas de arrasto para o abrigo — tratando apenas sangramentos maciços nas extremidades;</li>
+        <li>2ª Fase — Cuidados em Campo Tático ou Atendimento em Campo Tático (Área Amarela): após delimitar área segura (1º abrigo), tratamento rápido dos ferimentos mais graves, sistematizado pelo mnemônico M.A.R.C.H. (Maciças hemorragias, Aéreas, Respiração, Circulação e Choque, Hipotermia);</li>
+        <li>3ª Fase — Atendimento em Evacuação Tática (Área Verde): técnicas específicas para transferência adequada do ferido, minimizando riscos no transporte enquanto a equipe mantém a capacidade de confronto; monitoramento contínuo até a entrega no ambiente intra-hospitalar.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

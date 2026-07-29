@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>MEMENTO — PLANEJAMENTO OPERACIONAL ESPECIALIZADO · CFO PM 2026</title>
+<style>
+/* ===== MEMENTO CFO PM 2026 — identidade visual fixa ===== */
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: #fbf9f3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  background: #fbf9f3; color: #2a2620;
+  font-family: "Segoe UI", -apple-system, Arial, sans-serif;
+  font-size: 9.5pt; line-height: 1.42;
+}
+/* ---- Cabeçalho do documento ---- */
+.doc-header {
+  text-align: center; padding: 4mm 0 3mm;
+  border-bottom: 3px double #2a2620; margin-bottom: 5mm;
+}
+.doc-header h1 { font-size: 15pt; letter-spacing: .5px; }
+.doc-header .sub { font-size: 9pt; color: #4a4a4a; margin-top: 1mm; }
+
+/* ---- Tema (um por capítulo; cada tema inicia em nova página) ---- */
+.tema { break-before: page; padding-top: 2mm; }
+.tema:first-of-type { break-before: auto; }
+.tema-header { display: flex; align-items: stretch; gap: 0; margin-bottom: 1.5mm; }
+.tema-num {
+  background: #7d1f2b; color: #fff; font-weight: 800; font-size: 13pt;
+  min-width: 11mm; display: flex; align-items: center; justify-content: center;
+  border-radius: 2px 0 0 2px; padding: 1.5mm 2mm;
+}
+.tema-titulo {
+  background: #a3444f; color: #fff; font-weight: 700; font-size: 11.5pt;
+  flex: 1; display: flex; align-items: center; padding: 1.5mm 3mm;
+  border-radius: 0 2px 2px 0; letter-spacing: .3px;
+}
+.tema-base { font-style: italic; font-size: 8.5pt; color: #4a4a4a; margin: 0 0 3mm 1mm; }
+
+/* Variantes de cor do cabeçalho de tema (usar conforme a natureza dominante) */
+.tema-header.azul .tema-num { background: #1f4e79; } .tema-header.azul .tema-titulo { background: #4a749c; }
+.tema-header.verde .tema-num { background: #2e6b3e; } .tema-header.verde .tema-titulo { background: #578964; }
+.tema-header.dourado .tema-num { background: #9a7b16; } .tema-header.dourado .tema-titulo { background: #b39a4a; }
+.tema-header.cinza .tema-num { background: #4a4a4a; } .tema-header.cinza .tema-titulo { background: #757575; }
+
+/* ---- 1. Caixas coloridas ---- */
+.caixa { border-radius: 3px; padding: 2.2mm 3mm; margin-bottom: 2.6mm; break-inside: avoid; border-left: 3.5px solid; }
+.caixa .caixa-titulo { font-weight: 800; font-size: 9.5pt; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1mm; }
+.caixa p { margin-bottom: 1mm; } .caixa p:last-child { margin-bottom: 0; }
+.caixa ul, .caixa ol { padding-left: 5mm; } .caixa li { margin-bottom: .6mm; }
+.caixa.def     { background: #e8eef5; border-color: #1f4e79; } .caixa.def .caixa-titulo     { color: #1f4e79; }
+.caixa.atencao { background: #e9f2ea; border-color: #2e6b3e; } .caixa.atencao .caixa-titulo { color: #2e6b3e; }
+.caixa.prazo   { background: #f7f1dd; border-color: #9a7b16; } .caixa.prazo .caixa-titulo   { color: #9a7b16; }
+.caixa.fase    { background: #f6e8ea; border-color: #7d1f2b; } .caixa.fase .caixa-titulo    { color: #7d1f2b; }
+.caixa.neutra  { background: #efefef; border-color: #4a4a4a; } .caixa.neutra .caixa-titulo  { color: #4a4a4a; }
+
+/* ---- 2. Fluxo vertical com setas (ritos, etapas, ciclos) ---- */
+.fluxo-v { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-v .fv-titulo { font-weight: 800; font-size: 9.5pt; color: #7d1f2b; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-v .passo {
+  background: #f6e8ea; border: 1px solid #7d1f2b; border-radius: 3px;
+  padding: 1.6mm 2.6mm; text-align: center;
+}
+.fluxo-v .passo b { color: #7d1f2b; }
+.fluxo-v .seta { text-align: center; color: #7d1f2b; font-size: 10pt; line-height: 1.1; padding: .4mm 0; }
+.fluxo-v.azul .passo { background: #e8eef5; border-color: #1f4e79; } .fluxo-v.azul .seta, .fluxo-v.azul .fv-titulo, .fluxo-v.azul .passo b { color: #1f4e79; }
+
+/* ---- 3. Fluxo horizontal inline (categorias/espécies) ---- */
+.fluxo-h { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-h .fh-titulo { font-weight: 800; font-size: 9.5pt; color: #4a4a4a; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-h .linha { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2mm; }
+.fluxo-h .item {
+  background: #efefef; border: 1px solid #4a4a4a; border-radius: 3px;
+  padding: 1.2mm 2.4mm; font-size: 9pt; font-weight: 600;
+}
+.fluxo-h .seta-h { color: #4a4a4a; font-weight: 700; }
+
+/* ---- 4. Mnemônico ---- */
+.mnemo {
+  border: 2px dashed #9a7b16; background: #f7f1dd; border-radius: 4px;
+  padding: 2.4mm 3mm; margin-bottom: 2.6mm; break-inside: avoid;
+}
+.mnemo .palavra { font-size: 14pt; font-weight: 900; color: #9a7b16; letter-spacing: 1.5px; text-align: center; margin-bottom: 1.2mm; }
+.mnemo .exp { font-size: 9pt; }
+.mnemo .exp b { color: #9a7b16; }
+
+/* ---- 5. Tabela comparativa ---- */
+table.comp { width: 100%; border-collapse: collapse; margin-bottom: 2.6mm; break-inside: avoid; font-size: 8.8pt; }
+table.comp th { background: #4a4a4a; color: #fff; padding: 1.4mm 2mm; text-align: left; font-size: 8.8pt; }
+table.comp td { border: 1px solid #b9b4aa; padding: 1.3mm 2mm; vertical-align: top; background: #fffdf8; }
+table.comp tr:nth-child(even) td { background: #f4f1e9; }
+table.comp td:first-child { font-weight: 700; }
+
+/* ---- 6. Discursiva com espelho ---- */
+.discursiva { border: 1.5px solid #1f4e79; border-radius: 4px; margin-bottom: 2.6mm; break-inside: avoid; }
+.discursiva .enunciado { background: #1f4e79; color: #fff; padding: 2mm 3mm; font-weight: 600; }
+.discursiva .enunciado::before { content: "QUESTÃO DISCURSIVA — "; font-weight: 800; }
+.discursiva .espelho { padding: 2.2mm 3mm; background: #fffdf8; }
+.discursiva .espelho .esp-titulo { font-weight: 800; color: #1f4e79; text-transform: uppercase; font-size: 9pt; margin-bottom: 1mm; }
+.discursiva .espelho ul { padding-left: 5mm; } .discursiva .espelho li { margin-bottom: .6mm; }
+
+/* util */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; margin-bottom: 2.6mm; }
+.grid2 > * { margin-bottom: 0; }
+b.azul { color: #1f4e79; } b.borg { color: #7d1f2b; } b.verde { color: #2e6b3e; } b.ouro { color: #9a7b16; }
+</style>
+</head>
+<body>
+<div class="doc-header">
+  <h1>MEMENTO — PLANEJAMENTO OPERACIONAL ESPECIALIZADO · CFO PM 2026</h1>
+  <div class="sub">Apostila da disciplina "Planejamento Operacional Especializado – CFO PM 2024" — APMP / PMPE</div>
+</div>
+
+<!-- ============ TEMA 1 ============ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">1</div>
+    <div class="tema-titulo">CONCEITOS BÁSICOS DO POLICIAMENTO OSTENSIVO</div>
+  </div>
+  <div class="tema-base">Base legal: Constituição Federal de 1988 (art. 5º, art. 42, art. 144); Constituição Estadual de 1989 (arts. 101, 102 e 105).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Constituição Federal — conceito</div>
+    <p>Conjunto de normas, fixando a estrutura fundamental do Estado, determinando as funções e competência de seus órgãos principais, estabelecendo os processos de designação dos governantes e declarando os direitos essenciais das pessoas e suas respectivas garantias. É a <b class="azul">lei reguladora ou suprema de um país</b>.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Art. 5º da CF — incisos destacados na apostila</div>
+    <ul>
+      <li><b>I</b> — homens e mulheres são iguais em direitos e obrigações;</li>
+      <li><b>XV</b> — é livre a locomoção no território nacional em tempo de paz;</li>
+      <li><b>XXXIII</b> — direito a receber dos órgãos públicos informações de interesse particular, coletivo ou geral, ressalvado o sigilo imprescindível à segurança da sociedade e do Estado;</li>
+      <li><b>XL</b> — a lei penal não retroagirá, salvo para beneficiar o réu;</li>
+      <li><b>XLI</b> — a lei punirá qualquer discriminação atentatória dos direitos e liberdades fundamentais;</li>
+      <li><b>XLII</b> — racismo: crime <b class="azul">inafiançável e imprescritível</b>, sujeito a reclusão (nota da apostila: ADO 26 "equiparou homofobia e transfobia");</li>
+      <li><b>XLIII</b> — tortura, tráfico ilícito de entorpecentes, terrorismo e crimes hediondos: <b class="azul">inafiançáveis e insuscetíveis de graça ou anistia</b>;</li>
+      <li><b>XLIV</b> — ação de grupos armados, civis ou militares, contra a ordem constitucional e o Estado Democrático: crime <b class="azul">inafiançável e imprescritível</b>;</li>
+      <li><b>LXI</b> — ninguém será preso senão em flagrante delito ou por ordem escrita e fundamentada de autoridade judiciária competente, salvo transgressão militar ou crime propriamente militar.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Poder de Polícia — conceito</div>
+    <p>Um dos poderes administrativos: <b class="azul">faculdade de que dispõe a administração pública para o controle dos direitos e liberdades das pessoas</b>, naturais ou jurídicas, inspirado nos ideais do <b class="azul">bem COMUM</b>.</p>
+  </div>
+
+  <div class="mnemo">
+    <div class="palavra">D.A.C</div>
+    <div class="exp">Atributos do poder de polícia (não se confundem com o modo de atuação!): <b>D</b>iscricionariedade — aferir e valorar a atividade policiada segundo conveniência, oportunidade e justiça, nos limites da lei; <b>A</b>uto-executoriedade — o ato de polícia independe de prévia aprovação/autorização do Poder Judiciário; <b>C</b>oercibilidade — o ato de polícia é imperativo, admitindo emprego de força (sem descambar para o arbítrio/violência/excesso).</div>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Modos de atuar (fases) do Poder de Polícia</div>
+    <div class="passo"><b>1) Ordem de polícia</b> — preceito pelo qual o Estado impõe limitação às pessoas, para que não se faça o que prejudica o bem comum ou não se deixe de fazer o que evitaria prejuízo público</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2) Consentimento de polícia</b> — controle prévio do Estado, compatibilizando interesse particular e público; manifesta-se pela <b>licença</b> (vinculada a um direito) ou pela <b>autorização</b> (discricionária e revogável a qualquer tempo)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3) Fiscalização de polícia</b> — verificação, de ofício ou provocada, do cumprimento das ordens e consentimentos; dupla utilidade: prevenção e repressão. Em matéria de ordem pública recebe o nome de <b>POLICIAMENTO</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4) Sanção de polícia</b> — intervenção punitiva do Estado para reprimir a infração; em ofensa à ordem pública, é o constrangimento pessoal, direto e imediato, na justa medida para restabelecê-la</div>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Polícia Militar</div>
+      <p>Instituição Pública, organizada com base na <b class="azul">hierarquia e disciplina</b>, incumbida da preservação da ordem pública e da polícia ostensiva, nos Estados, Territórios e DF (CF, art. 42; CE/89, art. 105: à PM cabe <b class="azul">com exclusividade</b> a polícia ostensiva e a preservação da ordem pública).</p>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Segurança Pública</div>
+      <p>Estado antidelitual, de valor comunitário, que resulta da observância dos preceitos da legislação penal — pode resultar de ações preventivas, repressivas ou da simples ausência (mesmo temporária) de delitos. É <b class="azul">aspecto da ordem pública</b> e tem nesta seu objeto. A comunidade tem direito e responsabilidade pela segurança pública (CE/89, art. 101).</p>
+    </div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Ordem Pública — conceituação (importante)</div>
+    <p>Situação de <b class="azul">tranquilidade e normalidade</b> que o Estado deve assegurar às instituições e a todos os membros da sociedade, consoante as normas jurídicas. Existe quando garantidos os direitos individuais, a estabilidade das instituições, o regular funcionamento dos serviços públicos e a moralidade pública. É sempre uma <b class="azul">noção de valor nacional</b>, composta por 3 aspectos:</p>
+    <ul>
+      <li><b>Tranquilidade pública</b> — clima de convivência pacífica e bem-estar social; "a paz pública nas ruas";</li>
+      <li><b>Salubridade pública</b> — situação favorável às condições de vida;</li>
+      <li><b>Segurança pública</b> — estado de normalidade que permite o usufruto de direitos e o cumprimento de deveres.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa fase">
+      <div class="caixa-titulo">Preservação da Ordem Pública — 2 fases</div>
+      <ul>
+        <li><b class="borg">Normalidade</b> — assegurada mediante ações <b>preventivas</b>, com atitudes dissuasivas;</li>
+        <li><b class="borg">Anormalidade</b> (ordem pública ofendida) — restabelecida mediante ações <b>repressivas imediatas</b>, com atitudes de contenção.</li>
+      </ul>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Defesa Pública</div>
+      <p>Conjunto de atitudes, medidas e ações adotadas para garantir o cumprimento das leis, de modo a evitar, impedir ou eliminar a prática de atos que perturbem a ordem pública.</p>
+    </div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Policiamento Ostensivo (IMPORTANTE)</div>
+    <p>São <b class="azul">ações de fiscalização de polícia, sobre matéria de ordem pública</b>, em cujo emprego o homem ou a fração de tropa sejam <b class="azul">identificados de relance</b>, quer pela farda, quer pelo equipamento, armamento ou viatura.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Polícia Ostensiva — perfil</div>
+    <p>Denominação brasileira que evoluiu de "policiamento ostensivo", ganhando dignidade constitucional com a Carta de 1988. Perfil:</p>
+    <ul>
+      <li>atua <b>preventivamente</b> para assegurar a ordem pública;</li>
+      <li>atua <b>repressivamente</b> para restabelecer a ordem pública (nas infrações penais comuns, limita-se à <b class="azul">repressão imediata</b> — atendimento da ocorrência, incluído o estado de flagrância);</li>
+      <li>compreende os <b>quatro modos de atuar</b> do poder de polícia;</li>
+      <li>possui <b>investidura militar</b>;</li>
+      <li>exerce as funções de força policial nos termos da lei;</li>
+      <li>exerce as funções de <b>polícia judiciária militar estadual</b> sobre seus componentes;</li>
+      <li>integra-se ao sistema de defesa territorial da Nação como força auxiliar e reserva do Exército.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Tática × Técnica PM (importante)</div>
+      <ul>
+        <li><b>Tática</b> — <b class="azul">arte</b> de empregar a tropa em operações policiais-militares que visam assegurar ou restabelecer a ordem pública;</li>
+        <li><b>Técnica</b> — <b class="azul">conjunto de métodos e procedimentos</b> usados para a execução eficiente das atividades policiais-militares nas ações e operações de preservação da Ordem Pública.</li>
+      </ul>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Local de risco</div>
+      <p>Todo local que, por suas características, apresenta <b class="azul">elevada probabilidade de risco</b> para a ordem pública, especialmente à incolumidade das pessoas e do patrimônio.</p>
+    </div>
+  </div>
+
+  <table class="comp">
+    <tr><th>Espaço físico</th><th>Responsabilidade</th><th>Exemplo</th></tr>
+    <tr><td>Região ou Território</td><td>Comando Regional ou Território de PM</td><td>DIM, DINTER 1 ou DINTER 2</td></tr>
+    <tr><td>Área</td><td>OPM de escalão Batalhão (BPM) ou Regimento de Polícia Montada (RPMont)</td><td>19º BPM</td></tr>
+    <tr><td>Subárea</td><td>Fração de área — Companhia PM (Cia PM) ou Esquadrão de Polícia Montada (Esqd PMont)</td><td>4ª CPM</td></tr>
+    <tr><td>Setor</td><td>Fração de subárea — Pelotão (Pel PM)</td><td>—</td></tr>
+    <tr><td>Subsetor</td><td>Fração de setor — Grupo (Gp PM)</td><td>—</td></tr>
+    <tr><td>Posto</td><td>Espaço físico onde se presume que uma patrulha ou o PM isolado possa cumprir suas atribuições; elaborado a um módulo por processo, modalidade e carga de trabalho</td><td>—</td></tr>
+  </table>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Patrulhar · Itinerário · Posto · Pontos</div>
+    <ul>
+      <li><b>Patrulhar</b> — exercer atividade móvel de observação, fiscalização, proteção, reconhecimento ou, mesmo, de emprego de força;</li>
+      <li><b>Itinerário de patrulhamento</b> — sucessão de pontos, de passagem obrigatória, sujeitos à vigilância por um homem, uma dupla ou maior número de PMs;</li>
+      <li><b>Posto</b> — constituído por um ponto base (PB) ou vários PBs interligados por itinerários; havendo vários PBs, a fração obedece a um <b class="azul">CARTÃO-PROGRAMA</b>. Numeração feita sobre as plantas da cidade, <b>de sul para norte e de oeste para leste</b> (facilita a rápida localização pelos operadores);</li>
+      <li><b>Ponto de estacionamento</b> — local onde a patrulha deve permanecer estacionada quando não atende ocorrência nem patrulha: <b>PEP</b> (Principal) e <b>PES</b> (Secundário).</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa atencao">
+      <div class="caixa-titulo">PBF × PBAC (importante)</div>
+      <p><b>Ponto base</b>: espaço físico que, por ser local de risco, exige a presença da patrulha — <b class="verde">contínua (PBF – Ponto Base Fixo)</b> ou <b class="verde">temporária (PBAC – Ponto Base Atendendo ao CIODS)</b>. Convém que possua iluminação (identificação); quando motorizado, deve permitir deslocamento no mínimo em duas direções.</p>
+    </div>
+    <div class="caixa atencao">
+      <div class="caixa-titulo">Cartão-Programa</div>
+      <p>Representação gráfica do posto: localização dos PBs, itinerários e horários. O cumprimento do horário <b class="verde">OBRIGA</b> o PM a estar por determinado tempo em certos locais e a atender ocorrências nas proximidades; se atender ocorrência fora do posto, registra em Boletim de Ocorrência, justificando o não cumprimento. <b class="verde">Principal requisito: HORÁRIO</b>.</p>
+    </div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Ocorrência × Ação × Operação policial-militar</div>
+    <ul>
+      <li><b>Ocorrência PM</b> — todo fato que exige intervenção policial-militar, por intermédio de ações ou operações;</li>
+      <li><b>Ação PM</b> — desempenho isolado de fração elementar ou constituída, com autonomia para cumprir <b class="azul">missões rotineiras</b> de Policiamento Ostensivo;</li>
+      <li><b>Operação PM</b> — conjugação de ações, executada por fração de tropa constituída, que exige <b class="azul">planejamento específico</b>.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa neutra">
+      <div class="caixa-titulo">Fração elementar × constituída</div>
+      <ul>
+        <li><b>Fração elementar</b> — efetivo de <b>até 3 PM</b> para emprego coordenado;</li>
+        <li><b>Fração constituída</b> — efetivo de tropa com, no mínimo, <b>1 Gp PM</b> (4 ou mais).</li>
+      </ul>
+    </div>
+    <div class="caixa neutra">
+      <div class="caixa-titulo">Sistemas de policiamento</div>
+      <p>Subestruturas de patrulhamento que agem sobre área geográfica comum: <b>a)</b> Forças de Patrulhas Territoriais; <b>b)</b> Forças de Patrulhas Especiais; <b>c)</b> Forças Táticas; <b>d)</b> Forças e Serviços de Apoio.</p>
+    </div>
+  </div>
+
+  <table class="comp">
+    <tr><th>Sistema</th><th>Características</th><th>Exemplos / missões</th></tr>
+    <tr><td>Forças de Patrulhas Territoriais</td><td>BPM e CPA da Capital ou Interior — patrulhamento voltado ao policiamento ostensivo, em seus processos e modalidades, sob comando único na área de responsabilidade territorial</td><td>—</td></tr>
+    <tr><td>Forças de Patrulhas Especiais</td><td>Competência especial em razão da matéria; missões especializadas, no mesmo espaço físico das Territoriais, porém sob comando de policiamento especializado (trabalho rotineiro)</td><td>Policiamento de Trânsito Urbano; Florestal e de mananciais; Trânsito Rodoviário; de Guarda</td></tr>
+    <tr><td>Forças Táticas</td><td>Emprego sem vinculação à área, em missões táticas e eventuais; constituem reservas dos Comandos (situações específicas ou excepcionais)</td><td>Policiamento de choque (ex.: BPChoque); ostensivo geral; patrulhamento tático; policiamento de eventos</td></tr>
+    <tr><td>Forças e Serviços de Apoio</td><td>Órgãos e frações de alto grau de especialização, destinados ao apoio às demais forças</td><td>Apoio aéreo; Informações; Subsistência; Transportes; Guarda Interna; Assuntos Internos; Escolta de Presos</td></tr>
+  </table>
+</div>
+
+<!-- ============ TEMA 2 ============ -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">2</div>
+    <div class="tema-titulo">CARACTERÍSTICAS DO POLICIAMENTO OSTENSIVO</div>
+  </div>
+  <div class="tema-base">Base: capítulo 2 da apostila — aspectos gerais de que se reveste a atividade policial-militar, definindo-lhe o campo de atuação e as razões do desencadeamento. São 05 características.</div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">As 5 características</div>
+    <div class="linha"><span class="item">Ação Pública</span><span class="item">Totalidade</span><span class="item">Dinâmica</span><span class="item">Legalidade</span><span class="item">Ação de Presença</span></div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">2.1 Ação Pública</div>
+    <p>Exercido visando preservar o <b class="azul">interesse geral de segurança pública</b> nas comunidades, resguardando o bem comum em sua maior amplitude. <b>Não se confunde</b> com zeladoria (vigilância particular de bens ou áreas) nem com segurança pessoal de indivíduos sob ameaça — eventual atuação nessas situações é excepcionalidade, não regra.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">2.2 Totalidade</div>
+    <p>Atividade essencialmente dinâmica, com origem na necessidade comum de segurança da comunidade. Desenvolvida sob os aspectos <b class="azul">preventivo e repressivo</b>. Deve fazer frente a toda e qualquer ocorrência: por <b>iniciativa própria</b>, por <b>solicitação</b> ou em razão de <b>determinação</b>. Havendo envolvidos, quando couber, serão encaminhados aos órgãos competentes.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">2.3 Dinâmica</div>
+    <ul>
+      <li>Prioridade ao cumprimento e aperfeiçoamento dos <b>planos de rotina</b>, mantendo íntimo engajamento da tropa com sua circunscrição (conhecimento do terreno e dos hábitos da população) e presença continuada — criando a sensação de segurança que resulta na tranquilidade pública, <b class="azul">objetivo final da manutenção da ordem pública</b>;</li>
+      <li>Operações PM supletivas e esporádicas por <b>saturação</b> — concentração maciça de pessoal e material frente a situação temporária inquietante, sem prejuízo do plano de policiamento;</li>
+      <li>Planejamento deve considerar <b>objetivos globais</b>; o policiamento não deve ser rígido e imutável — deve ser <b class="azul">flexível</b> para adaptar-se às situações anormais.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">2.4 Legalidade (em sentido AMPLO)</div>
+    <p>As atividades desenvolvem-se dentro dos limites que a lei estabelece. O exercício do poder de polícia é <b class="azul">discricionário, mas não arbitrário</b>; seus parâmetros são a própria Lei, em especial os direitos e garantias fundamentais da CF. Mesmo atuando discricionariamente em defesa da moralidade pública e do bem comum, os limites continuam sendo as garantias constitucionais.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">2.5 Ação de Presença (destaque de prova)</div>
+    <p>Manifestação que dá à comunidade a <b class="verde">sensação de segurança</b>, pela certeza de cobertura policial-militar.</p>
+    <ul>
+      <li><b>Ação de presença REAL</b> — presença física do policial militar, agindo por dissuasão nos locais onde a probabilidade de ocorrência seja grande;</li>
+      <li><b>Ação de presença POTENCIAL</b> — capacidade do policiamento ostensivo de, num espaço de tempo mínimo (<b class="verde">tempo de resposta</b>), acorrer a local onde uma ocorrência é iminente ou já se tenha verificado ("curto espaço de tempo para a resposta").</li>
+    </ul>
+    <p>São ações de policiamento ostensivo, entre outras: verificações localizadas de pessoas/instalações; patrulhamento a pé e motorizado; investigações de campo; pronto-socorrismo; fiscalização das normas de trânsito; colaboração no fluxo de trânsito local; atendimento de acidente de trânsito; segurança escolar; prevenção de tumultos.</p>
+  </div>
+</div>
+
+<!-- ============ TEMA 3 ============ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">3</div>
+    <div class="tema-titulo">PRINCÍPIOS DO POLICIAMENTO OSTENSIVO</div>
+  </div>
+  <div class="tema-base">Base: capítulo 3 da apostila — fundamentos a considerar no planejamento e na execução das atividades policiais-militares, visando a eficácia operacional. São 11 princípios.</div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">Os 11 princípios</div>
+    <div class="linha"><span class="item">Universalidade</span><span class="item">Responsabilidade territorial</span><span class="item">Continuidade</span><span class="item">Efetividade</span><span class="item">Aplicação</span><span class="item">Isenção</span><span class="item">Emprego lógico</span><span class="item">Antecipação</span><span class="item">Profundidade</span><span class="item">Unidade de comando</span><span class="item">Objetivo</span></div>
+  </div>
+
+  <table class="comp">
+    <tr><th>Princípio</th><th>Conteúdo essencial</th></tr>
+    <tr><td>3.1 Universalidade</td><td>Preservação da ordem pública em sentido amplo. A especialização não impede o PM de dar tratamento adequado aos diversos tipos de ocorrência: ao PM especializado caberá adotar medidas, ainda que preliminares, em qualquer ocorrência; tarefas específicas não desobrigam o atendimento de outras ocorrências que presencie ou para as quais seja convocado. Os atos de polícia ostensiva ocorrem sempre nas formas preventiva ou repressiva, de polícia administrativa ou judiciária.</td></tr>
+    <tr><td>3.2 Responsabilidade territorial</td><td>Os elementos em comando, com tropa desdobrada no terreno, respondem <b>perante o escalão imediatamente superior</b> pela preservação da ordem pública na circunscrição que lhes estiver afetada; compete-lhes a iniciativa das providências legais e regulamentares para ajustar os meios à missão.</td></tr>
+    <tr><td>3.3 Continuidade</td><td>Atividade essencial, de caráter absolutamente operacional, exercida <b>diuturnamente</b>; a resposta deve estar na estrutura organizacional, nas rotinas de serviço e na mentalidade do PM.</td></tr>
+    <tr><td>3.4 Efetividade</td><td>Otimização dos recursos destinados à PMPE; busca da eficácia operacional com eficiência e constante aprimoramento da produtividade.</td></tr>
+    <tr><td>3.5 Aplicação</td><td>Atividade facilmente identificada pelo uniforme — exige atenção e atuação ativa, desestimulando atos antissociais pela atuação preventiva. Omissão, desinteresse e apatia geram descrédito e desconfiança. O PM deve estar o mais próximo possível da comunidade onde serve.</td></tr>
+    <tr><td>3.6 Isenção</td><td>Atuar sem demonstrar emoções ou concepções pessoais; sem preconceitos de profissão, nível social, religião, raça, condição econômica ou posição política; agir com <b>imparcialidade e impessoalidade</b>.</td></tr>
+    <tr><td>3.7 Emprego lógico</td><td>Disposição de meios como resultado de julgamento criterioso das necessidades, escalonadas em prioridades, com dosagem do efetivo e material e conceito de operação claro, em esquemas exequíveis; distribuição conforme necessidades, evitando atendimento preferencial; emprego integrado e coordenado sob um único Comando racionaliza recursos.</td></tr>
+    <tr><td>3.8 Antecipação</td><td>Providências táticas e técnicas para <b>minimizar a surpresa</b>, face à evolução da criminalidade; o sucesso exige <b>informações de natureza administrativa e criminal</b>, base do planejamento adequado.</td></tr>
+    <tr><td>3.9 Profundidade</td><td>Cobertura de locais de risco não ocupados e/ou reforço a pessoal empenhado, ordenadamente: emprego judicioso da <b>reserva</b>, remanejamento dos recursos imediatos ou progressivo e crescente apoio. A <b>supervisão e coordenação</b> por oficiais e graduados também integram o princípio (corrigem distorções e elevam o moral).</td></tr>
+    <tr><td>3.10 Unidade de comando</td><td>Em eventos que exijam diferentes unidades, a missão é melhor cumprida com <b>um só comandante</b> para a operação — unidade de esforço pela aplicação coordenada de todos os meios.</td></tr>
+    <tr><td>3.11 Objetivo</td><td><b>Assegurar ou restabelecer a ordem pública</b>, por meio de ações e operações, integradas ou isoladas, com aspectos particulares definidos.</td></tr>
+  </table>
+</div>
+
+<!-- ============ TEMA 4 ============ -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">4</div>
+    <div class="tema-titulo">VARIÁVEIS DO POLICIAMENTO OSTENSIVO</div>
+  </div>
+  <div class="tema-base">Base: capítulo 4 da apostila — critérios que identificam os aspectos principais da execução do policiamento ostensivo fardado. São 10 variáveis.</div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">As 10 variáveis</div>
+    <div class="linha"><span class="item">Tipo</span><span class="item">Processo</span><span class="item">Modalidade</span><span class="item">Circunstância</span><span class="item">Lugar</span><span class="item">Número (efetivo)</span><span class="item">Forma</span><span class="item">Tempo (duração)</span><span class="item">Suplementação</span><span class="item">Desempenho</span></div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Tipos de policiamento ostensivo — são 04 (qualificadores das ações e operações)</div>
+    <ul>
+      <li><b>Policiamento ostensivo geral</b> — satisfaz as necessidades básicas de segurança inerentes a qualquer comunidade ou cidadão;</li>
+      <li><b>Policiamento de trânsito urbano ou rodoviário</b> — em vias terrestres abertas à livre circulação, para disciplinar o público no cumprimento das regras de trânsito (Código Nacional de Trânsito e legislação pertinente);</li>
+      <li><b>Policiamento florestal e de mananciais</b> — preserva fauna, recursos florestais, extensões d'água e mananciais contra caça/pesca ilegais, derrubada indevida e poluição; em cooperação com órgãos competentes (Batalhão de Polícia Ambiental – BPA);</li>
+      <li><b>Policiamento de guarda</b> — guarda de aquartelamentos, segurança externa de estabelecimentos penais, segurança física das sedes dos poderes estaduais e repartições de importância, e escolta de presos fora dos estabelecimentos penais. Todas as unidades fazem policiamento de guarda, mas há unidade especializada (BPGd).</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Processos — meios de locomoção</div>
+    <p>1) a pé; 2) motorizado; 3) montado; 4) aéreo; 5) em embarcação; 6) em bicicleta. A análise dos fatores propicia a escolha das variáveis que conduzem à eficácia operacional:</p>
+    <ul>
+      <li><b>Fatores determinantes</b> — tipicidade, gravidade e incidência de ocorrências PM, presumíveis ou existentes;</li>
+      <li><b>Fatores componentes</b> — custos, espaços a cobrir, mobilidade, possibilidade de contato direto (conhecimento do local e relacionamento), autonomia, facilidade de fiscalização e controle, flexibilidade e proteção ao PM;</li>
+      <li><b>Fatores condicionantes</b> — local de atuação; características físicas e psicossociais; clima; dia da semana; horário; disponibilidade de recursos.</li>
+    </ul>
+  </div>
+
+  <table class="comp">
+    <tr><th>Fator componente</th><th>A pé</th><th>Montado</th><th>Automóvel</th></tr>
+    <tr><td>Custos</td><td>Mn</td><td>Md</td><td>Mx</td></tr>
+    <tr><td>Espaços a serem cobertos</td><td>Mn</td><td>Md</td><td>Mx</td></tr>
+    <tr><td>Mobilidade</td><td>Mn</td><td>Md</td><td>Mx</td></tr>
+    <tr><td>Conhecimento do local</td><td>Mx</td><td>Gr</td><td>Mn</td></tr>
+    <tr><td>Relacionamento</td><td>Mx</td><td>Md</td><td>Mn</td></tr>
+    <tr><td>Autonomia</td><td>Mn</td><td>Md</td><td>Mx</td></tr>
+    <tr><td>Fiscalização e controle</td><td>Mn</td><td>Md</td><td>Mx</td></tr>
+    <tr><td>Flexibilidade</td><td>Mx</td><td>Md</td><td>Mn</td></tr>
+    <tr><td>Proteção do PM</td><td>Mn</td><td>Gr</td><td>Mx</td></tr>
+  </table>
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Legenda e observação do quadro</div>
+    <p><b>Mx</b> – máximo; <b>Gr</b> – grande; <b>Md</b> – médio; <b>Pe</b> – pequeno; <b>Mn</b> – mínimo. O quadro original também compara <b>Moto</b> e <b>Bicicleta</b>. Obs. da apostila: nenhuma variável, em si, pode ser tomada como a melhor ou mais eficaz — o pleno rendimento operacional vem da <b>associação de processos, modalidades, números e duração</b>.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Modalidades — modos peculiares de execução</div>
+    <ul>
+      <li><b>Patrulhamento</b> — atividade móvel de observação, fiscalização, reconhecimento, proteção ou, mesmo, de emprego de força; a patrulha deve ser o centro de atenção do desenvolvimento tecnológico da PM (atender o usuário onde ele se encontra);</li>
+      <li><b>Permanência</b> — atividade predominantemente estática, pelo PM isolado ou não, em local de risco ou posto fixo, dentro do módulo, preferencialmente com possibilidade de comunicação;</li>
+      <li><b>Diligência</b> — busca e apreensão de objetos e/ou busca e captura de pessoas em flagrante delito ou mediante mandado judicial;</li>
+      <li><b>Escolta</b> — custódia de pessoas ou bens, em deslocamento.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Circunstâncias (IMPORTANTE) — frequência com que o policiamento é exigido</div>
+    <ul>
+      <li><b>Ordinário</b> — emprego <b class="azul">rotineiro</b> de meios operacionais em obediência a um plano sistemático, que contém a escala de prioridades;</li>
+      <li><b>Extraordinário</b> — emprego <b class="azul">eventual e temporário</b>, face a acontecimento <b>imprevisto</b> que exige manobra de recursos (ex.: crise, enchente, motivos de força maior);</li>
+      <li><b>Especial</b> — emprego <b class="azul">temporário</b> em eventos <b>previsíveis</b> que exijam esforço específico (ex.: São João, Eleição, Final do Campeonato PE, Galo da Madrugada).</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Lugar</div>
+      <ul>
+        <li><b>Urbano</b> — áreas edificadas e de maior concentração populacional dos municípios;</li>
+        <li><b>Rural</b> — áreas de ocupação extensiva, fora dos limites da área urbana municipal.</li>
+      </ul>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Forma — disposição da tropa no terreno</div>
+      <ul>
+        <li><b>Desdobramento</b> — distribuição das UOp no terreno, articuladas até o nível Gp PM, com limites de responsabilidade perfeitamente definidos;</li>
+        <li><b>Escalonamento</b> — grau de responsabilidade dos sucessivos e distintos níveis da cadeia de comando, no seu espaço físico (hierarquização).</li>
+      </ul>
+    </div>
+  </div>
+
+  <table class="comp">
+    <tr><th>Número (efetivo empenhado)</th><th>Faixa</th></tr>
+    <tr><td>Fração elementar</td><td>1 PM (ex.: sentinela), 2 PM ou 3 PM</td></tr>
+    <tr><td>Gp PM</td><td>até 20</td></tr>
+    <tr><td>Pel PM</td><td>de 20 a 80 (Destacamento = parte do Pelotão)</td></tr>
+    <tr><td>Cia PM – Esq</td><td>de 80 a 250</td></tr>
+    <tr><td>BPM – RPMon</td><td>de 300 a 1000 PPMM</td></tr>
+  </table>
+
+  <div class="caixa prazo">
+    <div class="caixa-titulo">Tempo — duração do empenho diário</div>
+    <ul>
+      <li><b>Jornada</b> — período equivalente às <b class="ouro">24 horas do dia</b> em que se desenvolvem as atividades de Policiamento Ostensivo;</li>
+      <li><b>Turno</b> — fração da jornada com período previamente determinado. Turnos de serviço: <b class="ouro">06h, 08h, 12h ou 24h</b>.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Suplementação</div>
+      <p>Utensílios ou semoventes utilizáveis na atividade-fim: <b>a)</b> cão; <b>b)</b> rádio transceptor; <b>c)</b> armamento e equipamento peculiares; <b>d)</b> outros.</p>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Desempenho</div>
+      <ul>
+        <li><b>Atividade Linha</b> — emprego diretamente relacionado com o público, na atividade-fim do Policiamento Ostensivo;</li>
+        <li><b>Atividade Auxiliar</b> — emprego em apoio <b class="azul">IMEDIATO</b> ao PM em atividade linha (não confundir com o apoio <b>MEDIATO</b>, próprio da atividade-meio).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TEMA 5 ============ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">5</div>
+    <div class="tema-titulo">ÓRGÃOS DO SISTEMA DE SEGURANÇA PÚBLICA</div>
+  </div>
+  <div class="tema-base">Base legal: CF/88, art. 144 (com EC nº 104/2019); Lei estadual nº 11.629/1999 (SDS); Lei nº 6.657/1974 (Polícia Científica); Lei nº 12.853/2005 (data magna da Polícia Civil).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Art. 144, CF — rol de órgãos da segurança pública</div>
+    <p>Segurança pública: <b class="azul">dever do Estado, direito e responsabilidade de todos</b>, exercida para a preservação da ordem pública e da incolumidade das pessoas e do patrimônio, através de: <b>I</b> – polícia federal; <b>II</b> – polícia rodoviária federal; <b>III</b> – polícia ferroviária federal; <b>IV</b> – polícias civis; <b>V</b> – polícias militares e corpos de bombeiros militares; <b>VI</b> – polícias penais federal, estaduais e distrital (EC nº 104/2019).</p>
+    <ul>
+      <li><b>§ 4º</b> — polícias civis, dirigidas por delegados de carreira: polícia judiciária e apuração de infrações penais, exceto as militares (ressalvada a competência da União);</li>
+      <li><b>§ 5º</b> — polícias militares: polícia ostensiva e preservação da ordem pública; corpos de bombeiros: atividades de defesa civil;</li>
+      <li><b>§ 6º</b> — PMs e CBMs, forças auxiliares e reserva do Exército, subordinam-se, com as polícias civis e as polícias penais, aos Governadores (EC nº 104/2019);</li>
+      <li><b>§ 8º</b> — Municípios poderão constituir guardas municipais para proteção de seus bens, serviços e instalações;</li>
+      <li><b>§ 10</b> — segurança viária: educação, engenharia e fiscalização de trânsito; compete aos órgãos executivos e agentes de trânsito, em carreira (EC nº 82/2014).</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Pegadinhas do rol</div>
+    <ul>
+      <li>A <b class="verde">Polícia Científica NÃO está no rol</b> do art. 144;</li>
+      <li>A Polícia Penal foi inserida no rol pela <b class="verde">EC nº 104/2019</b> (até 2019, a nomenclatura era "agente penitenciário");</li>
+      <li>A SERES não integra a SDS (nota da apostila: criou-se a SEAP — Secretaria de Estado subordinada diretamente à governadora).</li>
+    </ul>
+  </div>
+
+  <table class="comp">
+    <tr><th>Órgão</th><th>Pontos cobráveis</th></tr>
+    <tr><td>Polícia Militar (PMPE)</td><td>Função primordial: policiamento ostensivo e preservação da ordem pública. Força Auxiliar e reserva do Exército; órgão operativo da SDS. Criada por <b>Decreto Imperial de 11 de junho de 1825 (D. Pedro I)</b>, em decorrência da <b>Confederação do Equador</b> (1824, sufocada pelo Brigadeiro Lima e Silva; entre os executados, Frei Caneca). Efetivo inicial: 320 homens — Estado-Maior, 1 Companhia de Cavalaria e 2 de Infantaria.</td></tr>
+    <tr><td>Polícia Civil</td><td>Polícia judiciária e apuração das infrações penais, exceto militares (art. 144, § 4º). Origem: Decreto do Governo Provisório de <b>13 de abril de 1817</b> (Tribunal de Polícia); data magna: 13 de abril (Lei nº 12.853/2005); patrono: <b>Felipe Néri Ferreira</b>. Lei nº 11.629/1999 criou a <b>SDS</b> (1º titular: Gen Bda Adalberto Bueno da Cruz), subordinando PC, PM e CBM. Dirigida por <b>Chefe de Polícia</b>, delegado de carreira nomeado pelo Governador (1ª mulher: Delegada Olga Maria de Almeida Câmara, 2001).</td></tr>
+    <tr><td>Corpo de Bombeiros Militar</td><td>Missão primordial: defesa civil, prevenção e combate a incêndios, buscas, salvamentos e socorros públicos. Força Auxiliar e Reserva do Exército; órgão operativo da SDS. Instituído em <b>23/09/1887</b>; aniversário em <b>20 de outubro</b> (posse do Cap Joaquim José de Aguiar). Emancipado da PM pela <b>Emenda nº 04/1994 da CE/89</b>.</td></tr>
+    <tr><td>Polícia Federal</td><td>Subordinada ao Ministério da Justiça. Art. 144, § 1º: <b>a)</b> apurar infrações contra a ordem política e social ou em detrimento de bens/serviços/interesses da União, e infrações de repercussão interestadual ou internacional; <b>b)</b> prevenir e reprimir tráfico ilícito de entorpecentes, contrabando e descaminho; <b>c)</b> polícia marítima, aeroportuária e de fronteiras; <b>d)</b> <b>com exclusividade</b>, polícia judiciária da União. Origem: Intendência-Geral de Polícia (D. João VI, 10/05/1808); DFSP: Decreto-Lei nº 6.378/1944. Estrutura: Superintendências, Delegacias e Postos avançados.</td></tr>
+    <tr><td>Polícia Rodoviária Federal</td><td>Integrada ao Sistema Nacional de Segurança Pública em 1988: <b>patrulhamento ostensivo das rodovias federais</b>. Desde 1991 no Ministério da Justiça. Atribuições definidas pelo <b>CTB</b> (polícia de trânsito) e <b>Decreto 1.655/95</b> (combate ao crime). Não é instituição militar; cargo dividido em 4 classes (Agente, Agente Operacional, Agente Especial e Inspetor). Pioneira no uso do calibre .40 S&W. Lei nº 11.705/2008: fiscalização de estabelecimentos com acesso às vias federais (venda de bebidas alcoólicas).</td></tr>
+    <tr><td>Polícia Ferroviária Federal</td><td>Policiamento ostensivo das ferrovias federais (art. 144, § 3º). Criada em <b>1852, por decreto de D. Pedro II</b> — <b>primeira corporação policial especializada do país</b>. Efetivo reduzido de 3.200 para ~1.200 com a privatização das ferrovias (1996).</td></tr>
+    <tr><td>Sistema Penitenciário (SERES)</td><td>Secretaria Executiva de Ressocialização: controla e mantém o sistema penitenciário, com guarda e administração dos estabelecimentos prisionais, buscando a ressocialização. Código Penitenciário do Estado: Lei nº 7.698/1978. SUSIPE → DISIPE → SUSIPE → <b>Seres</b> (LC nº 049/2003 e Decreto nº 25.287/2003), órgão integrante da <b>SJDH</b>. Administra 21 estabelecimentos penais e 58 cadeias públicas (mais de 30 mil reclusos).</td></tr>
+    <tr><td>Polícia Penal</td><td>Inserida no rol da segurança pública pela <b>EC nº 104/2019</b>. Foco exclusivo no sistema penitenciário: segurança interna dos presídios (rebeliões, fugas, conflitos), escolta de presos para audiências e atividades externas, normas internas de ordem e disciplina.</td></tr>
+    <tr><td>Poder Judiciário (TJPE)</td><td>52 desembargadores; sede no Recife, jurisdição em todo o Estado (competência: art. 61 da CE). Processa e julga originariamente, nos crimes comuns e de responsabilidade: vice-governador, secretários de Estado, juízes e membros do MP; apenas nos crimes comuns: deputados estaduais. Criado pelo alvará de <b>6 de fevereiro de 1821 (D. João VI)</b> como Tribunal da Relação de Pernambuco.</td></tr>
+    <tr><td>Ministério Público</td><td>Instituição permanente, essencial à função jurisdicional: defesa da ordem jurídica, do regime democrático e dos interesses sociais e individuais indisponíveis (art. 127, CF). Princípios institucionais: <b>unidade, indivisibilidade e independência funcional</b>. Funções: promover privativamente a ação penal pública; inquérito civil e ação civil pública; <b>controle externo da atividade policial</b>. Chefia: Procurador-Geral de Justiça (lista tríplice → Governador; mandato de 2 anos, permitida uma recondução). Garantias: <b>vitaliciedade</b> (após 2 anos), <b>inamovibilidade</b> e <b>irredutibilidade de subsídio</b>.</td></tr>
+    <tr><td>Polícia Científica</td><td>Criada pela <b>Lei nº 6.657, de 07/01/1974</b>: médicos legistas, peritos criminais, datiloscopistas, auxiliares de legistas e de peritos. Composta por: <b>Instituto de Medicina Legal, Instituto de Criminalística e Instituto de Identificação Tavares Buril</b>. A <b>GGPOC</b> (Gerência Geral da Polícia Científica), órgão de direção geral e apoio executivo, subordinada diretamente ao titular da SDS, coordena perícias e identificação papiloscópica (nota da apostila: está dentro do organograma da Polícia Civil, apesar de seu gerente subordinar-se diretamente à SDS).</td></tr>
+  </table>
+</div>
+
+<!-- ============ TEMA 6 ============ -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">6</div>
+    <div class="tema-titulo">DESDOBRAMENTO DA PMPE — DPO E DIRETORIAS TERRITORIAIS (DIM, DINTER I e II)</div>
+  </div>
+  <div class="tema-base">Base legal: Lei nº 15.186, de 12 de dezembro de 2013 (criação da DIM, DINTER I, DINTER II e DIRESP); Lei nº 13.458/2008 (CPS-II).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">DPO — Diretoria de Planejamento Operacional</div>
+    <p>Diretamente subordinada ao <b class="azul">Subcomando Geral</b>. Missão precípua: coordenar as ações das diretorias subordinadas (<b>DIM, DIRESP, DINTER I, DINTER II e DASDH</b>) visando à Garantia da Ordem Pública. Competências: análise operacional; prover meios (efetivo e material); reuniões de planejamento; ativar o <b>CICCR</b> (Centro Integrado de Comando e Controle Regional); diretrizes das operações de grande repercussão; hipotecas de efetivo; distribuição de efetivo/diárias do calendário turístico (com a 6ª EMG); gerenciar cotas do <b>PJES</b>; diretrizes de apoio ao cumprimento de mandados judiciais.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Composição da DPO</th><th>Responsabilidade</th></tr>
+    <tr><td>CPO – Coord. de Planejamento Operacional</td><td>Demandas de planejamento das ações de segurança das OME subordinadas (diretrizes, reuniões, análise de Ordens de Serviço/Operações); coordena o núcleo de monitoramento de viaturas (desde junho de 2017)</td></tr>
+    <tr><td>CAA – Coord. de Apoio Administrativo</td><td>Aporte administrativo às diretorias/OME; gerenciamento de todo o efetivo (hipotecas conforme a magnitude dos eventos); distribuição de diárias e PJES; logística junto à DGA</td></tr>
+    <tr><td>CAE – Coord. de Assuntos Especiais</td><td>Assessoramento jurídico ao Diretor; apoio às demandas judiciais de ação policial em cumprimento de mandados (principalmente reintegração de posse)</td></tr>
+    <tr><td>CAD – Coord. de Análise de Dados</td><td>Coleta de informações e transformações estatísticas relevantes ao serviço operacional</td></tr>
+  </table>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">DIM — Diretoria Integrada Metropolitana</div>
+    <p>Criada pela Lei nº 15.186/2013 (DOE nº 237, de 13/12/2013); integra o Sistema de Segurança Pública e Defesa Social da SDS/PE. Sediada no prédio do Comando Geral da PMPE (Rua Amaro Bezerra, Derby, Recife). Coordena as unidades da Região Metropolitana do Recife (RMR).</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>AIS</th><th>OME</th><th>Denominação histórica / responsabilidade</th></tr>
+    <tr><td>AIS 1</td><td>16º BPM</td><td>Batalhão Frei Caneca — bairros centrais do Recife (Santo Antônio, São José, Cabanga, Joana Bezerra etc.); segurança do Galo da Madrugada</td></tr>
+    <tr><td>AIS 2</td><td>13º BPM</td><td>Batalhão Cel PM João Nunes — Campo Grande, Espinheiro, Encruzilhada, Madalena, Arruda etc.</td></tr>
+    <tr><td>AIS 3</td><td>19º BPM</td><td>Batalhão André Vidal de Negreiros — Boa Viagem, Pina, Imbiribeira, Ibura etc. (4 companhias)</td></tr>
+    <tr><td>AIS 4</td><td>12º BPM</td><td>Batalhão Arraial Novo do Bom Jesus — Várzea, Afogados, Jardim São Paulo, Curado etc.</td></tr>
+    <tr><td>AIS 5</td><td>11º BPM</td><td>Batalhão 17 de Agosto (Batalha de Casa Forte, 1645) — Apipucos, Casa Amarela, Casa Forte etc.</td></tr>
+    <tr><td>AIS 6</td><td>6º BPM e 25º BPM</td><td>6º: Batalhão Henrique Dias — Prazeres, Piedade, Candeias (Jaboatão); 25º: Cel PM Cláudio Galdino da Silva — Moreno + 12 bairros de Jaboatão</td></tr>
+    <tr><td>AIS 7</td><td>1º BPM</td><td>Batalhão Duarte Coelho — criado em 11/06/1825 (D. Pedro I), embrião da Instituição; Olinda</td></tr>
+    <tr><td>AIS 8</td><td>17º BPM e 26º BPM</td><td>17º: Batalhão General Abreu e Lima — Paulista; 26º: Batalhão 1º Sgt PM José Mariano Pimentel Neto — Araçoiaba, Igarassu, Itamaracá e Itapissuma (3 companhias)</td></tr>
+    <tr><td>AIS 9</td><td>20º BPM</td><td>Batalhão Cel PM Olinto de Melo Viana — São Lourenço da Mata e Camaragibe</td></tr>
+    <tr><td>AIS 10</td><td>18º BPM</td><td>Batalhão Cel PM Agenor Cavalcanti — Cabo de Santo Agostinho e Ipojuca</td></tr>
+  </table>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">DINTER I — Diretoria Integrada do Interior I</div>
+    <p>Criada pela Lei nº 15.186/2013. Missão: policiamento ostensivo e preservação da ordem pública nas áreas do <b class="azul">Agreste e da Mata Pernambucana</b>. Sede em <b>Caruaru</b>. Coordena <b>14 unidades operacionais</b> (batalhões e companhias independentes), <b>109 municípios</b> em <b>08 áreas integradas de segurança</b> (AIS 11 a 18).</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>AIS</th><th>Unidades (sede)</th><th>Denominação histórica</th></tr>
+    <tr><td>AIS 11</td><td>2º BPM (Nazaré da Mata); 3ª CIPM (Goiana)</td><td>Batalhão João Fernandes Vieira; Cia Ten Cel PM Felipe Apurangy de Araújo</td></tr>
+    <tr><td>AIS 12</td><td>21º BPM (Vitória de Santo Antão); 5ª CIPM (Gravatá)</td><td>Batalhão Monte das Tabocas; Cia Cel Mário Mariano de Vasconcelos Araújo</td></tr>
+    <tr><td>AIS 13</td><td>10º BPM (Palmares); 10ª CIPM (Tamandaré)</td><td>Batalhão Joaquim Nabuco; Cia Theophanes Ferraz Torres</td></tr>
+    <tr><td>AIS 14</td><td>4º BPM (Caruaru)</td><td>Batalhão Barreto de Menezes — segurança do São João de Caruaru</td></tr>
+    <tr><td>AIS 15</td><td>15º BPM (Belo Jardim); 8ª CIPM (Pesqueira)</td><td>Batalhão Cel José Bezerra de Amorim (antes Desembargador João Paes); Cia Cap Rubem Quirino de Souza</td></tr>
+    <tr><td>AIS 16</td><td>22º BPM (Surubim); 6ª CIPM (Limoeiro)</td><td>Batalhão Cel PM Antônio Barbosa de Lucena; Cia Professor Antônio de Souza Vilaça</td></tr>
+    <tr><td>AIS 17</td><td>24º BPM (Santa Cruz do Capibaribe)</td><td>Batalhão Cel PM Nelson Ambrósio da Silva — polo de confecções (Lei nº 15.004/2013, extinguiu a 3ª CIPM)</td></tr>
+    <tr><td>AIS 18</td><td>9º BPM (Garanhuns); 11ª CIPM (Lajedo)</td><td>Batalhão Mons. Arruda Câmara; Cia 2º Sgt PM Antônio Pedro de Souza (Cabo Cobrinha — Hecatombe de Garanhuns)</td></tr>
+  </table>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">DINTER II — Diretoria Integrada do Interior II</div>
+    <p>Origem: Comando de Policiamento do Sertão-II (CPS-II), criado em 03/06/2008 pela Lei estadual nº 13.458; transformada em DINTER II pela Lei nº 15.186/2013. <b>Órgão de Execução</b>: planejamento, organização, supervisão, coordenação, integração, controle, execução, avaliação e manutenção das ações de Policiamento Ostensivo das OMEs de seu território (Sertão). Diretamente subordinada à DPO. Sede em <b>Petrolina</b>; Subdiretoria/Gestão de Controle Operacional em Serra Talhada. Estrutura: Diretor (Cel QOPM); Chefe do EM/Diretor Adjunto (Cel QOPM); CPA (SAA + Seção Correcional); CPO (SPO + SACE); Secretaria.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>AIS</th><th>Unidades (sede)</th><th>Denominação histórica</th></tr>
+    <tr><td>AIS 19</td><td>3º BPM (Arcoverde)</td><td>Batalhão Martim Soares Moreno — Sertão do Moxotó e Ipanema (10 municípios)</td></tr>
+    <tr><td>AIS 20</td><td>23º BPM (Afogados da Ingazeira)</td><td>Batalhão Cel PM Presciliano P. de Morais — Sertão do Alto Pajeú</td></tr>
+    <tr><td>AIS 21</td><td>14º BPM (Serra Talhada)</td><td>Batalhão Cel PM Manoel de Souza Ferraz ("Manoel Flor")</td></tr>
+    <tr><td>AIS 22</td><td>1ª CIPM (Belém do São Francisco); 4ª CIPM (Petrolândia)</td><td>Cia Independente Rio São Francisco; Cia Ten PM Cirilo de Souza Araújo</td></tr>
+    <tr><td>AIS 23</td><td>8º BPM (Salgueiro)</td><td>Batalhão Agamenon Magalhães — Operação Polígono (04 pontos de bloqueio)</td></tr>
+    <tr><td>AIS 24</td><td>7º BPM (Ouricuri)</td><td>Batalhão Voluntários da Pátria — Sertão do Araripe</td></tr>
+    <tr><td>AIS 25</td><td>2ª CIPM (Cabrobó); 7ª CIPM (Santa Maria da Boa Vista)</td><td>Cia Cap PM Arlindo Rocha (policia também a Ilha de Assunção, dos índios Trukás); Cia Cap Natanael Silva Barros</td></tr>
+    <tr><td>AIS 26</td><td>5º BPM (Petrolina); 9ª CIPM (Araripina)</td><td>Batalhão Gov. Nilo Coelho ("A Sentinela Avançada do Sertão"); Cia Gov. Miguel Arraes de Alencar (Polo Gesseiro)</td></tr>
+  </table>
+</div>
+
+<!-- ============ TEMA 7 ============ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">7</div>
+    <div class="tema-titulo">DIRESP E DASDH — UNIDADES ESPECIALIZADAS E PROGRAMAS SOCIAIS</div>
+  </div>
+  <div class="tema-base">Base legal: Lei nº 15.186/2013 (DIRESP); leis e decretos de criação de cada OME conforme indicado; Lei 8.069/90 – ECA (ASCRIAD); Portaria do Comando Geral nº 1.255/2009 (GT Racismo).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">DIRESP — Diretoria Integrada Especializada</div>
+    <p>Criada pela Lei nº 15.186/2013. Coordena as ações das unidades subordinadas, voltadas a garantir a segurança da população através de <b class="azul">ações específicas inerentes a cada OME</b>. Sediada no prédio do Comando Geral da PMPE (Derby, Recife).</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>OME</th><th>Missão / pontos cobráveis</th></tr>
+    <tr><td>RPMon — Regimento de Polícia Montada Dias Cardoso</td><td>Recobrimento da malha de policiamento das Unidades de Área pelo <b>processo montado</b> e, quando necessário, emprego no controle de distúrbios civis. Esquadrão Dias Cardoso (Lei nº 5019/1964) → Regimento (Decreto nº 252, de 02/04/1970). Homenagem a Antônio Dias Cardoso.</td></tr>
+    <tr><td>BPRP — Batalhão de Polícia de Radiopatrulha Gen Roberto Pessoa</td><td>Recobrimento das AIS na <b>RMR</b>; combate ao crime organizado (assalto a bancos, tráfico, captura de foragidos); operações com Núcleo de Inteligência e Pacto pela Vida. Origem: Companhia de Vigilância de Radiopatrulha (25/08/1951, Cel Roberto Pessoa); Batalhão pelo Decreto nº 2860/1970; Operação ROCROP (1995).</td></tr>
+    <tr><td>BPGd — Batalhão de Polícia de Guardas ("Batalhão Paulo Guerra")</td><td>Segurança externa dos prédios públicos (Palácio do Campo das Princesas, Palácio dos Despachos, Secretaria da Fazenda, Palácio da Justiça) e guarda de estabelecimentos prisionais do grande Recife (desde 1976). Desmembrado em 1997 (Portaria CG nº 089 — parte virou o 16º BPM); reativado pela Portaria CG nº 658/1999.</td></tr>
+    <tr><td>BPChoque — Batalhão de Polícia de Choque Matias de Albuquerque</td><td><b>Batalhão de intervenção</b>; especialidade: policiamento de choque, sobretudo <b>controle de distúrbios civis</b> — reintegrações de posse, ações em estabelecimentos prisionais, manifestações com grave perturbação da ordem (greves, passeatas, obstruções de vias); policiamento de praças desportivas e eventos com grandes aglomerações; apoio às OME/Área. Companhia de Choque (1980) → Batalhão (Decreto-Lei nº 7.870/1982). Considerada Unidade de Elite.</td></tr>
+    <tr><td>1º BPTran — Batalhão Felipe Camarão</td><td>Ações de fiscalização e operação de <b>trânsito urbano</b>, com foco nos condutores, junto ao DETRAN/PE e órgãos municipais; combate a CVP e CVLI com rondas, abordagens, blitz e bloqueios; Operação RONFEC. Criado pelo Decreto Estadual nº 15951/1992.</td></tr>
+    <tr><td>BPRv — Batalhão de Polícia Rodoviária Cel PM Manuel de Souza Neto</td><td>Policiamento ostensivo de trânsito nas <b>rodovias ESTADUAIS</b>; fiscalização em apoio ao DER-PE, mediante convênio, conforme o <b>art. 23 da Lei nº 9.503/1997 (CTB)</b>. Origem: CPR (1964); Batalhão pelo Decreto nº 10.324/1985.</td></tr>
+    <tr><td>BEPI — Batalhão Especializado de Policiamento do Interior</td><td>Combate ao narcotráfico e <b>erradicação de plantios de maconha</b>; combate a grupos armados e sequestros; prevenção de assaltos a carros-fortes; escoltas de autoridades; mandados de prisão/busca; repressão a assaltos a bancos e nas BRs; operações com a Polícia Federal. Origem: PEAC (1997) → CIOSAC (Serra Talhada; depois Custódia — ponto central do Estado); extinta e transformada em BEPI pela Lei nº 15.624, de 21/10/2015.</td></tr>
+    <tr><td>BOPE — Batalhão de Operações Policiais Especiais</td><td>Origem: CPEsp → <b>1ª CIOE</b> (Decreto nº 14.147/1989; denominação Cel Ex Carlos Sérgio Torres). <b>Último recurso estratégico da Corporação</b>; doutrina de Forças Especiais; porta de entrada: Curso de Operações Policiais Especiais (COPE — 4 etapas: rusticidade, policial, técnica e operações). Gerenciamento de crises (Decreto nº 24.029/2002) com alternativas táticas: <b>negociação, técnicas menos que letais, tiro de comprometimento e assalto tático</b>; ocorrências com bombas e explosivos. BOPE criado pela <b>Lei nº 16.058, de 6 de junho de 2017</b>. Unidade de intervenção para crises não rotineiras; lema: VITAE DEFENSOR.</td></tr>
+    <tr><td>CIATur — Companhia Independente de Apoio ao Turista</td><td>Serviço especializado de segurança nas áreas turísticas e históricas (Sítio Histórico de Olinda, Recife Antigo/Marco Zero, Porto de Galinhas, Muro Alto e Maracaípe); policiais fluentes em idiomas. Origem: GEATur (Portaria CG nº 620/2001); CIATur criada pela Lei nº 12.544/2004. Em situação especial: planeja e coordena o policiamento das prévias e do carnaval em seus bairros.</td></tr>
+    <tr><td>CIPCães — Cia Independente de Policiamento com Cães</td><td>Criada em 02/02/1962; desmembrada do BPChoque pela Portaria CG nº 1.111/1997 — <b>primeira do Brasil no gênero</b> entre as PMs. Combate a CVLI/CVP e ao narcotráfico com cães; apoio ao BPChoque em presídios e distúrbios; revistas preventivas antiterrorismo.</td></tr>
+    <tr><td>CIPMoto — Cia Independente de Policiamento com Motocicletas</td><td>Criada em 29/12/1999 (ROCAM); CIPMoto pelo Decreto Lei nº 12.544/04. Missão: combater a criminalidade de forma <b>AUDAZ, VELOZ e PRECISA</b> — trios ROCAM e Grupo Tático de Ações Rápidas (GTAR); forma policiais para atuar em motocicletas.</td></tr>
+    <tr><td>CIPOMA — Cia de Policiamento do Meio Ambiente Ecólogo Vasconcelos Sobrinho</td><td>Criada e ativada pelo Decreto nº 14.147, de 18/12/1989 (efetivo: Lei nº 10.390/89). Policiamento ambiental ostensivo fardado: coibir e reprimir degradação ambiental; preservação e conservação dos recursos naturais; fiscalização e educação ambiental. Sede em Igarassu.</td></tr>
+    <tr><td>1º BIEsp — Cel PM Roberto Carvalho Moura e Silva</td><td>Criado pela Lei nº 16.014/2017; inaugurado em Caruaru. 4 companhias especializadas: Trânsito, Radiopatrulhamento, Motopatrulhamento (ROCAM) e Choque com apoio de cães. Missão: apoiar os batalhões de área da DINTER I, ênfase na <b>AIS 14</b>.</td></tr>
+    <tr><td>2º BIEsp — Major PM Optato Gueiros</td><td>Criado em 27/12/2017; inaugurado em 03/07/2018, sede em <b>Petrolina</b>. Repete a fórmula do 1º BIEsp; apoio à <b>AIS 26</b> e à ordem pública no Sertão do São Francisco.</td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">DASDH — Diretoria de Articulação Social e Direitos Humanos: ações e programas</div>
+    <ul>
+      <li><b>Policiamento Comunitário</b> — filosofia e estratégia organizacional fundamentada na <b class="verde">parceria entre a população e as instituições de segurança pública</b> para identificar, priorizar e resolver problemas (crime, medo do crime, exclusão e desigualdade social); a parceria é o elemento central;</li>
+      <li><b>Patrulha do Bairro</b> — policiamento ostensivo preventivo voltado à maior interação com a população das localidades atendidas;</li>
+      <li><b>Patrulha Escolar</b> — ação preventiva de assessoramento das comunidades escolares (redes públicas estadual e municipal) na busca de soluções de segurança;</li>
+      <li><b>PROERD</b> — Programa Educacional de Resistência às Drogas; base no <b>D.A.R.E.</b> (Drug Abuse Resistance Education, Professora Ruth Rich + Depto. de Polícia de Los Angeles, EUA, 1983); no Brasil desde 1992 (PMERJ); em Pernambuco desde 2000;</li>
+      <li><b>ASCRIAD</b> — divulgação e cumprimento da Lei 8.069/90 (ECA), com foco na proteção integral da criança e do adolescente (Portaria CG 087, de 18FEV98);</li>
+      <li><b>GT Racismo</b> — Grupo de Trabalho de Enfrentamento ao Racismo Institucional (Portaria CG nº 1.255, de 10/11/2009): combate ao racismo institucional e à intolerância religiosa; formou docentes da disciplina Relações Étnicorraciais;</li>
+      <li><b>Banda de Música</b> — criada por Decreto da Província de 05/11/1873; atividades especializadas de <b>policiamento com música</b>;</li>
+      <li><b>Patrulha Maria da Penha</b> (citada na apostila).</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ TEMA 8 ============ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">8</div>
+    <div class="tema-titulo">3ª EMG — 3ª SEÇÃO DO ESTADO-MAIOR GERAL</div>
+  </div>
+  <div class="tema-base">Base: capítulo 7 da apostila (estrutura da PMPE: órgãos de Direção, de apoio e de execução).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Estrutura e Estado-Maior Geral</div>
+    <p>A PMPE é estruturada em <b class="azul">órgãos de Direção, órgãos de apoio e órgãos de execução</b>. Os órgãos de Direção constituem o Comando Geral (comandante geral, órgãos de direção geral, de direção setorial, de apoio do Comando Geral e de assessoramento). O <b>Estado-Maior</b>, órgão de direção geral, é o <b class="azul">principal órgão de assessoramento do Comandante Geral</b> no estabelecimento da política da Corporação.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Seção</th><th>Encargo</th></tr>
+    <tr><td>1ª Seção (PM/1)</td><td>Pessoal e legislação</td></tr>
+    <tr><td>2ª Seção (PM/2)</td><td>Informação e contra-informação</td></tr>
+    <tr><td>3ª Seção (PM/3)</td><td><b>Ensino, instrução e operações</b> (notas de instrução — não relacionadas aos cursos de formação e capacitação)</td></tr>
+    <tr><td>4ª Seção (PM/4)</td><td>Apoio logístico</td></tr>
+    <tr><td>5ª Seção (PM/5)</td><td>Assuntos civis</td></tr>
+    <tr><td>6ª Seção (PM/6)</td><td>Planejamento administrativo e orçamentário</td></tr>
+  </table>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Ponto de prova</div>
+    <p>Uma das principais atribuições da 3ª Seção do EM é a organização do <b class="verde">CERIMONIAL MILITAR</b>. Nota da apostila: a política de instrução/adestramento da tropa hoje está sob a tutela da <b>DEIP</b>; cursos e estágios (DEIP); concursos (3ª Seção).</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Atribuições do EMG (5)</div>
+    <ul>
+      <li>I – Produzir informações;</li>
+      <li>II – Realizar ações;</li>
+      <li>III – Apresentar propostas e sugestões;</li>
+      <li>IV – Elaborar planos e ordens para aprovação do Comandante Geral;</li>
+      <li>V – Supervisionar, no âmbito de sua competência, a execução dos planos e ordens.</li>
+    </ul>
+    <p>Compete-lhe em especial: dirigir/orientar/coordenar/fiscalizar a execução de diretrizes e planos do Cmt Geral; elaborar diretrizes e planos de ação; acompanhar a execução das ordens; acompanhar políticas setoriais; obter informações, elaborar estudos e apresentar sugestões, preparando planos e transformando decisões em ordens; elaborar ordens de serviço e demais documentos de interesse do Cmt Geral.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Missões da 3ª Seção (PM/3)</div>
+    <ul>
+      <li>Elaborar itens de planos e ordens do Cmt Geral em sua competência;</li>
+      <li>Acompanhar a evolução técnica e tática do policiamento no território estadual;</li>
+      <li>Elaborar os planos das Diretrizes Gerais de Ensino e Instrução (DGEI);</li>
+      <li>Realizar pesquisas de operações;</li>
+      <li>Planejar, coordenar e supervisionar a participação da PM em solenidades, paradas e desfiles;</li>
+      <li>Centralizar planejamento e controle das operações que, por seu vulto, impliquem coordenação em nível de EM da PM;</li>
+      <li>Propor normas para as ações operacionais integradas; coordenar coleta e apuração de dados sobre a situação operacional;</li>
+      <li>Supervisionar e avaliar a execução dos planos operacionais aprovados pelo Comando Geral;</li>
+      <li>Elaborar o Cerimonial Policial-Militar; estudos sobre política de instrução de manutenção e adestramento;</li>
+      <li>Propor cursos, estágios e concursos para o ano seguinte; elaborar Notas de Instrução e/ou de Serviço;</li>
+      <li>Participar de estudos de (re)organização de unidades e propostas de alteração dos Quadros de Organização (QO); estudos sobre localização de unidades e subunidades; diretrizes de operações integradas.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Chefes de Seção do EMG — atribuições</div>
+    <p><b>Comuns:</b> administrar as atividades da seção; dirigir, orientar e coordenar os trabalhos; praticar os atos necessários ao funcionamento; estudar e propor ao Chefe do EM as medidas que lhe escapem à competência; exercer encargos atribuídos pelo Cmt Geral e pelo Chefe do EM. <b>Específicas do Chefe da PM/3:</b> apresentar sumários e relatórios de operações, ensino e instrução; normas de ação para ensino e instrução (ligação PM/3 – Diretoria de Ensino – P/5 das OMEs); coordenar coleta e apuração de dados operacionais, de ensino e instrução; <b class="azul">encarregar-se do Cerimonial Policial Militar</b>; avaliar a execução de planos e ordens do Cmt Geral quanto a operações, ensino e instrução.</p>
+  </div>
+</div>
+
+<!-- ============ TEMA 9 ============ -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">9</div>
+    <div class="tema-titulo">PLANEJAMENTO OPERACIONAL NA PMPE</div>
+  </div>
+  <div class="tema-base">Base: capítulo 8 da apostila (atividades de Estado-Maior; níveis e requisitos do planejamento; metodologia de resolução de problemas; tomada de decisão).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">O Comandante e a descentralização</div>
+    <p>O Comandante — em nível estratégico, tático ou operacional — <b class="azul">planeja, organiza, dirige, coordena e controla</b> as forças sob seu comando. Poupa tempo e energia <b>descentralizando</b> atividades, delegando competência e responsabilizando os comandantes subordinados; conta com um Estado-Maior para assessorá-lo, que atua mediante diretrizes baixadas pelo Comandante, preferentemente por escrito.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">5 atividades comuns a todos os oficiais de Estado-Maior</div>
+    <ul>
+      <li><b>1) Produzir informações</b> — coletar, consolidar e interpretar dados de todas as fontes; analisar informes; transmitir informações ao comandante (mesmo não solicitadas, se repercutirem sobre as operações); assegurar a troca de informações no EM e com escalões superiores e subordinados;</li>
+      <li><b>2) Elaborar estudos de situação</b> — prévios e continuados; base para o comandante apreciar os fatores que influenciam as linhas de ação (análise, conclusões, linhas de ação possíveis, propostas de apoio);</li>
+      <li><b>3) Apresentar propostas</b> — assessorar nas decisões e diretrizes; sugestões a outros oficiais do EM e comandantes subordinados, sem envolver a responsabilidade do comando;</li>
+      <li><b>4) Elaborar planos e ordens</b> — transformar decisões e diretrizes em planos e ordens (competência pode ser delegada); planos com base em hipóteses da evolução da situação reduzem o tempo de reação;</li>
+      <li><b>5) Supervisionar a execução</b> — assegurar a execução adequada; libera o Comandante dos detalhes e alimenta os relatórios de situação.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Metodologia para resolução de problemas (6 etapas)</div>
+    <ul>
+      <li>a. Identificação ou definição do problema;</li>
+      <li>b. Levantamento dos fatores que contribuíram para sua caracterização;</li>
+      <li>c. Estruturação do problema (levantamento e enunciação das alternativas de solução);</li>
+      <li>d. Apresentação das soluções possíveis (linhas de ação);</li>
+      <li>e. Escolha da solução mais apropriada (decisão);</li>
+      <li>f. Definição das providências necessárias para a resolução.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Dados para resolução de problemas</div>
+    <ul>
+      <li><b>Informe</b> — notícia sobre algum fato que <b class="azul">ainda depende de confirmação</b>, através de processo de elaboração apropriado;</li>
+      <li><b>Informação</b> — resulta de um informe sobre o qual se exerceu trabalho ordenado, permitindo <b class="azul">maior margem de certeza</b>;</li>
+      <li><b>Hipótese válida</b> — lógica, realística e enunciada com objetividade; responde afirmativamente a: "é esta hipótese absolutamente necessária à solução deste problema?". Não usar indiscriminadamente, mas não evitar quando essencial. A decisão do Comandante, mesmo baseada em hipótese, é válida para a elaboração de planos.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Tomada de decisão e execução — 8 fases</div>
+    <div class="passo"><b>1ª fase — Definição do problema</b>: missão prescrita pelo escalão superior ou deduzida pelo próprio Cmt; missão = atividade operacional; problema = questão administrativa; análise preliminar</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2ª fase — Coleta das informações disponíveis</b>: feita pelo Cmt junto às seções do EM ou outros setores</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3ª fase — Diretriz de planejamento</b>: análise complementar da missão/problema com novo enunciado; expedição de Diretriz de Planejamento para facilitar o trabalho do EM</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4ª fase — Estudo de situação, Estudo de Estado-Maior ou Estudo</b>: missão (operacional) → linhas de ação pela <b>3ª Seção</b>; probabilidades opostas pela <b>2ª Seção</b>; problema (administrativo) → coordenação pela seção pertinente, com pareceres fundamentados das demais</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>5ª fase — Estudo de situação do Comandante ou Decisão</b>: o Cmt decide a linha de ação e estabelece o conceito da operação; ou toma a decisão solucionando o problema</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>6ª fase — Preparo de planos</b>: cada seção elabora seus itens; encaminhamento à 3ª Seção (operacional); aprovação do Cmt; expedição pela 3ª Seção (operacionais) ou demais seções (administrativos)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>7ª fase — Supervisão</b>: em nível de execução, o Cmt e todos os oficiais do EM supervisionam a atividade executória</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>8ª fase — Avaliação e revisão</b>: avaliação dos resultados e revisão crítica do planejamento, para imediata correção dos desvios</div>
+  </div>
+</div>
+
+<!-- ============ TEMA 10 ============ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">10</div>
+    <div class="tema-titulo">DOCUMENTOS DE PLANEJAMENTO DA PMPE</div>
+  </div>
+  <div class="tema-base">Base: capítulo 9 da apostila (documentos de Estado-Maior e modelos/mementos — Portaria do Comando Geral 582 de 14DEZ1981, Instruções Provisórias de Estado-Maior, nas referências).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Documentos de Estado-Maior — noção geral</div>
+    <p>Documentos escritos com <b class="azul">concisão e clareza</b>, obedecendo a <b class="azul">mementos preestabelecidos</b>, destinados a viabilizar, com a maior margem de êxito, as atividades da Corporação.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Documento</th><th>Definição / detalhes</th></tr>
+    <tr><td>Estudo</td><td>Aprecia problema administrativo <b>simples</b>, sugerindo a solução.</td></tr>
+    <tr><td>Estudo de Situação</td><td>Chefes de seções de EM apreciam circunstâncias e fatores que possam influir no cumprimento de atividade operacional ou administrativa, propondo a melhor linha de ação. Podem ser: de Pessoal; de Informações; de Contra-informações; de Operações; de Logística; de Assuntos Civis; de Finanças. O <b>Estudo de Situação de Operações</b> é o da 3ª Seção: analisa fatores não específicos das demais seções que possam influir nas operações; pode ser exame acurado de elementos de uma missão operacional, terminando com proposta de linha de ação.</td></tr>
+    <tr><td>Estudo de Estado-Maior</td><td>Seções do EM (isolada ou conjuntamente) apreciam problemas <b>complexos e controvertidos de natureza administrativa</b>, com parecer conclusivo sobre a solução.</td></tr>
+    <tr><td>Diretriz</td><td>Estabelece orientação, por normas objetivas, para qualquer trabalho (administrativo, operacional ou de planejamento); baixada por Comandante, Diretores ou Chefes. Tipos: <b>de Planejamento; de Operações; Administrativa</b>. Diretriz de Operações: orientação para execução de atividade operacional.</td></tr>
+    <tr><td>Plano</td><td>Dá forma a um trabalho de planejamento, viabilizando, mediante esquema imaginado, a solução de problemas. <b class="azul">O plano baseia-se em HIPÓTESES</b>. Tipos: de Operações; Administrativo. Plano de Operações: esquema imaginado pelo comandante para executar missão operacional com êxito; baseia-se normalmente em estudos de situação das seções do EM.</td></tr>
+    <tr><td>Ordem</td><td>Autoridade determina a subordinado a execução de um serviço. <b class="azul">A ordem baseia-se em FATOS</b>. Tipos: Preparatória; de Operação; Administrativa; de Serviço; Fragmentada ou Complementar.</td></tr>
+  </table>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Espécies de ordem</div>
+      <ul>
+        <li><b>Preparatória</b> — informações antecipadas de ação prevista, dando mais tempo aos preparativos; pode conter deslocamentos prévios e medidas urgentes de segurança; o conteúdo é repetido, quando necessário, na ordem de execução;</li>
+        <li><b>De Operação</b> — Cmt Geral, de Grande Comando ou Comando Intermediário determina missão operacional <b>de envergadura</b>, envolvendo uma ou mais OME: define SITUAÇÃO, MISSÃO e pormenores da execução, assegurando ação coordenada;</li>
+        <li><b>Administrativa</b> — determina missão administrativa; regula também o apoio de órgão administrativo às operações;</li>
+        <li><b>De Serviço</b> — determina, na forma de procedimento, serviço com emprego de elemento PM, em caráter <b>rotineiro</b>, preventivo ou repressivo, envolvendo uma ou mais unidades;</li>
+        <li><b>Fragmentada ou Complementar</b> — instruções básicas, específicas e oportunas, complementando ordem preparatória, de operações ou administrativa já expedidas; omite o que não foi alterado.</li>
+      </ul>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Notas</div>
+      <ul>
+        <li><b>Nota de Instrução (NI)</b> — cria, modifica, adapta ou ajusta a organização (total ou parcial) da PM/OME, ou estabelece/altera rotinas operacionais e administrativas; pode consolidar-se em NORMAS GERAIS DE AÇÃO; <b class="azul">preparada a partir do escalão Batalhão</b>;</li>
+        <li><b>Nota de Serviço</b> — regula procedimento em cerimônias, exibições, formaturas, desfiles, solenidades e eventos <b>não considerados atividade operacional</b>;</li>
+        <li><b>Nota de Segurança</b> — elaborada pelas <b class="azul">2ª Seções de EM</b>: regula missões de segurança reservada de determinado evento;</li>
+        <li><b>Nota Complementar (NC)</b> — supre omissões ou retifica erros de Nota de Serviço, de Instrução ou de Segurança já expedidas, tomando a nomenclatura correspondente.</li>
+      </ul>
+    </div>
+  </div>
+
+  <table class="comp">
+    <tr><th>Documento acessório</th><th>Função</th><th>Classificação</th></tr>
+    <tr><td>Anexo (An)</td><td>Detalha documento básico de EM (informações ou condutas de interesse limitado/técnico); permite documento básico mais simples</td><td>Ordem alfabética, na sequência em que são mencionados</td></tr>
+    <tr><td>Apêndice (Apd)</td><td>Explicita o contido nos anexos</td><td>Numérica (algarismos arábicos)</td></tr>
+    <tr><td>Adendo (Ad)</td><td>Complementa o contido no apêndice</td><td>Ordem alfabética</td></tr>
+    <tr><td>Aditamento (Adt)</td><td>Complementa o contido no adendo</td><td>Numérica (algarismos arábicos)</td></tr>
+  </table>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Relatório (Rel)</div>
+    <p>Documento pelo qual comandos subordinados prestam informações aos escalões superiores (situação geral ou assunto particular); restringir ao mínimo indispensável, evitando excessiva adjetivação. Tipos: de Situação de Operações; Periódico de Pessoal; Periódico de Informações; Periódico de Operações; Periódico de Logística; Periódico de Assuntos Civis; Periódico de Orçamento e Finança.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Critério</th><th>Rel de Situação de Operações (Rel Sit Op)</th><th>Rel Periódico de Operações (Rel Per Op)</th><th>Rel Periódico de Informações (Rel Per Info)</th></tr>
+    <tr><td>Elaboração</td><td>EM (situação de operação em curso)</td><td>3ª Seções de EM</td><td>2ª Seções de EM</td></tr>
+    <tr><td>Abrangência</td><td><b>Um único momento</b> (início, fase do desenvolvimento ou logo após o final da operação)</td><td>Atuação, operações realizadas e situação em <b>um período determinado</b>; consigna sucessos e insucessos</td><td>Resumo dos assuntos de informações no período: síntese das forças adversas, atividades, vulnerabilidades, área de operações e condições climáticas/meteorológicas</td></tr>
+  </table>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Mementos (modelos) — estruturas cobráveis</div>
+    <ul>
+      <li><b>Diretriz de Planejamento</b>: 1. Missão (enunciado + análise); 2. Objetivo(s); 3. Situação; 4. Plano Geral; 5. Orientação; 6. Prescrições Diversas;</li>
+      <li><b>Estudo de Situação de Operações</b>: 1. Missão (enunciado, ações a realizar, condições de execução); 2. Objetivo(s); 3. Situação (nossa situação × situação adversa); 4. Linhas de Ação (nossas × adversas); 5. Análise das Linhas de Ação; 6. Decisão (ou Proposta — no Est Sit Op o parágrafo se constitui de propostas);</li>
+      <li><b>Estudo de Estado-Maior</b>: Assunto; 1. Problema (o que? que área/extensão? por quê?); 2. Fatores relacionados (critérios, fatos, hipóteses, definições); 3. Discussão (linhas de ação possíveis; análise quanto à <b class="borg">adequabilidade, praticabilidade e aceitabilidade</b>; vantagens e desvantagens); 4. Conclusão; 5. Proposta; pareceres favoráveis/contrários; Decisão (solução do Cmt Geral);</li>
+      <li><b>Plano (ou Ordem) de Operações</b>: 1. Situação (forças adversas; forças amigas; meios recebidos; hipóteses — <b class="borg">só no Plano</b>); 2. Missão (quem, o quê, quando, onde, para quê — geral, particular, eventuais); 3. Execução (conceito da operação: finalidade, fases, manobra; tarefas específicas; prescrições); 4. Administração (logística, pessoal, assuntos civis, orçamento); 5. Ligações e Comunicações (postos de comando, de detidos, de salvados);</li>
+      <li><b>Ordem Preparatória</b>: 1. Situação; 2. Missão (geral, particular, eventual/especial); 3. Prescrições;</li>
+      <li><b>Ordem Fragmentada / NC de Instrução</b>: 1. Referência; 2. Finalidade; 3. Retificação;</li>
+      <li><b>Ordem de Serviço</b>: 1. Situação; 2. Objetivo (missão); 3. Execução (participação, atribuição); 4. Prescrições Diversas;</li>
+      <li><b>Nota de Instrução</b>: 1. Situação (finalidade); 2. Condições de Execução (quando, como, onde); 3. Prescrições Diversas;</li>
+      <li><b>Relatório de Situação</b>: 1. Forças Adversas; 2. Nossa Situação; 3. Administração; 4. Generalidades; 5. Avaliação do Comandante (quando ordenada pelo Cmt superior);</li>
+      <li><b>Relatório Periódico de Operações</b>: 1. Nossa situação no fim do período; 2. Informações sobre elementos amigos e tropas de apoio; 3. Nossas operações durante o período; 4. Eficiência operacional; 5. Resultado das operações; 6. Diversos.</li>
+    </ul>
+  </div>
+
+  <div class="discursiva">
+    <div class="enunciado">Diferencie PLANO e ORDEM como documentos de Estado-Maior da PMPE e, em seguida, apresente os atributos do poder de polícia e seus modos de atuar, indicando em qual deles se insere o policiamento.</div>
+    <div class="espelho">
+      <div class="esp-titulo">Espelho de resposta</div>
+      <ul>
+        <li>Plano: documento de EM que dá forma a um trabalho de planejamento, mediante esquema imaginado; <b>baseia-se em hipóteses</b> (apostila, cap. 9.1.3);</li>
+        <li>Ordem: documento pelo qual uma autoridade determina a subordinado a execução de um serviço; <b>baseia-se em fatos</b> (apostila, cap. 9.1.4);</li>
+        <li>Atributos do poder de polícia (D.A.C): discricionariedade (conveniência, oportunidade e justiça, nos limites da lei); auto-executoriedade (independe de prévia autorização do Judiciário); coercibilidade (imperatividade, admitindo emprego de força, sem arbítrio);</li>
+        <li>Modos de atuar (fases): ordem de polícia; consentimento de polícia (licença/autorização); fiscalização de polícia; sanção de polícia;</li>
+        <li>A fiscalização de polícia exercida em matéria de ordem pública recebe a denominação de <b>policiamento</b> (apostila, cap. 1.2).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TEMA 11 ============ -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">11</div>
+    <div class="tema-titulo">FERRAMENTAS DO PLANEJAMENTO — CICLO PDCA</div>
+  </div>
+  <div class="tema-base">Base: capítulo 10 da apostila (ciclo PDCA — Walter Andrew Shewart; William Edwards Deming).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">O que é o ciclo PDCA</div>
+    <p>Método para solução de problemas <b class="azul">cuja causa não é conhecida</b> — geralmente problemas não resolvidos apesar de várias tentativas. Criado na <b>década de 20 por Walter Andrew Shewart</b> (físico norte-americano, pioneiro do controle estatístico de qualidade) e popularizado na <b>década de 50 por William Edwards Deming</b> ("guru do gerenciamento de qualidade"). Método único, aplicado da mesma maneira em qualquer tipo de organização — a diferença está no tamanho e na diversidade dos problemas.</p>
+  </div>
+
+  <div class="mnemo">
+    <div class="palavra">PDCA</div>
+    <div class="exp"><b>P</b>lan — planejar · <b>D</b>o — fazer ou executar · <b>C</b>heck — checar, analisar ou verificar · <b>A</b>ction — agir de forma a corrigir eventuais erros ou falhas.</div>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Estágios do ciclo PDCA</div>
+    <div class="passo"><b>Planejamento</b> — projeto bem elaborado é primordial (impede falhas futuras, ganha tempo); pautado na missão, visão e valores do órgão, com metas, objetivos e o melhor caminho para atingi-los</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>Execução</b> — colocar em prática e à risca (sem queimar etapas nem improvisar); subdividida em 3 etapas: <b>treinamento</b> de funcionários e gestores, <b>realização</b> propriamente dita e <b>"colheita" de dados</b> para avaliação posterior</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>Checagem</b> — identifica brechas no projeto; metas e resultados mensurados pelos dados coletados e mapeamento de processos; feita de duas maneiras: <b>paralelamente à execução</b> e <b>ao final dela</b> (análise estatística mais abrangente)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>Ação</b> — ações corretivas para aperfeiçoamento contínuo; é simultaneamente <b>fim e começo</b>: após apurar as causas dos erros, o ciclo é refeito com novas diretrizes e parâmetros</div>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Colocando em prática e a importância dos ciclos</div>
+    <ul>
+      <li>No planejamento: analisar dados do problema (histórico, frequência) e refletir sobre as <b>causas fundamentais</b>; cabe o <b>brainstorming</b> (causas e ações), com posterior <b>priorização</b> (causas mais impactantes, ações de mais resultado);</li>
+      <li>Disciplina para cumprir o plano de ação; coletar dados dos resultados e verificar se atendem ao esperado;</li>
+      <li>A sequência é <b class="verde">cíclica</b>: sem o resultado esperado, os ajustes da etapa Ação voltam ao início do ciclo; repete-se até implementar plano consistente;</li>
+      <li>Em caso de sucesso: <b class="verde">padronização do processo</b>, para garantir a repetição das boas práticas.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ TEMA 12 ============ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">12</div>
+    <div class="tema-titulo">PROGRAMA JUNTOS PELA SEGURANÇA E GESTÃO POR RESULTADOS</div>
+  </div>
+  <div class="tema-base">Base: capítulo 11 da apostila — Programa do Estado de Pernambuco "Juntos pela Segurança"; Plano Estadual de Segurança Pública (PESP).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">O programa</div>
+    <p>Política pública de segurança de Pernambuco que busca <b class="azul">promover a paz, prevenir a violência e combater a desigualdade</b> em todas as regiões do estado. Construída com diálogo institucional e <b>escuta popular</b> (mais de 7 mil participantes) e oficinas com mais de 280 especialistas. Ponto de partida: a construção de uma sociedade segura começa com a prevenção da violência e a promoção de uma cultura de paz.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Os 5 pilares estratégicos</div>
+    <ul>
+      <li><b>1. Prevenção da Violência e Redução da Desigualdade</b> — atuação em problemas graves como violência doméstica e dependência química;</li>
+      <li><b>2. Atuação Conjunta com os Municípios e Instituições</b> — recuperação de espaços públicos degradados e oferta de serviços públicos em áreas deflagradas pelo crime organizado;</li>
+      <li><b>3. Enfrentamento ao Crime Organizado e Tráfico de Drogas</b> — valorização dos profissionais de segurança e reconquista da confiança nas instituições policiais;</li>
+      <li><b>4. Articulação com o Sistema de Justiça</b> — redução da impunidade, aceleração de processos e acesso à justiça, com garantia dos Direitos Humanos e do devido processo legal;</li>
+      <li><b>5. Ampliação e Requalificação dos Sistemas Prisional e Socioeducativo</b> — reintegração para reduzir a reincidência (educação e qualificação profissional de reeducandos e socioeducandos).</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Áreas Integradas de Segurança (AIS) e avanços de gestão</div>
+    <ul>
+      <li>Territorialização do Estado em <b class="verde">26 AIS</b>: informação criminal gerada por área; atuação integrada PM + PC, ambas <b>responsabilizadas pelo resultado</b> na redução da criminalidade;</li>
+      <li><b>NGR</b> — Núcleo de Gestão por Resultados na SDS: aporta técnicas e ferramentas de gestão ao Programa;</li>
+      <li><b>POPs</b> — Procedimentos Operacionais Padrão para a ação policial: sistematizam e definem como a ação deve ser executada;</li>
+      <li>Em <b>2023</b>: criação do <b class="verde">Prêmio de Defesa Social (PDS)</b>, fortalecendo a meritocracia; o Programa atingiu a meta e reduziu a violência pelo segundo ano consecutivo;</li>
+      <li>Novas câmaras técnicas: Câmara de Enfrentamento ao Crack e Câmara de Enfrentamento da Violência de Gênero Contra a Mulher.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Modelo de gestão — 6 características elementares (1ª: Plano de Segurança Pública)</div>
+    <p>O Plano de Segurança Pública exige as seguintes atividades:</p>
+    <ul>
+      <li><b>1.1 Diagnóstico Situacional</b> — análise de todo o fluxo criminal (do policiamento ostensivo ao sistema judiciário e à ressocialização do egresso), identificando eficiências, deficiências e entraves;</li>
+      <li><b>1.2 Definição de Objetivos</b> — o PESP definiu como objetivo principal interromper o crescimento da violência criminosa e iniciar redução contínua e progressiva, especialmente dos crimes contra a vida;</li>
+      <li><b>1.3 Definição das Diretrizes</b> — sugeridas: <b class="borg">meritocracia, monitoramento e avaliação, integração e divisão territorial</b>;</li>
+      <li><b>1.4 Definição de Indicadores e Metas</b> — indicadores de resultado: <b>MVI, CVLI e CVP</b> (número reduzido de indicadores para não prejudicar o monitoramento);</li>
+      <li><b>1.5 Identificação das Ações Prioritárias</b> — repressão qualificada da violência; aperfeiçoamento institucional; informação e gestão do conhecimento; formação e capacitação; prevenção social do crime e da violência; gestão democrática;</li>
+      <li><b>1.6 Gestão de Recursos</b> — levantamento dos recursos materiais e humanos, sugerindo aquisições e/ou parcerias.</li>
+    </ul>
+  </div>
+
+  <table class="comp">
+    <tr><th>Indicador</th><th>Composição</th><th>Meta / observações</th></tr>
+    <tr><td>CVLI — Crimes Violentos Letais Intencionais</td><td>Homicídio doloso (inclusive por enfrentamento com a polícia), lesão corporal seguida de morte e latrocínio</td><td>Taxa por 100 mil hab./ano; contabilizado pelo <b>número de vítimas</b> (não de ocorrências); homicídios no sistema prisional/socioeducativo contam na meta do Estado, não nas AIS. Meta: redução de <b>12%</b> (série histórica desde jan/17)</td></tr>
+    <tr><td>CVP — Crimes Violentos contra o Patrimônio</td><td>Todas as modalidades de roubo (<b>exceto latrocínio</b>), sequestro relâmpago e extorsão mediante sequestro</td><td>Meta: redução de <b>12%</b>, vs. mesmo período do ano anterior (série histórica desde set/16)</td></tr>
+  </table>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Indicadores de processo (início do programa)</div>
+    <p>Apreensão de armas (armas de fogo industriais); Recolhimento (flagrantes e mandados de prisão cumpridos); Apreensão de drogas (crack, cocaína e pasta base); Mandados de prisão expedidos; Mandados de prisão cumpridos (operação malhas da lei).</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Ator</th><th>Composição / função</th></tr>
+    <tr><td>Comitê Gestor</td><td>SEPLAG (coordenação), SDS e membros das Câmaras Técnicas. Acompanha resultados e soluciona dificuldades que as Câmaras não resolvem; decide ações estratégicas.</td></tr>
+    <tr><td>Câmara Técnica de Defesa Social</td><td>Secretário de Defesa Social (coordenação), Secretário Executivo de Defesa Social, chefes dos órgãos operativos (PM, PC, Polícia Científica e CBM), CIIDS, CIODS, coordenação das AIS (Diretorias Integradas), coordenação das especializadas (DIRESP), GACE e NGR. Acompanha o indicador principal — CVLI.</td></tr>
+    <tr><td>Câmara Técnica de Articulação MP, Poder Judiciário e Defensoria</td><td>Desembargador do TJ (coordenação), representantes do Judiciário, MPE, Defensoria, juízes de execução penal, Secretário Executivo de Ressocialização, SDS, Conselho Penitenciário, Patronato e NGR. Aproxima o Programa do Judiciário e do MP.</td></tr>
+    <tr><td>Câmara Técnica de Prevenção Social</td><td>Secretaria Executiva de Articulação Social (coordenação), SEDSDH, SEE, SES, SDS, SCJ e STQE. Acompanha ações de prevenção social e coordena as ações do Governo Presente.</td></tr>
+    <tr><td>Câmara Técnica de Administração Prisional</td><td>Secretário Executivo de Ressocialização (coordenação), diretores das unidades prisionais, gerentes; eventualmente juízes e promotores de execuções penais.</td></tr>
+    <tr><td>Núcleo de Gestão por Resultados (NGR)</td><td>Analistas APOG do Estado (respondem à SEPLAG, alocados na SDS); analistas divididos entre DIM, DINTER I e II e DIRESP. Suporte a planejamento, organização de recursos e avaliação; monitora atividades, consolida dados, gera relatórios e divulga resultados.</td></tr>
+    <tr><td>Órgãos Operativos</td><td>PM, CBM, PC e Polícia Científica: executam suas funções conforme as prioridades do Comitê Gestor; fornecem informações precisas no prazo; participam das reuniões e disseminam as decisões.</td></tr>
+  </table>
+
+  <div class="caixa prazo">
+    <div class="caixa-titulo">Sistemática de monitoramento — periodicidade das reuniões</div>
+    <ul>
+      <li><b>Reunião de Monitoramento do Juntos pela Segurança</b> — <b class="ouro">semanal, todas às quintas-feiras pela manhã</b>; Comitê Gestor + NGR + Judiciário, MP, Defensoria, PGE e gestores das AIS; abre com apresentação dos resultados dos indicadores de cada AIS pelo Coordenador; resultados ruins → diagnóstico detalhado; positivos → apresentação de boas práticas;</li>
+      <li><b>Reuniões das Câmaras Técnicas</b> — <b class="ouro">semanais, nos dias que antecedem as reuniões do Programa</b>; encaminhamentos registrados em ata, com responsáveis e prazos;</li>
+      <li><b>Reunião das AIS</b> — <b class="ouro">sob demanda</b> (solicitada pela PM, PC, NGPR e Câmaras Técnicas); integra os órgãos operativos da área; foco na apresentação de resultados, soluções e intervenções.</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

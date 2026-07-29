@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>MEMENTO — ASPECTOS JURÍDICOS DA ABORDAGEM POLICIAL · CFO PM 2026</title>
+<style>
+/* ===== MEMENTO CFO PM 2026 — identidade visual fixa ===== */
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: #fbf9f3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  background: #fbf9f3; color: #2a2620;
+  font-family: "Segoe UI", -apple-system, Arial, sans-serif;
+  font-size: 9.5pt; line-height: 1.42;
+}
+/* ---- Cabeçalho do documento ---- */
+.doc-header {
+  text-align: center; padding: 4mm 0 3mm;
+  border-bottom: 3px double #2a2620; margin-bottom: 5mm;
+}
+.doc-header h1 { font-size: 15pt; letter-spacing: .5px; }
+.doc-header .sub { font-size: 9pt; color: #4a4a4a; margin-top: 1mm; }
+
+/* ---- Tema (um por capítulo; cada tema inicia em nova página) ---- */
+.tema { break-before: page; padding-top: 2mm; }
+.tema:first-of-type { break-before: auto; }
+.tema-header { display: flex; align-items: stretch; gap: 0; margin-bottom: 1.5mm; }
+.tema-num {
+  background: #7d1f2b; color: #fff; font-weight: 800; font-size: 13pt;
+  min-width: 11mm; display: flex; align-items: center; justify-content: center;
+  border-radius: 2px 0 0 2px; padding: 1.5mm 2mm;
+}
+.tema-titulo {
+  background: #a3444f; color: #fff; font-weight: 700; font-size: 11.5pt;
+  flex: 1; display: flex; align-items: center; padding: 1.5mm 3mm;
+  border-radius: 0 2px 2px 0; letter-spacing: .3px;
+}
+.tema-base { font-style: italic; font-size: 8.5pt; color: #4a4a4a; margin: 0 0 3mm 1mm; }
+
+/* Variantes de cor do cabeçalho de tema (usar conforme a natureza dominante) */
+.tema-header.azul .tema-num { background: #1f4e79; } .tema-header.azul .tema-titulo { background: #4a749c; }
+.tema-header.verde .tema-num { background: #2e6b3e; } .tema-header.verde .tema-titulo { background: #578964; }
+.tema-header.dourado .tema-num { background: #9a7b16; } .tema-header.dourado .tema-titulo { background: #b39a4a; }
+.tema-header.cinza .tema-num { background: #4a4a4a; } .tema-header.cinza .tema-titulo { background: #757575; }
+
+/* ---- 1. Caixas coloridas ---- */
+.caixa { border-radius: 3px; padding: 2.2mm 3mm; margin-bottom: 2.6mm; break-inside: avoid; border-left: 3.5px solid; }
+.caixa .caixa-titulo { font-weight: 800; font-size: 9.5pt; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1mm; }
+.caixa p { margin-bottom: 1mm; } .caixa p:last-child { margin-bottom: 0; }
+.caixa ul, .caixa ol { padding-left: 5mm; } .caixa li { margin-bottom: .6mm; }
+.caixa.def     { background: #e8eef5; border-color: #1f4e79; } .caixa.def .caixa-titulo     { color: #1f4e79; }
+.caixa.atencao { background: #e9f2ea; border-color: #2e6b3e; } .caixa.atencao .caixa-titulo { color: #2e6b3e; }
+.caixa.prazo   { background: #f7f1dd; border-color: #9a7b16; } .caixa.prazo .caixa-titulo   { color: #9a7b16; }
+.caixa.fase    { background: #f6e8ea; border-color: #7d1f2b; } .caixa.fase .caixa-titulo    { color: #7d1f2b; }
+.caixa.neutra  { background: #efefef; border-color: #4a4a4a; } .caixa.neutra .caixa-titulo  { color: #4a4a4a; }
+
+/* ---- 2. Fluxo vertical com setas (ritos, etapas, ciclos) ---- */
+.fluxo-v { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-v .fv-titulo { font-weight: 800; font-size: 9.5pt; color: #7d1f2b; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-v .passo {
+  background: #f6e8ea; border: 1px solid #7d1f2b; border-radius: 3px;
+  padding: 1.6mm 2.6mm; text-align: center;
+}
+.fluxo-v .passo b { color: #7d1f2b; }
+.fluxo-v .seta { text-align: center; color: #7d1f2b; font-size: 10pt; line-height: 1.1; padding: .4mm 0; }
+.fluxo-v.azul .passo { background: #e8eef5; border-color: #1f4e79; } .fluxo-v.azul .seta, .fluxo-v.azul .fv-titulo, .fluxo-v.azul .passo b { color: #1f4e79; }
+
+/* ---- 3. Fluxo horizontal inline (categorias/espécies) ---- */
+.fluxo-h { margin-bottom: 2.6mm; break-inside: avoid; }
+.fluxo-h .fh-titulo { font-weight: 800; font-size: 9.5pt; color: #4a4a4a; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 1.2mm; }
+.fluxo-h .linha { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2mm; }
+.fluxo-h .item {
+  background: #efefef; border: 1px solid #4a4a4a; border-radius: 3px;
+  padding: 1.2mm 2.4mm; font-size: 9pt; font-weight: 600;
+}
+.fluxo-h .seta-h { color: #4a4a4a; font-weight: 700; }
+
+/* ---- 4. Mnemônico ---- */
+.mnemo {
+  border: 2px dashed #9a7b16; background: #f7f1dd; border-radius: 4px;
+  padding: 2.4mm 3mm; margin-bottom: 2.6mm; break-inside: avoid;
+}
+.mnemo .palavra { font-size: 14pt; font-weight: 900; color: #9a7b16; letter-spacing: 1.5px; text-align: center; margin-bottom: 1.2mm; }
+.mnemo .exp { font-size: 9pt; }
+.mnemo .exp b { color: #9a7b16; }
+
+/* ---- 5. Tabela comparativa ---- */
+table.comp { width: 100%; border-collapse: collapse; margin-bottom: 2.6mm; break-inside: avoid; font-size: 8.8pt; }
+table.comp th { background: #4a4a4a; color: #fff; padding: 1.4mm 2mm; text-align: left; font-size: 8.8pt; }
+table.comp td { border: 1px solid #b9b4aa; padding: 1.3mm 2mm; vertical-align: top; background: #fffdf8; }
+table.comp tr:nth-child(even) td { background: #f4f1e9; }
+table.comp td:first-child { font-weight: 700; }
+
+/* ---- 6. Discursiva com espelho ---- */
+.discursiva { border: 1.5px solid #1f4e79; border-radius: 4px; margin-bottom: 2.6mm; break-inside: avoid; }
+.discursiva .enunciado { background: #1f4e79; color: #fff; padding: 2mm 3mm; font-weight: 600; }
+.discursiva .enunciado::before { content: "QUESTÃO DISCURSIVA — "; font-weight: 800; }
+.discursiva .espelho { padding: 2.2mm 3mm; background: #fffdf8; }
+.discursiva .espelho .esp-titulo { font-weight: 800; color: #1f4e79; text-transform: uppercase; font-size: 9pt; margin-bottom: 1mm; }
+.discursiva .espelho ul { padding-left: 5mm; } .discursiva .espelho li { margin-bottom: .6mm; }
+
+/* util */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; margin-bottom: 2.6mm; }
+.grid2 > * { margin-bottom: 0; }
+b.azul { color: #1f4e79; } b.borg { color: #7d1f2b; } b.verde { color: #2e6b3e; } b.ouro { color: #9a7b16; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <h1>MEMENTO — ASPECTOS JURÍDICOS DA ABORDAGEM POLICIAL · CFO PM 2026</h1>
+  <div class="sub">Apostila da disciplina — Cap. I: Aspectos Jurídicos · Cap. II: Aspectos Doutrinários da Abordagem Policial (PMPE)</div>
+</div>
+
+<!-- ============================ TEMA 1 ============================ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">1</div>
+    <div class="tema-titulo">FUNDAMENTAÇÃO DA BUSCA PESSOAL</div>
+  </div>
+  <div class="tema-base">Base legal: CF/88, art. 144; CPP, arts. 240 (§§ 1º e 2º), 244 e 249.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Missão constitucional (art. 144, CF/88)</div>
+    <p>A PMPE tem a missão constitucional de realizar o <b class="azul">policiamento ostensivo</b> e a <b class="azul">preservação da ordem pública</b>. A polícia ostensiva repele atos de anormalidade e reprime atos ilegais em flagrante delito, devendo agir na <b>legalidade</b>, <b>proporcionalidade</b> e <b>eficiência</b>, em benefício do interesse coletivo — realizando vistorias, abordagens e revistas <b>pessoais, veiculares ou domiciliares</b>.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Conceito de busca pessoal</div>
+    <p>Revista no corpo do sujeito realizada por um policial com a finalidade de encontrar <b>armas, drogas, objetos ou papéis que constituam corpo de delito</b>. Como o procedimento é realizado em situação de suspeição flagrancial e <b>sem mandado judicial</b>, o policial deve fundamentar no boletim de ocorrência o <b class="azul">motivo prévio (fundada suspeita)</b> e a <b class="azul">necessidade da urgência</b> que justificam a medida.</p>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">CPP — dispositivos da busca pessoal</div>
+    <ul>
+      <li><b>Art. 240, § 2º</b> — Proceder-se-á à busca pessoal quando houver <b class="azul">fundada suspeita</b> de que alguém oculte consigo <b>arma proibida</b> ou objetos mencionados nas letras <b>b a f e letra h</b> do § 1º (busca domiciliar).</li>
+      <li><b>Art. 244</b> — A busca pessoal <b class="azul">independerá de mandado</b>: (1) no caso de <b>prisão</b>; (2) quando houver <b>fundada suspeita</b> de posse de arma proibida ou de objetos/papéis que constituam corpo de delito; (3) quando a medida for determinada <b>no curso de busca domiciliar</b>.</li>
+      <li><b>Art. 249</b> — A busca em <b>mulher</b> será feita por <b>outra mulher</b>, se não importar retardamento ou prejuízo da diligência.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Fundada suspeita (arts. 240 e 244, CPP)</div>
+    <p><b class="azul">Requisito essencial e indispensável</b> para a realização da busca pessoal. Suspeita é desconfiança ou suposição, algo intuitivo e frágil — por isso a norma exige <b>fundada</b> suspeita, mais concreta e segura: existência, no caso concreto, de <b>indícios significativos</b> de que a pessoa abordada esteja de posse de arma proibida, objetos ou papéis que constituam corpo de delito.</p>
+    <p>Doutrina (Código de Processo Penal Comentado. 4. ed. São Paulo: RT, 2005, p. 493): o policial não pode valer-se unicamente de sua experiência ou pressentimento — precisa de algo mais palpável, como a <b>denúncia feita por terceiro</b> de que a pessoa porta o instrumento do delito, ou <b>visualizar uma saliência sob a blusa</b> com nítida impressão de se tratar de um revólver.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Ponto de atenção — o que NÃO fundamenta e o que registrar</div>
+    <ul>
+      <li>A fundada suspeita <b>não</b> pode ser baseada em elementos frágeis: <b>pressentimentos, achismos ou tirocínio policial</b> — e sim em <b class="verde">elementos objetivos e indícios significativos</b>.</li>
+      <li>No relatório, o policial deve fazer constar os <b>elementos concretos</b> da ação que levaram à fundada suspeita, evidenciando também a <b>urgência</b> para executar a diligência.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 2 ============================ -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">2</div>
+    <div class="tema-titulo">FUNDADA SUSPEITA NOS TRIBUNAIS SUPERIORES (STF/STJ)</div>
+  </div>
+  <div class="tema-base">Base: STF, HC 81305; STJ, AgRg HC 734263-RS; STJ, RHC nº 158580/BA; STF, HC 208240-SP; tabela de decisões relevantes (2023/2024).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">STF — HC 81305 (Min. Ilmar Galvão, DJ 22-02-2002)</div>
+    <p>A "fundada suspeita" prevista no art. 244 do CPP <b>não pode fundar-se em parâmetros unicamente subjetivos</b>, exigindo <b class="azul">elementos concretos</b> que indiquem a necessidade da revista, em face do constrangimento que causa. No caso, a alegação de que o paciente trajava um <b>"blusão" suscetível de esconder uma arma</b> não configurou tais elementos — sob risco de referendo a condutas arbitrárias, ofensivas a direitos e garantias individuais e caracterizadoras de <b>abuso de poder</b>.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">STJ — AgRg HC 734263-RS (denúncia anônima)</div>
+    <p>"A <b>denúncia anônima</b>, sem amparo em outros elementos que justifiquem a suspeita, <b>não configura a justa causa</b> necessária para legitimar a busca pessoal e veicular efetuada pela polícia."</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">STJ — RHC nº 158580/BA: hipóteses de ILEGALIDADE da busca pessoal</div>
+    <ul>
+      <li><b>a)</b> Quando pautada em critérios <b>unicamente subjetivos</b>;</li>
+      <li><b>b)</b> Abordagens de <b>rotina</b>;</li>
+      <li><b>c)</b> Abordagem em razão do <b>nervosismo</b> do abordado;</li>
+      <li><b>d)</b> Abordagem baseada unicamente em <b>denúncia anônima</b>;</li>
+      <li><b>e)</b> Abordagem baseada unicamente no <b>tirocínio policial</b>;</li>
+      <li><b>f)</b> Abordagem em razão (tão somente) de <b>atitude suspeita</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">STF — HC 208240-SP (tese)</div>
+    <p>"A busca pessoal <b>independe de mandado judicial</b> e deve estar fundada em <b class="azul">elementos indiciários objetivos</b> de que a pessoa esteja na posse de arma proibida ou de objetos ou papéis que constituam corpo de delito, <b>não sendo lícita</b> a realização da medida com base na <b>raça, sexo, orientação sexual, cor da pele ou aparência física</b>."</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Situação reconhecida nos julgados</th><th>Julgado</th></tr>
+    <tr><td>Denúncia anônima + demonstração de nervosismo + mudança de direção ao avistar os policiais</td><td>STF, ARE 1493264, 04/07/2024</td></tr>
+    <tr><td>Denúncia anônima detalhada + diligência prévia</td><td>STJ, AgRg no HC 883286, 19/06/2024</td></tr>
+    <tr><td>Fuga ao avistar a equipe policial</td><td>STJ, AgRg no HC 897225, 20/06/2024</td></tr>
+    <tr><td>Denúncia anônima + atitude suspeita + fuga para o interior da residência</td><td>STJ, AgRg HC 862522, 01/07/2024; STJ, HC 889618, 26/04/2024</td></tr>
+    <tr><td>Demonstração de nervosismo dos ocupantes do veículo + fuga instantânea ao avistarem a viatura</td><td>STF, RE 1459386, 22/03/2024</td></tr>
+    <tr><td>Denúncias anônimas circunstanciadas (detalhadas) da prática de crime</td><td>STJ, AgRg no HC 892490, 26/06/2024; STF, HC 241436, 28/06/2024</td></tr>
+    <tr><td>Denúncia anônima + campana</td><td>STJ, AgRg no HC 889215, 19/06/2024</td></tr>
+    <tr><td>Dispensar sacola ao avistar a equipe policial</td><td>STF, ARE 1500055, 02/07/2024</td></tr>
+    <tr><td>Informações de que o abordado era o autor do crime</td><td>STF, RHC 242676, 24/06/2024</td></tr>
+    <tr><td>Arremesso de veículo em direção aos policiais durante operação</td><td>STF, ARE 1495634, 25/06/2024</td></tr>
+    <tr><td>Nervosismo ao avistar os policiais + grande volume na cintura</td><td>STJ, HC 844904, 08/07/2024; STF, RE 1517829, 09/10/2024</td></tr>
+    <tr><td>Nervosismo acentuado + desvio de olhar + mudança de direção</td><td>TJPR, 21/10/2024</td></tr>
+    <tr><td>Usuário de drogas aponta a casa onde comprou a droga — abordagem legítima; tráfico de drogas é crime permanente</td><td>STJ, HC 916185, 24/05/2024; STJ, RHC 194681, 03/07/2024</td></tr>
+    <tr><td>Cheiro forte de "maconha" saindo do carro</td><td>STJ, AgRg no HC n. 755.614, 17/02/2023</td></tr>
+    <tr><td>Identificação de diversos registros de prisão configura justa causa (fundada suspeita) para busca veicular</td><td>STF, RE 1447080, 07/05/2024</td></tr>
+    <tr><td>Avistamento de drogas no interior do imóvel após flagrante e apreensão fora da residência</td><td>(constante da tabela de decisões relevantes da apostila)</td></tr>
+  </table>
+  <div class="tema-base">Tabela "Decisões relevantes referentes à legalidade de buscas pessoais, veiculares e domiciliares" — pareamento situação × julgado conforme a ordem da apostila.</div>
+</div>
+
+<!-- ============================ TEMA 3 ============================ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">3</div>
+    <div class="tema-titulo">ATENDIMENTO E BUSCA PESSOAL AOS GRUPOS VULNERÁVEIS</div>
+  </div>
+  <div class="tema-base">Base legal: Lei 13.431/2017 (arts. 7º a 12); Lei 12.764/2012; CF/88, art. 3º, IV; Decreto Estadual 30.051/2010; POPs 0021, 0016, 001 e 007 (SDS), 0029, 0053 e 0005.</div>
+
+  <table class="comp">
+    <tr><th>Grupo vulnerável</th><th>Documento orientador / norma</th></tr>
+    <tr><td>Criança e adolescente</td><td>POP 0021 — Ocorrências com Crianças e Adolescentes no âmbito da atividade Policial Militar; Lei 13.431/2017 (alterou o ECA)</td></tr>
+    <tr><td>Mulher</td><td>POP 0016 — atendimento à mulher vítima de violência doméstica, familiar, sexual, psicológica, moral ou patrimonial baseada no gênero; POPs 001 e 007 da SDS (abordagens a pessoas a pé e busca pessoal)</td></tr>
+    <tr><td>Pessoa idosa</td><td>Considerar peculiaridades e limitações da idade avançada; evitar exposição a situação que não suporte</td></tr>
+    <tr><td>Pessoa com deficiência</td><td>POP nº 0029 — Abordagem a pessoa com deficiência; Lei 12.764/2012 (TEA = pessoa com deficiência para todos os termos legais); POP nº 0053 — Ocorrências envolvendo pessoas com TEA</td></tr>
+    <tr><td>Pessoa em situação de rua</td><td>Busca pessoal + breve entrevista; notificações aos CRAS e CREAS para integração e ressocialização; POP específico da PMPE</td></tr>
+    <tr><td>População LGBTQIAPN+</td><td>CF, art. 3º, IV; Decreto Estadual 30.051/2010 (nome social); recomendação do MPPE; POP 0005 — Abordagem, busca e revista pessoal</td></tr>
+  </table>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Escuta especializada (art. 7º)</div>
+      <p>Procedimento de <b>entrevista</b> sobre situação de violência com criança ou adolescente perante <b class="azul">órgão da rede de proteção</b>, limitado o relato estritamente ao necessário para o cumprimento de sua finalidade.</p>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Depoimento especial (art. 8º)</div>
+      <p>Procedimento de <b>oitiva</b> de criança ou adolescente vítima ou testemunha de violência perante <b class="azul">autoridade policial ou judiciária</b>.</p>
+    </div>
+  </div>
+
+  <div class="caixa prazo">
+    <div class="caixa-titulo">Depoimento especial — regras numéricas (Lei 13.431/2017)</div>
+    <ul>
+      <li>Realizado, sempre que possível, <b class="ouro">uma única vez</b>, em sede de produção antecipada de prova judicial (art. 11);</li>
+      <li>Seguirá o <b>rito cautelar de antecipação de prova</b>: I — quando a criança/adolescente tiver <b class="ouro">menos de 7 (sete) anos</b>; II — em caso de <b class="ouro">violência sexual</b> (art. 11, § 1º);</li>
+      <li>Novo depoimento especial: <b>não admitido</b>, salvo imprescindibilidade justificada pela autoridade competente + concordância da vítima/testemunha ou representante legal (art. 11, § 2º).</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Garantias à criança e ao adolescente (arts. 9º a 12)</div>
+    <ul>
+      <li>Resguardo de <b>qualquer contato, ainda que visual</b>, com o suposto autor/acusado ou pessoa que represente ameaça, coação ou constrangimento (art. 9º);</li>
+      <li>Local <b>apropriado e acolhedor</b>, com privacidade (art. 10);</li>
+      <li>Vedada a <b>leitura da denúncia</b> ou de outras peças processuais; assegurada a <b>livre narrativa</b>; transmissão em tempo real à sala de audiência com sigilo; gravação em <b>áudio e vídeo</b>; tramitação em <b>segredo de justiça</b> (art. 12);</li>
+      <li>O policial deve evitar <b class="verde">violência institucional</b> e a <b class="verde">revitimização</b>, acolhendo adequadamente a criança/adolescente.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">População LGBTQIAPN+ — pontos de atenção</div>
+    <ul>
+      <li><b>CF, art. 3º, IV</b>: "promover o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação";</li>
+      <li><b>Decreto Estadual 30.051/2010</b>: inclusão do uso do <b>nome social</b> de travestis e transexuais nos registros estaduais e serviços públicos estaduais;</li>
+      <li>Por recomendação do <b>MPPE</b>: a manifestação de afeto em público, entre pessoas heterossexuais ou homossexuais, <b>não constitui crime</b>, desde que não seja ato obsceno de cunho sexual — o policial deve orientar a população sobre o direito à expressão pública de afeto (beijo, abraço, mãos dadas).</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Pessoa em situação de rua</div>
+    <p>População que já vive em <b>vulnerabilidade social</b>: realizar a busca pessoal e, após, breve entrevista, analisando e orientando o indivíduo (pessoa com transtorno mental, imigrante, indígena, egresso do sistema penitenciário, com mandado em aberto, mulheres, idosos, crianças/adolescentes e pessoas LGBTQIAPN+). Realizar as devidas <b class="verde">notificações aos CRAS e CREAS</b> para ações de integração e ressocialização, com identificação pessoal, facilitando o acolhimento e a reintegração.</p>
+  </div>
+</div>
+
+<!-- ============================ TEMA 4 ============================ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">4</div>
+    <div class="tema-titulo">BUSCA VEICULAR E BUSCA DOMICILIAR</div>
+  </div>
+  <div class="tema-base">Base legal: CF/88, art. 5º, XI; CPP, art. 240, § 1º; STF, HC 94.016 (Rel. Min. Celso de Mello, j. 16-9-2008, Segunda Turma); STF, RE nº 603616.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Busca veicular</div>
+    <p>Deve obedecer aos <b>mesmos critérios da busca pessoal</b> — é necessária a verificação da <b class="azul">fundada suspeita</b>. Não é correto confundir busca veicular com busca domiciliar, <b>salvo</b> exceções: <b>motor home</b> ou <b>food truck</b> quando não estiver sendo ali usado como veículo.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Inviolabilidade domiciliar (CF, art. 5º, XI)</div>
+    <p>"A casa é <b>asilo inviolável</b> do indivíduo, ninguém nela podendo penetrar sem consentimento do morador, salvo em caso de <b>flagrante delito</b> ou <b>desastre</b>, ou para <b>prestar socorro</b>, ou, <b>durante o dia</b>, por <b>determinação judicial</b>." Objetivo: proteger a vida privada e a intimidade do indivíduo.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Conceito de "casa" (STF — HC 94.016)</div>
+    <p>Conceito <b>abrangente</b>, estendendo-se a: <b>qualquer compartimento habitado</b>; <b>qualquer aposento ocupado de habitação coletiva</b>; e <b>qualquer compartimento privado não aberto ao público onde alguém exerce profissão ou atividade pessoal</b> — ex.: escritórios profissionais, consultórios médicos e odontológicos.</p>
+  </div>
+
+  <div class="fluxo-v azul">
+    <div class="fv-titulo">Hipóteses que autorizam a entrada no domicílio (art. 5º, XI)</div>
+    <div class="passo"><b>I</b> — Com o consentimento do morador</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>II</b> — Sem o consentimento do morador: através de ordem judicial e durante o dia</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>III</b> — A qualquer hora, sem o consentimento do indivíduo: flagrante delito, desastre ou para prestar socorro</div>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">CPP, art. 240, § 1º — busca domiciliar: finalidades ("fundadas razões")</div>
+    <ul>
+      <li><b>a)</b> prender criminosos; <b>b)</b> apreender coisas achadas ou obtidas por meios criminosos; <b>c)</b> apreender instrumentos de falsificação ou de contrafação e objetos falsificados ou contrafeitos;</li>
+      <li><b>d)</b> apreender armas e munições, instrumentos utilizados na prática de crime ou destinados a fim delituoso; <b>e)</b> descobrir objetos necessários à prova de infração ou à defesa do réu;</li>
+      <li><b>f)</b> apreender cartas, abertas ou não, destinadas ao acusado ou em seu poder, quando haja suspeita de que o conhecimento do seu conteúdo possa ser útil à elucidação do fato; <b>g)</b> apreender pessoas vítimas de crimes; <b>h)</b> colher qualquer elemento de convicção.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Fundadas razões — STF, RE nº 603616</div>
+    <ul>
+      <li>"Fundadas razões": <b>elemento prévio e concreto (objetivo)</b> que sinaliza que naquela residência esteja ocorrendo um ato ilegal;</li>
+      <li>A entrada forçada em domicílio <b>sem justificativa prévia</b> conforme o direito é <b>arbitrária</b> — <b>não</b> será a constatação de flagrância <b>posterior ao ingresso</b> que justificará a medida;</li>
+      <li>A entrada forçada sem mandado judicial só é lícita, <b>mesmo em período noturno</b>, quando amparada em <b class="verde">fundadas razões, devidamente justificadas a posteriori</b>, que indiquem que dentro da casa ocorre situação de flagrante delito;</li>
+      <li>Sob pena de <b>responsabilidade disciplinar, civil e penal</b> do agente ou da autoridade e de <b>nulidade dos atos praticados</b>.</li>
+    </ul>
+  </div>
+
+  <table class="comp">
+    <tr><th>CF/88</th><th>Tipificação</th><th>Descrição</th></tr>
+    <tr><td>Art. 5º, XI</td><td>Proteção da casa</td><td>Casa é asilo inviolável; entrada só com consentimento, flagrante delito, desastre, socorro ou, durante o dia, determinação judicial</td></tr>
+    <tr><td>Art. 5º, XVI</td><td>Direito a reunião</td><td>Reunir-se pacificamente, sem armas, em locais abertos ao público, independentemente de autorização, desde que não frustrem outra reunião anteriormente convocada para o mesmo local, sendo apenas exigido prévio aviso à autoridade competente</td></tr>
+    <tr><td>Art. 5º, XLIX</td><td>Direito do preso</td><td>É assegurado aos presos o respeito à integridade física e moral</td></tr>
+    <tr><td>Art. 5º, LXI</td><td>Aspectos da prisão</td><td>Ninguém será preso senão em flagrante delito ou por ordem escrita e fundamentada de autoridade judiciária competente, salvo transgressão militar ou crime propriamente militar, definidos em lei</td></tr>
+    <tr><td>Art. 5º, LXIII</td><td>Direito do preso</td><td>O preso será informado de seus direitos, entre os quais o de permanecer calado, sendo-lhe assegurada a assistência da família e advogado</td></tr>
+    <tr><td>Art. 5º, LXIV</td><td>Direito do preso</td><td>O preso tem direito à identificação dos responsáveis por sua prisão ou por seu interrogatório policial</td></tr>
+  </table>
+
+  <div class="discursiva">
+    <div class="enunciado">Durante patrulhamento noturno, uma guarnição da PMPE recebe denúncia anônima de tráfico de drogas em determinada residência e pretende nela ingressar sem mandado judicial. À luz da Constituição Federal e do entendimento dos Tribunais Superiores apresentados na apostila, discorra sobre os requisitos de licitude da entrada forçada em domicílio e as consequências de seu descumprimento.</div>
+    <div class="espelho">
+      <div class="esp-titulo">Espelho de resposta</div>
+      <ul>
+        <li>Inviolabilidade domiciliar: casa é asilo inviolável; hipóteses de entrada — consentimento do morador; ordem judicial durante o dia; a qualquer hora em flagrante delito, desastre ou socorro (CF, art. 5º, XI);</li>
+        <li>Conceito abrangente de "casa": compartimento habitado, aposento de habitação coletiva, compartimento privado não aberto ao público onde se exerce profissão/atividade (STF, HC 94.016);</li>
+        <li>Exigência de fundadas razões — elemento prévio e concreto (objetivo) de que na residência ocorre ato ilegal; a flagrância constatada após o ingresso não justifica a medida (STF, RE nº 603616);</li>
+        <li>Denúncia anônima, por si só, não configura justa causa para busca (STJ, AgRg HC 734263-RS); necessidade de outros elementos concretos (ex.: diligência prévia, campana — tabela de decisões da apostila);</li>
+        <li>Consequências da entrada ilícita: responsabilidade disciplinar, civil e penal do agente/autoridade e nulidade dos atos praticados (STF, RE nº 603616).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ TEMA 5 ============================ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">5</div>
+    <div class="tema-titulo">ABORDAGEM POLICIAL: CONCEITO, PRINCÍPIOS E PROCESSOS</div>
+  </div>
+  <div class="tema-base">Cap. II — Aspectos Doutrinários da Abordagem Policial, itens 1 a 3.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Conceito de abordagem policial</div>
+    <p>Ação operacional do <b>policiamento ostensivo</b> que visa garantir a segurança pública e a preservação da ordem, executada de forma técnica e fundamentada por princípios legais e éticos. Consiste no ato de aproximar-se de pessoas ou locais com o objetivo de:</p>
+    <ul>
+      <li><b>a) Orientar ou Assistir</b> — fornecer informações, ajudar, esclarecer dúvidas;</li>
+      <li><b>b) Interpelar ou Advertir</b> — dialogar para obter informações ou alertar sobre comportamentos;</li>
+      <li><b>c) Realizar Busca</b> — verificar armas, objetos ilícitos ou pessoas procuradas;</li>
+      <li><b>d) Identificar</b> — confirmar identidade de pessoas ou propriedade de bens (ex.: veículos);</li>
+      <li><b>e) Deter</b> — detenção em flagrante delito ou cumprimento de mandados judiciais.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">Técnicas envolvidas na abordagem</div>
+    <div class="linha"><span class="item">Busca Pessoal</span><span class="item">Busca em Veículos</span><span class="item">Busca em Edificações</span><span class="item">Busca no Perímetro</span></div>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Princípios da abordagem</div>
+    <ul>
+      <li><b class="azul">SEGURANÇA</b> — pilar para proteger policiais, abordados e sociedade; minimizar riscos e assegurar a integridade física e psicológica de todos;</li>
+      <li><b class="azul">SURPRESA</b> — agir de maneira inesperada/não previsível, criando vantagem tática e minimizando chances de reação ou resistência;</li>
+      <li><b class="azul">RAPIDEZ</b> — execução ágil e eficiente; minimizar o tempo entre a decisão de agir e a conclusão da abordagem;</li>
+      <li><b class="azul">AÇÃO VIGOROSA</b> — postura firme e resoluta, com ordens claras, precisas e tecnicamente fundamentadas; <b>não se confunde com arbítrio ou violência</b> — respeita legalidade e direitos humanos;</li>
+      <li><b class="azul">UNIDADE DE COMANDO</b> — decisões e ordens emanam de uma única autoridade, em hierarquia definida, evitando conflito de ordens.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Processos da abordagem</div>
+    <div class="passo"><b>1. Planejamento mental</b> — O que faremos? Para que abordaremos? (possibilidade e tipo de delito) Quem iremos abordar? Onde se dará a ação? (riscos e nível da abordagem)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2. Plano de ação</b> — Como faremos? (Modus Operandi) Quando faremos? (melhor momento)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3. Execução</b> — prática do que foi previamente planejado, aplicando a técnica de abordagem</div>
+  </div>
+</div>
+
+<!-- ============================ TEMA 6 ============================ -->
+<div class="tema">
+  <div class="tema-header cinza">
+    <div class="tema-num">6</div>
+    <div class="tema-titulo">POSTURAS DE SEGURANÇA, TIPOS DE BUSCA E POSIÇÕES</div>
+  </div>
+  <div class="tema-base">Cap. II, itens 4 a 6 — posturas conforme o nível de ameaça; tipos e posições da busca pessoal.</div>
+
+  <table class="comp">
+    <tr><th>Postura</th><th>Armamento</th><th>Emprego</th></tr>
+    <tr><td>Um (básica)</td><td>Arma de porte no coldre do lado oposto (policial na diagonal); arma portátil apontada para baixo em bandoleira, cano em direção segura</td><td>Ações educativas/informativas (ex.: prestar informações a transeuntes, alerta celular)</td></tr>
+    <tr><td>Dois Modificada</td><td>Arma de porte e/ou portátil engajada a 45º para baixo ou pronto alto, em posição de segurança</td><td>Policial responsável pela segurança (do que aborda, custódia dos abordados ou perímetro)</td></tr>
+    <tr><td>Três Modificada</td><td>Arma engajada e pronta para o disparo, massa de mira levemente abaixo da linha de visada (amplia a visão periférica)</td><td>Primeiro contato e verbalização com o abordado</td></tr>
+    <tr><td>Três Pronto</td><td>Arma engajada em condições plenas de disparo</td><td>Somente em confronto atual ou iminente, com risco de vida ao policiamento ou a terceiros</td></tr>
+  </table>
+
+  <table class="comp">
+    <tr><th>Tipo de busca</th><th>Característica</th></tr>
+    <tr><td>Visual / Ocular</td><td>Técnica preventiva, discreta e sem contato físico: identifica objetos/comportamentos suspeitos e avalia o ambiente para decidir se são necessárias ações mais invasivas. Feita a distância segura. Limitações: dependência da observação, interpretação subjetiva, fatores ambientais</td></tr>
+    <tr><td>Rápida</td><td>Técnica rápida e direta para localizar objetos que representem risco, sem busca minuciosa; suspeita imediata e pouco tempo. Ex.: acesso a eventos (partidas de futebol), patrulhamento e incursões a pé</td></tr>
+    <tr><td>Minuciosa</td><td>Inspeção aprofundada, extensa, cuidadosa e sistemática, quando a verificação rápida não é suficiente</td></tr>
+    <tr><td>Completa</td><td>Situações extremas: inclusive as cavidades do abordado são verificadas. Somente em cenários de revistas prisionais, entre outros</td></tr>
+  </table>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Posições da busca pessoal</div>
+    <ul>
+      <li><b>EM PÉ</b> — coloca o abordado em posição de desequilíbrio, dificultando movimento brusco e permitindo busca eficaz e segura;</li>
+      <li><b>AJOELHADO</b> — maior controle: suspeitas confirmadas, abordagens de maior risco ou desvantagem numérica da guarnição. Posição: de joelhos, <b>pés cruzados à retaguarda</b>, mãos sobre a nuca com dedos entrelaçados. Exige proporcionalidade, uso mínimo de força, treinamento e respeito aos direitos humanos;</li>
+      <li><b>DEITADO</b> — <b>suspeita confirmada + nível máximo de periculosidade</b> (posse de armas, resistência prévia, indícios de comportamento agressivo, risco de reação violenta). Posição: de bruços (<b>decúbito ventral</b>), pernas afastadas, mãos atrás da cabeça na altura da nuca com dedos entrelaçados, cabeça virada para um lado (facilita respiração e visibilidade). Uso em cenário de baixa ameaça pode configurar <b>abuso de poder</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Observações obrigatórias (itens a–e)</div>
+    <ul>
+      <li>Objetos (mochilas, sacolas, pochetes): busca em um <b>segundo momento</b>, priorizando a busca nas pessoas;</li>
+      <li>Busca em objetos com o abordado a distância de segurança, mas visualizando seus pertences;</li>
+      <li>Após a busca nas posições ajoelhado e deitado, o abordado será colocado <b>de pé</b> (algemado ou não) e será realizada <b class="verde">nova busca pessoal</b>;</li>
+      <li>Se houver resistência durante a busca: provocar o <b>desequilíbrio</b> do abordado, afastar-se para facilitar a atuação do Segurança de Busca e adotar postura de segurança condizente;</li>
+      <li>O Homem-Busca aproxima-se com a <b>arma de porte no coldre</b> e a <b>portátil travada</b>, evitando que fique à frente do corpo.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 7 ============================ -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">7</div>
+    <div class="tema-titulo">ZONAS DE SEGURANÇA E SEQUÊNCIA DA ABORDAGEM A PESSOAS</div>
+  </div>
+  <div class="tema-base">Cap. II, itens 7 e 8 (8.1 a 8.3) — zonas de segurança; aproximação, verbalização e posicionamento.</div>
+
+  <table class="comp">
+    <tr><th>Zona</th><th>Definição</th></tr>
+    <tr><td>Área de Busca</td><td>Local onde o policiamento posiciona o(s) abordado(s), verbalizando, para realizar a busca pessoal com segurança em relação ao ambiente e restringindo a possibilidade de fuga</td></tr>
+    <tr><td>Área de Custódia</td><td>Local onde o abordado é posicionado após a busca pessoal (já verificado que não representa risco), sob custódia direta de um ou mais policiais</td></tr>
+    <tr><td>Área de Alcance</td><td>Espaço em que os policiais podem ser alcançados em uma possível reação dos abordados</td></tr>
+    <tr><td>Perímetro de Segurança (540º)</td><td>Área delimitada que serve como primeira linha de defesa contra ameaça externa — todo o entorno do cenário, inclusive pontos altos de edificações (<b>360º horizontal + 180º vertical</b>)</td></tr>
+  </table>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Sequência da abordagem a pessoas (item 8)</div>
+    <div class="passo"><b>8.1 Aproximação</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>8.2 Verbalização</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>8.3 Posicionamento</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>8.4 Busca</b></div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>8.5 Desfecho</b></div>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">8.1 Aproximação — sequência de ações</div>
+    <ul>
+      <li>1º. <b>Triangulação</b>, com o(s) abordado(s) no vértice;</li>
+      <li>2º. Distância de cerca de <b class="borg">2 m entre os policiais</b> e de <b class="borg">1 a 3 m destes para o abordado</b>;</li>
+      <li>3º. Manter a distância e evitar o contato enquanto o abordado ainda não estiver devidamente posicionado para a busca pessoal.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">8.2 Verbalização — sequência de comandos</div>
+    <ul>
+      <li>1º. <b>"PARADO(S)! POLÍCIA MILITAR!"</b></li>
+      <li>2º. <b>"MÃOS ATRÁS DA CABEÇA E ENTRELACE OS DEDOS!"</b></li>
+      <li>3º. <b>"DE COSTAS PARA O POLICIAMENTO!"</b></li>
+      <li>4º. <b>"ABRA AS PERNAS"</b> (o quanto necessário para uma abordagem efetiva e segura, deixando o abordado em posição desconfortável);</li>
+      <li>5º. <b>"PARA SUA SEGURANÇA, FAÇA SOMENTE O QUE FOR DETERMINADO PELO POLICIAMENTO."</b></li>
+    </ul>
+    <p>Comunicação clara e objetiva evita mal-entendidos e reações impulsivas, transmite segurança, profissionalismo e controle emocional, reforçando a autoridade policial sem agressividade.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">8.3 Posicionamento</div>
+    <ul>
+      <li><b>Policiamento</b>: manter distância enquanto verbaliza; policiais <b>em linha</b>, sem adentrar na linha de fogo do companheiro. Na aproximação para a busca, o segurança do homem-busca toma um dos flancos e o homem-busca inicia pelo <b>flanco oposto</b>;</li>
+      <li><b>Equipe com 03 PPMM</b> (mais de um abordado): homem-busca ao centro; patrulheiro (a pé) ou motorista (motorizado) acumula segurança da custódia e do perímetro, na diagonal do homem-busca, oposta à do Comandante;</li>
+      <li><b>Equipe com 04 PPMM</b>: 4º componente assume segurança do homem-busca em um dos flancos; Comandante na diagonal oposta faz a segurança da área de custódia; motorista assume segurança do perímetro;</li>
+      <li><b>Abordado</b>: voltado para um <b>anteparo</b> (sempre que houver), em linha com os demais, com distância mínima de <b class="borg">1 m entre eles</b> (sempre que possível); em via pública, retirado para a calçada ou local seguro. Após a busca, removido da linha de busca para a <b>área de custódia</b>.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 8 ============================ -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">8</div>
+    <div class="tema-titulo">EXECUÇÃO DA BUSCA PESSOAL E DESFECHO</div>
+  </div>
+  <div class="tema-base">Cap. II, itens 8.4 e 8.5 — funções da guarnição, escalonamento de prioridades, execução da busca e desfecho. Base legal: CPP, art. 244.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Busca pessoal (conceito operacional)</div>
+    <p>Procedimento técnico-operacional realizado pelo policial militar, com base em <b class="azul">fundada suspeita (art. 244 do CPP)</b>, que consiste na revista do <b>corpo, vestes e pertences</b> de uma pessoa, com o objetivo de prevenir ou reprimir atos ilícitos, assegurando a ordem pública e a integridade física de todos os envolvidos.</p>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Funções dos componentes da guarnição</div>
+    <ul>
+      <li><b>COMANDANTE</b> — policial mais antigo; responsável pela equipe e pelo gerenciamento de todo o cenário da abordagem;</li>
+      <li><b>HOMEM-BUSCA</b> — responsável pela busca/revista pessoal e/ou veicular;</li>
+      <li><b>SEGURANÇA DO HOMEM-BUSCA</b> — garante a segurança do homem-busca e de terceiros envolvidos;</li>
+      <li><b>SEGURANÇA DO PERÍMETRO</b> — responsável por toda a segurança do perímetro (540º);</li>
+      <li><b>Obs.</b>: com mais de 04 PPMM, as funções serão reforçadas (ex.: dois homens-busca, dois seguranças da busca).</li>
+    </ul>
+  </div>
+
+  <table class="comp">
+    <tr><th>Efetivo</th><th>Policiamento a pé</th><th>Policiamento motorizado</th></tr>
+    <tr><td>02 PPMM</td><td>Comandante: acumula segurança do homem-busca, do perímetro e da custódia · Patrulheiro 01: homem-busca</td><td>Comandante: acumula segurança do homem-busca, do perímetro e da custódia · Motorista: homem-busca</td></tr>
+    <tr><td>03 PPMM</td><td>Comandante: + segurança do homem-busca · Patrulheiro 01: homem-busca · Patrulheiro 02: segurança do perímetro e da custódia</td><td>Comandante: + segurança do homem-busca · Motorista: segurança do perímetro e da custódia · Patrulheiro 01: homem-busca</td></tr>
+    <tr><td>04 PPMM</td><td>Comandante: + segurança da custódia · Patrulheiro 01: homem-busca · Patrulheiro 02: segurança do homem-busca · Patrulheiro 03: segurança do perímetro</td><td>Comandante: + segurança da custódia · Motorista: segurança do perímetro · Patrulheiro 01: homem-busca · Patrulheiro 02: segurança do homem-busca</td></tr>
+  </table>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Escalonamento de prioridades da busca</div>
+    <div class="passo"><b>1º — BUSCA PESSOAL</b>: garantir a segurança da equipe (armas de fogo/brancas) e verificar demais ilícitos (entorpecentes etc.)</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2º — BUSCA VEICULAR</b>: se os abordados estiverem com veículos</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3º — BUSCA NO PERÍMETRO</b>: local imediato onde estavam os abordados — objetos/cavidades que possam ocultar armas e ilícitos</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4º — CONSULTAS</b>: identificação do(s) abordado(s), veículos, aparelhos eletrônicos, entre outros</div>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Execução da busca a pessoas em pé (roteiro)</div>
+    <ul>
+      <li><b>1º–2º</b> — Posicionar verbalmente o(s) abordado(s) em linha; havendo mais de um, verbalizar (preferencialmente) para que o primeiro dê <b>dois passos à retaguarda</b> (mesmo procedimento para os demais);</li>
+      <li><b>3º</b> — <b>Mãos livres</b>: arma de porte no coldre ou portátil travada e trazida à retaguarda pela bandoleira;</li>
+      <li><b>4º–5º</b> — Aproximação com as mãos à altura do rosto e das mãos do abordado (posição típica de "luta"); com a <b>mão reativa</b>, pegada firme nas mãos do abordado (dedos entrelaçados na nuca);</li>
+      <li><b>6º–7º</b> — Base firme: perna do lado da mão reativa entre as pernas do abordado (sem passar da linha dos pés), perna da mão ativa recuada à diagonal ("base de luta"); cotovelo do braço reativo pressiona as costas, trazendo tronco e cabeça levemente para trás (desconforto e desequilíbrio);</li>
+      <li><b>8º–9º</b> — Com a mão ativa: busca na <b>linha de cintura</b> (mão desliza sem perder contato, inclusive atrás; não passar a cabeça da linha do abordado) e, depois, na <b>virilha</b>;</li>
+      <li><b>10º–11º</b> — <b>Tórax em "X"</b>: do ombro oposto deslizando até a cintura (observando axila), depois do ombro mais próximo; mesmo processo nas <b>costas</b>;</li>
+      <li><b>12º</b> — <b>Membros inferiores</b>: perna próxima da mão ativa até o tornozelo (posterior e anterior); troca de mãos e de base — a mão reativa só sai quando a ativa chega para "rendê-la" — e busca na perna oposta.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Observações da busca</div>
+    <ul>
+      <li>A ordem da busca no corpo <b>pode ser alterada</b> se o policial visualizar/tiver informação de arma ou ilícito em local específico;</li>
+      <li>Com mais de um abordado: busca <b>das extremidades para o centro</b> (a depender da posição do segurança da busca); pode ser alterada por risco visualizado, informação prévia ou fundadas razões;</li>
+      <li>Além do visual, o <b class="verde">tato</b> é o principal sentido na busca pessoal. Preferencialmente <b>não colocar a mão no bolso</b> do abordado (risco de objetos perfurocortantes) — havendo dúvida sobre entorpecente/ilícito, <b>comandar que esvazie o bolso</b> e apresente o material;</li>
+      <li><b>Superioridade numérica relativa</b>: princípio basilar; sem superioridade numérica, a equipe ainda pode abordar mantendo vantagem por técnicas e táticas em equipe, equipamentos etc.;</li>
+      <li>Com mais de 02 abordados, aquele que demonstre <b>prioridade de busca</b> (mesmo ao centro) será buscado antes e conduzido para a extremidade oposta à do comandante.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Busca não ortodoxa a pessoas em pé</div>
+    <p>Adotam-se todos os procedimentos anteriores, <b>exceto o posicionamento das mãos</b>: em vez de atrás da nuca, estarão <b>voltadas para trás, na linha de cintura, com os dedos entrelaçados</b>.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">8.5 Desfecho</div>
+    <ul>
+      <li><b>Flagrante delito verificado</b> → conduzir o(s) abordado(s) à Delegacia de Polícia Civil e apresentá-lo(s) à autoridade policial para o procedimento legal;</li>
+      <li><b>Nenhum ilícito verificado</b> → liberar o(s) abordado(s), <b class="borg">agradecendo pela cooperação</b>.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 9 ============================ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">9</div>
+    <div class="tema-titulo">TÉCNICAS DE ALGEMAMENTO</div>
+  </div>
+  <div class="tema-base">Cap. II, item 9 — emprego de algemas na abordagem policial.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Momento do emprego</div>
+    <p>O uso de algemas pode ocorrer <b>antes, durante ou após</b> a busca pessoal, conforme as circunstâncias; o abordado pode estar <b>em pé, ajoelhado ou deitado</b>. O policial deve sempre observar os <b class="azul">fundamentos legais</b> que justificam a ação. O algemamento <b>antes</b> da busca é recomendável quando o abordado se mostre <b>resistente</b>, impossibilitando a busca pessoal.</p>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Procedimentos por posição</div>
+    <ul>
+      <li><b>Em pé, sem anteparo</b> — abordado de pé, pernas afastadas, braços erguidos, dedos entrelaçados sobre a nuca; o homem-busca saca as algemas com a <b>mão dominante</b>, gancho de fechamento voltado para frente; inicia pelo lado da mão forte do policial; conduz a mão do abordado para trás para finalizar;</li>
+      <li><b>Ajoelhado</b> — mesmos procedimentos da abordagem em pé; atenção à altura do abordado e ao momento de colocá-lo em pé;</li>
+      <li><b>Deitado</b> — abordado de bruços (decúbito ventral), pernas afastadas, mãos na nuca com dedos entrelaçados, cabeça virada para o lado; o policial aproxima-se pelo <b>lado oposto ao rosto</b>, posiciona os joelhos nas costas — um na <b>região cervical</b> e outro na <b>dorsal</b> — para imobilização; um braço é algemado entre as pernas do policial e conduzido às costas; o abordado leva a outra mão para trás.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Detalhes técnicos</div>
+    <ul>
+      <li>Mãos com os <b>dorsos contrários ("costa-costa")</b> após o algemamento;</li>
+      <li>Algemas com as <b>bases na parte externa dos antebraços</b> e <b>fechaduras voltadas para a nuca</b>;</li>
+      <li><b>Algemas plásticas (tipo lacre)</b>: usar <b class="verde">dois lacres</b> — um para cada pulso, passando um por dentro do elo do outro, garantindo firmeza sem comprometer o fluxo sanguíneo.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Levantamento e condução do abordado algemado</div>
+    <ul>
+      <li><b>Ajoelhado</b> — o policial mantém o controle de um braço e instrui o abordado a descruzar os pés e levantar-se (outro policial pode auxiliar no outro braço);</li>
+      <li><b>Deitado</b> — abordado colocado de lado; o policial entrelaça seu braço com o do abordado (o voltado para cima), apoia a outra mão na nuca e faz movimento de rotação para erguê-lo (auxílio conforme a compleição física);</li>
+      <li><b>Condução</b> — segurando diretamente a algema ou entrelaçando o braço com o do abordado.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 10 ============================ -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">10</div>
+    <div class="tema-titulo">ABORDAGEM A VEÍCULOS E MOTOCICLETAS</div>
+  </div>
+  <div class="tema-base">Cap. II — Abordagem a Veículos: Procedimentos e Técnicas; composições de viatura a 2, 3 e 4 homens e duas viaturas; motocicletas.</div>
+
+  <div class="grid2">
+    <div class="caixa atencao">
+      <div class="caixa-titulo">Riscos associados</div>
+      <ul>
+        <li>Perigo à integridade física de policiais e cidadãos;</li>
+        <li>Risco à integridade de vítimas dentro do veículo;</li>
+        <li>Risco de danos à propriedade;</li>
+        <li>O veículo pode ser utilizado <b>como arma</b>.</li>
+      </ul>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Objetivos e dificuldades</div>
+      <ul>
+        <li>Objetivos: identificar e abordar ocupantes; realizar buscas e identificação veicular; garantir a segurança de todos;</li>
+        <li>Dificuldades: falta de visualização total dos ocupantes; cobertura proporcionada pelo veículo; riscos em acompanhamentos em alta velocidade.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">Tipos da abordagem a veículos</div>
+    <div class="linha"><span class="item">BLOQUEIO — interdição do caminho para evitar fuga e verificação geral</span><span class="item">CERCO — posicionamento estratégico para controlar o entorno</span><span class="item">INTERCEPTAÇÃO — abordagem direta ao veículo</span></div>
+  </div>
+
+  <div class="fluxo-v">
+    <div class="fv-titulo">Etapas da abordagem a veículos</div>
+    <div class="passo"><b>1. Acompanhamento</b> — monitoramento visual, aproximação e comunicação (dispositivos sonoros e luminosos), verbalização firme e clara até o término</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>2. Desembarque</b> — rapidez e precisão para gerar impacto psicológico; armas em pronto emprego</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>3. Posicionamento</b> — da viatura e dos policiais, evitando linha de tiro e usando a viatura como proteção</div>
+    <div class="seta">▼</div>
+    <div class="passo"><b>4. Contenção</b> — parada do veículo, saída dos ocupantes e busca pessoal</div>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Comandos padrão</div>
+    <ul>
+      <li>1. <b>"POLÍCIA, ENCOSTE O VEÍCULO!"</b></li>
+      <li>2. <b>"DESLIGUE O VEÍCULO!"</b></li>
+      <li>3. <b>"TODOS OS OCUPANTES DO VEÍCULO DESEMBARQUEM COM AS MÃOS PARA CIMA E DE COSTAS PARA O POLICIAMENTO! DESLOQUEM-SE PELA PARTE DE TRÁS PARA A DIREITA DO VEÍCULO"</b></li>
+    </ul>
+    <p><b>Plano de ação</b>: avaliar tráfego, civis e riscos; utilizar sirenes, giroflex e megafone quando necessário; portas destravadas e vidros abertos; avaliar necessidade de apoio.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Busca veicular</div>
+    <p>Observação atenta e <b>tomada de ângulo</b>, iniciando pela <b class="azul">varredura preliminar</b> para localizar pessoas e objetos ilícitos visíveis. O policial deve adotar um <b>padrão</b> na busca veicular, de modo a evitar locais sem vistoria.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Composição</th><th>Pontos-chave</th></tr>
+    <tr><td>Viatura a 2 homens</td><td>Limitações: falta de patrulheiro para custódia/segurança externa; dificuldade com 2+ ocupantes; divisão de atenção do Comandante. Recomendação: <b>solicitar reforço para veículos com 3 ou mais ocupantes</b>. Comandante: observação frente/lateral direita, custódia e segurança; Motorista: observação frente/lateral esquerda, homem-busca e verificação do veículo</td></tr>
+    <tr><td>Viatura a 3 homens</td><td>Ideal pela presença do patrulheiro. Comandante: observação frente/lateral direita, custódia e segurança; Motorista: observação frente e segurança (após zona de segurança, segurança externa); Patrulheiro 1: observação frente/lateral esquerda, homem-busca e verificação do veículo</td></tr>
+    <tr><td>Viatura a 4 homens</td><td>Comandante: segurança de busca; Motorista: segurança externa (+ apoio à custódia se necessário); Patrulheiro 1: homem-busca; Patrulheiro 2: desembarca pelo lado do Comandante, segurança da zona de alcance e, após a busca do primeiro abordado, segurança de custódia</td></tr>
+    <tr><td>Duas viaturas a 3 homens</td><td>Cobertura total do veículo abordado. Viatura 1: procedimentos anteriores; Viatura 2 — Comandante: cobre flanco direito e assume segurança de custódia; Motorista: lado esquerdo, segurança externa, controla o trânsito, segurança do perímetro; Patrulheiro 1: cobre flanco esquerdo, segurança de custódia (abordados)</td></tr>
+  </table>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Procedimento-base (viatura a 2 homens)</div>
+    <ul>
+      <li><b>Comandante</b> (após o veículo parar, desembarca, forma triangulação, arma em pronto emprego) ordena ao condutor: 1. desligar o veículo; 2. desembarcar com as mãos para cima; 3. abrir a porta traseira do lado do motorista; 4. dirigir-se de costas ao lado direito do veículo → aplicam-se as Técnicas de Contenção e Busca Pessoal;</li>
+      <li><b>Motorista</b> (após autorização do Comandante): 1. desloca-se pela lateral esquerda; 2. Tomada de Ângulo com arma de pronto emprego para verificar ocupantes adicionais; 3. dá o <b>"limpo"</b> para a guarnição; 4. assume homem-busca (POP de abordagem a pessoas), apoiado pelo Comandante (segurança de busca); 5. verifica o porta-malas; 6. busca veicular;</li>
+      <li><b>Segundo abordado</b>: o Motorista mantém atenção exclusiva no segundo até o primeiro estar custodiado; verificação do veículo sem apoio de fogo integral do Comandante.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Abordagem à motocicleta (2, 3 e 4 homens / duas viaturas)</div>
+    <ul>
+      <li>Comandante ordena: 1. desligar a motocicleta e colocar o <b>descanso ou cavalete</b>; 2. desembarcar com as mãos para cima; 3. dirigir-se de costas para trás do veículo → Técnicas de Contenção e Busca Pessoal;</li>
+      <li>Homem-busca solicita que o condutor se desloque para o <b>lado direito da motocicleta</b>, <b>retire o capacete e o entregue ao policial</b> — o abordado permanece com as <b>mãos para trás</b>; em seguida, busca veicular e consulta do veículo e do condutor; nada irregular → devolve o capacete e libera;</li>
+      <li><b>Segundo abordado (garupa)</b>: o Comandante solicita que desembarque <b>primeiro o "garupa"</b> e em seguida o condutor;</li>
+      <li>Composições a 3 e 4 homens e duas viaturas: mesmas funções da abordagem a veículos (segurança externa, segurança de busca, zona de custódia).</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 11 ============================ -->
+<div class="tema">
+  <div class="tema-header verde">
+    <div class="tema-num">11</div>
+    <div class="tema-titulo">PONTO DE BLOQUEIO, ABORDAGEM A ÔNIBUS E A VEÍCULOS DE CARGA</div>
+  </div>
+  <div class="tema-base">Cap. II — Ponto de Bloqueio Policial Militar; Abordagem PM a Ônibus; Abordagem a veículos de carga (PMPE).</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Ponto de bloqueio — recomendações</div>
+    <p>Estabelecer os <b>objetivos principais</b> da operação; programar <b>dia, horário e duração</b> (evitar congestionamentos e longa permanência no mesmo lugar); escolher o local pelos critérios de <b>objetividade e segurança</b>, com trechos suficientes para <b>sinalização, bolsão de vistoria, área de veículo recolhido e estacionamento de viatura</b>.</p>
+  </div>
+
+  <table class="comp">
+    <tr><th>Missão do bloqueio</th><th>Regra da busca</th></tr>
+    <tr><td>Ação educativa de trânsito</td><td>Abordar o condutor e divulgar a ação; busca <b>somente</b> em caso de fundada suspeita</td></tr>
+    <tr><td>Ação conjunta com equipes de trânsito</td><td>Havendo fundada suspeita, <b>primeiro a busca</b>, depois a ação de trânsito</td></tr>
+    <tr><td>Ostensividade / saturação de área</td><td>A busca será a <b>regra</b>, prezando pela segurança, conforme o tópico de abordagem a veículos</td></tr>
+  </table>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Funções no ponto de bloqueio</div>
+    <ul>
+      <li><b>Comandante</b> — coordena as ações; posição estratégica para visualizar toda a operação;</li>
+      <li><b>Selecionador/Vistoriador (homem-busca)</b> — na entrada do bloqueio, seleciona o veículo em fundada suspeita, verifica documentação e realiza a busca pessoal e veicular; após as buscas, procede às consultas;</li>
+      <li><b>Segurança do Vistoriador</b> — segurança do policial que verifica veículos e ocupantes;</li>
+      <li><b>Segurança do Bloqueio (perímetro)</b> — integridade das zonas de segurança, regulando o fluxo de veículos e pedestres;</li>
+      <li><b>Viatura no início do bloqueio</b> — identifica o bloqueio e funciona como barreira física;</li>
+      <li><b>Bases de vistorias</b> — em número proporcional ao efetivo, à topografia do terreno e aos meios (cones) disponibilizados.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Abordagem a ônibus (catraca dianteira) — efetivo mínimo de 4 policiais</div>
+    <ul>
+      <li><b>Aproximação</b> — viatura estaciona na retaguarda do ônibus, coluna do lado do comandante alinhada à coluna do motorista do coletivo, a pelo menos <b class="verde">5 metros</b>; Comandante (1ºH) e Patrulheiros 1 e 2 (3ºH e 4ºH) posicionam-se junto às portas dianteira, central e traseira; Motorista (2ºH) fica próximo à viatura, na coluna traseira, observando objetos descartados ou fugas. Deslocar preferencialmente pelo lado oposto à circulação da via;</li>
+      <li><b>Contenção</b> — o Comandante acessa o ônibus pela porta dianteira, subindo somente o necessário (evita exposição ao corredor); solicita ao motorista que <b>desligue o veículo e mantenha as portas fechadas</b>; visualiza possíveis suspeitos e verbaliza para que desembarquem pela <b>porta central</b> (idealmente) ou retaguarda, com seus pertences, direcionados à área de busca pelo Patrulheiro 01;</li>
+      <li><b>Busca</b> — Patrulheiro 01 (3ºH): busca pessoal; Comandante: segurança do homem-busca no flanco oposto; Patrulheiro 02 (4ºH): segurança da área de custódia. Com 02 viaturas a 02 PPMM, o Comandante da 2ª viatura assume a função de Patrulheiro 01 e o Motorista a de Patrulheiro 02;</li>
+      <li><b>Interior do veículo</b> — se necessário, os demais passageiros desembarcam com seus pertences (busca pessoal se persistir suspeição) e vão para a <b>área de custódia nº 02</b>, sob segurança do Comandante; o Patrulheiro 01 busca no interior do coletivo (objetos escondidos/abandonados);</li>
+      <li><b>Final</b> — sem flagrante delito, o Comandante autoriza o reembarque e a liberação do veículo, garantindo a segurança do trânsito até a saída do ônibus.</li>
+    </ul>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Abordagem a veículos de carga</div>
+    <ul>
+      <li>Duas categorias (independentemente do tamanho): <b>carga com fechamento baú</b> e <b>carga aberta</b> — o baú tem mais pontos críticos (parte interna e obscura);</li>
+      <li>Sempre realizadas com base em <b class="verde">fundada suspeita</b> → <b>alto grau de risco</b>; a verbalização inicial pode ser prejudicada;</li>
+      <li><b>Caminhão baú — aproximação</b>: sinais sonoros e luminosos, luz alta intermitente, seta indicando onde encostar; viatura a <b class="verde">3 a 5 metros</b>, coluna do lado direito (comandante) alinhada à coluna do lado esquerdo (motorista); todos desembarcam e se aproximam da retaguarda;</li>
+      <li><b>Verbalização e posicionamento</b>: condutor desembarca deixando a porta aberta e, com a mão na cabeça, desloca-se até a retaguarda, à direita (área de busca); o comandante questiona sobre outros passageiros — havendo, todos desembarcam para a área de busca;</li>
+      <li><b>Busca</b>: o comandante realiza a busca pessoal sem perder a visão do lado direito da cabine; o motorista (segurança do homem-busca) atento ao lado esquerdo; após, o motorista avança pela esquerda para a <b>varredura da cabine</b>; em seguida solicita que o condutor <b>abra o baú</b> — ambos realizam a varredura (o motorista pode adentrar o baú, com o comandante em segurança). Com três ou mais policiais, o patrulheiro faz a varredura logo após a busca pessoal.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 12 ============================ -->
+<div class="tema">
+  <div class="tema-header azul">
+    <div class="tema-num">12</div>
+    <div class="tema-titulo">ABORDAGEM À EDIFICAÇÃO — CONCEITOS E TIPOS</div>
+  </div>
+  <div class="tema-base">Cap. II — Abordagem à Edificação: definições, tipos, entradas e aspectos essenciais de segurança.</div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Definições</div>
+    <ul>
+      <li><b>Abordagem à edificação</b> — abordagem policial com técnicas específicas de <b>progressão e domínio de área edificada</b>, em ocorrências que <b>não</b> sejam de alta complexidade;</li>
+      <li><b>Área edificada</b> — toda localidade onde exista edificação (conjunto de construções); <b>não confundir com zona urbana</b> — há áreas edificadas na zona rural;</li>
+      <li><b>Edificações</b> — todo tipo de construção, permanente ou temporária, para atender ao interesse do homem: edifício, prédio, casa, barraco, ruínas ou construções inacabadas.</li>
+    </ul>
+  </div>
+
+  <div class="fluxo-h">
+    <div class="fh-titulo">Tipos de edificações</div>
+    <div class="linha"><span class="item">Área edificada em zona urbana (horizontal: casas e vilas · vertical: edifícios e conjuntos habitacionais)</span><span class="item">Casa isolada (afastada de outras edificações, urbana ou rural)</span><span class="item">Favelas e palafitas (construções variadas, sem planejamento urbano, ocupação desordenada)</span></div>
+  </div>
+
+  <table class="comp">
+    <tr><th>Critério</th><th>Abordagem FURTIVA</th><th>Abordagem OSTENSIVA</th></tr>
+    <tr><td>Aproximação</td><td>Lenta e minuciosa, sistemática, com disciplina de luzes e ruídos</td><td>Chegada visível (ostensiva), sem exigir necessariamente disciplina de luzes e ruídos</td></tr>
+    <tr><td>Finalidade</td><td>Ocultar/não denunciar precocemente a presença policial; usada quando se desconhece a localização (ou existência) do suspeito</td><td>Local da ocorrência já identificado; anuncia-se a presença do efetivo mediante verbalização</td></tr>
+    <tr><td>Dinâmica</td><td>Duração e velocidade não são essenciais; proteção em 540º durante toda a ação; espelhos e equipamentos se houver treinamento</td><td>Dinamismo maior, pois não existe o fator "surpresa"</td></tr>
+  </table>
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Evolução da abordagem</div>
+    <p>A abordagem pode <b>evoluir do tipo furtivo para o ostensivo</b>, exigindo intervenção rápida e priorizando a velocidade, devido à necessidade de resguardar a vida de terceiros.</p>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Tipos de entradas</div>
+    <ul>
+      <li><b>ENTRADA COBERTA PREVENTIVA</b> — o PSP, usando cobertas e abrigos, realiza entrada lenta e progressiva, priorizando a segurança da equipe;</li>
+      <li><b>ENTRADA COBERTA EMERGENCIAL</b> — caráter excepcional: diante de situação emergencial, prioriza a <b>velocidade</b> para resguardar vidas em perigo atual ou iminente, relativizando aspectos da entrada preventiva;</li>
+      <li><b>ENTRADA DINÂMICA</b> — entrada rápida para resguardar a vida de terceiros; exige treinamento, armamento e equipamentos específicos; alternativa tática em ocorrências de alta complexidade — <b class="borg">não deve ser utilizada pelo policiamento convencional</b>.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Aspectos essenciais de segurança</div>
+    <ul>
+      <li><b>Deslocamento</b> — evitar contatos inesperados; giroflex e sirene têm utilidade, mas não são absolutos;</li>
+      <li><b>Posicionamento</b> — conforme a geografia do terreno: posição de segurança, observação e adentramento; a partir dela pode ocorrer verbalização com rendição, sem rendição, abordagem ou confrontação; atentar aos <b>Pontos de Perigo Iminente (PPI)</b>;</li>
+      <li><b>Aproximação</b> — preferencialmente abrigado e/ou coberto, evitando ruídos; em <b>casa isolada</b>, aproximação em <b class="verde">"L"</b>, visualizando os quatro lados da edificação;</li>
+      <li><b>Proteção 540º</b> — cada policial mantém sua zona de responsabilidade nos planos horizontal (360º) e vertical (180º);</li>
+      <li><b>Contato visual</b> — não perder o contato visual e manter comunicação constante com a equipe.</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Conceitos operacionais</div>
+    <ul>
+      <li><b>Abrigos</b> — acidentes naturais/artificiais que protegem o policial <b>de tiros</b> (eficiência relativa ao calibre empregado);</li>
+      <li><b>Cobertas</b> — ocultam o policial da visão do oponente, <b>sem proteção balística</b>;</li>
+      <li><b>Silhueta</b> — parte do corpo percebida pela vista do opositor; <b>Redução de silhueta</b> — postura diminuta, recomendável só para adequar-se ao abrigo/coberta;</li>
+      <li><b>Técnica do terceiro olho</b> — o armamento acompanha a linha de direcionamento do olhar (posição pronto-baixo);</li>
+      <li><b>Tomada de ângulo</b> — visualização contínua abrindo o campo visual, distanciando-se das paredes, armamento em pronto-baixo, evitando exposição desnecessária;</li>
+      <li><b>Olhada rápida</b> — jogada rápida de cabeça ao local a ser varrido, retornando imediatamente à proteção; segunda observação por outro ponto; opção quando falta espaço;</li>
+      <li><b>Ângulo morto</b> — local de difícil visualização inicial na varredura;</li>
+      <li><b>PPI</b> — ponto/local/situação com maior probabilidade de surgir ameaça; <b>Perigo imediato</b> — onde o policial estará mais vulnerável: <b>primário</b> = pessoas (proximidade, armamento, suspeitos em relação a reféns); <b>secundário</b> = cantos, mobiliários, portas, escadas etc.;</li>
+      <li><b>Varredura</b> — conjunto de técnicas para busca de perímetro; priorizar o <b>Perigo Imediato Primário</b>;</li>
+      <li><b>Cone da morte</b> — pontos extremamente perigosos (portas, janelas, corredores, escadas, feixes de luz): expor-se o mínimo possível;</li>
+      <li><b>Segurança de profundidade</b> — apoio para manter a segurança em todos os PPI durante a varredura; <b>Tomada de ambiente</b> — controlar os locais já varridos.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================ TEMA 13 ============================ -->
+<div class="tema">
+  <div class="tema-header">
+    <div class="tema-num">13</div>
+    <div class="tema-titulo">EDIFICAÇÃO — EQUIPES, PROCEDIMENTOS E TÉCNICAS DE ENTRADA</div>
+  </div>
+  <div class="tema-base">Cap. II — funções na abordagem a edificações, procedimentos gerais e específicos, varreduras e técnicas de entrada no cômodo.</div>
+
+  <div class="grid2">
+    <div class="caixa def">
+      <div class="caixa-titulo">Equipe de varredura</div>
+      <p>Fração responsável pela <b>busca no interior</b> da edificação. Composição ideal a partir de <b class="azul">04 (quatro) policiais</b>; os integrantes <b>NÃO possuem funções fixas</b> — o comandante pode executar qualquer uma, mas deve evitar ficar preso em custódia de cômodo, vítimas e abordados.</p>
+    </div>
+    <div class="caixa def">
+      <div class="caixa-titulo">Equipe de apoio</div>
+      <p>Fração que permanece <b>fora</b> da edificação: segurança da equipe de varredura, observação dos PPI, vigilância das <b>rotas de fuga</b> e apoio à varredura quando necessário.</p>
+    </div>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Funções na equipe de varredura</div>
+    <ul>
+      <li><b>PONTA 01</b> — primeira posição; explora e confere o que está à frente no sentido da progressão e protege o avanço da fração;</li>
+      <li><b>PONTA 02</b> — à retaguarda do Ponta 01; promove sua cobertura na conferência do ambiente e realiza as técnicas de entrada com ele; elo para as táticas em dupla;</li>
+      <li><b>SEGURANÇA</b> — terceiro PSP; apoia prioritariamente os pontas 01 e 02; segurança dos locais já explorados, se necessário;</li>
+      <li><b>RETAGUARDA</b> — quarto PSP; segurança da retaguarda, podendo assumir outras funções.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Variações de efetivo (medidas de exceção)</div>
+    <ul>
+      <li><b>03 PSP</b> — pontas 01 e 02 preservam as funções; o PSP 03 avoca segurança e retaguarda; funções não engessadas (revezamento conforme o cenário);</li>
+      <li><b>02 PSP</b> — pontas 01 e 02 acumulam segurança e retaguarda, priorizando o perigo imediato. É <b>exceção</b> (risco potencializado): sempre que possível, acionar a central de rádio para pedir apoio, priorizando entrada com efetivo maior (<b>preferencialmente 04 PSP</b>);</li>
+      <li>Prioridade de efetivo é da <b>equipe de varredura</b> — pode-se realocar policiais da equipe de apoio para reforçá-la.</li>
+    </ul>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Procedimentos gerais — pontos-chave (itens 1 a 21)</div>
+    <ul>
+      <li>Evitar passar ou parar em frente ao local; desembarcar em ponto não visível; providenciar <b>cerco e isolamento</b>;</li>
+      <li>Comandante: recolhe informações, identifica policiais, distribui funções e escolhe o local de entrada — que deverá ser <b class="verde">única, para evitar o fogo amigo</b>;</li>
+      <li>Analisar vias de acesso e rotas de fuga; cuidado com animais; manter-se abrigado/coberto; posicionar-se fora da linha de tiro dos companheiros; evitar disparos na direção da edificação (especialmente com a equipe de varredura dentro);</li>
+      <li>Varredura nos cômodos <b>um por vez</b>; porta entreaberta: postar-se do lado da fechadura e empurrá-la com a ponta dos dedos ou o pé até tocar a parede; arrombamento: golpear próximo à fechadura, expondo-se o mínimo;</li>
+      <li>Busca pessoal <b>antes de conduzir alguém à viatura</b>, evitando locais próximos a portas, janelas e junções;</li>
+      <li><b>Elevadores</b>: evitados pela fração e mantidos no térreo, preferencialmente sob vigilância de um PSP;</li>
+      <li>Priorizar <b>comunicação por gestos</b>; cômodo sem suspeito → anunciar <b>"limpo"</b>; PPI sem cobertura → pedir <b>"apoio"</b>;</li>
+      <li>Ao final: reorganizar o efetivo, relatar evidências e realizar o <b>"check de abandono"</b> (conferência de material coletivo e individual).</li>
+    </ul>
+  </div>
+
+  <div class="caixa neutra">
+    <div class="caixa-titulo">Procedimentos específicos</div>
+    <ul>
+      <li><b>Corredores</b> — via de acesso limitada nas laterais (análoga a viela/avenida, com espaço menor e maior chance de confronto): deslocar próximo à parede ou por lanços; reduzir distância entre componentes; apoio de fogo para todos os PPI; atenção a portas, janelas, telhado, orifícios e final do corredor; entrar e sair pelo mesmo local nos cômodos; controlar a região ainda não tomada;</li>
+      <li><b>Escadas</b> — controlar os PPI; <b>não cruzar as pernas</b> no deslocamento (desequilíbrio); cobrir PPI do mais próximo ao mais distante com segurança de profundidade; pessoas descendo em direção à equipe → conduzir a local apropriado para busca pessoal; não cruzar a linha de tiro; verificação possível com a técnica do espelho;</li>
+      <li><b>Estabelecimento comercial</b> — aglomeração e livre circulação: separar por verbalização <b>homens e mulheres em extremidades distintas</b>; equipe de apoio controla o perímetro externo; após a separação, busca pessoal; depois, abordagem à edificação;</li>
+      <li><b>Cômodos</b> — parar e ouvir; analisar detalhes e pontos sem visão completa; verificar abrigos; presumir que pode haver <b>mais suspeitos</b> que o detectado; abordados podem estar em cômodos diferentes; retornar pelo mesmo lugar; suspeitos barricados → verbalizar para persuadi-los à rendição.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Busca visual no cômodo — técnicas de varredura</div>
+    <ul>
+      <li><b>a) Olhada rápida</b> — movimento rápido de corpo mantendo a postura máxima, direcionado ao interior do cômodo e retornando imediatamente; demais policiais fazem segurança e apoio de fogo; repetição por outro ponto de observação; usada em espaço curto/apertado;</li>
+      <li><b>b) Tomada de ângulo</b> — abrir o campo visual distanciando-se das paredes; varredura a partir de ponto fixo coincidente com a extremidade do cano da arma, girando "ângulo a ângulo", "fatia a fatia"; cano, cabeça, cotovelo, ombro e pé juntos em cada ângulo; serve para escadas, corredores, carros, cômodos, cantos de armários;</li>
+      <li><b>c) Uso de espelho</b> — forma mais segura de observar sem exposição: espelho preferencialmente <b>convexo</b> projetado por extensor; o executor precisa de apoio de fogo (estará deitado ou ajoelhado);</li>
+      <li><b>d) Visual refletivo</b> — observação por reflexos de objetos reluzentes: tela de televisor desligado, tampas de micro-ondas, torneiras, espelhos, vidros, cinzeiros, garrafas, pedras de revestimento etc.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="caixa neutra">
+      <div class="caixa-titulo">Porta de centro</div>
+      <p>Entre dois segmentos de paredes (idênticos ou irregulares); em regra, <b>quatro cantos de parede</b> de difícil visualização — dois observáveis na tomada de ângulo ainda do lado de fora; os outros dois formados pelo prolongamento da parede usada como anteparo/barricada.</p>
+    </div>
+    <div class="caixa neutra">
+      <div class="caixa-titulo">Porta de canto</div>
+      <p>Um dos lados localizado junto a um dos ângulos formados pelo prolongamento da parede utilizada como anteparo/barricada.</p>
+    </div>
+  </div>
+
+  <div class="caixa fase">
+    <div class="caixa-titulo">Técnicas de entrada no cômodo</div>
+    <ul>
+      <li><b>ENTRADA UNILATERAL</b> — quando a equipe só pode postar-se em um lado do acesso: pontas 01 e 02 encostados à parede, ombro a ombro, varrem por tomada de ângulo; adentram quase simultaneamente varrendo ângulos mortos e pontos não esclarecidos. <b class="borg">Mais indicada para acesso análogo à porta de canto</b>;</li>
+      <li><b>ENTRADA CRUZADA</b> — pontas em lados opostos do acesso; entrada de forma <b>cruzada</b>, buscando o canto de parede (ângulo morto) e em seguida o centro, com velocidade;</li>
+      <li><b>ENTRADA EM GANCHO</b> — pontas em lados opostos; entrada em forma de <b>gancho</b>, tomando o ângulo morto do próprio lado e depois o centro, com velocidade;</li>
+      <li><b>ENTRADA DELIBERADA</b> — excepcional: o ponta 01 adentra <b>sem prévia combinação</b>, na direção de sua convicção; o ponta 02 obrigatoriamente adentra para o lado oposto.</li>
+    </ul>
+  </div>
+
+  <div class="caixa def">
+    <div class="caixa-titulo">Linguagem das armas</div>
+    <p>Comunicação <b>não verbal</b> que define a ordem de entrada no cômodo quando os pontas estão em lados opostos: finalizada a tomada de ângulo, o ponta que adotar o armamento em <b>pronto-alto ou pronto-baixo</b> indica o franqueamento da entrada ao outro; <b>dois ou mais movimentos de trazer a coronha ao peito</b> indicam que será sua a prioridade de entrada.</p>
+  </div>
+
+  <div class="caixa atencao">
+    <div class="caixa-titulo">Uso de lanterna</div>
+    <p>Em baixa ou zero luminosidade o risco é ainda maior: a lanterna é fundamental para a segurança, mas deve ser usada com consciência — facilita o deslocamento, porém pode <b>denunciar a presença da equipe</b>. Indicadas as lanternas táticas <b>de mão</b> e <b>dedicadas</b> (acopladas ao armamento por trilhos, acionamento sem perder a empunhadura dupla nas armas de porte, sem fragilizá-la nas portáteis).</p>
+  </div>
+</div>
+
+</body>
+</html>
