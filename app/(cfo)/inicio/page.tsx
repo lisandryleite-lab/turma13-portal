@@ -3,7 +3,6 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { ViewToggle } from "../view-toggle"
-import { TREINO_ARMAMENTO_HREF, TREINO_ARMAMENTO_ATE, treinoArmamentoDisponivel } from "@/lib/treino-armamento"
 
 type Tile = "olive" | "gold"
 
@@ -49,23 +48,6 @@ const cards: {
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
-      </svg>
-    ),
-  },
-  {
-    label: "Armamento",
-    href: TREINO_ARMAMENTO_HREF,
-    bg: "gold",
-    externo: true,
-    nota: `Disponível até ${TREINO_ARMAMENTO_ATE}`,
-    icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <circle cx="12" cy="12" r="10" />
-        <line x1="22" x2="18" y1="12" y2="12" />
-        <line x1="6" x2="2" y1="12" y2="12" />
-        <line x1="12" x2="12" y1="6" y2="2" />
-        <line x1="12" x2="12" y1="22" y2="18" />
-        <circle cx="12" cy="12" r="2" />
       </svg>
     ),
   },
@@ -205,9 +187,7 @@ export default async function PortalCfoHome() {
   const eu = session?.user?.id
     ? await prisma.user.findUnique({ where: { id: session.user.id }, select: { turma13: true } })
     : null
-  // Armamento é temporário: some do menu após 17/07 (o middleware também bloqueia a URL).
-  const base = treinoArmamentoDisponivel() ? cards : cards.filter(c => c.href !== TREINO_ARMAMENTO_HREF)
-  const cardsToShow = eu?.turma13 ? base : [...base, cardSenha]
+  const cardsToShow = eu?.turma13 ? cards : [...cards, cardSenha]
 
   return (
     <main
