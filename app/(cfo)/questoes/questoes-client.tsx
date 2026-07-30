@@ -3,11 +3,11 @@
 import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { moduloLabel, moduloLabelCurto } from "@/lib/modulos-titulos"
 
 type Materia = { sigla: string; nome: string; total: number; modulos: string[] }
 
 const TIPOS: [string, string][] = [["", "Todos os tipos"], ["certo_errado", "Certo/Errado"], ["multipla", "Múltipla escolha"], ["dissertativa", "Dissertativa"]]
-const moduloLabel = (m: string) => (m === "" ? "Sem módulo" : `Módulo ${m}`)
 function buildQuery(materia: string, modulo: string, tipo: string, extra = "") {
   let q = `materia=${encodeURIComponent(materia)}${extra}`
   if (modulo !== "__all__") q += `&modulo=${encodeURIComponent(modulo)}`
@@ -263,7 +263,7 @@ function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; init
             <label style={{ flex: 1, fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>Módulo
               <select style={{ ...inputStyle, marginTop: 6 }} value={modulo} onChange={e => setModulo(e.target.value)}>
                 <option value="__all__">Todos os módulos</option>
-                {mAtual.modulos.map(md => <option key={md} value={md}>{moduloLabel(md)}</option>)}
+                {mAtual.modulos.map(md => <option key={md} value={md}>{moduloLabel(materia, md)}</option>)}
               </select>
             </label>
             <label style={{ flex: 1, fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>Tipo
@@ -297,7 +297,7 @@ function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; init
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "var(--ink-60)", marginBottom: 8 }}>
-        <span>{q.materia}{q.modulo ? ` · Mód. ${q.modulo}` : ""}</span>
+        <span>{q.materia}{q.modulo ? ` · ${moduloLabelCurto(q.materia, q.modulo)}` : ""}</span>
         <span>Questão {i + 1} de {qs.length} · acertos {acertos}/{feitas}</span>
       </div>
       <div style={card}>
@@ -419,7 +419,7 @@ function Simulado({ materias }: { materias: Materia[] }) {
           <label style={{ display: "block", fontSize: 13, fontWeight: 600, marginTop: 12 }}>Módulo
             <select style={{ ...inputStyle, marginTop: 6 }} value={modulo} onChange={e => setModulo(e.target.value)}>
               <option value="__all__">Todos os módulos</option>
-              {mAtual.modulos.map(md => <option key={md} value={md}>{moduloLabel(md)}</option>)}
+              {mAtual.modulos.map(md => <option key={md} value={md}>{moduloLabel(materia, md)}</option>)}
             </select>
           </label>
         )}
@@ -545,7 +545,7 @@ function Admin({ disciplinas, materias, onImport }: { disciplinas: Disc[]; mater
 
   async function limpar() {
     if (!limparMat) return
-    const escopo = limparMod === "__all__" ? "TODAS as questões" : `as questões do ${moduloLabel(limparMod)}`
+    const escopo = limparMod === "__all__" ? "TODAS as questões" : `as questões do ${moduloLabel(limparMat, limparMod)}`
     if (!confirm(`Excluir ${escopo} de ${limparMat}? Isso também apaga as respostas dos alunos e não pode ser desfeito.`)) return
     setLimpando(true); setLimparMsg("")
     let url = `/api/questoes/import?materia=${encodeURIComponent(limparMat)}`
@@ -634,7 +634,7 @@ function Admin({ disciplinas, materias, onImport }: { disciplinas: Disc[]; mater
           <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 160px" }}>Módulo
             <select style={{ ...inputStyle, marginTop: 6 }} value={limparMod} onChange={e => setLimparMod(e.target.value)} disabled={!mLimpar}>
               <option value="__all__">Todos</option>
-              {mLimpar?.modulos.map(md => <option key={md} value={md}>{moduloLabel(md)}</option>)}
+              {mLimpar?.modulos.map(md => <option key={md} value={md}>{moduloLabel(limparMat, md)}</option>)}
             </select>
           </label>
           <button onClick={limpar} disabled={!limparMat || limpando} style={{ padding: "10px 16px", borderRadius: 8, border: "1px solid var(--red)", background: "#fff", color: "var(--red)", fontWeight: 600, cursor: !limparMat || limpando ? "default" : "pointer", opacity: !limparMat ? 0.5 : 1 }}>
