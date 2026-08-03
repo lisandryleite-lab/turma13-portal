@@ -14,7 +14,7 @@ const LABEL_FUNCAO: Record<string,string> = {
   AuxiliarOD:"Auxiliar do Oficial de Dia", AdjuntoOD:"Adjunto ao Aux. do Oficial de Dia",
   Adjunto1:"Adjunto da 1ª CIA", Adjunto2:"Adjunto da 2ª CIA",
   Mestre:"Mestre de Cerimônia", Leitor:"Leitor de BI",
-  Discurso:"Discurso ao CFO", Comandante:"Comandante da 2ª CIA",
+  Discurso:"Discurso ao CFO", Comandante:"Comandante da 1ª CIA",
 }
 const GRUPOS_FAXINA = ["G1","G2","G3","G4","G5","G6","G7","G8"] as const
 
