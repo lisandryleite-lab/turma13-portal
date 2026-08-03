@@ -17,21 +17,28 @@ const HORARIOS = [
 
 const DIAS = ["Seg 27/07","Ter 28/07","Qua 29/07","Qui 30/07","Sex 31/07","Sáb 01/08","Dom 02/08"]
 
-// Transcrito da foto do QTS mestre — Turma 13 (coluna da esquerda de cada dia),
-// Semana 29 (27/07–02/08/2026). A foto está em blocos de 2 tempos; cada bloco
-// preenche 2 slots do array de 11. idx0 = 07h00 (vago).
-// Blocos: idx1,2 = 08h00–09h40 · idx3,4 = 10h00–11h40 · idx5,6 = 13h40–15h20 ·
-//         idx7,8 = 15h40–17h20 · idx9,10 = 17h30–19h10.
-// EASPE da foto → EASE no banco. Sáb 01/08 livre; Dom 02/08 tem aula (AP + PJM).
+// Transcrito da foto do QTS mestre — Semana 29 (27/07 a 02/08/2026).
+// Cada dia da foto tem DUAS subcolunas: a da ESQUERDA é a Turma 13, a da direita
+// é a outra turma (mesmo critério das semanas 25/27/28). Por isso os pares
+// aparecem trocados entre os blocos (ex.: ter. TFM2|MPC e depois MPC|TFM2).
+// Mapeamento das linhas da foto para os índices de HORARIOS:
+//   07h00 às 08h00 → idx0 (vago) · 08h00 às 09h40 → idx1,2 · 10h00 às 11h40 → idx3,4
+//   13h40 às 15h20 → idx5,6 · 15h30 às 17h20 → idx7,8 · 18h20 às 19h10 → idx10
+// Siglas normalizadas p/ o banco: INTSIP→INTSISP, EASPE→EASE.
 const grade: Record<string, string[]> = {
-  "Seg 27/07": ["", "EPCR","EPCR", "","", "EASE","EASE", "","", "",""],
-  "Ter 28/07": ["", "TFM2","TFM2", "MPC","MPC", "AP","AP", "TCEM","TCEM", "TCEM","TCEM"],
-  "Qua 29/07": ["", "APHT","APHT", "TFM2","TFM2", "POE","POE", "APHT","APHT", "",""],
-  "Qui 30/07": ["", "AM","AM", "AM","AM", "AP","AP", "AP","AP", "AP","AP"],
-  "Sex 31/07": ["", "MPC","MPC", "POE","POE", "TCEM","TCEM", "INTSISP","INTSISP", "",""],
+  "Seg 27/07": ["", "EPCR","EPCR","","", "EASE","EASE", "","", "",""],
+  "Ter 28/07": ["", "TFM2","TFM2","MPC","MPC", "AP","AP", "TCEM","TCEM", "","TCEM"],
+  "Qua 29/07": ["", "APHT","APHT","TFM2","TFM2", "POE","POE", "APHT","APHT", "",""],
+  "Qui 30/07": ["", "AM","AM","AM","AM", "AP","AP", "AP","AP", "","AP"],
+  "Sex 31/07": ["", "MPC","MPC","POE","POE", "TCEM","TCEM", "INTSISP","INTSISP", "",""],
   "Sáb 01/08": ["","","","","","","","","","",""],
-  "Dom 02/08": ["", "AP","AP", "AP","AP", "PJM","PJM", "PJM","PJM", "",""],
+  "Dom 02/08": ["", "AP","AP","AP","AP", "PJM","PJM", "PJM","PJM", "",""],
 }
+
+// A foto da semana 29 está recortada e NÃO mostra os contadores de carga —
+// por isso, ao contrário das semanas 27/28 (que traziam o valor absoluto),
+// aqui a carga é INCREMENTADA a partir do valor já gravado no banco,
+// somando as horas da própria grade acima. Limitado a cargaTotal.
 
 async function main() {
   const dados = { dias: DIAS, horarios: HORARIOS, grade }
@@ -42,21 +49,20 @@ async function main() {
   })
   console.log(`✓ QTS da semana ${SEMANA} salvo (${DIAS.length} dias).`)
 
-  // Contagem de horas por disciplina (1 slot = 1 hora), igual ao editor.
-  const horas: Record<string, number> = {}
+  const horasSemana: Record<string, number> = {}
   for (const slots of Object.values(grade)) {
-    for (const s of slots) if (s) horas[s] = (horas[s] || 0) + 1
+    for (const sigla of slots) {
+      if (sigla) horasSemana[sigla] = (horasSemana[sigla] || 0) + 1
+    }
   }
 
-  // Atualização INCREMENTAL: soma as horas desta semana à carga atual
-  // (capada no total) — respeita as edições manuais como base.
-  for (const [sigla, h] of Object.entries(horas)) {
+  for (const [sigla, horas] of Object.entries(horasSemana).sort()) {
     const disc = await prisma.disciplina.findUnique({ where: { sigla } })
     if (!disc) { console.log(`  ⚠ disciplina ${sigla} não encontrada — pulando`); continue }
-    const nova = Math.min(disc.cargaTotal, disc.cargaMinistrada + h)
+    const nova = Math.min(disc.cargaTotal, disc.cargaMinistrada + horas)
     const status = nova >= disc.cargaTotal ? "Concluída" : nova > 0 ? "Em andamento" : disc.status
     await prisma.disciplina.update({ where: { sigla }, data: { cargaMinistrada: nova, status } })
-    console.log(`  • ${sigla}: ${disc.cargaMinistrada}/${disc.cargaTotal} +${h} → ${nova}/${disc.cargaTotal} (${status})`)
+    console.log(`  • ${sigla}: ${disc.cargaMinistrada}/${disc.cargaTotal} +${horas}h → ${nova}/${disc.cargaTotal} (${status})`)
   }
 }
 main().catch(e => { console.error(e); process.exit(1) }).finally(() => prisma.$disconnect())
