@@ -23,14 +23,17 @@ const DIAS = ["Seg 03/08","Ter 04/08","Qua 05/08","Qui 06/08","Sex 07/08","Sáb 
 // Mapeamento das linhas da foto para os índices de HORARIOS (mesma convenção
 // da semana 29 revisada): 07h00 às 08h00 → idx0 (vago) · 08h00 às 09h40 → idx1,2 ·
 //   10h00 às 11h40 → idx3,4 · 13h40 às 15h20 → idx5,6 · 15h30 às 17h20 → idx7,8 ·
-//   18h20 às 19h10 → idx10 (tempo único; idx9 fica vago).
+//   18h20 às 19h10 → idx10.
+// O bloco da NOITE (idx9 = 17h30–18h20) não aparece legível na foto — foi
+// informado pela turma em 03/08/2026: seg INTSISP e ter TCEM das 17h30 às 19h10;
+// qua e qui EASE a partir das 17h30 (somando ao EASE das 18h20 já lançado).
 // Siglas da foto → banco: EASPE → EASE · INTSIP → INTSISP · DPPPM → DPPM.
 // Sáb 08/08 e Dom 09/08 não constam na foto (sem aula).
 const grade: Record<string, string[]> = {
-  "Seg 03/08": ["", "PJM","PJM", "INTSISP","INTSISP", "PJM","PJM", "INTSISP","INTSISP", "",""],
-  "Ter 04/08": ["", "TFM2","TFM2", "TFM2","TFM2", "EPCR","EPCR", "TCEM","TCEM", "",""],
-  "Qua 05/08": ["", "AM","AM", "AM","AM", "APHT","APHT", "TPE","TPE", "","EASE"],
-  "Qui 06/08": ["", "AP","AP", "AP","AP", "EASE","EASE", "EASE","EASE", "","EASE"],
+  "Seg 03/08": ["", "PJM","PJM", "INTSISP","INTSISP", "PJM","PJM", "INTSISP","INTSISP", "INTSISP","INTSISP"],
+  "Ter 04/08": ["", "TFM2","TFM2", "TFM2","TFM2", "EPCR","EPCR", "TCEM","TCEM", "TCEM","TCEM"],
+  "Qua 05/08": ["", "AM","AM", "AM","AM", "APHT","APHT", "TPE","TPE", "EASE","EASE"],
+  "Qui 06/08": ["", "AP","AP", "AP","AP", "EASE","EASE", "EASE","EASE", "EASE","EASE"],
   "Sex 07/08": ["", "DPPM","DPPM", "DPPM","DPPM", "TCEM","TCEM", "TPE","TPE", "",""],
   "Sáb 08/08": ["","","","","","","","","","",""],
   "Dom 09/08": ["","","","","","","","","","",""],
