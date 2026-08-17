@@ -5,7 +5,8 @@
 // Isolar numa janela evita conflitos com o layout/sidebar da aplicação, que
 // faziam a página de impressão sair em branco.
 
-type QtsDados = { dias: string[]; horarios: string[]; grade: Record<string, string[]> }
+import type { QtsDados } from "@/lib/qts"
+
 type Disciplina = { id: string; sigla: string; nome: string; cargaTotal: number; cargaMinistrada: number; status: string; modulo: string }
 
 const CORES = [

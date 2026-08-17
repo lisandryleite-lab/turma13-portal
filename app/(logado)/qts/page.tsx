@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth"
 import { QtsAdmin } from "./qts-admin"
 import { QtsPrint } from "./qts-print"
 import { semanaAtual } from "@/lib/utils"
+import type { QtsDados } from "@/lib/qts"
 
 export const dynamic = "force-dynamic"
 
@@ -57,7 +58,6 @@ export default async function QtsPage() {
 }
 
 // ── Tipos ──────────────────────────────────────────────────────────────────────
-type QtsDados = { dias: string[]; horarios: string[]; grade: Record<string, string[]> }
 type Disciplina = { id: string; sigla: string; nome: string; cargaTotal: number; cargaMinistrada: number; status: string; modulo: string }
 
 // ── Paleta de cores por disciplina ────────────────────────────────────────────
