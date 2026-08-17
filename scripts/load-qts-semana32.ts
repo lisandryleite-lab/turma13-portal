@@ -1,4 +1,6 @@
 import "dotenv/config"
+import { readFileSync } from "node:fs"
+import { join } from "node:path"
 import { PrismaClient } from "../lib/generated/prisma/client"
 import { PrismaNeon } from "@prisma/adapter-neon"
 import { neonConfig } from "@neondatabase/serverless"
@@ -24,17 +26,11 @@ const DIAS = diasDaSemana(SEMANA) // Seg 17/08 … Dom 23/08
 // Sáb 22/08 e Dom 23/08 estão em branco na foto (sem aula).
 // Obs.: o "AP" de qua. 19/08 às 10h00 aparece RISCADO na foto — é a subcoluna
 // da outra turma, então não afeta a grade da Turma 13.
-const PLANILHA = `
-SEMANA 32 | 07h00 às 08h00 |       |       |       |       |       |       |       |       |       |
-SEMANA 32 | 08h00 às 09h40 | POE   | EASPE | TFM2  | POE   | AP    | POE   | GC    | TFM2  | DPPPM | GC
-SEMANA 32 | 10h00 às 11h40 | EASPE | POE   | POE   | TFM2  | POE   | AP    | TFM2  | GC    | GC    | DPPPM
-SEMANA 32 | 13h40 às 15h20 | POE   | EASPE | TPE   | DPPPM | AP    | TPE   | AP    | TCEM  | EASPE | PE
-SEMANA 32 | 15h30 às 17h20 | EASPE | POE   | DPPPM | TPE   | TPE   | AP    | TCEM  | AP    | PE    | EASPE
-SEMANA 32 | 18h20 às 19h10 | EASPE | POE   |       | TPE   | TPE   | AP    | TCEM  | AP    |       | EASPE
-`
-
-// A planilha é colada com TAB entre as células; aqui usamos "|" só para manter
-// o bloco legível no código-fonte.
+//
+// A transcrição vive em scripts/data/qts-semana32.txt (compartilhada com
+// scripts/qts-cartaz-pdf.ts). A planilha real é colada com TAB entre as
+// células; no arquivo usamos "|" só para manter o bloco legível.
+const PLANILHA = readFileSync(join(__dirname, "data", "qts-semana32.txt"), "utf8")
 const COLADO = PLANILHA.trim().split("\n").map(l => l.split("|").map(c => c.trim()).join("\t")).join("\n")
 
 async function main() {
