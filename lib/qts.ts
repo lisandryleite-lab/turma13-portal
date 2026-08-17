@@ -138,7 +138,7 @@ export function importarQtsColado(
   const siglas = new Set<string>()
 
   for (const bruta of (texto || "").split(/\r?\n/)) {
-    if (!bruta.trim()) continue
+    if (!bruta.trim() || bruta.trimStart().startsWith("#")) continue
     const celulas = bruta.includes("\t") ? bruta.split("\t") : bruta.split(/\s{2,}/)
 
     const iFaixa = celulas.findIndex(c => faixaHorario(c))

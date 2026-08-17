@@ -36,7 +36,10 @@ function gradeDoArquivo(caminho: string, dias: string[]) {
   // O arquivo usa "|" no lugar do TAB só para ficar legível no repositório.
   const colado = planilha.trim().split("\n")
     .map(l => l.split("|").map(c => c.trim()).join("\t")).join("\n")
-  return importarQtsColado(colado, dias, { colunasPorDia: 2, coluna: "esquerda" })
+  // 1 coluna por dia = QTS oficial da turma; 2 = foto da planilha mestre, em que
+  // cada dia tem duas subcolunas e a Turma 13 é a da esquerda.
+  const colunasPorDia = arg("colunas") === "2" ? 2 : 1
+  return importarQtsColado(colado, dias, { colunasPorDia, coluna: "esquerda" })
 }
 
 async function doBanco(semana: number): Promise<{ dados: QtsDados; disciplinas: DisciplinaCartaz[] }> {
