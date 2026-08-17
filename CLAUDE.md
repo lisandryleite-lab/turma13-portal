@@ -45,7 +45,7 @@ NEXTAUTH_URL          # URL base da aplicação — produção: https://portalcf
 | `/escalas` | `escalas/page.tsx` + `escalas-client.tsx` | Escalas de serviço, faxina, plantão — semana atual e visualização mensal |
 | `/avisos` | `avisos/page.tsx` + `avisos-client.tsx` | Quadro de avisos com fixação e destaque; admin pode criar/editar |
 | `/missao` | `missao/page.tsx` + `missao-admin.tsx` | Missão da semana; admin pode editar |
-| `/qts` | `qts/page.tsx` + `qts-admin.tsx` | Quadro de trabalho semanal (JSON estruturado) |
+| `/qts` | `qts/page.tsx` + `qts-admin.tsx` | Quadro de trabalho semanal (JSON estruturado). Editor admin com importação por colagem da planilha mestre — helpers em `lib/qts.ts` |
 | `/turma` | `turma/page.tsx` + `turma-client.tsx` | Diretório da turma: alunos, hierarquia, funções fixas, cangas |
 | `/xerifancia` | `xerifancia/page.tsx` + `xerifancia-admin.tsx` | Histórico e xerife atual |
 | `/aniversarios` | `aniversarios/page.tsx` | Aniversariantes do mês |

@@ -1,41 +1,8 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { useRouter } from "next/navigation"
-
-// ── Constantes ────────────────────────────────────────────────────────────────
-const HORARIOS = [
-  "07h00-07h50","08h00-08h50","08h50-09h40",
-  "10h00-10h50","10h50-11h40",
-  "13h40-14h30","14h30-15h20",
-  "15h40-16h30","16h30-17h20","17h30-18h20","18h20-19h10",
-]
-
-// Data local (não UTC) — primeira segunda-feira do curso. Construída com
-// componentes ano/mês/dia para evitar o deslize de fuso que jogava o início
-// da semana para domingo.
-const DATA_INICIO = new Date(2026, 0, 12)
-
-function diasDaSemana(semana: number): string[] {
-  const seg = new Date(DATA_INICIO.getTime() + (semana - 1) * 7 * 24 * 60 * 60 * 1000)
-  const fmt = (d: Date) => {
-    const dia = String(d.getDate()).padStart(2, "0")
-    const mes = String(d.getMonth() + 1).padStart(2, "0")
-    const labels = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"]
-    return `${labels[d.getDay()]} ${dia}/${mes}`
-  }
-  // 7 dias (Seg–Dom): há semanas com aula no domingo (ex.: OU-II, PO)
-  return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(seg.getTime() + i * 24 * 60 * 60 * 1000)
-    return fmt(d)
-  })
-}
-
-function gradeVazia(dias: string[]): Record<string, string[]> {
-  const g: Record<string, string[]> = {}
-  for (const d of dias) g[d] = new Array(HORARIOS.length).fill("")
-  return g
-}
+import { HORARIOS, diasDaSemana, gradeVazia, importarQtsColado, type QtsDados } from "@/lib/qts"
 
 // ── Paleta ────────────────────────────────────────────────────────────────────
 const CORES = [
@@ -54,7 +21,6 @@ function corDisc(sigla: string) {
 }
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
-type QtsDados = { dias: string[]; horarios: string[]; grade: Record<string, string[]> }
 type Disciplina = { id: string; sigla: string; nome: string; cargaTotal: number; cargaMinistrada: number; status: string; modulo: string }
 
 // ── Componente principal ──────────────────────────────────────────────────────
@@ -69,7 +35,8 @@ export function QtsAdmin({
   const router = useRouter()
   const [show, setShow] = useState(false)
   const [semana, setSemana] = useState(semanaAtual)
-  const dias = diasDaSemana(semana)
+  // Memoizado: a identidade do array alimenta o useMemo da pré-visualização
+  const dias = useMemo(() => diasDaSemana(semana), [semana])
 
   // Inicializa grade: usa dados existentes (remapeando dias se necessário) ou vazia
   const [grade, setGrade] = useState<Record<string, string[]>>(() => {
@@ -107,10 +74,33 @@ export function QtsAdmin({
     return h
   }, [grade])
 
-  const discMap = Object.fromEntries(disciplinas.map(d => [d.sigla, d]))
+  const discMap = useMemo(
+    () => Object.fromEntries(disciplinas.map(d => [d.sigla, d])) as Record<string, Disciplina>,
+    [disciplinas],
+  )
 
   // Disciplinas que aparecem na grade atual
   const discNaGrade = Object.keys(horasPorDisc()).sort()
+
+  // ── Importação por colagem da planilha mestre ─────────────────────────────
+  const [showImport, setShowImport] = useState(false)
+  const [colado, setColado] = useState("")
+  const [colunasPorDia, setColunasPorDia] = useState<1 | 2>(2)
+  const [coluna, setColuna] = useState<"esquerda" | "direita">("esquerda")
+
+  const previa = useMemo(
+    () => (colado.trim() ? importarQtsColado(colado, dias, { colunasPorDia, coluna }) : null),
+    [colado, dias, colunasPorDia, coluna],
+  )
+  const siglasDesconhecidas = previa ? previa.siglas.filter(s => !discMap[s]) : []
+
+  function aplicarImportacao() {
+    if (!previa) return
+    setGrade(previa.grade)
+    setHorasOverride({})
+    setColado("")
+    setShowImport(false)
+  }
 
   // ── Pintura de células ────────────────────────────────────────────────────
   function pintar(dia: string, i: number) {
@@ -244,6 +234,13 @@ export function QtsAdmin({
           <span style={{ fontSize: 12, color: "#9aa3b8" }}>{dias[0].slice(4)} – {dias[dias.length - 1].slice(4)}/2026</span>
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <button onClick={() => setShowImport(v => !v)} style={{
+            background: showImport ? "var(--azul-medio)" : "#fff", color: showImport ? "#fff" : "var(--azul-medio)",
+            border: "1.5px solid var(--azul-medio)", borderRadius: 7, padding: "6px 14px",
+            fontSize: 12, fontWeight: 700, cursor: "pointer",
+          }}>
+            📋 Colar da planilha
+          </button>
           {qtsList.length > 0 && (
             <select onChange={e => e.target.value && copiarSemana(Number(e.target.value))} defaultValue=""
               style={{ border: "1px solid #dde3ee", borderRadius: 7, padding: "6px 10px", fontSize: 12, color: "var(--azul-profundo)" }}>
@@ -254,6 +251,117 @@ export function QtsAdmin({
           <button onClick={() => setShow(false)} style={{ background: "none", border: "1px solid #dde3ee", borderRadius: 7, padding: "6px 14px", fontSize: 12, cursor: "pointer", color: "#6b7a99" }}>Fechar</button>
         </div>
       </div>
+
+      {/* Importação por colagem da planilha mestre do QTS */}
+      {showImport && (
+        <div style={{ background: "#fff", border: "1.5px solid var(--azul-medio)", borderRadius: 12, padding: 16, marginBottom: 16 }}>
+          <p style={{ fontSize: 12, fontWeight: 700, color: "var(--azul-profundo)", margin: "0 0 4px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+            📋 Importar da planilha
+          </p>
+          <p style={{ fontSize: 11.5, color: "#6b7a99", margin: "0 0 10px", lineHeight: 1.5 }}>
+            Selecione as linhas da planilha mestre (uma por faixa de horário) e cole aqui.
+            As siglas da planilha são convertidas para as do banco automaticamente
+            (EASPE → EASE, DPPPM → DPPM, INTSIP → INTSISP) e cada faixa é expandida
+            nos tempos que ela cobre. Linhas sem horário reconhecível são ignoradas.
+          </p>
+
+          <textarea
+            value={colado}
+            onChange={e => setColado(e.target.value)}
+            rows={7}
+            spellCheck={false}
+            placeholder={"08h00 às 09h40\tPOE\tEASPE\tTFM2\tPOE\t…\n10h00 às 11h40\tEASPE\tPOE\tPOE\tTFM2\t…"}
+            style={{
+              width: "100%", border: "1px solid #dde3ee", borderRadius: 8, padding: "8px 10px",
+              fontSize: 12, fontFamily: "monospace", color: "var(--azul-profundo)",
+              resize: "vertical", whiteSpace: "pre", overflowX: "auto",
+            }}
+          />
+
+          <div style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap", marginTop: 10 }}>
+            <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "#6b7a99" }}>
+              Layout:
+              <select value={colunasPorDia} onChange={e => setColunasPorDia(Number(e.target.value) as 1 | 2)}
+                style={{ border: "1px solid #dde3ee", borderRadius: 6, padding: "4px 8px", fontSize: 12, color: "var(--azul-profundo)" }}>
+                <option value={2}>2 colunas por dia (QTS mestre)</option>
+                <option value={1}>1 coluna por dia</option>
+              </select>
+            </label>
+            {colunasPorDia === 2 && (
+              <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "#6b7a99" }}>
+                Turma:
+                <select value={coluna} onChange={e => setColuna(e.target.value as "esquerda" | "direita")}
+                  style={{ border: "1px solid #dde3ee", borderRadius: 6, padding: "4px 8px", fontSize: 12, color: "var(--azul-profundo)" }}>
+                  <option value="esquerda">Coluna da esquerda (Turma 13)</option>
+                  <option value="direita">Coluna da direita</option>
+                </select>
+              </label>
+            )}
+          </div>
+
+          {/* Pré-visualização */}
+          {previa && (
+            <div style={{ marginTop: 12, borderTop: "1px solid #edf0f7", paddingTop: 12 }}>
+              {previa.linhas.length === 0 ? (
+                <p style={{ fontSize: 12, color: "#b91c1c", margin: 0 }}>
+                  Nenhuma faixa de horário reconhecida. Cada linha precisa conter algo como &quot;08h00 às 09h40&quot;.
+                </p>
+              ) : (
+                <>
+                  <div style={{ overflowX: "auto" }}>
+                    <table style={{ borderCollapse: "collapse", fontSize: 11 }}>
+                      <thead>
+                        <tr>
+                          <th style={{ padding: "4px 8px", textAlign: "left", color: "#6b7a99", fontWeight: 700 }}>Faixa</th>
+                          {dias.map(d => (
+                            <th key={d} style={{ padding: "4px 8px", color: "#6b7a99", fontWeight: 700, minWidth: 62 }}>{d}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {previa.linhas.map(l => (
+                          <tr key={l.faixa} style={{ borderTop: "1px solid #f0f4ff" }}>
+                            <td style={{ padding: "4px 8px", fontFamily: "monospace", color: "#9aa3b8", whiteSpace: "nowrap" }}>
+                              {l.faixa} <span style={{ color: "#c5cde0" }}>({l.slots.length}h)</span>
+                            </td>
+                            {l.valores.map((v, i) => (
+                              <td key={dias[i]} style={{ padding: "3px 6px", textAlign: "center" }}>
+                                {v ? (
+                                  <span style={{ ...corDisc(v), borderRadius: 5, padding: "2px 7px", fontWeight: 700, fontSize: 10.5 }}>{v}</span>
+                                ) : (
+                                  <span style={{ color: "#e2e8f0" }}>—</span>
+                                )}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {siglasDesconhecidas.length > 0 && (
+                    <p style={{ fontSize: 11.5, color: "#b45309", background: "#fef3c7", borderRadius: 7, padding: "6px 10px", margin: "10px 0 0" }}>
+                      ⚠ Sem disciplina cadastrada: <strong>{siglasDesconhecidas.join(", ")}</strong>. A grade aceita
+                      mesmo assim, mas o progresso dessas siglas não será atualizado ao salvar.
+                    </p>
+                  )}
+                  <p style={{ fontSize: 11, color: "#9aa3b8", margin: "8px 0 0" }}>
+                    Aulas riscadas na planilha chegam como texto normal — apague as células canceladas na grade depois de aplicar.
+                  </p>
+
+                  <button onClick={aplicarImportacao} style={{
+                    marginTop: 10, background: "var(--azul-medio)", color: "#fff", border: "none",
+                    borderRadius: 8, padding: "8px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer",
+                  }}>
+                    Aplicar à grade ({previa.linhas.length} faixas · {previa.siglas.length} disciplinas)
+                  </button>
+                  <span style={{ fontSize: 11, color: "#9aa3b8", marginLeft: 10 }}>substitui a grade atual</span>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Seletor de disciplina ativa */}
       <div style={{ marginBottom: 16, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
