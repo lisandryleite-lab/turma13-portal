@@ -243,8 +243,14 @@ export function AulasClient({
             {f.label} <span style={{ opacity: 0.65 }}>({f.n})</span>
           </button>
         ))}
+        <a href="/faltas" style={{
+          marginLeft: "auto", padding: "7px 16px", borderRadius: 20, border: "1.5px solid var(--cinza-borda)",
+          background: "#fff", color: "var(--cinza-texto)", fontSize: 12, textDecoration: "none",
+        }}>
+          ⚠ Limite de faltas (25%)
+        </a>
         <button onClick={imprimirCartaz} style={{
-          marginLeft: "auto", padding: "7px 16px", borderRadius: 20, border: "1.5px solid var(--azul-profundo)",
+          padding: "7px 16px", borderRadius: 20, border: "1.5px solid var(--azul-profundo)",
           background: "var(--azul-profundo)", color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer",
         }}>
           🖨️ Imprimir cartaz

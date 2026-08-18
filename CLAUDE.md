@@ -42,6 +42,7 @@ NEXTAUTH_URL          # URL base da aplicação — produção: https://portalcf
 |------|---------|--------|
 | `/dashboard` | `dashboard/page.tsx` | Visão geral: progresso do curso, últimas notas, xerife, missão da semana, links rápidos |
 | `/aulas` | `aulas/page.tsx` + `aulas-client.tsx` | Lista de disciplinas com carga horária e status (Server + Client) |
+| `/faltas` | `faltas/page.tsx` + `faltas-client.tsx` | Limite de faltas por disciplina — 25% da carga total (Decreto 57.694/2024, frequência mínima de 75%). O contador "Faltei" é anotação pessoal em `localStorage` (`t13:faltas:v1`), nunca no banco — o portal não tem frequência oficial |
 | `/escalas` | `escalas/page.tsx` + `escalas-client.tsx` | Escalas de serviço, faxina, plantão — semana atual e visualização mensal |
 | `/avisos` | `avisos/page.tsx` + `avisos-client.tsx` | Quadro de avisos com fixação e destaque; admin pode criar/editar |
 | `/missao` | `missao/page.tsx` + `missao-admin.tsx` | Missão da semana; admin pode editar |
@@ -181,4 +182,28 @@ npm run db:push       # prisma db push (sincronizar schema com banco)
 npm run db:seed       # seed inicial de alunos, disciplinas e escalas
 npm run dev           # Next.js dev server
 npm run build         # build de produção
+
+npx tsx scripts/load-qts-semana<N>.ts   # carrega o QTS da semana N e ajusta a carga das disciplinas
+powershell -File scripts/gerar-bi.ps1 -Semana <N>   # gera "BI SEMANA N.html" + .pdf (Chrome headless)
 ```
+
+## QTS e carga horária — como sincronizar
+
+O QTS oficial da Divisão de Ensino traz, a partir da **semana 32**, o **contador de tempos**
+por disciplina em cada aula (`POE 7/60`). Esse contador é a fonte da verdade: `load-qts-semana32.ts`
+grava `cargaMinistrada` de forma **absoluta** (o último `X/Y` da semana), em vez de somar as horas
+da grade como faziam os carregadores anteriores. Somar incrementalmente acumula erro quando uma
+aula é cancelada ou remarcada — foi assim que POE e EASE ficaram 4h à frente e AP e TCEM 2h.
+Ao carregar uma nova semana, prefira sempre transcrever os contadores oficiais.
+
+No bloco da noite (17h30 e 18h20), a extração de texto do PDF do QTS sai desalinhada e não dá para
+confiar em qual dia cada aula caiu — resolva pela **ordem crescente dos contadores** (um `TPE 9/40`
+só pode vir depois do `TPE 8/40`).
+
+## BI da Semana
+
+`scripts/gerar-bi.ts` monta o "BI DA SEMANA" em HTML lendo tudo do banco e de `lib/escalas.ts`
+(QTS, progresso do curso, xerife, aniversariantes, P1/P3/P4, faxina, plantão, funções de destaque)
+— nada é digitado à mão, para o BI nunca divergir do portal. `scripts/gerar-bi.ps1` converte para
+PDF A4 com Chrome headless. O BI tem que caber em **uma página**: o único ajuste é o `zoom`
+(3º argumento do script, padrão `0.82`) — se sair uma página em branco no fim, baixe um pouco.
