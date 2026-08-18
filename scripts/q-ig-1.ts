@@ -814,9 +814,11 @@ async function main() {
   const disc = await prisma.disciplina.findUnique({ where: { sigla: MAT } })
   if (!disc) throw new Error(`Disciplina ${MAT} não existe.`)
 
-  // Remove questões IG obsoletas (de versões anteriores) que não fazem parte do novo conjunto
+  // Remove questões IG obsoletas (de versões anteriores) que não fazem parte do novo conjunto.
+  // Restrito aos módulos da apostila (1–28) — os módulos de provas (ex.: "AV1 2026 · 1ª CIA") são preservados.
   const novosHashes = QS.map(q => createHash("sha1").update(`${MAT}|${q.modulo}|${q.enunciado}`).digest("hex"))
-  const del = await prisma.questao.deleteMany({ where: { materia: MAT, hash: { notIn: novosHashes } } })
+  const modulosApostila = [...new Set(QS.map(q => q.modulo))]
+  const del = await prisma.questao.deleteMany({ where: { materia: MAT, modulo: { in: modulosApostila }, hash: { notIn: novosHashes } } })
   if (del.count > 0) console.log(`Removidas ${del.count} questões IG obsoletas.`)
 
   let c = 0, u = 0
