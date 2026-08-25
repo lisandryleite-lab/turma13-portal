@@ -1,12 +1,18 @@
 // ─────────────────────────────────────────────────────────────
-//  Cria o login de 214 DAMASCENA na Turma 13 (ago/2026).
+//  Login de 214 DAMASCENA — aluno do CFO de OUTRA turma.
 //
-//  Matrícula e equipe confirmadas no "MAPA DE EQUIPES DE PLANTÃO - ESCALA 3X1 ·
-//  AGOSTO/2026" (SEI, 1ª CIA, 21/08/2026): a célula "214 - DAMASCENA" fica na
-//  linha 23, na faixa de x da coluna CHARLIE (x≈318, entre as fronteiras 301 e 369).
+//  Ele usa a plataforma (hub /inicio: questões, mementos, ranking, documentos),
+//  mas NÃO é da Turma 13: `turma13: false` faz o layout de `app/(logado)` barrar
+//  /dashboard, /escalas, /faltas e o resto do portal do 1º Pelotão.
 //
-//  Não mexe em MATRICULAS_ORDEM (antiguidade), grupo de faxina nem canga — ver o
-//  aviso no fim do script.
+//  Por isso ele NÃO entra em:
+//   • MEMBROS_PLANTAO (lib/escalas.ts) — aquela lista é só da Turma 13. Ele aparece
+//     em CHARLIE no mapa da 1ª CIA, que é da companhia inteira, não da turma.
+//   • MATRICULAS_ORDEM (antiguidade / rodízio P1-P3-P4 da Turma 13).
+//   • Grupos de faxina G1–G8 e cotas financeiras da Turma 13.
+//
+//  Idempotente — também serve para CORRIGIR o cadastro caso ele tenha sido criado
+//  como membro da Turma 13 por engano.
 //
 //  Uso: npx tsx scripts/add-214-damascena.ts
 // ─────────────────────────────────────────────────────────────
@@ -22,56 +28,53 @@ const prisma = new PrismaClient({ adapter: new PrismaNeon({ connectionString: pr
 
 const MAT = 214
 const NOME = "DAMASCENA"
-const GRUPO = "CHARLIE"
 
 async function main() {
   const existente = await prisma.user.findUnique({ where: { matricula: MAT } })
 
-  if (existente) {
-    await prisma.user.update({
-      where: { matricula: MAT },
-      data: { turma13: true, ativo: true, grupoPlantao: GRUPO },
+  if (!existente) {
+    // Senha temporária — trocar em /trocar-senha no primeiro acesso.
+    const senhaTemp = "cfo2026!"
+    const hash = await bcrypt.hash(senhaTemp, 12)
+    await prisma.user.create({
+      data: {
+        matricula: MAT,
+        nomeGuerra: NOME,
+        nomeCompleto: NOME,                          // completar depois em /admin
+        email: `aluno${MAT}@cfopm2026.placeholder`,  // trocar pelo e-mail real em /admin
+        password: hash,
+        turma13: false,                              // NÃO é da Turma 13
+        ativo: true,
+      },
     })
-    console.log(`Mat ${MAT} já existia — turma13/ativo garantidos, plantão ${GRUPO}.`)
+    console.log(`✓ Mat ${MAT} (${NOME}) criada — acesso à plataforma, FORA da Turma 13.`)
+    console.log(`  Senha temporária: ${senhaTemp} — pedir troca em /trocar-senha no 1º acesso.`)
     return
   }
 
-  // Senha temporária no mesmo padrão dos outros novatos (211, 212, 213).
-  // O aluno TEM que trocar em /alterar-senha no primeiro acesso.
-  const senhaTemp = "cfo2026!"
-  const hash = await bcrypt.hash(senhaTemp, 12)
-
-  const user = await prisma.user.create({
-    data: {
-      matricula: MAT,
-      nomeGuerra: NOME,
-      nomeCompleto: NOME,                                  // completar depois em /admin
-      email: `aluno${MAT}@cfopm2026.placeholder`,          // trocar pelo e-mail real em /admin
-      password: hash,
-      turma13: true,
-      ativo: true,
-      grupoPlantao: GRUPO,
-    },
+  // Já existe: garante que está marcado como NÃO-Turma 13 e limpa o que só faz
+  // sentido para membro do 1º Pelotão.
+  const antes = { turma13: existente.turma13, grupoPlantao: existente.grupoPlantao, grupoFaxina: existente.grupoFaxina }
+  await prisma.user.update({
+    where: { matricula: MAT },
+    data: { turma13: false, ativo: true, grupoPlantao: null, grupoFaxina: null },
   })
-  console.log(`✓ Mat ${MAT} (${NOME}) criada — plantão ${GRUPO}.`)
-  console.log(`  Senha temporária: ${senhaTemp} — pedir troca em /alterar-senha no 1º acesso.`)
+  console.log(`✓ Mat ${MAT} (${existente.nomeGuerra}) ajustada — acesso à plataforma, FORA da Turma 13.`)
+  if (antes.turma13) console.log(`  • turma13: true → false (perde o portal do 1º Pelotão)`)
+  if (antes.grupoPlantao) console.log(`  • grupoPlantao: ${antes.grupoPlantao} → null (escala de plantão da Turma 13)`)
+  if (antes.grupoFaxina) console.log(`  • grupoFaxina: ${antes.grupoFaxina} → null`)
 
-  // Novato entra nas cotas financeiras ATIVAS, como foi feito com a 212.
-  const cotasAtivas = await prisma.cotaFinanceira.findMany({ where: { ativa: true } })
-  for (const c of cotasAtivas) {
-    await prisma.pagamentoCota.upsert({
-      where: { cotaId_userId: { cotaId: c.id, userId: user.id } },
-      update: {},
-      create: { cotaId: c.id, userId: user.id },
-    })
+  // Cotas financeiras são da Turma 13 — remove qualquer vínculo, desde que nada
+  // tenha sido pago/declarado (aí é caso para o tesoureiro resolver na mão).
+  const pagamentos = await prisma.pagamentoCota.findMany({ where: { userId: existente.id } })
+  for (const p of pagamentos) {
+    const mexido = p.pago || p.declaradoPago || p.respostas !== null
+    if (mexido) {
+      console.log(`  ⚠ cota ${p.cotaId}: já tem pagamento declarado/confirmado — NÃO removido, ver com o tesoureiro`)
+      continue
+    }
+    await prisma.pagamentoCota.delete({ where: { id: p.id } })
+    console.log(`  • removido de 1 cota financeira da Turma 13`)
   }
-  console.log(`  Adicionada a ${cotasAtivas.length} cota(s) financeira(s) ativa(s).`)
-
-  console.log(`
-  PENDENTE (decisão da turma, não dá para deduzir do mapa da 1ª CIA):
-   • Antiguidade — incluir 214 em MATRICULAS_ORDEM (lib/escalas.ts) DESLOCA toda a
-     rotação de P1/P3/P4 das semanas seguintes. Só mexer se a turma confirmar.
-   • Grupo de faxina (G1–G8) e canga — definir em /admin.
-   • Nome completo e e-mail reais — hoje estão como placeholder.`)
 }
 main().catch(e => { console.error(e); process.exit(1) }).finally(() => prisma.$disconnect())
