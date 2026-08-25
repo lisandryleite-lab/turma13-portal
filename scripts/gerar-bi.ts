@@ -16,7 +16,7 @@ import { neonConfig } from "@neondatabase/serverless"
 import ws from "ws"
 import { DATA_INICIO, DATA_FIM_CFO, diasParaFimCFO } from "../lib/utils"
 import {
-  calcularServico, calendarioFaxinaMes, parseDataLocal, GRUPOS_FAXINA,
+  calcularServico, parseDataLocal, grupoPlantaoPorData, grupoFaxinaPorData, GRUPOS_FAXINA,
   MEMBROS_PLANTAO, GRUPOS_PLANTAO, CORES_PLANTAO,
 } from "../lib/escalas"
 
@@ -129,23 +129,28 @@ async function main() {
     return { semana: s, p1: nome(p1), p3: nome(p3), p4: nome(p4) }
   })
 
-  // ── Faxina do mês ────────────────────────────────────────────────────
-  const calendario = calendarioFaxinaMes(anoRef, mesRef).filter(d => d.tipo === "util")
-  const linhasFaxina: { rotulo: string; dias: { dia: string; grupo: string }[] }[] = []
-  for (const d of calendario) {
-    const diaNum = d.data.split("-")[2]
-    const ultima = linhasFaxina[linhasFaxina.length - 1]
-    if (!ultima || ultima.dias.length >= 5 || d.diaSemana === "Seg") {
-      linhasFaxina.push({ rotulo: "", dias: [{ dia: diaNum, grupo: d.grupoFaxina! }] })
-    } else {
-      ultima.dias.push({ dia: diaNum, grupo: d.grupoFaxina! })
+  // ── Agenda dos próximos dias ─────────────────────────────────────────
+  // O calendário do mês inteiro gastava meia página com dias que já passaram.
+  // Aqui só o que ainda vem: plantão (equipe do dia), faxina (grupo do dia) e a
+  // contagem regressiva caindo dia a dia. Começa em HOJE — ou na segunda da
+  // semana, se o BI for gerado adiantado.
+  const DIAS_AGENDA = 14
+  const agendaInicio = hoje > inicio
+    ? new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate())
+    : new Date(inicio)
+  const agenda = Array.from({ length: DIAS_AGENDA }, (_, i) => {
+    const d = new Date(agendaInicio); d.setDate(d.getDate() + i)
+    return {
+      data: d,
+      diaSemana: DIAS_ABREV[d.getDay()],
+      fds: d.getDay() === 0 || d.getDay() === 6,
+      plantao: grupoPlantaoPorData(d),
+      faxina: grupoFaxinaPorData(d),
+      faltam: diasParaFimCFO(d),
+      hoje: d.getTime() === new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()).getTime(),
     }
-  }
-  for (const l of linhasFaxina) {
-    l.rotulo = l.dias.length > 1
-      ? `${l.dias[0].dia}–${l.dias[l.dias.length - 1].dia}/${pad(mesRef)}`
-      : `${l.dias[0].dia}/${pad(mesRef)}`
-  }
+  })
+  const agendaFim = agenda[agenda.length - 1].data
 
   // ── Grupos de faxina (banco, com fallback pela composição do lib) ────
   const gruposFaxina = GRUPOS_FAXINA.map(g => ({
@@ -264,34 +269,45 @@ async function main() {
       </tbody>
     </table>`
 
-  const aniversariosHtml = aniversariantes.length === 0
-    ? `<p style="font-size:9.5px;color:#8a93a5;margin:0">— &nbsp; Nenhum aniversariante em ${MESES[mesRef - 1]}</p>`
-    : `<ul style="list-style:none;margin:0;padding:0;font-size:9.5px">
-        ${aniversariantes.map(a => `
-          <li style="display:flex;gap:8px;padding:3px 0;border-bottom:1px solid ${BORDA}">
-            <span style="font-weight:700;color:${GOLD};width:38px">${esc(a.aniversario!)}</span>
-            <span>${esc(a.nomeGuerra)}</span>
-            <span style="margin-left:auto;color:#8a93a5;font-size:8.5px">Mat. ${a.matricula}</span>
-          </li>`).join("")}
-      </ul>`
+  // Faixa fina, e SÓ quando há aniversariante — o bloco "Nenhum aniversariante"
+  // ocupava um quarto da página sem dizer nada. Em setembro ela volta sozinha.
+  const aniversariosHtml = aniversariantes.length === 0 ? "" : `
+    <div style="border:1px solid ${GOLD}55;background:rgba(184,146,74,.07);border-radius:8px;
+      padding:6px 14px;margin-bottom:12px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <span style="font-size:9px;font-weight:700;color:${GOLD};text-transform:uppercase;letter-spacing:.1em;white-space:nowrap">
+        Aniversariantes — ${MESES[mesRef - 1]}
+      </span>
+      ${aniversariantes.map(a => `<span style="font-size:10px;white-space:nowrap">
+        <strong style="color:${GOLD}">${esc(a.aniversario!)}</strong> ${esc(a.nomeGuerra)}
+      </span>`).join(" ")}
+    </div>`
 
-  const faxinaHtml = `
+  const agendaHtml = `
     <table style="width:100%;border-collapse:collapse;font-size:8.5px">
       <thead><tr style="border-bottom:1.5px solid ${BORDA};color:${NAVY}">
-        <th style="padding:4px 5px;text-align:left">Semana</th>
-        ${["Seg","Ter","Qua","Qui","Sex"].map(d => `<th style="padding:4px 5px">${d}</th>`).join("")}
+        <th style="padding:4px 5px;text-align:left">Data</th>
+        <th style="padding:4px 5px;text-align:left">Dia</th>
+        <th style="padding:4px 5px;text-align:left">Plantão</th>
+        <th style="padding:4px 5px;text-align:left">Faxina</th>
+        <th style="padding:4px 5px;text-align:right">Faltam</th>
       </tr></thead>
       <tbody>
-        ${linhasFaxina.map((l, i) => `
-          <tr style="background:${i % 2 ? "#fbfcfe" : "#fff"};border-bottom:1px solid ${BORDA}">
-            <td style="padding:4px 5px;font-weight:700;color:${NAVY};white-space:nowrap">${esc(l.rotulo)}</td>
-            ${Array.from({ length: 5 }, (_, k) => {
-              const c = l.dias[k]
-              return `<td style="padding:4px 5px;text-align:center">${c ? `${c.dia} · <strong style="color:${NAVY}">${c.grupo}</strong>` : ""}</td>`
-            }).join("")}
+        ${agenda.map((a, i) => `
+          <tr style="background:${a.hoje ? "#fdf6e6" : a.fds ? "#f6f8fc" : i % 2 ? "#fbfcfe" : "#fff"};
+            border-bottom:1px solid ${BORDA};${a.hoje ? `box-shadow:inset 2px 0 0 ${GOLD}` : ""}">
+            <td style="padding:4px 5px;font-weight:700;color:${NAVY};white-space:nowrap">
+              ${ddmm(a.data)}${a.hoje ? ` <span style="color:${GOLD};font-size:7.5px">hoje</span>` : ""}
+            </td>
+            <td style="padding:4px 5px;color:${a.fds ? "#8a93a5" : "#1e2937"}">${a.diaSemana}</td>
+            <td style="padding:4px 5px;font-weight:700;color:${CORES_PLANTAO[a.plantao]}">${a.plantao}</td>
+            <td style="padding:4px 5px;font-weight:${a.faxina ? 700 : 400};color:${a.faxina ? NAVY : "#c3cad8"}">${a.faxina ?? "—"}</td>
+            <td style="padding:4px 5px;text-align:right;font-weight:700;color:${GOLD}">${a.faltam}</td>
           </tr>`).join("")}
       </tbody>
-    </table>`
+    </table>
+    <p style="font-size:8px;color:#8a93a5;margin:5px 0 0">
+      "Faltam" = dias até o término previsto do CFO (${DATA_FIM_CFO.toLocaleDateString("pt-BR", { timeZone: "UTC" })}).
+    </p>`
 
   const gruposFaxinaHtml = `
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
@@ -388,16 +404,15 @@ async function main() {
     ${pill(`${diasFim}`, `dias para o fim do CFO · ${DATA_FIM_CFO.toLocaleDateString("pt-BR", { timeZone: "UTC" })}`)}
   </div>
 
-  <!-- Aniversariantes + Serviço -->
-  <div style="display:grid;grid-template-columns:1fr 1.35fr;gap:16px;margin-bottom:12px">
-    <div>${secao(`Aniversariantes — ${MESES[mesRef - 1]}`)}${aniversariosHtml}</div>
-    <div>${secao("Serviço — P1 / P3 / P4")}${servicoHtml}</div>
-  </div>
+  ${aniversariosHtml}
 
-  <!-- Faxina -->
+  <!-- Agenda + Serviço -->
   <div style="display:grid;grid-template-columns:1fr 1.35fr;gap:16px;margin-bottom:12px">
-    <div>${secao(`Escala de faxina — ${MESES[mesRef - 1]} ${anoRef}`)}${faxinaHtml}</div>
-    <div>${secao("Grupos de faxina")}${gruposFaxinaHtml}</div>
+    <div>${secao(`Agenda — ${ddmm(agendaInicio)} a ${ddmm(agendaFim)}`)}${agendaHtml}</div>
+    <div>
+      ${secao("Serviço — P1 / P3 / P4")}${servicoHtml}
+      <div style="margin-top:12px">${secao("Grupos de faxina")}${gruposFaxinaHtml}</div>
+    </div>
   </div>
 
   <!-- Plantão + Funções -->
