@@ -136,7 +136,10 @@ e `DATA_FIM_CFO` são meia-noite **UTC**, todo cálculo com elas usa acessores U
 `getDate()`/`getDay()` em fuso negativo volta um dia.
 
 ### Turma
-34 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
+35 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
+**214 DAMASCENA** entrou em ago/2026 (`scripts/add-214-damascena.ts`, equipe CHARLIE) — ainda
+**fora de `MATRICULAS_ORDEM`**, porque incluir na antiguidade desloca toda a rotação de
+P1/P3/P4; só mexer com confirmação da turma. Faxina, canga e nome completo também pendentes.
 **1 (Hellton Fernandes) e 54 (Elder Carvalho) saíram** da Turma 13 em jun/2026; **213 (R Silva) entrou** em jun/2026 — ver `scripts/update-roster-213.ts` e `scripts/update-roster-julho.ts`. **211 (Dário)** e **212 (Camila Buonora) entraram** em jul/2026 — ver `scripts/add-dario.ts`, `scripts/add-212-camila.ts` e `scripts/integra-novatos-escalas.ts`. Lista oficial de antiguidade em `lib/escalas.ts` (`MATRICULAS_ORDEM`).
 
 ### Grupos de faxina — fonte viva no banco
@@ -155,7 +158,7 @@ Migração dos dados: `scripts/migra-plantao-3x1.ts`.
 |---------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------|
 | ALPHA   | 41, 60, 94, 108, 116, 153                     | Alan Silva, João Nunes, André Cardoso, Lisandry, Bertipalha, Hugo                                              |
 | BRAVO   | 26, 37, 65, 98, 114, 131, 167, 174, 186, 212  | André, Pablo Torres, Kauhanni, José Menezes, Josiane Farias, José Inácio, Gustavo Neto, Alexandre, Samuel Silva, Camila Buonora |
-| CHARLIE | 45, 55, 71, 76, 81, 106, 165                  | Gabriele Costa, Shirlayne, Leimig, Araújo Jr, Fernando Rocha, Rafael Ribeiro, Kevin Gomes                       |
+| CHARLIE | 45, 55, 71, 76, 81, 106, 165, 214             | Gabriele Costa, Shirlayne, Leimig, Araújo Jr, Fernando Rocha, Rafael Ribeiro, Kevin Gomes, Damascena            |
 | DELTA   | 7, 13, 19, 23, 57, 105, 143, 144, 191         | Aldo Silva, Jonas, Thais Figueiredo, Rodolfo Moura, Cleyton, Lucas Eduardo, Vidal, Samuel Santos, Gomes Nascimento |
 
 **O mapa da 1ª CIA lista só 31 dos 34 alunos.** Busca no texto do PDF por "108", "LISANDRY",
