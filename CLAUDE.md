@@ -153,14 +153,16 @@ Migração dos dados: `scripts/migra-plantao-3x1.ts`.
 
 | Grupo   | Mats                                          | Membros                                                                                                        |
 |---------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| ALPHA   | 41, 60, 94, 116, 153                          | Alan Silva, João Nunes, André Cardoso, Bertipalha, Hugo                                                        |
+| ALPHA   | 41, 60, 94, 108, 116, 153                     | Alan Silva, João Nunes, André Cardoso, Lisandry, Bertipalha, Hugo                                              |
 | BRAVO   | 26, 37, 65, 98, 114, 131, 167, 174, 186, 212  | André, Pablo Torres, Kauhanni, José Menezes, Josiane Farias, José Inácio, Gustavo Neto, Alexandre, Samuel Silva, Camila Buonora |
 | CHARLIE | 45, 55, 71, 76, 81, 106, 165                  | Gabriele Costa, Shirlayne, Leimig, Araújo Jr, Fernando Rocha, Rafael Ribeiro, Kevin Gomes                       |
 | DELTA   | 7, 13, 19, 23, 57, 105, 143, 144, 191         | Aldo Silva, Jonas, Thais Figueiredo, Rodolfo Moura, Cleyton, Lucas Eduardo, Vidal, Samuel Santos, Gomes Nascimento |
 
-**O mapa da 1ª CIA lista 31 dos 34 alunos.** Ficaram de fora — sem equipe — **108 LISANDRY,
-211 DÁRIO e 213 R SILVA** (`SEM_EQUIPE_PLANTAO` em `lib/escalas.ts`, e `User.grupoPlantao`
-nulo). Não chutar equipe para eles: esperar a 1ª CIA publicar.
+**O mapa da 1ª CIA lista só 31 dos 34 alunos.** Busca no texto do PDF por "108", "LISANDRY",
+"DÁRIO" e "R SILVA" não acha nada — é omissão do documento, não outro grupo.
+**108 LISANDRY está em ALPHA** (informado pelo próprio em 25/08/2026, e a tabela acima já
+reflete isso). **211 DÁRIO e 213 R SILVA seguem sem equipe** (`SEM_EQUIPE_PLANTAO` em
+`lib/escalas.ts`, e `User.grupoPlantao` nulo) — não chutar: esperar a 1ª CIA publicar.
 
 ## Autenticação — padrão de uso
 

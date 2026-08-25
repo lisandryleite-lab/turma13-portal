@@ -150,15 +150,18 @@ export const COMPOSICAO_FAXINA: Record<GrupoFaxina, { mat: number; nome: string 
 // Transcrita do "MAPA DE DIVISÃO DAS EQUIPES DE PLANTÃO DA 1ª COMPANHIA" (SEI,
 // assinado em 21/08/2026), filtrando as 34 matrículas da Turma 13.
 //
-// ATENÇÃO: o mapa da 1ª CIA lista 31 dos 34 alunos da Turma 13. Ficaram DE FORA
-// (não aparecem em nenhuma das 4 equipes): 108 LISANDRY, 211 DÁRIO e 213 R SILVA.
-// Enquanto a 1ª CIA não publicar a equipe deles, não chutar — deixar sem grupo.
+// ATENÇÃO: o mapa da 1ª CIA lista só 31 dos 34 alunos da Turma 13 — 108 LISANDRY,
+// 211 DÁRIO e 213 R SILVA não aparecem em nenhuma das 4 equipes (busca no texto do
+// PDF por "108", "LISANDRY", "DÁRIO" e "R SILVA" não acha nada; é omissão do
+// documento, não outro grupo).
+//   • 108 LISANDRY está em ALPHA — informado pelo próprio em 25/08/2026.
+//   • 211 e 213 seguem sem equipe. Não chutar: esperar a 1ª CIA publicar.
 export const MEMBROS_PLANTAO: Record<GrupoPlantao, { mat: number; nome: string }[]> = {
-  ALPHA:   [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 94,  nome: "ANDRÉ CARDOSO" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 153, nome: "HUGO" }],
+  ALPHA:   [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 94,  nome: "ANDRÉ CARDOSO" }, { mat: 108, nome: "LISANDRY" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 153, nome: "HUGO" }],
   BRAVO:   [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }, { mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 186, nome: "SAMUEL SILVA" }, { mat: 212, nome: "CAMILA BUONORA" }],
   CHARLIE: [{ mat: 45,  nome: "GABRIELE COSTA" }, { mat: 55,  nome: "SHIRLAYNE" }, { mat: 71,  nome: "LEIMIG" }, { mat: 76,  nome: "ARAÚJO JR" }, { mat: 81,  nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 165, nome: "KEVIN GOMES" }],
   DELTA:   [{ mat: 7,   nome: "ALDO SILVA" }, { mat: 13,  nome: "JONAS" }, { mat: 19,  nome: "THAIS FIGUEIREDO" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 57,  nome: "CLEYTON" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 143, nome: "VIDAL" }, { mat: 144, nome: "SAMUEL SANTOS" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
 }
 
 // Alunos da Turma 13 ainda sem equipe no mapa 3X1 da 1ª CIA.
-export const SEM_EQUIPE_PLANTAO = [108, 211, 213] as const
+export const SEM_EQUIPE_PLANTAO = [211, 213] as const
