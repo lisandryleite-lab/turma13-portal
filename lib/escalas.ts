@@ -35,28 +35,36 @@ export function calcularServico(semana: number): {
 }
 
 // ─────────────────────────────────────────────────────────────
-//  Grupo de plantão externo — cicla a cada dia corrido
-//  Referência confirmada: 26/05/2026 = GOLF (índice 0)
-//  Ciclo: GOLF → HOTEL → INDIA → JULIETT → KILO → LIMA → MIKE → NOVEMBER → (repete)
-//  Inclui fins de semana. Verificação: 02/06/2026 = NOVEMBER.
+//  Grupo de plantão externo — ESCALA 3X1 (a partir de agosto/2026)
+//  Ciclo: ALPHA → BRAVO → CHARLIE → DELTA → (repete), um grupo por dia
+//  corrido, fins de semana incluídos. Cada grupo dá plantão a cada 4 dias.
+//
+//  Substituiu a escala 7x1 de 8 grupos (GOLF…NOVEMBER), que valia até
+//  julho/2026 com referência 26/05/2026 = GOLF.
+//
+//  Fonte: "MAPA DE EQUIPES DE PLANTÃO - ESCALA 3X1 · AGOSTO/2026" (SEI, 1ª CIA,
+//  assinado em 21/08/2026) e "ESCALA - 3X1 - AGOSTO (ATUALIZADA ATÉ 19.08)".
+//  Referência: 25/08/2026 (Ter) = BRAVO. Conferida contra os 12 dias de 20 a
+//  31/08 da escala diária — bate em todos.
 // ─────────────────────────────────────────────────────────────
-export const GRUPOS_PLANTAO = ["GOLF", "HOTEL", "INDIA", "JULIETT", "KILO", "LIMA", "MIKE", "NOVEMBER"] as const
+export const GRUPOS_PLANTAO = ["ALPHA", "BRAVO", "CHARLIE", "DELTA"] as const
 export type GrupoPlantao = typeof GRUPOS_PLANTAO[number]
 
 // Cor por grupo de plantão — fonte única (evita paletas divergentes entre telas)
 export const CORES_PLANTAO: Record<string, string> = {
-  GOLF: "#15803D", HOTEL: "#0369A1", INDIA: "#B45309", JULIETT: "#7C3AED",
-  KILO: "#B91C1C", LIMA: "#1D4ED8", MIKE: "#7E22CE", NOVEMBER: "#92400E",
+  ALPHA: "#15803D", BRAVO: "#B91C1C", CHARLIE: "#1D4ED8", DELTA: "#B45309",
 }
 
-// Referência: 26/05/2026 = GOLF (índice 0) — confirmado pela turma
-// Normaliza para UTC midnight para evitar problemas de fuso horário
-const REF_PLANTAO_UTC = new Date("2026-05-26T00:00:00.000Z").getTime()
+// Referência: 25/08/2026 = BRAVO (índice 1).
+// Normaliza para UTC midnight para evitar problemas de fuso horário.
+const REF_PLANTAO_UTC = new Date("2026-08-25T00:00:00.000Z").getTime()
+const REF_PLANTAO_IDX = 1 // BRAVO
 
 export function grupoPlantaoPorData(data: Date): GrupoPlantao {
   const dataUTC = Date.UTC(data.getFullYear(), data.getMonth(), data.getDate())
   const diffDias = Math.floor((dataUTC - REF_PLANTAO_UTC) / 86_400_000)
-  return GRUPOS_PLANTAO[((diffDias % 8) + 8) % 8]
+  const n = GRUPOS_PLANTAO.length
+  return GRUPOS_PLANTAO[(((REF_PLANTAO_IDX + diffDias) % n) + n) % n]
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -138,16 +146,19 @@ export const COMPOSICAO_FAXINA: Record<GrupoFaxina, { mat: number; nome: string 
   G8: [{ mat: 7, nome: "ALDO SILVA" }, { mat: 23, nome: "RODOLFO MOURA" }, { mat: 26, nome: "ANDRÉ" }, { mat: 37, nome: "PABLO TORRES" }, { mat: 212, nome: "CAMILA BUONORA" }],
 }
 
-// Composição dos grupos de plantão — atualizado jul/2026 (Mapa de Equipes, escala 7x1 da 2ª CIA)
-// 1 HELLTON FERNANDES (GOLF) e 54 ELDER CARVALHO (MIKE) saíram da Turma 13;
-// 213 R SILVA entrou (JULIETT); 212 CAMILA BUONORA entrou em jul/2026 (KILO)
+// Composição dos grupos de plantão — escala 3X1, agosto/2026.
+// Transcrita do "MAPA DE DIVISÃO DAS EQUIPES DE PLANTÃO DA 1ª COMPANHIA" (SEI,
+// assinado em 21/08/2026), filtrando as 34 matrículas da Turma 13.
+//
+// ATENÇÃO: o mapa da 1ª CIA lista 31 dos 34 alunos da Turma 13. Ficaram DE FORA
+// (não aparecem em nenhuma das 4 equipes): 108 LISANDRY, 211 DÁRIO e 213 R SILVA.
+// Enquanto a 1ª CIA não publicar a equipe deles, não chutar — deixar sem grupo.
 export const MEMBROS_PLANTAO: Record<GrupoPlantao, { mat: number; nome: string }[]> = {
-  GOLF:     [{ mat: 7,   nome: "ALDO SILVA" }, { mat: 19,  nome: "THAIS FIGUEIREDO" }, { mat: 57,  nome: "CLEYTON" }, { mat: 143, nome: "VIDAL" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
-  HOTEL:    [{ mat: 13,  nome: "JONAS" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 144, nome: "SAMUEL SANTOS" }, { mat: 211, nome: "DÁRIO" }],
-  INDIA:    [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 116, nome: "BERTIPALHA" }],
-  JULIETT:  [{ mat: 94,  nome: "ANDRÉ CARDOSO" }, { mat: 213, nome: "R SILVA" }],
-  KILO:     [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }, { mat: 212, nome: "CAMILA BUONORA" }],
-  LIMA:     [{ mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 186, nome: "SAMUEL SILVA" }],
-  MIKE:     [{ mat: 45,  nome: "GABRIELE COSTA" }, { mat: 81,  nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 108, nome: "LISANDRY" }, { mat: 153, nome: "HUGO" }, { mat: 165, nome: "KEVIN GOMES" }],
-  NOVEMBER: [{ mat: 55,  nome: "SHIRLAYNE" }, { mat: 71,  nome: "LEIMIG" }, { mat: 76,  nome: "ARAÚJO JR" }],
+  ALPHA:   [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 94,  nome: "ANDRÉ CARDOSO" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 153, nome: "HUGO" }],
+  BRAVO:   [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }, { mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 186, nome: "SAMUEL SILVA" }, { mat: 212, nome: "CAMILA BUONORA" }],
+  CHARLIE: [{ mat: 45,  nome: "GABRIELE COSTA" }, { mat: 55,  nome: "SHIRLAYNE" }, { mat: 71,  nome: "LEIMIG" }, { mat: 76,  nome: "ARAÚJO JR" }, { mat: 81,  nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 165, nome: "KEVIN GOMES" }],
+  DELTA:   [{ mat: 7,   nome: "ALDO SILVA" }, { mat: 13,  nome: "JONAS" }, { mat: 19,  nome: "THAIS FIGUEIREDO" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 57,  nome: "CLEYTON" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 143, nome: "VIDAL" }, { mat: 144, nome: "SAMUEL SANTOS" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
 }
+
+// Alunos da Turma 13 ainda sem equipe no mapa 3X1 da 1ª CIA.
+export const SEM_EQUIPE_PLANTAO = [108, 211, 213] as const

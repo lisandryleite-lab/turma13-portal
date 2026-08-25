@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { CORES_PLANTAO } from "@/lib/escalas"
+import { CORES_PLANTAO, GRUPOS_PLANTAO } from "@/lib/escalas"
 import type { MEMBROS_PLANTAO, GrupoFaxina, GrupoPlantao } from "@/lib/escalas"
 
 const MESES = ["","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
@@ -156,7 +156,7 @@ export function EscalasClient({
 
 
   const isMinhaFaxina=(g:GrupoFaxina|null)=>g?(composicao[g]||[]).some(p=>p.mat===minhaMatricula):false
-  const meuGrupoPlantao=(["GOLF","HOTEL","INDIA","JULIETT","KILO","LIMA","MIKE","NOVEMBER"] as GrupoPlantao[]).find(g=>(membrosPlantao[g]||[]).some(m=>m.mat===minhaMatricula))??null
+  const meuGrupoPlantao=GRUPOS_PLANTAO.find(g=>(membrosPlantao[g]||[]).some(m=>m.mat===minhaMatricula))??null
 
   // Escala de serviço unificada: 6 funções por data (funcoesDias + adjuntos legados de plantaoDias)
   type ServicoItem={funcao:string;matricula:number;id?:string}
@@ -453,7 +453,7 @@ export function EscalasClient({
       {aba==="plantao"&&(
         <div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))",gap:12,marginBottom:28}}>
-            {(["GOLF","HOTEL","INDIA","JULIETT","KILO","LIMA","MIKE","NOVEMBER"] as GrupoPlantao[]).map(g=>{
+            {GRUPOS_PLANTAO.map(g=>{
               const membros=membrosPlantao[g]||[]
               const temEu=membros.some(m=>m.mat===minhaMatricula)
               return (

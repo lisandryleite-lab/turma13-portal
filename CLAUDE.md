@@ -64,7 +64,6 @@ NEXTAUTH_URL          # URL base da aplicação — produção: https://portalcf
 | `/mementos` | Mementos resumidos por disciplina + flashcards |
 | `/questoes` | Banco de questões por disciplina/bateria |
 | `/ranking` | Ranking da turma |
-| `/permutas` | Permuta de plantões (cadeia direta/triangular, SEI opcional; cada aluno vê só as permutas de que participa) — usa `MilitarPlantao` |
 | `/psicologia` | Conteúdo de psicologia |
 | `/documentos` | Links institucionais (SEI, ACIDES, Decreto 57.694/2024) + modelos de documentos (.docx/.pdf/.xlsx) em `public/modelos/`, com instruções (prazo, destinatário, base legal). Server component, `<details>` nativo — sem `"use client"` |
 | `/ajuda-senha`, `/trocar-senha` | Suporte de senha |
@@ -80,7 +79,7 @@ Subconjunto antigo (`/ranking`, `/notas`, `/escalas`, `/avisos`, `/links`, `/adm
 ## Schema Prisma — modelos principais
 
 ### `User`
-Aluno ou admin. `matricula` é o identificador humano (Int, único). `isAdmin` controla acesso a rotas restritas. Campos de escala: `grupoPlantao` (LIMA/GOLF/…), `grupoFaxina` (G1–G8), `canga` (nome da canga), `cangaPar` (matrícula do par, Int).
+Aluno ou admin. `matricula` é o identificador humano (Int, único). `isAdmin` controla acesso a rotas restritas. Campos de escala: `grupoPlantao` (ALPHA/BRAVO/CHARLIE/DELTA), `grupoFaxina` (G1–G8), `canga` (nome da canga), `cangaPar` (matrícula do par, Int).
 
 ### `Nota`
 Nota de avaliação de um aluno em uma disciplina. Campos: `disciplina` (sigla), `avaliacao` (ex: "P1"), `nota` (Float), `peso` (Float, padrão 1), `ehAF` (se é 2ª chamada), `apto` (aprovado sem nota numérica). Toda criação/edição/exclusão gera um `HistoricoNota`.
@@ -98,7 +97,7 @@ Escalas nominais da turma com data exata, posição e userId.
 Escala individual de um aluno (plantão externo, faxina de alojamento, etc.) com data, hora e função.
 
 ### `PlantaoDia`
-Plantão externo da 2ª CIA por dia. Admin insere mensalmente. Campo `grupoPlantao`: GOLF | HOTEL | INDIA | JULIETT | KILO | LIMA | MIKE | NOVEMBER (8 grupos).
+Plantão externo por dia. Admin insere mensalmente. Campo `grupoPlantao`: ALPHA | BRAVO | CHARLIE | DELTA (escala 3X1, ago/2026 em diante). Tabela hoje vazia — o grupo do dia sai de `grupoPlantaoPorData()`.
 
 ### `FuncaoDestaqueDia`
 Funções de destaque diárias (Mestre, Leitor, Discurso, Comandante) com matrícula do responsável.
@@ -121,7 +120,7 @@ Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 ### Demais modelos (schema tem 43 no total)
 - **Estudo**: `Memento`, `Flashcard`, `Questao`, `Resposta`, `Gaivota` (dúvidas), `NotaCFO`/`HistoricoNotaCFO`/`NotaHistorica` (notas oficiais do CFO)
 - **Financeiro**: `CotaFinanceira`, `PagamentoCota` (token público de pagamento), `PedidoLanche`, `ItemLanche`, `PedidoLancheAluno`, `LinhaPedidoLanche`
-- **Permutas**: `MilitarPlantao` (roster completo da CIA), `PermutaOferta`, `PermutaSolicitacao`, `PermutaParticipante`
+- **Permutas (DESATIVADO)**: `MilitarPlantao`, `PermutaOferta`, `PermutaSolicitacao`, `PermutaParticipante` — o módulo `/permutas` e as rotas `/api/permutas/*` foram **removidos do site** em ago/2026 a pedido da turma. Os modelos e os dados continuam no banco (nada foi apagado); se voltar, o roster em `MilitarPlantao` está com os grupos ANTIGOS da 7x1 e precisa ser refeito pelo mapa 3X1. O modelo de documento "Permuta de serviço" segue disponível em `/documentos`
 - **Faxina**: `FaxinaGrupoMembro` (composição viva dos grupos G1–G8)
 - **Outros**: `OPM`/`PreferenciaOPM` (batalhões RMR), `MissaoConcluida`, `LogAcesso`
 
@@ -130,6 +129,12 @@ Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 ### Semana atual (`lib/utils.ts`)
 `DATA_INICIO = new Date("2026-01-12")` (primeira segunda-feira do curso) → semana 20 = 25/05 a 31/05/2026. Consistente com a referência das escalas (`REF_SEMANA = 20` em `lib/escalas.ts`).
 
+### Término do curso (`lib/utils.ts`)
+`DATA_FIM_CFO = 05/01/2027` (previsão da turma, ago/2026) e `diasParaFimCFO()`. A contagem
+regressiva aparece no topo do `/dashboard` (`components/contagem-cfo.tsx`). Como `DATA_INICIO`
+e `DATA_FIM_CFO` são meia-noite **UTC**, todo cálculo com elas usa acessores UTC — usar
+`getDate()`/`getDay()` em fuso negativo volta um dia.
+
 ### Turma
 34 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
 **1 (Hellton Fernandes) e 54 (Elder Carvalho) saíram** da Turma 13 em jun/2026; **213 (R Silva) entrou** em jun/2026 — ver `scripts/update-roster-213.ts` e `scripts/update-roster-julho.ts`. **211 (Dário)** e **212 (Camila Buonora) entraram** em jul/2026 — ver `scripts/add-dario.ts`, `scripts/add-212-camila.ts` e `scripts/integra-novatos-escalas.ts`. Lista oficial de antiguidade em `lib/escalas.ts` (`MATRICULAS_ORDEM`).
@@ -137,21 +142,25 @@ Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 ### Grupos de faxina — fonte viva no banco
 A composição exibida em `/escalas` vem da tabela **`FaxinaGrupoMembro`** quando não vazia; `COMPOSICAO_FAXINA` em `lib/escalas.ts` é só fallback (mantida em sincronia). `User.grupoFaxina` (dashboard) deve espelhar a tabela — `scripts/integra-novatos-escalas.ts` sincroniza. Em jul/2026: G7 = Thais, Gabriele, Cleyton, 211 Dário, 213 R Silva; G8 = Aldo, Rodolfo, André, Pablo, 212 Camila (grupos com 5).
 
-### Grupos de plantão — 8 grupos (atualizado jul/2026 — Mapa de Equipes, escala 7x1)
-Ciclo **diário** (todos os dias, incluindo fins de semana).
-Ordem: GOLF → HOTEL → INDIA → JULIETT → KILO → LIMA → MIKE → NOVEMBER → (repete).
-Referência confirmada: **26/05/2026 = GOLF**. Verificação: 02/06/2026 = NOVEMBER.
+### Grupos de plantão — ESCALA 3X1, 4 grupos (a partir de ago/2026)
+Ciclo **diário** (todos os dias, incluindo fins de semana): ALPHA → BRAVO → CHARLIE → DELTA → (repete).
+Referência: **25/08/2026 (Ter) = BRAVO**, conferida contra os 12 dias de 20 a 31/08 da
+escala diária da 1ª CIA — bate em todos.
 
-| Grupo    | Mats                      | Membros                                                                          |
-|----------|---------------------------|----------------------------------------------------------------------------------|
-| GOLF     | 7, 19, 57, 143, 191       | Aldo Silva, Thais Figueiredo, Cleyton, Vidal, Gomes Nascimento                   |
-| HOTEL    | 13, 23, 105, 144, 211     | Jonas, Rodolfo Moura, Lucas Eduardo, Samuel Santos, Dário                        |
-| INDIA    | 41, 60, 116               | Alan Silva, João Nunes, Bertipalha                                               |
-| JULIETT  | 94, 213                   | André Cardoso, R Silva                                                          |
-| KILO     | 26, 37, 65, 98, 212       | André, Pablo Torres, Kauhanni, José Menezes, Camila Buonora                      |
-| LIMA     | 114, 131, 167, 174, 186   | Josiane Farias, José Inácio, Gustavo Neto, Alexandre, Samuel Silva               |
-| MIKE     | 45, 81, 106, 108, 153, 165| Gabriele Costa, Fernando Rocha, Rafael Ribeiro, Lisandry, Hugo, Kevin Gomes      |
-| NOVEMBER | 55, 71, 76                | Shirlayne, Leimig, Araújo Junior                                                 |
+Substituiu a escala **7x1 de 8 grupos** (GOLF → HOTEL → INDIA → JULIETT → KILO → LIMA →
+MIKE → NOVEMBER, referência 26/05/2026 = GOLF), que valeu até julho/2026.
+Migração dos dados: `scripts/migra-plantao-3x1.ts`.
+
+| Grupo   | Mats                                          | Membros                                                                                                        |
+|---------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| ALPHA   | 41, 60, 94, 116, 153                          | Alan Silva, João Nunes, André Cardoso, Bertipalha, Hugo                                                        |
+| BRAVO   | 26, 37, 65, 98, 114, 131, 167, 174, 186, 212  | André, Pablo Torres, Kauhanni, José Menezes, Josiane Farias, José Inácio, Gustavo Neto, Alexandre, Samuel Silva, Camila Buonora |
+| CHARLIE | 45, 55, 71, 76, 81, 106, 165                  | Gabriele Costa, Shirlayne, Leimig, Araújo Jr, Fernando Rocha, Rafael Ribeiro, Kevin Gomes                       |
+| DELTA   | 7, 13, 19, 23, 57, 105, 143, 144, 191         | Aldo Silva, Jonas, Thais Figueiredo, Rodolfo Moura, Cleyton, Lucas Eduardo, Vidal, Samuel Santos, Gomes Nascimento |
+
+**O mapa da 1ª CIA lista 31 dos 34 alunos.** Ficaram de fora — sem equipe — **108 LISANDRY,
+211 DÁRIO e 213 R SILVA** (`SEM_EQUIPE_PLANTAO` em `lib/escalas.ts`, e `User.grupoPlantao`
+nulo). Não chutar equipe para eles: esperar a 1ª CIA publicar.
 
 ## Autenticação — padrão de uso
 

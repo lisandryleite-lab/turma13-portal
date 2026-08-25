@@ -40,7 +40,6 @@ const LINKS: LinkDef[] = [
   { href: "/aulas",        label: "Aulas",        Icon: BookIco   },
   { href: "/faltas",       label: "Faltas 25%",   Icon: AlertIco  },
   { href: "/escalas",      label: "Escalas",      Icon: EscalaIco },
-  { href: "/permutas",     label: "Permutas",     Icon: SwapIco   },
   { href: "/xerifancia",   label: "Xerifância",   Icon: StarIco   },
   { href: "/turma",        label: "Turma",        Icon: UsersIco, adminOnly: true },
   { href: "/financeiro",   label: "Financeiro",   Icon: CoinIco   },

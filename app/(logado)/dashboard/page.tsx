@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { semanaAtual } from "@/lib/utils"
 import { ResumoHoje } from "@/components/resumo-hoje"
+import { ContagemCFO } from "@/components/contagem-cfo"
 import Link from "next/link"
 
 export const dynamic = "force-dynamic"
@@ -73,6 +74,9 @@ export default async function DashboardPage() {
       </div>
 
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))" }}>
+
+        {/* ── Contagem regressiva para o fim do CFO ── */}
+        <ContagemCFO />
 
         {/* ── Resumo de hoje: plantão, faxina e funções ── */}
         <ResumoHoje matricula={matricula} />
