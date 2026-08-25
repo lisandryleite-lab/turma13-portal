@@ -14,9 +14,9 @@ import { PrismaClient } from "../lib/generated/prisma/client"
 import { PrismaNeon } from "@prisma/adapter-neon"
 import { neonConfig } from "@neondatabase/serverless"
 import ws from "ws"
-import { DATA_INICIO } from "../lib/utils"
+import { DATA_INICIO, DATA_FIM_CFO, diasParaFimCFO } from "../lib/utils"
 import {
-  calcularServico, calendarioFaxinaMes, GRUPOS_FAXINA,
+  calcularServico, calendarioFaxinaMes, parseDataLocal, GRUPOS_FAXINA,
   MEMBROS_PLANTAO, GRUPOS_PLANTAO, CORES_PLANTAO,
 } from "../lib/escalas"
 
@@ -40,6 +40,13 @@ const FUNCOES_LABEL: Record<string, string> = {
 // Ordem de exibição das funções — as de escala de dia primeiro, depois as de solenidade.
 const FUNCOES_ORDEM = ["AuxiliarOD","AdjuntoOD","Adjunto1","Adjunto2","Mestre","Leitor","Comandante","Discurso"]
 
+// Provas marcadas. O QTS marca prova com um emoji que não sobrevive à extração de
+// texto, então a data vem daqui — avisada pela Divisão de Ensino/instrutor.
+// Aparecem no BI quando caem até 21 dias depois do fim da semana do boletim.
+const PROVAS: { data: string; disciplinas: string[]; obs?: string }[] = [
+  { data: "2026-09-02", disciplinas: ["TCEM", "GC"] }, // Qua — avisado em 25/08/2026
+]
+
 const pad = (n: number) => String(n).padStart(2, "0")
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 const ddmm = (d: Date) => `${pad(d.getDate())}/${pad(d.getMonth() + 1)}`
@@ -61,6 +68,7 @@ function segundaDaSemana(semana: number): Date {
 type QtsDados = { dias: string[]; horarios: string[]; grade: Record<string, string[]> }
 
 async function main() {
+  const hoje = new Date()
   const inicio = segundaDaSemana(SEMANA)
   const fim = new Date(inicio); fim.setDate(fim.getDate() + 6)
   const mesRef = inicio.getMonth() + 1
@@ -204,6 +212,31 @@ async function main() {
       }${legenda.map(([s, h]) => `<span style="white-space:nowrap;margin-right:12px"><strong style="color:${NAVY}">${esc(s)}</strong> · ${h}h esta semana</span>`).join(" ")}
     </p>`
 
+  // ── Provas à vista (até 21 dias depois do fim desta semana) ──────────
+  const diasFim = diasParaFimCFO()
+  const limiteProvas = new Date(fim); limiteProvas.setDate(limiteProvas.getDate() + 21)
+  const provas = PROVAS
+    .map(p => ({ ...p, quando: parseDataLocal(p.data) }))
+    .filter(p => p.quando > fim && p.quando <= limiteProvas)
+    .sort((a, b) => a.quando.getTime() - b.quando.getTime())
+
+  const provasHtml = provas.length === 0 ? "" : `
+    <div style="border:1.5px solid #b4562a;background:#fdf3ec;border-radius:8px;
+      padding:9px 14px;margin-bottom:12px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <span style="font-size:9px;font-weight:700;color:#b4562a;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap">
+        ▲ Provas à vista
+      </span>
+      ${provas.map(p => {
+        const emDias = Math.round((p.quando.getTime() - Date.UTC(hoje.getFullYear(), hoje.getMonth(), hoje.getDate())) / 86_400_000)
+        return `<span style="font-size:10.5px;color:#1e2937">
+          <strong style="color:#b4562a">${DIAS_ABREV[p.quando.getDay()]} ${ddmm(p.quando)}</strong>
+          — ${p.disciplinas.map(d => `<strong>${esc(d)}</strong>`).join(" e ")}
+          <span style="color:#8a6a55">(em ${emDias} dia${emDias === 1 ? "" : "s"})</span>
+          ${p.obs ? ` · ${esc(p.obs)}` : ""}
+        </span>`
+      }).join("")}
+    </div>`
+
   const pill = (destaque: string, texto: string) => `
     <div style="flex:1;background:linear-gradient(135deg,${NAVY} 0%,#12407f 100%);border-radius:8px;
       padding:10px 14px;display:flex;align-items:center;gap:9px;color:#fff">
@@ -303,7 +336,7 @@ async function main() {
       )).join("")}
     </div>`
 
-  const hoje = new Date()
+
   const html = `<!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8">
 <title>BI da Semana ${SEMANA} — Turma 13</title>
@@ -345,11 +378,14 @@ async function main() {
     ${legendaHtml}
   </div>
 
+  ${provasHtml}
+
   <!-- Indicadores -->
   <div style="display:flex;gap:8px;margin-bottom:12px">
     ${pill(`${pct}%`, `${totalDada}h de ${totalCarga}h ministradas`)}
     ${pill(`${encerradas}/${disciplinas.length}`, "disciplinas encerradas")}
     ${pill(`${restantes}h`, `restantes · término ${termino}`)}
+    ${pill(`${diasFim}`, `dias para o fim do CFO · ${DATA_FIM_CFO.toLocaleDateString("pt-BR", { timeZone: "UTC" })}`)}
   </div>
 
   <!-- Aniversariantes + Serviço -->
@@ -366,7 +402,7 @@ async function main() {
 
   <!-- Plantão + Funções -->
   <div style="display:grid;grid-template-columns:1fr 1.35fr;gap:16px">
-    <div>${secao("Plantão — grupos de serviço")}${plantaoHtml}</div>
+    <div>${secao("Plantão — equipes 3X1")}${plantaoHtml}</div>
     <div>${secao("Escala de serviço — funções")}
       <p style="font-size:8.5px;font-weight:700;color:${GOLD};text-transform:uppercase;letter-spacing:.06em;margin:0 0 5px">★ Desta semana · ${ddmm(inicio)} a ${ddmm(fim)}</p>
       ${funcoesSemanaHtml}

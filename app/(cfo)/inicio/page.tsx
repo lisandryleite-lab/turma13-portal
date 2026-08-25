@@ -3,6 +3,10 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { ViewToggle } from "../view-toggle"
+import { ContagemCFO } from "@/components/contagem-cfo"
+
+// A contagem regressiva tem que ser recalculada a cada acesso, nunca servida de cache.
+export const dynamic = "force-dynamic"
 
 type Tile = "olive" | "gold"
 
@@ -209,6 +213,11 @@ export default async function PortalCfoHome() {
           Portal CFO 2026
         </h1>
       </header>
+
+      {/* Contagem regressiva para o fim do CFO — esta é a página inicial do portal */}
+      <div style={{ width: "100%", maxWidth: 460, marginTop: -28, marginBottom: 36 }}>
+        <ContagemCFO tema="olive" compacto />
+      </div>
 
       <div
         style={{
