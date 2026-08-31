@@ -47,24 +47,64 @@ export function calcularServico(semana: number): {
 //  Referência: 25/08/2026 (Ter) = BRAVO. Conferida contra os 12 dias de 20 a
 //  31/08 da escala diária — bate em todos.
 // ─────────────────────────────────────────────────────────────
-export const GRUPOS_PLANTAO = ["ALPHA", "BRAVO", "CHARLIE", "DELTA"] as const
-export type GrupoPlantao = typeof GRUPOS_PLANTAO[number]
+// Grupos da 7X1 — regime VIGENTE (setembro/2026 em diante).
+export const GRUPOS_7X1 = ["GOLF", "HOTEL", "INDIA", "JULIETT", "KILO", "LIMA", "MIKE", "NOVEMBER"] as const
+// Grupos da 3X1 — valeu só em agosto/2026. Mantidos para os dias daquele mês
+// continuarem corretos (a semana 34 do portal começa em 31/08).
+export const GRUPOS_3X1 = ["ALPHA", "BRAVO", "CHARLIE", "DELTA"] as const
+
+export type Grupo7x1 = typeof GRUPOS_7X1[number]
+export type Grupo3x1 = typeof GRUPOS_3X1[number]
+export type GrupoPlantao = Grupo7x1 | Grupo3x1
+
+// O que as telas listam = o regime vigente.
+export const GRUPOS_PLANTAO = GRUPOS_7X1
 
 // Cor por grupo de plantão — fonte única (evita paletas divergentes entre telas)
 export const CORES_PLANTAO: Record<string, string> = {
+  // 7X1 (vigente)
+  GOLF: "#15803D", HOTEL: "#B91C1C", INDIA: "#1D4ED8", JULIETT: "#B45309",
+  KILO: "#7E22CE", LIMA: "#0F766E", MIKE: "#BE185D", NOVEMBER: "#4D7C0F",
+  // 3X1 (agosto/2026)
   ALPHA: "#15803D", BRAVO: "#B91C1C", CHARLIE: "#1D4ED8", DELTA: "#B45309",
 }
 
-// Referência: 25/08/2026 = BRAVO (índice 1).
-// Normaliza para UTC midnight para evitar problemas de fuso horário.
-const REF_PLANTAO_UTC = new Date("2026-08-25T00:00:00.000Z").getTime()
-const REF_PLANTAO_IDX = 1 // BRAVO
+// ─────────────────────────────────────────────────────────────
+//  Dois regimes, uma função
+//
+//  Agosto/2026 foi de 3X1 (4 grupos). Setembro/2026 VOLTOU para a 7X1 de 8
+//  grupos — fonte: "MAPA DE EQUIPES DE PLANTÃO - ESCALA 7X1 · SETEMBRO/2026" e
+//  "ESCALA DE PLANTÃO, AUXILIAR, ADJUNTO E SOBREAVISO - ESCALA 7X1 ·
+//  SETEMBRO/2026" (1ª CIA, 1º Ten Tenório).
+//
+//  A virada é 01/09/2026. Antes disso vale a 3X1; de lá em diante, a 7X1.
+// ─────────────────────────────────────────────────────────────
+const INICIO_7X1_UTC = Date.UTC(2026, 8, 1) // 01/09/2026
+
+// 7X1 — referência: 01/09/2026 (Ter) = ÍNDIA (índice 2). Conferida contra os 30
+// dias do mês na escala diária: bate em todos, inclusive 07/09 = GOLF,
+// 23/09 = GOLF e 30/09 = NOVEMBER.
+// (Confere também com a referência antiga de 26/05/2026 = GOLF: 98 dias de
+// diferença, 98 mod 8 = 2 = ÍNDIA. O ciclo de 8 dias nunca se perdeu por baixo;
+// agosto foi uma sobreposição.)
+const REF_7X1_UTC = Date.UTC(2026, 8, 1)
+const REF_7X1_IDX = 2 // ÍNDIA
+
+// 3X1 — referência: 25/08/2026 (Ter) = BRAVO (índice 1).
+const REF_3X1_UTC = Date.UTC(2026, 7, 25)
+const REF_3X1_IDX = 1 // BRAVO
+
+function ciclico<T extends readonly string[]>(grupos: T, refUTC: number, refIdx: number, dataUTC: number): T[number] {
+  const dias = Math.floor((dataUTC - refUTC) / 86_400_000)
+  const n = grupos.length
+  return grupos[(((refIdx + dias) % n) + n) % n]
+}
 
 export function grupoPlantaoPorData(data: Date): GrupoPlantao {
   const dataUTC = Date.UTC(data.getFullYear(), data.getMonth(), data.getDate())
-  const diffDias = Math.floor((dataUTC - REF_PLANTAO_UTC) / 86_400_000)
-  const n = GRUPOS_PLANTAO.length
-  return GRUPOS_PLANTAO[(((REF_PLANTAO_IDX + diffDias) % n) + n) % n]
+  return dataUTC >= INICIO_7X1_UTC
+    ? ciclico(GRUPOS_7X1, REF_7X1_UTC, REF_7X1_IDX, dataUTC)
+    : ciclico(GRUPOS_3X1, REF_3X1_UTC, REF_3X1_IDX, dataUTC)
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -146,22 +186,43 @@ export const COMPOSICAO_FAXINA: Record<GrupoFaxina, { mat: number; nome: string 
   G8: [{ mat: 7, nome: "ALDO SILVA" }, { mat: 23, nome: "RODOLFO MOURA" }, { mat: 26, nome: "ANDRÉ" }, { mat: 37, nome: "PABLO TORRES" }, { mat: 212, nome: "CAMILA BUONORA" }],
 }
 
-// Composição dos grupos de plantão — escala 3X1, agosto/2026.
-// Transcrita do "MAPA DE DIVISÃO DAS EQUIPES DE PLANTÃO DA 1ª COMPANHIA" (SEI,
-// assinado em 21/08/2026), filtrando as 34 matrículas da Turma 13.
+// Composição dos grupos de plantão — escala 7X1, SETEMBRO/2026 (vigente).
+// Transcrita do "MAPA DE DIVISÃO DAS EQUIPES DE PLANTÃO DA 1ª COMPANHIA -
+// ESCALA 7X1 · PERÍODO: SETEMBRO/2026" (1ª CIA, 1º Ten Tenório), filtrando as
+// 34 matrículas da Turma 13 das 26 linhas × 8 colunas da companhia inteira.
 //
-// ATENÇÃO: o mapa da 1ª CIA lista só 31 dos 34 alunos da Turma 13 — 108 LISANDRY,
-// 211 DÁRIO e 213 R SILVA não aparecem em nenhuma das 4 equipes (busca no texto do
-// PDF por "108", "LISANDRY", "DÁRIO" e "R SILVA" não acha nada; é omissão do
-// documento, não outro grupo).
-//   • 108 LISANDRY está em ALPHA — informado pelo próprio em 25/08/2026.
-//   • 211 e 213 seguem sem equipe. Não chutar: esperar a 1ª CIA publicar.
-export const MEMBROS_PLANTAO: Record<GrupoPlantao, { mat: number; nome: string }[]> = {
+// Ao contrário do mapa 3X1 de agosto, este traz 108 LISANDRY explicitamente
+// (ÍNDIA, linha 14). Seguem de fora só 211 DÁRIO e 213 R SILVA.
+//
+// Obs. do documento: 105 LUCAS EDUARDO é adventista — os plantões de sexta dele
+// vão para quinta, e os de sábado para domingo.
+export const MEMBROS_7X1: Record<Grupo7x1, { mat: number; nome: string }[]> = {
+  GOLF:     [{ mat: 7,   nome: "ALDO SILVA" }, { mat: 19,  nome: "THAIS FIGUEIREDO" }, { mat: 57,  nome: "CLEYTON" }, { mat: 143, nome: "VIDAL" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
+  HOTEL:    [{ mat: 13,  nome: "JONAS" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 144, nome: "SAMUEL SANTOS" }],
+  INDIA:    [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 108, nome: "LISANDRY" }, { mat: 116, nome: "BERTIPALHA" }],
+  JULIETT:  [{ mat: 94,  nome: "ANDRÉ CARDOSO" }, { mat: 153, nome: "HUGO" }],
+  KILO:     [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }, { mat: 212, nome: "CAMILA BUONORA" }],
+  LIMA:     [{ mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 186, nome: "SAMUEL SILVA" }],
+  MIKE:     [{ mat: 45,  nome: "GABRIELE COSTA" }, { mat: 81,  nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 165, nome: "KEVIN GOMES" }],
+  NOVEMBER: [{ mat: 55,  nome: "SHIRLAYNE" }, { mat: 71,  nome: "LEIMIG" }, { mat: 76,  nome: "ARAÚJO JR" }],
+}
+
+// Composição da 3X1 — agosto/2026. Mantida para os dias daquele mês (a semana
+// 34 do portal começa em 31/08) continuarem mostrando a equipe certa.
+export const MEMBROS_3X1: Record<Grupo3x1, { mat: number; nome: string }[]> = {
   ALPHA:   [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 94,  nome: "ANDRÉ CARDOSO" }, { mat: 108, nome: "LISANDRY" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 153, nome: "HUGO" }],
   BRAVO:   [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }, { mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 186, nome: "SAMUEL SILVA" }, { mat: 212, nome: "CAMILA BUONORA" }],
   CHARLIE: [{ mat: 45,  nome: "GABRIELE COSTA" }, { mat: 55,  nome: "SHIRLAYNE" }, { mat: 71,  nome: "LEIMIG" }, { mat: 76,  nome: "ARAÚJO JR" }, { mat: 81,  nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 165, nome: "KEVIN GOMES" }],
   DELTA:   [{ mat: 7,   nome: "ALDO SILVA" }, { mat: 13,  nome: "JONAS" }, { mat: 19,  nome: "THAIS FIGUEIREDO" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 57,  nome: "CLEYTON" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 143, nome: "VIDAL" }, { mat: 144, nome: "SAMUEL SANTOS" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
 }
 
-// Alunos da Turma 13 ainda sem equipe no mapa 3X1 da 1ª CIA.
+// Os dois regimes juntos: `grupoPlantaoPorData` devolve nome de 3X1 para agosto
+// e de 7X1 daí em diante, então quem procura a equipe do dia precisa dos 12.
+export const MEMBROS_PLANTAO: Record<GrupoPlantao, { mat: number; nome: string }[]> = {
+  ...MEMBROS_7X1,
+  ...MEMBROS_3X1,
+}
+
+// Alunos da Turma 13 ainda sem equipe no mapa da 1ª CIA (também ausentes do
+// mapa 7X1 de setembro). Não chutar: esperar a 1ª CIA publicar.
 export const SEM_EQUIPE_PLANTAO = [211, 213] as const
