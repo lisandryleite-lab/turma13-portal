@@ -6,7 +6,7 @@ import {
   calendarioFaxinaMes,
   COMPOSICAO_FAXINA,
 } from "@/lib/escalas"
-import { semanaAtual } from "@/lib/utils"
+import { semanaAtual, partesEmRecife } from "@/lib/utils"
 import { PrintClient } from "./print-client"
 
 export const dynamic = "force-dynamic"
@@ -16,9 +16,8 @@ export default async function ImprimirEscalasPage() {
   if (!session) redirect("/login")
 
   const semana = semanaAtual()
-  const hoje = new Date()
-  const ano = hoje.getFullYear()
-  const mes = hoje.getMonth() + 1
+  // Calendário de Recife — no servidor (UTC) o mês viraria às 21h.
+  const { ano, mes } = partesEmRecife()
 
   // Composição de faxina do banco (com fallback estático)
   const [faxinaMembrosBD, overridesBD] = await Promise.all([

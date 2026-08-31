@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { partesEmRecife } from "@/lib/utils"
 
 // GET /api/funcoes-destaque?ano=2026&mes=5
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
-  const ano = Number(searchParams.get("ano") || new Date().getFullYear())
-  const mes = Number(searchParams.get("mes") || new Date().getMonth() + 1)
+  // Default = mês corrente em Recife; no servidor (UTC) viraria às 21h.
+  const agora = partesEmRecife()
+  const ano = Number(searchParams.get("ano") || agora.ano)
+  const mes = Number(searchParams.get("mes") || agora.mes)
 
   const inicio = new Date(ano, mes - 1, 1)
   const fim    = new Date(ano, mes, 0, 23, 59, 59)

@@ -1,20 +1,23 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { semanaAtual } from "@/lib/utils"
-import { ResumoHoje } from "@/components/resumo-hoje"
+import { semanaAtual, partesEmRecife } from "@/lib/utils"
+import { ResumoHoje, carregarResumoHoje } from "@/components/resumo-hoje"
 import { ContagemCFO } from "@/components/contagem-cfo"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 
 export default async function DashboardPage() {
   const session = await auth()
-  const user = session!.user
-  const matricula = user.matricula
+  if (!session) redirect("/login")
+  const matricula = session.user.matricula
 
   const semana = semanaAtual()
 
-  const [aluno, aviso, xerife, disciplinas, todosComAniv] = await Promise.all([
+  // Tudo num Promise.all só — inclusive os dados do card "hoje". Cada consulta
+  // fora daqui vira um roundtrip iad1↔sa-east-1 em série.
+  const [aluno, aviso, xerife, disciplinas, todosComAniv, resumoHoje] = await Promise.all([
     prisma.user.findUnique({
       where: { matricula },
       select: { id: true, nomeGuerra: true, nomeCompleto: true, email: true, canga: true, grupoPlantao: true, grupoFaxina: true, aniversario: true },
@@ -26,11 +29,12 @@ export default async function DashboardPage() {
       where: { isAdmin: false, aniversario: { not: null } },
       select: { nomeGuerra: true, aniversario: true, matricula: true },
     }),
+    carregarResumoHoje(),
   ])
 
-  const hoje = new Date()
-  const mesAtual = hoje.getMonth() + 1
-  const diaHoje = String(hoje.getDate()).padStart(2, "0")
+  // Dia do calendário de Recife — no servidor (UTC) o mês/dia virariam às 21h.
+  const { mes: mesAtual, dia } = partesEmRecife()
+  const diaHoje = String(dia).padStart(2, "0")
 
   const aniversariantesDoMes = todosComAniv
     .filter(a => Number(a.aniversario?.split("/")[1]) === mesAtual)
@@ -79,7 +83,7 @@ export default async function DashboardPage() {
         <ContagemCFO />
 
         {/* ── Resumo de hoje: plantão, faxina e funções ── */}
-        <ResumoHoje matricula={matricula} />
+        <ResumoHoje matricula={matricula} dados={resumoHoje} />
 
         {/* ── Progresso geral ── */}
         <div style={{ gridColumn: "1/-1", background: "#fff", borderRadius: 14, padding: 20, border: "1px solid #dde3ee", boxShadow: "0 1px 4px rgba(11,45,94,0.06)" }}>

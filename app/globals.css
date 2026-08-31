@@ -246,3 +246,17 @@
   .notas-print .print-only { display: block !important; }
   .notas-print .nota-card { break-inside: avoid; border: 1px solid #ccc !important; background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* Skeleton de carregamento (loading.tsx dos grupos (logado) e (cfo)) */
+.t13-skel {
+  background: linear-gradient(90deg, rgba(11,45,94,0.05) 25%, rgba(11,45,94,0.11) 50%, rgba(11,45,94,0.05) 75%);
+  background-size: 200% 100%;
+  animation: t13-skel-pulse 1.4s ease-in-out infinite;
+}
+@keyframes t13-skel-pulse {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t13-skel { animation: none; }
+}

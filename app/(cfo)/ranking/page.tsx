@@ -12,7 +12,16 @@ export default async function RankingPage() {
   const [minhasNotas, disciplinas, todasNotas, eu, turmaSize, opms, minhaPref, agregado] = await Promise.all([
     prisma.notaCFO.findMany({ where: { userId }, orderBy: [{ disciplina: "asc" }, { avaliacao: "asc" }] }),
     prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true }, orderBy: { sigla: "asc" } }),
-    prisma.notaCFO.findMany({ include: { user: { select: { id: true, nfdc: true, turma: true } } } }),
+    // Filtra no SQL: antes puxava a tabela INTEIRA (todas as turmas, todos os
+    // campos) e descartava em JS — atravessando a rede à toa a cada abertura.
+    prisma.notaCFO.findMany({
+      where: { user: { turma: 3 }, NOT: { userId } },
+      select: {
+        userId: true, disciplina: true, avaliacao: true,
+        valor: true, ehAF: true, apto: true,
+        user: { select: { nfdc: true } },
+      },
+    }),
     prisma.user.findUnique({ where: { id: userId }, select: { nfdc: true } }),
     prisma.user.count({ where: { turma: 3 } }),
     prisma.oPM.findMany({ orderBy: { ordem: "asc" } }),
@@ -23,7 +32,6 @@ export default async function RankingPage() {
   // MGC dos OUTROS alunos T3 que já lançaram notas (para posicionar o ranking)
   const porUser = new Map<string, { nfdc: number; vs: Verificacao[] }>()
   for (const n of todasNotas) {
-    if (n.user.turma !== 3 || n.userId === userId) continue
     const e = porUser.get(n.userId) || { nfdc: n.user.nfdc, vs: [] }
     e.vs.push({ disciplina: n.disciplina, avaliacao: n.avaliacao, nota: n.valor, peso: 1, ehAF: n.ehAF, apto: n.apto })
     porUser.set(n.userId, e)

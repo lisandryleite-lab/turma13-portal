@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import { hojeEmRecife } from "@/lib/utils"
 import {
   grupoPlantaoPorData,
   grupoFaxinaPorData,
@@ -18,8 +19,17 @@ const ordemFuncao = (f: string) => {
   return i < 0 ? 99 : i
 }
 
-export async function ResumoHoje({ matricula }: { matricula: number }) {
-  const hoje = new Date()
+export type DadosResumoHoje = Awaited<ReturnType<typeof carregarResumoHoje>>
+
+/**
+ * Busca os dados do card "hoje". Fica separado do componente de propósito: a
+ * página chama isto DENTRO do seu próprio `Promise.all`, senão as 3 consultas
+ * daqui só começariam depois que as da página terminassem — um roundtrip
+ * inteiro a mais (~250 ms) em série, toda vez que alguém abre o dashboard.
+ */
+export async function carregarResumoHoje() {
+  // Dia do calendário de Recife — no servidor (UTC) `new Date()` viraria o dia às 21h.
+  const hoje = hojeEmRecife()
   const grupoPlantao = grupoPlantaoPorData(hoje)
   const grupoFaxina = grupoFaxinaPorData(hoje)
 
@@ -43,9 +53,18 @@ export async function ResumoHoje({ matricula }: { matricula: number }) {
   }
   const composicao = faxinaMembrosBD.length > 0 ? composicaoBD : (COMPOSICAO_FAXINA as Record<string, { mat: number; nome: string }[]>)
 
-  const plantao = MEMBROS_PLANTAO[grupoPlantao] || []
-  const faxina = grupoFaxina ? (composicao[grupoFaxina] || []) : []
-  const funcoes = [...funcoesHoje].sort((a, b) => ordemFuncao(a.funcao) - ordemFuncao(b.funcao))
+  return {
+    grupoPlantao,
+    grupoFaxina,
+    nomesPorMat,
+    plantao: MEMBROS_PLANTAO[grupoPlantao] || [],
+    faxina: grupoFaxina ? (composicao[grupoFaxina] || []) : [],
+    funcoes: [...funcoesHoje].sort((a, b) => ordemFuncao(a.funcao) - ordemFuncao(b.funcao)),
+  }
+}
+
+export function ResumoHoje({ matricula, dados }: { matricula: number; dados: DadosResumoHoje }) {
+  const { grupoPlantao, grupoFaxina, nomesPorMat, plantao, faxina, funcoes } = dados
 
   const chip = (key: string, conteudo: React.ReactNode, eu: boolean, dim = false) => (
     <span key={key} style={{

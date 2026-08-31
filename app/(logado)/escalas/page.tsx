@@ -7,13 +7,14 @@ import {
   COMPOSICAO_FAXINA,
   MEMBROS_PLANTAO,
 } from "@/lib/escalas"
-import { semanaAtual } from "@/lib/utils"
+import { semanaAtual, partesEmRecife } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
 
+// Calendário de Recife — no servidor (UTC) o mês viraria às 21h do último dia.
 function mesAtual() {
-  const hoje = new Date()
-  return { ano: hoje.getFullYear(), mes: hoje.getMonth() + 1 }
+  const { ano, mes } = partesEmRecife()
+  return { ano, mes }
 }
 
 export default async function EscalasPage() {

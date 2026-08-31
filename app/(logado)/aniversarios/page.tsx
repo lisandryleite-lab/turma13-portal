@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import { partesEmRecife } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
 
@@ -24,9 +25,9 @@ export default async function AniversariosPage() {
     porMes[m].sort((a, b) => Number(a.aniversario!.split("/")[0]) - Number(b.aniversario!.split("/")[0]))
   }
 
-  const hoje = new Date()
-  const mesAtual = hoje.getMonth() + 1
-  const diaHoje = String(hoje.getDate()).padStart(2, "0")
+  // Calendário de Recife — no servidor (UTC) o mês/dia virariam às 21h.
+  const { mes: mesAtual, dia } = partesEmRecife()
+  const diaHoje = String(dia).padStart(2, "0")
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
