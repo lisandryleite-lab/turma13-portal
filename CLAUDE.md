@@ -206,12 +206,53 @@ const { matricula, isAdmin, nomeGuerra } = session.user  // tipado — sem as an
 
 Middleware em `auth.config.ts` protege todas as rotas fora de `PUBLIC_PATHS`.
 
+## Rotas de API — padrão obrigatório (`lib/api.ts`)
+
+Toda rota é envolvida por `rotaApi()` e todo corpo é lido com `lerCorpo()`.
+Nunca chamar `req.json()` direto: corpo malformado estoura sem catch e vira 500.
+
+```ts
+import { rotaApi, lerCorpo, proibido, naoEncontrado, ErroHttp, z, zId } from "@/lib/api"
+
+const Corpo = z.object({ id: zId, titulo: z.string().trim().min(1, "obrigatório") })
+
+export const POST = rotaApi(async (req: NextRequest) => {
+  const session = await auth()
+  if (!session?.user?.isAdmin) throw proibido()      // 403
+  const { id, titulo } = await lerCorpo(req, Corpo)  // 400 se inválido
+  ...
+})
+```
+
+- **Erro se comunica com `throw`**, não com `return NextResponse.json(...)`:
+  `proibido()` 403, `naoAutorizado()` 401, `naoEncontrado(x)` 404,
+  `new ErroHttp(status, msg)` para o resto.
+- **Mapeamento automático:** P2025 → 404, P2002/P2003 → 409,
+  `PrismaClientValidationError` → 400, inesperado → 500 com `console.error`.
+- **Nunca espalhar o corpo no Prisma** (`data: { ...body }`): o schema zod é a
+  lista fechada de campos graváveis. Foi assim que `PUT /api/admin/alunos/[id]`
+  deixava a requisição escrever `isAdmin` e `turma13`.
+- **Escrita em mais de uma tabela vai em `$transaction`** (nota + histórico,
+  xerife atual + novo xerife). Laço de upsert também: uma transação em vez de
+  um roundtrip por item.
+- `/api/*` sem sessão responde **401 JSON** (`lib/auth.config.ts`); só as
+  páginas redirecionam para `/login`.
+- Peças de schema prontas: `zMatricula`, `zId`, `zData`, `zSemana`.
+
 ## Prisma — padrão de importação
 
 ```ts
 import { prisma } from "@/lib/prisma"
 // Cliente gerado em lib/generated/prisma — não importar de @prisma/client diretamente
 ```
+
+**Índices:** o Prisma **não** cria índice automático em FK no PostgreSQL. Ao adicionar
+uma coluna `userId`/`xxxId` nova, declarar o `@@index` na mão.
+
+**Migração:** `prisma db push` aplica direto no banco de produção (não há pasta
+`migrations/`). Antes de rodar, conferir o SQL com
+`npx prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --script`
+e guardar o script + o rollback em `prisma/sql/`.
 
 ## Comandos úteis
 
