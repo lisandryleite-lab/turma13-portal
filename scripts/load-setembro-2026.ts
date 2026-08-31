@@ -93,12 +93,18 @@ const DIAS = ["Seg 31/08","Ter 01/09","Qua 02/09","Qui 03/09","Sex 04/09","Sáb 
 // direita é a Turma 14 (as duas se revezam nas mesmas matérias).
 // Siglas da foto → banco: INTSIP → INTSISP, EASPE → EASE.
 // Quarta 10h-11h40 tinha POE RISCADO no documento (aula cancelada) → vazio.
+//
+// ATENÇÃO ao bloco da noite: nesta semana a última faixa é "18h20 às 19h10",
+// ou seja UM tempo só (idx10). Não há aula às 17h30 — diferente da semana 33,
+// cuja faixa era "17h30 às 19h10" (dois tempos, idx9 e idx10). Preencher os
+// dois aqui inflava PE em 2h e AP em 1h.
 const grade: Record<string, string[]> = {
-  "Seg 31/08": ["", "INTSISP","INTSISP", "POE","POE",   "EASE","EASE", "PE","PE",   "PE","PE"],
-  "Ter 01/09": ["", "PJM","PJM",         "PJM","PJM",   "AM","AM",     "AM","AM",   "",""],
-  "Qua 02/09": ["", "POE","POE",         "","",         "TCEM","TCEM", "GC","GC",   "",""],
-  "Qui 03/09": ["", "","",               "","",         "AP","AP",     "PE","PE",   "PE","PE"],
-  "Sex 04/09": ["", "EPCR","EPCR",       "TFM2","TFM2", "PE","PE",     "AP","AP",   "AP","AP"],
+  //              07h00  08h00     08h50       10h00   10h50    13h40  14h30   15h40 16h30   17h30 18h20
+  "Seg 31/08": ["", "INTSISP","INTSISP", "POE","POE",   "EASE","EASE", "PE","PE",   "", "PE"],
+  "Ter 01/09": ["", "PJM","PJM",         "PJM","PJM",   "AM","AM",     "AM","AM",   "", ""],
+  "Qua 02/09": ["", "POE","POE",         "","",         "TCEM","TCEM", "GC","GC",   "", ""],
+  "Qui 03/09": ["", "","",               "","",         "AP","AP",     "PE","PE",   "", "PE"],
+  "Sex 04/09": ["", "EPCR","EPCR",       "TFM2","TFM2", "PE","PE",     "AP","AP",   "", "AP"],
   "Sáb 05/09": ["","","","","","","","","","",""],
   "Dom 06/09": ["","","","","","","","","","",""],
 }
