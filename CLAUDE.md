@@ -108,7 +108,7 @@ Escalas nominais da turma com data exata, posição e userId.
 Escala individual de um aluno (plantão externo, faxina de alojamento, etc.) com data, hora e função.
 
 ### `PlantaoDia`
-Plantão externo por dia. Admin insere mensalmente. Campo `grupoPlantao`: ALPHA | BRAVO | CHARLIE | DELTA (escala 3X1, ago/2026 em diante). Tabela hoje vazia — o grupo do dia sai de `grupoPlantaoPorData()`.
+Plantão externo por dia. Admin insere mensalmente. Campo `grupoPlantao`: GOLF | HOTEL | INDIA | JULIETT | KILO | LIMA | MIKE | NOVEMBER na 7X1 vigente (set/2026 em diante); ALPHA | BRAVO | CHARLIE | DELTA na 3X1 de ago/2026 — ver "Grupos de plantão". Tabela hoje vazia — o grupo do dia sai de `grupoPlantaoPorData()`.
 
 ### `FuncaoDestaqueDia`
 Funções de destaque diárias (Mestre, Leitor, Discurso, Comandante) com matrícula do responsável.
@@ -170,27 +170,59 @@ regressiva um dia a menos e a semana pulando no domingo à noite.
 ### Grupos de faxina — fonte viva no banco
 A composição exibida em `/escalas` vem da tabela **`FaxinaGrupoMembro`** quando não vazia; `COMPOSICAO_FAXINA` em `lib/escalas.ts` é só fallback (mantida em sincronia). `User.grupoFaxina` (dashboard) deve espelhar a tabela — `scripts/integra-novatos-escalas.ts` sincroniza. Em jul/2026: G7 = Thais, Gabriele, Cleyton, 211 Dário, 213 R Silva; G8 = Aldo, Rodolfo, André, Pablo, 212 Camila (grupos com 5).
 
-### Grupos de plantão — ESCALA 3X1, 4 grupos (a partir de ago/2026)
-Ciclo **diário** (todos os dias, incluindo fins de semana): ALPHA → BRAVO → CHARLIE → DELTA → (repete).
-Referência: **25/08/2026 (Ter) = BRAVO**, conferida contra os 12 dias de 20 a 31/08 da
-escala diária da 1ª CIA — bate em todos.
+### Grupos de plantão — o regime MUDA de mês para mês; conferir sempre
 
-Substituiu a escala **7x1 de 8 grupos** (GOLF → HOTEL → INDIA → JULIETT → KILO → LIMA →
-MIKE → NOVEMBER, referência 26/05/2026 = GOLF), que valeu até julho/2026.
-Migração dos dados: `scripts/migra-plantao-3x1.ts`.
+`grupoPlantaoPorData()` carrega **dois regimes** e escolhe pela data. Não presumir
+que o vigente é o do mês passado: a 1ª CIA já trocou duas vezes em 2026.
 
-| Grupo   | Mats                                          | Membros                                                                                                        |
-|---------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| ALPHA   | 41, 60, 94, 108, 116, 153                     | Alan Silva, João Nunes, André Cardoso, Lisandry, Bertipalha, Hugo                                              |
-| BRAVO   | 26, 37, 65, 98, 114, 131, 167, 174, 186, 212  | André, Pablo Torres, Kauhanni, José Menezes, Josiane Farias, José Inácio, Gustavo Neto, Alexandre, Samuel Silva, Camila Buonora |
-| CHARLIE | 45, 55, 71, 76, 81, 106, 165                  | Gabriele Costa, Shirlayne, Leimig, Araújo Jr, Fernando Rocha, Rafael Ribeiro, Kevin Gomes                       |
-| DELTA   | 7, 13, 19, 23, 57, 105, 143, 144, 191         | Aldo Silva, Jonas, Thais Figueiredo, Rodolfo Moura, Cleyton, Lucas Eduardo, Vidal, Samuel Santos, Gomes Nascimento |
+| Período | Escala | Grupos | Referência |
+|---|---|---|---|
+| até jul/2026 | 7X1 | GOLF…NOVEMBER | 26/05/2026 = GOLF |
+| **ago/2026** | 3X1 | ALPHA…DELTA | 25/08/2026 = BRAVO |
+| **set/2026 em diante** | 7X1 | GOLF…NOVEMBER | **01/09/2026 = ÍNDIA** |
 
-**O mapa da 1ª CIA lista só 31 dos 34 alunos.** Busca no texto do PDF por "108", "LISANDRY",
-"DÁRIO" e "R SILVA" não acha nada — é omissão do documento, não outro grupo.
-**108 LISANDRY está em ALPHA** (informado pelo próprio em 25/08/2026, e a tabela acima já
-reflete isso). **211 DÁRIO e 213 R SILVA seguem sem equipe** (`SEM_EQUIPE_PLANTAO` em
-`lib/escalas.ts`, e `User.grupoPlantao` nulo) — não chutar: esperar a 1ª CIA publicar.
+Ciclo **diário** nos dois casos (fins de semana incluídos), um grupo por dia corrido.
+A virada 3X1 → 7X1 é **01/09/2026** (`INICIO_7X1_UTC` em `lib/escalas.ts`). A semana 34
+do portal começa em 31/08, então os dois regimes precisam conviver.
+
+A referência de setembro foi conferida contra os **30 dias** da escala diária oficial —
+bate em todos. E bate com a referência antiga de 26/05 (98 dias, `98 mod 8 = 2` = ÍNDIA):
+o ciclo de 8 dias **nunca se perdeu por baixo**; agosto foi uma sobreposição de 4 grupos.
+
+**7X1 · setembro/2026** (`MEMBROS_7X1`) — 32 dos 34 alunos:
+
+| Grupo | Mats |
+|---|---|
+| GOLF | 7, 19, 57, 143, 191 |
+| HOTEL | 13, 23, 105, 144 |
+| INDIA | 41, 60, 108, 116 |
+| JULIETT | 94, 153 |
+| KILO | 26, 37, 65, 98, 212 |
+| LIMA | 114, 131, 167, 174, 186 |
+| MIKE | 45, 81, 106, 165 |
+| NOVEMBER | 55, 71, 76 |
+
+A 3X1 de agosto segue em `MEMBROS_3X1`; `MEMBROS_PLANTAO` é a união das duas (12 chaves),
+porque `grupoPlantaoPorData()` devolve nome de qualquer um dos dois regimes.
+
+**211 DÁRIO e 213 R SILVA seguem sem equipe** (`SEM_EQUIPE_PLANTAO`, e `User.grupoPlantao`
+nulo) — ausentes também do mapa de setembro. Não chutar: esperar a 1ª CIA publicar.
+Ao contrário do mapa de agosto, o de setembro traz **108 LISANDRY** explicitamente (ÍNDIA).
+
+O documento escreve o grupo ora como "JULIET", ora como "JULIETT"; no código é **JULIETT**.
+Obs. do documento: **105 LUCAS EDUARDO é adventista** — plantão de sexta vai para quinta,
+o de sábado para domingo.
+
+Carregador do mês: `scripts/load-setembro-2026.ts` (idempotente — grupo de plantão,
+funções nas formaturas, guarda-bandeira e QTS).
+
+### Numeração das semanas — o portal e a Divisão de Ensino divergem
+
+O QTS oficial rotulou **31/08–06/09 como "SEMANA 33"**, mas `semanaAtual()` põe essa
+semana na **34** (a 33 do portal é 24–30/08). A numeração oficial está **uma semana
+atrás** da do portal. O QTS é gravado sob o número do **portal**, senão o dashboard não
+acha a semana corrente. Mexer em `DATA_INICIO`/`REF_SEMANA` para alinhar deslocaria
+junto a rotação de P1/P3/P4 (`calcularServico`) — não fazer sem decisão da turma.
 
 ## Autenticação — padrão de uso
 
