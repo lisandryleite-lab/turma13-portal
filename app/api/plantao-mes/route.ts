@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { partesEmRecife } from "@/lib/utils"
+import { rotaApi, lerCorpo, proibido, z, zData, zMatricula } from "@/lib/api"
 
 // GET /api/plantao-mes?ano=2026&mes=5
-export async function GET(req: NextRequest) {
+export const GET = rotaApi(async (req: NextRequest) => {
   const { searchParams } = new URL(req.url)
   // Default = mês corrente em Recife; no servidor (UTC) viraria às 21h.
   const agora = partesEmRecife()
@@ -19,25 +20,34 @@ export async function GET(req: NextRequest) {
     orderBy: { data: "asc" },
   })
   return NextResponse.json(dias)
-}
+})
 
 // POST /api/plantao-mes  { dias: [{data, grupoPlantao, adjuntoMat?}] }
-export async function POST(req: NextRequest) {
+const SalvarPlantoes = z.object({
+  dias: z.array(z.object({
+    data: zData,
+    grupoPlantao: z.string().trim().min(1, "obrigatório"),
+    adjuntoMat: zMatricula.nullish(),
+  })),
+})
+
+export const POST = rotaApi(async (req: NextRequest) => {
   const session = await auth()
-  if (!session?.user?.isAdmin)
-    return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!session?.user?.isAdmin) throw proibido()
 
-  const { dias } = await req.json()
-  if (!Array.isArray(dias)) return NextResponse.json({ error: "dias[] obrigatório" }, { status: 400 })
+  const { dias } = await lerCorpo(req, SalvarPlantoes)
 
-  for (const d of dias) {
+  // Uma transação em vez de N upserts em série — o mês inteiro eram ~30
+  // roundtrips até o banco, um a um.
+  await prisma.$transaction(dias.map(d => {
     const data = new Date(d.data)
     data.setUTCHours(12, 0, 0, 0)
-    await prisma.plantaoDia.upsert({
+    return prisma.plantaoDia.upsert({
       where: { data },
       update: { grupoPlantao: d.grupoPlantao, adjuntoMat: d.adjuntoMat ?? null },
       create: { data, grupoPlantao: d.grupoPlantao, adjuntoMat: d.adjuntoMat ?? null },
     })
-  }
+  }))
+
   return NextResponse.json({ ok: true })
-}
+})

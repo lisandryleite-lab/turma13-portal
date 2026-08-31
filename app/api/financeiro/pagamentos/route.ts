@@ -2,39 +2,43 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { ehGestorFinanceiro } from "@/lib/financeiro"
+import { rotaApi, lerCorpo, proibido, z, zId } from "@/lib/api"
 
-export async function POST(req: NextRequest) {
+async function exigirGestor() {
   const session = await auth()
-  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!ehGestorFinanceiro(session)) throw proibido()
+}
 
-  const { cotaId, userId } = await req.json()
-  if (!cotaId || !userId) return NextResponse.json({ error: "cotaId e userId obrigatórios" }, { status: 400 })
+export const POST = rotaApi(async (req: NextRequest) => {
+  await exigirGestor()
 
+  const { cotaId, userId } = await lerCorpo(req, z.object({ cotaId: zId, userId: zId }))
   const pagamento = await prisma.pagamentoCota.upsert({
     where: { cotaId_userId: { cotaId, userId } },
     update: {},
     create: { cotaId, userId },
   })
   return NextResponse.json(pagamento)
-}
+})
 
-export async function DELETE(req: NextRequest) {
-  const session = await auth()
-  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+export const DELETE = rotaApi(async (req: NextRequest) => {
+  await exigirGestor()
 
-  const { id } = await req.json()
-  if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
+  const { id } = await lerCorpo(req, z.object({ id: zId }))
   await prisma.pagamentoCota.delete({ where: { id } })
   return NextResponse.json({ ok: true })
-}
+})
 
-export async function PATCH(req: NextRequest) {
-  const session = await auth()
-  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+const ConfirmarPagamento = z.object({
+  id: zId,
+  pago: z.boolean().optional(),
+  observacao: z.string().nullish(),
+})
 
-  const { id, pago, observacao } = await req.json()
-  if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
+export const PATCH = rotaApi(async (req: NextRequest) => {
+  await exigirGestor()
 
+  const { id, pago, observacao } = await lerCorpo(req, ConfirmarPagamento)
   const pagamento = await prisma.pagamentoCota.update({
     where: { id },
     data: {
@@ -44,4 +48,4 @@ export async function PATCH(req: NextRequest) {
     },
   })
   return NextResponse.json(pagamento)
-}
+})

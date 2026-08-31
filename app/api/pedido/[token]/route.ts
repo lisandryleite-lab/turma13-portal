@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { parseFormulario, parseResposta } from "@/lib/formulario-cota"
+import { rotaApi, naoEncontrado, ErroHttp } from "@/lib/api"
 
 // Registro do pedido pelo link público (sem login) — o token do PagamentoCota
 // já identifica a pessoa, igual ao fluxo de /pagar/[token].
-export async function POST(req: NextRequest, { params }: { params: Promise<{ token: string }> }) {
+export const POST = rotaApi(async (req: NextRequest, { params }: { params: Promise<{ token: string }> }) => {
   const { token } = await params
   const { respostas } = await req.json().catch(() => ({ respostas: null }))
 
@@ -12,11 +13,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     where: { token },
     select: { id: true, cota: { select: { ativa: true, formulario: true } } },
   })
-  if (!pag) return NextResponse.json({ error: "Link inválido" }, { status: 404 })
-  if (!pag.cota.ativa) return NextResponse.json({ error: "Levantamento encerrado" }, { status: 400 })
+  if (!pag) throw naoEncontrado("Link")
+  if (!pag.cota.ativa) throw new ErroHttp(400, "Levantamento encerrado")
 
   const form = parseFormulario(pag.cota.formulario)
-  if (!form) return NextResponse.json({ error: "Esta cota não tem formulário" }, { status: 400 })
+  if (!form) throw new ErroHttp(400, "Esta cota não tem formulário")
 
   // Mesma normalização do endpoint logado: só entra o que existe na definição.
   const resp = parseResposta(respostas)
@@ -31,10 +32,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     campos[c.id] = v
   }
 
-  if (itens.length === 0) return NextResponse.json({ error: "Escolha pelo menos uma peça" }, { status: 400 })
+  if (itens.length === 0) throw new ErroHttp(400, "Escolha pelo menos uma peça")
   const faltando = form.campos.filter(c => c.obrigatorio && !campos[c.id]).map(c => c.label)
-  if (faltando.length > 0) return NextResponse.json({ error: `Preencha: ${faltando.join(", ")}` }, { status: 400 })
+  if (faltando.length > 0) throw new ErroHttp(400, `Preencha: ${faltando.join(", ")}`)
 
   await prisma.pagamentoCota.update({ where: { id: pag.id }, data: { respostas: { campos, itens } } })
   return NextResponse.json({ ok: true })
-}
+})

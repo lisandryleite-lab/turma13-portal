@@ -2,63 +2,87 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { ehGestorFinanceiro } from "@/lib/financeiro"
+import { rotaApi, lerCorpo, proibido, z, zId } from "@/lib/api"
 
 // Admin gerencia o pedido coletivo (header + cardápio).
 
-export async function POST(req: NextRequest) {
+async function exigirGestor() {
   const session = await auth()
-  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!ehGestorFinanceiro(session)) throw proibido()
+}
 
-  const { titulo, restaurante, responsavel, instrucoes, driveFolderUrl, prazo, itens } = await req.json()
-  if (!titulo) return NextResponse.json({ error: "Título obrigatório" }, { status: 400 })
+const zPrazo = z.string().nullish().refine(
+  (s) => s == null || s === "" || !Number.isNaN(Date.parse(s)), "prazo inválido",
+)
 
-  const cardapio = (Array.isArray(itens) ? itens : [])
-    .filter((i: { nome?: string; preco?: unknown }) => i?.nome && !isNaN(Number(i.preco)))
-    .map((i: { nome: string; preco: unknown }, idx: number) => ({ nome: String(i.nome), preco: Number(i.preco), ordem: idx }))
+const CriarLanche = z.object({
+  titulo: z.string().trim().min(1, "obrigatório"),
+  restaurante: z.string().nullish(),
+  responsavel: z.string().nullish(),
+  instrucoes: z.string().nullish(),
+  driveFolderUrl: z.string().nullish(),
+  prazo: zPrazo,
+  itens: z.array(z.object({
+    nome: z.string().trim().min(1),
+    preco: z.coerce.number().refine(Number.isFinite, "preço inválido"),
+  })).min(1, "adicione ao menos um item ao cardápio"),
+})
 
-  if (cardapio.length === 0) return NextResponse.json({ error: "Adicione ao menos um item ao cardápio" }, { status: 400 })
+export const POST = rotaApi(async (req: NextRequest) => {
+  await exigirGestor()
+
+  const c = await lerCorpo(req, CriarLanche)
+  const cardapio = c.itens.map((i, ordem) => ({ nome: i.nome, preco: i.preco, ordem }))
 
   const pedido = await prisma.pedidoLanche.create({
     data: {
-      titulo,
-      restaurante: restaurante || null,
-      responsavel: responsavel || "",
-      instrucoes: instrucoes || null,
-      driveFolderUrl: driveFolderUrl || null,
-      prazo: prazo ? new Date(prazo) : null,
+      titulo: c.titulo,
+      restaurante: c.restaurante || null,
+      responsavel: c.responsavel || "",
+      instrucoes: c.instrucoes || null,
+      driveFolderUrl: c.driveFolderUrl || null,
+      prazo: c.prazo ? new Date(c.prazo) : null,
       itens: { create: cardapio },
     },
   })
   return NextResponse.json(pedido)
-}
+})
 
-export async function PATCH(req: NextRequest) {
-  const session = await auth()
-  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+const AtualizarLanche = z.object({
+  id: zId,
+  aberto: z.boolean().optional(),
+  titulo: z.string().trim().min(1).optional(),
+  restaurante: z.string().nullish(),
+  responsavel: z.string().optional(),
+  instrucoes: z.string().nullish(),
+  driveFolderUrl: z.string().nullish(),
+  prazo: zPrazo,
+})
 
-  const { id, aberto, titulo, restaurante, responsavel, instrucoes, driveFolderUrl, prazo } = await req.json()
-  if (!id) return NextResponse.json({ error: "id obrigatório" }, { status: 400 })
+export const PATCH = rotaApi(async (req: NextRequest) => {
+  await exigirGestor()
 
+  const { id, ...c } = await lerCorpo(req, AtualizarLanche)
   const pedido = await prisma.pedidoLanche.update({
     where: { id },
     data: {
-      ...(aberto !== undefined && { aberto: Boolean(aberto) }),
-      ...(titulo !== undefined && { titulo }),
-      ...(restaurante !== undefined && { restaurante }),
-      ...(responsavel !== undefined && { responsavel }),
-      ...(instrucoes !== undefined && { instrucoes }),
-      ...(driveFolderUrl !== undefined && { driveFolderUrl: driveFolderUrl || null }),
-      ...(prazo !== undefined && { prazo: prazo ? new Date(prazo) : null }),
+      ...(c.aberto !== undefined && { aberto: c.aberto }),
+      ...(c.titulo !== undefined && { titulo: c.titulo }),
+      ...(c.restaurante !== undefined && { restaurante: c.restaurante }),
+      ...(c.responsavel !== undefined && { responsavel: c.responsavel }),
+      ...(c.instrucoes !== undefined && { instrucoes: c.instrucoes }),
+      ...(c.driveFolderUrl !== undefined && { driveFolderUrl: c.driveFolderUrl || null }),
+      ...(c.prazo !== undefined && { prazo: c.prazo ? new Date(c.prazo) : null }),
     },
   })
   return NextResponse.json(pedido)
-}
+})
 
-export async function DELETE(req: NextRequest) {
-  const session = await auth()
-  if (!ehGestorFinanceiro(session)) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+export const DELETE = rotaApi(async (req: NextRequest) => {
+  await exigirGestor()
 
-  const { id } = await req.json()
+  const { id } = await lerCorpo(req, z.object({ id: zId }))
   await prisma.pedidoLanche.delete({ where: { id } })
   return NextResponse.json({ ok: true })
-}
+})
+

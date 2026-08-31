@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { rotaApi, lerCorpo, proibido, ErroHttp, z, zSemana } from "@/lib/api"
 
-export async function GET(req: NextRequest) {
+export const GET = rotaApi(async (req: NextRequest) => {
   const { searchParams } = new URL(req.url)
   const semana = Number(searchParams.get("semana") || 0)
 
@@ -12,37 +13,82 @@ export async function GET(req: NextRequest) {
     prisma.escalaPlantao.findMany({ where: { semana } }),
   ])
   return NextResponse.json({ servico, faxinas, plantoes })
-}
+})
 
-export async function POST(req: NextRequest) {
+// `tipo` escolhe a tabela, e cada uma tem campos próprios. Antes o resto do
+// corpo era espalhado direto no create/upsert — campo a mais ou a menos virava
+// 500 do Prisma. Só a UI de "servico" está viva hoje; as outras duas ficam
+// aceitas para não quebrar nenhum cliente antigo.
+const zMat = z.coerce.number().int().nullish()
+const SalvarEscala = z.discriminatedUnion("tipo", [
+  z.object({
+    tipo: z.literal("servico"),
+    semana: zSemana,
+    subXerife: zMat,
+    p1: zMat,
+    p3: zMat,
+    p4: zMat,
+  }),
+  z.object({
+    tipo: z.literal("faxina"),
+    semana: zSemana,
+    grupo: z.string().trim().min(1, "obrigatório"),
+    local: z.string().trim().min(1, "obrigatório"),
+  }),
+  z.object({
+    tipo: z.literal("plantao"),
+    semana: zSemana,
+    grupo: z.string().trim().min(1, "obrigatório"),
+    // `tipo` já é o discriminador do corpo, então o tipo do plantão (a coluna
+    // EscalaPlantao.tipo) vem noutro nome. Antes o campo se perdia na
+    // desestruturação e o create quebrava — o ramo nunca funcionou.
+    tipoPlantao: z.string().trim().min(1, "obrigatório"),
+  }),
+])
+
+export const POST = rotaApi(async (req: NextRequest) => {
   const session = await auth()
-  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!session?.user?.isAdmin) throw proibido()
 
-  const body = await req.json()
-  const { tipo, semana, ...data } = body
+  const corpo = await lerCorpo(req, SalvarEscala)
 
-  if (tipo === "servico") {
+  if (corpo.tipo === "servico") {
+    const dados = {
+      subXerife: corpo.subXerife ?? null,
+      p1: corpo.p1 ?? null,
+      p3: corpo.p3 ?? null,
+      p4: corpo.p4 ?? null,
+    }
     await prisma.escalaServico.upsert({
-      where: { semana: Number(semana) },
-      update: data,
-      create: { semana: Number(semana), ...data },
+      where: { semana: corpo.semana },
+      update: dados,
+      create: { semana: corpo.semana, ...dados },
     })
-  } else if (tipo === "faxina") {
-    await prisma.escalaFaxina.create({ data: { semana: Number(semana), ...data } })
-  } else if (tipo === "plantao") {
-    await prisma.escalaPlantao.create({ data: { semana: Number(semana), ...data } })
+  } else if (corpo.tipo === "faxina") {
+    await prisma.escalaFaxina.create({
+      data: { semana: corpo.semana, grupo: corpo.grupo, local: corpo.local },
+    })
+  } else {
+    await prisma.escalaPlantao.create({
+      data: { semana: corpo.semana, grupo: corpo.grupo, tipo: corpo.tipoPlantao },
+    })
   }
 
   return NextResponse.json({ ok: true })
-}
+})
 
-export async function DELETE(req: NextRequest) {
+const ApagarEscala = z.object({
+  tipo: z.string().trim().min(1, "obrigatório"),
+  semana: zSemana,
+})
+
+export const DELETE = rotaApi(async (req: NextRequest) => {
   const session = await auth()
-  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!session?.user?.isAdmin) throw proibido()
 
-  const { tipo, semana } = await req.json()
-  if (tipo === "servico") {
-    await prisma.escalaServico.deleteMany({ where: { semana: Number(semana) } })
-  }
+  const { tipo, semana } = await lerCorpo(req, ApagarEscala)
+  if (tipo !== "servico") throw new ErroHttp(400, `Tipo "${tipo}" não pode ser apagado por aqui`)
+
+  await prisma.escalaServico.deleteMany({ where: { semana } })
   return NextResponse.json({ ok: true })
-}
+})

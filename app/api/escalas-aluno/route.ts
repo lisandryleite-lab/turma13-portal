@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { rotaApi, lerCorpo, naoAutorizado, z, zData } from "@/lib/api"
 
-export async function GET() {
+export const GET = rotaApi(async () => {
   const session = await auth()
-  if (!session?.user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
+  if (!session?.user) throw naoAutorizado()
   const userId = session.user.id!
   const isAdmin = session.user.isAdmin
 
@@ -13,18 +14,29 @@ export async function GET() {
     : await prisma.escalaAluno.findMany({ where: { userId }, orderBy: { data: "desc" } })
 
   return NextResponse.json(escalas)
-}
+})
 
-export async function POST(req: NextRequest) {
+const CriarEscalaAluno = z.object({
+  tipo: z.string().trim().min(1, "obrigatório"),
+  data: zData,
+  nome: z.string().nullish(),
+  horaInicio: z.string().nullish(),
+  horaFim: z.string().nullish(),
+  funcao: z.string().nullish(),
+  local: z.string().nullish(),
+  descricao: z.string().nullish(),
+  observacao: z.string().nullish(),
+})
+
+export const POST = rotaApi(async (req: NextRequest) => {
   const session = await auth()
-  if (!session?.user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
+  if (!session?.user) throw naoAutorizado()
   const userId = session.user.id!
 
-  const body = await req.json()
-  const { tipo, nome, data, horaInicio, horaFim, funcao, local, descricao, observacao } = body
+  const { data, ...campos } = await lerCorpo(req, CriarEscalaAluno)
 
   const r = await prisma.escalaAluno.create({
-    data: { userId, tipo, nome, data: new Date(data), horaInicio, horaFim, funcao, local, descricao, observacao },
+    data: { userId, ...campos, data: new Date(data) },
   })
   return NextResponse.json(r)
-}
+})

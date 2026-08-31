@@ -19,6 +19,13 @@ export const authConfig: NextAuthConfig = {
       if (isStatic || isApi || isPublic) return true
 
       if (!auth) {
+        // Numa rota de API, redirecionar para /login devolve 307 + HTML. O
+        // cliente então faz `res.json()` em cima de uma página e quebra com um
+        // erro de parse, escondendo a causa real (sessão expirada). Aqui vai
+        // 401 em JSON, no mesmo formato das outras respostas de erro.
+        if (pathname.startsWith("/api/")) {
+          return NextResponse.json({ error: "Sessão expirada. Entre de novo." }, { status: 401 })
+        }
         return NextResponse.redirect(new URL("/login", request.url))
       }
       return true

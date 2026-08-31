@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { genai, MODEL, IA_HABILITADA, parseJsonLoose } from "@/lib/ai"
+import { rotaApi } from "@/lib/api"
 
 export const runtime = "nodejs"
 export const maxDuration = 60
 
 type Modelo = { estrutura?: string; criterios?: string[]; resposta?: string }
 
-export async function POST(req: NextRequest) {
+export const POST = rotaApi(async (req: NextRequest) => {
   const session = await auth()
   if (!session?.user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
   if (!IA_HABILITADA) return NextResponse.json({ error: "IA não configurada (defina GEMINI_API_KEY)." }, { status: 503 })
@@ -64,4 +65,4 @@ export async function POST(req: NextRequest) {
     const m = e instanceof Error ? e.message : "Erro na IA"
     return NextResponse.json({ error: m }, { status: 500 })
   }
-}
+})

@@ -2,16 +2,16 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
+import { rotaApi, lerCorpo, proibido, z, zMatricula } from "@/lib/api"
 
-async function requireAdmin() {
+async function exigirAdmin() {
   const session = await auth()
-  if (!session?.user?.isAdmin) return null
+  if (!session?.user?.isAdmin) throw proibido()
   return session
 }
 
-export async function GET() {
-  const s = await requireAdmin()
-  if (!s) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+export const GET = rotaApi(async () => {
+  await exigirAdmin()
   const alunos = await prisma.user.findMany({
     orderBy: { matricula: "asc" },
     select: {
@@ -21,21 +21,25 @@ export async function GET() {
     },
   })
   return NextResponse.json(alunos)
-}
+})
 
-export async function POST(req: NextRequest) {
-  const s = await requireAdmin()
-  if (!s) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+const CriarAluno = z.object({
+  matricula: zMatricula,
+  nomeGuerra: z.string().trim().min(1, "obrigatório"),
+  nomeCompleto: z.string().trim().min(1, "obrigatório"),
+  email: z.string().trim().email("e-mail inválido"),
+  password: z.string().min(4, "mínimo 4 caracteres"),
+  aniversario: z.string().nullish(),
+  canga: z.string().nullish(),
+  grupoPlantao: z.string().nullish(),
+  grupoFaxina: z.string().nullish(),
+})
 
-  const body = await req.json()
-  const { matricula, nomeGuerra, nomeCompleto, email, password, aniversario, canga, grupoPlantao, grupoFaxina } = body
-
-  if (!matricula || !nomeGuerra || !nomeCompleto || !email || !password)
-    return NextResponse.json({ error: "Campos obrigatórios ausentes" }, { status: 400 })
+export const POST = rotaApi(async (req: NextRequest) => {
+  await exigirAdmin()
+  const { password, ...dados } = await lerCorpo(req, CriarAluno)
 
   const hash = await bcrypt.hash(password, 12)
-  const user = await prisma.user.create({
-    data: { matricula: Number(matricula), nomeGuerra, nomeCompleto, email, password: hash, aniversario, canga, grupoPlantao, grupoFaxina },
-  })
+  const user = await prisma.user.create({ data: { ...dados, password: hash } })
   return NextResponse.json({ id: user.id })
-}
+})

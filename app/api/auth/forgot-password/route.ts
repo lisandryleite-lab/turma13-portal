@@ -2,14 +2,16 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Resend } from "resend"
 import { randomBytes } from "crypto"
+import { rotaApi, lerCorpo, z, zMatricula } from "@/lib/api"
 
 const resend = new Resend(process.env.RESEND_API_KEY?.trim())
 
-export async function POST(req: NextRequest) {
-  const body = await req.json()
-  const matricula = Number(body.matricula)
-  if (isNaN(matricula) || matricula <= 0)
-    return NextResponse.json({ error: "Matrícula inválida" }, { status: 400 })
+const PedirReset = z.object({
+  matricula: zMatricula.refine((m) => m > 0, "matrícula inválida"),
+})
+
+export const POST = rotaApi(async (req: NextRequest) => {
+  const { matricula } = await lerCorpo(req, PedirReset)
 
   const user = await prisma.user.findUnique({ where: { matricula } })
   if (!user) return NextResponse.json({ ok: true }) // não revelar se existe
@@ -35,4 +37,4 @@ export async function POST(req: NextRequest) {
   })
 
   return NextResponse.json({ ok: true })
-}
+})

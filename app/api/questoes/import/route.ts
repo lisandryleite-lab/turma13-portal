@@ -3,6 +3,7 @@ import { createHash } from "crypto"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { logAcesso } from "@/lib/log"
+import { rotaApi, lerCorpo, proibido, ErroHttp, z } from "@/lib/api"
 
 // Importação em lote de questões (Admin). Idempotente: upsert por hash
 // = sha1(materia|modulo|enunciado). Re-importar atualiza, não duplica.
@@ -19,39 +20,42 @@ type QIn = {
   fonte?: string
 }
 
-export async function POST(req: NextRequest) {
-  const session = await auth()
-  if (!session?.user?.isAdmin)
-    return NextResponse.json({ error: "Apenas administradores." }, { status: 403 })
+// Só o envelope é validado. A lista de questões segue tolerante de propósito:
+// questão ruim entra em `erros[]` e o resto do pacote passa.
+const Pacote = z.object({
+  materia: z.string().trim().min(1, "informe a matéria (sigla)"),
+  modulo: z.union([z.string(), z.number(), z.null()]).optional(),
+  questoes: z.array(z.unknown()).optional(),
+})
+const CorpoImport = z.union([Pacote, z.array(Pacote)])
 
-  let body: any
-  try {
-    body = await req.json()
-  } catch {
-    return NextResponse.json({ error: "JSON inválido." }, { status: 400 })
-  }
+export const POST = rotaApi(async (req: NextRequest) => {
+  const session = await auth()
+  if (!session?.user?.isAdmin) throw proibido()
+
+  const body = await lerCorpo(req, CorpoImport)
 
   // Aceita um pacote único {materia,modulo,questoes} OU um array de pacotes.
   if (Array.isArray(body)) {
-    const resultados: any[] = []
+    const resultados: Array<{ materia?: string; modulo?: string; criadas: number; atualizadas: number }> = []
     let criadas = 0, atualizadas = 0
     const erros: string[] = []
     for (const [idx, pacote] of body.entries()) {
-      const r = await importarPacote(pacote, session)
+      const r = await importarPacote(pacote)
       if (r.error) { erros.push(`Pacote ${idx + 1}: ${r.error}`); continue }
       criadas += r.criadas; atualizadas += r.atualizadas
       if (r.erros?.length) erros.push(...r.erros.map(e => `Pacote ${idx + 1} (${r.materia}/${r.modulo}): ${e}`))
       resultados.push({ materia: r.materia, modulo: r.modulo, criadas: r.criadas, atualizadas: r.atualizadas })
     }
-    await logAcesso(session.user as any, "questoes/import", `lote de ${body.length} pacotes: +${criadas} novas, ${atualizadas} atualizadas`)
+    await logAcesso(session.user, "questoes/import", `lote de ${body.length} pacotes: +${criadas} novas, ${atualizadas} atualizadas`)
     return NextResponse.json({ pacotes: resultados, criadas, atualizadas, erros })
   }
 
-  const r = await importarPacote(body, session)
-  if (r.error) return NextResponse.json({ error: r.error }, { status: 400 })
-  await logAcesso(session.user as any, "questoes/import", `${r.materia}${r.modulo ? "/" + r.modulo : ""}: +${r.criadas} novas, ${r.atualizadas} atualizadas`)
+  const r = await importarPacote(body)
+  if (r.error) throw new ErroHttp(400, r.error)
+  await logAcesso(session.user, "questoes/import", `${r.materia}${r.modulo ? "/" + r.modulo : ""}: +${r.criadas} novas, ${r.atualizadas} atualizadas`)
   return NextResponse.json({ materia: r.materia, modulo: r.modulo, criadas: r.criadas, atualizadas: r.atualizadas, totalMateria: r.totalMateria, erros: r.erros })
-}
+})
 
 type ImportResult = {
   error?: string
@@ -63,10 +67,10 @@ type ImportResult = {
   erros?: string[]
 }
 
-async function importarPacote(body: any, _session: any): Promise<ImportResult> {
+async function importarPacote(body: { materia: string; modulo?: string | number | null; questoes?: unknown[] }): Promise<ImportResult> {
   const materia = String(body?.materia || "").trim().toUpperCase()
   const modulo = body?.modulo != null ? String(body.modulo).trim() : ""
-  const questoes: QIn[] = Array.isArray(body?.questoes) ? body.questoes : []
+  const questoes = (Array.isArray(body?.questoes) ? body.questoes : []) as QIn[]
 
   if (!materia) return { error: "Informe a matéria (sigla).", criadas: 0, atualizadas: 0 }
   if (questoes.length === 0) return { error: "Nenhuma questão no pacote.", criadas: 0, atualizadas: 0 }
@@ -103,9 +107,9 @@ async function importarPacote(body: any, _session: any): Promise<ImportResult> {
     try {
       const existe = await prisma.questao.findUnique({ where: { hash } })
       await prisma.questao.upsert({ where: { hash }, update: dados, create: { ...dados, hash } })
-      existe ? atualizadas++ : criadas++
-    } catch (e: any) {
-      erros.push(`Questão ${i + 1}: ${e?.message || e}`)
+      if (existe) atualizadas++; else criadas++
+    } catch (e) {
+      erros.push(`Questão ${i + 1}: ${e instanceof Error ? e.message : String(e)}`)
     }
   }
 
@@ -114,18 +118,18 @@ async function importarPacote(body: any, _session: any): Promise<ImportResult> {
 }
 
 // Limpar questões de uma matéria (e opcionalmente de um módulo). Admin.
-export async function DELETE(req: NextRequest) {
+export const DELETE = rotaApi(async (req: NextRequest) => {
   const session = await auth()
-  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Apenas administradores." }, { status: 403 })
+  if (!session?.user?.isAdmin) throw proibido()
 
   const sp = req.nextUrl.searchParams
   const materia = (sp.get("materia") || "").toUpperCase()
-  if (!materia) return NextResponse.json({ error: "Informe a matéria." }, { status: 400 })
+  if (!materia) throw new ErroHttp(400, "Informe a matéria.")
 
   const where: { materia: string; modulo?: string } = { materia }
   if (sp.has("modulo")) where.modulo = sp.get("modulo") || ""
 
   const r = await prisma.questao.deleteMany({ where }) // respostas em cascata
-  await logAcesso(session.user as any, "questoes/limpar", `removeu ${r.count} questões de ${materia}${sp.has("modulo") ? "/" + (sp.get("modulo") || "(sem módulo)") : ""}`)
+  await logAcesso(session.user, "questoes/limpar", `removeu ${r.count} questões de ${materia}${sp.has("modulo") ? "/" + (sp.get("modulo") || "(sem módulo)") : ""}`)
   return NextResponse.json({ removidas: r.count })
-}
+})

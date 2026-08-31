@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { partesEmRecife } from "@/lib/utils"
+import { rotaApi, lerCorpo, proibido, z, zId, zData, zMatricula } from "@/lib/api"
 
 // GET /api/funcoes-destaque?ano=2026&mes=5
-export async function GET(req: NextRequest) {
+export const GET = rotaApi(async (req: NextRequest) => {
   const { searchParams } = new URL(req.url)
   // Default = mês corrente em Recife; no servidor (UTC) viraria às 21h.
   const agora = partesEmRecife()
@@ -19,36 +20,44 @@ export async function GET(req: NextRequest) {
     orderBy: [{ data: "asc" }, { funcao: "asc" }],
   })
   return NextResponse.json(funcoes)
-}
+})
 
 // POST /api/funcoes-destaque  { funcoes: [{data, funcao, matricula}] }
-export async function POST(req: NextRequest) {
+const SalvarFuncoes = z.object({
+  funcoes: z.array(z.object({
+    data: zData,
+    funcao: z.string().trim().min(1, "obrigatório"),
+    matricula: zMatricula,
+  })),
+})
+
+export const POST = rotaApi(async (req: NextRequest) => {
   const session = await auth()
-  if (!session?.user?.isAdmin)
-    return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!session?.user?.isAdmin) throw proibido()
 
-  const { funcoes } = await req.json()
-  if (!Array.isArray(funcoes)) return NextResponse.json({ error: "funcoes[] obrigatório" }, { status: 400 })
+  const { funcoes } = await lerCorpo(req, SalvarFuncoes)
 
-  for (const f of funcoes) {
+  // Uma transação em vez de N upserts em série: com o banco em outra máquina,
+  // cada upsert do laço era um roundtrip próprio.
+  await prisma.$transaction(funcoes.map(f => {
     const data = new Date(f.data)
     data.setUTCHours(12, 0, 0, 0)
-    await prisma.funcaoDestaqueDia.upsert({
+    return prisma.funcaoDestaqueDia.upsert({
       where: { data_funcao: { data, funcao: f.funcao } },
-      update: { matricula: Number(f.matricula) },
-      create: { data, funcao: f.funcao, matricula: Number(f.matricula) },
+      update: { matricula: f.matricula },
+      create: { data, funcao: f.funcao, matricula: f.matricula },
     })
-  }
+  }))
+
   return NextResponse.json({ ok: true })
-}
+})
 
 // DELETE /api/funcoes-destaque  { id }
-export async function DELETE(req: NextRequest) {
+export const DELETE = rotaApi(async (req: NextRequest) => {
   const session = await auth()
-  if (!session?.user?.isAdmin)
-    return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!session?.user?.isAdmin) throw proibido()
 
-  const { id } = await req.json()
+  const { id } = await lerCorpo(req, z.object({ id: zId }))
   await prisma.funcaoDestaqueDia.delete({ where: { id } })
   return NextResponse.json({ ok: true })
-}
+})

@@ -3,21 +3,36 @@ import { createHash } from "crypto"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { logAcesso } from "@/lib/log"
+import { rotaApi, lerCorpo, proibido, ErroHttp, z } from "@/lib/api"
+
+// Só o envelope é validado aqui. A lista de flashcards continua tolerante de
+// propósito: card ruim entra em `erros[]` e o resto do lote passa.
+const ImportarMemento = z.object({
+  materia: z.string().trim().min(1, "informe a matéria (sigla)").transform(s => s.toUpperCase()),
+  modulo: z.string().nullish(),
+  memento: z.object({
+    titulo: z.string().trim().min(1),
+    conteudoMd: z.string().min(1),
+    ordem: z.coerce.number().optional(),
+  }).nullish(),
+  flashcards: z.array(z.object({
+    frente: z.string().optional(),
+    verso: z.string().optional(),
+    ordem: z.coerce.number().optional(),
+  })).optional(),
+})
 
 // Importa memento (Markdown) e/ou flashcards de uma matéria (Admin). Idempotente.
-export async function POST(req: NextRequest) {
+export const POST = rotaApi(async (req: NextRequest) => {
   const session = await auth()
-  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Apenas administradores." }, { status: 403 })
+  if (!session?.user?.isAdmin) throw proibido()
 
-  let body: any
-  try { body = await req.json() } catch { return NextResponse.json({ error: "JSON inválido." }, { status: 400 }) }
-
-  const materia = String(body.materia || "").trim().toUpperCase()
+  const body = await lerCorpo(req, ImportarMemento)
+  const materia = body.materia
   const modulo = body.modulo != null ? String(body.modulo).trim() : ""
-  if (!materia) return NextResponse.json({ error: "Informe a matéria (sigla)." }, { status: 400 })
 
   const disc = await prisma.disciplina.findUnique({ where: { sigla: materia } })
-  if (!disc) return NextResponse.json({ error: `Matéria "${materia}" não existe nas disciplinas.` }, { status: 400 })
+  if (!disc) throw new ErroHttp(400, `Matéria "${materia}" não existe nas disciplinas.`)
 
   let mementoMsg = "", criadosCards = 0, atualizadosCards = 0
   const erros: string[] = []
@@ -34,7 +49,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Flashcards
-  const cards = Array.isArray(body.flashcards) ? body.flashcards : []
+  const cards = body.flashcards ?? []
   for (const [i, c] of cards.entries()) {
     const frente = String(c.frente || "").trim()
     const verso = String(c.verso || "").trim()
@@ -47,22 +62,22 @@ export async function POST(req: NextRequest) {
         update: { verso, ordem: Number(c.ordem) || 0 },
         create: { materia, modulo, frente, verso, ordem: Number(c.ordem) || 0, hash },
       })
-      existe ? atualizadosCards++ : criadosCards++
-    } catch (e: any) { erros.push(`Card ${i + 1}: ${e?.message || e}`) }
+      if (existe) atualizadosCards++; else criadosCards++
+    } catch (e) { erros.push(`Card ${i + 1}: ${e instanceof Error ? e.message : String(e)}`) }
   }
 
-  await logAcesso(session.user as any, "mementos/import", `${materia}${modulo ? "/" + modulo : ""}: ${mementoMsg || "sem memento"}; cards +${criadosCards}/${atualizadosCards}`)
+  await logAcesso(session.user, "mementos/import", `${materia}${modulo ? "/" + modulo : ""}: ${mementoMsg || "sem memento"}; cards +${criadosCards}/${atualizadosCards}`)
   return NextResponse.json({ materia, modulo, mementoMsg, criadosCards, atualizadosCards, erros })
-}
+})
 
 // Remove mementos e flashcards de uma matéria (e opcionalmente de um módulo). Admin.
-export async function DELETE(req: NextRequest) {
+export const DELETE = rotaApi(async (req: NextRequest) => {
   const session = await auth()
-  if (!session?.user?.isAdmin) return NextResponse.json({ error: "Apenas administradores." }, { status: 403 })
+  if (!session?.user?.isAdmin) throw proibido()
 
   const sp = req.nextUrl.searchParams
   const materia = (sp.get("materia") || "").toUpperCase()
-  if (!materia) return NextResponse.json({ error: "Informe a matéria." }, { status: 400 })
+  if (!materia) throw new ErroHttp(400, "Informe a matéria.")
 
   const where: { materia: string; modulo?: string } = { materia }
   if (sp.has("modulo")) where.modulo = sp.get("modulo") || ""
@@ -71,6 +86,6 @@ export async function DELETE(req: NextRequest) {
     prisma.memento.deleteMany({ where }),
     prisma.flashcard.deleteMany({ where }),
   ])
-  await logAcesso(session.user as any, "mementos/limpar", `removeu ${m.count} mementos e ${f.count} cards de ${materia}${sp.has("modulo") ? "/" + (sp.get("modulo") || "(sem módulo)") : ""}`)
+  await logAcesso(session.user, "mementos/limpar", `removeu ${m.count} mementos e ${f.count} cards de ${materia}${sp.has("modulo") ? "/" + (sp.get("modulo") || "(sem módulo)") : ""}`)
   return NextResponse.json({ mementos: m.count, flashcards: f.count })
-}
+})

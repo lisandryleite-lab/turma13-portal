@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { rotaApi, proibido } from "@/lib/api"
 
-export async function GET(req: NextRequest) {
+export const GET = rotaApi(async (req: NextRequest) => {
   const session = await auth()
-  if (!session?.user?.isAdmin)
-    return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
+  if (!session?.user?.isAdmin) throw proibido()
 
   const { searchParams } = new URL(req.url)
   const matricula = searchParams.get("matricula")
@@ -14,8 +14,13 @@ export async function GET(req: NextRequest) {
   const dataInicio = searchParams.get("dataInicio")
   const dataFim = searchParams.get("dataFim")
 
-  const filtroUser = matricula
-    ? await prisma.user.findUnique({ where: { matricula: Number(matricula) }, select: { id: true } })
+  // Datas inválidas viravam `Invalid Date` e o Prisma estourava com 500.
+  const inicio = dataInicio && !Number.isNaN(Date.parse(dataInicio)) ? new Date(dataInicio) : null
+  const fim = dataFim && !Number.isNaN(Date.parse(dataFim + "T23:59:59")) ? new Date(dataFim + "T23:59:59") : null
+
+  const mat = matricula ? Number(matricula) : NaN
+  const filtroUser = Number.isFinite(mat)
+    ? await prisma.user.findUnique({ where: { matricula: mat }, select: { id: true } })
     : null
 
   const historico = await prisma.historicoNota.findMany({
@@ -23,13 +28,8 @@ export async function GET(req: NextRequest) {
       ...(filtroUser ? { nota: { userId: filtroUser.id } } : {}),
       ...(disciplina ? { disciplina } : {}),
       ...(tipo ? { tipo } : {}),
-      ...(dataInicio || dataFim
-        ? {
-            createdAt: {
-              ...(dataInicio ? { gte: new Date(dataInicio) } : {}),
-              ...(dataFim ? { lte: new Date(dataFim + "T23:59:59") } : {}),
-            },
-          }
+      ...(inicio || fim
+        ? { createdAt: { ...(inicio ? { gte: inicio } : {}), ...(fim ? { lte: fim } : {}) } }
         : {}),
     },
     include: {
@@ -41,4 +41,4 @@ export async function GET(req: NextRequest) {
   })
 
   return NextResponse.json(historico)
-}
+})

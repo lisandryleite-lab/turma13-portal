@@ -2,25 +2,30 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { parseFormulario, parseResposta } from "@/lib/formulario-cota"
+import { rotaApi, lerCorpo, naoAutorizado, naoEncontrado, ErroHttp, z, zId } from "@/lib/api"
 
 // Resposta do próprio aluno ao formulário de levantamento de uma cota.
 // Cada um só grava o próprio pedido — o gestor consolida na tela do financeiro.
-export async function POST(req: NextRequest) {
-  const session = await auth()
-  if (!session?.user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
+const EnviarPedido = z.object({
+  cotaId: zId,
+  respostas: z.unknown().optional(), // formato livre; `parseResposta` normaliza abaixo
+})
 
-  const { cotaId, respostas } = await req.json()
-  if (!cotaId) return NextResponse.json({ error: "cotaId obrigatório" }, { status: 400 })
+export const POST = rotaApi(async (req: NextRequest) => {
+  const session = await auth()
+  if (!session?.user) throw naoAutorizado()
+
+  const { cotaId, respostas } = await lerCorpo(req, EnviarPedido)
 
   const cota = await prisma.cotaFinanceira.findUnique({
     where: { id: cotaId },
     select: { ativa: true, formulario: true },
   })
-  if (!cota) return NextResponse.json({ error: "Cota não encontrada" }, { status: 404 })
-  if (!cota.ativa) return NextResponse.json({ error: "Cota encerrada" }, { status: 400 })
+  if (!cota) throw naoEncontrado("Cota")
+  if (!cota.ativa) throw new ErroHttp(400, "Cota encerrada")
 
   const form = parseFormulario(cota.formulario)
-  if (!form) return NextResponse.json({ error: "Esta cota não tem formulário" }, { status: 400 })
+  if (!form) throw new ErroHttp(400, "Esta cota não tem formulário")
 
   // Normaliza e valida contra a definição do formulário — nada de valor livre
   // em modelo/versão/tamanho, senão o consolidado do fornecedor vira sopa.
@@ -38,7 +43,7 @@ export async function POST(req: NextRequest) {
 
   const faltando = form.campos.filter(c => c.obrigatorio && !campos[c.id]).map(c => c.label)
   if (itens.length > 0 && faltando.length > 0) {
-    return NextResponse.json({ error: `Preencha: ${faltando.join(", ")}` }, { status: 400 })
+    throw new ErroHttp(400, `Preencha: ${faltando.join(", ")}`)
   }
 
   const pagamento = await prisma.pagamentoCota.upsert({
@@ -47,4 +52,4 @@ export async function POST(req: NextRequest) {
     create: { cotaId, userId: session.user.id, respostas: { campos, itens } },
   })
   return NextResponse.json({ ok: true, respostas: pagamento.respostas })
-}
+})

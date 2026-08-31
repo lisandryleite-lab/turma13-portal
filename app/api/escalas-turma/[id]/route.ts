@@ -1,20 +1,18 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { rotaApi, proibido, ErroHttp } from "@/lib/api"
 
-async function requireAdmin() {
+export const DELETE = rotaApi(async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
   const session = await auth()
-  return session?.user?.isAdmin ? session : null
-}
+  if (!session?.user?.isAdmin) throw proibido()
 
-export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  if (!(await requireAdmin())) return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
   const { id } = await params
   const tipo = new URL(req.url).searchParams.get("tipo")
 
   if (tipo === "faxina") await prisma.escalaTurmaFaxina.delete({ where: { id } })
   else if (tipo === "servico") await prisma.escalaTurmaServico.delete({ where: { id } })
-  else return NextResponse.json({ error: "Tipo inválido" }, { status: 400 })
+  else throw new ErroHttp(400, 'Informe ?tipo=faxina ou ?tipo=servico')
 
   return NextResponse.json({ ok: true })
-}
+})
