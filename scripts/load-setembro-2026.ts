@@ -194,8 +194,71 @@ async function main() {
   const tempos: Record<string, number> = {}
   for (const slots of Object.values(grade)) for (const s of slots) if (s) tempos[s] = (tempos[s] || 0) + 1
   console.log(`   QTS da semana ${SEMANA_PORTAL} salvo (rotulado "SEMANA 33" no documento oficial)`)
-  console.log(`   Tempos: ${Object.entries(tempos).map(([k, v]) => `${k} ${v}h`).join(", ")}`)
-  console.log(`   cargaMinistrada NÃO alterada — a foto do QTS não traz o contador X/Y.`)
+  console.log(`   Tempos: ${Object.entries(tempos).map(([k, v]) => `${k} ${v}h`).join(", ")}\n`)
+
+  // 5. carga horária ------------------------------------------------------
+  await atualizarCarga(tempos)
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+//  Carga horária desta semana — ESTIMATIVA, não o contador oficial
+//
+//  A foto do QTS não traz o contador `X/Y` por aula, que é a fonte da verdade
+//  desde a semana 32. Os valores abaixo saíram de somar os tempos da grade à
+//  carga que o portal já tinha, a pedido da turma (31/08/2026).
+//
+//  Três disciplinas passariam do total ao somar e ficaram TRAVADAS no teto:
+//    INTSISP 30+2 → 30/30 · TCEM 40+2 → 40/40 · GC 30+2 → 30/30
+//  Isso significa que há divergência real entre o portal e a grade — ou o
+//  portal está adiantado nelas, ou aquelas aulas não foram dadas. Só o PDF com
+//  o contador resolve. Quando ele chegar, regravar de forma ABSOLUTA.
+//
+//  Gravado como valor ABSOLUTO (`depois`), com `antes` como trava: se a carga
+//  no banco não for mais a esperada, o script avisa e não mexe — assim rodar de
+//  novo não soma duas vezes.
+// ─────────────────────────────────────────────────────────────────────────
+const CARGA: Record<string, { antes: number; depois: number }> = {
+  INTSISP: { antes: 30, depois: 30 }, // travado no total (somaria 32/30)
+  POE:     { antes: 22, depois: 26 },
+  EASE:    { antes: 22, depois: 24 },
+  PE:      { antes: 8,  depois: 16 },
+  PJM:     { antes: 6,  depois: 10 },
+  AM:      { antes: 48, depois: 52 },
+  TCEM:    { antes: 40, depois: 40 }, // travado no total (somaria 42/40)
+  GC:      { antes: 30, depois: 30 }, // travado no total (somaria 32/30)
+  AP:      { antes: 40, depois: 45 },
+  EPCR:    { antes: 6,  depois: 8 },
+  TFM2:    { antes: 44, depois: 46 },
+}
+
+async function atualizarCarga(tempos: Record<string, number>) {
+  console.log("── 5. Carga horária (estimada — sem o contador oficial) ──")
+  let aplicadas = 0, jaOk = 0, puladas = 0
+
+  for (const [sigla, { antes, depois }] of Object.entries(CARGA)) {
+    const d = await prisma.disciplina.findUnique({ where: { sigla } })
+    if (!d) { console.log(`   ⚠ ${sigla}: disciplina não existe — pulando`); puladas++; continue }
+
+    if (d.cargaMinistrada === depois) { jaOk++; continue }
+    if (d.cargaMinistrada !== antes) {
+      console.log(`   ⚠ ${sigla}: banco está em ${d.cargaMinistrada}h, esperava ${antes}h — NÃO alterado`)
+      puladas++
+      continue
+    }
+
+    const status = depois >= d.cargaTotal ? "Concluída" : depois > 0 ? "Em andamento" : "Início"
+    await prisma.disciplina.update({ where: { sigla }, data: { cargaMinistrada: depois, status } })
+    const travado = antes + (tempos[sigla] ?? 0) > d.cargaTotal ? "  ← travado no total" : ""
+    console.log(`   ${sigla.padEnd(8)} ${String(antes).padStart(2)}h +${tempos[sigla] ?? 0}h ⇒ ${String(depois).padStart(2)}/${d.cargaTotal}h ${status}${travado}`)
+    aplicadas++
+  }
+
+  console.log(`   ${aplicadas} aplicada(s), ${jaOk} já corretas, ${puladas} pulada(s)`)
+
+  const todas = await prisma.disciplina.findMany()
+  const total = todas.reduce((s, d) => s + d.cargaTotal, 0)
+  const dada = todas.reduce((s, d) => s + d.cargaMinistrada, 0)
+  console.log(`\n   Progresso do curso: ${dada}h de ${total}h (${Math.round(dada / total * 100)}%)`)
 }
 
 main().catch(e => { console.error(e); process.exit(1) }).finally(() => prisma.$disconnect())
