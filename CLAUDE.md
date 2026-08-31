@@ -142,9 +142,26 @@ Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 
 ### Término do curso (`lib/utils.ts`)
 `DATA_FIM_CFO = 05/01/2027` (previsão da turma, ago/2026) e `diasParaFimCFO()`. A contagem
-regressiva aparece no topo do `/dashboard` (`components/contagem-cfo.tsx`). Como `DATA_INICIO`
-e `DATA_FIM_CFO` são meia-noite **UTC**, todo cálculo com elas usa acessores UTC — usar
-`getDate()`/`getDay()` em fuso negativo volta um dia.
+regressiva aparece no topo do `/dashboard` (`components/contagem-cfo.tsx`). `DATA_INICIO` e
+`DATA_FIM_CFO` são meia-noite **UTC**, então todo cálculo com elas usa acessores UTC.
+
+### Fuso horário — regra absoluta (`lib/utils.ts`)
+
+As funções da Vercel rodam em **UTC**; a turma vive em **America/Recife** (UTC−3, sem horário
+de verão). No **servidor**, `new Date().getDate()` vira o dia às **21h** — foi assim que o
+portal passou a mostrar o plantão e a faxina de amanhã, as funções do dia errado, a contagem
+regressiva um dia a menos e a semana pulando no domingo à noite.
+
+- Todo "que dia é hoje" no servidor passa por **`partesEmRecife()`** (→ `{ano, mes, dia}`) ou
+  **`hojeEmRecife()`** (→ `Date` de meia-noite, para repassar a `grupoPlantaoPorData()` /
+  `grupoFaxinaPorData()`, que leem `getDate()`/`getDay()`).
+- **Componentes client não precisam** — o navegador do aluno já está no fuso certo.
+- **`new Date()` como carimbo de instante** (`dataPagamento`, `expires`) continua correto:
+  não trocar.
+
+### Região das funções (`vercel.json`)
+`"regions": ["gru1"]` — o Neon está em `sa-east-1` (São Paulo). Rodando no padrão `iad1`
+(Washington), cada consulta atravessava o continente: ~250 ms por roundtrip. Não remover.
 
 ### Turma
 34 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
