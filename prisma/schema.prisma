@@ -613,3 +613,17 @@ model LogAcesso {
 
   @@index([timestamp])
 }
+
+// ── CFO 2026 — Mídias dos mementos (vídeo / áudio / mapa mental por matéria) ──
+// Arquivos ficam no Google Drive (ou YouTube); aqui guardamos só o link.
+model MementoMidia {
+  id        String   @id @default(cuid())
+  materia   String   // sigla da Disciplina
+  tipo      String   // "video" | "audio" | "mapa"
+  titulo    String
+  url       String   // link do Google Drive / YouTube
+  ordem     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([materia, tipo])
+}

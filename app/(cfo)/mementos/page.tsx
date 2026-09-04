@@ -6,20 +6,26 @@ import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { PDF_PARTS, type PdfPart } from "@/lib/mementos-pdfs"
 import { APOSTILA_PARTS, type ApostilaPart } from "@/lib/apostilas"
+import { hojeRecifeISO } from "@/lib/calendario-provas"
 import { MementosClient } from "./mementos-client"
 
 export default async function MementosPage() {
   const session = await auth()
   if (!session?.user) redirect("/login")
 
-  const [mementos, fcGroups, disciplinas] = await Promise.all([
+  const [mementos, fcGroups, disciplinas, midias] = await Promise.all([
     prisma.memento.findMany({
       select: { id: true, materia: true, modulo: true, titulo: true },
       orderBy: [{ materia: "asc" }, { modulo: "asc" }, { ordem: "asc" }],
     }),
     // mantido apenas para a área "Limpar matéria" do admin (conteudoMaterias)
     prisma.flashcard.groupBy({ by: ["materia", "modulo"], _count: { _all: true } }),
-    prisma.disciplina.findMany({ select: { sigla: true, nome: true }, orderBy: { sigla: "asc" } }),
+    prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true }, orderBy: { sigla: "asc" } }),
+    // vídeo / áudio / mapa mental por matéria (links do Drive ou YouTube)
+    prisma.mementoMidia.findMany({
+      select: { id: true, materia: true, tipo: true, titulo: true, url: true, ordem: true },
+      orderBy: [{ materia: "asc" }, { tipo: "asc" }, { ordem: "asc" }, { createdAt: "asc" }],
+    }),
   ])
 
   const nomeMap = new Map(disciplinas.map(d => [d.sigla, d.nome]))
@@ -83,6 +89,8 @@ export default async function MementosPage() {
       currentUser={{ matricula: session.user.matricula, nomeGuerra: session.user.nomeGuerra }}
       pdfMaterias={pdfMaterias}
       apostilaMaterias={apostilaMaterias}
+      midias={midias}
+      hojeISO={hojeRecifeISO()}
     />
   )
 }

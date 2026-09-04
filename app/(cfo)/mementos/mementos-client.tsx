@@ -5,6 +5,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { renderMarkdown } from "@/lib/markdown"
 import { MEMENTO_PROPRIO } from "@/lib/mementos-pdfs"
+import { CALENDARIO_PROVAS, CALENDARIO_FONTE, dmy, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
+import { DRIVE_MEMENTOS_URL, MIDIA_INFO, embedDe, type TipoMidia } from "@/lib/midia-embed"
 
 type MementoMeta = { id: string; materia: string; modulo: string; titulo: string; nome: string }
 type CurrentUser = { matricula: number; nomeGuerra: string }
@@ -12,7 +14,8 @@ type PdfPart = { file: string; label: string }
 type PdfMateria = { sigla: string; nome: string; parts: PdfPart[] }
 type ApostilaMateria = { sigla: string; parts: PdfPart[] }
 type GaivotaMsg = { id: string; matricula: number; nomeGuerra: string; texto: string; createdAt: string }
-type Disc = { sigla: string; nome: string }
+type Disc = { sigla: string; nome: string; status: string }
+type Midia = { id: string; materia: string; tipo: string; titulo: string; url: string; ordem: number }
 type ContMat = { sigla: string; nome: string; modulos: string[] }
 type Aba = "mementos" | "admin"
 
@@ -24,8 +27,9 @@ const inputStyle: React.CSSProperties = {
   border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15,
 }
 
-export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias, apostilaMaterias }: {
+export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias, apostilaMaterias, midias, hojeISO }: {
   mementos: MementoMeta[]; conteudoMaterias: ContMat[]; disciplinas: Disc[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]; apostilaMaterias: ApostilaMateria[]
+  midias: Midia[]; hojeISO: string
 }) {
   const router = useRouter()
   const [aba, setAba] = useState<Aba>("mementos")
@@ -48,7 +52,7 @@ export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmi
         ))}
       </div>
 
-      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} apostilaMaterias={apostilaMaterias} />}
+      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} apostilaMaterias={apostilaMaterias} midias={midias} hojeISO={hojeISO} />}
       {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} conteudoMaterias={conteudoMaterias} onImport={() => router.refresh()} />}
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>
@@ -159,17 +163,21 @@ function Gaivotas({ materia, isAdmin, currentUser }: { materia: string; isAdmin:
   )
 }
 
-// ── Mementos (grid de matérias → memento / PDF / apostila / gaivotas) ──
-type SubAba = "memento" | "pdf" | "apostila" | "questoes" | "gaivotas" | "tutor"
+// ── Mementos (grid de matérias → abas fixas por matéria) ──
+// Ordem padronizada em TODAS as matérias; o que não existir mostra "em breve".
+type SubAba = "memento" | "apostila" | "video" | "audio" | "mapa" | "questoes" | "tutor" | "gaivotas"
 
-function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, apostilaMaterias }: {
+function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, apostilaMaterias, midias: midiasIniciais, hojeISO }: {
   mementos: MementoMeta[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]
-  disciplinas: Disc[]; apostilaMaterias: ApostilaMateria[]
+  disciplinas: Disc[]; apostilaMaterias: ApostilaMateria[]; midias: Midia[]; hojeISO: string
 }) {
   const comPdf = new Set(pdfMaterias.map(p => p.sigla))
   const pdfPartsMap = new Map(pdfMaterias.map(p => [p.sigla, p.parts]))
   const apostilaPartsMap = new Map(apostilaMaterias.map(a => [a.sigla, a.parts]))
   const comApostila = new Set(apostilaMaterias.map(a => a.sigla))
+  const statusMap = new Map(disciplinas.map(d => [d.sigla, d.status]))
+  const provas = provasPorMateria(hojeISO)
+  const [midias, setMidias] = useState<Midia[]>(midiasIniciais)
   const [materiaSel, setMateriaSel] = useState<string | null>(null)
   const [subAba, setSubAba] = useState<SubAba>("memento")
   const [aberto, setAberto] = useState<{ titulo: string; html: string } | null>(null)
@@ -182,6 +190,10 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
     setAberto({ titulo: m.titulo, html: renderMarkdown(data.conteudoMd || "") })
     setCarregando(false)
     window.scrollTo(0, 0)
+  }
+
+  function abrirMateria(sigla: string, sub: SubAba = "memento") {
+    setMateriaSel(sigla); setSubAba(sub); window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
   // leitura de um memento (markdown estilizado + imprimir)
@@ -221,8 +233,11 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
     if (!grupos.has(d.sigla)) grupos.set(d.sigla, { nome: d.nome, items: [] })
   }
   const materias = [...grupos.entries()].sort((a, b) => a[0].localeCompare(b[0]))
+  const nomes = new Map(materias.map(([sigla, e]) => [sigla, e.nome]))
 
-  // ── detalhe de uma matéria (sub-abas) ──
+  const midiasDe = (sigla: string, tipo: TipoMidia) => midias.filter(m => m.materia === sigla && m.tipo === tipo)
+
+  // ── detalhe de uma matéria (abas fixas) ──
   if (materiaSel) {
     const grupo = grupos.get(materiaSel)
     const sigla = materiaSel
@@ -231,24 +246,42 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
     const temApostila = comApostila.has(sigla)
     const temMemento = temPdf || (grupo?.items.length ?? 0) > 0
     const mementoLabel = MEMENTO_PROPRIO.has(sigla) ? "PDF Memento" : temMemento ? "PDF Pernambuco Imortal" : "Memento"
-    const subAbas: [SubAba, string][] = [
-      ["memento", mementoLabel],
-      ...(temApostila ? [["apostila", "Apostila"] as [SubAba, string]] : []),
-      ["questoes", "Questões"], ["tutor", "✦ Tutor IA"], ["gaivotas", "🪶 Gaivotas"],
+    const prova = provas.get(sigla)
+    const status = statusMap.get(sigla)
+    const concluida = status === "Concluída" && !prova
+    // [aba, rótulo, tem conteúdo?] — abas sem conteúdo ficam esmaecidas
+    const subAbas: [SubAba, string, boolean][] = [
+      ["memento", mementoLabel, temMemento],
+      ["apostila", "Apostila", temApostila],
+      ["video", "🎬 Memento em vídeo", midiasDe(sigla, "video").length > 0],
+      ["audio", "🎧 Memento em áudio", midiasDe(sigla, "audio").length > 0],
+      ["mapa", "🧠 Mapa mental", midiasDe(sigla, "mapa").length > 0],
+      ["questoes", "Questões", true],
+      ["tutor", "✦ Tutor IA", true],
+      ["gaivotas", "🪶 Gaivotas", true],
     ]
     return (
       <div>
         <button onClick={() => { setMateriaSel(null); setSubAba("memento") }} style={{ background: "none", border: "none", color: "var(--olive)", fontWeight: 600, cursor: "pointer", fontSize: 14, padding: 0 }}>
           ← Todas as matérias
         </button>
-        <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.3rem", color: "var(--olive)", margin: "10px 0 14px" }}>
+        <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.3rem", color: "var(--olive)", margin: "10px 0 10px" }}>
           {sigla}{grupo?.nome && grupo.nome !== sigla ? ` — ${grupo.nome}` : ""}
         </h2>
+        {prova && (
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px", borderRadius: 999, marginBottom: 14, fontSize: 13, fontWeight: 600,
+            background: situacao(prova.semana, hojeISO) === "passada" ? "var(--surface)" : "rgba(181,147,63,0.16)",
+            color: situacao(prova.semana, hojeISO) === "passada" ? "var(--ink-60)" : "var(--olive)", border: "1px solid rgba(181,147,63,0.45)" }}>
+            📝 {situacao(prova.semana, hojeISO) === "passada" ? "Prova realizada" : situacao(prova.semana, hojeISO) === "atual" ? "Prova ESTA semana" : "Prova prevista"}
+            {prova.prova.rotulo ? ` (${prova.prova.rotulo})` : ""} · semana {prova.semana.semana} · {periodo(prova.semana)}
+          </div>
+        )}
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
-          {subAbas.map(([t, rot]) => (
-            <button key={t} onClick={() => setSubAba(t)}
+          {subAbas.map(([t, rot, tem]) => (
+            <button key={t} onClick={() => setSubAba(t)} title={tem ? undefined : "Em breve"}
               style={{ padding: "7px 13px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600,
-                background: subAba === t ? "var(--olive)" : "var(--surface)", color: subAba === t ? "var(--canvas)" : "var(--ink-60)" }}>
+                background: subAba === t ? "var(--olive)" : "var(--surface)", color: subAba === t ? "var(--canvas)" : "var(--ink-60)",
+                opacity: tem || subAba === t ? 1 : 0.55 }}>
               {rot}
             </button>
           ))}
@@ -265,11 +298,19 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
                   </button>
                 ))}
               </div>
-            ) : <div style={cardBox}><p style={{ margin: 0, color: "var(--ink-60)" }}>Memento desta matéria <em>em breve</em>.</p></div>
+            ) : <EmBreve texto={<>Memento de <strong>{sigla}</strong> <em>em breve</em>.</>} concluida={concluida} />
           )
         )}
 
-        {subAba === "apostila" && <PdfOriginal sigla={sigla} parts={apostilaPartsMap.get(sigla) ?? []} base="apostilas" labelVazio="apostila" />}
+        {subAba === "apostila" && (
+          temApostila
+            ? <PdfOriginal sigla={sigla} parts={apostilaPartsMap.get(sigla) ?? []} base="apostilas" labelVazio="apostila" />
+            : <EmBreve texto={<>Apostila de <strong>{sigla}</strong> <em>em breve</em>.</>} concluida={concluida} />
+        )}
+        {(subAba === "video" || subAba === "audio" || subAba === "mapa") && (
+          <MidiaTab key={`${sigla}-${subAba}`} sigla={sigla} tipo={subAba} itens={midiasDe(sigla, subAba)} isAdmin={isAdmin} concluida={concluida}
+            onAdd={m => setMidias(l => [...l, m])} onRemove={id => setMidias(l => l.filter(x => x.id !== id))} />
+        )}
         {subAba === "questoes" && <QuestoesLink sigla={sigla} />}
         {subAba === "tutor" && <TutorIA materia={sigla} />}
         {subAba === "gaivotas" && <Gaivotas materia={sigla} isAdmin={isAdmin} currentUser={currentUser} />}
@@ -281,6 +322,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
   return (
     <div>
       <NotaMaciel />
+      <CalendarioProvas hojeISO={hojeISO} nomes={nomes} onAbrir={sigla => abrirMateria(sigla)} />
       {materias.length === 0 ? (
         <p style={{ color: "var(--ink-60)" }}>Nenhum memento publicado ainda.</p>
       ) : (
@@ -288,27 +330,219 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
           {materias.map(([sigla, e]) => {
             const temPdf = comPdf.has(sigla)
             const temApostila = comApostila.has(sigla)
-            const vazio = e.items.length === 0 && !temPdf && !temApostila
+            const temMidia = midias.some(m => m.materia === sigla)
+            const vazio = e.items.length === 0 && !temPdf && !temApostila && !temMidia
             const rodape = MEMENTO_PROPRIO.has(sigla) ? "PDF Memento"
               : temPdf ? "PDF Pernambuco Imortal"
               : e.items.length > 0 ? "PDF Pernambuco Imortal"
               : temApostila ? "Apostila"
+              : temMidia ? "Vídeo / áudio"
               : "em breve"
-            const subInicial: SubAba = (e.items.length > 0 || temPdf) ? "memento" : temApostila ? "apostila" : "memento"
+            const subInicial: SubAba = (e.items.length > 0 || temPdf) ? "memento" : temApostila ? "apostila"
+              : (midias.find(m => m.materia === sigla)?.tipo as SubAba | undefined) ?? "memento"
+            const prova = provas.get(sigla)
+            const sit = prova ? situacao(prova.semana, hojeISO) : null
             return (
-              <button key={sigla} onClick={() => { setMateriaSel(sigla); setSubAba(subInicial) }}
+              <button key={sigla} onClick={() => abrirMateria(sigla, subInicial)}
                 style={{
                   display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-between", gap: 10,
-                  minHeight: 118, padding: "16px 14px", borderRadius: 16, cursor: "pointer", textAlign: "left",
-                  border: "1px solid rgba(58,74,58,0.15)", background: vazio ? "var(--surface)" : "#fff",
+                  minHeight: 118, padding: "16px 14px", borderRadius: 16, cursor: "pointer", textAlign: "left", position: "relative",
+                  border: sit === "atual" ? "1.5px solid var(--gold)" : "1px solid rgba(58,74,58,0.15)", background: vazio ? "var(--surface)" : "#fff",
                   boxShadow: vazio ? "none" : "0 2px 8px rgba(0,0,0,0.05)", opacity: vazio ? 0.72 : 1,
                 }}>
+                {prova && sit !== "passada" && (
+                  <span style={{ position: "absolute", top: 10, right: 10, fontSize: 10.5, fontWeight: 700, padding: "2px 7px", borderRadius: 999,
+                    background: sit === "atual" ? "var(--gold)" : "rgba(181,147,63,0.18)", color: sit === "atual" ? "#fff" : "var(--olive)" }}>
+                    📝 {sit === "atual" ? "PROVA" : periodo(prova.semana).replace(" a ", "–")}
+                  </span>
+                )}
                 <span style={{ fontFamily: "var(--serif-cfo)", fontWeight: 700, fontSize: "1.35rem", color: "var(--olive)" }}>{sigla}</span>
                 <span style={{ fontSize: 12.5, color: "var(--ink-60)", lineHeight: 1.35 }}>{e.nome !== sigla ? e.nome : "Memento"}</span>
                 <span style={{ fontSize: 11.5, color: vazio ? "var(--ink-60)" : "var(--gold)", fontWeight: 600 }}>{rodape} ›</span>
               </button>
             )
           })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Mensagem padrão de conteúdo ainda não publicado (com atalho para a pasta do Drive)
+function EmBreve({ texto, concluida, drive }: { texto: React.ReactNode; concluida?: boolean; drive?: boolean }) {
+  return (
+    <div style={cardBox}>
+      <p style={{ margin: 0, fontSize: 14.5, color: "var(--ink-60)", lineHeight: 1.6 }}>{texto}</p>
+      {concluida && <p style={{ margin: "6px 0 0", fontSize: 13, color: "var(--ink-60)" }}>Matéria concluída — o material será publicado conforme o calendário de estudos.</p>}
+      {drive && (
+        <a href={DRIVE_MEMENTOS_URL} target="_blank" rel="noopener noreferrer"
+          style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 12, fontSize: 13.5, fontWeight: 600, color: "var(--olive)", textDecoration: "none" }}>
+          📁 Ver pasta de mementos no Drive ↗
+        </a>
+      )}
+    </div>
+  )
+}
+
+// ── Calendário de provas (semanas 34–39) ──
+function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes: Map<string, string>; onAbrir: (sigla: string) => void }) {
+  const [aberto, setAberto] = useState(true)
+  const proximas = CALENDARIO_PROVAS.filter(s => situacao(s, hojeISO) !== "passada")
+  const semanaAtual = CALENDARIO_PROVAS.find(s => situacao(s, hojeISO) === "atual")
+  const resumo = semanaAtual?.provas.length
+    ? `Esta semana: ${semanaAtual.provas.map(p => p.sigla).join(" e ")}`
+    : proximas.find(s => s.provas.length) ? `Próxima: ${proximas.find(s => s.provas.length)!.provas.map(p => p.sigla).join(" e ")} · ${periodo(proximas.find(s => s.provas.length)!)}` : "Calendário encerrado"
+
+  return (
+    <section style={{ marginBottom: 24, borderRadius: 16, border: "1px solid rgba(181,147,63,0.45)", background: "#fff", boxShadow: "0 2px 8px rgba(0,0,0,0.05)", overflow: "hidden" }}>
+      <button onClick={() => setAberto(a => !a)} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 18px", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
+        <span style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+          <span style={{ fontSize: 20 }}>📝</span>
+          <span style={{ minWidth: 0 }}>
+            <span style={{ display: "block", fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "1.1rem", color: "var(--olive)" }}>Calendário de Provas</span>
+            <span style={{ display: "block", fontSize: 12.5, color: "var(--ink-60)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{resumo}</span>
+          </span>
+        </span>
+        <span style={{ fontSize: 13, color: "var(--ink-60)", transform: aberto ? "rotate(180deg)" : "none", transition: "transform 0.2s", flexShrink: 0 }}>▾</span>
+      </button>
+      {aberto && (
+        <div style={{ padding: "0 18px 14px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {CALENDARIO_PROVAS.map(s => {
+              const sit = situacao(s, hojeISO)
+              return (
+                <div key={s.semana} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "10px 12px", borderRadius: 12,
+                  background: sit === "atual" ? "rgba(181,147,63,0.14)" : "var(--surface)",
+                  border: sit === "atual" ? "1px solid var(--gold)" : "1px solid transparent", opacity: sit === "passada" ? 0.55 : 1 }}>
+                  <div style={{ flexShrink: 0, width: 92 }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 0.5, color: sit === "atual" ? "var(--gold)" : "var(--ink-60)", textTransform: "uppercase" }}>
+                      {sit === "atual" ? "Esta semana" : `Semana ${s.semana}`}
+                    </div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>{dmy(s.inicio)} – {dmy(s.fim)}</div>
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    {s.provas.length === 0 ? (
+                      <div style={{ fontSize: 13, color: "var(--ink-60)", lineHeight: 1.45 }}>{s.obs ?? "Sem avaliação teórica."}</div>
+                    ) : (
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                        {s.provas.map(p => (
+                          <button key={p.sigla} onClick={() => onAbrir(p.sigla)} title={nomes.get(p.sigla) ?? p.sigla}
+                            style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 11px", borderRadius: 999, cursor: "pointer", fontSize: 13, fontWeight: 700,
+                              background: sit === "passada" ? "var(--surface)" : "var(--olive)", color: sit === "passada" ? "var(--ink-60)" : "var(--canvas)",
+                              border: sit === "passada" ? "1px solid rgba(58,74,58,0.25)" : "none", textDecoration: sit === "passada" ? "line-through" : "none" }}>
+                            {p.sigla}{p.rotulo ? <span style={{ fontWeight: 500, opacity: 0.85 }}>{p.rotulo}</span> : null}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {s.provas.length > 0 && (
+                      <div style={{ marginTop: 5, fontSize: 12, color: "var(--ink-60)", lineHeight: 1.4 }}>
+                        {s.provas.map(p => nomes.get(p.sigla) ?? p.sigla).join(" · ")}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+          <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>
+            Fonte: {CALENDARIO_FONTE} · <a href="/calendario-provas-cfo-2026.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>ver PDF oficial ↗</a>. Toque na sigla para abrir o material da matéria.
+          </p>
+        </div>
+      )}
+    </section>
+  )
+}
+
+// ── Vídeo / áudio / mapa mental por matéria (links do Drive ou YouTube) ──
+function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
+  sigla: string; tipo: TipoMidia; itens: Midia[]; isAdmin: boolean; concluida: boolean
+  onAdd: (m: Midia) => void; onRemove: (id: string) => void
+}) {
+  const info = MIDIA_INFO[tipo]
+  const [i, setI] = useState(0)
+  const [titulo, setTitulo] = useState("")
+  const [url, setUrl] = useState("")
+  const [salvando, setSalvando] = useState(false)
+  const [msg, setMsg] = useState("")
+
+  async function adicionar() {
+    setSalvando(true); setMsg("")
+    const res = await fetch("/api/mementos/midia", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ materia: sigla, tipo, titulo: titulo.trim() || `${info.rotulo} — ${sigla}`, url }),
+    })
+    const j = await res.json().catch(() => ({}))
+    setSalvando(false)
+    if (!res.ok) return setMsg("✗ " + (j.error || "Erro ao salvar."))
+    onAdd(j); setTitulo(""); setUrl(""); setMsg("✓ Publicado.")
+  }
+  async function remover(id: string) {
+    if (!confirm(`Remover este ${info.curto} de ${sigla}?`)) return
+    const res = await fetch(`/api/mementos/midia?id=${id}`, { method: "DELETE" })
+    if (res.ok) { onRemove(id); setI(0) }
+  }
+
+  const sel = itens[Math.min(i, Math.max(0, itens.length - 1))]
+  const embed = sel ? embedDe(sel.url) : null
+  const altura = tipo === "video" ? undefined : tipo === "audio" ? 120 : "70vh"
+  const linkStyle: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }
+
+  return (
+    <div>
+      {itens.length === 0 ? (
+        <EmBreve drive concluida={concluida} texto={<>{info.icone} {info.rotulo} de <strong>{sigla}</strong> <em>em breve</em>.</>} />
+      ) : (
+        <div>
+          {itens.length > 1 && (
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+              {itens.map((m, idx) => (
+                <button key={m.id} onClick={() => setI(idx)}
+                  style={{ padding: "7px 13px", borderRadius: 999, border: "1px solid var(--olive)", cursor: "pointer", fontSize: 13.5, fontWeight: 600,
+                    background: idx === i ? "var(--olive)" : "#fff", color: idx === i ? "var(--canvas)" : "var(--olive)" }}>
+                  {m.titulo}
+                </button>
+              ))}
+            </div>
+          )}
+          <div style={{ display: "flex", gap: 8, marginBottom: 10, alignItems: "center", flexWrap: "wrap" }}>
+            <span style={{ fontSize: 13.5, color: "var(--ink-60)", fontWeight: 600 }}>{info.icone} {sel.titulo}</span>
+            <a href={sel.url} target="_blank" rel="noopener noreferrer" style={linkStyle}>↗ Abrir em nova aba</a>
+            {isAdmin && <button onClick={() => remover(sel.id)} style={{ ...linkStyle, color: "var(--red)", borderColor: "var(--red)", cursor: "pointer" }}>✕ Remover</button>}
+          </div>
+          {embed?.src ? (
+            <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(58,74,58,0.15)", background: "#000",
+              ...(tipo === "video" ? { aspectRatio: "16 / 9" } : { height: altura }) }}>
+              <iframe key={embed.src} src={embed.src} title={`${info.rotulo} ${sigla} — ${sel.titulo}`} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen
+                style={{ width: "100%", height: "100%", border: "none", display: "block" }} />
+            </div>
+          ) : (
+            <div style={cardBox}><p style={{ margin: 0, fontSize: 14, color: "var(--ink-60)" }}>Este link não pode ser embutido aqui — use “Abrir em nova aba”.</p></div>
+          )}
+          <p style={{ marginTop: 8, fontSize: 12, color: "var(--ink-60)" }}>
+            {tipo === "mapa" ? "Mapa mental" : "Conteúdo"} gerado com NotebookLM a partir do memento da matéria. Se o player não carregar, abra em nova aba (é preciso estar logado no Google com acesso ao Drive da turma).
+          </p>
+        </div>
+      )}
+
+      {isAdmin && (
+        <div style={{ ...cardBox, marginTop: 16, border: "1px dashed rgba(58,74,58,0.35)" }}>
+          <p style={{ margin: "0 0 10px", fontSize: 13.5, fontWeight: 600, color: "var(--olive)" }}>
+            + Publicar {info.curto} de {sigla} <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>(admin)</span>
+          </p>
+          <p style={{ margin: "0 0 10px", fontSize: 12.5, color: "var(--ink-60)", lineHeight: 1.5 }}>
+            Suba o arquivo na pasta <a href={DRIVE_MEMENTOS_URL} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>MEMENTOS (MATERIAL DE ESTUDO)</a> do Drive,
+            marque “Qualquer pessoa com o link”, copie o link e cole abaixo. Links do YouTube também funcionam.
+          </p>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <input value={titulo} onChange={e => setTitulo(e.target.value)} placeholder={`Título (ex.: ${info.rotulo} — Módulo 1)`} style={{ ...inputStyle, flex: "1 1 200px" }} />
+            <input value={url} onChange={e => setUrl(e.target.value)} placeholder="https://drive.google.com/file/d/…/view" style={{ ...inputStyle, flex: "2 1 260px" }} />
+            <button onClick={adicionar} disabled={salvando || !url.trim()}
+              style={{ padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: salvando || !url.trim() ? "default" : "pointer", opacity: !url.trim() ? 0.5 : 1 }}>
+              {salvando ? "Salvando…" : "Publicar"}
+            </button>
+          </div>
+          {msg && <p style={{ margin: "8px 0 0", fontSize: 13, color: msg.startsWith("✓") ? "var(--olive)" : "var(--red)" }}>{msg}</p>}
         </div>
       )}
     </div>
