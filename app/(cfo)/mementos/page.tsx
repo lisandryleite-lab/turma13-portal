@@ -8,6 +8,7 @@ import { PDF_PARTS, type PdfPart } from "@/lib/mementos-pdfs"
 import { APOSTILA_PARTS, type ApostilaPart } from "@/lib/apostilas"
 import { hojeRecifeISO } from "@/lib/calendario-provas"
 import { tipoPorExtensao, tituloDeArquivo } from "@/lib/midia-embed"
+import { MIDIAS_DRIVE } from "@/lib/midias-drive"
 import { MementosClient } from "./mementos-client"
 
 export default async function MementosPage() {
@@ -91,7 +92,11 @@ export default async function MementosPage() {
       }
     }
   } catch { /* pasta ausente — sem mídias locais */ }
-  const todasMidias = [...midiasLocais, ...midias].sort((a, b) => a.materia.localeCompare(b.materia) || a.tipo.localeCompare(b.tipo) || a.ordem - b.ordem)
+  // mídias declaradas em código (links do Drive/YouTube) — não pesam no repositório
+  const midiasDrive: MidiaItem[] = Object.entries(MIDIAS_DRIVE).flatMap(([sigla, itens]) =>
+    itens.map((m, i) => ({ id: `drive:${sigla}/${i}`, materia: sigla.toUpperCase(), tipo: m.tipo, titulo: m.titulo, url: m.url, ordem: -500 + i }))
+  )
+  const todasMidias = [...midiasLocais, ...midiasDrive, ...midias].sort((a, b) => a.materia.localeCompare(b.materia) || a.tipo.localeCompare(b.tipo) || a.ordem - b.ordem)
 
   // matérias com conteúdo (mementos + flashcards) — para a área de limpar
   const contMap = new Map<string, Set<string>>()
