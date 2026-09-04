@@ -42,8 +42,9 @@ const cards: {
     ),
   },
   {
-    label: "Calendário de Provas",
+    label: "Calendário",
     href: "/calendario",
+    nota: "Provas · Eventos · Escalas",
     bg: "gold",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
