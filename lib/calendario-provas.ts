@@ -22,8 +22,12 @@ export type ProvaCalendario = {
 
 export type SemanaCalendario = {
   semana: number
+  /** rótulo curto "31/08" */
   inicio: string
   fim: string
+  /** datas ISO da semana (segunda a domingo) — usadas pela grade do calendário */
+  inicioIso: string
+  fimIso: string
   provas: ProvaCalendario[]
   /** semanas sem avaliação teórica trazem só a observação */
   semAvaliacao?: boolean
@@ -42,6 +46,8 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
     semana: 34,
     inicio: "31/08",
     fim: "06/09",
+    inicioIso: "2026-08-31",
+    fimIso: "2026-09-06",
     provas: [
       { sigla: "TCEM", avaliacao: "2AE" },
       { sigla: "GC" },
@@ -51,6 +57,8 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
     semana: 35,
     inicio: "07/09",
     fim: "13/09",
+    inicioIso: "2026-09-07",
+    fimIso: "2026-09-13",
     provas: [],
     semAvaliacao: true,
     obs: "Desfile 7SET, Balística, Simulado GC, Palestra CMT-G e balizamento de C/H entre as turmas.",
@@ -59,6 +67,8 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
     semana: 36,
     inicio: "14/09",
     fim: "20/09",
+    inicioIso: "2026-09-14",
+    fimIso: "2026-09-20",
     provas: [
       { sigla: "AM", avaliacao: "2AE" },
       { sigla: "INTSISP" },
@@ -68,6 +78,8 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
     semana: 37,
     inicio: "21/09",
     fim: "27/09",
+    inicioIso: "2026-09-21",
+    fimIso: "2026-09-27",
     provas: [
       { sigla: "DPPM", siglaPdf: "DPPPM", avaliacao: "1AE" },
       { sigla: "EASE", siglaPdf: "EASP" },
@@ -77,6 +89,8 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
     semana: 38,
     inicio: "28/09",
     fim: "04/10",
+    inicioIso: "2026-09-28",
+    fimIso: "2026-10-04",
     provas: [
       { sigla: "EPCR" },
       { sigla: "PJM", avaliacao: "1AE" },
@@ -86,6 +100,8 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
     semana: 39,
     inicio: "05/10",
     fim: "11/10",
+    inicioIso: "2026-10-05",
+    fimIso: "2026-10-11",
     provas: [
       { sigla: "POE", avaliacao: "1AE" },
       { sigla: "PE" },

@@ -274,38 +274,3 @@ export const MESES_ESCALA: MesEscala[] = [
 export function mesVigente(hojeIso: string): MesEscala {
   return MESES_ESCALA.find(m => hojeIso >= m.inicio && hojeIso <= m.fim) ?? MESES_ESCALA[MESES_ESCALA.length - 1]
 }
-
-// ── O que é meu ──────────────────────────────────────────────
-
-export type MinhaEscala =
-  | { data: string; tipo: "plantao"; detalhe: string }
-  | { data: string; tipo: "funcao"; detalhe: string }
-
-/**
- * Compromissos da matrícula no mês: dias em que o grupo dela está de plantão
- * (com o papel, quando é auxiliar/adjunto/sobreaviso) e funções de formatura.
- * Ordenado por data.
- */
-export function minhasEscalas(mat: number, mes: MesEscala): MinhaEscala[] {
-  const meuGrupo = grupoDaMatricula(mat)
-  const itens: MinhaEscala[] = []
-
-  for (const d of mes.plantao) {
-    const papeis: string[] = []
-    if (d.auxiliar === mat) papeis.push("Auxiliar do Oficial de Dia")
-    if (d.adjunto === mat) papeis.push("Adjunto ao Auxiliar")
-    if (d.sobreaviso.includes(mat)) papeis.push("Sobreaviso")
-    const noGrupo = meuGrupo === d.grupo
-    if (!papeis.length && !noGrupo) continue
-    const base = `Plantão ${ROTULO_GRUPO[d.grupo]}`
-    itens.push({ data: d.data, tipo: "plantao", detalhe: papeis.length ? `${base} · ${papeis.join(" e ")}` : base })
-  }
-
-  for (const f of mes.funcoes) {
-    for (const chave of Object.keys(ROTULO_FUNCAO) as ChaveFuncao[]) {
-      if (f[chave] === mat) itens.push({ data: f.data, tipo: "funcao", detalhe: ROTULO_FUNCAO[chave] })
-    }
-  }
-
-  return itens.sort((a, b) => a.data.localeCompare(b.data))
-}

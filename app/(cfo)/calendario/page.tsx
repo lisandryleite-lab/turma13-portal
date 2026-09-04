@@ -1,8 +1,7 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
-import { semanaAtual } from "@/lib/utils"
-import { grupoDaMatricula, mesVigente, minhasEscalas } from "@/lib/escalas-cia"
+import { grupoDaMatricula, mesVigente } from "@/lib/escalas-cia"
 import { CalendarioClient } from "./calendario-client"
 
 export const dynamic = "force-dynamic"
@@ -21,18 +20,15 @@ export default async function CalendarioPage() {
   const nomeDisciplina = Object.fromEntries(disciplinas.map(d => [d.sigla, d.nome]))
 
   const hojeIso = hojeLocalIso()
-  const mes = mesVigente(hojeIso)
   const matricula = session.user.matricula
 
   return (
     <CalendarioClient
       hojeIso={hojeIso}
-      semanaAtual={semanaAtual()}
       nomeDisciplina={nomeDisciplina}
       minhaMatricula={matricula}
       meuGrupo={grupoDaMatricula(matricula)}
-      minhasEscalas={minhasEscalas(matricula, mes)}
-      mes={mes}
+      mes={mesVigente(hojeIso)}
     />
   )
 }
