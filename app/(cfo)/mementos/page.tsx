@@ -7,6 +7,7 @@ import { adminAtivo } from "@/lib/view"
 import { PDF_PARTS, type PdfPart } from "@/lib/mementos-pdfs"
 import { APOSTILA_PARTS, type ApostilaPart } from "@/lib/apostilas"
 import { hojeRecifeISO } from "@/lib/calendario-provas"
+import { tipoPorExtensao, tituloDeArquivo } from "@/lib/midia-embed"
 import { MementosClient } from "./mementos-client"
 
 export default async function MementosPage() {
@@ -22,10 +23,11 @@ export default async function MementosPage() {
     prisma.flashcard.groupBy({ by: ["materia", "modulo"], _count: { _all: true } }),
     prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true }, orderBy: { sigla: "asc" } }),
     // vídeo / áudio / mapa mental por matéria (links do Drive ou YouTube)
+    // (tolerante: se a tabela ainda não existir no banco — antes do db:push — segue sem itens)
     prisma.mementoMidia.findMany({
       select: { id: true, materia: true, tipo: true, titulo: true, url: true, ordem: true },
       orderBy: [{ materia: "asc" }, { tipo: "asc" }, { ordem: "asc" }, { createdAt: "asc" }],
-    }),
+    }).catch(() => [] as { id: string; materia: string; tipo: string; titulo: string; url: string; ordem: number }[]),
   ])
 
   const nomeMap = new Map(disciplinas.map(d => [d.sigla, d.nome]))
@@ -72,6 +74,25 @@ export default async function MementosPage() {
     }).filter(m => m.parts.length > 0).sort((a, b) => a.sigla.localeCompare(b.sigla))
   } catch { /* pasta ausente — sem apostilas */ }
 
+  // mídias locais em /public/midias/<SIGLA>/ (vídeo, áudio ou mapa mental
+  // detectados pela extensão; título vem do nome do arquivo). Somam-se às do banco.
+  type MidiaItem = (typeof midias)[number]
+  const midiasLocais: MidiaItem[] = []
+  try {
+    const raiz = path.join(process.cwd(), "public", "midias")
+    for (const pasta of await readdir(raiz)) {
+      const sigla = pasta.toUpperCase()
+      let arquivos: string[] = []
+      try { arquivos = await readdir(path.join(raiz, pasta)) } catch { continue }
+      for (const [i, f] of arquivos.sort().entries()) {
+        const tipo = tipoPorExtensao(f)
+        if (!tipo) continue
+        midiasLocais.push({ id: `file:${sigla}/${f}`, materia: sigla, tipo, titulo: tituloDeArquivo(f), url: `/midias/${encodeURIComponent(pasta)}/${encodeURIComponent(f)}`, ordem: -1000 + i })
+      }
+    }
+  } catch { /* pasta ausente — sem mídias locais */ }
+  const todasMidias = [...midiasLocais, ...midias].sort((a, b) => a.materia.localeCompare(b.materia) || a.tipo.localeCompare(b.tipo) || a.ordem - b.ordem)
+
   // matérias com conteúdo (mementos + flashcards) — para a área de limpar
   const contMap = new Map<string, Set<string>>()
   for (const m of mementos) (contMap.get(m.materia) || contMap.set(m.materia, new Set()).get(m.materia)!).add(m.modulo)
@@ -89,7 +110,7 @@ export default async function MementosPage() {
       currentUser={{ matricula: session.user.matricula, nomeGuerra: session.user.nomeGuerra }}
       pdfMaterias={pdfMaterias}
       apostilaMaterias={apostilaMaterias}
-      midias={midias}
+      midias={todasMidias}
       hojeISO={hojeRecifeISO()}
     />
   )

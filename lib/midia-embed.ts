@@ -33,3 +33,25 @@ export function embedDe(url: string): Embed {
 export function urlValida(url: string): boolean {
   try { const u = new URL(url); return u.protocol === "https:" } catch { return false }
 }
+
+// Arquivos locais em /public/midias/<SIGLA>/ — tipo pela extensão.
+const EXT_TIPO: Record<string, TipoMidia> = {
+  mp4: "video", webm: "video", mov: "video", m4v: "video",
+  m4a: "audio", mp3: "audio", wav: "audio", ogg: "audio", aac: "audio", opus: "audio",
+  pdf: "mapa", png: "mapa", jpg: "mapa", jpeg: "mapa", webp: "mapa", svg: "mapa",
+}
+export function tipoPorExtensao(nome: string): TipoMidia | null {
+  const ext = nome.toLowerCase().split(".").pop() || ""
+  return EXT_TIPO[ext] ?? null
+}
+export function extensaoDe(url: string): string {
+  return (url.split("?")[0].toLowerCase().split(".").pop() || "")
+}
+/** "Entendendo_o_SISBIN_comprimido.mp4" → "Entendendo o SISBIN" */
+export function tituloDeArquivo(nome: string): string {
+  return nome.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").replace(/\s*\(?comprimido\)?\s*$/i, "").trim()
+}
+/** Mídia servida pelo próprio portal (/public) — toca com <video>/<audio>/<object>, não com iframe. */
+export function ehLocal(url: string): boolean {
+  return url.startsWith("/")
+}

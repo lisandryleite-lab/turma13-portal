@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { renderMarkdown } from "@/lib/markdown"
 import { MEMENTO_PROPRIO } from "@/lib/mementos-pdfs"
 import { CALENDARIO_PROVAS, CALENDARIO_FONTE, dmy, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
-import { DRIVE_MEMENTOS_URL, MIDIA_INFO, embedDe, type TipoMidia } from "@/lib/midia-embed"
+import { DRIVE_MEMENTOS_URL, MIDIA_INFO, embedDe, ehLocal, extensaoDe, type TipoMidia } from "@/lib/midia-embed"
 
 type MementoMeta = { id: string; materia: string; modulo: string; titulo: string; nome: string }
 type CurrentUser = { matricula: number; nomeGuerra: string }
@@ -484,7 +484,8 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
   }
 
   const sel = itens[Math.min(i, Math.max(0, itens.length - 1))]
-  const embed = sel ? embedDe(sel.url) : null
+  const local = sel ? ehLocal(sel.url) : false
+  const embed = sel && !local ? embedDe(sel.url) : null
   const altura = tipo === "video" ? undefined : tipo === "audio" ? 120 : "70vh"
   const linkStyle: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }
 
@@ -508,9 +509,12 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
           <div style={{ display: "flex", gap: 8, marginBottom: 10, alignItems: "center", flexWrap: "wrap" }}>
             <span style={{ fontSize: 13.5, color: "var(--ink-60)", fontWeight: 600 }}>{info.icone} {sel.titulo}</span>
             <a href={sel.url} target="_blank" rel="noopener noreferrer" style={linkStyle}>↗ Abrir em nova aba</a>
-            {isAdmin && <button onClick={() => remover(sel.id)} style={{ ...linkStyle, color: "var(--red)", borderColor: "var(--red)", cursor: "pointer" }}>✕ Remover</button>}
+            {local && <a href={sel.url} download style={linkStyle}>⬇ Baixar</a>}
+            {isAdmin && !local && <button onClick={() => remover(sel.id)} style={{ ...linkStyle, color: "var(--red)", borderColor: "var(--red)", cursor: "pointer" }}>✕ Remover</button>}
           </div>
-          {embed?.src ? (
+          {local ? (
+            <PlayerLocal tipo={tipo} url={sel.url} titulo={`${info.rotulo} ${sigla} — ${sel.titulo}`} />
+          ) : embed?.src ? (
             <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(58,74,58,0.15)", background: "#000",
               ...(tipo === "video" ? { aspectRatio: "16 / 9" } : { height: altura }) }}>
               <iframe key={embed.src} src={embed.src} title={`${info.rotulo} ${sigla} — ${sel.titulo}`} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen
@@ -520,7 +524,8 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
             <div style={cardBox}><p style={{ margin: 0, fontSize: 14, color: "var(--ink-60)" }}>Este link não pode ser embutido aqui — use “Abrir em nova aba”.</p></div>
           )}
           <p style={{ marginTop: 8, fontSize: 12, color: "var(--ink-60)" }}>
-            {tipo === "mapa" ? "Mapa mental" : "Conteúdo"} gerado com NotebookLM a partir do memento da matéria. Se o player não carregar, abra em nova aba (é preciso estar logado no Google com acesso ao Drive da turma).
+            {tipo === "mapa" ? "Mapa mental" : "Conteúdo"} gerado com NotebookLM a partir do memento da matéria.
+            {local ? " Se o player não carregar, use “Baixar”." : " Se o player não carregar, abra em nova aba (é preciso estar logado no Google com acesso ao Drive da turma)."}
           </p>
         </div>
       )}
@@ -547,6 +552,41 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
       )}
     </div>
   )
+}
+
+// Player para arquivos servidos pelo próprio portal (/public/midias/<SIGLA>/…)
+function PlayerLocal({ tipo, url, titulo }: { tipo: TipoMidia; url: string; titulo: string }) {
+  const borda: React.CSSProperties = { borderRadius: 12, border: "1px solid rgba(58,74,58,0.15)", overflow: "hidden" }
+  if (tipo === "video") {
+    return (
+      <div style={{ ...borda, background: "#000" }}>
+        <video key={url} src={url} controls playsInline preload="metadata" style={{ width: "100%", maxHeight: "70vh", display: "block" }}>
+          Seu navegador não reproduz este vídeo. <a href={url} download>Baixe o arquivo</a>.
+        </video>
+      </div>
+    )
+  }
+  if (tipo === "audio") {
+    return (
+      <div style={{ ...borda, background: "var(--surface)", padding: "18px 16px", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+        <span style={{ fontSize: 34 }}>🎧</span>
+        <audio key={url} src={url} controls preload="metadata" style={{ flex: "1 1 260px", minWidth: 0 }}>
+          Seu navegador não reproduz este áudio. <a href={url} download>Baixe o arquivo</a>.
+        </audio>
+      </div>
+    )
+  }
+  const ext = extensaoDe(url)
+  if (ext === "pdf") {
+    return (
+      <object key={url} data={url} type="application/pdf" style={{ ...borda, width: "100%", height: "75vh" }}>
+        <iframe src={url} title={titulo} style={{ width: "100%", height: "75vh", border: "none", borderRadius: 12 }} />
+      </object>
+    )
+  }
+  // imagem (png/jpg/webp/svg)
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={url} alt={titulo} style={{ ...borda, width: "100%", height: "auto", display: "block", background: "#fff" }} />
 }
 
 // Visualizador de PDF (1 ou várias partes, rotuladas). base = pasta em /public.
