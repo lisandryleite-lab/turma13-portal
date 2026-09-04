@@ -60,7 +60,8 @@ NEXTAUTH_URL          # URL base da aplicação — produção: https://portalcf
 | Rota | Função |
 |------|--------|
 | `/inicio`, `/painel` | Hub de estudo / painel geral |
-| `/mementos` | Mementos resumidos por disciplina + flashcards |
+| `/calendario` | 3 abas: **Provas** (T13–T18 + recado da Seção de Provas; cada matéria linka para `/mementos?materia=SIGLA`), **Eventos** (100 Dias, Baile das Espadas… com contagem regressiva) e **Escalas da CIA** (plantão 7x1, funções nas formaturas, mapa de equipes, PDFs originais), com destaque do que é do aluno logado pela matrícula. Dados em `lib/calendario-provas.ts`, `lib/eventos-cfo.ts` e `lib/escalas-cia.ts` |
+| `/mementos` | Mementos resumidos por disciplina + flashcards. Aceita `?materia=SIGLA` para abrir a matéria direto |
 | `/questoes` | Banco de questões por disciplina/bateria |
 | `/ranking` | Ranking da turma |
 | `/permutas` | Permuta de plantões (cadeia direta/triangular, SEI opcional; cada aluno vê só as permutas de que participa) — usa `MilitarPlantao` |
@@ -133,8 +134,16 @@ Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 34 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
 **1 (Hellton Fernandes) e 54 (Elder Carvalho) saíram** da Turma 13 em jun/2026; **213 (R Silva) entrou** em jun/2026 — ver `scripts/update-roster-213.ts` e `scripts/update-roster-julho.ts`. **211 (Dário)** e **212 (Camila Buonora) entraram** em jul/2026 — ver `scripts/add-dario.ts`, `scripts/add-212-camila.ts` e `scripts/integra-novatos-escalas.ts`. Lista oficial de antiguidade em `lib/escalas.ts` (`MATRICULAS_ORDEM`).
 
+### Usuários fora da Turma 13 (`turma13: false`)
+O portal também hospeda alunos de outros pelotões do CFO 2026. Eles têm `turma13: false` e por isso só acessam a **área CFO** (`app/(cfo)/`: `/inicio`, `/mementos`, `/questoes`, `/ranking`, `/permutas`, `/documentos`, `/trocar-senha`) — o grupo `(logado)` é bloqueado pelo próprio `app/(logado)/layout.tsx`. Com `turma: 3` contam no `turmaSize` do `/ranking` e do `/painel`.
+**Turma 19** (set/2026, `scripts/add-turma19.ts`): 199 BARROS, 203 J LUIZ, 217 SALUSTIANO, 218 COELHO, 219 BRENER, 220 RATIS. Senha inicial = a própria matrícula.
+
 ### Grupos de faxina — fonte viva no banco
 A composição exibida em `/escalas` vem da tabela **`FaxinaGrupoMembro`** quando não vazia; `COMPOSICAO_FAXINA` em `lib/escalas.ts` é só fallback (mantida em sincronia). `User.grupoFaxina` (dashboard) deve espelhar a tabela — `scripts/integra-novatos-escalas.ts` sincroniza. Em jul/2026: G7 = Thais, Gabriele, Cleyton, 211 Dário, 213 R Silva; G8 = Aldo, Rodolfo, André, Pablo, 212 Camila (grupos com 5).
+
+### Escalas da 1ª CIA — fonte estática em `lib/escalas-cia.ts`
+Transcrição dos documentos assinados pelo Cmt da 1ª CIA (mapa de equipes, escala de plantão 7x1 e funções nas formaturas), com os PDFs originais em `public/escalas/`. Exibido em `/calendario` (aba "Escalas da CIA"), para **todo o portal** — não só a Turma 13. Ao chegar um novo mês: acrescentar um bloco em `MESES_ESCALA` e copiar os PDFs.
+O mapa de setembro/2026 abrange 201 militares da CIA e serve de dicionário matrícula → nome de guerra (`nomeDaMatricula`, `grupoDaMatricula`). **Atenção:** ele diverge em alguns pontos da tabela de grupos abaixo (ex.: 108 LISANDRY aparece em ÍNDIA, não em MIKE) — o documento do mês é a fonte de verdade.
 
 ### Grupos de plantão — 8 grupos (atualizado jul/2026 — Mapa de Equipes, escala 7x1)
 Ciclo **diário** (todos os dias, incluindo fins de semana).

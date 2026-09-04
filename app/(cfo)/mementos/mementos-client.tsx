@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { renderMarkdown } from "@/lib/markdown"
 import { MEMENTO_PROPRIO } from "@/lib/mementos-pdfs"
-import { CALENDARIO_PROVAS, CALENDARIO_FONTE, dmy, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
+import { CALENDARIO_PROVAS, CALENDARIO_ATUALIZADO_EM, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
 import { DRIVE_MEMENTOS_URL, MIDIA_INFO, embedDe, ehLocal, extensaoDe, type TipoMidia } from "@/lib/midia-embed"
 
 type MementoMeta = { id: string; materia: string; modulo: string; titulo: string; nome: string }
@@ -21,14 +21,19 @@ type Aba = "mementos" | "admin"
 
 const moduloLabel = (m: string) => (m === "" ? "Sem módulo" : `Módulo ${m}`)
 
+/** "1AE" → "1ª AE" (rótulo da avaliação no calendário de provas) */
+const avaliacaoLabel = (a?: string) => (a ? a.replace(/^(\d+)\s*AE$/i, "$1ª AE") : "")
+
 const cardBox: React.CSSProperties = { padding: 16, borderRadius: 12, background: "var(--surface)" }
 const inputStyle: React.CSSProperties = {
   width: "100%", padding: "10px 12px", borderRadius: 8,
   border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15,
 }
 
-export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias, apostilaMaterias, midias, hojeISO }: {
+export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias, apostilaMaterias, materiaInicial = null, midias, hojeISO }: {
   mementos: MementoMeta[]; conteudoMaterias: ContMat[]; disciplinas: Disc[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]; apostilaMaterias: ApostilaMateria[]
+  /** sigla vinda de ?materia= — abre a matéria já selecionada */
+  materiaInicial?: string | null
   midias: Midia[]; hojeISO: string
 }) {
   const router = useRouter()
@@ -52,7 +57,7 @@ export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmi
         ))}
       </div>
 
-      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} apostilaMaterias={apostilaMaterias} midias={midias} hojeISO={hojeISO} />}
+      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} apostilaMaterias={apostilaMaterias} materiaInicial={materiaInicial} midias={midias} hojeISO={hojeISO} />}
       {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} conteudoMaterias={conteudoMaterias} onImport={() => router.refresh()} />}
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>
@@ -167,9 +172,10 @@ function Gaivotas({ materia, isAdmin, currentUser }: { materia: string; isAdmin:
 // Ordem padronizada em TODAS as matérias; o que não existir mostra "em breve".
 type SubAba = "memento" | "apostila" | "video" | "audio" | "mapa" | "questoes" | "tutor" | "gaivotas"
 
-function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, apostilaMaterias, midias: midiasIniciais, hojeISO }: {
+function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, apostilaMaterias, materiaInicial, midias: midiasIniciais, hojeISO }: {
   mementos: MementoMeta[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]
-  disciplinas: Disc[]; apostilaMaterias: ApostilaMateria[]; midias: Midia[]; hojeISO: string
+  disciplinas: Disc[]; apostilaMaterias: ApostilaMateria[]; materiaInicial: string | null
+  midias: Midia[]; hojeISO: string
 }) {
   const comPdf = new Set(pdfMaterias.map(p => p.sigla))
   const pdfPartsMap = new Map(pdfMaterias.map(p => [p.sigla, p.parts]))
@@ -178,7 +184,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
   const statusMap = new Map(disciplinas.map(d => [d.sigla, d.status]))
   const provas = provasPorMateria(hojeISO)
   const [midias, setMidias] = useState<Midia[]>(midiasIniciais)
-  const [materiaSel, setMateriaSel] = useState<string | null>(null)
+  const [materiaSel, setMateriaSel] = useState<string | null>(materiaInicial)
   const [subAba, setSubAba] = useState<SubAba>("memento")
   const [aberto, setAberto] = useState<{ titulo: string; html: string } | null>(null)
   const [carregando, setCarregando] = useState(false)
@@ -238,7 +244,8 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
   const midiasDe = (sigla: string, tipo: TipoMidia) => midias.filter(m => m.materia === sigla && m.tipo === tipo)
 
   // ── detalhe de uma matéria (abas fixas) ──
-  if (materiaSel) {
+  // sigla desconhecida (ex.: ?materia= errado) cai na lista completa
+  if (materiaSel && grupos.has(materiaSel)) {
     const grupo = grupos.get(materiaSel)
     const sigla = materiaSel
     const parts = pdfPartsMap.get(sigla) ?? []
@@ -273,7 +280,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
             background: situacao(prova.semana, hojeISO) === "passada" ? "var(--surface)" : "rgba(181,147,63,0.16)",
             color: situacao(prova.semana, hojeISO) === "passada" ? "var(--ink-60)" : "var(--olive)", border: "1px solid rgba(181,147,63,0.45)" }}>
             📝 {situacao(prova.semana, hojeISO) === "passada" ? "Prova realizada" : situacao(prova.semana, hojeISO) === "atual" ? "Prova ESTA semana" : "Prova prevista"}
-            {prova.prova.rotulo ? ` (${prova.prova.rotulo})` : ""} · semana {prova.semana.semana} · {periodo(prova.semana)}
+            {prova.prova.avaliacao ? ` (${avaliacaoLabel(prova.prova.avaliacao)})` : ""} · semana {prova.semana.semana} · {periodo(prova.semana)}
           </div>
         )}
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
@@ -418,7 +425,7 @@ function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes:
                     <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 0.5, color: sit === "atual" ? "var(--gold)" : "var(--ink-60)", textTransform: "uppercase" }}>
                       {sit === "atual" ? "Esta semana" : `Semana ${s.semana}`}
                     </div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>{dmy(s.inicio)} – {dmy(s.fim)}</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>{s.inicio} – {s.fim}</div>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     {s.provas.length === 0 ? (
@@ -430,7 +437,7 @@ function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes:
                             style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 11px", borderRadius: 999, cursor: "pointer", fontSize: 13, fontWeight: 700,
                               background: sit === "passada" ? "var(--surface)" : "var(--olive)", color: sit === "passada" ? "var(--ink-60)" : "var(--canvas)",
                               border: sit === "passada" ? "1px solid rgba(58,74,58,0.25)" : "none", textDecoration: sit === "passada" ? "line-through" : "none" }}>
-                            {p.sigla}{p.rotulo ? <span style={{ fontWeight: 500, opacity: 0.85 }}>{p.rotulo}</span> : null}
+                            {p.sigla}{p.avaliacao ? <span style={{ fontWeight: 500, opacity: 0.85 }}>{avaliacaoLabel(p.avaliacao)}</span> : null}
                           </button>
                         ))}
                       </div>
@@ -446,7 +453,7 @@ function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes:
             })}
           </div>
           <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>
-            Fonte: {CALENDARIO_FONTE} · <a href="/calendario-provas-cfo-2026.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>ver PDF oficial ↗</a>. Toque na sigla para abrir o material da matéria.
+            Previsão da Seção de Provas, atualizada em {CALENDARIO_ATUALIZADO_EM} · <a href="/calendario-provas-cfo-2026.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>ver PDF oficial ↗</a>. Toque na sigla para abrir o material da matéria. Veja a grade completa em <Link href="/calendario" style={{ color: "var(--olive)", fontWeight: 600 }}>Calendário</Link>.
           </p>
         </div>
       )}
