@@ -8,9 +8,15 @@ import { PDF_PARTS, type PdfPart } from "@/lib/mementos-pdfs"
 import { APOSTILA_PARTS, type ApostilaPart } from "@/lib/apostilas"
 import { MementosClient } from "./mementos-client"
 
-export default async function MementosPage() {
+export default async function MementosPage({ searchParams }: {
+  searchParams: Promise<{ materia?: string | string[] }>
+}) {
   const session = await auth()
   if (!session?.user) redirect("/login")
+
+  // ?materia=SIGLA abre direto a matéria (usado pelo /calendario)
+  const { materia } = await searchParams
+  const materiaInicial = (Array.isArray(materia) ? materia[0] : materia)?.toUpperCase() || null
 
   const [mementos, fcGroups, disciplinas] = await Promise.all([
     prisma.memento.findMany({
@@ -83,6 +89,7 @@ export default async function MementosPage() {
       currentUser={{ matricula: session.user.matricula, nomeGuerra: session.user.nomeGuerra }}
       pdfMaterias={pdfMaterias}
       apostilaMaterias={apostilaMaterias}
+      materiaInicial={materiaInicial}
     />
   )
 }

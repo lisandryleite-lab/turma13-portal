@@ -60,7 +60,8 @@ NEXTAUTH_URL          # URL base da aplicação — produção: https://portalcf
 | Rota | Função |
 |------|--------|
 | `/inicio`, `/painel` | Hub de estudo / painel geral |
-| `/mementos` | Mementos resumidos por disciplina + flashcards |
+| `/calendario` | Calendário de provas (T13–T18) + recado da Seção de Provas; cada matéria linka para `/mementos?materia=SIGLA`. Dados em `lib/calendario-provas.ts` — atualizar a cada novo planejamento |
+| `/mementos` | Mementos resumidos por disciplina + flashcards. Aceita `?materia=SIGLA` para abrir a matéria direto |
 | `/questoes` | Banco de questões por disciplina/bateria |
 | `/ranking` | Ranking da turma |
 | `/permutas` | Permuta de plantões (cadeia direta/triangular, SEI opcional; cada aluno vê só as permutas de que participa) — usa `MilitarPlantao` |

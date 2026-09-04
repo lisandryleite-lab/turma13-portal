@@ -24,8 +24,10 @@ const inputStyle: React.CSSProperties = {
   border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15,
 }
 
-export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias, apostilaMaterias }: {
+export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias, apostilaMaterias, materiaInicial = null }: {
   mementos: MementoMeta[]; conteudoMaterias: ContMat[]; disciplinas: Disc[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]; apostilaMaterias: ApostilaMateria[]
+  /** sigla vinda de ?materia= — abre a matéria já selecionada */
+  materiaInicial?: string | null
 }) {
   const router = useRouter()
   const [aba, setAba] = useState<Aba>("mementos")
@@ -48,7 +50,7 @@ export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmi
         ))}
       </div>
 
-      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} apostilaMaterias={apostilaMaterias} />}
+      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} apostilaMaterias={apostilaMaterias} materiaInicial={materiaInicial} />}
       {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} conteudoMaterias={conteudoMaterias} onImport={() => router.refresh()} />}
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>
@@ -162,15 +164,15 @@ function Gaivotas({ materia, isAdmin, currentUser }: { materia: string; isAdmin:
 // ── Mementos (grid de matérias → memento / PDF / apostila / gaivotas) ──
 type SubAba = "memento" | "pdf" | "apostila" | "questoes" | "gaivotas" | "tutor"
 
-function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, apostilaMaterias }: {
+function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, apostilaMaterias, materiaInicial }: {
   mementos: MementoMeta[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]
-  disciplinas: Disc[]; apostilaMaterias: ApostilaMateria[]
+  disciplinas: Disc[]; apostilaMaterias: ApostilaMateria[]; materiaInicial: string | null
 }) {
   const comPdf = new Set(pdfMaterias.map(p => p.sigla))
   const pdfPartsMap = new Map(pdfMaterias.map(p => [p.sigla, p.parts]))
   const apostilaPartsMap = new Map(apostilaMaterias.map(a => [a.sigla, a.parts]))
   const comApostila = new Set(apostilaMaterias.map(a => a.sigla))
-  const [materiaSel, setMateriaSel] = useState<string | null>(null)
+  const [materiaSel, setMateriaSel] = useState<string | null>(materiaInicial)
   const [subAba, setSubAba] = useState<SubAba>("memento")
   const [aberto, setAberto] = useState<{ titulo: string; html: string } | null>(null)
   const [carregando, setCarregando] = useState(false)
@@ -223,7 +225,8 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
   const materias = [...grupos.entries()].sort((a, b) => a[0].localeCompare(b[0]))
 
   // ── detalhe de uma matéria (sub-abas) ──
-  if (materiaSel) {
+  // sigla desconhecida (ex.: ?materia= errado) cai na lista completa
+  if (materiaSel && grupos.has(materiaSel)) {
     const grupo = grupos.get(materiaSel)
     const sigla = materiaSel
     const parts = pdfPartsMap.get(sigla) ?? []
