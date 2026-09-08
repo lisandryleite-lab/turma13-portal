@@ -53,3 +53,13 @@ next-env.d.ts
 
 # insumos de conteúdo (texto bruto de apostilas p/ gerar questões/mementos)
 /_*.txt
+
+# mídias pesadas (vídeo/áudio) ficam no Google Drive — no repo só o link.
+# Arquivos leves (mapa mental em PDF/imagem) podem ficar em public/midias/.
+/public/midias/**/*.mp4
+/public/midias/**/*.m4v
+/public/midias/**/*.mov
+/public/midias/**/*.webm
+/public/midias/**/*.m4a
+/public/midias/**/*.mp3
+/public/midias/**/*.wav

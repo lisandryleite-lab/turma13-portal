@@ -37,8 +37,8 @@ export const EVENTOS_CFO: EventoCFO[] = [
   },
   {
     data: "2027-01-23",
-    titulo: "Baile das Espadas",
-    descricao: "Baile de formatura do CFO 2026.",
+    titulo: "Formatura",
+    descricao: "Formatura do CFO 2026.",
     confirmado: false,
   },
 ]

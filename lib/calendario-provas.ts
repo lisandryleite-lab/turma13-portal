@@ -109,7 +109,50 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
   },
 ]
 
+/** A avaliação escrita acontece na QUARTA-FEIRA da semana planejada. */
+export function diaDaProva(s: SemanaCalendario): string {
+  const [a, m, d] = s.inicioIso.split("-").map(Number)   // inicioIso é a segunda
+  const q = new Date(a, m - 1, d + 2)                     // +2 dias = quarta
+  return `${q.getFullYear()}-${String(q.getMonth() + 1).padStart(2, "0")}-${String(q.getDate()).padStart(2, "0")}`
+}
+
 /** Link direto para a matéria dentro de /mementos. */
 export function linkMemento(sigla: string) {
   return `/mementos?materia=${encodeURIComponent(sigla)}`
+}
+
+// ── Auxiliares de exibição (usados pelo bloco de provas em /mementos) ──
+
+/** Hoje no fuso de Recife, em YYYY-MM-DD (evita divergência servidor/cliente). */
+export function hojeRecifeISO(): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Recife", year: "numeric", month: "2-digit", day: "2-digit" })
+    .format(new Date())
+}
+
+/** Situação da semana em relação a hoje (YYYY-MM-DD). */
+export function situacao(s: SemanaCalendario, hojeISO: string): "passada" | "atual" | "futura" {
+  if (hojeISO > s.fimIso) return "passada"
+  if (hojeISO < s.inicioIso) return "futura"
+  return "atual"
+}
+
+/** Período legível da semana: "14 a 20/09" ou "28/09 a 04/10". */
+export function periodo(s: SemanaCalendario): string {
+  const [di, mi] = s.inicio.split("/")
+  const [df, mf] = s.fim.split("/")
+  return mi === mf ? `${di} a ${df}/${mf}` : `${s.inicio} a ${s.fim}`
+}
+
+/** sigla → semana em que a matéria tem prova (prefere a que ainda não passou). */
+export function provasPorMateria(hojeISO: string): Map<string, { semana: SemanaCalendario; prova: ProvaCalendario }> {
+  const mapa = new Map<string, { semana: SemanaCalendario; prova: ProvaCalendario }>()
+  for (const s of CALENDARIO_PROVAS) {
+    for (const p of s.provas) {
+      const atual = mapa.get(p.sigla)
+      if (!atual || (situacao(atual.semana, hojeISO) === "passada" && situacao(s, hojeISO) !== "passada")) {
+        mapa.set(p.sigla, { semana: s, prova: p })
+      }
+    }
+  }
+  return mapa
 }
