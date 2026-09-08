@@ -496,7 +496,10 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
   const sel = itens[Math.min(i, Math.max(0, itens.length - 1))]
   const local = sel ? ehLocal(sel.url) : false
   const embed = sel && !local ? embedDe(sel.url) : null
-  const altura = tipo === "video" ? undefined : tipo === "audio" ? 120 : "70vh"
+  // O visualizador do Drive desenha a própria moldura (nome do arquivo + controles)
+  // acima do player. Em 120px o áudio ficava cortado dentro de uma caixa preta e
+  // parecia não existir. 260px cabe a moldura inteira.
+  const altura = tipo === "audio" ? 260 : "70vh"
   const linkStyle: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }
 
   return (
@@ -525,7 +528,9 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
           {local ? (
             <PlayerLocal tipo={tipo} url={sel.url} titulo={`${info.rotulo} ${sigla} — ${sel.titulo}`} />
           ) : embed?.src ? (
-            <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(58,74,58,0.15)", background: "#000",
+            <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(58,74,58,0.15)",
+              // fundo preto só faz sentido para vídeo; no áudio ele escondia a moldura do Drive
+              background: tipo === "video" ? "#000" : "var(--surface)",
               ...(tipo === "video" ? { aspectRatio: "16 / 9" } : { height: altura }) }}>
               <iframe key={embed.src} src={embed.src} title={`${info.rotulo} ${sigla} — ${sel.titulo}`} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen
                 style={{ width: "100%", height: "100%", border: "none", display: "block" }} />
@@ -535,7 +540,11 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
           )}
           <p style={{ marginTop: 8, fontSize: 12, color: "var(--ink-60)" }}>
             {tipo === "mapa" ? "Mapa mental" : "Conteúdo"} gerado com NotebookLM a partir do memento da matéria.
-            {local ? " Se o player não carregar, use “Baixar”." : " Se o player não carregar, abra em nova aba (é preciso estar logado no Google com acesso ao Drive da turma)."}
+            {local
+              ? " Se o player não carregar, use “Baixar”."
+              : tipo === "audio"
+                ? " O Drive nem sempre toca .m4a embutido; se o player não aparecer, use “Abrir em nova aba”."
+                : " Se o player não carregar, abra em nova aba."}
           </p>
         </div>
       )}
