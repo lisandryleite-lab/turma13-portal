@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { renderMarkdown } from "@/lib/markdown"
 import { MEMENTO_PROPRIO } from "@/lib/mementos-pdfs"
-import { CALENDARIO_PROVAS, CALENDARIO_ATUALIZADO_EM, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
+import { CALENDARIO_PROVAS, CALENDARIO_ATUALIZADO_EM, diaDaProva, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
 import { DRIVE_MEMENTOS_URL, MIDIA_INFO, embedDe, ehLocal, extensaoDe, type TipoMidia } from "@/lib/midia-embed"
 
 type MementoMeta = { id: string; materia: string; modulo: string; titulo: string; nome: string }
@@ -20,6 +20,9 @@ type ContMat = { sigla: string; nome: string; modulos: string[] }
 type Aba = "mementos" | "admin"
 
 const moduloLabel = (m: string) => (m === "" ? "Sem módulo" : `Módulo ${m}`)
+
+/** "2026-09-16" → "16/09" */
+const dmyCurto = (iso: string) => { const [, m, d] = iso.split("-"); return `${d}/${m}` }
 
 /** "1AE" → "1ª AE" (rótulo da avaliação no calendário de provas) */
 const avaliacaoLabel = (a?: string) => (a ? a.replace(/^(\d+)\s*AE$/i, "$1ª AE") : "")
@@ -280,7 +283,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
             background: situacao(prova.semana, hojeISO) === "passada" ? "var(--surface)" : "rgba(181,147,63,0.16)",
             color: situacao(prova.semana, hojeISO) === "passada" ? "var(--ink-60)" : "var(--olive)", border: "1px solid rgba(181,147,63,0.45)" }}>
             📝 {situacao(prova.semana, hojeISO) === "passada" ? "Prova realizada" : situacao(prova.semana, hojeISO) === "atual" ? "Prova ESTA semana" : "Prova prevista"}
-            {prova.prova.avaliacao ? ` (${avaliacaoLabel(prova.prova.avaliacao)})` : ""} · semana {prova.semana.semana} · {periodo(prova.semana)}
+            {prova.prova.avaliacao ? ` (${avaliacaoLabel(prova.prova.avaliacao)})` : ""} · quarta, {dmyCurto(diaDaProva(prova.semana))} · semana {prova.semana.semana}
           </div>
         )}
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
@@ -360,7 +363,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
                 {prova && sit !== "passada" && (
                   <span style={{ position: "absolute", top: 10, right: 10, fontSize: 10.5, fontWeight: 700, padding: "2px 7px", borderRadius: 999,
                     background: sit === "atual" ? "var(--gold)" : "rgba(181,147,63,0.18)", color: sit === "atual" ? "#fff" : "var(--olive)" }}>
-                    📝 {sit === "atual" ? "PROVA" : periodo(prova.semana).replace(" a ", "–")}
+                    📝 {sit === "atual" ? "PROVA" : dmyCurto(diaDaProva(prova.semana))}
                   </span>
                 )}
                 <span style={{ fontFamily: "var(--serif-cfo)", fontWeight: 700, fontSize: "1.35rem", color: "var(--olive)" }}>{sigla}</span>
@@ -444,7 +447,7 @@ function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes:
                     )}
                     {s.provas.length > 0 && (
                       <div style={{ marginTop: 5, fontSize: 12, color: "var(--ink-60)", lineHeight: 1.4 }}>
-                        {s.provas.map(p => nomes.get(p.sigla) ?? p.sigla).join(" · ")}
+                        Quarta, {dmyCurto(diaDaProva(s))} · {s.provas.map(p => nomes.get(p.sigla) ?? p.sigla).join(" · ")}
                       </div>
                     )}
                   </div>

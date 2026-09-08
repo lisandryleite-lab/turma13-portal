@@ -10,7 +10,7 @@ import {
 } from "@/lib/calendario-config"
 import {
   construirEventos, filtrar, contarPorTipo, proximos, cobreDia, normalizar,
-  type EventoCalendario,
+  type EventoCalendario, type EventoDoBanco,
 } from "@/lib/calendario-eventos"
 import type { Grupo, MesEscala } from "@/lib/escalas-cia"
 import {
@@ -28,12 +28,16 @@ export type DadosCalendario = {
   meuGrupo: Grupo | null
   mes: MesEscala
   minhaTurma: string | null
+  isAdmin: boolean
+  eventosDoBanco: EventoDoBanco[]
 }
 
 export function CalendarioClient(props: DadosCalendario) {
-  const { hojeIso, nomeDisciplina, minhaMatricula, meuGrupo, mes, minhaTurma } = props
+  const { hojeIso, nomeDisciplina, minhaMatricula, meuGrupo, mes, minhaTurma, isAdmin } = props
+  const [doBanco, setDoBanco] = useState<EventoDoBanco[]>(props.eventosDoBanco)
   const router = useRouter()
   const params = useSearchParams()
+  const aba = params.get("aba") === "admin" && isAdmin ? "admin" : "calendario"
 
   const meses = useMemo(() => mesesDoAnoLetivo(), [])
   const mesDeHoje = meses.find(m => hojeIso >= m.inicio && hojeIso <= m.fim) ?? meses[0]
@@ -68,8 +72,8 @@ export function CalendarioClient(props: DadosCalendario) {
 
   // ── dados ──────────────────────────────────────────────────
   const todos = useMemo(
-    () => construirEventos({ mes, matricula: minhaMatricula, meuGrupo, nomeDisciplina, minhaTurma }),
-    [mes, minhaMatricula, meuGrupo, nomeDisciplina, minhaTurma],
+    () => construirEventos({ mes, matricula: minhaMatricula, meuGrupo, nomeDisciplina, minhaTurma, doBanco }),
+    [mes, minhaMatricula, meuGrupo, nomeDisciplina, minhaTurma, doBanco],
   )
 
   const termo = normalizar(busca.trim())
@@ -99,6 +103,26 @@ export function CalendarioClient(props: DadosCalendario) {
   return (
     <main style={S.main}>
       <Cabecalho escopo={escopo} />
+
+      {isAdmin && (
+        <div style={S.abasTopo} role="group" aria-label="Seções">
+          {([["calendario", "Calendário"], ["admin", "Administrar eventos"]] as const).map(([chave, rotulo]) => (
+            <button key={chave} onClick={() => setParams({ aba: chave === "calendario" ? null : chave })}
+              aria-pressed={aba === chave}
+              style={{ ...S.abaTopo, ...(aba === chave ? S.abaTopoAtiva : null) }}>
+              {rotulo}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {aba === "admin" ? (
+        <AdminEventos
+          eventos={doBanco}
+          onCriar={e => setDoBanco(l => [...l, e])}
+          onRemover={id => setDoBanco(l => l.filter(x => x.id !== id))}
+        />
+      ) : (<>
 
       <SeletorEscopo
         escopo={escopo}
@@ -191,6 +215,7 @@ export function CalendarioClient(props: DadosCalendario) {
         {CONFIG_CALENDARIO.instituicao} · ano letivo {CONFIG_CALENDARIO.anoLetivo.rotulo} ·
         {" "}{noEscopoESemFiltro.length} eventos no escopo, {visiveis.length} nesta seleção.
       </p>
+      </>)}
     </main>
   )
 }
@@ -411,11 +436,163 @@ function Grade({ eventos, mes, semana, hojeIso }: {
   )
 }
 
+
+// ── administração de eventos ─────────────────────────────────
+
+function AdminEventos({ eventos, onCriar, onRemover }: {
+  eventos: EventoDoBanco[]
+  onCriar: (e: EventoDoBanco) => void
+  onRemover: (id: string) => void
+}) {
+  const [titulo, setTitulo] = useState("")
+  const [tipo, setTipo] = useState<TipoEvento>("evento")
+  const [inicio, setInicio] = useState("")
+  const [fim, setFim] = useState("")
+  const [turma, setTurma] = useState("")
+  const [turno, setTurno] = useState("")
+  const [obs, setObs] = useState("")
+  const [salvando, setSalvando] = useState(false)
+  const [msg, setMsg] = useState("")
+
+  async function criar() {
+    setSalvando(true); setMsg("")
+    const res = await fetch("/api/calendario/eventos", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        titulo, tipo, inicio, fim: fim || inicio,
+        turma: turma || null, turno: turno || null, obs: obs || null,
+      }),
+    })
+    const j = await res.json().catch(() => ({}))
+    setSalvando(false)
+    if (!res.ok) return setMsg("Não salvou: " + (j.error || "erro desconhecido."))
+    onCriar(j)
+    setTitulo(""); setInicio(""); setFim(""); setTurma(""); setTurno(""); setObs("")
+    setMsg("Evento publicado.")
+  }
+
+  async function remover(e: EventoDoBanco) {
+    if (!confirm(`Excluir "${e.titulo}" de ${faixaCurta(e.inicio, e.fim)}?`)) return
+    const res = await fetch(`/api/calendario/eventos?id=${e.id}`, { method: "DELETE" })
+    if (res.ok) onRemover(e.id)
+  }
+
+  const podeSalvar = titulo.trim() !== "" && inicio !== "" && !salvando
+
+  return (
+    <section style={S.admin}>
+      <h2 style={S.tituloSecao}>Novo evento</h2>
+      <p style={S.adminAjuda}>
+        Some-se ao que já vem do planejamento (provas, feriados, plantão e formatura).
+        Deixe o fim vazio para um evento de um dia só. Turma e turno são opcionais:
+        sem turma, o evento vale para todo o segmento.
+      </p>
+
+      <div style={S.formGrade}>
+        <label style={S.campo}>
+          <span style={S.legenda}>Título</span>
+          <input value={titulo} onChange={e => setTitulo(e.target.value)} maxLength={140}
+            placeholder="Ex.: Reunião de coordenação" style={S.input} />
+        </label>
+        <label style={S.campo}>
+          <span style={S.legenda}>Tipo</span>
+          <select value={tipo} onChange={e => setTipo(e.target.value as TipoEvento)} style={S.input}>
+            {TIPOS_EVENTO.map(t => <option key={t.chave} value={t.chave}>{t.rotulo}</option>)}
+          </select>
+        </label>
+        <label style={S.campo}>
+          <span style={S.legenda}>Início</span>
+          <input type="date" value={inicio} onChange={e => setInicio(e.target.value)} style={S.input} />
+        </label>
+        <label style={S.campo}>
+          <span style={S.legenda}>Fim <span style={S.opcional}>(opcional)</span></span>
+          <input type="date" value={fim} min={inicio || undefined}
+            onChange={e => setFim(e.target.value)} style={S.input} />
+        </label>
+        <label style={S.campo}>
+          <span style={S.legenda}>Turma <span style={S.opcional}>(opcional)</span></span>
+          <input value={turma} onChange={e => setTurma(e.target.value)} placeholder="T13" style={S.input} />
+        </label>
+        <label style={S.campo}>
+          <span style={S.legenda}>Turno <span style={S.opcional}>(opcional)</span></span>
+          <select value={turno} onChange={e => setTurno(e.target.value)} style={S.input}>
+            <option value="">—</option>
+            {["manhã", "tarde", "noite", "integral"].map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
+        </label>
+        <label style={{ ...S.campo, gridColumn: "1 / -1" }}>
+          <span style={S.legenda}>Observação <span style={S.opcional}>(opcional)</span></span>
+          <input value={obs} onChange={e => setObs(e.target.value)} maxLength={200}
+            placeholder="Detalhe curto que aparece junto do evento" style={S.input} />
+        </label>
+      </div>
+
+      <div style={S.adminAcoes}>
+        <button onClick={criar} disabled={!podeSalvar}
+          style={{ ...S.botaoPrimario, opacity: podeSalvar ? 1 : 0.45, cursor: podeSalvar ? "pointer" : "default" }}>
+          {salvando ? "Publicando…" : "Publicar evento"}
+        </button>
+        {msg && <span style={{ fontSize: 13.5, color: msg.startsWith("Não") ? "#9A2622" : "#2D5733" }}>{msg}</span>}
+      </div>
+
+      <h2 style={{ ...S.tituloSecao, marginTop: 32 }}>
+        Eventos cadastrados <span style={S.contadorSecao}>{eventos.length}</span>
+      </h2>
+      {eventos.length === 0 ? (
+        <p style={S.vazio}>Nenhum evento cadastrado ainda. O calendário mostra apenas o planejamento.</p>
+      ) : (
+        <ul style={S.listaAdmin}>
+          {[...eventos].sort((a, b) => a.inicio.localeCompare(b.inicio)).map(e => (
+            <li key={e.id} style={S.itemAdmin}>
+              <span aria-hidden style={{
+                ...S.barraTipo,
+                background: DEF_TIPO[(ORDEM_TIPOS as string[]).includes(e.tipo) ? e.tipo as TipoEvento : "evento"].cor,
+              }} />
+              <span style={S.itemCorpo}>
+                <span style={S.eventoTitulo}>{e.titulo}</span>
+                <span style={S.eventoMeta}>
+                  {DEF_TIPO[(ORDEM_TIPOS as string[]).includes(e.tipo) ? e.tipo as TipoEvento : "evento"].rotulo}
+                  {" · "}{faixaCurta(e.inicio, e.fim)}
+                  {e.turma ? ` · ${e.turma}` : ""}
+                  {e.turno ? ` · ${e.turno}` : ""}
+                  {e.obs ? ` · ${e.obs}` : ""}
+                </span>
+              </span>
+              <button onClick={() => remover(e)} style={S.botaoExcluir} aria-label={`Excluir ${e.titulo}`}>
+                Excluir
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  )
+}
+
 // ── estilos ──────────────────────────────────────────────────
 // Fundo off-white, tinta quase-preta, uma cor de destaque por tipo.
 // Título em serifa editorial, corpo em sans neutra. Sem gradientes.
 
 const S: Record<string, React.CSSProperties> = {
+  abasTopo: { display: "flex", gap: 6, margin: "4px 0 18px" },
+  abaTopo: { padding: "7px 14px", fontSize: 14, background: "transparent", color: "var(--cal-ink-60)", border: "1px solid rgba(26,25,23,0.18)", borderRadius: 6, cursor: "pointer" },
+  abaTopoAtiva: { background: "var(--cal-ink)", color: "var(--cal-fundo)", borderColor: "var(--cal-ink)" },
+
+  admin: { paddingTop: 6 },
+  adminAjuda: { margin: "0 0 16px", fontSize: 14, color: "var(--cal-ink-60)", maxWidth: "60ch", lineHeight: 1.55 },
+  formGrade: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))", gap: 12 },
+  campo: { display: "flex", flexDirection: "column", gap: 4 },
+  legenda: { fontSize: 13, color: "var(--cal-ink-60)" },
+  opcional: { opacity: 0.75 },
+  input: { padding: "8px 10px", fontSize: 14.5, color: "var(--cal-ink)", background: "#fff", border: "1px solid rgba(26,25,23,0.22)", borderRadius: 6, width: "100%" },
+  adminAcoes: { display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap", marginTop: 16 },
+  botaoPrimario: { padding: "10px 18px", fontSize: 14.5, fontWeight: 600, background: "var(--cal-ink)", color: "var(--cal-fundo)", border: "none", borderRadius: 6 },
+  contadorSecao: { fontFamily: "var(--sans, system-ui), sans-serif", fontSize: 14, fontWeight: 400, color: "var(--cal-ink-60)" },
+  listaAdmin: { listStyle: "none", margin: 0, padding: 0, borderTop: "1px solid rgba(26,25,23,0.12)" },
+  itemAdmin: { display: "flex", gap: 12, alignItems: "center", padding: "12px 0", borderBottom: "1px solid rgba(26,25,23,0.10)" },
+  itemCorpo: { display: "flex", flexDirection: "column", flex: 1, minWidth: 0 },
+  botaoExcluir: { padding: "6px 12px", fontSize: 13.5, color: "#9A2622", background: "#fff", border: "1px solid rgba(154,38,34,0.45)", borderRadius: 6, cursor: "pointer", flexShrink: 0 },
+
   main: {
     ["--cal-fundo" as string]: "#faf9f5",
     ["--cal-superficie" as string]: "#f2f0e9",

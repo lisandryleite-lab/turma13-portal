@@ -7,13 +7,13 @@
 //  formato, o que permite filtrar e agregar em qualquer nível.
 // ─────────────────────────────────────────────────────────────
 
-import { CALENDARIO_PROVAS, linkMemento } from "./calendario-provas"
+import { CALENDARIO_PROVAS, diaDaProva, linkMemento } from "./calendario-provas"
 import { EVENTOS_CFO } from "./eventos-cfo"
 import {
   ROTULO_GRUPO, ROTULO_FUNCAO, rotuloMilitar,
   type Grupo, type MesEscala, type ChaveFuncao,
 } from "./escalas-cia"
-import { REDE, type Escopo, type TipoEvento } from "./calendario-config"
+import { ORDEM_TIPOS, REDE, type Escopo, type TipoEvento } from "./calendario-config"
 
 export type EventoCalendario = {
   id: string
@@ -33,6 +33,8 @@ export type EventoCalendario = {
   href?: string
   /** o evento envolve o próprio aluno (plantão, função na formatura) */
   meu: boolean
+  /** cadastrado pelo admin (vem do banco) — pode ser excluído pela tela */
+  editavel?: boolean
   /** texto normalizado para busca */
   busca: string
 }
@@ -44,24 +46,28 @@ export function normalizar(s: string): string {
 
 // ── fontes declarativas ──────────────────────────────────────
 
-/** Feriados nacionais com nome, no recorte do ano letivo. */
-const FERIADOS: { data: string; nome: string }[] = [
-  { data: "2026-02-16", nome: "Carnaval" },
-  { data: "2026-02-17", nome: "Carnaval" },
-  { data: "2026-03-06", nome: "Dia da Polícia Militar de Pernambuco" },
-  { data: "2026-04-03", nome: "Sexta-feira Santa" },
-  { data: "2026-04-21", nome: "Tiradentes" },
-  { data: "2026-05-01", nome: "Dia do Trabalho" },
-  { data: "2026-06-04", nome: "Corpus Christi" },
-  { data: "2026-06-24", nome: "São João" },
-  { data: "2026-07-16", nome: "Nossa Senhora do Carmo (Recife)" },
-  { data: "2026-09-07", nome: "Independência do Brasil" },
-  { data: "2026-10-12", nome: "Nossa Senhora Aparecida" },
-  { data: "2026-11-02", nome: "Finados" },
-  { data: "2026-11-15", nome: "Proclamação da República" },
-  { data: "2026-11-20", nome: "Consciência Negra" },
-  { data: "2026-12-25", nome: "Natal" },
-  { data: "2027-01-01", nome: "Confraternização Universal" },
+/**
+ * Feriados no recorte do ano letivo. `ambito` distingue o feriado nacional
+ * (vale em todo o país) dos estaduais e municipais que afetam a Academia.
+ * Datas móveis de 2026 conferidas pela Páscoa em 05/04/2026.
+ */
+const FERIADOS: { data: string; nome: string; ambito: "nacional" | "estadual" | "municipal" }[] = [
+  { data: "2026-02-16", nome: "Carnaval",                          ambito: "nacional" },
+  { data: "2026-02-17", nome: "Carnaval",                          ambito: "nacional" },
+  { data: "2026-03-06", nome: "Dia da Polícia Militar de Pernambuco", ambito: "estadual" },
+  { data: "2026-04-03", nome: "Sexta-feira Santa",                 ambito: "nacional" },
+  { data: "2026-04-21", nome: "Tiradentes",                        ambito: "nacional" },
+  { data: "2026-05-01", nome: "Dia do Trabalho",                   ambito: "nacional" },
+  { data: "2026-06-04", nome: "Corpus Christi",                    ambito: "nacional" },
+  { data: "2026-06-24", nome: "São João",                          ambito: "estadual" },
+  { data: "2026-07-16", nome: "Nossa Senhora do Carmo",            ambito: "municipal" },
+  { data: "2026-09-07", nome: "Independência do Brasil",           ambito: "nacional" },
+  { data: "2026-10-12", nome: "Nossa Senhora Aparecida",           ambito: "nacional" },
+  { data: "2026-11-02", nome: "Finados",                           ambito: "nacional" },
+  { data: "2026-11-15", nome: "Proclamação da República",          ambito: "nacional" },
+  { data: "2026-11-20", nome: "Consciência Negra",                 ambito: "nacional" },
+  { data: "2026-12-25", nome: "Natal",                             ambito: "nacional" },
+  { data: "2027-01-01", nome: "Confraternização Universal",        ambito: "nacional" },
 ]
 
 /** Recessos e períodos sem instrução — faixas de dias. */
@@ -83,24 +89,40 @@ const base = (over: Partial<Base> = {}): Base => ({
   turno: null, obs: null, meu: false, ...over,
 })
 
+/** Linha da tabela EventoCalendario, como chega do banco. */
+export type EventoDoBanco = {
+  id: string
+  inicio: string
+  fim: string
+  titulo: string
+  tipo: string
+  unidade: string | null
+  segmento: string | null
+  turma: string | null
+  turno: string | null
+  obs: string | null
+}
+
 export function construirEventos(opts: {
   mes: MesEscala
   matricula: number
   meuGrupo: Grupo | null
   nomeDisciplina: Record<string, string>
   minhaTurma?: string | null
+  doBanco?: EventoDoBanco[]
 }): EventoCalendario[] {
-  const { mes, matricula, meuGrupo, nomeDisciplina, minhaTurma = null } = opts
+  const { mes, matricula, meuGrupo, nomeDisciplina, minhaTurma = null, doBanco = [] } = opts
   const ev: EventoCalendario[] = []
 
-  // provas — ocupam a semana inteira, porque o planejamento não fixa o dia
+  // provas — a avaliação escrita é sempre na quarta-feira da semana planejada
   for (const s of CALENDARIO_PROVAS) {
     if (s.semAvaliacao) continue
+    const dia = diaDaProva(s)
     for (const p of s.provas) {
       const nome = nomeDisciplina[p.sigla] || p.sigla
       ev.push({
         id: `prova-${s.semana}-${p.sigla}`,
-        inicio: s.inicioIso, fim: s.fimIso,
+        inicio: dia, fim: dia,
         titulo: p.avaliacao ? `${p.sigla} — ${p.avaliacao.replace(/^(\d+)\s*AE$/i, "$1ª AE")}` : p.sigla,
         tipo: "prova",
         href: linkMemento(p.sigla),
@@ -131,8 +153,8 @@ export function construirEventos(opts: {
       inicio: f.data, fim: f.data,
       titulo: f.nome,
       tipo: "feriado",
-      ...base({ segmento: null, obs: "Feriado" }),
-      busca: normalizar(`${f.nome} feriado`),
+      ...base({ segmento: null, obs: `Feriado ${f.ambito}` }),
+      busca: normalizar(`${f.nome} feriado ${f.ambito}`),
     })
   }
 
@@ -201,6 +223,22 @@ export function construirEventos(opts: {
         meu: !!meuPapel,
       }),
       busca: normalizar("formatura funcoes " + chaves.map(k => `${ROTULO_FUNCAO[k]} ${rotuloMilitar(f[k])}`).join(" ")),
+    })
+  }
+
+  // eventos cadastrados pelo admin — somam-se aos declarados em código
+  for (const e of doBanco) {
+    ev.push({
+      id: e.id,
+      inicio: e.inicio, fim: e.fim < e.inicio ? e.inicio : e.fim,
+      titulo: e.titulo,
+      tipo: (ORDEM_TIPOS as string[]).includes(e.tipo) ? (e.tipo as TipoEvento) : "evento",
+      rede: REDE,
+      unidade: e.unidade, segmento: e.segmento, turma: e.turma,
+      turno: e.turno, obs: e.obs,
+      meu: false,
+      editavel: true,
+      busca: normalizar(`${e.titulo} ${e.tipo} ${e.obs ?? ""} ${e.turma ?? ""}`),
     })
   }
 

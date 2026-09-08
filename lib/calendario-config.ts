@@ -44,7 +44,7 @@ export const CONFIG_CALENDARIO = {
   anoLetivo: { rotulo: "2026 · CFO", inicio: "2026-02-01", fim: "2027-01-31" },
   formatura: {
     ativo: true,
-    rotulo: "Baile das Espadas",
+    rotulo: "Formatura",
     /** data e hora locais da formatura */
     dataIso: "2027-01-23",
     hora: "19:00",

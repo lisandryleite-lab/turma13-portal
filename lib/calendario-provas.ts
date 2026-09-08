@@ -109,6 +109,13 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
   },
 ]
 
+/** A avaliação escrita acontece na QUARTA-FEIRA da semana planejada. */
+export function diaDaProva(s: SemanaCalendario): string {
+  const [a, m, d] = s.inicioIso.split("-").map(Number)   // inicioIso é a segunda
+  const q = new Date(a, m - 1, d + 2)                     // +2 dias = quarta
+  return `${q.getFullYear()}-${String(q.getMonth() + 1).padStart(2, "0")}-${String(q.getDate()).padStart(2, "0")}`
+}
+
 /** Link direto para a matéria dentro de /mementos. */
 export function linkMemento(sigla: string) {
   return `/mementos?materia=${encodeURIComponent(sigla)}`

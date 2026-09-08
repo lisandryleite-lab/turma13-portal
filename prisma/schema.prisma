@@ -627,3 +627,23 @@ model MementoMidia {
 
   @@index([materia, tipo])
 }
+
+// ── CFO 2026 — Eventos do calendário cadastrados pelo admin ───────
+// O calendário muda o tempo todo; estes eventos somam-se aos que
+// vêm declarados em código (provas, feriados, plantão, formatura).
+model EventoCalendario {
+  id        String   @id @default(cuid())
+  inicio    String   // ISO "YYYY-MM-DD"
+  fim       String   // ISO — igual a `inicio` em eventos de um dia
+  titulo    String
+  tipo      String   // "prova" | "feriado" | "evento" | "recesso" | "reuniao" | "plantao" | "formatura"
+  unidade   String?
+  segmento  String?
+  turma     String?
+  turno     String?
+  obs       String?
+  criadoPor Int?     // matrícula de quem cadastrou
+  createdAt DateTime @default(now())
+
+  @@index([inicio])
+}
