@@ -60,8 +60,8 @@ NEXTAUTH_URL          # URL base da aplicação — produção: https://portalcf
 | Rota | Função |
 |------|--------|
 | `/inicio`, `/painel` | Hub de estudo / painel geral |
-| `/calendario` | 3 abas: **Provas** (T13–T18 + recado da Seção de Provas; cada matéria linka para `/mementos?materia=SIGLA`), **Eventos** (100 Dias, Baile das Espadas… com contagem regressiva) e **Escalas da CIA** (plantão 7x1, funções nas formaturas, mapa de equipes, PDFs originais), com destaque do que é do aluno logado pela matrícula. Dados em `lib/calendario-provas.ts`, `lib/eventos-cfo.ts` e `lib/escalas-cia.ts` |
-| `/mementos` | Mementos resumidos por disciplina + flashcards. Aceita `?materia=SIGLA` para abrir a matéria direto |
+| `/calendario` | 3 abas: **Calendário** (abas de mês do ano letivo e sub-abas de semana, visões Lista e Grade, filtros por tipo com contador, escopo rede→unidade→segmento→turma, "Próximos eventos" e cronômetro da Formatura; estado espelhado na URL), **Escalas e documentos** (mapa de equipes, observações, PDFs assinados e recado da Seção de Provas) e **Administrar eventos** (só admin: cadastra/exclui eventos). Configuração em `lib/calendario-config.ts`; eventos em `lib/calendario-eventos.ts` (fonte única, alimentada por `calendario-provas.ts`, `eventos-cfo.ts`, `escalas-cia.ts` e pela tabela `EventoCalendario`); datas em `lib/calendario-datas.ts` |
+| `/mementos` | Abas fixas por disciplina: Memento · Apostila · Memento em vídeo · Memento em áudio · Mapa mental · Questões · Tutor IA · Gaivotas — o que não existe mostra "em breve". Mídias vêm de `lib/midias-drive.ts` (links do Drive/YouTube), da tabela `MementoMidia` (cadastro do admin) ou de `public/midias/<SIGLA>/` (arquivos leves; vídeo e áudio barrados no `.gitignore`). Aceita `?materia=SIGLA` para abrir a matéria direto |
 | `/questoes` | Banco de questões por disciplina/bateria |
 | `/ranking` | Ranking da turma |
 | `/permutas` | Permuta de plantões (cadeia direta/triangular, SEI opcional; cada aluno vê só as permutas de que participa) — usa `MilitarPlantao` |
@@ -142,7 +142,7 @@ O portal também hospeda alunos de outros pelotões do CFO 2026. Eles têm `turm
 A composição exibida em `/escalas` vem da tabela **`FaxinaGrupoMembro`** quando não vazia; `COMPOSICAO_FAXINA` em `lib/escalas.ts` é só fallback (mantida em sincronia). `User.grupoFaxina` (dashboard) deve espelhar a tabela — `scripts/integra-novatos-escalas.ts` sincroniza. Em jul/2026: G7 = Thais, Gabriele, Cleyton, 211 Dário, 213 R Silva; G8 = Aldo, Rodolfo, André, Pablo, 212 Camila (grupos com 5).
 
 ### Escalas da 1ª CIA — fonte estática em `lib/escalas-cia.ts`
-Transcrição dos documentos assinados pelo Cmt da 1ª CIA (mapa de equipes, escala de plantão 7x1 e funções nas formaturas), com os PDFs originais em `public/escalas/`. Exibido em `/calendario` (aba "Escalas da CIA"), para **todo o portal** — não só a Turma 13. Ao chegar um novo mês: acrescentar um bloco em `MESES_ESCALA` e copiar os PDFs.
+Transcrição dos documentos assinados pelo Cmt da 1ª CIA (mapa de equipes, escala de plantão 7x1 e funções nas formaturas), com os PDFs originais em `public/escalas/`. Exibido em `/calendario` (aba "Escalas e documentos"), para **todo o portal** — não só a Turma 13. Ao chegar um novo mês: acrescentar um bloco em `MESES_ESCALA` e copiar os PDFs.
 O mapa de setembro/2026 abrange 201 militares da CIA e serve de dicionário matrícula → nome de guerra (`nomeDaMatricula`, `grupoDaMatricula`). **Atenção:** ele diverge em alguns pontos da tabela de grupos abaixo (ex.: 108 LISANDRY aparece em ÍNDIA, não em MIKE) — o documento do mês é a fonte de verdade.
 
 ### Grupos de plantão — 8 grupos (atualizado jul/2026 — Mapa de Equipes, escala 7x1)

@@ -12,7 +12,11 @@ import {
   construirEventos, filtrar, contarPorTipo, proximos, cobreDia, normalizar,
   type EventoCalendario, type EventoDoBanco,
 } from "@/lib/calendario-eventos"
-import type { Grupo, MesEscala } from "@/lib/escalas-cia"
+import {
+  MAPA_EQUIPES, ORDEM_GRUPOS, ROTULO_GRUPO,
+  type Grupo, type MesEscala,
+} from "@/lib/escalas-cia"
+import { MENSAGEM_SECAO_PROVAS } from "@/lib/calendario-provas"
 import {
   DIAS_CABECALHO, celulasDaGrade, curta, diaSemanaLongo, diasEntre, faixaCurta,
   mesesDoAnoLetivo, partes, semanasDoMes, somaDias,
@@ -37,7 +41,10 @@ export function CalendarioClient(props: DadosCalendario) {
   const [doBanco, setDoBanco] = useState<EventoDoBanco[]>(props.eventosDoBanco)
   const router = useRouter()
   const params = useSearchParams()
-  const aba = params.get("aba") === "admin" && isAdmin ? "admin" : "calendario"
+  const abaParam = params.get("aba")
+  const aba = abaParam === "admin" && isAdmin ? "admin"
+    : abaParam === "escalas" ? "escalas"
+    : "calendario"
 
   const meses = useMemo(() => mesesDoAnoLetivo(), [])
   const mesDeHoje = meses.find(m => hojeIso >= m.inicio && hojeIso <= m.fim) ?? meses[0]
@@ -104,19 +111,25 @@ export function CalendarioClient(props: DadosCalendario) {
     <main style={S.main}>
       <Cabecalho escopo={escopo} />
 
-      {isAdmin && (
-        <div style={S.abasTopo} role="group" aria-label="Seções">
-          {([["calendario", "Calendário"], ["admin", "Administrar eventos"]] as const).map(([chave, rotulo]) => (
-            <button key={chave} onClick={() => setParams({ aba: chave === "calendario" ? null : chave })}
-              aria-pressed={aba === chave}
-              style={{ ...S.abaTopo, ...(aba === chave ? S.abaTopoAtiva : null) }}>
-              {rotulo}
-            </button>
-          ))}
-        </div>
-      )}
+      <div style={S.abasTopo} role="group" aria-label="Seções">
+        {(
+          [
+            ["calendario", "Calendário"],
+            ["escalas", "Escalas e documentos"],
+            ...(isAdmin ? [["admin", "Administrar eventos"] as const] : []),
+          ] as const
+        ).map(([chave, rotulo]) => (
+          <button key={chave} onClick={() => setParams({ aba: chave === "calendario" ? null : chave })}
+            aria-pressed={aba === chave}
+            style={{ ...S.abaTopo, ...(aba === chave ? S.abaTopoAtiva : null) }}>
+            {rotulo}
+          </button>
+        ))}
+      </div>
 
-      {aba === "admin" ? (
+      {aba === "escalas" ? (
+        <EscalasEDocumentos mes={mes} meuGrupo={meuGrupo} minhaMatricula={minhaMatricula} />
+      ) : aba === "admin" ? (
         <AdminEventos
           eventos={doBanco}
           onCriar={e => setDoBanco(l => [...l, e])}
@@ -569,11 +582,102 @@ function AdminEventos({ eventos, onCriar, onRemover }: {
   )
 }
 
+
+// ── escalas da CIA e documentos assinados ────────────────────
+// Conteúdo de referência (não é evento): mapa de equipes, observações
+// da escala, PDFs originais e o recado da Seção de Provas.
+
+function EscalasEDocumentos({ mes, meuGrupo, minhaMatricula }: {
+  mes: MesEscala; meuGrupo: Grupo | null; minhaMatricula: number
+}) {
+  return (
+    <section style={S.admin}>
+      <h2 style={S.tituloSecao}>Escala da 1ª Companhia — {mes.rotulo}</h2>
+      <p style={S.adminAjuda}>
+        Transcrição dos documentos assinados pelo Comandante da 1ª CIA. O plantão e as
+        funções nas formaturas aparecem como eventos na aba Calendário; aqui ficam o mapa
+        de equipes, as observações e os PDFs originais.
+      </p>
+
+      {mes.obs.length > 0 && (
+        <ul style={S.observacoes}>
+          {mes.obs.map((o, i) => <li key={i} style={S.observacao}>{o}</li>)}
+        </ul>
+      )}
+
+      <h3 style={S.subtituloSecao}>Documentos</h3>
+      <ul style={S.listaDocs}>
+        {mes.docs.map(d => (
+          <li key={d.arquivo} style={S.itemDoc}>
+            <a href={d.arquivo} target="_blank" rel="noopener noreferrer" style={S.linkDoc}>{d.titulo}</a>
+            <span style={S.eventoMeta}>{d.descricao}</span>
+          </li>
+        ))}
+      </ul>
+
+      <h3 style={S.subtituloSecao}>Mapa de equipes</h3>
+      <p style={S.adminAjuda}>
+        As oito equipes do plantão 7x1. {meuGrupo
+          ? `A sua é a ${ROTULO_GRUPO[meuGrupo]}, destacada abaixo.`
+          : "Sua matrícula não consta em nenhuma equipe."}
+      </p>
+      <div style={S.grupos}>
+        {ORDEM_GRUPOS.map(g => {
+          const meu = g === meuGrupo
+          return (
+            <div key={g} style={{
+              ...S.grupo,
+              borderColor: meu ? "var(--cal-ink)" : "rgba(26,25,23,0.12)",
+              background: meu ? "#fff" : "var(--cal-superficie)",
+            }}>
+              <h4 style={S.grupoTitulo}>
+                {ROTULO_GRUPO[g]}
+                <span style={S.grupoQtde}>{MAPA_EQUIPES[g].length}</span>
+              </h4>
+              <ul style={S.grupoLista}>
+                {MAPA_EQUIPES[g].map(([mat, nome]) => (
+                  <li key={mat} style={{
+                    ...S.grupoItem,
+                    fontWeight: mat === minhaMatricula ? 700 : 400,
+                  }}>
+                    <span style={S.grupoMat}>{mat}</span> {nome}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        })}
+      </div>
+
+      <h3 style={S.subtituloSecao}>Recado da Seção de Provas</h3>
+      <div style={S.recado}>
+        {MENSAGEM_SECAO_PROVAS.map((par, i) => <p key={i} style={S.recadoPar}>{par}</p>)}
+      </div>
+    </section>
+  )
+}
+
 // ── estilos ──────────────────────────────────────────────────
 // Fundo off-white, tinta quase-preta, uma cor de destaque por tipo.
 // Título em serifa editorial, corpo em sans neutra. Sem gradientes.
 
 const S: Record<string, React.CSSProperties> = {
+  subtituloSecao: { margin: "28px 0 10px", fontFamily: "var(--serif-cfo, Georgia), serif", fontSize: "1.05rem", fontWeight: 600 },
+  observacoes: { listStyle: "none", margin: "0 0 8px", padding: 0, display: "flex", flexDirection: "column", gap: 8 },
+  observacao: { padding: "10px 13px", background: "var(--cal-superficie)", borderLeft: "3px solid #8A5A00", borderRadius: 4, fontSize: 14, lineHeight: 1.5 },
+  listaDocs: { listStyle: "none", margin: 0, padding: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: 10 },
+  itemDoc: { display: "flex", flexDirection: "column", gap: 3, padding: "12px 14px", background: "#fff", border: "1px solid rgba(26,25,23,0.12)", borderRadius: 8 },
+  linkDoc: { fontSize: 15, color: "var(--cal-ink)", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 3 },
+  grupos: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 12 },
+  grupo: { border: "1px solid", borderRadius: 8, padding: "12px 14px" },
+  grupoTitulo: { display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8, margin: "0 0 8px", fontFamily: "var(--serif-cfo, Georgia), serif", fontSize: "1.05rem", fontWeight: 600 },
+  grupoQtde: { fontFamily: "var(--sans, system-ui), sans-serif", fontSize: 13, fontWeight: 400, color: "var(--cal-ink-60)" },
+  grupoLista: { listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 2 },
+  grupoItem: { fontSize: 13.5, lineHeight: 1.4 },
+  grupoMat: { display: "inline-block", minWidth: 30, color: "var(--cal-ink-60)", fontVariantNumeric: "tabular-nums" },
+  recado: { padding: "14px 16px", background: "var(--cal-superficie)", borderRadius: 8, maxWidth: "72ch" },
+  recadoPar: { margin: "0 0 10px", fontSize: 14.5, lineHeight: 1.6 },
+
   abasTopo: { display: "flex", gap: 6, margin: "4px 0 18px" },
   abaTopo: { padding: "7px 14px", fontSize: 14, background: "transparent", color: "var(--cal-ink-60)", border: "1px solid rgba(26,25,23,0.18)", borderRadius: 6, cursor: "pointer" },
   abaTopoAtiva: { background: "var(--cal-ink)", color: "var(--cal-fundo)", borderColor: "var(--cal-ink)" },

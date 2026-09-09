@@ -50,6 +50,24 @@ export const MIDIAS_DRIVE: Record<string, MidiaDrive[]> = {
     { tipo: "audio", titulo: "O cérebro financeiro da Polícia Militar",
       url: "https://drive.google.com/file/d/1_vxVL0mjQ3w5vchpA_I_1Z7oNGJtZjO_/view" },
   ],
-  // Pendentes de gravação: POE, PE e EASE. Assim que os arquivos entrarem na
-  // pasta da matéria no Drive, basta acrescentar a entrada aqui.
+  EASE: [
+    { tipo: "video", titulo: "O custo oculto de cada escolha",
+      url: "https://drive.google.com/file/d/1VQovHP0EeFFib9DKamHKx2SrhIjvidsE/view" },
+    { tipo: "audio", titulo: "O que a polícia aprende sobre economia",
+      url: "https://drive.google.com/file/d/1IfaFW5Sj9s2nlskNAWuJPlp1cFvzIoiN/view" },
+  ],
+  POE: [
+    { tipo: "video", titulo: "A anatomia do poder policial",
+      url: "https://drive.google.com/file/d/1k3HGvZBbG7JPvAhCkKlYX2lKhxK3kp9b/view" },
+    // Mesmo áudio que está em PE — foi enviado às duas pastas.
+    { tipo: "audio", titulo: "Estratégia não é prever o futuro",
+      url: "https://drive.google.com/file/d/1YUw22QBR0M8vyH9crwQTEQFz-bHxufKV/view" },
+  ],
+  PE: [
+    { tipo: "video", titulo: "Raízes do planejamento",
+      url: "https://drive.google.com/file/d/12lQYx3rlYKQok_kbjzz575adNEWI523N/view" },
+    { tipo: "audio", titulo: "Estratégia não é prever o futuro",
+      url: "https://drive.google.com/file/d/1wK69Ob-GPKMRDZz8InSnww1kg1Hjc-QL/view" },
+  ],
+  // Ainda sem gravação: TCEM e GC.
 }
