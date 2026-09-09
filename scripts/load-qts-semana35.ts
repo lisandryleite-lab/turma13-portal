@@ -32,25 +32,27 @@ const grade: Record<string, string[]> = {
   "Dom 13/09": ["","","","","","","","","","",""],
 }
 
-// Contador oficial no INÍCIO da semana 35 (primeiro X de cada disciplina, menos 1),
-// ou seja: a carga real ao FIM da semana 34.
+// Contador oficial da folha da semana 35: `antes` = primeiro X menos 1 (a carga real
+// ao FIM da semana 34); `depois` = último X (a carga ao FIM da semana 35).
 //
-// Rodado em 04/09/2026, com a semana 34 já cumprida (31/08 a 04/09) e a 35 ainda
-// por vir — por isso a carga NÃO é adiantada para o fim da 35. O `antes` entra como
-// TETO: o contador do QTS nunca anda para trás, então disciplina em que o portal
-// esteja ACIMA do `antes` está inflada e desce. Abaixo do `antes`, seriam aulas
-// ainda não dadas — não mexer.
+// O `antes` serve de auditoria — o contador do QTS nunca anda para trás, então
+// disciplina em que o portal estivesse ACIMA do `antes` estava inflada. Na primeira
+// passada (04/09/2026) as 7 estavam, resíduo dos carregadores antigos que somavam a
+// grade da semana em vez de gravar o contador (ver CLAUDE.md).
 //
-// Todas as 7 estavam infladas: resíduo dos carregadores antigos, que somavam a
-// grade da semana em vez de gravar o contador oficial (ver CLAUDE.md).
-const ANTES_35: Record<string, number> = {
-  EPCR:    8,   // 9/20 …
-  AP:     46,   // 47/50 …
-  INTSISP: 26,  // 27/30 …
-  POE:    24,   // 25/60 …
-  AM:     52,   // 53/60 …
-  TFM2:   42,   // TFM-II 43/60 …
-  EASE:   24,   // EASPE 25/30 …
+// O `depois` é o que fica gravado. Lançado em 08/09/2026 a pedido, com a semana
+// ainda em curso: segunda 07/09 foi feriado e terça 08/09 é hoje, então AP, INTSISP
+// e os quatro primeiros tempos de EPCR já aconteceram; POE, AM, TFM2, EASE e o
+// restante de EPCR são de quarta a sexta e entram como PREVISTOS. Se alguma dessas
+// aula cair, o contador da próxima folha corrige — é para isso que ele serve.
+const CONTADOR_35: Record<string, { antes: number; depois: number }> = {
+  EPCR:    { antes:  8, depois: 16 },  // 9/20 … 16/20   (ter 4 + sex 4)
+  AP:      { antes: 46, depois: 50 },  // 47/50 … 50/50  (ter 4) — encerra
+  INTSISP: { antes: 26, depois: 28 },  // 27/30 … 28/30  (ter 2)
+  POE:     { antes: 24, depois: 28 },  // 25/60 … 28/60  (qua 4)
+  AM:      { antes: 52, depois: 56 },  // 53/60 … 56/60  (qua 4)
+  TFM2:    { antes: 42, depois: 50 },  // TFM-II 43/60 … 50/60 (qui 4 + sex 4)
+  EASE:    { antes: 24, depois: 28 },  // EASPE 25/30 … 28/30  (qui 4)
 }
 
 async function main() {
@@ -62,33 +64,48 @@ async function main() {
   })
   console.log(`✓ QTS da semana ${SEMANA} salvo (${DIAS.length} dias).`)
 
-  console.log("\n── Portal x contador oficial no início da semana 35 ──")
-  const corrigidas: string[] = []
-  for (const [sigla, antes] of Object.entries(ANTES_35)) {
+  // Em que dia da semana 35 cada disciplina termina — só para o relatório dizer o
+  // que já aconteceu e o que ainda é previsão na hora em que o script roda.
+  const ULTIMO_DIA: Record<string, string> = {
+    AP: "2026-09-08", INTSISP: "2026-09-08",
+    POE: "2026-09-09", AM: "2026-09-09",
+    EASE: "2026-09-10",
+    EPCR: "2026-09-11", TFM2: "2026-09-11",
+  }
+  const hoje = new Date()
+  const hojeISO = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, "0")}-${String(hoje.getDate()).padStart(2, "0")}`
+
+  console.log("\n── Carga ao fim da semana 35, pelo contador oficial ──")
+  const inflada: string[] = []
+  const previstas: string[] = []
+
+  for (const [sigla, { antes, depois }] of Object.entries(CONTADOR_35)) {
     const disc = await prisma.disciplina.findUnique({ where: { sigla } })
     if (!disc) { console.log(`  ⚠ disciplina ${sigla} não encontrada — pulando`); continue }
 
-    if (disc.cargaMinistrada > antes) {
-      // Impossível: o contador do QTS nunca anda para trás. O portal contou aula
-      // que não foi dada (herança da soma incremental dos carregadores antigos).
-      const status = antes >= disc.cargaTotal ? "Concluída" : antes > 0 ? "Em andamento" : "Início"
-      await prisma.disciplina.update({ where: { sigla }, data: { cargaMinistrada: antes, status } })
-      corrigidas.push(sigla)
-      console.log(`  ▼ ${sigla.padEnd(8)} ${disc.cargaMinistrada}h → ${antes}h  (portal estava +${disc.cargaMinistrada - antes}h — corrigido)`)
-    } else if (disc.cargaMinistrada < antes) {
-      console.log(`  · ${sigla.padEnd(8)} ${disc.cargaMinistrada}h  (faltam ${antes - disc.cargaMinistrada}h da semana 34 — ainda não aconteceram, não mexer)`)
-    } else {
-      console.log(`  ok ${sigla.padEnd(8)} ${disc.cargaMinistrada}h  — em dia`)
-    }
+    // Auditoria: o contador nunca anda para trás, então portal acima do `antes`
+    // era carga inflada por soma da grade.
+    if (disc.cargaMinistrada > antes) inflada.push(`${sigla} +${disc.cargaMinistrada - antes}h`)
+
+    const futura = ULTIMO_DIA[sigla] > hojeISO
+    if (futura) previstas.push(sigla)
+
+    const status = depois >= disc.cargaTotal ? "Concluída" : depois > 0 ? "Em andamento" : "Início"
+    await prisma.disciplina.update({ where: { sigla }, data: { cargaMinistrada: depois, status } })
+
+    const marca = status === "Concluída" ? "✔" : futura ? "»" : "•"
+    const nota = futura ? `  (previsto — aula de ${ULTIMO_DIA[sigla].slice(8, 10)}/09)` : ""
+    console.log(`  ${marca} ${sigla.padEnd(8)} ${String(disc.cargaMinistrada).padStart(2)}h → ${depois}/${disc.cargaTotal}h  ${status}${nota}`)
   }
 
   const todas = await prisma.disciplina.findMany()
   const total = todas.reduce((s, d) => s + d.cargaTotal, 0)
   const dada = todas.reduce((s, d) => s + d.cargaMinistrada, 0)
-  console.log(`\n Total do curso: ${dada}h de ${total}h (${Math.round(dada/total*100)}%)`)
-  console.log(` ${corrigidas.length} disciplina(s) corrigida(s): ${corrigidas.join(", ") || "nenhuma"}`)
-  console.log(`\n ⚠ A carga NÃO foi adiantada para o fim da semana 35 — aquelas aulas são de 07 a 11/09.`)
-  console.log(` ⚠ As disciplinas da semana 34 que NÃO aparecem na 35 (PE, PJM, TPE, TCEM, GC)
-   não têm contador nesta folha — ficam sem conferência até saírem num QTS.`)
+  const encerradas = todas.filter(d => d.cargaMinistrada >= d.cargaTotal && d.cargaTotal > 0).length
+  console.log(`\n Total do curso: ${dada}h de ${total}h (${Math.round(dada/total*100)}%) · ${encerradas}/${todas.length} encerradas`)
+  if (inflada.length) console.log(` Estava inflado antes desta rodada: ${inflada.join(", ")}`)
+  if (previstas.length) console.log(` ⚠ Lançado como PREVISTO (aula ainda não dada): ${previstas.join(", ")}`)
+  console.log(` ⚠ PE, PJM, TPE, TCEM e GC entram na semana 34 mas não na 35 — sem contador
+   nesta folha, ficam sem conferência até saírem num QTS.`)
 }
 main().catch(e => { console.error(e); process.exit(1) }).finally(() => prisma.$disconnect())
