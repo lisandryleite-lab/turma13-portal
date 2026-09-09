@@ -95,9 +95,10 @@ const cards: {
   },
   {
     label: "Psicologia",
-    href: "https://agendamento-apmp.vercel.app/",
+    // passa pela página interna, que explica o processo antes de mandar
+    // para o sistema da APMP — antes o card pulava direto para fora
+    href: "/psicologia",
     bg: "olive",
-    externo: true,
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
