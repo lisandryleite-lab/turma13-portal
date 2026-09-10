@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import {
-  CONFIG_CALENDARIO, TIPOS_EVENTO, ORDEM_TIPOS, DEF_TIPO,
+  CONFIG_CALENDARIO, CRONOMETROS, TIPOS_EVENTO, ORDEM_TIPOS, DEF_TIPO,
   HIERARQUIA, NIVEIS_ESCOPO, REDE,
   type Escopo, type TipoEvento,
 } from "@/lib/calendario-config"
@@ -109,7 +109,7 @@ export function CalendarioClient(props: DadosCalendario) {
 
   return (
     <main style={S.main}>
-      <Cabecalho escopo={escopo} />
+      <Cabecalho escopo={escopo} hojeIso={hojeIso} />
 
       <div style={S.abasTopo} role="group" aria-label="Seções">
         {(
@@ -235,8 +235,11 @@ export function CalendarioClient(props: DadosCalendario) {
 
 // ── cabeçalho e cronômetro ───────────────────────────────────
 
-function Cabecalho({ escopo }: { escopo: Escopo }) {
+function Cabecalho({ escopo, hojeIso }: { escopo: Escopo; hojeIso: string }) {
   const trilha = [REDE, escopo.unidade, escopo.segmento, escopo.turma].filter(Boolean).join(" · ")
+  // some sozinho depois da data; `hojeIso` vem do servidor, então o
+  // cliente calcula a mesma lista e o HTML dos dois bate.
+  const cronometros = CRONOMETROS.filter(c => c.ativo && c.dataIso >= hojeIso)
   return (
     <header style={S.cabecalho}>
       <div>
@@ -244,15 +247,18 @@ function Cabecalho({ escopo }: { escopo: Escopo }) {
         <h1 style={S.titulo}>Calendário</h1>
         <p style={S.subtitulo}>Ano letivo {CONFIG_CALENDARIO.anoLetivo.rotulo}</p>
       </div>
-      {CONFIG_CALENDARIO.formatura.ativo && <Cronometro />}
+      {cronometros.length > 0 && (
+        <div style={S.cronometros}>
+          {cronometros.map(c => <Cronometro key={c.rotulo} {...c} />)}
+        </div>
+      )}
     </header>
   )
 }
 
-function Cronometro() {
-  const { dataIso, hora, rotulo } = CONFIG_CALENDARIO.formatura
+function Cronometro({ rotulo, dataIso, hora }: { rotulo: string; dataIso: string; hora?: string }) {
   const alvo = useMemo(() => {
-    const p = partes(dataIso); const [h, mi] = hora.split(":").map(Number)
+    const p = partes(dataIso); const [h, mi] = (hora ?? "00:00").split(":").map(Number)
     return new Date(p.ano, p.mes0, p.dia, h, mi, 0).getTime()
   }, [dataIso, hora])
 
@@ -275,7 +281,9 @@ function Cronometro() {
 
   return (
     <div style={S.cronometro}>
-      <p style={S.cronoRotulo}>{rotulo} · {curta(dataIso)}/{partes(dataIso).ano} às {hora.replace(":", "h")}</p>
+      <p style={S.cronoRotulo}>
+        {rotulo} · {curta(dataIso)}/{partes(dataIso).ano}{hora ? ` às ${hora.replace(":", "h")}` : ""}
+      </p>
       <div style={S.cronoCampos} aria-live="off">
         {(campos ?? [{ v: 0, r: "dias" }, { v: 0, r: "horas" }, { v: 0, r: "min" }, { v: 0, r: "seg" }]).map(c => (
           <div key={c.r} style={S.cronoCampo}>
@@ -712,6 +720,7 @@ const S: Record<string, React.CSSProperties> = {
   titulo: { margin: "4px 0 2px", fontFamily: "var(--serif-cfo, Georgia), serif", fontSize: "2.4rem", lineHeight: 1.05, fontWeight: 600 },
   subtitulo: { margin: 0, fontSize: 14, color: "var(--cal-ink-60)" },
 
+  cronometros: { display: "flex", flexDirection: "column", gap: 12 },
   cronometro: { minWidth: 260 },
   cronoRotulo: { margin: "0 0 6px", fontSize: 13, color: "var(--cal-ink-60)" },
   cronoCampos: { display: "flex", gap: 14 },
