@@ -165,6 +165,15 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "Exercícios — Ten Vicente": "Exercícios — Ten Vicente",
     Gaivotas: "Gaivotas — questões da turma",
   },
+  EPCR: {
+    "1": "7ª EMG, transferências fiscais e natureza da despesa",
+    "2": "Política de segurança pública x política pública de segurança",
+    "3": "Captação de recursos, fontes e emendas parlamentares",
+    "4": "FNSP e transferência fundo a fundo",
+    "5": "Transfere Gov, Compras SUSP e PE-Integrado",
+    "6": "PCA, DFD, ETP, Termo de Referência, ARP e IRP",
+    SIM: "Simulado — formato da prova (10,0 pontos · 100 min)",
+  },
   EASE: {
     "1": "Escassez, custo de oportunidade e os dez princípios",
     "2": "Microeconomia: bens, oferta e demanda e equilíbrio",
