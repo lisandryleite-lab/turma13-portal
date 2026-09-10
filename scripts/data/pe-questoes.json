@@ -1,0 +1,1257 @@
+{
+ "banco": {
+  "1": {
+   "titulo": "Planejamento, estratégia e pensamento estratégico",
+   "legal": "Jack Bologna; Sun Tzu; Oliveira; Chiavenato; Maquiavel; Clausewitz",
+   "vf": [
+    {
+     "t": "Segundo Chiavenato, o planejamento é um processo administrativo em que se estabelecem objetivos ou metas organizacionais e os melhores meios de alcançá-los pela organização dos recursos disponíveis.",
+     "r": true,
+     "j": "Correto — e o planejamento é a primeira função administrativa."
+    },
+    {
+     "t": "Para Oliveira, planejamento é um processo contínuo de pensamento sobre o futuro, envolvendo o que fazer, como, quando, quanto, para quem, por que, por quem e onde.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A palavra estratégia vem do grego estrategos, com o sentido de “a arte do general”, tendo portanto conotação militar.",
+     "r": true,
+     "j": "Correto — strategos é o líder de exército; em Atenas, a partir de 507 a.C., o Poder Executivo passou a ser exercido por dez strategoi, com mandato de um ano."
+    },
+    {
+     "t": "A frase “todos os homens podem ver as táticas pelas quais eu conquisto, mas o que ninguém consegue ver é a estratégia a partir da qual grandes vitórias são obtidas” é atribuída a Sun Tzu.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Pensamento estratégico e planejamento estratégico são expressões sinônimas.",
+     "r": false,
+     "j": "Falso. O pensamento estratégico é uma CAPACIDADE INTELECTUAL; o planejamento estratégico é a APLICAÇÃO dessa habilidade em um aspecto ou situação particular."
+    },
+    {
+     "t": "O pensamento estratégico é a abordagem que olha para o agora pensando no futuro, com capacidade de antecipar o efeito das próprias ações.",
+     "r": true,
+     "j": "Correto — é visão de longo prazo, criativa e orientada para executar objetivos específicos."
+    },
+    {
+     "t": "O pensamento estratégico é algo essencialmente teórico, que se adquire pelo estudo e não pela prática.",
+     "r": false,
+     "j": "Falso. NÃO é algo teórico: é aprendido e fortalecido pela prática — o material compara com andar de bicicleta."
+    },
+    {
+     "t": "Pensamos estrategicamente quando sabemos onde queremos chegar, em que ponto estamos, como definir o caminho a seguir e como avaliar a nós mesmos e corrigir-nos.",
+     "r": true,
+     "j": "Correto — quatro capacidades desenvolvidas pela prática; a definição do caminho é o ponto central da estratégia."
+    },
+    {
+     "t": "Conforme o dicionário Aurélio, estratégia é a arte de aplicar os meios disponíveis ou explorar condições favoráveis com vista a objetivos específicos.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Segundo Jack Bologna, o planejamento é a mais relevante e cerebral atividade do homem, e a capacidade de planejar torna o homem único no reino animal.",
+     "r": true,
+     "j": "Correto — daí a máxima de que quem faz um bom planejamento já realizou 50% das tarefas."
+    },
+    {
+     "t": "Maquiavel, em O Príncipe, escrito em 1513 e publicado em 1532, apresenta princípios básicos de estratégia e de planejamento.",
+     "r": true,
+     "j": "Correto — a tríplice missão do príncipe seria tomar o poder, assegurar a estabilidade política e construir a República unificada."
+    },
+    {
+     "t": "A frase “a guerra é a continuação da política por outros meios” é de Clausewitz, em sua obra A Guerra, publicada postumamente.",
+     "r": true,
+     "j": "Correto — seus ensinamentos baseiam-se na incerteza e na necessidade de adaptação de posições, destacando os conceitos de tática e estratégia."
+    },
+    {
+     "t": "Na evolução histórica da administração destacaram-se duas instituições: a Igreja Católica Romana e as organizações militares.",
+     "r": true,
+     "j": "Correto — a Igreja é considerada a organização formal mais eficiente da civilização ocidental."
+    },
+    {
+     "t": "O planejamento estratégico do Estado brasileiro tem entre seus exemplos o Plano SALTE e o Plano de Metas de Juscelino Kubitschek.",
+     "r": true,
+     "j": "Correto — SALTE: saúde, alimentação, transportes e energia; mais adiante vieram os planos plurianuais, determinados constitucionalmente."
+    },
+    {
+     "t": "Sun Tzu viveu na China na época dos “Reinos Combatentes”, entre 400 e 320 a.C., e dedica parcela importante de sua obra ao estudo e à aplicação das informações e do planejamento.",
+     "r": true,
+     "j": "Correto — teria sido comandante do rei Holu, do Estado de Wu."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a distinção entre pensamento estratégico e planejamento estratégico, assinale a alternativa CORRETA:",
+     "a": [
+      "São expressões sinônimas.",
+      "O pensamento estratégico é a aplicação prática do planejamento em uma situação particular.",
+      "O pensamento estratégico é capacidade intelectual; o planejamento estratégico é a aplicação dessa habilidade em situação particular.",
+      "O planejamento estratégico é capacidade inata, não desenvolvida pela prática.",
+      "Nenhum dos dois se aplica fora do campo militar."
+     ],
+     "c": 2,
+     "j": "O material é expresso na distinção; e o pensamento estratégico não é teórico — é aprendido e fortalecido pela prática, aplicável a qualquer finalidade, e não apenas ao campo militar ou comercial."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a uma das condições em que pensamos estrategicamente:",
+     "a": [
+      "Saber onde queremos chegar.",
+      "Saber em que ponto estamos.",
+      "Saber definir o caminho a seguir.",
+      "Saber avaliar a nós mesmos e corrigir-nos.",
+      "Saber eliminar por completo os riscos da decisão."
+     ],
+     "c": 4,
+     "j": "O planejamento estratégico não é uma tentativa de eliminar o risco — o que se busca é que os riscos assumidos sejam os riscos certos."
+    },
+    {
+     "e": "Sobre a origem do termo estratégia, assinale a alternativa INCORRETA:",
+     "a": [
+      "Vem do grego estrategos, “a arte do general”.",
+      "Strategos designa o líder de exército.",
+      "Em Atenas, a partir de 507 a.C., o Executivo passou a ser exercido por dez strategoi.",
+      "A linguagem científica aplicou o vocábulo à Teoria dos Jogos e aos modelos matemáticos.",
+      "O termo nasceu no meio empresarial e só depois foi aplicado ao meio militar."
+     ],
+     "c": 4,
+     "j": "É o inverso: o termo tem origem militar e depois foi aplicado à Teoria dos Jogos, aos modelos matemáticos e, finalmente, à organização."
+    },
+    {
+     "e": "Associe corretamente o autor à contribuição:",
+     "a": [
+      "Sun Tzu — “a guerra é a continuação da política por outros meios”.",
+      "Clausewitz — obra A Arte da Guerra, na época dos Reinos Combatentes.",
+      "Maquiavel — O Príncipe, com princípios básicos de estratégia e planejamento.",
+      "Jack Bologna — Teoria da Burocracia.",
+      "Peter Drucker — Teoria Clássica e os princípios gerais da administração."
+     ],
+     "c": 2,
+     "j": "A frase sobre guerra e política é de Clausewitz; Sun Tzu é dos Reinos Combatentes; a Teoria da Burocracia é de Weber e a Teoria Clássica é de Fayol; Drucker inaugura a Teoria Neoclássica."
+    },
+    {
+     "e": "Sobre a evolução histórica da administração, assinale a alternativa INCORRETA:",
+     "a": [
+      "A história da administração remonta à Suméria, por volta de 5.000 a.C.",
+      "Destacaram-se a Igreja Católica Romana e as organizações militares.",
+      "A Revolução Industrial foi marco na evolução da administração das empresas.",
+      "O Brasil acumulou experiência de planejamento governamental entre os anos 40 e 70, com o Plano SALTE e o Plano de Metas.",
+      "O planejamento governamental brasileiro eliminou as desigualdades sociais do país."
+     ],
+     "c": 4,
+     "j": "O material registra o oposto: apesar dos progressos setoriais e do amadurecimento industrial, a sociedade permaneceu inaceitavelmente desigual, com iniquidades em educação, saúde e condições de vida."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Conceitue planejamento e estratégia e diferencie pensamento estratégico de planejamento estratégico.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Planejamento — dicionário: ato ou efeito de planejar; trabalho de preparação para qualquer empreendimento, segundo roteiro e métodos elaborados; elaboração por etapas, com bases técnicas, de planos e programas com objetivos definidos.",
+      "Planejamento — Oliveira: processo contínuo de pensamento sobre o futuro, que envolve o que fazer, como, quando, quanto, para quem, por que, por quem e onde.",
+      "Planejamento — Chiavenato: processo administrativo em que se estabelecem objetivos ou metas organizacionais e os melhores meios de alcançá-los pela organização dos recursos disponíveis; é a primeira função administrativa e norteia a organização durante todo o ciclo operacional.",
+      "Estratégia: do grego estrategos, “a arte do general”, de conotação militar; strategos é o líder de exército; conforme o Aurélio, é a arte de aplicar os meios disponíveis ou explorar condições favoráveis com vista a objetivos específicos.",
+      "Pensamento estratégico: abordagem que olha para o agora pensando no futuro; capacidade de antecipar o efeito das próprias ações, com visão de longo prazo, criativa e orientada para executar objetivos específicos; não é teórico, sendo aprendido e fortalecido pela prática.",
+      "Condições do pensamento estratégico: saber onde queremos chegar; saber em que ponto estamos; saber definir o caminho a seguir — ponto central da estratégia; e saber avaliar a nós mesmos e corrigir-nos, com flexibilidade para redefinir a tática.",
+      "Distinção: pensamento estratégico é uma capacidade intelectual, enquanto planejamento estratégico é a aplicação dessa habilidade em um aspecto ou situação particular — não são a mesma coisa."
+     ]
+    },
+    {
+     "e": "Disserte sobre as raízes históricas do planejamento estratégico, citando autores e instituições relevantes.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Origens remotas: a história da administração inicia-se por volta de 5.000 a.C. na Suméria; segue-se o Egito, com o sistema econômico planejado de Ptolomeu, e a China de 500 a.C., com a Constituição de Chow e as Regras de Administração Pública de Confúcio.",
+      "Outras raízes: as instituições otomanas; os prelados católicos na Idade Média; os fiscalistas ou cameralistas da Alemanha e da Áustria entre 1550 e 1700; e os mercantilistas ou fisiocratas franceses, que preconizavam administração sistemática, especialmente no setor público.",
+      "Duas instituições de destaque: a Igreja Católica Romana, considerada a organização formal mais eficiente da civilização ocidental; e as organizações militares, que evoluíram das ordens dos cavaleiros medievais e dos exércitos mercenários até a hierarquia rígida e as práticas administrativas modernas.",
+      "Sun Tzu: viveu na China entre 400 e 320 a.C., na época dos Reinos Combatentes, tendo sido comandante do rei Holu; dedica parcela importante de sua obra ao estudo e à aplicação das informações e do planejamento.",
+      "Maquiavel: em O Príncipe, escrito em 1513 e publicado em 1532, apresenta princípios básicos de estratégia e planejamento, com a tríplice missão de tomar o poder, assegurar a estabilidade política e construir a República unificada.",
+      "Clausewitz: em A Guerra, publicada postumamente, associa guerra e política — “a guerra é a continuação da política por outros meios” —, com ensinamentos baseados na incerteza e na necessidade de adaptação de posições.",
+      "Revolução Industrial e século XIX: marco na evolução da administração, com desenvolvimento fabril, energia aplicada à indústria e avanço tecnológico; George Siemens destacou-se na Alemanha ao projetar e construir o Deutsche Bank.",
+      "Planejamento governamental brasileiro: entre os anos 40 e 70, do Plano SALTE (saúde, alimentação, transportes e energia) ao Plano de Metas de Juscelino Kubitschek e aos planos plurianuais determinados constitucionalmente; atingiu metas econômicas, mas teve pouco impacto na situação social."
+     ]
+    }
+   ]
+  },
+  "2": {
+   "titulo": "Administração estratégica e escolas administrativas",
+   "legal": "Relatório Gordon-Howell (1950); Weber, Fayol e Drucker",
+   "vf": [
+    {
+     "t": "A administração estratégica é o campo onde se efetua o planejamento estratégico da empresa, tendo como base sua missão, visão e valores.",
+     "r": true,
+     "j": "Correto — é processo prolongado que objetiva manter a empresa apropriada e integrada com o seu ambiente."
+    },
+    {
+     "t": "O formato de administração estratégica surge em 1950, após o relatório Gordon-Howell, patrocinado pela Fundação Ford e pela Carnegie Corporation.",
+     "r": true,
+     "j": "Correto — o relatório orientava que o ensino de negócios fosse mais amplo."
+    },
+    {
+     "t": "O curso mudou de nome recentemente de Administração Estratégica para Política de Negócios.",
+     "r": false,
+     "j": "Falso — está invertido. O curso mudou de POLÍTICA DE NEGÓCIOS para ADMINISTRAÇÃO ESTRATÉGICA."
+    },
+    {
+     "t": "A administração estratégica é processo contínuo, devido às mudanças constantes no micro e no macroambiente, exigindo monitoramento dos resultados e adaptações.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "São exemplos de estratégias empresariais a redução de custos, a inovação, a expansão e a internacionalização.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A administração estratégica divide-se em áreas como planejamento estratégico, gestão estratégica, controle e administração da estratégia empresarial e sistema de informação estratégico.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A abordagem clássica da administração é resumida na sigla POCCC: planejar, organizar, comandar, coordenar e controlar.",
+     "r": true,
+     "j": "Correto — o bom administrador sabe planejar, organizar e coordenar racionalmente seus passos e é capaz de comandar e controlar as atividades dos subordinados."
+    },
+    {
+     "t": "A Teoria da Burocracia, de Weber, trata da organização formal e da burocracia racional, estabelecendo regras sistemáticas que oferecem estrutura, estabilidade e ordem às organizações.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A Teoria Clássica, de Fayol, limitou e esclareceu as funções administrativas, separando o processo complexo de gestão em áreas interdependentes de responsabilidades.",
+     "r": true,
+     "j": "Correto — destacou a importância da competência administrativa para o desempenho organizacional."
+    },
+    {
+     "t": "A Teoria Neoclássica é atribuída a Max Weber.",
+     "r": false,
+     "j": "Falso. A Teoria Neoclássica é de Peter DRUCKER, que em 1954, com o livro Prática da Administração de Empresas, inaugurou a administração como verdadeira disciplina acadêmica e humana."
+    },
+    {
+     "t": "Drucker é considerado o pai da gestão (management) e “descobridor” da corporação como coração da sociedade industrial.",
+     "r": true,
+     "j": "Correto — a Teoria Neoclássica une as principais ideias das correntes anteriores, eliminando exageros e distorções."
+    },
+    {
+     "t": "O pensamento administrativo começou sob influência das ciências exatas, com conceitos mecanizados e rígidos apoiados na ideia de eficiência da produção.",
+     "r": true,
+     "j": "Correto — buscava-se melhor relação custo-benefício e melhor utilização de recursos."
+    },
+    {
+     "t": "A administração estratégica é um conjunto integrado e coordenado de ações definido para explorar competências essenciais e obter vantagem competitiva.",
+     "r": true,
+     "j": "Correto — é a síntese apresentada no material."
+    },
+    {
+     "t": "A Administração consolidou-se como ciência organizada após o lançamento das ideias de Peter Drucker, em 1954.",
+     "r": true,
+     "j": "Correto — embora desde o início do século XX vários pensadores tenham contribuído para o seu desenvolvimento."
+    },
+    {
+     "t": "Há amplo consenso doutrinário quanto ao significado preciso da expressão administração estratégica.",
+     "r": false,
+     "j": "Falso. O material registra justamente a FALTA de consenso a respeito de seu significado preciso, apesar da ampla aceitação do campo."
+    }
+   ],
+   "me": [
+    {
+     "e": "Associe corretamente a teoria ao seu autor:",
+     "a": [
+      "Teoria da Burocracia — Fayol.",
+      "Teoria Clássica — Weber.",
+      "Teoria Neoclássica — Drucker.",
+      "Teoria Neoclássica — Taylor.",
+      "Teoria da Burocracia — Drucker."
+     ],
+     "c": 2,
+     "j": "Weber: Teoria da Burocracia; Fayol: Teoria Clássica; Drucker: Teoria Neoclássica, inaugurada com Prática da Administração de Empresas, de 1954."
+    },
+    {
+     "e": "Sobre a administração estratégica, assinale a alternativa INCORRETA:",
+     "a": [
+      "É o campo onde se efetua o planejamento estratégico, com base em missão, visão e valores.",
+      "É processo prolongado que busca manter a empresa integrada com o seu ambiente.",
+      "Nela são estabelecidos conjuntos de opções, diretrizes e valores determinados pela alta administração.",
+      "É processo contínuo, exigindo monitoramento e adaptações.",
+      "Uma vez definida, dispensa revisões, por ser voltada ao longo prazo."
+     ],
+     "c": 4,
+     "j": "Justamente por ser processo contínuo diante das mudanças no micro e no macroambiente, exige constante monitoramento dos resultados e adaptações."
+    },
+    {
+     "e": "Sobre o surgimento da administração estratégica, assinale a alternativa CORRETA:",
+     "a": [
+      "Surge em 1970, com o relatório Gordon-Howell.",
+      "O relatório Gordon-Howell foi patrocinado pela Fundação Ford e pela Carnegie Corporation e orientava um ensino de negócios mais amplo.",
+      "O curso mudou de nome de Administração Estratégica para Política de Negócios.",
+      "O relatório teve pouca aceitação e não influenciou as escolas de negócios.",
+      "O curso surgiu já com o nome de Administração Estratégica."
+     ],
+     "c": 1,
+     "j": "O formato surge em 1950; o relatório teve ampla aceitação e, em meados de 1970, o curso já integrava a grade de escolas de negócios; a mudança de nome foi de Política de Negócios para Administração Estratégica."
+    },
+    {
+     "e": "A sigla POCCC, da abordagem clássica da administração, corresponde a:",
+     "a": [
+      "Planejar, organizar, controlar, coordenar e comunicar.",
+      "Planejar, orçar, comandar, controlar e corrigir.",
+      "Planejar, organizar, comandar, coordenar e controlar.",
+      "Prever, organizar, comandar, coordenar e checar.",
+      "Planejar, operar, comandar, coordenar e controlar."
+     ],
+     "c": 2,
+     "j": "É a formulação clássica: o bom administrador planeja, organiza e coordena racionalmente seus passos e é capaz de comandar e controlar as atividades dos subordinados."
+    },
+    {
+     "e": "Sobre a Teoria Neoclássica, assinale a alternativa INCORRETA:",
+     "a": [
+      "Foi inaugurada por Peter Drucker, em 1954.",
+      "Une as principais ideias das correntes anteriores, eliminando exageros e distorções.",
+      "Drucker é considerado o pai da gestão (management).",
+      "Drucker é o “descobridor” da corporação como coração da sociedade industrial.",
+      "Rejeita integralmente as contribuições das teorias clássica e da burocracia."
+     ],
+     "c": 4,
+     "j": "A Teoria Neoclássica UNE as principais ideias das correntes anteriores, condensando-as e eliminando exageros e distorções — não as rejeita."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique o que é administração estratégica e apresente as escolas administrativas que a antecederam.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: campo onde é efetuado o planejamento estratégico da empresa, tendo como base sua missão, visão e valores; processo prolongado que objetiva manter a empresa apropriada e integrada ao seu ambiente.",
+      "Conteúdo: nela são estabelecidos conjuntos de opções, diretrizes e valores determinados pela alta administração, para que a organização tenha bom desenvolvimento a longo prazo; exemplos de estratégias são redução de custos, inovação, expansão e internacionalização.",
+      "Natureza contínua: pelas mudanças constantes no micro e no macroambiente, exige monitoramento permanente dos resultados organizacionais e adaptações; divide-se em áreas como planejamento estratégico, gestão estratégica, controle e administração da estratégia empresarial e sistema de informação estratégico.",
+      "Origem: surge em 1950, após o relatório Gordon-Howell, patrocinado pela Fundação Ford e pela Carnegie Corporation, que orientava um ensino de negócios mais amplo; em meados de 1970 o curso já integrava a grade de escolas de negócios, tendo mudado de nome de Política de Negócios para Administração Estratégica.",
+      "Abordagem clássica (POCCC): planejar, organizar, comandar, coordenar e controlar.",
+      "Teoria da Burocracia (Weber): organização formal e burocracia racional, com regras sistemáticas que oferecem estrutura, estabilidade e ordem às organizações.",
+      "Teoria Clássica (Fayol): princípios gerais da administração; limitou e esclareceu as funções administrativas, destacando a competência administrativa e separando o processo de gestão em áreas interdependentes de responsabilidades.",
+      "Teoria Neoclássica (Drucker): a partir do livro Prática da Administração de Empresas, de 1954, inaugurou a administração como disciplina acadêmica e humana, unindo as ideias das correntes anteriores; Drucker é considerado o pai da gestão e o descobridor da corporação como coração da sociedade industrial.",
+      "Síntese: a administração estratégica é um conjunto integrado e coordenado de ações definido para explorar competências essenciais e obter vantagem competitiva."
+     ]
+    },
+    {
+     "e": "Explique o conceito de planejamento estratégico segundo Drucker e o que NÃO é planejamento estratégico.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Conceito geral: preparação do trabalho com base nos recursos disponíveis para o atingimento de metas e o alcance de resultados positivos.",
+      "Drucker: processo contínuo de, sistematicamente e com o maior conhecimento possível do futuro contido, tomar decisões atuais que envolvam riscos e medir os resultados dessas decisões em confronto com as expectativas alimentadas.",
+      "Conteúdo: elaborar, com base na missão e no negócio da organização, um plano de ação e de metas para garantir qualidade, lucro e marca, oferecendo visão de futuro, independentemente do porte da organização; é o ponto de partida da administração estratégica.",
+      "Questões que um bom PE deve responder: onde queremos chegar, o que fazer, como, quando, quanto, para quem, por que, por quem e onde.",
+      "Não é caixa de mágicas nem amontoado de técnicas — quantificar não é planejar.",
+      "Não é previsão: o PE se faz necessário justamente por não se ter a capacidade de prever.",
+      "Não opera com decisões futuras, mas com o que há de futuro nas decisões presentes.",
+      "Não é tentativa de eliminar o risco, embora seja fundamental que os riscos assumidos sejam os riscos certos."
+     ]
+    }
+   ]
+  },
+  "3": {
+   "titulo": "Níveis de planejamento: estratégico, tático e operacional",
+   "legal": "Planejamento estratégico x tático x operacional; o que não é planejamento estratégico",
+   "vf": [
+    {
+     "t": "O planejamento estratégico trata de objetivos de longo prazo, com estratégias e ações que afetam a empresa como um todo.",
+     "r": true,
+     "j": "Correto — é responsabilidade dos níveis hierárquicos mais elevados da organização."
+    },
+    {
+     "t": "O planejamento tático tem objetivos de mais curto prazo e afeta apenas parte da empresa.",
+     "r": true,
+     "j": "Correto — desenvolvido pelos níveis intermediários, tem como principal finalidade a utilização eficiente dos recursos disponíveis."
+    },
+    {
+     "t": "O planejamento operacional é desenvolvido pelos níveis hierárquicos mais elevados da organização.",
+     "r": false,
+     "j": "Falso. O planejamento operacional é realizado pela BASE da organização; são os níveis mais elevados que respondem pelo planejamento estratégico."
+    },
+    {
+     "t": "O planejamento operacional corresponde às partes homogêneas do planejamento tático, com foco nas atividades do dia a dia.",
+     "r": true,
+     "j": "Correto — é a formalização das metodologias de desenvolvimento e implantação estabelecidas, principalmente por documentos escritos."
+    },
+    {
+     "t": "O planejamento estratégico é o ponto de partida na administração estratégica das organizações, independentemente de seus tamanhos e tipos.",
+     "r": true,
+     "j": "Correto — tem por propósito adotar medidas decisivas e resultados na condução de atitudes proativas na gestão."
+    },
+    {
+     "t": "O planejamento estratégico é uma caixa de mágicas e um amontoado de técnicas de quantificação.",
+     "r": false,
+     "j": "Falso. O material é expresso: o PE NÃO é uma caixa de mágicas nem um amontoado de técnicas — quantificar não é planejar."
+    },
+    {
+     "t": "O planejamento estratégico é uma forma de previsão do futuro.",
+     "r": false,
+     "j": "Falso. O PE NÃO é previsão: ele se faz necessário justamente por não se ter a capacidade de prever."
+    },
+    {
+     "t": "O planejamento estratégico não opera com decisões futuras, mas com o que há de futuro nas decisões presentes.",
+     "r": true,
+     "j": "Correto — formulação clássica de Drucker."
+    },
+    {
+     "t": "O planejamento estratégico é uma tentativa de eliminar o risco.",
+     "r": false,
+     "j": "Falso. NÃO é tentativa de eliminar o risco, mas é fundamental que os riscos assumidos sejam os riscos certos."
+    },
+    {
+     "t": "Um bom planejamento estratégico deve responder às questões: onde queremos chegar, o que fazer, como, quando, quanto, para quem, por que, por quem e onde.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O planejamento estratégico consiste em elaborar, com base na missão e no negócio da organização, um plano de ação e de metas, oferecendo uma visão de futuro.",
+     "r": true,
+     "j": "Correto — visa garantir a qualidade, o lucro e a marca da empresa, independentemente do porte da organização."
+    },
+    {
+     "t": "Sem um bom planejamento e uma estratégia bem fundamentada, as empresas colocam em risco a própria sobrevivência.",
+     "r": true,
+     "j": "Correto — observação expressa do material."
+    },
+    {
+     "t": "A principal finalidade do planejamento tático é a utilização eficiente dos recursos disponíveis.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O planejamento estratégico é responsabilidade dos níveis intermediários da organização.",
+     "r": false,
+     "j": "Falso. É responsabilidade dos níveis hierárquicos MAIS ELEVADOS; os níveis intermediários respondem pelo planejamento tático."
+    },
+    {
+     "t": "A formalização do planejamento operacional se dá principalmente por meio de documentos escritos.",
+     "r": true,
+     "j": "Correto — trata das rotinas operacionais e do dia a dia."
+    }
+   ],
+   "me": [
+    {
+     "e": "Associe corretamente o nível de planejamento ao seu responsável:",
+     "a": [
+      "Estratégico — base da organização.",
+      "Tático — níveis hierárquicos mais elevados.",
+      "Operacional — níveis intermediários.",
+      "Estratégico — níveis hierárquicos mais elevados; tático — níveis intermediários; operacional — base.",
+      "Todos os níveis — alta administração."
+     ],
+     "c": 3,
+     "j": "É a distribuição clássica apresentada no material."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde ao que se afirma sobre o planejamento estratégico:",
+     "a": [
+      "Não é caixa de mágicas nem amontoado de técnicas.",
+      "Não é previsão.",
+      "Não opera com decisões futuras, mas com o que há de futuro nas decisões presentes.",
+      "Não é tentativa de eliminar o risco.",
+      "Quantificar é a essência de planejar."
+     ],
+     "c": 4,
+     "j": "O material afirma justamente o contrário: quantificar NÃO é planejar."
+    },
+    {
+     "e": "Sobre o planejamento tático, assinale a alternativa CORRETA:",
+     "a": [
+      "Tem objetivos de longo prazo e afeta a empresa como um todo.",
+      "Tem objetivos de mais curto prazo, afeta parte da empresa e é desenvolvido pelos níveis intermediários.",
+      "É realizado pela base da organização, com foco nas rotinas diárias.",
+      "Dispensa a utilização eficiente dos recursos.",
+      "É sinônimo de planejamento estratégico."
+     ],
+     "c": 1,
+     "j": "O de longo prazo e abrangência total é o estratégico; o de rotinas diárias, realizado pela base, é o operacional."
+    },
+    {
+     "e": "Assinale a alternativa que apresenta corretamente as questões que um bom planejamento estratégico deve responder:",
+     "a": [
+      "Apenas o que fazer e quando fazer.",
+      "Onde queremos chegar, o que fazer, como, quando, quanto, para quem, por que, por quem e onde.",
+      "Somente quanto custará e quem pagará.",
+      "Apenas a missão e a visão da organização.",
+      "Somente quais riscos serão eliminados."
+     ],
+     "c": 1,
+     "j": "É o conjunto de questões apontado no material, coerente com a definição de planejamento de Oliveira."
+    },
+    {
+     "e": "Sobre o planejamento operacional, assinale a alternativa INCORRETA:",
+     "a": [
+      "Corresponde às partes homogêneas do planejamento tático.",
+      "É a formalização das metodologias de desenvolvimento e implantação, principalmente por documentos escritos.",
+      "Tem foco nas atividades do dia a dia.",
+      "É realizado pela base da organização.",
+      "Define os objetivos de longo prazo que afetam a organização como um todo."
+     ],
+     "c": 4,
+     "j": "Definir objetivos de longo prazo que afetam a organização como um todo é próprio do planejamento ESTRATÉGICO."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Diferencie planejamento estratégico, tático e operacional quanto ao prazo, à abrangência e ao nível responsável.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Planejamento estratégico: objetivos de longo prazo; estratégias e ações que afetam a empresa como um todo; responsabilidade dos níveis hierárquicos mais elevados da organização.",
+      "Planejamento tático: objetivos de mais curto prazo; estratégias e ações que afetam parte da empresa; desenvolvido pelos níveis intermediários; tem por principal finalidade a utilização eficiente dos recursos disponíveis.",
+      "Planejamento operacional: corresponde às partes homogêneas do planejamento tático; é a formalização das metodologias de desenvolvimento e implantação estabelecidas, principalmente por meio de documentos escritos.",
+      "Foco do operacional: as atividades do dia a dia, as rotinas operacionais; é realizado pela base da organização.",
+      "Articulação: o planejamento estratégico é o ponto de partida da administração estratégica, desdobrando-se no tático e, deste, no operacional, de modo que os três níveis se articulam do objetivo de longo prazo até a rotina diária."
+     ]
+    },
+    {
+     "e": "Explique o que o planejamento estratégico NÃO é, e por que essas negativas são relevantes para a gestão.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Não é caixa de mágicas nem amontoado de técnicas: quantificar não é planejar — o excesso de instrumentos e números não substitui a reflexão estratégica.",
+      "Não é previsão: o planejamento estratégico se faz necessário justamente por não se ter a capacidade de prever o futuro; a incerteza é o pressuposto, não o obstáculo.",
+      "Não opera com decisões futuras: opera com o que há de futuro nas decisões presentes — é a formulação de Drucker, que situa o PE no presente, e não em um cenário hipotético.",
+      "Não é tentativa de eliminar o risco: o risco é inerente à decisão; o que se busca é que os riscos assumidos sejam os riscos certos.",
+      "Relevância: essas negativas impedem que a organização confunda planejamento com burocracia numérica, com adivinhação ou com busca de segurança absoluta, preservando o caráter decisório e proativo do processo.",
+      "Consequência prática: sem um bom planejamento e uma estratégia bem fundamentada, as organizações colocam em risco a própria sobrevivência."
+     ]
+    }
+   ]
+  },
+  "4": {
+   "titulo": "Técnicas de planejamento estratégico: SWOT, BCG, Porter e análise ambiental",
+   "legal": "Análise SWOT (Montana e Charnov; Oliveira); Matriz BCG (Bruce Henderson); Cinco Forças de Porter; GUT; Time Bound",
+   "vf": [
+    {
+     "t": "SWOT é a sigla de Strengths, Weaknesses, Opportunities and Threats — forças, fraquezas, oportunidades e ameaças, também chamada matriz FOFA.",
+     "r": true,
+     "j": "Correto — começou a ser desenvolvida nos anos 60-70, nas escolas americanas."
+    },
+    {
+     "t": "Na análise SWOT, as forças e fraquezas dizem respeito ao ambiente externo, e as oportunidades e ameaças ao ambiente interno.",
+     "r": false,
+     "j": "Falso — está invertido. Forças e fraquezas são do ambiente INTERNO (ligadas à empresa); oportunidades e ameaças são do ambiente EXTERNO (ligadas ao mercado)."
+    },
+    {
+     "t": "Os pontos fortes e fracos de uma empresa são constituídos de seus recursos humanos, organizacionais e físicos.",
+     "r": true,
+     "j": "Correto — humanos (experiências, conhecimentos, habilidades); organizacionais (sistemas, estratégias, estrutura, cultura); e físicos (instalações, equipamentos, tecnologia)."
+    },
+    {
+     "t": "As oportunidades são situações externas e não controláveis, atuais ou futuras, que, se adequadamente aproveitadas, podem influenciar a empresa positivamente.",
+     "r": true,
+     "j": "Correto — as ameaças são igualmente externas e não controláveis, mas afetam negativamente se não forem eliminadas, minimizadas ou evitadas."
+    },
+    {
+     "t": "As ameaças de uns podem ser as oportunidades de outros e vice-versa.",
+     "r": true,
+     "j": "Correto — observação expressa do material."
+    },
+    {
+     "t": "A função principal da análise SWOT é levar ao estabelecimento de objetivos para a organização.",
+     "r": true,
+     "j": "Correto — é, em última instância, ferramenta de apoio à tomada de decisão, bastante difundida no ambiente da inteligência competitiva."
+    },
+    {
+     "t": "O primeiro passo da técnica SWOT é criar uma lista de executivos e funcionários-chave, cuja opinião inventariará as questões importantes.",
+     "r": true,
+     "j": "Correto — parte da premissa de que as metas e objetivos da empresa estão na mente de seus executivos, admitindo o brainstorming."
+    },
+    {
+     "t": "A técnica GUT — gravidade, urgência e tendência — pode auxiliar na priorização das questões levantadas na SWOT.",
+     "r": true,
+     "j": "Correto — inclusive para definir a postura estratégica da empresa: sobrevivência, desenvolvimento, manutenção ou crescimento."
+    },
+    {
+     "t": "A Matriz BCG foi criada na década de 70 por Bruce Henderson, na Boston Consulting Group, e analisa graficamente os produtos de uma marca em relação ao seu desempenho no mercado.",
+     "r": true,
+     "j": "Correto — aplica-se ao portfólio de produtos, analisando o ciclo de vida de cada um, seu desempenho e o potencial de crescimento do mercado."
+    },
+    {
+     "t": "No quadrante “vaca leiteira” da Matriz BCG estão os produtos que geram alta receita, mas exigem alto investimento para alcançar a performance desejada.",
+     "r": false,
+     "j": "Falso. Essa é a descrição do quadrante ESTRELA. Na vaca leiteira a alta receita vem de forma orgânica, sem alto custo para incentivar as vendas — é o quadrante preferido e mais almejado."
+    },
+    {
+     "t": "O quadrante “ponto de interrogação” reúne produtos que ainda não geram muitos lucros, mesmo com certo grau de investimento, sendo comum em produtos em fase de lançamento.",
+     "r": true,
+     "j": "Correto — ainda não fornecem base sólida de dados nem muito conhecimento por parte do público."
+    },
+    {
+     "t": "Os produtos classificados como “abacaxis” têm baixa performance nas vendas, podendo a saída ser o cancelamento da linha e a retirada do portfólio.",
+     "r": true,
+     "j": "Correto — sobretudo se o plano para recuperar sua força exigir alto investimento."
+    },
+    {
+     "t": "São cinco as forças de Porter: rivalidade entre os concorrentes, poder de barganha dos clientes, poder de barganha dos fornecedores, ameaça de novos entrantes e ameaça de produtos substitutos.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A análise ambiental serve para conhecer o mercado em nível de macroambiente, estudando fatores ambientais, culturais, sociais, demográficos, econômicos, políticos, judiciais, psicológicos e tecnológicos.",
+     "r": true,
+     "j": "Correto — pode ser usada antes ou durante a entrada no mercado."
+    },
+    {
+     "t": "O Time Bound é uma técnica de análise da concorrência.",
+     "r": false,
+     "j": "Falso. O Time Bound é o estudo do TEMPO — um cronograma detalhado que reforça prazos, oficializa passos, esclarece processos e engaja os colaboradores. A análise da concorrência é feita pelas cinco forças de Porter."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a análise SWOT, assinale a alternativa INCORRETA:",
+     "a": [
+      "Forças e fraquezas são do ambiente interno.",
+      "Oportunidades e ameaças são do ambiente externo e não controláveis.",
+      "O objetivo é manter pontos fortes, reduzir pontos fracos, aproveitar oportunidades e proteger-se de ameaças.",
+      "A análise pode revelar pontos fortes ainda não plenamente utilizados.",
+      "A definição dos pontos fortes e fracos é a parte mais simples e automática da técnica."
+     ],
+     "c": 4,
+     "j": "As definições de pontos fortes e fracos são apontadas como um dos PRINCIPAIS DESAFIOS da técnica."
+    },
+    {
+     "e": "Assinale a alternativa que associa corretamente o quadrante da Matriz BCG à sua descrição:",
+     "a": [
+      "Estrela — alta receita obtida de forma orgânica, sem alto custo.",
+      "Vaca leiteira — alta receita, mas exigindo alto investimento.",
+      "Ponto de interrogação — produtos que ainda não geram muitos lucros, comuns em fase de lançamento.",
+      "Abacaxi — o quadrante preferido e mais almejado.",
+      "Estrela — baixa performance nas vendas."
+     ],
+     "c": 2,
+     "j": "Estrela: alta receita com alto investimento; vaca leiteira: alta receita orgânica, quadrante mais almejado; abacaxi: baixa performance."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a uma das cinco forças de Porter:",
+     "a": [
+      "Rivalidade entre os concorrentes.",
+      "Poder de barganha dos clientes.",
+      "Poder de barganha dos fornecedores.",
+      "Ameaça de novos entrantes.",
+      "Capacidade de endividamento da empresa."
+     ],
+     "c": 4,
+     "j": "A quinta força é a ameaça de produtos substitutos; a capacidade de endividamento não integra o modelo."
+    },
+    {
+     "e": "Sobre os passos para utilização da técnica SWOT, assinale a alternativa INCORRETA:",
+     "a": [
+      "Criar uma lista de executivos e funcionários-chave.",
+      "Desenvolver entrevistas individuais junto aos funcionários-chave.",
+      "Organizar as informações em uma matriz.",
+      "Priorizar as questões, podendo valer-se da técnica GUT.",
+      "Encerrar a análise sem definir questões-chave, deixando as conclusões em aberto."
+     ],
+     "c": 4,
+     "j": "O quinto passo é justamente a definição das questões-chave: de posse da matriz e das questões priorizadas, estabelece-se o que deve ser feito."
+    },
+    {
+     "e": "Sobre as técnicas de planejamento estratégico, assinale a alternativa CORRETA:",
+     "a": [
+      "A análise ambiental estuda apenas fatores econômicos.",
+      "O Time Bound é técnica de análise da concorrência.",
+      "A Matriz BCG foi criada por Michael Porter.",
+      "A SWOT é ferramenta versátil, aplicável à empresa como um todo, ao produto, à tomada de decisão e até ao marketing pessoal.",
+      "As cinco forças de Porter analisam o portfólio de produtos da empresa."
+     ],
+     "c": 3,
+     "j": "A análise ambiental abrange fatores ambientais, culturais, sociais, demográficos, econômicos, políticos, judiciais, psicológicos e tecnológicos; o Time Bound é o estudo do tempo; a BCG é de Bruce Henderson; e o portfólio é objeto da BCG, não de Porter."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique a análise SWOT: o que é, o que compõe cada quadrante e quais os passos para sua utilização.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Conceito: ferramenta estrutural utilizada para análise do ambiente e formulação de estratégias, que permite identificar forças e fraquezas da organização e extrapolar oportunidades e ameaças externas; também chamada matriz FOFA. Começou a ser desenvolvida nos anos 60-70, nas escolas americanas.",
+      "Forças e fraquezas (ambiente interno): constituídas dos recursos da empresa — humanos (experiências, conhecimentos, habilidades), organizacionais (sistemas, estratégias, estrutura, cultura) e físicos (instalações, equipamentos, tecnologia).",
+      "Oportunidades: situações externas e não controláveis, atuais ou futuras, que, se adequadamente aproveitadas, podem influenciar a empresa positivamente — mercado em expansão, alianças estratégicas, novo segmento rentável, novo mercado internacional.",
+      "Ameaças: situações externas e não controláveis, atuais ou futuras, que, se não eliminadas, minimizadas ou evitadas, podem afetar a empresa negativamente — novos concorrentes, guerra de preços, introdução de novas tecnologias. As ameaças de uns podem ser as oportunidades de outros.",
+      "Objetivo: levantar estratégias para manter pontos fortes, reduzir a intensidade dos pontos fracos, aproveitar oportunidades e proteger-se de ameaças; revela ainda pontos fortes não plenamente utilizados e pontos fracos corrigíveis. Sua função principal é levar ao estabelecimento de objetivos para a organização.",
+      "Postura estratégica: conforme a predominância de pontos fortes ou fracos e de oportunidades ou ameaças, adotam-se estratégias de sobrevivência, manutenção, crescimento ou desenvolvimento.",
+      "Passo 1 — criar uma lista de executivos e funcionários-chave, cuja opinião inventaria as questões importantes, partindo da premissa de que as metas e objetivos estão na mente dos executivos (admite-se o brainstorming).",
+      "Passos 2 a 5 — desenvolver entrevistas individuais junto aos funcionários-chave; organizar as informações na matriz SWOT; priorizar as questões, com apoio de técnicas como o GUT (gravidade, urgência e tendência); e definir as questões-chave, estabelecendo o que deve ser feito.",
+      "Desafio: a definição dos pontos fortes e fracos é um dos principais desafios da técnica; a estratégia e a inteligência competitiva devem andar juntas."
+     ]
+    },
+    {
+     "e": "Explique a Matriz BCG e as cinco forças de Porter.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Matriz BCG — origem e conceito: metodologia criada na década de 70 por Bruce Henderson, na Boston Consulting Group, que permite analisar graficamente os produtos de uma marca em relação ao seu desempenho no mercado, com base no portfólio, no ciclo de vida de cada produto e no potencial de crescimento do mercado.",
+      "Utilidade: ajuda na tomada de decisões, identificando quais produtos tiveram bom desempenho e devem ser mantidos e quais requerem muito esforço sem gerar os resultados esperados; a representação gráfica em quadrantes facilita decisões rápidas e claras.",
+      "Ponto de interrogação: produtos que ainda não geram muitos lucros, mesmo com certo investimento em marketing e vendas — comum em fase de lançamento, sem base sólida de dados nem conhecimento do público.",
+      "Estrela: produtos que geram receita alta, mas exigem alto investimento para alcançar a performance desejada.",
+      "Vaca leiteira: produtos de alta receita obtida de forma orgânica, sem alto custo para incentivar vendas — já estabelecidos no mercado e com boa percepção do consumidor; é o quadrante preferido e mais almejado.",
+      "Abacaxi: produtos de baixa performance nas vendas; se a recuperação exigir alto investimento, a saída pode ser o cancelamento da linha e a retirada do portfólio.",
+      "Cinco forças de Porter: rivalidade entre os concorrentes — quanto maior, mais difícil entrar no mercado; poder de barganha dos clientes — compradores com muitas opções pressionam por preços menores e mais qualidade; poder de barganha dos fornecedores — situações de monopólio ou oligopólio permitem ditar preços e condições.",
+      "Ameaça de novos entrantes: depende das barreiras de entrada — patentes, custos altos de instalação, economia de escala e força das marcas instaladas. Ameaça de produtos substitutos: produtos que atendem às mesmas necessidades de outra forma, às vezes melhor."
+     ]
+    }
+   ]
+  },
+  "5": {
+   "titulo": "Missão, visão, valores, objetivos, metas e plano de ação (5W2H)",
+   "legal": "Identidade organizacional; ferramenta 5W2H; Kanban, Scrum e RACI",
+   "vf": [
+    {
+     "t": "A missão é o propósito ou finalidade da organização, a descrição precisa do que ela faz e do negócio em que está inserida, representando sua razão de ser.",
+     "r": true,
+     "j": "Correto — deve responder ao “porquê” de a organização existir, de forma clara, sintética e compreensiva."
+    },
+    {
+     "t": "Para elaborar a missão, deve-se responder: qual o nosso negócio, quem é nosso cliente e que satisfação ele quer ao comprar nosso produto.",
+     "r": true,
+     "j": "Correto — a missão liga-se não apenas ao lucro, mas ao objetivo social, devendo satisfazer alguma necessidade do ambiente externo."
+    },
+    {
+     "t": "A missão da PMPE é preservar a ordem pública por meio da polícia ostensiva e preventiva no Estado de Pernambuco.",
+     "r": true,
+     "j": "Correto — exemplo trazido no material, ao lado dos exemplos de FIAT, Natura e 3M."
+    },
+    {
+     "t": "A visão é aquilo que a organização espera ser em determinado espaço de tempo, normalmente prazo longo, de pelo menos cinco anos.",
+     "r": true,
+     "j": "Correto — deve ser inspiradora, clara e concisa, de modo que todos a sintam."
+    },
+    {
+     "t": "A missão é mutável por natureza e a visão é perene.",
+     "r": false,
+     "j": "Falso — está invertido. A MISSÃO é perene e sustentável; a VISÃO é mutável por natureza, conforme a necessidade da organização, embora deva ser concreta e possível de alcançar."
+    },
+    {
+     "t": "A visão da PMPE é ser referência nacional no planejamento, na gestão e na qualidade dos serviços prestados.",
+     "r": true,
+     "j": "Correto — exemplo do material, ao lado de AVON e VALE."
+    },
+    {
+     "t": "A visão deve projetar oportunidades futuras, responder aonde a empresa quer chegar, delimitar um prazo e ser revista periodicamente.",
+     "r": true,
+     "j": "Correto — assume-se que permaneça inalterada por uma década, mas deve mudar se o ambiente exigir mudança fundamental."
+    },
+    {
+     "t": "Valores são princípios ou crenças que servem de guia para comportamentos, atitudes e decisões de todas as pessoas que executam a missão na direção da visão.",
+     "r": true,
+     "j": "Correto — são princípios éticos que norteiam todas as ações."
+    },
+    {
+     "t": "Recomenda-se estabelecer no máximo cinco valores, curtos, duradouros e coerentes com a identidade da empresa.",
+     "r": true,
+     "j": "Correto — os valores são inegociáveis e os mais perenes de uma organização."
+    },
+    {
+     "t": "São valores da PMPE, entre outros, a hierarquia e a disciplina, a ética, a dignidade da pessoa humana e o comprometimento com a missão institucional.",
+     "r": true,
+     "j": "Correto — somam-se história da corporação, espírito de corpo e patriotismo, lealdade, autocontrole e honestidade, proatividade, liderança e resiliência."
+    },
+    {
+     "t": "Objetivos são as etapas ou o caminho percorrido para se atingir uma meta.",
+     "r": false,
+     "j": "Falso — está invertido. OBJETIVOS são marcos finais, onde se pretende chegar, declarados de forma genérica; METAS são as etapas ou o caminho para atingir determinado objetivo."
+    },
+    {
+     "t": "As metas devem ser específicas, realistas e passíveis de medição, apontando exatamente o momento em que serão atingidas.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Estratégias são o plano de ação que viabiliza o cumprimento das metas, definindo o que será feito, por que, onde, quando, por quem, como e o custo.",
+     "r": true,
+     "j": "Correto — o custo nem sempre está presente nos planos."
+    },
+    {
+     "t": "A ferramenta 5W2H é um checklist de atividades, com prazos e responsabilidades, aplicável ao planejamento estratégico, tático e operacional.",
+     "r": true,
+     "j": "Correto — é ferramenta completa, simples e prática, útil em praticamente todas as atividades e áreas."
+    },
+    {
+     "t": "Os 2H do 5W2H correspondem a How (como será feito) e How Much (quanto vai custar).",
+     "r": true,
+     "j": "Correto — e os 5W são What, Why, Where, When e Who."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre missão e visão, assinale a alternativa CORRETA:",
+     "a": [
+      "A missão é mutável e a visão é perene.",
+      "A missão descreve o que a organização quer ser no futuro.",
+      "A missão é perene e representa a razão de ser; a visão é mutável e aponta aonde a organização quer chegar.",
+      "Missão e visão são sinônimos.",
+      "A visão deve ser extensa e detalhada, para não deixar dúvidas."
+     ],
+     "c": 2,
+     "j": "A missão é perene e sustentável; a visão é mutável por natureza, devendo ser inspiradora, clara e concisa, com prazo delimitado e revisão periódica."
+    },
+    {
+     "e": "Assinale a alternativa que diferencia corretamente objetivos, metas e estratégias:",
+     "a": [
+      "Objetivos são etapas; metas são marcos finais; estratégias são princípios éticos.",
+      "Objetivos são marcos finais declarados de forma genérica; metas são etapas específicas e mensuráveis; estratégias são o plano de ação que viabiliza as metas.",
+      "Metas são genéricas e objetivos são específicos.",
+      "Estratégias são marcos finais e objetivos são o caminho.",
+      "Todos os três são sinônimos no planejamento estratégico."
+     ],
+     "c": 1,
+     "j": "É a distinção apresentada no material."
+    },
+    {
+     "e": "Os 5W da ferramenta 5W2H correspondem a:",
+     "a": [
+      "What, Why, Where, When e Who.",
+      "What, Why, Where, When e How.",
+      "Who, Why, When, How e How Much.",
+      "What, Where, When, How e How Much.",
+      "Why, Who, Where, How e How Much."
+     ],
+     "c": 0,
+     "j": "Os 5W são What (o que), Why (por que), Where (onde), When (quando) e Who (por quem); os 2H são How (como) e How Much (quanto vai custar)."
+    },
+    {
+     "e": "Sobre os valores organizacionais, assinale a alternativa INCORRETA:",
+     "a": [
+      "São princípios ou crenças que servem de guia para comportamentos, atitudes e decisões.",
+      "Devem ter enunciado curto e resistir ao tempo.",
+      "Recomenda-se o máximo de cinco valores.",
+      "São inegociáveis e os mais perenes de uma empresa.",
+      "Devem variar conforme o ramo de atividade e ser revistos a cada semestre."
+     ],
+     "c": 4,
+     "j": "Os valores devem ser coerentes com a identidade da empresa e INDEPENDENTES do ramo de atividade, além de resistir ao tempo."
+    },
+    {
+     "e": "Sobre o plano de ação, assinale a alternativa INCORRETA:",
+     "a": [
+      "Aplica-se a ações de curto, médio e longo prazo.",
+      "Deve conter o objetivo global, a lista de ações e as datas de início e fim previstas.",
+      "O 5W2H é uma das ferramentas mais simples e eficazes para o acompanhamento de atividades.",
+      "Registros históricos, atas de reuniões, pesquisas e relatórios de auditoria são fontes de informação para sua elaboração.",
+      "Deve ser sempre robusto e complexo, independentemente da necessidade do projeto."
+     ],
+     "c": 4,
+     "j": "O plano de ação pode ser simples ou robusto, a depender da necessidade do projeto."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique missão, visão e valores, indicando como cada um é elaborado e exemplificando com a PMPE.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Identidade organizacional: missão, visão e valores representam a identidade da organização; qualquer organização precisa compreender sua missão no mercado e, a partir disso, estabelecer sua visão.",
+      "Missão: propósito ou finalidade da organização; descrição precisa do que ela faz e do negócio em que está inserida; liga-se aos objetivos institucionais e aos motivos pelos quais foi criada, representando sua razão de ser; deve responder ao “porquê” de existir, de forma clara, sintética e compreensiva.",
+      "Elaboração da missão: liga-se não apenas ao lucro, mas ao objetivo social; deve satisfazer alguma necessidade do ambiente externo, respondendo qual o nosso negócio, quem é nosso cliente e que satisfação ele quer.",
+      "Visão: objetivo da organização, aquilo que se espera ser em determinado espaço de tempo — normalmente prazo longo, de pelo menos cinco anos; deve ser inspiradora, clara e concisa.",
+      "Elaboração da visão: apontar para o futuro, ser curta e compreensiva, projetar oportunidades futuras, responder aonde a empresa quer chegar, delimitar prazo e ser revista periodicamente.",
+      "Distinção: a missão é perene e sustentável; a visão é mutável por natureza, conforme a necessidade da organização, ainda que deva ser concreta e possível de alcançar.",
+      "Valores: princípios ou crenças que servem de guia para comportamentos, atitudes e decisões de todos que executam a missão na direção da visão; princípios éticos que norteiam todas as ações e facilitam o comprometimento dos empregados entre si, com o mercado, a comunidade e a sociedade. Recomenda-se no máximo cinco, curtos, duradouros, inegociáveis e independentes do ramo de atividade.",
+      "Exemplos na PMPE: missão — preservar a ordem pública por meio da polícia ostensiva e preventiva no Estado de Pernambuco; visão — ser referência nacional no planejamento, na gestão e na qualidade dos serviços prestados; valores — hierarquia e disciplina, ética e dignidade da pessoa humana, comprometimento com a missão institucional, história da corporação, espírito de corpo e patriotismo, lealdade, autocontrole e honestidade, proatividade, liderança e resiliência."
+     ]
+    },
+    {
+     "e": "Diferencie objetivos, metas e estratégias e explique o plano de ação pela ferramenta 5W2H.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Objetivos: são marcos finais, onde se pretende chegar, devendo ser declarados de forma genérica.",
+      "Metas: etapas ou caminho percorrido para atingir determinado objetivo; devem ser específicas, realistas e passíveis de medição, apontando exatamente o momento em que serão atingidas.",
+      "Estratégias: plano de ação que viabiliza o cumprimento das metas, definindo com clareza o que será feito, por que, onde, quando, por quem, como e a que custo — este nem sempre presente nos planos.",
+      "Dificuldade prática: organizações e gestores encontram grande dificuldade nessa tarefa — o chamado “fantasma do planejamento”, em que os gestores não se sentem capacitados para planejar.",
+      "Plano de ação: aplica-se às ações de curto, médio e longo prazo, mostrando como colocar em prática as estratégias; possibilita a melhoria dos processos; tem por fontes registros históricos, atas de reuniões, pesquisas e relatórios de auditoria.",
+      "Ferramentas: das mais simples, como listas de tarefas com prazos, às mais complexas, como Kanban, Scrum e RACI; entre elas destaca-se o 5W2H, ferramenta completa, simples e prática, aplicável ao planejamento estratégico, tático e operacional.",
+      "5W2H: What (o que deve ser feito), Why (por que deve ser feito), Where (onde deve ser feito), When (quando deve ser feito), Who (por quem deve ser feito), How (como será feito) e How Much (quanto vai custar) — checklist de atividades com prazos e responsabilidades.",
+      "Conteúdo obrigatório do plano de ação: objetivo global a ser alcançado; lista de ações e atividades a executar; datas de início e fim previstas para cada ação; e demonstração dos custos financeiros ou de recursos humanos. Pode ser simples ou robusto, conforme a necessidade do projeto, e normalmente é montado em planilha eletrônica."
+     ]
+    }
+   ]
+  },
+  "6": {
+   "titulo": "Indicadores de desempenho e o planejamento estratégico da PMPE",
+   "legal": "Indicadores estratégicos, de produtividade, qualidade, efetividade e capacidade; Plano de Comando da PMPE",
+   "vf": [
+    {
+     "t": "Indicadores estratégicos informam o quanto a organização se encontra na direção da consecução de sua visão, refletindo o desempenho em relação aos fatores críticos de sucesso.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Indicadores de produtividade medem a proporção de recursos consumidos em relação às saídas dos processos e traduzem a eficiência.",
+     "r": true,
+     "j": "Correto — já os indicadores de qualidade focam a satisfação dos clientes e traduzem a eficácia."
+    },
+    {
+     "t": "Indicadores de qualidade medem a eficiência e têm foco no esforço.",
+     "r": false,
+     "j": "Falso — está invertido. Os de QUALIDADE medem a EFICÁCIA e têm foco nos RESULTADOS; os de produtividade medem a eficiência e têm foco no esforço."
+    },
+    {
+     "t": "Os indicadores de produtividade ensinam a “fazer certo as coisas”, e os de qualidade, a “fazer as coisas certas”.",
+     "r": true,
+     "j": "Correto — os de produtividade indicam COMO fazer; os de qualidade, O QUE fazer."
+    },
+    {
+     "t": "Indicadores de efetividade focam as consequências dos produtos e serviços — fazer a coisa certa da maneira certa.",
+     "r": true,
+     "j": "Correto — são também chamados indicadores de impacto."
+    },
+    {
+     "t": "Indicadores de capacidade medem a capacidade de resposta de um processo, pela relação entre as saídas produzidas por unidade de tempo.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Índice é o valor escolhido como referência de comparação ou meta de desempenho a ser alcançada.",
+     "r": false,
+     "j": "Falso. Essa é a definição de PADRÃO. ÍNDICE é o valor numérico de uma relação matemática que quantifica um indicador."
+    },
+    {
+     "t": "Resultado é o valor obtido para o indicador, e a fórmula de obtenção indica como esse valor numérico é obtido.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Meta é constituída por três componentes: objetivo gerencial, valor e prazo.",
+     "r": true,
+     "j": "Correto — exemplo do material: reduzir o número de acidentes em 50% até o final do ano."
+    },
+    {
+     "t": "Processo é o conjunto de atividades logicamente inter-relacionadas, organizadas com a finalidade de transformar insumos e produzir resultados específicos.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "São pontos fortes da PMPE, no diagnóstico do Plano de Comando, a presença em todo o território estadual, a exclusividade de polícia ostensiva e a hierarquia e disciplina.",
+     "r": true,
+     "j": "Correto — somam-se facilidade de mobilização, qualificação do quadro de pessoal, estrutura organizacional consolidada, assistência própria, tradição histórica e desejo de fortalecimento institucional."
+    },
+    {
+     "t": "A existência da violência criminal e do crime organizado, o assédio da criminalidade aos jovens e a desagregação de muitas famílias são apontados como ameaças à PMPE.",
+     "r": true,
+     "j": "Correto — item do ambiente externo no diagnóstico estratégico."
+    },
+    {
+     "t": "A carência por segurança pública e a credibilidade da instituição são apontadas como oportunidades no diagnóstico da PMPE.",
+     "r": true,
+     "j": "Correto — somam-se a missão como prioridade no Plano de Governo, o comprometimento político, a Política Nacional de Capacitação e o Plano Nacional de Segurança Pública."
+    },
+    {
+     "t": "O Plano de Comando da PMPE organiza-se em dez áreas estratégicas, entre elas a otimização da gestão de pessoas e a melhoria do desempenho operacional.",
+     "r": true,
+     "j": "Correto — somam-se ensino e pesquisa, suporte logístico, saúde, finanças, legislação e doutrina, gestão da qualidade, tecnologia e articulação social e direitos humanos."
+    },
+    {
+     "t": "Os indicadores servem, entre outros fins, para embasar a análise crítica dos resultados e do processo de tomada de decisão e contribuir para a melhoria contínua dos processos.",
+     "r": true,
+     "j": "Correto — servem ainda para internalizar as necessidades e expectativas dos clientes e possibilitar o desdobramento das metas."
+    }
+   ],
+   "me": [
+    {
+     "e": "Associe corretamente o tipo de indicador ao que ele mede:",
+     "a": [
+      "Produtividade — eficácia.",
+      "Qualidade — eficiência.",
+      "Efetividade — proporção de recursos consumidos.",
+      "Produtividade — eficiência; qualidade — eficácia.",
+      "Capacidade — satisfação dos clientes."
+     ],
+     "c": 3,
+     "j": "Produtividade mede eficiência, com foco no esforço; qualidade mede eficácia, com foco nos resultados; efetividade foca o impacto; e capacidade mede a resposta do processo por unidade de tempo."
+    },
+    {
+     "e": "Sobre as definições relacionadas aos indicadores, assinale a alternativa INCORRETA:",
+     "a": [
+      "Índice é o valor numérico de uma relação matemática que quantifica um indicador.",
+      "Padrão é o valor escolhido como referência de comparação ou meta de desempenho.",
+      "Resultado é o valor obtido para o indicador.",
+      "Processo é o conjunto de atividades inter-relacionadas que transformam insumos em resultados.",
+      "Meta é constituída apenas pelo valor a ser alcançado."
+     ],
+     "c": 4,
+     "j": "A meta é constituída por três componentes: objetivo gerencial, valor e prazo."
+    },
+    {
+     "e": "Sobre os indicadores de produtividade e de qualidade, assinale a alternativa CORRETA:",
+     "a": [
+      "Os de produtividade ensinam a fazer as coisas certas.",
+      "Os de qualidade indicam como fazer.",
+      "Os de produtividade têm foco nos resultados.",
+      "Os de produtividade ensinam a fazer certo as coisas; os de qualidade, a fazer as coisas certas.",
+      "Ambos medem a mesma dimensão do desempenho."
+     ],
+     "c": 3,
+     "j": "Produtividade: modo de utilizar os recursos, eficiência, foco no esforço, indica como fazer. Qualidade: satisfação dos clientes, eficácia, foco nos resultados, indica o que fazer."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a um ponto forte da PMPE no diagnóstico do Plano de Comando:",
+     "a": [
+      "Presença em todo o território estadual.",
+      "Exclusividade de polícia ostensiva.",
+      "Hierarquia e disciplina.",
+      "Tradição histórica consolidada.",
+      "Desagregação de muitas famílias."
+     ],
+     "c": 4,
+     "j": "A desagregação de muitas famílias é apontada como AMEAÇA, no ambiente externo, e não como ponto forte."
+    },
+    {
+     "e": "Sobre a missão institucional da PMPE no Plano de Comando, assinale a alternativa INCORRETA:",
+     "a": [
+      "Integrar o Sistema de Segurança Pública do Estado de Pernambuco.",
+      "Realizar, com exclusividade, a polícia ostensiva e a preservação da ordem pública.",
+      "Exercer as funções de polícia judiciária militar e a apuração das infrações penais militares.",
+      "Atender à convocação, inclusive mobilização, do Governo Federal em caso de guerra externa.",
+      "Exercer a polícia judiciária comum e a apuração das infrações penais comuns."
+     ],
+     "c": 4,
+     "j": "A apuração das infrações penais comuns é atribuição da Polícia Civil; à PM cabe a polícia judiciária militar e a apuração das infrações penais militares."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique os tipos de indicadores de desempenho e as definições de índice, padrão, resultado e meta.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Indicadores estratégicos: informam o quanto a organização se encontra na direção da consecução de sua visão, refletindo o desempenho em relação aos fatores críticos de sucesso.",
+      "Indicadores de produtividade (eficiência): medem a proporção de recursos consumidos com relação às saídas dos processos; dizem respeito ao modo de utilizar os recursos, têm foco no esforço, indicam como fazer e ensinam a fazer certo as coisas.",
+      "Indicadores de qualidade (eficácia): focam as medidas de satisfação dos clientes e as características do produto ou serviço; têm foco nos resultados, indicam o que fazer e ensinam a fazer as coisas certas.",
+      "Indicadores de efetividade (impacto): focam as consequências dos produtos e serviços — fazer a coisa certa da maneira certa. Indicadores de capacidade: medem a capacidade de resposta de um processo pela relação entre as saídas produzidas por unidade de tempo.",
+      "Índice: valor numérico de uma relação matemática que quantifica um indicador. Padrão: valor escolhido como referência de comparação ou meta de desempenho a ser alcançada.",
+      "Resultado: valor obtido para o indicador. Fórmula de obtenção: indica como o valor numérico do indicador é obtido. Processo: conjunto de atividades logicamente inter-relacionadas, organizadas para transformar insumos e produzir resultados específicos.",
+      "Meta: ponto ou posição a ser atingida no futuro, constituída por três componentes — objetivo gerencial, valor e prazo; por exemplo, reduzir o número de acidentes em 50% até o final do ano.",
+      "Para que servem: internalizar na organização pública as necessidades e expectativas dos clientes; possibilitar o desdobramento das metas do negócio; embasar a análise crítica dos resultados e a tomada de decisão; contribuir para a melhoria contínua dos processos; facilitar o planejamento e o controle do desempenho; e viabilizar a análise comparativa em negócios diversificados."
+     ]
+    },
+    {
+     "e": "Apresente o planejamento estratégico da PMPE conforme o Plano de Comando: missão, visão, diagnóstico e áreas estratégicas.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Importância do Plano: consiste no norte a ser seguido pelos integrantes do Comando-Geral, tendo em vista as dificuldades e oportunidades que podem interferir no destino da corporação, consideradas as diretrizes do Pacto pela Vida e a doutrina de defesa social.",
+      "Missão da PMPE: integrar o Sistema de Segurança Pública do Estado, contribuindo para a preservação da ordem pública, da incolumidade das pessoas e do patrimônio; realizar com exclusividade a polícia ostensiva e a preservação da ordem pública; exercer as funções de polícia judiciária militar e a apuração das infrações penais militares; e atender à convocação do Governo Federal em caso de guerra externa ou grave perturbação da ordem.",
+      "Visão: ser referência nacional de excelência nas ações de polícia ostensiva e preservação da ordem pública.",
+      "Diagnóstico — pontos fortes: presença em todo o território estadual; facilidade de mobilização; exclusividade de polícia ostensiva; qualificação do quadro de pessoal; estrutura organizacional consolidada; hierarquia e disciplina; assistência social, saúde e educacional própria; tradição histórica consolidada; e desejo de fortalecimento institucional.",
+      "Diagnóstico — oportunidades: carência por segurança pública; credibilidade da instituição; missão enquadrada como prioridade no Plano de Governo; comprometimento político com a segurança pública; Política Nacional de Capacitação em Segurança Pública; Plano Nacional de Segurança Pública; e apoio dos órgãos institucionais ligados à Defesa Social.",
+      "Diagnóstico — ameaças: a existência da violência criminal e do crime organizado; o constante assédio da criminalidade aos jovens com o fim de levá-los ao consumo de drogas; e a desagregação de muitas famílias.",
+      "Valores institucionais: hierarquia; disciplina; orgulho de servir à instituição; aprimoramento técnico-profissional; civismo; culto à história; comprometimento com a missão institucional; solidariedade; e sentimento de servir à sociedade.",
+      "Áreas e objetivos estratégicos: otimização da gestão de pessoas; melhoria do desempenho operacional; otimização do ensino, instrução e pesquisa; otimização da gestão do suporte logístico; otimização da gestão de saúde; otimização da gestão de finanças; consolidação da legislação e da doutrina; implantação da gestão da qualidade; otimização da gestão de tecnologia; e promoção da articulação social e dos direitos humanos.",
+      "Conclusão do Plano: a busca das metas deve ser prioridade para todos os integrantes da corporação, visando ao fortalecimento institucional, à melhoria das condições de trabalho e, como objetivo maior, à proteção da população."
+     ]
+    }
+   ]
+  }
+ },
+ "sim": {
+  "vf": [
+   {
+    "t": "Estratégia vem do grego estrategos, “a arte do general”, de conotação militar.",
+    "r": true,
+    "j": "Correto — strategos é o líder de exército.",
+    "g": "Questão 01 — Conceitos e escolas"
+   },
+   {
+    "t": "Pensamento estratégico e planejamento estratégico são a mesma coisa.",
+    "r": false,
+    "j": "Falso — o primeiro é capacidade intelectual; o segundo é a aplicação dessa habilidade em situação particular.",
+    "g": "Questão 01 — Conceitos e escolas"
+   },
+   {
+    "t": "A Teoria da Burocracia é de Weber e a Teoria Clássica é de Fayol.",
+    "r": true,
+    "j": "Correto — a Teoria Neoclássica é de Drucker, a partir de 1954.",
+    "g": "Questão 01 — Conceitos e escolas"
+   },
+   {
+    "t": "Drucker é considerado o pai da gestão (management).",
+    "r": true,
+    "j": "Correto — e “descobridor” da corporação como coração da sociedade industrial.",
+    "g": "Questão 01 — Conceitos e escolas"
+   },
+   {
+    "t": "A administração estratégica surge em 1970, com o relatório Gordon-Howell.",
+    "r": false,
+    "j": "Falso — o formato surge em 1950; em meados de 1970 o curso já integrava a grade de escolas de negócios.",
+    "g": "Questão 01 — Conceitos e escolas"
+   },
+   {
+    "t": "O planejamento estratégico é responsabilidade dos níveis hierárquicos mais elevados e trata de objetivos de longo prazo.",
+    "r": true,
+    "j": "Correto — o tático é dos níveis intermediários e o operacional, da base.",
+    "g": "Questão 02 — Níveis e técnicas"
+   },
+   {
+    "t": "O planejamento estratégico é uma forma de previsão do futuro.",
+    "r": false,
+    "j": "Falso — o PE se faz necessário justamente por não se ter a capacidade de prever.",
+    "g": "Questão 02 — Níveis e técnicas"
+   },
+   {
+    "t": "Na análise SWOT, forças e fraquezas pertencem ao ambiente interno e oportunidades e ameaças ao ambiente externo.",
+    "r": true,
+    "j": "Correto — as primeiras estão ligadas à empresa; as segundas, ao mercado.",
+    "g": "Questão 02 — Níveis e técnicas"
+   },
+   {
+    "t": "Na Matriz BCG, o quadrante “vaca leiteira” exige alto investimento para gerar receita.",
+    "r": false,
+    "j": "Falso — na vaca leiteira a alta receita vem de forma orgânica; quem exige alto investimento é a estrela.",
+    "g": "Questão 02 — Níveis e técnicas"
+   },
+   {
+    "t": "São cinco as forças de Porter, entre elas a ameaça de produtos substitutos.",
+    "r": true,
+    "j": "Correto — somam-se rivalidade entre concorrentes, poder de barganha de clientes e fornecedores e ameaça de novos entrantes.",
+    "g": "Questão 02 — Níveis e técnicas"
+   },
+   {
+    "t": "A missão é perene e a visão é mutável por natureza.",
+    "r": true,
+    "j": "Correto — a visão deve, ainda assim, ser concreta e possível de alcançar.",
+    "g": "Questão 03 — Identidade e plano de ação"
+   },
+   {
+    "t": "Objetivos são as etapas percorridas para atingir as metas.",
+    "r": false,
+    "j": "Falso — está invertido: objetivos são marcos finais e metas são as etapas específicas e mensuráveis.",
+    "g": "Questão 03 — Identidade e plano de ação"
+   },
+   {
+    "t": "Recomenda-se estabelecer no máximo cinco valores organizacionais, curtos e duradouros.",
+    "r": true,
+    "j": "Correto — os valores são inegociáveis e independentes do ramo de atividade.",
+    "g": "Questão 03 — Identidade e plano de ação"
+   },
+   {
+    "t": "Os 2H do 5W2H correspondem a How e How Much.",
+    "r": true,
+    "j": "Correto — como será feito e quanto vai custar.",
+    "g": "Questão 03 — Identidade e plano de ação"
+   },
+   {
+    "t": "A missão da PMPE é ser referência nacional no planejamento, na gestão e na qualidade dos serviços prestados.",
+    "r": false,
+    "j": "Falso — essa é a VISÃO da PMPE; a missão é preservar a ordem pública por meio da polícia ostensiva e preventiva no Estado de Pernambuco.",
+    "g": "Questão 03 — Identidade e plano de ação"
+   },
+   {
+    "t": "Os indicadores de produtividade medem a eficiência e têm foco no esforço.",
+    "r": true,
+    "j": "Correto — os de qualidade medem a eficácia e têm foco nos resultados.",
+    "g": "Questão 04 — Indicadores e PE da PMPE"
+   },
+   {
+    "t": "Índice é o valor escolhido como referência de comparação ou meta de desempenho.",
+    "r": false,
+    "j": "Falso — essa é a definição de PADRÃO; índice é o valor numérico que quantifica um indicador.",
+    "g": "Questão 04 — Indicadores e PE da PMPE"
+   },
+   {
+    "t": "A meta é constituída por objetivo gerencial, valor e prazo.",
+    "r": true,
+    "j": "Correto — exemplo: reduzir o número de acidentes em 50% até o final do ano.",
+    "g": "Questão 04 — Indicadores e PE da PMPE"
+   },
+   {
+    "t": "A exclusividade de polícia ostensiva é apontada como ponto forte da PMPE no diagnóstico estratégico.",
+    "r": true,
+    "j": "Correto — assim como presença em todo o território, hierarquia e disciplina e tradição histórica consolidada.",
+    "g": "Questão 04 — Indicadores e PE da PMPE"
+   },
+   {
+    "t": "A desagregação de muitas famílias é apontada como oportunidade no diagnóstico da PMPE.",
+    "r": false,
+    "j": "Falso — é apontada como AMEAÇA, no ambiente externo.",
+    "g": "Questão 04 — Indicadores e PE da PMPE"
+   }
+  ],
+  "me": [
+   {
+    "e": "Assinale a alternativa INCORRETA sobre planejamento e estratégia:",
+    "a": [
+     "Para Chiavenato, o planejamento é a primeira função administrativa.",
+     "Para Oliveira, o planejamento envolve o que fazer, como, quando, quanto, para quem, por que, por quem e onde.",
+     "O pensamento estratégico é fortalecido pela prática.",
+     "Estratégia, conforme o Aurélio, é a arte de aplicar os meios disponíveis com vista a objetivos específicos.",
+     "O planejamento estratégico busca eliminar por completo os riscos da decisão."
+    ],
+    "c": 4,
+    "j": "O PE não é tentativa de eliminar o risco — é fundamental, porém, que os riscos assumidos sejam os riscos certos."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre os níveis de planejamento:",
+    "a": [
+     "O tático é responsabilidade da base da organização.",
+     "O operacional define objetivos de longo prazo para toda a empresa.",
+     "O estratégico é desenvolvido pelos níveis intermediários.",
+     "O tático tem por principal finalidade a utilização eficiente dos recursos disponíveis.",
+     "Os três níveis são desenvolvidos exclusivamente pela alta administração."
+    ],
+    "c": 3,
+    "j": "O tático é dos níveis intermediários, afeta parte da empresa e busca a utilização eficiente dos recursos; o estratégico é da alta administração e o operacional, da base."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre as técnicas de planejamento estratégico:",
+    "a": [
+     "A SWOT tem por função principal levar ao estabelecimento de objetivos para a organização.",
+     "A técnica GUT pode auxiliar na priorização das questões levantadas.",
+     "A Matriz BCG foi criada por Bruce Henderson, na década de 70.",
+     "O Time Bound é o estudo do tempo, apoiado em cronograma detalhado.",
+     "As cinco forças de Porter analisam o portfólio de produtos da própria empresa."
+    ],
+    "c": 4,
+    "j": "O portfólio de produtos é objeto da Matriz BCG; as forças de Porter analisam a estrutura competitiva do setor."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre missão, visão e valores:",
+    "a": [
+     "A visão deve responder ao “porquê” de a organização existir.",
+     "A missão deve delimitar um prazo para ser atingida.",
+     "Os valores devem variar conforme o ramo de atividade.",
+     "A missão é a razão de ser da organização e deve satisfazer alguma necessidade do ambiente externo.",
+     "A visão é perene e imutável."
+    ],
+    "c": 3,
+    "j": "A missão responde ao porquê de existir e liga-se ao objetivo social; a visão aponta aonde se quer chegar, com prazo delimitado; e os valores devem ser independentes do ramo de atividade."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre o Plano de Comando da PMPE:",
+    "a": [
+     "Considera as diretrizes do Pacto pela Vida e a doutrina de defesa social.",
+     "Prevê como missão realizar, com exclusividade, a polícia ostensiva e a preservação da ordem pública.",
+     "Aponta a credibilidade da instituição como oportunidade.",
+     "Organiza-se em áreas estratégicas, entre elas a otimização da gestão de pessoas.",
+     "Prevê como missão a apuração das infrações penais comuns."
+    ],
+    "c": 4,
+    "j": "À PMPE cabem a polícia judiciária militar e a apuração das infrações penais MILITARES; as comuns são atribuição da Polícia Civil."
+   }
+  ],
+  "disc": [
+   {
+    "e": "Diferencie planejamento estratégico, tático e operacional e explique o que o planejamento estratégico não é.",
+    "est": "Discursiva do simulado — vale 1,5 ponto; mínimo 8 e máximo 15 linhas.",
+    "p": 1.5,
+    "cri": [
+     "Estratégico: objetivos de longo prazo, com estratégias e ações que afetam a empresa como um todo; responsabilidade dos níveis hierárquicos mais elevados.",
+     "Tático: objetivos de mais curto prazo, afetando parte da empresa; desenvolvido pelos níveis intermediários, com a finalidade principal de utilizar eficientemente os recursos disponíveis.",
+     "Operacional: partes homogêneas do planejamento tático; formalização das metodologias de desenvolvimento e implantação, principalmente por documentos escritos; foco nas atividades do dia a dia e realizado pela base da organização.",
+     "Não é caixa de mágicas nem amontoado de técnicas — quantificar não é planejar.",
+     "Não é previsão: faz-se necessário justamente por não se ter a capacidade de prever.",
+     "Não opera com decisões futuras, mas com o que há de futuro nas decisões presentes.",
+     "Não é tentativa de eliminar o risco, embora seja fundamental que os riscos assumidos sejam os riscos certos."
+    ]
+   },
+   {
+    "e": "Disserte sobre a análise SWOT e sua aplicação ao planejamento estratégico da PMPE, relacionando-a ao diagnóstico do Plano de Comando.",
+    "est": "Discursiva do simulado — vale 2,0 pontos; mínimo 12 e máximo 25 linhas.",
+    "p": 2.0,
+    "cri": [
+     "Conceito: ferramenta estrutural para análise do ambiente e formulação de estratégias, que identifica forças e fraquezas internas e extrapola oportunidades e ameaças externas; também chamada matriz FOFA, desenvolvida nos anos 60-70 nas escolas americanas.",
+     "Ambiente interno: forças e fraquezas constituídas dos recursos da organização — humanos, organizacionais e físicos —, ligadas à própria instituição.",
+     "Ambiente externo: oportunidades e ameaças, situações não controláveis, atuais ou futuras, ligadas ao mercado; as ameaças de uns podem ser as oportunidades de outros.",
+     "Objetivo: manter pontos fortes, reduzir a intensidade dos pontos fracos, aproveitar oportunidades e proteger-se de ameaças; sua função principal é levar ao estabelecimento de objetivos, definindo posturas de sobrevivência, manutenção, crescimento ou desenvolvimento.",
+     "Passos: listar executivos e funcionários-chave; realizar entrevistas individuais; organizar as informações em matriz; priorizar as questões, com apoio de técnicas como o GUT; e definir as questões-chave.",
+     "Aplicação à PMPE — pontos fortes: presença em todo o território estadual; facilidade de mobilização; exclusividade de polícia ostensiva; qualificação do quadro de pessoal; estrutura organizacional consolidada; hierarquia e disciplina; assistência social, saúde e educacional própria; tradição histórica consolidada; e desejo de fortalecimento institucional.",
+     "Aplicação à PMPE — oportunidades: carência por segurança pública; credibilidade da instituição; missão enquadrada como prioridade no Plano de Governo; comprometimento político; Política Nacional de Capacitação e Plano Nacional de Segurança Pública; e apoio dos órgãos ligados à Defesa Social.",
+     "Aplicação à PMPE — ameaças: a violência criminal e o crime organizado; o assédio da criminalidade aos jovens para levá-los ao consumo de drogas; e a desagregação de muitas famílias.",
+     "Desdobramento: do diagnóstico decorrem as áreas e objetivos estratégicos do Plano de Comando — gestão de pessoas, desempenho operacional, ensino e pesquisa, suporte logístico, saúde, finanças, legislação e doutrina, gestão da qualidade, tecnologia e articulação social e direitos humanos —, alinhados à missão e à visão da corporação."
+    ]
+   }
+  ]
+ }
+}

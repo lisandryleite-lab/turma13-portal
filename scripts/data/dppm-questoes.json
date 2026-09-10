@@ -1,0 +1,1242 @@
+{
+ "banco": {
+  "1": {
+   "titulo": "Parte geral: conceito, DPM x DADM, especialidade, interpretação e princípios",
+   "legal": "CPM; Lei nº 14.688/2023; CDMEPE; jurisprudência do STM e do STF",
+   "vf": [
+    {
+     "t": "O Direito Penal Militar é ramo do Direito Público que expressa o poder punitivo do Estado voltado à preservação da ordem, da disciplina e da hierarquia das instituições militares.",
+     "r": true,
+     "j": "Correto — conceito do material, que o trata como instrumento estatal de controle social qualificado, fundamentado na legalidade, tipicidade e intervenção mínima."
+    },
+    {
+     "t": "O Direito Militar Sancionador é gênero do qual são espécies o direito penal militar (DPM) e o direito administrativo disciplinar militar (DADM).",
+     "r": true,
+     "j": "Correto — e o DPM não se confunde com o DADM."
+    },
+    {
+     "t": "A fonte legal do Direito Penal Militar são leis estaduais, sendo o CDMEPE sua principal fonte.",
+     "r": false,
+     "j": "Falso — está invertido. O DPM tem por fonte apenas leis federais, sendo o Código Penal Militar a principal. Leis estaduais (CDMEPE, Estatuto dos Militares de Pernambuco) são fonte do DADM."
+    },
+    {
+     "t": "O julgamento no DPM ocorre em tribunais componentes do Judiciário; no DADM, em órgãos definidos em lei no Executivo, como a Corregedoria-Geral da SDS.",
+     "r": true,
+     "j": "Correto — em Pernambuco não há Tribunal de Justiça Militar Estadual, mas há uma Vara Militar no TJPE."
+    },
+    {
+     "t": "As instâncias criminal e administrativa são independentes, sem qualquer hipótese de comunicação entre elas.",
+     "r": false,
+     "j": "Falso. A regra é a independência, mas há uma hipótese de comunicação: a absolvição criminal fundamentada em negativa de autoria ou inexistência do fato vincula a decisão administrativa."
+    },
+    {
+     "t": "Os atos judiciais praticados na Justiça Castrense devem ser regidos pelas normas do CPPM, não havendo possibilidade jurídica de mesclar os sistemas processuais comum e militar; em caso de omissão de disposições específicas, faculta-se a aplicação do CPP.",
+     "r": true,
+     "j": "Correto — decorrência do princípio da especialidade."
+    },
+    {
+     "t": "São aplicáveis à Justiça Militar os institutos despenalizadores da Lei nº 9.099/95.",
+     "r": false,
+     "j": "Falso. São inaplicáveis, pois a própria Lei nº 9.099/95 veda a aplicação de institutos despenalizadores à Justiça Militar."
+    },
+    {
+     "t": "O princípio da identidade física do juiz, preconizado no CPP, é extensível ao processo penal militar.",
+     "r": false,
+     "j": "Falso. Não é extensível — daí ser eficaz o art. 24 da Lei nº 8.457/1992, que trata da criação e dissolução dos Conselhos Permanentes de Justiça a cada 3 meses."
+    },
+    {
+     "t": "No Direito Penal Militar a interpretação é restritiva, sendo vedada qualquer regra de interpretação extensiva quando se trate de normas incriminadoras.",
+     "r": true,
+     "j": "Correto — em normas incriminadoras só se aplicam regras de interpretação restritiva."
+    },
+    {
+     "t": "A analogia consiste em aplicar a uma hipótese não prevista em lei a disposição legal relativa a caso semelhante e, conforme a LINDB, deve ser utilizada quando a lei for omissa, desde que “in bonam parte”.",
+     "r": true,
+     "j": "Correto — ainda assim, deve ser vista com muita reserva pelo operador."
+    },
+    {
+     "t": "As súmulas, como interpretação judicial, obrigam sempre os operadores do direito.",
+     "r": false,
+     "j": "Falso. As súmulas não obrigam os operadores, salvo se classificadas como Vinculantes."
+    },
+    {
+     "t": "A Lei nº 14.688/2023 revogou a figura do assemelhado, a pena de reforma, a pena de suspensão do exercício do posto e o art. 233, que previa o atentado violento ao pudor.",
+     "r": true,
+     "j": "Correto — a lei buscou compatibilizar o CPM com o CP e a CF, além de alterar a Lei nº 8.072/90 para classificar como hediondos os crimes militares que especifica."
+    },
+    {
+     "t": "Pelo princípio da intervenção mínima, o Direito Penal é a ultima ratio, só entrando em ação quando os demais ramos do direito não forem capazes de proteger os bens de maior importância.",
+     "r": true,
+     "j": "Correto — a fragmentariedade e a subsidiariedade são características desse princípio."
+    },
+    {
+     "t": "O princípio da proporcionalidade apresenta três dimensões: adequação da pena, necessidade da pena e proporcionalidade em sentido estrito.",
+     "r": true,
+     "j": "Correto — e deve estar presente tanto no plano abstrato (legislador que comina) quanto no concreto (magistrado que aplica)."
+    },
+    {
+     "t": "O princípio humanitário veda as penas de morte em qualquer hipótese, de caráter perpétuo, de trabalhos forçados, de banimento e cruéis.",
+     "r": false,
+     "j": "Falso quanto à pena de morte: ela é vedada SALVO em caso de guerra declarada. As demais vedações estão corretas."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a distinção entre o Direito Penal Militar e o Direito Administrativo Disciplinar Militar, assinale a alternativa INCORRETA:",
+     "a": [
+      "O DPM tem por fonte apenas leis federais, sendo o CPM sua principal fonte.",
+      "O DADM tem por fonte leis estaduais, salvo quando o legislador definir diferente.",
+      "O DPM é processado por procedimentos como IPM, APFDM e IPD, além do próprio processo criminal.",
+      "O DADM é processado por Processo Administrativo Disciplinar Militar, como os Conselhos, o SAD e o PADS.",
+      "As instâncias criminal e administrativa comunicam-se sempre que houver absolvição criminal, seja qual for o fundamento."
+     ],
+     "c": 4,
+     "j": "A comunicação só ocorre quando a absolvição criminal se funda em negativa de autoria ou inexistência do fato. Absolvição por outro fundamento não vincula a esfera administrativa."
+    },
+    {
+     "e": "Sobre a especialidade do Direito Penal Militar, assinale a alternativa CORRETA:",
+     "a": [
+      "Admite-se livremente mesclar os sistemas processuais comum e militar.",
+      "A Lei nº 11.719/2008 aplica-se integralmente aos processos da Justiça Castrense.",
+      "O art. 366 do CPP incide na Justiça Militar sempre que puder beneficiar o réu.",
+      "Em caso de omissão de disposições específicas do CPPM, faculta-se a aplicação do CPP.",
+      "A citação editalícia do art. 286 do CPPM viola o devido processo legal, segundo o STM."
+     ],
+     "c": 3,
+     "j": "O princípio da especialidade impede a incidência do art. 366 do CPP (STM AP 0000087-45.2010.7.02.0102) e a aplicação da Lei nº 11.719/2008; a citação editalícia e a revelia não violam o devido processo legal (STM EMB 0000072-84.2007.7.01.0401). Só a omissão do CPPM abre espaço ao CPP."
+    },
+    {
+     "e": "Sobre a interpretação da norma penal militar, assinale a alternativa INCORRETA:",
+     "a": [
+      "Interpretar é extrair da norma penal seu exato alcance e real significado.",
+      "A interpretação pode ser autêntica, doutrinária ou judicial.",
+      "Jurisprudências são decisões reiteradas e colegiadas de determinados tribunais, e não decisões de primeiro grau.",
+      "Em normas incriminadoras admite-se a interpretação extensiva sempre que favorecer a repressão.",
+      "A analogia deve ser utilizada quando a lei for omissa, desde que “in bonam parte”."
+     ],
+     "c": 3,
+     "j": "Em normas incriminadoras NÃO se aplica nenhuma regra de interpretação extensiva — apenas regras de interpretação restritiva."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a uma inovação da Lei nº 14.688/2023:",
+     "a": [
+      "Revogou a figura do assemelhado.",
+      "Revogou a pena de reforma e a de suspensão do exercício do posto, graduação, cargo ou função.",
+      "Revogou o art. 233 do CPM, que previa o atentado violento ao pudor.",
+      "Alterou a Lei nº 8.072/90 para classificar como hediondos os crimes militares que especifica.",
+      "Criou a figura do crime militar por extensão."
+     ],
+     "c": 4,
+     "j": "O crime militar por extensão foi criado pela Lei nº 13.491/2017, que ampliou a competência da Justiça Militar, e não pela Lei nº 14.688/2023."
+    },
+    {
+     "e": "Sobre os princípios limitadores do Direito Penal, assinale a alternativa CORRETA:",
+     "a": [
+      "A individualização da pena desenvolve-se em três fases: legislativa, judicial e de execução.",
+      "A igualdade material significa tratar todos exatamente da mesma forma.",
+      "O princípio da culpabilidade admite a responsabilização penal sem dolo ou culpa.",
+      "O princípio da personalidade autoriza que a sanção criminal ultrapasse a figura do agente.",
+      "O “ne bis in idem” está previsto expressamente no Direito Penal pátrio."
+     ],
+     "c": 0,
+     "j": "Individualização: legislativa (penas proporcionais e diversificadas), judicial (critérios concretos de culpabilidade e periculosidade) e execução. A igualdade material é tratar os desiguais na medida das suas desigualdades; a culpabilidade exige dolo ou culpa; a responsabilidade é personalíssima; e o “ne bis in idem” não está expresso no DP pátrio — vem do Pacto de San José da Costa Rica, com status supralegal."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Diferencie o Direito Penal Militar do Direito Administrativo Disciplinar Militar quanto à fonte legal, ao julgamento e ao tipo de processo, e explique em que hipótese as instâncias se comunicam.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Gênero e espécies: o Direito Militar Sancionador é gênero que traz duas espécies — o direito penal militar (DPM) e o direito administrativo disciplinar militar (DADM), que não se confundem.",
+      "Fonte legal: o DPM tem por fonte apenas leis federais, sendo o Código Penal Militar a principal; o DADM funda-se em leis estaduais, salvo quando o legislador definir diferente (ex.: CDMEPE e Estatuto dos Militares de Pernambuco).",
+      "Julgamento: o DPM é julgado em tribunais componentes do Judiciário — em Pernambuco não há Tribunal de Justiça Militar Estadual, mas há uma Vara Militar no TJPE; o DADM, em órgãos definidos em lei no Executivo, como a Corregedoria-Geral da SDS.",
+      "Tipo de processo: no DPM, procedimentos (IPM, APFDM e IPD) e o próprio processo criminal; no DADM, o Processo Administrativo Disciplinar Militar (Conselhos de Disciplina e de Justificação, SAD e PADS).",
+      "Comunicação entre instâncias: a regra é a independência; a exceção ocorre quando há absolvição criminal fundamentada em negativa de autoria ou inexistência do fato — nesse caso a decisão administrativa fica vinculada à decisão criminal."
+     ]
+    },
+    {
+     "e": "Explique o princípio da especialidade no Direito Penal Militar, indicando ao menos três institutos do processo penal comum que não se aplicam à Justiça Castrense.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conteúdo do princípio: a especialidade, inerente ao Direito Militar, inviabiliza uma série de preceitos da legislação comum nos processos em curso na Justiça Castrense; os atos judiciais devem ser regidos pelo CPPM, sem possibilidade jurídica de mesclar os sistemas processuais.",
+      "Ressalva: em caso de omissão de disposições específicas, faculta-se a aplicação do CPP.",
+      "Lei nº 9.099/95: são inaplicáveis seus institutos despenalizadores, pois a própria lei veda a aplicação à Justiça Militar.",
+      "Identidade física do juiz: não é extensível ao processo penal militar — daí a eficácia do art. 24 da Lei nº 8.457/1992, sobre criação e dissolução dos Conselhos Permanentes de Justiça a cada 3 meses.",
+      "Art. 366 do CPP: não incide na Justiça Militar, ainda que a aplicação pudesse beneficiar o réu (STM AP 0000087-45.2010.7.02.0102).",
+      "Lei nº 11.719/2008: não se aplica, diante dos ritos próprios e especiais do CPPM; por isso não maculam o procedimento a ausência de defesa prévia, o indeferimento de novos interrogatórios e a inobservância da ordem de instrução probatória (STM CP 0000121-49.2012.7.12.0012).",
+      "Citação editalícia (art. 286) e revelia (art. 292): não violam o devido processo legal nem a ampla defesa (STM EMB 0000072-84.2007.7.01.0401)."
+     ]
+    }
+   ]
+  },
+  "2": {
+   "titulo": "Aplicação da lei penal militar, competência e o conceito de crime militar",
+   "legal": "Arts. 124 e 125, §4º, da CF; arts. 5º, 6º e 9º do CPM; art. 85 do CPPM; Leis nº 13.491/2017 e nº 14.688/2023",
+   "vf": [
+    {
+     "t": "Compete à Justiça Militar processar e julgar os crimes militares definidos em lei, conforme o art. 124 da Constituição Federal.",
+     "r": true,
+     "j": "Correto — e o parágrafo único remete à lei a organização, o funcionamento e a competência da Justiça Militar."
+    },
+    {
+     "t": "Compete à Justiça Militar Estadual processar e julgar os militares dos Estados nos crimes militares definidos em lei e as ações judiciais contra atos disciplinares militares, ressalvada a competência do júri quando a vítima for civil.",
+     "r": true,
+     "j": "Correto — art. 125, §4º, da CF; cabe ao tribunal competente decidir sobre a perda do posto e da patente dos oficiais e da graduação das praças."
+    },
+    {
+     "t": "Policial militar que comete crime doloso contra a vida de civil é julgado pela Justiça Militar Estadual.",
+     "r": false,
+     "j": "Falso. Será julgado pelo Tribunal do Júri (art. 9º, §1º, do CPM, com a redação da Lei nº 13.491/2017). Só os militares estaduais passam pelas portas da Justiça Militar Estadual, mas não nessa hipótese."
+    },
+    {
+     "t": "A competência do foro militar será determinada, de modo geral, pelo lugar da infração, pela residência ou domicílio do acusado e pela prevenção; e, de modo especial, pela sede do lugar de serviço.",
+     "r": true,
+     "j": "Correto — art. 85 do CPPM."
+    },
+    {
+     "t": "Quanto ao tempo, o CPM adota a teoria da atividade: considera-se praticado o crime no momento da ação ou omissão, ainda que outro seja o do resultado.",
+     "r": true,
+     "j": "Correto — art. 5º do CPM, mesma solução do CP."
+    },
+    {
+     "t": "Quanto ao lugar, o CPM adota exclusivamente a teoria da atividade.",
+     "r": false,
+     "j": "Falso. O art. 6º traz a regra da teoria MISTA (lugar da atividade e do resultado) e, especificamente para os crimes omissivos, a teoria da atividade — o fato considera-se praticado no lugar em que deveria realizar-se a ação omitida."
+    },
+    {
+     "t": "A lei penal militar só pode retroagir para beneficiar o réu, inclusive em sede de execução, admitindo-se a ultratividade das normas mais benignas.",
+     "r": true,
+     "j": "Correto — decorrência da legalidade e da irretroatividade da norma penal mais gravosa."
+    },
+    {
+     "t": "Para a Escola Topográfica, crime propriamente militar é aquele previsto no CPM com redação não encontrada no CP.",
+     "r": true,
+     "j": "Correto — e o impropriamente militar é aquele cujos elementos formativos guardam semelhança na legislação militar e comum."
+    },
+    {
+     "t": "Para a Escola Clássica, que tem o STM como maior representante, basta a localização do texto legal para classificar o crime militar.",
+     "r": false,
+     "j": "Falso. Para a Escola Clássica NÃO é suficiente a localização dos textos legais, sendo ainda necessário observar se o autor é ou não militar."
+    },
+    {
+     "t": "A definição legal (material) de crime militar encontra-se no art. 9º do CPM.",
+     "r": true,
+     "j": "Correto — dispositivo de extrema importância para o DPM."
+    },
+    {
+     "t": "Nos termos do art. 9º, II, do CPM, o autor é sempre militar da ativa.",
+     "r": true,
+     "j": "Correto — no inciso III, ao contrário, o autor é militar da reserva, reformado ou civil."
+    },
+    {
+     "t": "O crime praticado por militar da ativa contra militar na mesma situação só é militar se ambos estiverem de serviço.",
+     "r": false,
+     "j": "Falso. Na alínea “a” do art. 9º, II, pouco importa se estão de serviço; o conhecimento da condição de militar também não é relevante no momento da atuação de Polícia Judiciária Militar — a relevância é apenas no processo."
+    },
+    {
+     "t": "Segundo o STM, a simples condição de militar do agente é suficiente para atrair a competência da Justiça Militar.",
+     "r": false,
+     "j": "Falso. O STM já decidiu que a simples condição de militar NÃO é suficiente, sendo imprescindível o nexo funcional entre a conduta e o exercício das atividades militares."
+    },
+    {
+     "t": "Não caracteriza crime militar o homicídio cometido por policial militar em situação de folga contra outro policial militar que também não estava em serviço, por motivos alheios à administração militar.",
+     "r": true,
+     "j": "Correto — falta o nexo com a função militar ou com bens jurídicos castrenses."
+    },
+    {
+     "t": "A Lei nº 13.491/2017 ampliou a competência da Justiça Militar, permitindo o julgamento de crimes tipificados na legislação penal comum quando cometidos por militares em serviço, criando o chamado crime militar por extensão.",
+     "r": true,
+     "j": "Correto — e provocou o overruling de algumas súmulas do STJ, que tiveram seus efeitos esvaziados."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a competência para processo e julgamento do crime militar, assinale a alternativa INCORRETA:",
+     "a": [
+      "À Justiça Militar compete processar e julgar os crimes militares definidos em lei (art. 124, CF).",
+      "Compete à Justiça Militar Estadual julgar os militares dos Estados nos crimes militares definidos em lei.",
+      "Compete à Justiça Militar Estadual julgar as ações judiciais contra atos disciplinares militares.",
+      "Cabe ao tribunal competente decidir sobre a perda do posto e da patente dos oficiais e da graduação das praças.",
+      "O policial militar que pratica crime doloso contra a vida de civil é julgado pelo Conselho Permanente de Justiça."
+     ],
+     "c": 4,
+     "j": "Nessa hipótese a competência é do Tribunal do Júri, por expressa ressalva do art. 125, §4º, da CF e do art. 9º, §1º, do CPM."
+    },
+    {
+     "e": "Sobre a aplicação da lei penal militar no tempo e no espaço, assinale a alternativa CORRETA:",
+     "a": [
+      "O CPM adota, quanto ao tempo, a teoria do resultado.",
+      "Quanto ao lugar, o CPM adota a teoria mista como regra e a teoria da atividade para os crimes omissivos.",
+      "A lei penal militar mais gravosa retroage para alcançar fatos anteriores.",
+      "Não se admite a ultratividade das normas mais benignas.",
+      "Nos crimes omissivos, o fato considera-se praticado no lugar do resultado."
+     ],
+     "c": 1,
+     "j": "Art. 5º do CPM: teoria da atividade quanto ao tempo. Art. 6º: teoria mista quanto ao lugar, com previsão específica de que, nos crimes omissivos, o fato se considera praticado onde deveria realizar-se a ação omitida."
+    },
+    {
+     "e": "Sobre a classificação doutrinária dos crimes militares, assinale a alternativa INCORRETA:",
+     "a": [
+      "Para a Escola Topográfica, o crime propriamente militar é o previsto no CPM com redação não encontrada no CP.",
+      "Para a Escola Topográfica, o crime impropriamente militar tem elementos formativos semelhantes na legislação militar e comum.",
+      "Crimes militares por extensão são os que não estão previstos no CPM, mas que, praticados sob certas condições, serão tratados como se estivessem.",
+      "Para a Escola Clássica, basta a localização topográfica do texto legal para a classificação.",
+      "O STM é o maior representante da Escola Clássica."
+     ],
+     "c": 3,
+     "j": "Para a Escola Clássica não basta a localização dos textos legais: é necessário observar também se o autor é ou não militar."
+    },
+    {
+     "e": "Nos termos do art. 9º, II, do CPM, assinale a alternativa que NÃO configura crime militar:",
+     "a": [
+      "Praticado por militar da ativa contra militar na mesma situação.",
+      "Praticado por militar da ativa, em lugar sujeito à administração militar, contra civil.",
+      "Praticado por militar em serviço ou atuando em razão da função, ainda que fora do lugar sujeito à administração militar, contra civil.",
+      "Praticado por militar durante o período de manobras ou exercício contra militar da reserva.",
+      "Praticado por militar da ativa de folga contra outro militar de folga, por motivo estranho à administração militar, fora de lugar sujeito à administração militar."
+     ],
+     "c": 4,
+     "j": "Falta o nexo funcional. O STM e o STF exigem elementos de conexão com a função militar ou com bens jurídicos castrenses; o material traz expressamente o exemplo do homicídio entre militares de folga por motivos alheios à administração militar."
+    },
+    {
+     "e": "Sobre as inovações da Lei nº 13.491/2017, assinale a alternativa CORRETA:",
+     "a": [
+      "Restringiu a competência da Justiça Militar aos crimes previstos no CPM.",
+      "Criou o crime militar por extensão e ampliou a competência da Justiça Militar.",
+      "Revogou a figura do assemelhado.",
+      "Transferiu ao Tribunal do Júri o julgamento dos crimes dolosos contra a vida praticados por militares federais em serviço contra civis.",
+      "Extinguiu os Conselhos Permanentes de Justiça."
+     ],
+     "c": 1,
+     "j": "A Lei nº 13.491/2017 ampliou a competência e criou o crime militar por extensão. Quanto aos militares FEDERAIS, os crimes dolosos contra a vida contra civis passaram a ser julgados pela Justiça Militar quando o ato ocorre em serviço. A revogação do assemelhado é da Lei nº 14.688/2023."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Disserte sobre a definição legal de crime militar no art. 9º do CPM, indicando as circunstâncias determinantes do inciso II e a diferença de tratamento entre o inciso II e o inciso III.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Definição legal (material): está no art. 9º do CPM; o conceito doutrinário é o de infração penal que ofende bens jurídicos específicos da caserna — hierarquia, disciplina, ordem e dever funcional militar.",
+      "Inciso I: os crimes de que trata o CPM, quando definidos de modo diverso na lei penal comum ou nela não previstos, qualquer que seja o agente, salvo disposição especial.",
+      "Inciso II: o autor é sempre militar da ativa; três circunstâncias determinantes — a vítima é militar da ativa? o lugar é sujeito à administração militar? o militar está em serviço ou atuando em razão da função?",
+      "Alíneas do inciso II: (a) militar da ativa contra militar na mesma situação, pouco importando se estão de serviço; (b) militar da ativa, em lugar sujeito à administração militar, contra militar da reserva, reformado ou civil; (c) militar em serviço ou em razão da função, em comissão de natureza militar ou em formatura, ainda que fora do lugar sujeito à administração militar; (d) militar durante manobras ou exercício; (e) militar da ativa contra o patrimônio sob administração militar ou contra a ordem administrativa militar.",
+      "Inciso III: o autor é militar da reserva, reformado ou civil, contra as instituições militares — no âmbito estadual não se trata do civil, por não lhe ser possível praticar crime militar.",
+      "Definição formal: a definição material precisa estar alinhada aos limites constitucionais impostos à Justiça Militar Estadual (art. 125, §4º) e à Justiça Militar da União (art. 124).",
+      "Nexo funcional: STM e STF exigem elementos de conexão com a função militar ou com bens jurídicos castrenses; a simples condição de militar não atrai a competência."
+     ]
+    },
+    {
+     "e": "Explique a aplicação da lei penal militar no tempo e no espaço, indicando as teorias adotadas pelo CPM e a diferença em relação ao Código Penal comum.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "No tempo: obedece aos princípios gerais do Direito Penal, especialmente a legalidade e a irretroatividade da norma penal mais gravosa; a lei penal militar só retroage para beneficiar o réu, inclusive em sede de execução, admitindo-se a ultratividade das normas mais benignas.",
+      "Art. 5º do CPM: considera-se praticado o crime no momento da ação ou omissão, ainda que outro seja o do resultado — teoria da atividade, a mesma do CP.",
+      "No espaço: art. 6º do CPM — considera-se praticado o fato no lugar em que se desenvolveu a atividade criminosa, no todo ou em parte, ainda que sob forma de participação, bem como onde se produziu ou deveria produzir-se o resultado.",
+      "Crimes omissivos: o fato considera-se praticado no lugar em que deveria realizar-se a ação omitida.",
+      "Diferença em relação ao CP: sutil — o CPM traz a regra (teoria mista) e ainda uma previsão específica para os crimes omissivos (teoria da atividade)."
+     ]
+    }
+   ]
+  },
+  "3": {
+   "titulo": "Teoria do crime militar: fato típico, teorias da ação, excludentes, iter criminis e concurso",
+   "legal": "Arts. 30, 31, 33, 35 a 39, 42, 48 a 50 e 53 do CPM",
+   "vf": [
+    {
+     "t": "Fato típico militar é a conduta do militar que se encaixa perfeitamente na descrição de um crime previsto no CPM ou em outras leis militares, apresentando quatro elementos: conduta, resultado típico, nexo de causalidade e tipicidade.",
+     "r": true,
+     "j": "Correto — e o CPM não possui o mesmo desenho do CP."
+    },
+    {
+     "t": "A teoria causal da ação, de Von Beling e Von Liszt, diferencia claramente a conduta dolosa da culposa.",
+     "r": false,
+     "j": "Falso. A teoria causal NÃO diferencia a conduta dolosa da culposa, pois não releva qualquer indagação sobre a relação psíquica do agente para com o resultado."
+    },
+    {
+     "t": "O Neokantismo, também chamado causalismo valorativo, tentou conciliar o método positivista e naturalista com uma visão axiológica influenciada pela filosofia de Immanuel Kant.",
+     "r": true,
+     "j": "Correto — a principal crítica a essa escola foi a sua aproximação com os horrores do nazismo."
+    },
+    {
+     "t": "No finalismo de Hans Welzel, o elemento subjetivo (dolo/culpa) sai da culpabilidade e passa a ser analisado na tipicidade, especificamente na conduta.",
+     "r": true,
+     "j": "Correto — e a imputação objetiva passa a ser novo requisito da tipicidade."
+    },
+    {
+     "t": "O Código Penal Militar é finalista, tendo acompanhado a reforma do Código Penal de 1984.",
+     "r": false,
+     "j": "Falso. Em 1984 o CP foi severamente influenciado pelo finalismo, o que NÃO foi acompanhado pelo CPM, que mantém o causalismo entranhado, evidenciado no art. 33 — o elemento subjetivo é analisado na culpabilidade."
+    },
+    {
+     "t": "O tipo penal militar tem três partes: o nome iuris, o preceito primário (conduta descrita) e o preceito secundário (pena).",
+     "r": true,
+     "j": "Correto — e três funções: de garantia, motivadora e selecionadora."
+    },
+    {
+     "t": "São excludentes de antijuridicidade no CPM o estado de necessidade, a legítima defesa, o estrito cumprimento do dever legal e o exercício regular de direito.",
+     "r": true,
+     "j": "Correto — art. 42 do CPM; o parágrafo único acrescenta a hipótese do comandante que, na iminência de perigo ou grave calamidade, compele os subalternos por meios violentos a executar serviços e manobras urgentes."
+    },
+    {
+     "t": "O erro de direito escusável isenta o agente de pena, inclusive quando se trate de crime que atente contra o dever militar.",
+     "r": false,
+     "j": "Falso. O art. 35 do CPM prevê que a pena pode ser ATENUADA OU SUBSTITUÍDA por outra menos grave — e ressalva expressamente os crimes que atentem contra o dever militar."
+    },
+    {
+     "t": "É isento de pena quem, ao praticar o crime, supõe, por erro plenamente escusável, a inexistência de circunstância de fato que o constitui ou a existência de situação de fato que tornaria a ação legítima.",
+     "r": true,
+     "j": "Correto — erro de fato, art. 36 do CPM; se o erro deriva de culpa, responde o agente a esse título, se o fato é punível como crime culposo."
+    },
+    {
+     "t": "Na obediência hierárquica, o inferior que cumpre ordem de superior sobre matéria de serviço nunca é punível.",
+     "r": false,
+     "j": "Falso. Se a ordem tem por objeto a prática de ato manifestamente criminoso, ou há excesso nos atos ou na forma da execução, é punível TAMBÉM o inferior hierárquico (art. 38, §2º, com redação da Lei nº 14.688/2023)."
+    },
+    {
+     "t": "O menor de 18 anos é penalmente inimputável, ficando sujeito às normas estabelecidas na legislação especial.",
+     "r": true,
+     "j": "Correto — art. 50 do CPM, com redação dada pela Lei nº 14.688/2023."
+    },
+    {
+     "t": "O iter criminis compreende cogitação, preparação, execução e consumação, sendo penalmente relevantes os atos executórios e a consumação; o ato preparatório pode ser punível se previsto como tipo penal próprio.",
+     "r": true,
+     "j": "Correto — no direito militar, a preparação e a tentativa de alguns crimes têm punições específicas (ex.: a conspiração do art. 152)."
+    },
+    {
+     "t": "Quanto à tentativa, o CPM adota como regra a teoria objetiva, admitindo excepcionalmente a teoria subjetiva.",
+     "r": true,
+     "j": "Correto — o parágrafo único do art. 30 pune a tentativa com a pena do crime diminuída de um a dois terços, podendo o juiz, no caso de excepcional gravidade, aplicar a pena do crime consumado."
+    },
+    {
+     "t": "O CPM não admite a desistência voluntária nem o arrependimento eficaz.",
+     "r": false,
+     "j": "Falso. O art. 31 os admite: o agente impede a consumação do crime e responde apenas pelos atos já praticados."
+    },
+    {
+     "t": "Os crimes militares são de ação penal pública incondicionada.",
+     "r": true,
+     "j": "Correto — o MP Militar ou o MP oferece denúncia independentemente de representação."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre as teorias da ação e o Código Penal Militar, assinale a alternativa CORRETA:",
+     "a": [
+      "O CPM é finalista, tendo acompanhado a reforma do CP de 1984.",
+      "O CPM é causalista, com o elemento subjetivo analisado na culpabilidade, o que se evidencia no art. 33.",
+      "No causalismo clássico o dolo é analisado na tipicidade.",
+      "O Neokantismo é sinônimo de finalismo.",
+      "Hans Welzel é o principal nome do causalismo valorativo."
+     ],
+     "c": 1,
+     "j": "O CPM manteve o causalismo, evidenciado no art. 33, e não acompanhou o finalismo incorporado ao CP em 1984. No causalismo o elemento subjetivo fica na culpabilidade; o finalismo, de Welzel, o transfere para a tipicidade; o Neokantismo é o causalismo valorativo."
+    },
+    {
+     "e": "Sobre as excludentes previstas no CPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "São excludentes de antijuridicidade o estado de necessidade, a legítima defesa, o estrito cumprimento do dever legal e o exercício regular de direito.",
+      "Não há crime quando o comandante, na iminência de perigo ou grave calamidade, compele os subalternos por meios violentos a executar serviços e manobras urgentes para salvar a unidade ou vidas.",
+      "Não é culpado quem comete o crime sob coação irresistível.",
+      "Não é culpado quem comete o crime em estrita obediência a ordem direta de superior hierárquico, em matéria de serviços.",
+      "O erro de direito escusável isenta de pena inclusive nos crimes que atentem contra o dever militar."
+     ],
+     "c": 4,
+     "j": "O art. 35 fala em pena ATENUADA OU SUBSTITUÍDA por outra menos grave, e ressalva expressamente os crimes que atentem contra o dever militar."
+    },
+    {
+     "e": "Sobre a tentativa no Direito Penal Militar, assinale a alternativa CORRETA:",
+     "a": [
+      "A tentativa é punida sempre com a pena do crime consumado.",
+      "A tentativa é punida com a pena do crime diminuída de um a dois terços, podendo o juiz, no caso de excepcional gravidade, aplicar a pena do consumado.",
+      "O CPM adota exclusivamente a teoria subjetiva.",
+      "A desistência voluntária não é admitida no CPM.",
+      "O crime de motim exige resultado naturalístico para consumar-se."
+     ],
+     "c": 1,
+     "j": "Parágrafo único do art. 30. A teoria objetiva é a regra, com a subjetiva admitida excepcionalmente; a desistência voluntária e o arrependimento eficaz estão no art. 31; o motim admite consumação imediata, sem necessidade de resultado naturalístico."
+    },
+    {
+     "e": "Sobre a inimputabilidade no CPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "Não é imputável quem, por doença mental ou desenvolvimento mental incompleto ou retardado, não possui capacidade de entender o caráter ilícito do fato.",
+      "Se a doença ou deficiência mental não suprime, mas diminui consideravelmente a capacidade de entendimento, a pena pode ser reduzida de 1/3 a 2/3.",
+      "Não é imputável o agente que, por embriaguez completa proveniente de caso fortuito ou força maior, era inteiramente incapaz de entender o caráter criminoso do fato.",
+      "O menor de 18 anos é penalmente inimputável.",
+      "A embriaguez voluntária e completa isenta o agente de pena."
+     ],
+     "c": 4,
+     "j": "O art. 49 exige que a embriaguez completa seja proveniente de CASO FORTUITO OU FORÇA MAIOR. A embriaguez voluntária não isenta de pena."
+    },
+    {
+     "e": "Sobre o concurso de pessoas e a ação penal no Direito Penal Militar, assinale a alternativa INCORRETA:",
+     "a": [
+      "O concurso de agentes é regulado no art. 53 do CPM.",
+      "A punibilidade de qualquer dos concorrentes é independente da dos outros, determinando-se segundo a sua própria culpabilidade.",
+      "Não se comunicam as condições ou circunstâncias de caráter pessoal, salvo quando elementares do crime.",
+      "O cooperador de menor importância pode ter a pena reduzida.",
+      "Os crimes militares são de ação penal pública condicionada à representação do ofendido."
+     ],
+     "c": 4,
+     "j": "Os crimes militares são de ação penal pública INCONDICIONADA — o MP oferece denúncia independentemente de representação."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique as excludentes de tipicidade, de antijuridicidade e de culpabilidade no Direito Penal Militar, indicando os dispositivos do CPM.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Conceito: são eventos jurídicos que, quando ocorrem, eliminam um ou outro elemento do conceito tripartite do crime militar.",
+      "Excludentes de tipicidade: apenas as hipóteses supralegais.",
+      "Excludentes de antijuridicidade (art. 42 do CPM): estado de necessidade, legítima defesa, estrito cumprimento do dever legal e exercício regular de direito; o parágrafo único acrescenta a conduta do comandante de navio, aeronave ou praça de guerra que, na iminência de perigo ou grave calamidade, compele os subalternos por meios violentos a executar serviços e manobras urgentes para salvar a unidade ou vidas, ou evitar o desânimo, o terror, a desordem, a rendição, a revolta ou o saque.",
+      "Erro de direito (art. 35): a pena pode ser atenuada ou substituída por outra menos grave quando o agente supõe lícito o fato por ignorância ou erro de interpretação da lei, se escusáveis — salvo em crime que atente contra o dever militar.",
+      "Erro de fato (art. 36): isento de pena quem supõe, por erro plenamente escusável, a inexistência de circunstância de fato que constitui o crime ou a existência de situação que tornaria a ação legítima; se deriva de culpa, responde a esse título; se provocado por terceiro, responde o provocador.",
+      "Erro sobre a pessoa (art. 37): responde como se tivesse praticado o crime contra quem pretendia atingir, considerando-se as condições e qualidades da pessoa visada.",
+      "Art. 38: não é culpado quem comete o crime sob coação irresistível ou em estrita obediência a ordem direta de superior hierárquico em matéria de serviços; responde o autor da coação ou da ordem, sendo punível também o inferior se a ordem tem por objeto ato manifestamente criminoso ou se há excesso.",
+      "Art. 39: estado de necessidade como excludente de culpabilidade; arts. 48 a 50: inimputáveis por doença mental, embriaguez por caso fortuito ou força maior e menores de 18 anos."
+     ]
+    },
+    {
+     "e": "Disserte sobre o iter criminis e a tentativa no Direito Penal Militar, indicando as teorias aplicáveis e as particularidades do CPM.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Iter criminis: cogitação, preparação, execução e consumação; são penalmente relevantes os atos executórios e a consumação, mas o ato preparatório pode ser punível se previsto como tipo penal próprio.",
+      "Particularidade militar: no direito militar a preparação e a tentativa de alguns crimes possuem punições específicas — a conspiração (art. 152) é ato preparatório do motim e já é crime autônomo.",
+      "Conatus: o art. 30 admite a punição da tentativa quando o agente inicia a execução e o crime não se consuma por circunstâncias alheias à sua vontade.",
+      "Pena da tentativa: parágrafo único do art. 30 — pena do crime diminuída de um a dois terços, podendo o juiz, no caso de excepcional gravidade, aplicar a pena do crime consumado.",
+      "Teoria objetiva: a punibilidade se justifica pelo risco ao bem jurídico, com pena menor que a do consumado; é a regra adotada pelo CP e pelo CPM.",
+      "Teoria subjetiva: a punição se baseia no dolo do agente, com pena igual à do consumado; excepcionalmente adotada pelo CPM.",
+      "Desistência voluntária e arrependimento eficaz (art. 31): o agente impede a consumação e responde apenas pelos atos já praticados — ex.: soldado que inicia motim e convence os pares a desistirem antes da violência.",
+      "Cautela: certos crimes, como o motim, admitem consumação imediata, sem necessidade de resultado naturalístico."
+     ]
+    }
+   ]
+  },
+  "4": {
+   "titulo": "Crimes contra a autoridade ou disciplina militar: motim, insubordinação, violência e resistência",
+   "legal": "Arts. 149 a 182 do CPM, com as alterações da Lei nº 14.688/2023",
+   "vf": [
+    {
+     "t": "O motim é punido com reclusão de quatro a oito anos, com aumento de um terço para os cabeças; se os agentes estavam armados, configura-se a revolta, com pena de reclusão de oito a vinte anos.",
+     "r": true,
+     "j": "Correto — art. 149 do CPM e seu parágrafo único."
+    },
+    {
+     "t": "Para a configuração da revolta é indispensável o efetivo emprego da arma de fogo.",
+     "r": false,
+     "j": "Falso. Não é preciso empregar a arma nem que seja arma de fogo; exige-se o liame subjetivo, ou seja, que os envolvidos saibam que há armados no grupo. Sem esse conhecimento, os demais respondem por motim e os armados por revolta."
+    },
+    {
+     "t": "A omissão de lealdade militar consiste em deixar o militar de levar ao conhecimento do superior o motim ou a revolta de cuja preparação teve notícia, ou, presenciando o ato, não usar de todos os meios ao seu alcance para impedi-lo.",
+     "r": true,
+     "j": "Correto — art. 151, com pena de reclusão de três a cinco anos."
+    },
+    {
+     "t": "A conspiração é o ajuste de militares para a prática do motim e, sendo mero ato preparatório, não constitui crime autônomo.",
+     "r": false,
+     "j": "Falso. A conspiração é ato preparatório do motim, mas por si só JÁ É CRIME (art. 152), com pena de reclusão de três a cinco anos. É isento de pena quem, antes da execução e quando ainda era possível evitar as consequências, denuncia o ajuste de que participou."
+    },
+    {
+     "t": "A aliciação exige a formação de adeptos, ao passo que o incitamento independe de adesão de quem quer que seja.",
+     "r": true,
+     "j": "Correto — o aliciador (art. 154) precisa que o militar adira à ideia; o incitador (art. 155) é o agitador nato, que não precisa de adeptos."
+    },
+    {
+     "t": "A violência contra superior é crime contra a pessoa.",
+     "r": false,
+     "j": "Falso. É crime contra a AUTORIDADE E A DISCIPLINA MILITAR — bem jurídico distinto. Se da violência resultar lesão corporal, aplica-se também a pena do crime contra a pessoa (art. 157, §3º)."
+    },
+    {
+     "t": "Na violência contra superior, a pena é aumentada da sexta parte se o crime ocorre em serviço.",
+     "r": true,
+     "j": "Correto — art. 157, §5º; se o superior é comandante da unidade ou oficial-general, a pena passa a reclusão de três a nove anos."
+    },
+    {
+     "t": "Praticada violência contra oficial de dia, de serviço ou de quarto, ou contra sentinela, vigia ou plantão, prevalece o crime de violência contra militar de serviço, ainda que a vítima seja superior.",
+     "r": true,
+     "j": "Correto — art. 158, mais específico; e o serviço é caracterizado pela ESCALA, não sendo a vítima necessariamente oficial."
+    },
+    {
+     "t": "O desrespeito a superior exige que o fato seja praticado diante de outro militar.",
+     "r": true,
+     "j": "Correto — art. 160; a presença de outro militar é elemento do tipo. Exemplo: continência de forma debochada."
+    },
+    {
+     "t": "O desrespeito a superior prevalece sobre o desacato a superior quando ambos ocorrem no mesmo contexto.",
+     "r": false,
+     "j": "Falso. O art. 160 é crime subsidiário (“se o fato não constitui crime mais grave”); havendo desrespeito e desacato, prevalece o DESACATO (art. 298), de caráter mais ofensivo."
+    },
+    {
+     "t": "A recusa de obediência do art. 163 não se confunde com a desobediência do art. 301, pois naquela há, além do não obedecer, a afronta, e os bens jurídicos tutelados são distintos.",
+     "r": true,
+     "j": "Correto — art. 163 tutela a autoridade e a disciplina militar; art. 301, a administração militar. A ordem precisa ser direta, objetiva e clara, sobre assunto de serviço ou dever imposto em lei, regulamento ou instrução."
+    },
+    {
+     "t": "Reunir-se militares para discutir política de reajuste periódico salarial configura o crime de reunião ilícita.",
+     "r": false,
+     "j": "Falso. O material é expresso: reunir-se para tratar sobre política de reajuste periódico salarial (“falar sobre tabela”) não é ilícito. O art. 165 pune a reunião para discussão de ato de superior ou assunto atinente à disciplina militar."
+    },
+    {
+     "t": "Assumir o militar, sem ordem ou autorização, qualquer comando ou a direção de estabelecimento militar é crime, salvo se em grave emergência.",
+     "r": true,
+     "j": "Correto — art. 167, com pena de reclusão de dois a quatro anos, se o fato não constitui crime mais grave."
+    },
+    {
+     "t": "O rigor excessivo consiste em exceder a faculdade de punir o subordinado, fazendo-o com rigor não permitido, ou ofendendo-o por palavra, ato ou escrito.",
+     "r": true,
+     "j": "Correto — art. 174, com pena de detenção de 1 a 2 anos (redação da Lei nº 14.688/2023)."
+    },
+    {
+     "t": "Na resistência, se o ato não se executa em razão da resistência, a pena passa a reclusão de dois a quatro anos.",
+     "r": true,
+     "j": "Correto — art. 177, §1º; e o §1º-A, incluído pela Lei nº 14.688/2023, prevê reclusão de 6 a 20 anos se da resistência resulta morte."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre o motim e a revolta, assinale a alternativa INCORRETA:",
+     "a": [
+      "O motim exige a reunião de militares em uma das hipóteses do art. 149.",
+      "A revolta é a forma qualificada, quando os agentes estavam armados.",
+      "Para a revolta exige-se o liame subjetivo: os envolvidos devem saber que há armados no grupo.",
+      "As penas dos arts. 149 e 150 são aplicáveis sem prejuízo das correspondentes à violência.",
+      "Se apenas dois participantes estão armados e os demais desconhecem o fato, todos respondem por revolta."
+     ],
+     "c": 4,
+     "j": "Sem o conhecimento dos demais, apenas os armados respondem por revolta; os demais respondem por motim."
+    },
+    {
+     "e": "Assinale a alternativa que corretamente distingue os crimes de aliciação e de incitamento:",
+     "a": [
+      "O aliciador dispensa adeptos; o incitador precisa deles.",
+      "Ambos exigem a efetiva adesão de outros militares.",
+      "O aliciador forma adeptos e, se o convidado o ignorar, não há consumação; o incitador é o agitador que não precisa de adeptos.",
+      "Ambos têm pena de reclusão de três a cinco anos.",
+      "O incitamento só se configura por meio de material impresso."
+     ],
+     "c": 2,
+     "j": "Art. 154 (aliciação) exige a adesão — sem ela não há consumação; art. 155 (incitamento) independe de adeptos, e o parágrafo único apenas acrescenta a conduta de introduzir, afixar ou distribuir material com incitamento. Ambos têm pena de reclusão de dois a quatro anos."
+    },
+    {
+     "e": "Sobre a violência contra superior e a violência contra militar de serviço, assinale a alternativa CORRETA:",
+     "a": [
+      "A violência contra superior é crime contra a pessoa.",
+      "Se da violência contra superior resulta lesão corporal, aplica-se apenas a pena da violência.",
+      "Havendo violência contra oficial de serviço, prevalece a violência contra militar de serviço, sendo o serviço caracterizado pela escala.",
+      "A vítima do art. 158 será sempre oficial.",
+      "A pena da violência contra superior não se altera se o crime ocorre em serviço."
+     ],
+     "c": 2,
+     "j": "O art. 158 é mais específico e o serviço é caracterizado pela escala; a vítima não é necessariamente oficial. A violência contra superior tutela a autoridade e a disciplina, aplica-se cumulativamente a pena do crime contra a pessoa (§3º) e a pena aumenta da sexta parte se o crime ocorre em serviço (§5º)."
+    },
+    {
+     "e": "Sobre os crimes de insubordinação, assinale a alternativa INCORRETA:",
+     "a": [
+      "A recusa de obediência pressupõe ordem sobre assunto de serviço ou dever imposto em lei, regulamento ou instrução.",
+      "A oposição a ordem de sentinela é punida com detenção de seis meses a um ano, se o fato não constitui crime mais grave.",
+      "A reunião ilícita pune com pena maior quem promove a reunião do que quem dela participa.",
+      "A publicação ou crítica indevida alcança o militar que critica publicamente ato de seu superior ou assunto atinente à disciplina militar.",
+      "A reunião de militares para discutir política de reajuste salarial configura reunião ilícita."
+     ],
+     "c": 4,
+     "j": "Falar sobre tabela — política de reajuste periódico salarial — não é ilícito; o tipo do art. 165 alcança a discussão de ato de superior ou assunto atinente à disciplina militar."
+    },
+    {
+     "e": "Sobre os crimes de usurpação e de excesso ou abuso de autoridade, assinale a alternativa INCORRETA:",
+     "a": [
+      "Assumir comando sem ordem ou autorização é crime, salvo em grave emergência.",
+      "Conservar comando legitimamente assumido após ordem superior para deixá-lo é crime.",
+      "Determinar o comandante, sem ordem superior, movimento de tropa ou ação militar é crime.",
+      "O uso indevido de uniforme militar por qualquer pessoa (art. 172) aplica-se plenamente à Justiça Militar Estadual.",
+      "O rigor excessivo consiste em exceder a faculdade de punir o subordinado."
+     ],
+     "c": 3,
+     "j": "O art. 172 não se aplica à Justiça Militar Estadual, por se tratar de civil — no âmbito estadual o civil não pratica crime militar."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Disserte sobre os crimes de motim, revolta, conspiração e omissão de lealdade militar, indicando penas e a hipótese de isenção.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Motim (art. 149): reunirem-se militares agindo contra ordem recebida de superior ou negando-se a cumpri-la; recusando obediência a superior quando estejam agindo sem ordem ou praticando violência; assentindo em recusa conjunta de obediência, resistência ou violência em comum contra superior; ou ocupando quartel, fortaleza, arsenal, estabelecimento militar, navio ou viatura militar para ação militar ou prática de violência. Pena: reclusão de quatro a oito anos, com aumento de um terço para os cabeças.",
+      "Revolta (parágrafo único do art. 149): se os agentes estavam armados — reclusão de oito a vinte anos, com aumento de um terço para os cabeças. Não é preciso empregar a arma nem que seja arma de fogo, mas exige-se o liame subjetivo: se os demais desconhecem que há armados, respondem por motim, e os armados por revolta.",
+      "Organização de grupo para a prática de violência (art. 150): dois ou mais militares, com armamento ou material bélico de propriedade militar, praticando violência à pessoa ou à coisa, em lugar sujeito ou não à administração militar — reclusão de quatro a oito anos.",
+      "Omissão de lealdade militar (art. 151): deixar o militar de levar ao conhecimento do superior o motim ou a revolta de cuja preparação teve notícia, ou, presenciando o ato, não usar de todos os meios ao seu alcance para impedi-lo — reclusão de três a cinco anos.",
+      "Conspiração (art. 152): concertarem-se militares para a prática do motim — reclusão de três a cinco anos. É ato preparatório do motim, mas crime autônomo.",
+      "Isenção de pena: é isento de pena aquele que, antes da execução do crime e quando ainda era possível evitar-lhe as consequências, denuncia o ajuste de que participou.",
+      "Cumulação (art. 153): as penas dos arts. 149 e 150 são aplicáveis sem prejuízo das correspondentes à violência."
+     ]
+    },
+    {
+     "e": "Diferencie o desrespeito a superior (art. 160), a recusa de obediência (art. 163) e a desobediência (art. 301), indicando os bens jurídicos tutelados e a subsidiariedade.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Desrespeito a superior (art. 160): desrespeitar superior diante de outro militar — a presença de outro militar é elemento do tipo. Pena de detenção de três meses a um ano, se o fato não constitui crime mais grave. Exemplo: continência de forma debochada. É aumentada da metade se praticado contra o comandante da unidade, oficial-general, oficial de dia, de serviço ou de quarto.",
+      "Não se confunde com o desacato a superior (art. 298), de caráter mais ofensivo; por ser subsidiário, se no mesmo contexto houver desrespeito e desacato, prevalece o desacato.",
+      "Recusa de obediência (art. 163): recusar obedecer a ordem do superior sobre assunto ou matéria de serviço, ou relativamente a dever imposto em lei, regulamento ou instrução — detenção de um a dois anos, se o fato não constitui crime mais grave. Não é apenas o não obedecer: há a AFRONTA.",
+      "Requisitos da ordem: precisa ser direta, objetiva e clara, e ter lógica de existência — sobre assunto ou matéria de serviço, ou dever imposto em lei, regulamento ou instrução.",
+      "Desobediência (art. 301): desobedecer à ordem legal de autoridade militar — detenção até seis meses; não exige a afronta e não pressupõe relação de subordinação (um Ten Cel pode desobedecer ordem legal emanada de autoridade militar).",
+      "Bem jurídico: o art. 163 tutela a autoridade e a disciplina militar; o art. 301, a administração militar."
+     ]
+    }
+   ]
+  },
+  "5": {
+   "titulo": "Crimes contra o serviço e o dever militar e contra a administração militar",
+   "legal": "Arts. 183 a 203 e 298 a 303 do CPM, com as alterações da Lei nº 14.688/2023",
+   "vf": [
+    {
+     "t": "A insubmissão consiste em deixar de apresentar-se o convocado à incorporação dentro do prazo marcado, ou, apresentando-se, ausentar-se antes do ato oficial de incorporação.",
+     "r": true,
+     "j": "Correto — art. 183, com pena de impedimento de três meses a um ano."
+    },
+    {
+     "t": "A deserção consiste em ausentar-se o militar, sem licença, da unidade em que serve ou do lugar em que deve permanecer, por mais de oito dias.",
+     "r": true,
+     "j": "Correto — art. 187; pena de detenção de seis meses a dois anos, agravada se oficial."
+    },
+    {
+     "t": "Para a configuração da deserção é indispensável que o militar esteja em lugar incerto e não sabido.",
+     "r": false,
+     "j": "Falso. Não há que se falar em “local incerto e não sabido”: o militar pode passar os oito dias defronte ao seu BPM, à vista de todos, e não se apresentar, restando configurada a deserção após o octídio."
+    },
+    {
+     "t": "Na contagem do prazo da deserção, o dia da falta ao serviço é o dia zero, consumando-se o crime após as 23h59 do oitavo dia.",
+     "r": true,
+     "j": "Correto — a deserção se dá com mais de oito dias de ausência."
+    },
+    {
+     "t": "Ao contrário do motim, a deserção é crime unissubjetivo.",
+     "r": true,
+     "j": "Correto — observação expressa do material."
+    },
+    {
+     "t": "A deserção-fraude, consistente em conseguir exclusão do serviço ativo ou situação de inatividade criando ou simulando incapacidade, também exige o transcurso do octídio.",
+     "r": false,
+     "j": "Falso. A deserção-fraude (art. 188, IV) NÃO tem octídio."
+    },
+    {
+     "t": "Se o desertor se apresenta voluntariamente dentro de oito dias após a consumação do crime, a pena é diminuída de metade; e de um terço, se de mais de oito dias e até sessenta.",
+     "r": true,
+     "j": "Correto — art. 189, I, atenuante especial. O inciso II traz a agravante de um terço se a deserção ocorre em unidade estacionada em fronteira ou país estrangeiro."
+    },
+    {
+     "t": "O abandono de posto só se configura quando o militar se retira fisicamente do local designado.",
+     "r": false,
+     "j": "Falso. O crime do art. 195 é também o abandono do SERVIÇO — o militar pode abandonar o posto sem sair dele, como no exemplo do comandante de guarnição que, escalado para rondas, vai ao cinema dentro da própria área de atuação."
+    },
+    {
+     "t": "A embriaguez em serviço exige que o militar esteja escalado, pois sem escala não há serviço, e o tipo penal fala em embriagar-se, não apenas em beber.",
+     "r": true,
+     "j": "Correto — art. 202, com pena de detenção de seis meses a dois anos."
+    },
+    {
+     "t": "Dormir em serviço é crime apenas quando praticado por oficial de quarto ou de ronda.",
+     "r": false,
+     "j": "Falso. O art. 203 alcança também quem, não sendo oficial, está em serviço de sentinela, vigia, plantão às máquinas, ao leme, de ronda ou em qualquer serviço de natureza semelhante."
+    },
+    {
+     "t": "O CPM prevê três tipos autônomos de desacato: a superior, a militar e a servidor público.",
+     "r": true,
+     "j": "Correto — arts. 298, 299 e 300, este último com redação dada pela Lei nº 14.688/2023."
+    },
+    {
+     "t": "O desacato a militar (art. 299) exige relação hierárquica entre autor e vítima.",
+     "r": false,
+     "j": "Falso. O tipo NÃO exige relação hierárquica — um Ten Cel pode desacatar um Cabo no exercício de função de natureza militar. Quem exige a subordinação é o desacato a superior (art. 298)."
+    },
+    {
+     "t": "O desacato a superior pode ser praticado de duas formas: ofendendo-lhe a dignidade ou o decoro, ou procurando deprimir-lhe a autoridade.",
+     "r": true,
+     "j": "Correto — na segunda forma não é preciso haver ofensa: o agente despreza a autoridade (ex.: “o senhor não manda em nada”). A pena é agravada se o superior é oficial-general ou comandante da unidade."
+    },
+    {
+     "t": "O ingresso clandestino exige dolo direto e exclusivo de invadir o quartel, sendo crime-fim e não crime-meio.",
+     "r": true,
+     "j": "Correto — art. 302, observação expressa do material."
+    },
+    {
+     "t": "No peculato culposo, a reparação do dano, se precede a sentença irrecorrível, extingue a punibilidade; se lhe é posterior, reduz de metade a pena imposta.",
+     "r": true,
+     "j": "Correto — art. 303, §4º, do CPM."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a deserção, assinale a alternativa INCORRETA:",
+     "a": [
+      "Consiste em ausentar-se o militar, sem licença, por mais de oito dias.",
+      "O dia da falta ao serviço é o dia zero da contagem.",
+      "A deserção é crime unissubjetivo.",
+      "A deserção-fraude prescinde do octídio.",
+      "Exige-se que o militar esteja em lugar incerto e não sabido."
+     ],
+     "c": 4,
+     "j": "Não se exige lugar incerto e não sabido: basta a ausência sem licença por mais de oito dias, ainda que o militar esteja à vista de todos."
+    },
+    {
+     "e": "Sobre os crimes contra o serviço militar, assinale a alternativa CORRETA:",
+     "a": [
+      "O descumprimento de missão não admite modalidade culposa.",
+      "A pena do descumprimento de missão é aumentada de um terço se o agente é oficial e de metade se exercia função de comando.",
+      "A embriaguez em serviço configura-se com a simples ingestão de bebida alcoólica.",
+      "Dormir em serviço é crime privativo de oficial.",
+      "O abandono de posto exige o afastamento físico do local designado."
+     ],
+     "c": 1,
+     "j": "Art. 196, §§1º e 2º; o §3º prevê a modalidade culposa. A embriaguez em serviço exige embriagar-se, com escala; o art. 203 alcança não oficiais; e o abandono de posto é também abandono do serviço."
+    },
+    {
+     "e": "Sobre os três tipos de desacato do CPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "O desacato a superior exige relação de subordinação.",
+      "O desacato a militar não exige relação hierárquica.",
+      "O desacato a servidor público exige que o fato ocorra em lugar sujeito à administração militar.",
+      "O desacato a superior tem pena agravada se o superior é oficial-general ou comandante da unidade a que pertence o agente.",
+      "O desacato a superior confunde-se com o desrespeito a superior, sendo figuras idênticas."
+     ],
+     "c": 4,
+     "j": "Não se confundem: o desacato (art. 298) tem caráter mais ofensivo e prevalece sobre o desrespeito (art. 160), que é subsidiário."
+    },
+    {
+     "e": "Sobre o peculato no CPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "Consiste em apropriar-se de dinheiro, valor ou qualquer outro bem móvel, público ou particular, de que se tem a posse ou detenção em razão do cargo, ou desviá-lo em proveito próprio ou alheio.",
+      "A pena aumenta-se de um terço se o objeto da apropriação ou desvio é de valor superior a vinte vezes o salário mínimo.",
+      "No peculato-furto o agente não tem a posse ou detenção do bem, mas o subtrai valendo-se da facilidade que lhe proporciona a qualidade de militar ou de servidor público.",
+      "O peculato culposo é punido com detenção de três meses a um ano.",
+      "No peculato doloso, a reparação do dano antes da sentença irrecorrível extingue a punibilidade."
+     ],
+     "c": 4,
+     "j": "A extinção da punibilidade pela reparação do dano é prevista para o peculato CULPOSO (§4º, que remete ao §3º), não para o doloso."
+    },
+    {
+     "e": "Sobre a insubmissão e figuras correlatas, assinale a alternativa CORRETA:",
+     "a": [
+      "A pena da insubmissão é aumentada pela apresentação voluntária dentro do prazo de um ano.",
+      "Criar ou simular incapacidade física que inabilite o convocado para o serviço militar é crime.",
+      "O favorecimento a convocado nunca gera isenção de pena.",
+      "A substituição de convocado só pune o substituído.",
+      "A ignorância escusável dos atos da convocação militar agrava a pena."
+     ],
+     "c": 1,
+     "j": "Art. 184, com pena de detenção de seis meses a dois anos. A ignorância escusável e a apresentação voluntária em até um ano DIMINUEM a pena de um terço; no favorecimento, é isento de pena o ascendente, descendente, cônjuge ou irmão; e na substituição incorre na mesma pena quem substitui o convocado."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Disserte sobre o crime de deserção: conceito, contagem do prazo, casos assimilados, atenuante e agravante especiais.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Conceito (art. 187): ausentar-se o militar, sem licença, da unidade em que serve, ou do lugar em que deve permanecer, por mais de oito dias — pena de detenção de seis meses a dois anos; se oficial, a pena é agravada.",
+      "O verbo é AUSENTAR-SE: não se exige lugar incerto e não sabido; o militar pode permanecer defronte ao quartel, à vista de todos, sem se apresentar, e a deserção se configura após o octídio.",
+      "Contagem: o dia da falta ao serviço é o dia zero; consuma-se após as 23h59 do oitavo dia (mais de oito dias).",
+      "Natureza: ao contrário do motim, a deserção é crime unissubjetivo.",
+      "Casos assimilados (art. 188): não se apresentar no lugar designado dentro de oito dias findo o prazo de trânsito ou férias; não se apresentar dentro de oito dias contados do término ou cassação da licença, agregação, estado de sítio ou de guerra; tendo cumprido a pena, não se apresentar em oito dias; e a deserção-fraude — conseguir exclusão do serviço ativo ou situação de inatividade criando ou simulando incapacidade, hipótese que NÃO tem octídio.",
+      "Atenuante especial (art. 189, I): apresentação voluntária em até oito dias após a consumação diminui a pena de metade; de um terço, se de mais de oito e até sessenta dias.",
+      "Agravante especial (art. 189, II): a pena é agravada de um terço se a deserção ocorre em unidade estacionada em fronteira ou país estrangeiro.",
+      "Figuras correlatas: deserção especial (art. 190), concerto para deserção (art. 191), deserção por evasão ou fuga (art. 192), favorecimento a desertor (art. 193, com isenção para ascendente, descendente, cônjuge ou irmão) e omissão de oficial (art. 194)."
+     ]
+    },
+    {
+     "e": "Explique os três tipos de desacato previstos no CPM e diferencie a desobediência (art. 301) da recusa de obediência (art. 163).",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Desacato a superior (art. 298): desacatar superior, ofendendo-lhe a dignidade ou o decoro, ou procurando deprimir-lhe a autoridade — reclusão até quatro anos, se o fato não constitui crime mais grave; exige relação de subordinação; a pena é agravada se o superior é oficial-general ou comandante da unidade a que pertence o agente.",
+      "Duas formas de execução: ofender a dignidade ou o decoro; ou procurar deprimir a autoridade, hipótese em que não é preciso haver ofensa — o agente despreza a autoridade.",
+      "Desacato a militar (art. 299): desacatar militar no exercício de função de natureza militar ou em razão dela — detenção de seis meses a dois anos; NÃO exige relação hierárquica.",
+      "Desacato a servidor público (art. 300): desacatar servidor público no exercício de função ou em razão dela, em lugar sujeito à administração militar — detenção de seis meses a dois anos; é a figura mais próxima do desacato do CP comum.",
+      "Desobediência (art. 301): desobedecer à ordem legal de autoridade militar — detenção até seis meses; não exige o “desaforo”.",
+      "Distinção: na recusa de obediência (art. 163) há, além do não obedecer, a afronta, e o bem jurídico é a autoridade e a disciplina militar; na desobediência, o bem jurídico é a administração militar e não se exige a afronta."
+     ]
+    }
+   ]
+  },
+  "6": {
+   "titulo": "Processo penal militar: Justiça Militar, CPPM, ação penal, rito e prisões",
+   "legal": "Arts. 1º a 4º, 29 a 35, 243 a 258, 277 a 282, 294 a 297, 314 a 316, 347, 368, 390 e 417 a 435 do CPPM; art. 125, §4º, da CF",
+   "vf": [
+    {
+     "t": "O Superior Tribunal Militar é composto por 15 ministros, sendo 3 generais da Marinha, 4 do Exército, 3 da Aeronáutica — todos da ativa e do posto mais elevado — e 5 civis.",
+     "r": true,
+     "j": "Correto — os civis devem ser maiores de 35 e menores de 70 anos: 3 advogados de notório saber jurídico com mais de 10 anos de atividade e 2 por escolha paritária (um juiz e um membro do MP Militar)."
+    },
+    {
+     "t": "A Justiça Militar de Pernambuco é subordinada ao Superior Tribunal Militar.",
+     "r": false,
+     "j": "Falso. A Justiça Militar de Pernambuco é subordinada ao TJPE; o STM serve como fonte doutrinária para a Justiça Militar Estadual."
+    },
+    {
+     "t": "A Constituição permite a criação de Tribunais de Justiça Militar nos Estados, mas apenas São Paulo, Minas Gerais e Rio Grande do Sul os criaram.",
+     "r": true,
+     "j": "Correto — nos demais Estados a Justiça Militar é representada pela Vara da Justiça Militar."
+    },
+    {
+     "t": "Compete aos juízes de direito do juízo militar processar e julgar, singularmente, os crimes militares cometidos contra civis e as ações judiciais contra atos disciplinares militares, cabendo ao Conselho de Justiça, sob a presidência do juiz de direito, julgar os demais crimes militares.",
+     "r": true,
+     "j": "Correto — art. 125, §4º, da CF; a Justiça Militar Estadual tem dupla competência (criminal e cível), o que não ocorre na JMU."
+    },
+    {
+     "t": "Os oficiais na qualidade de juízes militares têm as mesmas prerrogativas do juiz togado.",
+     "r": false,
+     "j": "Falso. As prerrogativas são inerentes ao cargo (juiz togado), e não à função exercida pelo oficial. O Conselho de Justiça também não se confunde com o Conselho de Justificação, que é do DADM."
+    },
+    {
+     "t": "A Justiça Militar Estadual pode julgar civis excepcionalmente, se no momento dos fatos a pessoa era militar — como no caso do “ex-SD PM”, excluído após os fatos.",
+     "r": true,
+     "j": "Correto — e o único crime que exige que o autor seja militar é a deserção."
+    },
+    {
+     "t": "Havendo divergência entre as normas do CPPM e as de convenção ou tratado de que o Brasil seja signatário, prevalecem as normas do CPPM.",
+     "r": false,
+     "j": "Falso. O art. 1º, §1º, do CPPM determina que prevaleçam as normas da convenção ou do tratado."
+    },
+    {
+     "t": "A lei de processo penal militar deve ser interpretada no sentido literal de suas expressões, admitindo-se a interpretação extensiva ou restritiva quando for manifesto que a expressão da lei é mais estrita ou mais ampla do que sua intenção.",
+     "r": true,
+     "j": "Correto — art. 2º e §1º do CPPM."
+    },
+    {
+     "t": "São vedadas as interpretações extensiva e restritiva quando cercearem a defesa pessoal do acusado, prejudicarem ou alterarem o curso normal do processo, ou desfigurarem de plano os fundamentos da acusação.",
+     "r": true,
+     "j": "Correto — art. 2º, §2º, do CPPM."
+    },
+    {
+     "t": "Os casos omissos no CPPM são supridos, entre outras fontes, pela legislação de processo penal comum, bastando para tanto a existência da omissão.",
+     "r": false,
+     "j": "Falso. São três requisitos cumulativos: haver omissão no CPPM, ser a norma aplicável ao caso concreto e não acarretar prejuízo à índole do processo penal militar (art. 3º, “a”)."
+    },
+    {
+     "t": "A ação penal militar é pública e somente pode ser promovida por denúncia do Ministério Público Militar, admitindo-se, após a Lei nº 14.688/2023, a ação privada subsidiária da pública se a ação pública não for intentada no prazo legal.",
+     "r": true,
+     "j": "Correto — art. 29 do CPPM e art. 121, parágrafo único, com a redação de 2023."
+    },
+    {
+     "t": "Apresentada a denúncia, o Ministério Público poderá dela desistir se entender conveniente.",
+     "r": false,
+     "j": "Falso. O art. 32 do CPPM proíbe a desistência — é a indisponibilidade da ação penal pública militar."
+    },
+    {
+     "t": "O prazo para a conclusão da instrução criminal é de 50 dias com o acusado preso e de 90 dias com o acusado solto, contados do recebimento da denúncia.",
+     "r": true,
+     "j": "Correto — art. 390 do CPPM."
+    },
+    {
+     "t": "A prisão do desertor formaliza-se por auto de prisão em flagrante delito.",
+     "r": false,
+     "j": "Falso. O desertor não é preso em flagrante: é capturado (auto de captura), por meio da Instrução Provisória de Deserção (IPD). Apresentar-se espontaneamente não impede a captura, e em Pernambuco o desertor não passa por audiência de custódia."
+    },
+    {
+     "t": "A menagem pode ser concedida pelo juiz nos crimes cujo máximo da pena não exceda quatro anos, levando em consideração a natureza do crime e os antecedentes do acusado.",
+     "r": true,
+     "j": "Correto — é espécie de prisão provisória fora do cárcere, dividindo-se em menagem-liberdade e menagem-prisão."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a aplicação da lei processual penal militar, assinale a alternativa INCORRETA:",
+     "a": [
+      "O CPPM aplica-se tanto em tempo de paz quanto em tempo de guerra.",
+      "Havendo divergência com convenção ou tratado de que o Brasil seja signatário, prevalecem estes últimos.",
+      "As normas do CPPM aplicam-se subsidiariamente aos processos regulados em leis especiais.",
+      "A regra de interpretação é a literal, com os termos técnicos entendidos em sua acepção especial.",
+      "Basta a omissão do CPPM para que se aplique a legislação processual penal comum."
+     ],
+     "c": 4,
+     "j": "São três requisitos cumulativos (art. 3º, “a”): omissão no CPPM, aplicabilidade ao caso concreto e ausência de prejuízo à índole do processo penal militar."
+    },
+    {
+     "e": "Sobre a ação penal militar, assinale a alternativa CORRETA:",
+     "a": [
+      "Vigora o princípio da oportunidade, podendo o MP decidir sobre a conveniência da denúncia.",
+      "A denúncia deve ser apresentada sempre que houver prova de fato que, em tese, constitua crime e indícios de autoria.",
+      "O MP pode desistir da ação penal após oferecida a denúncia.",
+      "O direito de representação do art. 33 do CPPM é condição de procedibilidade.",
+      "A ação privada subsidiária da pública é vedada no âmbito militar."
+     ],
+     "c": 1,
+     "j": "Art. 30 do CPPM — princípio da obrigatoriedade, que se opõe ao da oportunidade. O art. 32 proíbe a desistência; o direito de representação do art. 33 tem natureza informativa e auxiliar; e a Lei nº 14.688/2023 admitiu a ação privada subsidiária."
+    },
+    {
+     "e": "Sobre o rito do processo penal militar, assinale a alternativa INCORRETA:",
+     "a": [
+      "O processo inicia-se com o recebimento da denúncia pelo juiz, efetiva-se com a citação e extingue-se quando a sentença definitiva se torna irrecorrível.",
+      "A citação de militar da ativa faz-se mediante requisição à autoridade sob cujo comando estiver.",
+      "A acusação arrola suas testemunhas na denúncia, em número não superior a seis.",
+      "As testemunhas de defesa podem ser indicadas em qualquer fase da instrução, desde que não excedido o prazo de cinco dias após a inquirição da última testemunha de acusação.",
+      "O interrogatório do acusado é o primeiro ato da fase probatória."
+     ],
+     "c": 4,
+     "j": "O interrogatório é o ÚLTIMO ato da fase e constitui peça de defesa, não de acusação."
+    },
+    {
+     "e": "Sobre as provas no processo penal militar, assinale a alternativa CORRETA:",
+     "a": [
+      "A prova no juízo penal militar sujeita-se integralmente às restrições da lei civil.",
+      "É admissível qualquer espécie de prova, desde que não atente contra a moral, a saúde, a segurança individual ou coletiva, ou contra a hierarquia ou a disciplina militares.",
+      "O juiz não pode determinar diligências de ofício em nenhuma hipótese.",
+      "A perícia só pode ser determinada pela autoridade judiciária.",
+      "O ofendido é obrigado a responder pergunta que possa incriminá-lo."
+     ],
+     "c": 1,
+     "j": "Art. 295 do CPPM. A prova não se sujeita às restrições da lei civil, salvo quanto ao estado das pessoas (art. 294); o juiz pode determinar diligências de ofício para dirimir dúvida sobre ponto relevante (art. 296); a perícia pode ser determinada pela autoridade policial militar ou judiciária, ou requerida pelas partes (art. 315); e o ofendido não é obrigado a responder pergunta que possa incriminá-lo (art. 313)."
+    },
+    {
+     "e": "Sobre as prisões no processo penal militar, assinale a alternativa INCORRETA:",
+     "a": [
+      "Qualquer pessoa poderá e os militares deverão prender quem for insubmisso ou desertor, ou seja encontrado em flagrante delito.",
+      "A Lei nº 7.960/1989 não se aplica aos crimes militares, por trazer rol taxativo de crimes do Código Penal.",
+      "São requisitos cumulativos da preventiva a prova do fato delituoso e os indícios suficientes de autoria.",
+      "A preventiva deve fundar-se em ao menos um dos casos do art. 255, entre eles a exigência de manutenção das normas ou princípios de hierarquia e disciplina militares.",
+      "O assistente pode requerer a decretação da prisão preventiva."
+     ],
+     "c": 4,
+     "j": "Ao contrário do CPP, na seara militar não há como o assistente requerer a prisão preventiva."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Descreva as seis fases do rito do processo penal militar, indicando os prazos relevantes.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Prazo global (art. 390): a instrução criminal deve concluir-se em 50 dias com o acusado preso e 90 dias com o acusado solto, contados do recebimento da denúncia.",
+      "1ª fase — Recebimento da denúncia: dá início ao processo, não se confundindo com o oferecimento; o art. 35 dispõe que o processo se inicia com o recebimento, efetiva-se com a citação e extingue-se quando a sentença definitiva se torna irrecorrível.",
+      "2ª fase — Citação (art. 277): por oficial de justiça, mediante mandado, precatória, requisição (arts. 280 e 282), pelo correio ou por edital; a citação de militar da ativa faz-se mediante requisição à autoridade sob cujo comando estiver.",
+      "3ª fase — Defesa prévia: primeiro momento em que a defesa arrola testemunhas; a acusação só pode arrolar na denúncia, em número não superior a seis (art. 77, “h”), enquanto a defesa pode indicar em qualquer fase, desde que não excedido o prazo de cinco dias após a inquirição da última testemunha de acusação (art. 417, §2º).",
+      "4ª fase — Probatória (arts. 294 a 298 e 311 a 316): admite-se qualquer espécie de prova que não atente contra a moral, a saúde, a segurança ou a hierarquia e disciplina; o ônus é de quem alega, podendo o juiz determinar diligências de ofício para dirimir dúvida sobre ponto relevante; as testemunhas são inquiridas pelo auditor (sistema presidencialista) e o interrogatório é o último ato, sendo peça de defesa.",
+      "5ª fase — Saneadora (art. 427): após a inquirição da última testemunha de defesa, vista em cartório às partes por cinco dias.",
+      "6ª fase — Alegações finais (art. 428) e julgamento (arts. 432 a 435): oito dias sucessivos para o MP e para a defesa, e cinco dias para o assistente; o julgamento começa com a leitura das peças, seguem-se as sustentações (MP, assistente e defesa), réplica e tréplica de até uma hora, votando primeiro o auditor, depois os juízes militares por ordem inversa de hierarquia e, por fim, o presidente."
+     ]
+    },
+    {
+     "e": "Disserte sobre a prisão preventiva no processo penal militar e sobre a peculiaridade da prisão do desertor.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Cabimento: a preventiva pode ser decretada pelo auditor ou pelo Conselho de Justiça, de ofício, a requerimento do MP ou mediante representação da autoridade encarregada do IPM, em qualquer fase deste ou do processo — inclusive antes da ação penal.",
+      "Fumus commissi delicti (art. 254): requisitos cumulativos — prova do fato delituoso e indícios suficientes de autoria.",
+      "Periculum libertatis (art. 255): hipóteses alternativas — garantia da ordem pública; conveniência da instrução criminal; periculosidade do indiciado ou acusado; segurança da aplicação da lei penal militar; e exigência da manutenção das normas ou princípios de hierarquia e disciplina militares.",
+      "Limites: o juiz deixará de decretar a preventiva se presumir que o indiciado não fuja nem perturbe a ação da justiça (art. 257), e não a decretará se verificar que o agente praticou o fato nas condições dos arts. 35, 38, 39 e 42 do CPM (art. 258); o assistente não pode requerê-la.",
+      "Revisão: aplica-se a orientação do art. 316 do CPP, de revisão da necessidade a cada 90 dias, sob pena de ilegalidade.",
+      "Prisão do desertor: depende de procedimento especial — a Instrução Provisória de Deserção (IPD) —, nunca de auto de prisão em flagrante; o desertor não é preso em flagrante, é capturado (auto de captura); apresentar-se espontaneamente não impede a captura; em Pernambuco não passa por audiência de custódia e não há atuação de juiz de garantias, já que o instrumento que formaliza a prisão não é o APFD.",
+      "Prisão temporária: a Lei nº 7.960/1989 não se aplica aos crimes militares, por trazer rol taxativo de tipos do Código Penal; supre-lhe a falta a detenção decretada pelo encarregado do IPM (art. 18 do CPPM), restrita aos crimes propriamente militares."
+     ]
+    }
+   ]
+  }
+ },
+ "sim": {
+  "vf": [
+   {
+    "t": "O Direito Penal Militar tem por fonte apenas leis federais, sendo o Código Penal Militar a principal.",
+    "r": true,
+    "j": "Correto — as leis estaduais (CDMEPE, Estatuto dos Militares de Pernambuco) são fonte do DADM.",
+    "g": "Questão 01 — Parte geral e princípios"
+   },
+   {
+    "t": "A absolvição criminal por insuficiência de provas vincula a decisão administrativa.",
+    "r": false,
+    "j": "Falso — só vincula a absolvição fundamentada em negativa de autoria ou inexistência do fato.",
+    "g": "Questão 01 — Parte geral e princípios"
+   },
+   {
+    "t": "Em normas incriminadoras do Direito Penal Militar aplicam-se apenas regras de interpretação restritiva.",
+    "r": true,
+    "j": "Correto — não se aplica nenhuma regra de interpretação extensiva.",
+    "g": "Questão 01 — Parte geral e princípios"
+   },
+   {
+    "t": "A Lei nº 14.688/2023 criou a figura do crime militar por extensão.",
+    "r": false,
+    "j": "Falso — o crime militar por extensão foi criado pela Lei nº 13.491/2017. A Lei nº 14.688/2023 revogou o assemelhado, a pena de reforma, a suspensão do exercício do posto e o art. 233.",
+    "g": "Questão 01 — Parte geral e princípios"
+   },
+   {
+    "t": "O princípio humanitário veda a pena de morte, salvo em caso de guerra declarada.",
+    "r": true,
+    "j": "Correto — veda ainda penas de caráter perpétuo, de trabalhos forçados, de banimento e cruéis.",
+    "g": "Questão 01 — Parte geral e princípios"
+   },
+   {
+    "t": "Quanto ao tempo, o CPM adota a teoria da atividade: o crime considera-se praticado no momento da ação ou omissão, ainda que outro seja o do resultado.",
+    "r": true,
+    "j": "Correto — art. 5º do CPM.",
+    "g": "Questão 02 — Crime militar e teoria do crime"
+   },
+   {
+    "t": "O Código Penal Militar é finalista, analisando o dolo e a culpa na tipicidade.",
+    "r": false,
+    "j": "Falso — o CPM é CAUSALISTA, com o elemento subjetivo analisado na culpabilidade, o que se evidencia no art. 33.",
+    "g": "Questão 02 — Crime militar e teoria do crime"
+   },
+   {
+    "t": "Segundo o STM, a simples condição de militar do agente é suficiente para atrair a competência da Justiça Militar.",
+    "r": false,
+    "j": "Falso — é imprescindível o nexo funcional entre a conduta e o exercício das atividades militares.",
+    "g": "Questão 02 — Crime militar e teoria do crime"
+   },
+   {
+    "t": "A tentativa é punida, em regra, com a pena do crime diminuída de um a dois terços, podendo o juiz, em caso de excepcional gravidade, aplicar a pena do consumado.",
+    "r": true,
+    "j": "Correto — art. 30, parágrafo único: teoria objetiva como regra e subjetiva excepcionalmente.",
+    "g": "Questão 02 — Crime militar e teoria do crime"
+   },
+   {
+    "t": "Em estrita obediência a ordem direta de superior hierárquico em matéria de serviço, o inferior nunca responde pelo crime.",
+    "r": false,
+    "j": "Falso — se a ordem tem por objeto ato manifestamente criminoso, ou há excesso nos atos ou na forma da execução, é punível também o inferior (art. 38, §2º).",
+    "g": "Questão 02 — Crime militar e teoria do crime"
+   },
+   {
+    "t": "Para configurar a revolta basta que os agentes estejam armados, sendo desnecessário o emprego da arma, exigindo-se, porém, o liame subjetivo quanto ao armamento.",
+    "r": true,
+    "j": "Correto — sem o conhecimento dos demais, estes respondem por motim e os armados por revolta.",
+    "g": "Questão 03 — Crimes em espécie"
+   },
+   {
+    "t": "A violência contra superior é crime contra a pessoa.",
+    "r": false,
+    "j": "Falso — é crime contra a autoridade e a disciplina militar; havendo lesão corporal, aplica-se também a pena do crime contra a pessoa.",
+    "g": "Questão 03 — Crimes em espécie"
+   },
+   {
+    "t": "A deserção-fraude prescinde do transcurso do octídio.",
+    "r": true,
+    "j": "Correto — art. 188, IV, do CPM.",
+    "g": "Questão 03 — Crimes em espécie"
+   },
+   {
+    "t": "O desacato a militar (art. 299) exige relação hierárquica entre autor e vítima.",
+    "r": false,
+    "j": "Falso — o tipo não exige relação hierárquica; quem a exige é o desacato a superior (art. 298).",
+    "g": "Questão 03 — Crimes em espécie"
+   },
+   {
+    "t": "O abandono de posto abrange também o abandono do serviço, ainda que o militar não se retire fisicamente do local designado.",
+    "r": true,
+    "j": "Correto — art. 195, conforme observação expressa do material.",
+    "g": "Questão 03 — Crimes em espécie"
+   },
+   {
+    "t": "Havendo divergência entre o CPPM e tratado de que o Brasil seja signatário, prevalece o tratado.",
+    "r": true,
+    "j": "Correto — art. 1º, §1º, do CPPM.",
+    "g": "Questão 04 — Processo penal militar"
+   },
+   {
+    "t": "O interrogatório é o primeiro ato da fase probatória e constitui peça de acusação.",
+    "r": false,
+    "j": "Falso — é o ÚLTIMO ato da fase e constitui peça de DEFESA.",
+    "g": "Questão 04 — Processo penal militar"
+   },
+   {
+    "t": "O prazo para conclusão da instrução criminal é de 50 dias com o acusado preso e de 90 dias com o acusado solto.",
+    "r": true,
+    "j": "Correto — art. 390 do CPPM, contados do recebimento da denúncia.",
+    "g": "Questão 04 — Processo penal militar"
+   },
+   {
+    "t": "O desertor é preso em flagrante delito, lavrando-se o respectivo APFD.",
+    "r": false,
+    "j": "Falso — o desertor é capturado (auto de captura), mediante Instrução Provisória de Deserção; a apresentação espontânea não impede a captura.",
+    "g": "Questão 04 — Processo penal militar"
+   },
+   {
+    "t": "No julgamento, vota em primeiro lugar o auditor; depois os juízes militares, por ordem inversa de hierarquia; e, por fim, o presidente do Conselho de Justiça.",
+    "r": true,
+    "j": "Correto — art. 435 do CPPM.",
+    "g": "Questão 04 — Processo penal militar"
+   }
+  ],
+  "me": [
+   {
+    "e": "Assinale a alternativa INCORRETA sobre a competência da Justiça Militar:",
+    "a": [
+     "À Justiça Militar compete processar e julgar os crimes militares definidos em lei (art. 124, CF).",
+     "Compete à Justiça Militar Estadual julgar as ações judiciais contra atos disciplinares militares.",
+     "A Justiça Militar da União tem a mesma dupla competência criminal-cível da Justiça Militar Estadual.",
+     "A Justiça Militar Estadual pode julgar quem já era civil ao tempo do processo, se era militar ao tempo dos fatos.",
+     "A competência do foro militar determina-se, de modo geral, pelo lugar da infração, pela residência ou domicílio do acusado e pela prevenção."
+    ],
+    "c": 2,
+    "j": "A dupla competência (criminal e cível), decorrente do julgamento das ações judiciais contra atos disciplinares militares, é exclusiva da Justiça Militar Estadual — a JMU não a possui."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre as excludentes no CPM:",
+    "a": [
+     "O erro de direito escusável isenta de pena inclusive em crime que atente contra o dever militar.",
+     "O erro de fato plenamente escusável isenta de pena.",
+     "A embriaguez voluntária e completa exclui a imputabilidade.",
+     "O estado de necessidade figura apenas como excludente de antijuridicidade.",
+     "As excludentes de tipicidade estão expressamente previstas no CPM."
+    ],
+    "c": 1,
+    "j": "Art. 36 do CPM. O erro de direito atenua ou substitui a pena e ressalva os crimes contra o dever militar (art. 35); a embriaguez só exclui a imputabilidade se proveniente de caso fortuito ou força maior (art. 49); o estado de necessidade aparece tanto no art. 42 quanto no art. 39 (excludente de culpabilidade); e as excludentes de tipicidade são apenas supralegais."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre os crimes contra a autoridade e a disciplina militar:",
+    "a": [
+     "A conspiração é ato preparatório do motim, mas constitui crime autônomo.",
+     "É isento de pena quem denuncia o ajuste antes da execução, quando ainda possível evitar as consequências.",
+     "O desrespeito a superior exige que o fato seja praticado diante de outro militar.",
+     "A omissão de lealdade militar pune quem deixa de comunicar ao superior o motim de cuja preparação teve notícia.",
+     "Havendo desrespeito e desacato no mesmo contexto, prevalece o desrespeito, por ser norma especial."
+    ],
+    "c": 4,
+    "j": "O desrespeito (art. 160) é subsidiário — “se o fato não constitui crime mais grave” —, de modo que prevalece o desacato (art. 298)."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre a ação penal militar:",
+    "a": [
+     "Vigora o princípio da oportunidade.",
+     "Apresentada a denúncia, o MP pode dela desistir.",
+     "A ação penal é pública e, desde a Lei nº 14.688/2023, admite-se a ação privada subsidiária da pública se a ação pública não for intentada no prazo legal.",
+     "O direito de representação do art. 33 do CPPM é condição de procedibilidade.",
+     "Os crimes militares são de ação penal pública condicionada."
+    ],
+    "c": 2,
+    "j": "Art. 121, parágrafo único, do CPM, incluído pela Lei nº 14.688/2023. Vigoram a obrigatoriedade (art. 30) e a indisponibilidade (art. 32); o direito de representação do art. 33 é informativo e auxiliar; e os crimes militares são de ação pública incondicionada."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre as prisões e a menagem:",
+    "a": [
+     "A prisão preventiva exige, cumulativamente, prova do fato delituoso e indícios suficientes de autoria.",
+     "A exigência de manutenção das normas de hierarquia e disciplina militares é fundamento idôneo para a preventiva.",
+     "A Lei nº 7.960/1989 não se aplica aos crimes militares.",
+     "A menagem pode ser concedida nos crimes cujo máximo da pena não exceda quatro anos.",
+     "O assistente pode requerer a decretação da prisão preventiva."
+    ],
+    "c": 4,
+    "j": "Ao contrário do CPP, na seara militar o assistente não pode requerer a prisão preventiva."
+   }
+  ],
+  "disc": [
+   {
+    "e": "Explique a diferença entre o Direito Penal Militar e o Direito Administrativo Disciplinar Militar e indique a hipótese em que as instâncias se comunicam.",
+    "est": "Discursiva do simulado — vale 1,5 ponto; mínimo 8 e máximo 15 linhas.",
+    "p": 1.5,
+    "cri": [
+     "Gênero e espécies: o Direito Militar Sancionador é gênero, com duas espécies — DPM e DADM —, que não se confundem.",
+     "Fonte legal: DPM, apenas leis federais, sendo o CPM a principal; DADM, leis estaduais, salvo disposição diversa do legislador (CDMEPE, Estatuto dos Militares de Pernambuco).",
+     "Julgamento: DPM, em tribunais do Judiciário — em Pernambuco, a Vara Militar do TJPE; DADM, em órgãos do Executivo definidos em lei, como a Corregedoria-Geral da SDS.",
+     "Tipo de processo: DPM, procedimentos (IPM, APFDM e IPD) e processo criminal; DADM, Processo Administrativo Disciplinar Militar (Conselhos de Disciplina e de Justificação, SAD e PADS).",
+     "Comunicação: as instâncias são independentes; a exceção é a absolvição criminal fundamentada em negativa de autoria ou inexistência do fato, que vincula a decisão administrativa."
+    ]
+   },
+   {
+    "e": "Disserte sobre o crime de deserção e sobre a forma pela qual se dá a prisão do desertor, apontando as diferenças em relação à prisão em flagrante.",
+    "est": "Discursiva do simulado — vale 2,0 pontos; mínimo 12 e máximo 25 linhas.",
+    "p": 2.0,
+    "cri": [
+     "Tipo (art. 187): ausentar-se o militar, sem licença, da unidade em que serve ou do lugar em que deve permanecer, por mais de oito dias — detenção de seis meses a dois anos; se oficial, a pena é agravada.",
+     "Verbo nuclear: AUSENTAR-SE; não se exige lugar incerto e não sabido — o militar pode permanecer defronte ao quartel, à vista de todos, e ainda assim desertar após o octídio.",
+     "Contagem: o dia da falta ao serviço é o dia zero; consuma-se após as 23h59 do oitavo dia. É crime unissubjetivo, ao contrário do motim.",
+     "Casos assimilados (art. 188): não apresentação em oito dias findo o prazo de trânsito ou férias; término ou cassação de licença, agregação, estado de sítio ou de guerra; após cumprida a pena; e a deserção-fraude, que não tem octídio.",
+     "Atenuante e agravante (art. 189): apresentação voluntária em até oito dias reduz a pena de metade, e de um terço se de mais de oito e até sessenta; a deserção em unidade estacionada em fronteira ou país estrangeiro agrava a pena de um terço.",
+     "Prisão do desertor: art. 243 do CPPM — qualquer pessoa poderá e os militares deverão prender quem for insubmisso ou desertor, ou seja encontrado em flagrante delito; a prisão do desertor não se confunde com a prisão em flagrante.",
+     "Formalização: depende de procedimento especial, a Instrução Provisória de Deserção (IPD), nunca de auto de prisão em flagrante delito; o desertor não é preso, é capturado, lavrando-se auto de captura.",
+     "Consequências: a apresentação espontânea não impede a captura; em Pernambuco o desertor não passa por audiência de custódia; e não há atuação de juiz de garantias, pois o instrumento que formaliza a prisão não é o APFD."
+    ]
+   }
+  ]
+ }
+}

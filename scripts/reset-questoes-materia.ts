@@ -1,13 +1,14 @@
 /**
- * reset-am-questoes.ts — RESET TOTAL das questões de AM (Armamento e Munição).
+ * reset-questoes-materia.ts — RESET TOTAL do banco de questões de uma matéria.
  *
- * Fonte: scripts/data/am-questoes.json (banco por tema 1–6 + simulado).
- * Ação DESTRUTIVA: apaga TODAS as questões materia="AM" — o cascade leva junto
- * as Respostas dos alunos a essas questões — e reinsere a partir do arquivo,
- * nos módulos "1".."6" e SIM.
+ * Fonte: scripts/data/<sigla em minúsculas>-questoes.json — banco por tema
+ * (módulos "1".."6") mais o simulado (módulo SIM).
  *
- * Rodar:     node_modules/.bin/tsx scripts/reset-am-questoes.ts
- * Simulação: DRY=1 node_modules/.bin/tsx scripts/reset-am-questoes.ts
+ * Ação DESTRUTIVA: apaga TODAS as questões da matéria — o cascade leva junto
+ * as Respostas dos alunos a essas questões — e reinsere a partir do arquivo.
+ *
+ * Rodar:     node_modules/.bin/tsx scripts/reset-questoes-materia.ts AM
+ * Simulação: DRY=1 node_modules/.bin/tsx scripts/reset-questoes-materia.ts AM
  */
 import "dotenv/config"
 import { readFileSync } from "node:fs"
@@ -20,7 +21,12 @@ import ws from "ws"
 neonConfig.webSocketConstructor = ws
 const prisma = new PrismaClient({ adapter: new PrismaNeon({ connectionString: process.env.DATABASE_URL! }) })
 
-const MATERIA = "AM"
+const MATERIA = (process.argv[2] || "").trim().toUpperCase()
+if (!MATERIA) {
+  console.error("Uso: node_modules/.bin/tsx scripts/reset-questoes-materia.ts <SIGLA>")
+  process.exit(1)
+}
+const ARQUIVO = `./data/${MATERIA.toLowerCase()}-questoes.json`
 const LETRAS = ["A", "B", "C", "D", "E"]
 const MOD_SIM = "SIM"
 
@@ -69,7 +75,7 @@ const buildDisc = (modulo: string, q: DISC, fonte: string) =>
 
 async function main() {
   const data = JSON.parse(
-    readFileSync(new URL("./data/am-questoes.json", import.meta.url), "utf8"),
+    readFileSync(new URL(ARQUIVO, import.meta.url), "utf8"),
   ) as Fonte
 
   // ── Banco por tema → módulos "1".."6" ──
@@ -81,7 +87,7 @@ async function main() {
   }
 
   // ── Simulado → módulo SIM ──
-  const fonteSim = "Simulado AM — CFO PM 2026 (10,0 pts · 100 min)"
+  const fonteSim = `Simulado ${MATERIA} — CFO PM 2026 (10,0 pts · 100 min)`
   for (const v of data.sim.vf) buildCE(MOD_SIM, v, fonteSim)
   for (const m of data.sim.me) buildMC(MOD_SIM, m, fonteSim)
   for (const d of data.sim.disc) buildDisc(MOD_SIM, d, fonteSim)
@@ -107,7 +113,7 @@ async function main() {
   // ── RESET: apaga as questões AM atuais (cascade apaga as Respostas) ──
   const antes = await prisma.questao.count({ where: { materia: MATERIA } })
   const del = await prisma.questao.deleteMany({ where: { materia: MATERIA } })
-  console.log(`\nApagadas ${del.count} questões AM antigas (de ${antes}).`)
+  console.log(`\nApagadas ${del.count} questões ${MATERIA} antigas (de ${antes}).`)
 
   // ── Insere as novas ──
   const created = await prisma.questao.createMany({
@@ -115,7 +121,7 @@ async function main() {
     skipDuplicates: true,
   })
   const depois = await prisma.questao.count({ where: { materia: MATERIA } })
-  console.log(`Inseridas ${created.count}. Total AM agora: ${depois}.`)
+  console.log(`Inseridas ${created.count}. Total ${MATERIA} agora: ${depois}.`)
   await prisma.$disconnect()
 }
 main().catch(e => { console.error(e); process.exit(1) })

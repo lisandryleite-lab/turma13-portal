@@ -1,0 +1,1250 @@
+{
+ "banco": {
+  "1": {
+   "titulo": "Conceitos básicos: poder de polícia, ordem pública e polícia ostensiva",
+   "legal": "Arts. 5º, 42 e 144 da CF/88; arts. 101, 102 e 105 da Constituição Estadual de 1989",
+   "vf": [
+    {
+     "t": "Poder de polícia é a faculdade de que dispõe a administração pública para o controle dos direitos e liberdades das pessoas, inspirado nos ideais do bem comum.",
+     "r": true,
+     "j": "Correto — é um dos poderes administrativos."
+    },
+    {
+     "t": "São atributos do poder de polícia a discricionariedade, a autoexecutoriedade e a coercibilidade (D.A.C.).",
+     "r": true,
+     "j": "Correto — não se confundem com os modos de atuação."
+    },
+    {
+     "t": "Pela autoexecutoriedade, o ato de polícia depende de prévia autorização judiciária.",
+     "r": false,
+     "j": "Falso. A autoexecutoriedade significa justamente que o ato de polícia INDEPENDE de prévia aprovação ou autorização do Poder Judiciário."
+    },
+    {
+     "t": "Pela coercibilidade, o ato de polícia é imperativo, admitindo-se o emprego de força, sem descambar para o arbítrio.",
+     "r": true,
+     "j": "Correto — o excesso e a violência são vedados."
+    },
+    {
+     "t": "São quatro os modos de atuar do poder de polícia: ordem, consentimento, fiscalização e sanção de polícia.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O consentimento de polícia manifesta-se pela licença, discricionária e revogável, ou pela autorização, vinculada a um direito.",
+     "r": false,
+     "j": "Falso — está invertido. A LICENÇA é vinculada a um direito; a AUTORIZAÇÃO é discricionária e revogável a qualquer tempo."
+    },
+    {
+     "t": "A fiscalização de polícia, quando exercida em matéria de ordem pública, denomina-se policiamento.",
+     "r": true,
+     "j": "Correto — tem dupla utilidade: prevenção e repressão das infrações."
+    },
+    {
+     "t": "Segurança pública é o estado antidelitual, de valor comunitário, que resulta da observância dos preceitos contidos na legislação penal.",
+     "r": true,
+     "j": "Correto — é aspecto da ordem pública e tem nesta seu objeto; pode resultar de ações preventivas, repressivas ou da simples ausência de delitos."
+    },
+    {
+     "t": "A ordem pública compõe-se de três aspectos: tranquilidade pública, salubridade pública e segurança pública.",
+     "r": true,
+     "j": "Correto — é sempre uma noção de valor nacional. Tranquilidade é a paz pública nas ruas; salubridade são as situações favoráveis às condições de vida; segurança é o estado de normalidade que permite o usufruto de direitos."
+    },
+    {
+     "t": "A preservação da ordem pública dá-se em duas fases: na normalidade, por ações preventivas com atitudes dissuasivas; na anormalidade, por ações repressivas imediatas com atitudes de contenção.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Policiamento ostensivo são ações de fiscalização de polícia, sobre matéria de ordem pública, em cujo emprego o homem ou a fração de tropa sejam identificados de relance, pela farda, equipamento, armamento ou viatura.",
+     "r": true,
+     "j": "Correto — conceito central da disciplina."
+    },
+    {
+     "t": "No perfil da polícia ostensiva, a atuação repressiva nas infrações penais comuns limita-se à repressão imediata, caracterizada no atendimento da ocorrência, incluído o estado de flagrância.",
+     "r": true,
+     "j": "Correto — compreende ainda os quatro modos de atuar do poder de polícia, possui investidura militar e exerce polícia judiciária militar estadual sobre seus componentes."
+    },
+    {
+     "t": "Tática policial-militar é o conjunto de métodos e procedimentos usados para a execução eficiente das atividades.",
+     "r": false,
+     "j": "Falso — essa é a TÉCNICA. A TÁTICA é a arte de empregar a tropa em operações policiais-militares que visam assegurar ou restabelecer a ordem pública."
+    },
+    {
+     "t": "Ponto base fixo (PBF) exige presença contínua da patrulha, enquanto o ponto base atendendo ao CIODS (PBAC) exige presença temporária.",
+     "r": true,
+     "j": "Correto — ponto base é o espaço físico que, por ser local de risco, exige a presença da patrulha."
+    },
+    {
+     "t": "O principal requisito do cartão-programa é o horário.",
+     "r": true,
+     "j": "Correto — é a representação gráfica do posto, com localização dos PBs, itinerários e horários; o cumprimento do horário obriga o PM a estar por determinado tempo em certos locais."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre os atributos do poder de polícia, assinale a alternativa INCORRETA:",
+     "a": [
+      "Discricionariedade: aferir e valorar a atividade policiada segundo conveniência, oportunidade e justiça.",
+      "Autoexecutoriedade: o ato independe de prévia autorização do Judiciário.",
+      "Coercibilidade: o ato é imperativo, admitindo emprego de força.",
+      "Os atributos são resumidos na sigla D.A.C.",
+      "Os atributos confundem-se com os quatro modos de atuar do poder de polícia."
+     ],
+     "c": 4,
+     "j": "Os atributos (D.A.C.) NÃO se confundem com os modos de atuação — ordem, consentimento, fiscalização e sanção de polícia."
+    },
+    {
+     "e": "Sobre os modos de atuar do poder de polícia, assinale a alternativa CORRETA:",
+     "a": [
+      "A ordem de polícia é o controle prévio que compatibiliza interesse particular e público.",
+      "O consentimento manifesta-se pela licença, vinculada a um direito, ou pela autorização, discricionária e revogável.",
+      "A fiscalização de polícia é a intervenção punitiva para reprimir a infração.",
+      "A sanção de polícia, em matéria de ordem pública, denomina-se policiamento.",
+      "Os modos de atuar são apenas três."
+     ],
+     "c": 1,
+     "j": "Ordem de polícia é o preceito que impõe limitação; a fiscalização é a verificação do cumprimento das ordens e consentimentos e, em matéria de ordem pública, denomina-se policiamento; a sanção é a intervenção punitiva. São quatro os modos."
+    },
+    {
+     "e": "Sobre a ordem pública, assinale a alternativa INCORRETA:",
+     "a": [
+      "É situação de tranquilidade e normalidade que o Estado deve assegurar.",
+      "Existe quando garantidos os direitos individuais, a estabilidade das instituições, o regular funcionamento dos serviços públicos e a moralidade pública.",
+      "É sempre uma noção de valor nacional.",
+      "Compõe-se de tranquilidade, salubridade e segurança pública.",
+      "A segurança pública é gênero do qual a ordem pública é espécie."
+     ],
+     "c": 4,
+     "j": "É o inverso: a segurança pública é ASPECTO da ordem pública e tem nesta o seu objeto."
+    },
+    {
+     "e": "Sobre os espaços físicos e a responsabilidade correspondente, assinale a alternativa CORRETA:",
+     "a": [
+      "Área — Companhia PM.",
+      "Subárea — Batalhão.",
+      "Setor — Pelotão PM.",
+      "Subsetor — Companhia PM.",
+      "Região — Batalhão."
+     ],
+     "c": 2,
+     "j": "Região ou território: comando regional (DIM, DINTER 1 ou 2); área: batalhão ou RPMont; subárea: companhia ou esquadrão; setor: pelotão; subsetor: grupo; posto: espaço da patrulha ou do PM isolado."
+    },
+    {
+     "e": "Sobre ocorrência, ação e operação policial-militar, assinale a alternativa INCORRETA:",
+     "a": [
+      "Ocorrência PM é todo fato que exige intervenção policial-militar.",
+      "Ação PM é o desempenho isolado de fração elementar ou constituída, com autonomia para missões rotineiras.",
+      "Operação PM é a conjugação de ações, executada por fração de tropa constituída, exigindo planejamento específico.",
+      "Fração elementar é o efetivo de até 3 PM para emprego coordenado.",
+      "Fração constituída é o efetivo de até 2 PM."
+     ],
+     "c": 4,
+     "j": "Fração constituída é o efetivo de tropa com, no mínimo, 1 Gp PM — quatro ou mais policiais."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Conceitue o poder de polícia, indique seus atributos e explique seus quatro modos de atuar, situando o policiamento.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: um dos poderes administrativos — faculdade de que dispõe a administração pública para o controle dos direitos e liberdades das pessoas, naturais ou jurídicas, inspirado nos ideais do bem comum.",
+      "Atributos (D.A.C.): discricionariedade — aferir e valorar a atividade policiada segundo conveniência, oportunidade e justiça, nos limites da lei; autoexecutoriedade — o ato de polícia independe de prévia aprovação ou autorização do Judiciário; coercibilidade — o ato é imperativo, admitindo emprego de força, sem descambar para o arbítrio, a violência ou o excesso. Os atributos não se confundem com os modos de atuação.",
+      "Ordem de polícia: preceito pelo qual o Estado impõe limitação às pessoas, para que não se faça o que prejudica o bem comum ou não se deixe de fazer o que evitaria prejuízo público.",
+      "Consentimento de polícia: controle prévio que compatibiliza o interesse particular com o público; manifesta-se pela licença, vinculada a um direito, ou pela autorização, discricionária e revogável a qualquer tempo.",
+      "Fiscalização de polícia: verificação, de ofício ou provocada, do cumprimento das ordens e consentimentos, com dupla utilidade — prevenção e repressão das infrações. Em matéria de ordem pública, recebe a denominação de POLICIAMENTO.",
+      "Sanção de polícia: intervenção punitiva do Estado para reprimir a infração; em ofensa à ordem pública, é o constrangimento pessoal, direto e imediato, na justa medida para restabelecê-la."
+     ]
+    },
+    {
+     "e": "Explique os conceitos de segurança pública, ordem pública e polícia ostensiva, indicando as duas fases da preservação da ordem pública.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Segurança pública: estado antidelitual, de valor comunitário, que resulta da observância dos preceitos contidos na legislação penal; pode resultar de ações preventivas, repressivas ou da simples ausência, ainda que temporária, de delitos; é dever do Estado, direito e responsabilidade de todos, e constitui aspecto da ordem pública.",
+      "Ordem pública: situação de tranquilidade e normalidade que o Estado deve assegurar às instituições e a todos os membros da sociedade; existe quando garantidos os direitos individuais, a estabilidade das instituições, o regular funcionamento dos serviços públicos e a moralidade pública.",
+      "Aspectos da ordem pública: tranquilidade pública (clima de convivência pacífica e bem-estar social — a paz pública nas ruas); salubridade pública (situações favoráveis às condições de vida); e segurança pública (estado de normalidade que permite o usufruto de direitos e o cumprimento de deveres).",
+      "Preservação — 1ª fase: em situação de normalidade, é assegurada mediante ações preventivas, com atitudes dissuasivas.",
+      "Preservação — 2ª fase: em situação de anormalidade, ofendida a ordem pública, esta deve ser restabelecida mediante ações repressivas imediatas, com atitudes de contenção.",
+      "Policiamento ostensivo: ações de fiscalização de polícia, sobre matéria de ordem pública, em cujo emprego o homem ou a fração de tropa sejam identificados de relance, quer pela farda, quer pelo equipamento, armamento ou viatura.",
+      "Polícia ostensiva — perfil: denominação que evoluiu de policiamento ostensivo e ganhou dignidade constitucional com a CF/88; atua preventivamente para assegurar e repressivamente para restabelecer a ordem pública (nas infrações penais comuns, limita-se à repressão imediata); compreende os quatro modos de atuar do poder de polícia; possui investidura militar; exerce funções de força policial e de polícia judiciária militar estadual sobre seus componentes; e integra-se ao sistema de defesa territorial como força auxiliar e reserva do Exército."
+     ]
+    }
+   ]
+  },
+  "2": {
+   "titulo": "Características e princípios do policiamento ostensivo",
+   "legal": "Capítulos 2 e 3 da apostila de POE — 5 características e 11 princípios",
+   "vf": [
+    {
+     "t": "São cinco as características do policiamento ostensivo: ação pública, totalidade, dinâmica, legalidade e ação de presença.",
+     "r": true,
+     "j": "Correto — são os aspectos gerais de que se reveste a atividade, definindo o campo de atuação e as razões do desencadeamento."
+    },
+    {
+     "t": "Pela característica da ação pública, o policiamento ostensivo confunde-se com a zeladoria e com a segurança pessoal de indivíduos sob ameaça.",
+     "r": false,
+     "j": "Falso. A ação pública visa preservar o interesse geral de segurança pública nas comunidades e NÃO se confunde com zeladoria (vigilância particular de bens ou áreas) nem com segurança pessoal — a atuação nessas situações é excepcionalidade, não regra."
+    },
+    {
+     "t": "Pela totalidade, o policiamento deve fazer frente a toda e qualquer ocorrência, por iniciativa própria, por solicitação ou em razão de determinação.",
+     "r": true,
+     "j": "Correto — atividade essencialmente dinâmica, desenvolvida sob os aspectos preventivo e repressivo."
+    },
+    {
+     "t": "A característica da dinâmica exige que o policiamento seja rígido e imutável, para garantir previsibilidade.",
+     "r": false,
+     "j": "Falso. O policiamento NÃO deve ser rígido e imutável — deve ser flexível, para adaptar-se às situações anormais, ainda que se priorize o cumprimento e o aperfeiçoamento dos planos de rotina."
+    },
+    {
+     "t": "As operações PM supletivas e esporádicas por saturação consistem na concentração maciça de pessoal e material frente a situação temporária inquietante, sem prejuízo do plano de policiamento.",
+     "r": true,
+     "j": "Correto — item da característica dinâmica."
+    },
+    {
+     "t": "Pela legalidade em sentido amplo, o exercício do poder de polícia é discricionário, mas não arbitrário, tendo por parâmetros a lei e os direitos e garantias fundamentais.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Ação de presença real é a capacidade de acorrer, em tempo mínimo, a local onde a ocorrência é iminente ou já se verificou.",
+     "r": false,
+     "j": "Falso — essa é a ação de presença POTENCIAL. A REAL é a presença física do policial militar, agindo por dissuasão nos locais onde a probabilidade de ocorrência seja grande."
+    },
+    {
+     "t": "São onze os princípios do policiamento ostensivo.",
+     "r": true,
+     "j": "Correto: universalidade, responsabilidade territorial, continuidade, efetividade, aplicação, isenção, emprego lógico, antecipação, profundidade, unidade de comando e objetivo."
+    },
+    {
+     "t": "Pelo princípio da universalidade, a especialização impede que o PM especializado adote medidas em ocorrências alheias à sua tarefa específica.",
+     "r": false,
+     "j": "Falso. A especialização NÃO impede o PM de dar tratamento adequado aos diversos tipos de ocorrência: caberá adotar medidas, ainda que preliminares, em qualquer ocorrência, e as tarefas específicas não desobrigam o atendimento de outras."
+    },
+    {
+     "t": "Pelo princípio da responsabilidade territorial, os elementos em comando respondem perante o escalão imediatamente superior pela preservação da ordem pública na circunscrição que lhes estiver afetada.",
+     "r": true,
+     "j": "Correto — cabendo-lhes a iniciativa das providências legais e regulamentares para ajustar os meios à missão."
+    },
+    {
+     "t": "O princípio da efetividade traduz a otimização dos recursos destinados à PMPE, buscando a eficácia operacional com eficiência e constante aprimoramento da produtividade.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Pelo princípio da isenção, o policial deve atuar com imparcialidade e impessoalidade, sem preconceitos de profissão, nível social, religião, raça, condição econômica ou posição política.",
+     "r": true,
+     "j": "Correto — atuando sem demonstrar emoções ou concepções pessoais."
+    },
+    {
+     "t": "O princípio do emprego lógico admite o atendimento preferencial de determinadas áreas, independentemente das necessidades apuradas.",
+     "r": false,
+     "j": "Falso. A distribuição deve ocorrer conforme as necessidades, EVITANDO o atendimento preferencial; o emprego integrado e coordenado sob um único comando racionaliza recursos."
+    },
+    {
+     "t": "O princípio da profundidade abrange a cobertura de locais de risco não ocupados e o reforço a pessoal empenhado, com emprego judicioso da reserva e apoio progressivo e crescente.",
+     "r": true,
+     "j": "Correto — a supervisão e a coordenação por oficiais e graduados também integram o princípio."
+    },
+    {
+     "t": "Pelo princípio da unidade de comando, em eventos que exijam diferentes unidades, a missão é melhor cumprida com um só comandante para a operação.",
+     "r": true,
+     "j": "Correto — unidade de esforço pela aplicação coordenada de todos os meios."
+    }
+   ],
+   "me": [
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a uma das cinco características do policiamento ostensivo:",
+     "a": [
+      "Ação pública.",
+      "Totalidade.",
+      "Dinâmica.",
+      "Legalidade.",
+      "Unidade de comando."
+     ],
+     "c": 4,
+     "j": "Unidade de comando é PRINCÍPIO, não característica. A quinta característica é a ação de presença."
+    },
+    {
+     "e": "Sobre a ação de presença, assinale a alternativa CORRETA:",
+     "a": [
+      "Real é a capacidade de acorrer rapidamente ao local da ocorrência.",
+      "Potencial é a presença física do policial no local de risco.",
+      "Real é a presença física do PM, agindo por dissuasão; potencial é a capacidade de acorrer em tempo mínimo de resposta.",
+      "A ação de presença não integra as características do policiamento ostensivo.",
+      "Ambas dispensam a identificação do policial pela farda."
+     ],
+     "c": 2,
+     "j": "A ação de presença é a manifestação que dá à comunidade a sensação de segurança pela certeza de cobertura policial-militar, nas modalidades real e potencial."
+    },
+    {
+     "e": "Sobre o princípio da aplicação, assinale a alternativa CORRETA:",
+     "a": [
+      "Determina a distribuição de meios conforme julgamento criterioso das necessidades.",
+      "Exige atuação ativa, desestimulando atos antissociais pela atuação preventiva, com o PM o mais próximo possível da comunidade.",
+      "Refere-se ao emprego judicioso da reserva.",
+      "Diz respeito à imparcialidade do policial.",
+      "Trata da unidade de esforço em operações conjuntas."
+     ],
+     "c": 1,
+     "j": "É atividade facilmente identificada pelo uniforme; omissão, desinteresse e apatia geram descrédito e desconfiança. As demais alternativas descrevem emprego lógico, profundidade, isenção e unidade de comando."
+    },
+    {
+     "e": "Sobre o princípio da antecipação, assinale a alternativa CORRETA:",
+     "a": [
+      "Exige providências táticas e técnicas para minimizar a surpresa, face à evolução da criminalidade.",
+      "Determina a atuação diuturna do policiamento.",
+      "Refere-se à cobertura de locais de risco não ocupados.",
+      "Impõe atuação sem preconceitos.",
+      "Trata da otimização dos recursos da corporação."
+     ],
+     "c": 0,
+     "j": "O sucesso exige informações de natureza administrativa e criminal, base do planejamento adequado. As demais descrevem continuidade, profundidade, isenção e efetividade."
+    },
+    {
+     "e": "Sobre as características do policiamento ostensivo, assinale a alternativa INCORRETA:",
+     "a": [
+      "A ação pública resguarda o bem comum em sua maior amplitude.",
+      "A totalidade impõe fazer frente a toda e qualquer ocorrência.",
+      "A dinâmica prioriza o cumprimento e o aperfeiçoamento dos planos de rotina.",
+      "A legalidade admite que o poder de polícia seja exercido de forma arbitrária em defesa da moralidade pública.",
+      "A ação de presença gera a sensação de segurança pela certeza de cobertura policial-militar."
+     ],
+     "c": 3,
+     "j": "O exercício do poder de polícia é discricionário, mas NÃO arbitrário: mesmo em defesa da moralidade pública e do bem comum, os limites continuam sendo as garantias constitucionais."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Enumere e explique as cinco características do policiamento ostensivo.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Noção: as características são os aspectos gerais de que se reveste a atividade policial-militar, definindo-lhe o campo de atuação e as razões do desencadeamento; são cinco.",
+      "Ação pública: exercida visando preservar o interesse geral de segurança pública nas comunidades, resguardando o bem comum em sua maior amplitude; não se confunde com zeladoria nem com segurança pessoal de indivíduos sob ameaça — a atuação nessas situações é excepcionalidade, não regra.",
+      "Totalidade: atividade essencialmente dinâmica, com origem na necessidade comum de segurança da comunidade, desenvolvida sob os aspectos preventivo e repressivo; deve fazer frente a toda e qualquer ocorrência, por iniciativa própria, por solicitação ou por determinação, encaminhando os envolvidos aos órgãos competentes quando couber.",
+      "Dinâmica: prioridade ao cumprimento e ao aperfeiçoamento dos planos de rotina, com engajamento da tropa com sua circunscrição e presença continuada, criando a sensação de segurança; admite operações supletivas e esporádicas por saturação; e o policiamento não deve ser rígido e imutável, mas flexível para adaptar-se às situações anormais.",
+      "Legalidade em sentido amplo: as atividades desenvolvem-se dentro dos limites que a lei estabelece; o exercício do poder de polícia é discricionário, mas não arbitrário, tendo por parâmetros a própria lei e, em especial, os direitos e garantias fundamentais da Constituição.",
+      "Ação de presença: manifestação que dá à comunidade a sensação de segurança pela certeza de cobertura policial-militar; real, quando há presença física do PM agindo por dissuasão nos locais de maior probabilidade de ocorrência; potencial, quando o policiamento é capaz de acorrer, em tempo mínimo de resposta, ao local onde a ocorrência é iminente ou já se verificou."
+     ]
+    },
+    {
+     "e": "Enumere os onze princípios do policiamento ostensivo e explique cinco deles.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Enumeração: universalidade, responsabilidade territorial, continuidade, efetividade, aplicação, isenção, emprego lógico, antecipação, profundidade, unidade de comando e objetivo — fundamentos a considerar no planejamento e na execução, visando à eficácia operacional.",
+      "Universalidade: preservação da ordem pública em sentido amplo; a especialização não impede o PM de dar tratamento adequado aos diversos tipos de ocorrência, cabendo-lhe adotar medidas ainda que preliminares em qualquer ocorrência.",
+      "Responsabilidade territorial: os elementos em comando, com tropa desdobrada no terreno, respondem perante o escalão imediatamente superior pela preservação da ordem pública na circunscrição afetada, cabendo-lhes a iniciativa das providências para ajustar os meios à missão.",
+      "Continuidade: atividade essencial, de caráter absolutamente operacional, exercida diuturnamente; a resposta deve estar na estrutura organizacional, nas rotinas de serviço e na mentalidade do PM.",
+      "Efetividade: otimização dos recursos destinados à PMPE, buscando a eficácia operacional com eficiência e constante aprimoramento da produtividade.",
+      "Aplicação: atividade facilmente identificada pelo uniforme, que exige atenção e atuação ativa, desestimulando atos antissociais; omissão, desinteresse e apatia geram descrédito e desconfiança.",
+      "Isenção: atuar sem demonstrar emoções ou concepções pessoais e sem preconceitos, com imparcialidade e impessoalidade.",
+      "Emprego lógico: disposição de meios como resultado de julgamento criterioso das necessidades, escalonadas em prioridades, evitando atendimento preferencial; o emprego integrado sob um único comando racionaliza recursos.",
+      "Antecipação, profundidade, unidade de comando e objetivo: minimizar a surpresa com base em informações; cobrir locais de risco não ocupados e reforçar o pessoal empenhado com emprego judicioso da reserva; um só comandante nas operações que reúnam diferentes unidades; e assegurar ou restabelecer a ordem pública por ações e operações com aspectos particulares definidos."
+     ]
+    }
+   ]
+  },
+  "3": {
+   "titulo": "Variáveis do policiamento ostensivo: tipos, processos, modalidades e demais",
+   "legal": "Capítulo 4 da apostila de POE — 10 variáveis; sistemas de policiamento",
+   "vf": [
+    {
+     "t": "São dez as variáveis do policiamento ostensivo: tipo, processo, modalidade, circunstância, lugar, número, forma, tempo, suplementação e desempenho.",
+     "r": true,
+     "j": "Correto — são os critérios que identificam os aspectos principais da execução do policiamento ostensivo fardado."
+    },
+    {
+     "t": "São quatro os tipos de policiamento ostensivo: geral, de trânsito urbano ou rodoviário, florestal e de mananciais, e de guarda.",
+     "r": true,
+     "j": "Correto — os tipos qualificam as ações e operações."
+    },
+    {
+     "t": "O policiamento de guarda é exclusivo do BPGd, não podendo ser executado por outras unidades.",
+     "r": false,
+     "j": "Falso. TODAS as unidades fazem policiamento de guarda, embora haja unidade especializada (BPGd)."
+    },
+    {
+     "t": "São processos de policiamento os meios de locomoção: a pé, motorizado, montado, aéreo, em embarcação e em bicicleta.",
+     "r": true,
+     "j": "Correto — seis processos."
+    },
+    {
+     "t": "São fatores determinantes na escolha das variáveis a tipicidade, a gravidade e a incidência de ocorrências PM, presumíveis ou existentes.",
+     "r": true,
+     "j": "Correto — distinguem-se dos fatores componentes (custos, espaços, mobilidade, contato direto, autonomia, fiscalização, flexibilidade e proteção) e dos condicionantes (local, características físicas e psicossociais, clima, dia da semana, horário e disponibilidade de recursos)."
+    },
+    {
+     "t": "No processo a pé, o conhecimento do local e o relacionamento com a comunidade são máximos, enquanto a mobilidade e a autonomia são mínimas.",
+     "r": true,
+     "j": "Correto — no automóvel ocorre o inverso: mobilidade, autonomia e espaços cobertos são máximos, e conhecimento e relacionamento, mínimos."
+    },
+    {
+     "t": "Segundo a apostila, o processo motorizado é sempre a variável mais eficaz.",
+     "r": false,
+     "j": "Falso. Nenhuma variável, em si, pode ser tomada como a melhor ou mais eficaz — o pleno rendimento operacional vem da ASSOCIAÇÃO de processos, modalidades, números e duração."
+    },
+    {
+     "t": "São modalidades de policiamento o patrulhamento, a permanência, a diligência e a escolta.",
+     "r": true,
+     "j": "Correto — são os modos peculiares de execução."
+    },
+    {
+     "t": "A permanência é atividade predominantemente móvel de observação e fiscalização.",
+     "r": false,
+     "j": "Falso. A permanência é atividade predominantemente ESTÁTICA, pelo PM isolado ou não, em local de risco ou posto fixo. A atividade móvel de observação e fiscalização é o PATRULHAMENTO."
+    },
+    {
+     "t": "Quanto à circunstância, o policiamento ordinário é o emprego rotineiro de meios operacionais em obediência a um plano sistemático, que contém a escala de prioridades.",
+     "r": true,
+     "j": "Correto — o extraordinário é o emprego eventual e temporário face a acontecimento imprevisto; o especial é o emprego temporário em eventos previsíveis."
+    },
+    {
+     "t": "O policiamento no São João, nas eleições e no Galo da Madrugada classifica-se como extraordinário.",
+     "r": false,
+     "j": "Falso. São eventos PREVISÍVEIS que exigem esforço específico — logo, policiamento ESPECIAL. O extraordinário decorre de acontecimento imprevisto, como crise ou enchente."
+    },
+    {
+     "t": "Quanto à forma, o desdobramento é a distribuição das unidades operacionais no terreno, articuladas até o nível de grupo, com limites de responsabilidade definidos.",
+     "r": true,
+     "j": "Correto — o escalonamento é o grau de responsabilidade dos sucessivos e distintos níveis da cadeia de comando."
+    },
+    {
+     "t": "Quanto ao tempo, jornada é o período equivalente às 24 horas do dia em que se desenvolvem as atividades, e turno é a fração da jornada com período previamente determinado.",
+     "r": true,
+     "j": "Correto — os turnos de serviço podem ser de 6, 8, 12 ou 24 horas."
+    },
+    {
+     "t": "Quanto ao desempenho, atividade auxiliar é o emprego em apoio imediato ao PM em atividade linha, não se confundindo com o apoio mediato, próprio da atividade-meio.",
+     "r": true,
+     "j": "Correto — a atividade linha é o emprego diretamente relacionado com o público, na atividade-fim."
+    },
+    {
+     "t": "São sistemas de policiamento as forças de patrulhas territoriais, as forças de patrulhas especiais, as forças táticas e as forças e serviços de apoio.",
+     "r": true,
+     "j": "Correto — subestruturas de patrulhamento que agem sobre área geográfica comum."
+    }
+   ],
+   "me": [
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a um dos quatro tipos de policiamento ostensivo:",
+     "a": [
+      "Policiamento ostensivo geral.",
+      "Policiamento de trânsito urbano ou rodoviário.",
+      "Policiamento florestal e de mananciais.",
+      "Policiamento de guarda.",
+      "Policiamento montado."
+     ],
+     "c": 4,
+     "j": "Montado é PROCESSO (meio de locomoção), e não tipo de policiamento."
+    },
+    {
+     "e": "Sobre as modalidades de policiamento, assinale a alternativa CORRETA:",
+     "a": [
+      "Patrulhamento é atividade predominantemente estática.",
+      "Permanência é a custódia de pessoas ou bens em deslocamento.",
+      "Diligência é a busca e apreensão de objetos e/ou a busca e captura de pessoas em flagrante delito ou mediante mandado judicial.",
+      "Escolta é a atividade móvel de observação e fiscalização.",
+      "São seis as modalidades de policiamento."
+     ],
+     "c": 2,
+     "j": "Patrulhamento é móvel; permanência é estática; escolta é a custódia de pessoas ou bens em deslocamento. São quatro as modalidades."
+    },
+    {
+     "e": "O policiamento empregado por ocasião de uma enchente, em razão de acontecimento imprevisto que exige manobra de recursos, classifica-se, quanto à circunstância, como:",
+     "a": [
+      "Ordinário.",
+      "Especial.",
+      "Extraordinário.",
+      "Suplementar.",
+      "Tático."
+     ],
+     "c": 2,
+     "j": "Extraordinário é o emprego eventual e temporário face a acontecimento imprevisto — crise, enchente, motivos de força maior. O especial recai sobre eventos previsíveis, como São João e Galo da Madrugada."
+    },
+    {
+     "e": "Sobre os sistemas de policiamento, assinale a alternativa INCORRETA:",
+     "a": [
+      "Forças de patrulhas territoriais: BPM e CPA, sob comando único na área de responsabilidade territorial.",
+      "Forças de patrulhas especiais: competência especial em razão da matéria, sob comando de policiamento especializado.",
+      "Forças táticas: emprego sem vinculação à área, em missões táticas e eventuais, constituindo reservas dos comandos.",
+      "Forças e serviços de apoio: órgãos de alto grau de especialização destinados ao apoio às demais forças.",
+      "Forças táticas: patrulhamento rotineiro vinculado a uma área de responsabilidade territorial fixa."
+     ],
+     "c": 4,
+     "j": "As forças táticas caracterizam-se justamente pelo emprego SEM vinculação à área, em missões táticas e eventuais; o patrulhamento territorial é das forças de patrulhas territoriais."
+    },
+    {
+     "e": "Sobre a variável número (efetivo), assinale a alternativa INCORRETA:",
+     "a": [
+      "Fração elementar: 1, 2 ou 3 PM.",
+      "Gp PM: até 20.",
+      "Pel PM: de 20 a 80.",
+      "Cia PM ou Esquadrão: de 80 a 250.",
+      "BPM ou RPMon: de 20 a 80."
+     ],
+     "c": 4,
+     "j": "BPM ou RPMon corresponde à faixa de 300 a 1000 policiais militares."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Enumere as dez variáveis do policiamento ostensivo e detalhe os tipos, os processos e as modalidades.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Enumeração: tipo, processo, modalidade, circunstância, lugar, número (efetivo), forma, tempo (duração), suplementação e desempenho — critérios que identificam os aspectos principais da execução do policiamento ostensivo fardado.",
+      "Tipos (4): policiamento ostensivo geral, que satisfaz as necessidades básicas de segurança; de trânsito urbano ou rodoviário, em vias abertas à livre circulação, para disciplinar o cumprimento das regras de trânsito; florestal e de mananciais, que preserva fauna, recursos florestais e mananciais, em cooperação com órgãos competentes; e de guarda, que abrange aquartelamentos, segurança externa de estabelecimentos penais, sedes dos poderes estaduais e escolta de presos — todas as unidades o fazem, havendo unidade especializada (BPGd).",
+      "Processos (6): a pé, motorizado, montado, aéreo, em embarcação e em bicicleta.",
+      "Fatores de escolha: determinantes (tipicidade, gravidade e incidência de ocorrências, presumíveis ou existentes); componentes (custos, espaços a cobrir, mobilidade, contato direto, autonomia, fiscalização e controle, flexibilidade e proteção ao PM); e condicionantes (local, características físicas e psicossociais, clima, dia da semana, horário e disponibilidade de recursos).",
+      "Comparação de processos: a pé oferece máximo conhecimento do local, relacionamento e flexibilidade, com mínima mobilidade, autonomia e proteção; o automóvel inverte esses valores, com máximos em custos, espaços cobertos, mobilidade, autonomia e proteção. Nenhuma variável, isoladamente, é a mais eficaz — o rendimento vem da associação de processos, modalidades, números e duração.",
+      "Modalidades (4): patrulhamento, atividade móvel de observação, fiscalização, reconhecimento, proteção ou emprego de força; permanência, atividade predominantemente estática em local de risco ou posto fixo; diligência, busca e apreensão de objetos e/ou busca e captura de pessoas em flagrante ou mediante mandado; e escolta, custódia de pessoas ou bens em deslocamento."
+     ]
+    },
+    {
+     "e": "Explique as variáveis circunstância, lugar, forma, tempo, suplementação e desempenho, e apresente os sistemas de policiamento.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Circunstância (frequência com que o policiamento é exigido): ordinário — emprego rotineiro em obediência a plano sistemático com escala de prioridades; extraordinário — emprego eventual e temporário face a acontecimento imprevisto, como crise ou enchente; especial — emprego temporário em eventos previsíveis que exijam esforço específico, como São João, eleição e Galo da Madrugada.",
+      "Lugar: urbano, nas áreas edificadas e de maior concentração populacional; rural, nas áreas de ocupação extensiva fora dos limites urbanos.",
+      "Forma (disposição da tropa no terreno): desdobramento — distribuição das unidades operacionais no terreno, articuladas até o nível de Gp PM, com limites de responsabilidade definidos; escalonamento — grau de responsabilidade dos sucessivos e distintos níveis da cadeia de comando.",
+      "Número (efetivo): fração elementar de 1 a 3 PM; Gp PM até 20; Pel PM de 20 a 80; Cia PM ou Esquadrão de 80 a 250; e BPM ou RPMon de 300 a 1000.",
+      "Tempo: jornada é o período equivalente às 24 horas do dia; turno é a fração da jornada com período previamente determinado, podendo ser de 6, 8, 12 ou 24 horas.",
+      "Suplementação: utensílios ou semoventes utilizáveis na atividade-fim — cão, rádio transceptor, armamento e equipamento peculiares e outros.",
+      "Desempenho: atividade linha, de emprego diretamente relacionado com o público na atividade-fim; e atividade auxiliar, de apoio imediato ao PM em atividade linha, não se confundindo com o apoio mediato, próprio da atividade-meio.",
+      "Sistemas de policiamento: forças de patrulhas territoriais (BPM e CPA, sob comando único na área); forças de patrulhas especiais (competência em razão da matéria, no mesmo espaço físico das territoriais, sob comando especializado); forças táticas (emprego sem vinculação à área, reservas dos comandos); e forças e serviços de apoio (apoio aéreo, informações, subsistência, transportes, guarda interna, assuntos internos e escolta de presos)."
+     ]
+    }
+   ]
+  },
+  "4": {
+   "titulo": "Órgãos do sistema de segurança pública e desdobramento da PMPE",
+   "legal": "Art. 144 da CF (EC nº 104/2019); Lei estadual nº 11.629/1999 (SDS); Lei nº 15.186/2013 (DIM, DINTER I e II e DIRESP)",
+   "vf": [
+    {
+     "t": "São órgãos da segurança pública, no art. 144 da CF: polícia federal, polícia rodoviária federal, polícia ferroviária federal, polícias civis, polícias militares e corpos de bombeiros militares e polícias penais.",
+     "r": true,
+     "j": "Correto — a polícia penal foi inserida pela EC nº 104/2019."
+    },
+    {
+     "t": "A Polícia Científica integra o rol de órgãos da segurança pública do art. 144 da CF.",
+     "r": false,
+     "j": "Falso. A Polícia Científica NÃO está no rol do art. 144 — é uma das “pegadinhas” apontadas no material."
+    },
+    {
+     "t": "Às polícias militares cabem a polícia ostensiva e a preservação da ordem pública, e aos corpos de bombeiros militares, as atividades de defesa civil.",
+     "r": true,
+     "j": "Correto — art. 144, §5º, da CF."
+    },
+    {
+     "t": "As polícias militares e os corpos de bombeiros militares são forças auxiliares e reserva do Exército e subordinam-se, com as polícias civis e as polícias penais, aos Governadores.",
+     "r": true,
+     "j": "Correto — art. 144, §6º, com a redação da EC nº 104/2019."
+    },
+    {
+     "t": "A Polícia Militar de Pernambuco foi criada por Decreto Imperial de 11 de junho de 1825, em decorrência da Confederação do Equador.",
+     "r": true,
+     "j": "Correto — o efetivo inicial era de 320 homens: Estado-Maior, uma companhia de cavalaria e duas de infantaria."
+    },
+    {
+     "t": "A Lei nº 11.629/1999 criou a SDS, subordinando a Polícia Civil, a Polícia Militar e o Corpo de Bombeiros Militar.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O Corpo de Bombeiros Militar foi emancipado da Polícia Militar pela Emenda nº 04/1994 da Constituição Estadual de 1989.",
+     "r": true,
+     "j": "Correto — instituído em 23/09/1887, com aniversário comemorado em 20 de outubro."
+    },
+    {
+     "t": "Compete à Polícia Federal, com exclusividade, exercer a polícia judiciária da União.",
+     "r": true,
+     "j": "Correto — art. 144, §1º, “d”, da CF."
+    },
+    {
+     "t": "A Polícia Rodoviária Federal é instituição militar.",
+     "r": false,
+     "j": "Falso. NÃO é instituição militar; seu cargo divide-se em quatro classes — Agente, Agente Operacional, Agente Especial e Inspetor."
+    },
+    {
+     "t": "A Polícia Ferroviária Federal foi criada em 1852, por decreto de D. Pedro II, sendo a primeira corporação policial especializada do país.",
+     "r": true,
+     "j": "Correto — seu efetivo foi reduzido de 3.200 para cerca de 1.200 com a privatização das ferrovias, em 1996."
+    },
+    {
+     "t": "A Diretoria de Planejamento Operacional (DPO) é diretamente subordinada ao Subcomando-Geral e tem por missão precípua coordenar as ações das diretorias subordinadas visando à garantia da ordem pública.",
+     "r": true,
+     "j": "Correto — coordena DIM, DIRESP, DINTER I, DINTER II e DASDH."
+    },
+    {
+     "t": "A DIM, Diretoria Integrada Metropolitana, foi criada pela Lei nº 15.186/2013 e coordena as unidades da Região Metropolitana do Recife.",
+     "r": true,
+     "j": "Correto — sediada no prédio do Comando-Geral, no Derby, Recife."
+    },
+    {
+     "t": "A DINTER I tem sede em Caruaru e é responsável pelo Agreste e pela Mata Pernambucana, coordenando as AIS 11 a 18.",
+     "r": true,
+     "j": "Correto — coordena 14 unidades operacionais e 109 municípios."
+    },
+    {
+     "t": "A DINTER II tem sede em Petrolina, com subdiretoria em Serra Talhada, e é responsável pelo Sertão.",
+     "r": true,
+     "j": "Correto — originou-se do Comando de Policiamento do Sertão-II (CPS-II), criado pela Lei estadual nº 13.458/2008."
+    },
+    {
+     "t": "O 19º BPM, Batalhão André Vidal de Negreiros, responde pela AIS 3, que abrange Boa Viagem, Pina, Imbiribeira e Ibura.",
+     "r": true,
+     "j": "Correto — possui quatro companhias."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre o rol do art. 144 da CF, assinale a alternativa INCORRETA:",
+     "a": [
+      "Inclui as polícias penais federal, estaduais e distrital, por força da EC nº 104/2019.",
+      "Inclui a polícia ferroviária federal.",
+      "Inclui a Polícia Científica.",
+      "Prevê que os municípios poderão constituir guardas municipais.",
+      "Trata da segurança viária no §10, incluído pela EC nº 82/2014."
+     ],
+     "c": 2,
+     "j": "A Polícia Científica não integra o rol do art. 144 — em Pernambuco, foi criada pela Lei nº 6.657/1974."
+    },
+    {
+     "e": "Sobre a estrutura territorial da PMPE, assinale a alternativa CORRETA:",
+     "a": [
+      "A DIM responde pelo Sertão.",
+      "A DINTER I tem sede em Petrolina.",
+      "A DINTER II originou-se do CPS-II e tem sede em Petrolina, com subdiretoria em Serra Talhada.",
+      "A DPO subordina-se diretamente ao Governador.",
+      "A DIRESP coordena as unidades da Região Metropolitana."
+     ],
+     "c": 2,
+     "j": "A DIM coordena a RMR; a DINTER I tem sede em Caruaru (Agreste e Mata); a DPO subordina-se ao Subcomando-Geral; e a DIRESP coordena as unidades especializadas."
+    },
+    {
+     "e": "Sobre a composição da DPO, assinale a alternativa INCORRETA:",
+     "a": [
+      "CPO — Coordenadoria de Planejamento Operacional, que trata das demandas de planejamento das ações de segurança.",
+      "CAA — Coordenadoria de Apoio Administrativo, responsável pelo gerenciamento do efetivo e pela distribuição de diárias e PJES.",
+      "CAE — Coordenadoria de Assuntos Especiais, de assessoramento jurídico ao Diretor.",
+      "CAD — Coordenadoria de Análise de Dados, de coleta de informações e estatísticas.",
+      "CIODS — Coordenadoria de Inteligência Operacional, responsável pelas investigações criminais."
+     ],
+     "c": 4,
+     "j": "A DPO compõe-se de CPO, CAA, CAE e CAD. O CIODS é o Centro Integrado de Operações de Defesa Social, e não uma coordenadoria da DPO."
+    },
+    {
+     "e": "Sobre a Polícia Civil e o Ministério Público, assinale a alternativa INCORRETA:",
+     "a": [
+      "Às polícias civis cabem a polícia judiciária e a apuração das infrações penais, exceto as militares.",
+      "A data magna da Polícia Civil é 13 de abril, por força da Lei nº 12.853/2005.",
+      "O Ministério Público tem por princípios institucionais a unidade, a indivisibilidade e a independência funcional.",
+      "O Procurador-Geral de Justiça é escolhido em lista tríplice, com mandato de dois anos, permitida uma recondução.",
+      "São garantias dos membros do MP a vitaliciedade após cinco anos, a inamovibilidade e a irredutibilidade de subsídio."
+     ],
+     "c": 4,
+     "j": "A vitaliciedade é adquirida após DOIS anos."
+    },
+    {
+     "e": "Sobre as AIS da Região Metropolitana, assinale a alternativa INCORRETA:",
+     "a": [
+      "AIS 1 — 16º BPM, Batalhão Frei Caneca, responsável pela segurança do Galo da Madrugada.",
+      "AIS 3 — 19º BPM, Batalhão André Vidal de Negreiros.",
+      "AIS 5 — 11º BPM, Batalhão 17 de Agosto.",
+      "AIS 7 — 1º BPM, Batalhão Duarte Coelho, criado em 11/06/1825.",
+      "AIS 9 — 18º BPM, responsável pelo Cabo de Santo Agostinho e Ipojuca."
+     ],
+     "c": 4,
+     "j": "A AIS 9 é do 20º BPM (São Lourenço da Mata e Camaragibe); o 18º BPM responde pela AIS 10, no Cabo de Santo Agostinho e Ipojuca."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Apresente os órgãos da segurança pública do art. 144 da CF e destaque as observações relevantes sobre o rol.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito constitucional: a segurança pública é dever do Estado, direito e responsabilidade de todos, exercida para a preservação da ordem pública e da incolumidade das pessoas e do patrimônio.",
+      "Rol: polícia federal; polícia rodoviária federal; polícia ferroviária federal; polícias civis; polícias militares e corpos de bombeiros militares; e polícias penais federal, estaduais e distrital.",
+      "Atribuições: às polícias civis, dirigidas por delegados de carreira, cabem a polícia judiciária e a apuração das infrações penais, exceto as militares (§4º); às polícias militares, a polícia ostensiva e a preservação da ordem pública, e aos corpos de bombeiros, a defesa civil (§5º).",
+      "Subordinação: PMs e CBMs são forças auxiliares e reserva do Exército e subordinam-se, com as polícias civis e as polícias penais, aos Governadores (§6º, com a redação da EC nº 104/2019).",
+      "Guardas municipais (§8º) e segurança viária (§10, EC nº 82/2014): os municípios poderão constituir guardas para proteção de seus bens, serviços e instalações; a segurança viária compreende educação, engenharia e fiscalização de trânsito.",
+      "Observações: a Polícia Científica NÃO integra o rol do art. 144; a polícia penal foi inserida pela EC nº 104/2019, quando a nomenclatura anterior era “agente penitenciário”; e a SERES não integra a SDS.",
+      "Contexto estadual: a Lei nº 11.629/1999 criou a SDS, subordinando Polícia Civil, Polícia Militar e Corpo de Bombeiros Militar; a Polícia Científica foi criada pela Lei nº 6.657/1974, com o IML, o Instituto de Criminalística e o Instituto de Identificação Tavares Buril, coordenados pela GGPOC."
+     ]
+    },
+    {
+     "e": "Explique o desdobramento territorial da PMPE, apresentando a DPO e as três diretorias territoriais.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Base legal: Lei nº 15.186, de 12 de dezembro de 2013, que criou a DIM, a DINTER I, a DINTER II e a DIRESP.",
+      "DPO — Diretoria de Planejamento Operacional: diretamente subordinada ao Subcomando-Geral; missão precípua de coordenar as ações das diretorias subordinadas (DIM, DIRESP, DINTER I, DINTER II e DASDH) visando à garantia da ordem pública.",
+      "Competências da DPO: análise operacional; prover meios (efetivo e material); reuniões de planejamento; ativar o CICCR; diretrizes das operações de grande repercussão; hipotecas de efetivo; distribuição de efetivo e diárias do calendário turístico; gerenciar cotas do PJES; e diretrizes de apoio ao cumprimento de mandados judiciais.",
+      "Composição da DPO: CPO (planejamento das ações de segurança e coordenação do núcleo de monitoramento de viaturas); CAA (aporte administrativo, gerenciamento do efetivo, diárias e PJES, logística junto à DGA); CAE (assessoramento jurídico e apoio às demandas judiciais, principalmente reintegração de posse); e CAD (coleta de informações e estatísticas).",
+      "DIM — Diretoria Integrada Metropolitana: criada pela Lei nº 15.186/2013, sediada no prédio do Comando-Geral, no Derby, coordena as unidades da Região Metropolitana do Recife, correspondentes às AIS 1 a 10.",
+      "DINTER I: sede em Caruaru; policiamento ostensivo e preservação da ordem pública no Agreste e na Mata Pernambucana; coordena 14 unidades operacionais e 109 municípios, nas AIS 11 a 18.",
+      "DINTER II: origem no Comando de Policiamento do Sertão-II (CPS-II), criado pela Lei nº 13.458/2008 e transformado pela Lei nº 15.186/2013; sede em Petrolina, com subdiretoria em Serra Talhada; responde pelas AIS 19 a 26, no Sertão, e é diretamente subordinada à DPO."
+     ]
+    }
+   ]
+  },
+  "5": {
+   "titulo": "DIRESP e DASDH: unidades especializadas e programas sociais",
+   "legal": "Lei nº 15.186/2013 (DIRESP); leis e decretos de criação de cada OME; Lei nº 8.069/90 (ECA)",
+   "vf": [
+    {
+     "t": "A DIRESP foi criada pela Lei nº 15.186/2013 e coordena as ações das unidades especializadas subordinadas, sediada no prédio do Comando-Geral, no Derby.",
+     "r": true,
+     "j": "Correto — voltada a garantir a segurança da população por ações específicas inerentes a cada OME."
+    },
+    {
+     "t": "O Regimento de Polícia Montada Dias Cardoso tem por missão o recobrimento da malha de policiamento das unidades de área pelo processo montado e, quando necessário, o emprego no controle de distúrbios civis.",
+     "r": true,
+     "j": "Correto — passou de esquadrão (Lei nº 5.019/1964) a regimento (Decreto nº 252, de 02/04/1970)."
+    },
+    {
+     "t": "O BPRP tem a missão de recobrimento das AIS na Região Metropolitana do Recife, combatendo o crime organizado.",
+     "r": true,
+     "j": "Correto — origem na Companhia de Vigilância de Radiopatrulha (1951); tornou-se batalhão em 1970; a Operação ROCROP é de 1995."
+    },
+    {
+     "t": "O BPGd é responsável pela segurança externa de prédios públicos e pela guarda de estabelecimentos prisionais.",
+     "r": true,
+     "j": "Correto — Palácio do Campo das Princesas, Palácio dos Despachos, Secretaria da Fazenda e Palácio da Justiça."
+    },
+    {
+     "t": "O BPChoque é considerado unidade de elite e batalhão de intervenção, com especialidade no policiamento de choque e no controle de distúrbios civis.",
+     "r": true,
+     "j": "Correto — atua em reintegrações de posse, ações em estabelecimentos prisionais e manifestações com grave perturbação da ordem; passou de companhia (1980) a batalhão (Decreto-Lei nº 7.870/1982)."
+    },
+    {
+     "t": "O BPRv realiza o policiamento ostensivo de trânsito nas rodovias federais.",
+     "r": false,
+     "j": "Falso. O BPRv atua nas rodovias ESTADUAIS, em apoio ao DER-PE mediante convênio; as rodovias federais são da Polícia Rodoviária Federal."
+    },
+    {
+     "t": "O 1º BPTran desenvolve ações de fiscalização e operação de trânsito com foco nos condutores, junto ao DETRAN/PE e aos órgãos municipais de trânsito.",
+     "r": true,
+     "j": "Correto — criado pelo Decreto Estadual nº 15.951/1992; realiza a Operação RONFEC."
+    },
+    {
+     "t": "O BEPI tem como missão o combate ao narcotráfico, a erradicação de plantios de maconha, o combate a grupos armados e sequestros e a prevenção a assaltos a carros-fortes.",
+     "r": true,
+     "j": "Correto — originou-se da CIOSAC e foi transformado em BEPI pela Lei nº 15.624, de 21/10/2015; sede em Custódia, ponto central do Estado."
+    },
+    {
+     "t": "O BOPE é o último recurso estratégico da corporação, com doutrina de forças especiais e lema VITAE DEFENSOR.",
+     "r": true,
+     "j": "Correto — criado pela Lei nº 16.058, de 6 de junho de 2017; a porta de entrada é o Curso de Operações Policiais Especiais (COPE), com quatro etapas."
+    },
+    {
+     "t": "As alternativas táticas do gerenciamento de crises são a negociação, as técnicas menos que letais, o tiro de comprometimento e o assalto tático.",
+     "r": true,
+     "j": "Correto — Decreto nº 24.029/2002."
+    },
+    {
+     "t": "A CIPCães foi criada em 1962 e é a primeira do Brasil no gênero entre as polícias militares.",
+     "r": true,
+     "j": "Correto — desmembrada do BPChoque pela Portaria CG nº 1.111/1997."
+    },
+    {
+     "t": "A CIATur presta serviço especializado de segurança nas áreas turísticas e históricas, com policiais fluentes em idiomas.",
+     "r": true,
+     "j": "Correto — Sítio Histórico de Olinda, Recife Antigo/Marco Zero, Porto de Galinhas, Muro Alto e Maracaípe; criada pela Lei nº 12.544/2004."
+    },
+    {
+     "t": "O policiamento comunitário é filosofia e estratégia organizacional fundamentada na parceria entre a população e as instituições de segurança pública, sendo a parceria o elemento central.",
+     "r": true,
+     "j": "Correto — visa identificar, priorizar e resolver problemas como crime, medo do crime, exclusão e desigualdade social."
+    },
+    {
+     "t": "O PROERD tem base no programa norte-americano D.A.R.E., existindo no Brasil desde 1992 e em Pernambuco desde 2000.",
+     "r": true,
+     "j": "Correto — o D.A.R.E. foi criado em 1983 pela professora Ruth Rich com o Departamento de Polícia de Los Angeles; no Brasil começou pela PMERJ."
+    },
+    {
+     "t": "O GT Racismo foi instituído pela Portaria do Comando-Geral nº 1.255, de 10/11/2009, para o enfrentamento ao racismo institucional e à intolerância religiosa.",
+     "r": true,
+     "j": "Correto — formou docentes da disciplina Relações Étnicorraciais."
+    }
+   ],
+   "me": [
+    {
+     "e": "Associe corretamente a OME especializada à sua missão:",
+     "a": [
+      "BPGd — policiamento ostensivo de trânsito nas rodovias estaduais.",
+      "BPRv — segurança externa de prédios públicos e guarda de presídios.",
+      "BPChoque — controle de distúrbios civis, reintegrações de posse e policiamento de praças desportivas.",
+      "BPRP — combate ao narcotráfico no Sertão e erradicação de plantios de maconha.",
+      "BEPI — recobrimento das AIS na Região Metropolitana do Recife."
+     ],
+     "c": 2,
+     "j": "BPGd: segurança externa de prédios públicos e guarda de presídios; BPRv: rodovias estaduais; BPRP: recobrimento das AIS na RMR; BEPI: combate ao narcotráfico e a grupos armados no interior."
+    },
+    {
+     "e": "Sobre o BOPE, assinale a alternativa INCORRETA:",
+     "a": [
+      "É o último recurso estratégico da corporação, com doutrina de forças especiais.",
+      "Foi criado pela Lei nº 16.058, de 6 de junho de 2017.",
+      "A porta de entrada é o Curso de Operações Policiais Especiais (COPE).",
+      "Atua no gerenciamento de crises, com alternativas táticas previstas no Decreto nº 24.029/2002.",
+      "É unidade de patrulhamento rotineiro vinculada a uma AIS específica."
+     ],
+     "c": 4,
+     "j": "O BOPE é unidade de intervenção para crises NÃO rotineiras — não faz patrulhamento rotineiro vinculado a área."
+    },
+    {
+     "e": "Sobre as companhias independentes da DIRESP, assinale a alternativa INCORRETA:",
+     "a": [
+      "A CIATur atua nas áreas turísticas e históricas, com policiais fluentes em idiomas.",
+      "A CIPCães foi criada em 1962, sendo a primeira do gênero entre as PMs do Brasil.",
+      "A CIPMoto tem por missão combater a criminalidade de forma audaz, veloz e precisa.",
+      "A CIPOMA realiza policiamento ambiental ostensivo fardado, com sede em Igarassu.",
+      "A CIPMoto foi criada em 1962 e desmembrada do BPChoque."
+     ],
+     "c": 4,
+     "j": "Quem foi criada em 1962 e desmembrada do BPChoque foi a CIPCães. A CIPMoto foi criada em 29/12/1999 (ROCAM) e instituída pelo Decreto-Lei nº 12.544/04."
+    },
+    {
+     "e": "Sobre os programas da DASDH, assinale a alternativa CORRETA:",
+     "a": [
+      "O policiamento comunitário dispensa a parceria com a população.",
+      "A Patrulha Escolar é ação repressiva de ocupação de escolas.",
+      "O PROERD tem base no programa D.A.R.E. e existe em Pernambuco desde 2000.",
+      "O ASCRIAD trata do enfrentamento ao racismo institucional.",
+      "A Banda de Música foi criada pela Portaria CG nº 1.255/2009."
+     ],
+     "c": 2,
+     "j": "A parceria é o elemento central do policiamento comunitário; a Patrulha Escolar é ação preventiva de assessoramento das comunidades escolares; o ASCRIAD trata do ECA; e a Banda de Música foi criada por decreto da Província em 1873."
+    },
+    {
+     "e": "Sobre os batalhões integrados especializados, assinale a alternativa INCORRETA:",
+     "a": [
+      "O 1º BIEsp foi criado pela Lei nº 16.014/2017 e inaugurado em Caruaru.",
+      "O 1º BIEsp possui quatro companhias especializadas: trânsito, radiopatrulhamento, motopatrulhamento e choque com apoio de cães.",
+      "O 1º BIEsp apoia os batalhões de área da DINTER I, com ênfase na AIS 14.",
+      "O 2º BIEsp tem sede em Petrolina e apoia a AIS 26.",
+      "O 2º BIEsp foi criado em 1999 e integra a DIM."
+     ],
+     "c": 4,
+     "j": "O 2º BIEsp foi criado em 27/12/2017 e inaugurado em 03/07/2018, com sede em Petrolina, apoiando a ordem pública no Sertão do São Francisco."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Apresente a DIRESP e descreva a missão de cinco de suas unidades especializadas.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "DIRESP: Diretoria Integrada Especializada, criada pela Lei nº 15.186/2013, sediada no prédio do Comando-Geral da PMPE, no Derby; coordena as ações das unidades subordinadas, voltadas a garantir a segurança da população através de ações específicas inerentes a cada OME.",
+      "RPMon — Regimento de Polícia Montada Dias Cardoso: recobrimento da malha de policiamento das unidades de área pelo processo montado e, quando necessário, emprego no controle de distúrbios civis.",
+      "BPRP — Batalhão de Polícia de Radiopatrulha Gen Roberto Pessoa: recobrimento das AIS na RMR e combate ao crime organizado — assalto a bancos, tráfico e captura de foragidos —, com operações junto ao Núcleo de Inteligência; Operação ROCROP desde 1995.",
+      "BPGd — Batalhão de Polícia de Guardas: segurança externa dos prédios públicos (Palácio do Campo das Princesas, Palácio dos Despachos, Secretaria da Fazenda e Palácio da Justiça) e guarda dos estabelecimentos prisionais.",
+      "BPChoque — Batalhão de Polícia de Choque Matias de Albuquerque: batalhão de intervenção e unidade de elite, especializado no policiamento de choque e no controle de distúrbios civis — reintegrações de posse, ações em estabelecimentos prisionais e manifestações com grave perturbação da ordem —, além do policiamento de praças desportivas e grandes eventos.",
+      "1º BPTran e BPRv: o primeiro desenvolve ações de fiscalização e operação de trânsito urbano com foco nos condutores, junto ao DETRAN/PE e aos órgãos municipais; o segundo executa o policiamento ostensivo de trânsito nas rodovias ESTADUAIS, em apoio ao DER-PE mediante convênio.",
+      "BEPI e BOPE: o BEPI combate o narcotráfico, erradica plantios de maconha e enfrenta grupos armados e sequestros, com sede em Custódia; o BOPE é o último recurso estratégico da corporação, unidade de intervenção para crises não rotineiras, com doutrina de forças especiais e gerenciamento de crises."
+     ]
+    },
+    {
+     "e": "Explique os programas e ações da DASDH.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "DASDH: Diretoria de Articulação Social e Direitos Humanos, responsável pelas ações e programas de aproximação com a comunidade.",
+      "Policiamento comunitário: filosofia e estratégia organizacional fundamentada na parceria entre a população e as instituições de segurança pública para identificar, priorizar e resolver problemas — crime, medo do crime, exclusão e desigualdade social; a parceria é o elemento central.",
+      "Patrulha do Bairro: policiamento ostensivo preventivo voltado à maior interação com a população das localidades atendidas.",
+      "Patrulha Escolar: ação preventiva de assessoramento das comunidades escolares das redes públicas estadual e municipal na busca de soluções de segurança.",
+      "PROERD: Programa Educacional de Resistência às Drogas, com base no D.A.R.E. (criado em 1983 pela professora Ruth Rich com o Departamento de Polícia de Los Angeles); no Brasil desde 1992, pela PMERJ, e em Pernambuco desde 2000.",
+      "ASCRIAD: divulgação e cumprimento da Lei nº 8.069/90 (ECA), com foco na proteção integral da criança e do adolescente (Portaria CG nº 087/1998).",
+      "GT Racismo: Grupo de Trabalho de Enfrentamento ao Racismo Institucional (Portaria CG nº 1.255, de 10/11/2009), voltado ao combate ao racismo institucional e à intolerância religiosa, tendo formado docentes da disciplina Relações Étnicorraciais.",
+      "Banda de Música e Patrulha Maria da Penha: a Banda foi criada por decreto da Província de 05/11/1873, desenvolvendo atividades especializadas de policiamento com música; a Patrulha Maria da Penha integra as ações citadas pela apostila."
+     ]
+    }
+   ]
+  },
+  "6": {
+   "titulo": "Planejamento operacional: 3ª EMG, documentos de Estado-Maior, PDCA e Juntos pela Segurança",
+   "legal": "Capítulos 7 a 11 da apostila de POE; Portaria CG nº 582/1981; Plano Estadual de Segurança Pública",
+   "vf": [
+    {
+     "t": "A PMPE estrutura-se em órgãos de direção, órgãos de apoio e órgãos de execução, sendo o Estado-Maior o principal órgão de assessoramento do Comandante-Geral.",
+     "r": true,
+     "j": "Correto — os órgãos de direção constituem o Comando-Geral."
+    },
+    {
+     "t": "A 3ª Seção do Estado-Maior (PM/3) responde por ensino, instrução e operações.",
+     "r": true,
+     "j": "Correto — a 1ª trata de pessoal e legislação; a 2ª, de informação e contra-informação; a 4ª, do apoio logístico; a 5ª, dos assuntos civis; e a 6ª, do planejamento administrativo e orçamentário."
+    },
+    {
+     "t": "Uma das principais atribuições da 3ª Seção do Estado-Maior é a organização do cerimonial militar.",
+     "r": true,
+     "j": "Correto — ponto de prova destacado no material."
+    },
+    {
+     "t": "São cinco as atividades comuns a todos os oficiais de Estado-Maior: produzir informações, elaborar estudos de situação, apresentar propostas, elaborar planos e ordens e supervisionar a execução.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A metodologia para resolução de problemas compreende seis etapas, iniciando pela identificação ou definição do problema.",
+     "r": true,
+     "j": "Correto — seguem-se o levantamento dos fatores, a estruturação do problema, a apresentação das soluções possíveis, a escolha da solução e a definição das providências."
+    },
+    {
+     "t": "O plano baseia-se em fatos, enquanto a ordem baseia-se em hipóteses.",
+     "r": false,
+     "j": "Falso — está invertido. O PLANO baseia-se em HIPÓTESES; a ORDEM baseia-se em FATOS."
+    },
+    {
+     "t": "A diretriz estabelece orientação, por normas objetivas, para qualquer trabalho administrativo, operacional ou de planejamento, sendo baixada por comandantes, diretores ou chefes.",
+     "r": true,
+     "j": "Correto — pode ser de planejamento, de operações ou administrativa."
+    },
+    {
+     "t": "A ordem preparatória fornece informações antecipadas de ação prevista, dando mais tempo aos preparativos.",
+     "r": true,
+     "j": "Correto — pode conter deslocamentos prévios e medidas urgentes de segurança."
+    },
+    {
+     "t": "A ordem fragmentada ou complementar traz instruções básicas, específicas e oportunas, complementando ordem já expedida e omitindo o que não foi alterado.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A nota de segurança é elaborada pelas 3ª Seções de Estado-Maior.",
+     "r": false,
+     "j": "Falso. A nota de segurança é elaborada pelas 2ª SEÇÕES de Estado-Maior, regulando missões de segurança reservada de determinado evento."
+    },
+    {
+     "t": "Entre os documentos acessórios, o anexo detalha o documento básico, o apêndice explicita o anexo, o adendo complementa o apêndice e o aditamento complementa o adendo.",
+     "r": true,
+     "j": "Correto — anexos e adendos têm classificação alfabética; apêndices e aditamentos, numérica."
+    },
+    {
+     "t": "O ciclo PDCA foi criado na década de 20 por Walter Andrew Shewart e popularizado na década de 50 por William Edwards Deming.",
+     "r": true,
+     "j": "Correto — é método para solução de problemas cuja causa não é conhecida."
+    },
+    {
+     "t": "As etapas do ciclo PDCA são planejar, fazer, checar e agir, sendo a ação simultaneamente fim e começo do ciclo.",
+     "r": true,
+     "j": "Correto — após apurar as causas dos erros, o ciclo é refeito com novas diretrizes e parâmetros; havendo sucesso, padroniza-se o processo."
+    },
+    {
+     "t": "O Programa Juntos pela Segurança organiza-se em cinco pilares estratégicos, entre eles a prevenção da violência e a redução da desigualdade.",
+     "r": true,
+     "j": "Correto — somam-se a atuação conjunta com municípios e instituições, o enfrentamento ao crime organizado, a articulação com o sistema de justiça e a ampliação e requalificação dos sistemas prisional e socioeducativo."
+    },
+    {
+     "t": "O indicador CVLI é contabilizado pelo número de ocorrências registradas.",
+     "r": false,
+     "j": "Falso. O CVLI é contabilizado pelo número de VÍTIMAS, e não de ocorrências; compõe-se de homicídio doloso, lesão corporal seguida de morte e latrocínio, com meta de redução de 12%."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre as seções do Estado-Maior Geral, assinale a alternativa INCORRETA:",
+     "a": [
+      "1ª Seção — pessoal e legislação.",
+      "2ª Seção — informação e contra-informação.",
+      "3ª Seção — ensino, instrução e operações.",
+      "4ª Seção — apoio logístico.",
+      "5ª Seção — planejamento administrativo e orçamentário."
+     ],
+     "c": 4,
+     "j": "A 5ª Seção trata dos assuntos civis; o planejamento administrativo e orçamentário é da 6ª Seção."
+    },
+    {
+     "e": "Sobre os documentos de Estado-Maior, assinale a alternativa CORRETA:",
+     "a": [
+      "O estudo de situação aprecia problema administrativo simples.",
+      "O estudo de Estado-Maior aprecia problemas complexos e controvertidos de natureza administrativa, com parecer conclusivo.",
+      "A diretriz determina a subordinado a execução de um serviço.",
+      "O plano baseia-se em fatos.",
+      "A ordem baseia-se em hipóteses."
+     ],
+     "c": 1,
+     "j": "O estudo aprecia problema administrativo simples; a ordem determina a execução de serviço e baseia-se em fatos; o plano baseia-se em hipóteses."
+    },
+    {
+     "e": "Assinale a alternativa que apresenta corretamente a espécie de nota e quem a elabora:",
+     "a": [
+      "Nota de instrução — elaborada pelas 2ª Seções de EM.",
+      "Nota de segurança — elaborada pelas 2ª Seções de EM.",
+      "Nota de serviço — regula rotinas operacionais e administrativas da corporação.",
+      "Nota complementar — cria ou modifica a organização da PM.",
+      "Nota de instrução — regula cerimônias, formaturas e desfiles."
+     ],
+     "c": 1,
+     "j": "A nota de instrução cria, modifica, adapta ou ajusta a organização, ou estabelece rotinas, sendo preparada a partir do escalão batalhão; a nota de serviço regula cerimônias e eventos não operacionais; e a nota complementar supre omissões ou retifica erros das demais."
+    },
+    {
+     "e": "Sobre o ciclo PDCA, assinale a alternativa INCORRETA:",
+     "a": [
+      "É método para solução de problemas cuja causa não é conhecida.",
+      "Foi criado por Walter Andrew Shewart e popularizado por William Edwards Deming.",
+      "A execução subdivide-se em treinamento, realização e coleta de dados.",
+      "A checagem pode ser feita paralelamente à execução e ao final dela.",
+      "Concluída a etapa de ação, o ciclo se encerra definitivamente."
+     ],
+     "c": 4,
+     "j": "A ação é simultaneamente fim e começo: apuradas as causas dos erros, o ciclo é refeito com novas diretrizes e parâmetros, repetindo-se até implementar plano consistente; em caso de sucesso, padroniza-se o processo."
+    },
+    {
+     "e": "Sobre o Programa Juntos pela Segurança, assinale a alternativa INCORRETA:",
+     "a": [
+      "Territorializa o Estado em 26 Áreas Integradas de Segurança.",
+      "O NGR é o Núcleo de Gestão por Resultados na SDS.",
+      "Os POPs sistematizam e definem como a ação policial deve ser executada.",
+      "A reunião de monitoramento é semanal, às quintas-feiras pela manhã.",
+      "O CVP compreende todas as modalidades de roubo, inclusive o latrocínio."
+     ],
+     "c": 4,
+     "j": "O CVP abrange todas as modalidades de roubo EXCETO o latrocínio, além do sequestro relâmpago e da extorsão mediante sequestro; o latrocínio integra o CVLI."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Diferencie plano e ordem como documentos de Estado-Maior e apresente as espécies de ordem.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Noção geral: os documentos de Estado-Maior são escritos com concisão e clareza, obedecendo a mementos preestabelecidos, destinados a viabilizar com a maior margem de êxito as atividades da corporação.",
+      "Plano: documento que dá forma a um trabalho de planejamento, viabilizando, mediante esquema imaginado, a solução de problemas; baseia-se em HIPÓTESES; pode ser de operações ou administrativo. O plano de operações é o esquema imaginado pelo comandante para executar missão operacional com êxito, apoiando-se nos estudos de situação das seções do EM.",
+      "Ordem: documento pelo qual a autoridade determina a subordinado a execução de um serviço; baseia-se em FATOS.",
+      "Ordem preparatória: informações antecipadas de ação prevista, dando mais tempo aos preparativos; pode conter deslocamentos prévios e medidas urgentes de segurança, repetindo-se o conteúdo na ordem de execução quando necessário.",
+      "Ordem de operação: o Comandante-Geral, de Grande Comando ou de Comando Intermediário determina missão operacional de envergadura, envolvendo uma ou mais OME, definindo situação, missão e pormenores da execução.",
+      "Ordem administrativa e ordem de serviço: a primeira determina missão administrativa e regula o apoio de órgão administrativo às operações; a segunda determina, na forma de procedimento, serviço com emprego de elemento PM, em caráter rotineiro, preventivo ou repressivo.",
+      "Ordem fragmentada ou complementar: instruções básicas, específicas e oportunas que complementam ordem preparatória, de operações ou administrativa já expedida, omitindo o que não foi alterado."
+     ]
+    },
+    {
+     "e": "Explique o Programa Juntos pela Segurança: pilares, indicadores e sistemática de monitoramento.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Conceito: política pública de segurança de Pernambuco que busca promover a paz, prevenir a violência e combater a desigualdade em todas as regiões do Estado, construída com diálogo institucional e escuta popular; parte da premissa de que a construção de uma sociedade segura começa com a prevenção da violência e a promoção de uma cultura de paz.",
+      "Pilar 1 — prevenção da violência e redução da desigualdade: atuação em problemas graves como violência doméstica e dependência química. Pilar 2 — atuação conjunta com municípios e instituições: recuperação de espaços públicos degradados e oferta de serviços em áreas deflagradas pelo crime organizado.",
+      "Pilar 3 — enfrentamento ao crime organizado e ao tráfico de drogas, com valorização dos profissionais de segurança. Pilar 4 — articulação com o sistema de justiça, reduzindo a impunidade e acelerando processos. Pilar 5 — ampliação e requalificação dos sistemas prisional e socioeducativo, com foco na reintegração.",
+      "Territorialização: o Estado é dividido em 26 Áreas Integradas de Segurança (AIS), com informação criminal gerada por área e responsabilização conjunta de PM e PC pelo resultado.",
+      "Indicador CVLI: homicídio doloso (inclusive por enfrentamento com a polícia), lesão corporal seguida de morte e latrocínio; taxa por 100 mil habitantes ao ano, contabilizado pelo número de vítimas, com meta de redução de 12%.",
+      "Indicador CVP: todas as modalidades de roubo, exceto latrocínio, além do sequestro relâmpago e da extorsão mediante sequestro; meta de redução de 12% frente ao mesmo período do ano anterior.",
+      "Atores: Comitê Gestor (coordenado pela SEPLAG, com a SDS e as câmaras técnicas); Câmara Técnica de Defesa Social, que acompanha o CVLI; câmaras de articulação com o sistema de justiça, de prevenção social e de administração prisional; o NGR, que dá suporte a planejamento, monitoramento e divulgação de resultados; e os órgãos operativos.",
+      "Sistemática de monitoramento: reunião semanal do Programa às quintas-feiras pela manhã, abrindo com a apresentação dos resultados por AIS — resultados ruins geram diagnóstico detalhado e positivos, apresentação de boas práticas; reuniões semanais das câmaras técnicas nos dias que antecedem; e reuniões das AIS sob demanda, com registro em ata, responsáveis e prazos."
+     ]
+    }
+   ]
+  }
+ },
+ "sim": {
+  "vf": [
+   {
+    "t": "São atributos do poder de polícia a discricionariedade, a autoexecutoriedade e a coercibilidade.",
+    "r": true,
+    "j": "Correto — D.A.C.; não se confundem com os quatro modos de atuar.",
+    "g": "Questão 01 — Conceitos e poder de polícia"
+   },
+   {
+    "t": "A licença é discricionária e revogável a qualquer tempo, e a autorização é vinculada a um direito.",
+    "r": false,
+    "j": "Falso — está invertido: a licença é vinculada a um direito e a autorização é discricionária e revogável.",
+    "g": "Questão 01 — Conceitos e poder de polícia"
+   },
+   {
+    "t": "A fiscalização de polícia, em matéria de ordem pública, denomina-se policiamento.",
+    "r": true,
+    "j": "Correto — tem dupla utilidade: prevenção e repressão das infrações.",
+    "g": "Questão 01 — Conceitos e poder de polícia"
+   },
+   {
+    "t": "A segurança pública é gênero do qual a ordem pública é espécie.",
+    "r": false,
+    "j": "Falso — é o inverso: a segurança pública é ASPECTO da ordem pública e tem nesta o seu objeto.",
+    "g": "Questão 01 — Conceitos e poder de polícia"
+   },
+   {
+    "t": "Tática é a arte de empregar a tropa em operações policiais-militares que visam assegurar ou restabelecer a ordem pública.",
+    "r": true,
+    "j": "Correto — técnica é o conjunto de métodos e procedimentos para a execução eficiente das atividades.",
+    "g": "Questão 01 — Conceitos e poder de polícia"
+   },
+   {
+    "t": "São cinco as características do policiamento ostensivo: ação pública, totalidade, dinâmica, legalidade e ação de presença.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 02 — Características, princípios e variáveis"
+   },
+   {
+    "t": "Ação de presença potencial é a presença física do policial militar no local de risco.",
+    "r": false,
+    "j": "Falso — essa é a ação de presença REAL; a potencial é a capacidade de acorrer em tempo mínimo de resposta.",
+    "g": "Questão 02 — Características, princípios e variáveis"
+   },
+   {
+    "t": "O princípio da universalidade impede que o policial especializado atue em ocorrências alheias à sua tarefa.",
+    "r": false,
+    "j": "Falso — a especialização não desobriga o PM de adotar medidas, ainda que preliminares, em qualquer ocorrência.",
+    "g": "Questão 02 — Características, princípios e variáveis"
+   },
+   {
+    "t": "São quatro os tipos de policiamento ostensivo: geral, de trânsito, florestal e de mananciais, e de guarda.",
+    "r": true,
+    "j": "Correto — os processos, por sua vez, são os seis meios de locomoção.",
+    "g": "Questão 02 — Características, princípios e variáveis"
+   },
+   {
+    "t": "O policiamento do São João e do Galo da Madrugada classifica-se, quanto à circunstância, como extraordinário.",
+    "r": false,
+    "j": "Falso — são eventos previsíveis, logo policiamento ESPECIAL; o extraordinário decorre de acontecimento imprevisto.",
+    "g": "Questão 02 — Características, princípios e variáveis"
+   },
+   {
+    "t": "A Polícia Científica não integra o rol de órgãos da segurança pública do art. 144 da CF.",
+    "r": true,
+    "j": "Correto — em Pernambuco foi criada pela Lei nº 6.657/1974.",
+    "g": "Questão 03 — Órgãos e estrutura da PMPE"
+   },
+   {
+    "t": "A polícia penal foi inserida no rol do art. 144 da CF pela EC nº 104/2019.",
+    "r": true,
+    "j": "Correto — até então a nomenclatura era “agente penitenciário”.",
+    "g": "Questão 03 — Órgãos e estrutura da PMPE"
+   },
+   {
+    "t": "A DINTER I tem sede em Petrolina e responde pelo Sertão.",
+    "r": false,
+    "j": "Falso — a DINTER I tem sede em Caruaru (Agreste e Mata); quem responde pelo Sertão, com sede em Petrolina, é a DINTER II.",
+    "g": "Questão 03 — Órgãos e estrutura da PMPE"
+   },
+   {
+    "t": "O BPRv executa o policiamento ostensivo de trânsito nas rodovias estaduais, em apoio ao DER-PE.",
+    "r": true,
+    "j": "Correto — as rodovias federais são da PRF.",
+    "g": "Questão 03 — Órgãos e estrutura da PMPE"
+   },
+   {
+    "t": "O BOPE é unidade de intervenção para crises não rotineiras, criado pela Lei nº 16.058/2017.",
+    "r": true,
+    "j": "Correto — lema VITAE DEFENSOR; porta de entrada pelo COPE.",
+    "g": "Questão 03 — Órgãos e estrutura da PMPE"
+   },
+   {
+    "t": "A 3ª Seção do Estado-Maior responde por ensino, instrução e operações, cabendo-lhe também o cerimonial policial-militar.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 04 — Planejamento e gestão"
+   },
+   {
+    "t": "O plano baseia-se em fatos e a ordem, em hipóteses.",
+    "r": false,
+    "j": "Falso — está invertido: o plano baseia-se em hipóteses e a ordem, em fatos.",
+    "g": "Questão 04 — Planejamento e gestão"
+   },
+   {
+    "t": "A nota de segurança é elaborada pelas 2ª Seções de Estado-Maior.",
+    "r": true,
+    "j": "Correto — regula missões de segurança reservada de determinado evento.",
+    "g": "Questão 04 — Planejamento e gestão"
+   },
+   {
+    "t": "No ciclo PDCA, a etapa de ação é simultaneamente fim e começo do ciclo.",
+    "r": true,
+    "j": "Correto — apuradas as causas dos erros, o ciclo é refeito com novas diretrizes e parâmetros.",
+    "g": "Questão 04 — Planejamento e gestão"
+   },
+   {
+    "t": "O indicador CVP inclui o latrocínio entre as modalidades de roubo.",
+    "r": false,
+    "j": "Falso — o CVP abrange todas as modalidades de roubo EXCETO o latrocínio, que integra o CVLI.",
+    "g": "Questão 04 — Planejamento e gestão"
+   }
+  ],
+  "me": [
+   {
+    "e": "Assinale a alternativa INCORRETA sobre os modos de atuar do poder de polícia:",
+    "a": [
+     "Ordem de polícia é o preceito pelo qual o Estado impõe limitação às pessoas.",
+     "Consentimento de polícia é o controle prévio, manifestado por licença ou autorização.",
+     "Fiscalização de polícia é a verificação do cumprimento das ordens e consentimentos.",
+     "Sanção de polícia é a intervenção punitiva do Estado para reprimir a infração.",
+     "Os modos de atuar confundem-se com os atributos do poder de polícia."
+    ],
+    "c": 4,
+    "j": "Atributos (D.A.C.) e modos de atuar são categorias distintas — o material destaca expressamente que não se confundem."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre as variáveis do policiamento ostensivo:",
+    "a": [
+     "Patrulhamento é modalidade predominantemente estática.",
+     "Montado é tipo de policiamento.",
+     "Desdobramento é a distribuição das unidades operacionais no terreno, articuladas até o nível de Gp PM.",
+     "Jornada é a fração do turno.",
+     "Atividade linha é o apoio mediato, próprio da atividade-meio."
+    ],
+    "c": 2,
+    "j": "Patrulhamento é móvel; montado é processo; jornada são as 24 horas e turno é a fração dela; e atividade linha é o emprego diretamente relacionado com o público, na atividade-fim."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre os órgãos de segurança pública:",
+    "a": [
+     "Às polícias civis cabem a polícia judiciária e a apuração das infrações penais, exceto as militares.",
+     "À Polícia Federal cabe, com exclusividade, a polícia judiciária da União.",
+     "A Polícia Rodoviária Federal é instituição militar.",
+     "A Polícia Ferroviária Federal foi criada em 1852, por decreto de D. Pedro II.",
+     "Os municípios poderão constituir guardas municipais para proteção de seus bens, serviços e instalações."
+    ],
+    "c": 2,
+    "j": "A PRF não é instituição militar; seu cargo divide-se em quatro classes — Agente, Agente Operacional, Agente Especial e Inspetor."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre a estrutura de planejamento da PMPE:",
+    "a": [
+     "A DPO subordina-se diretamente ao Governador.",
+     "A DIRESP coordena as unidades da Região Metropolitana do Recife.",
+     "A DPO coordena DIM, DIRESP, DINTER I, DINTER II e DASDH, subordinando-se ao Subcomando-Geral.",
+     "A DIM foi criada pela Lei nº 13.458/2008.",
+     "A DASDH responde pelo policiamento de choque."
+    ],
+    "c": 2,
+    "j": "A DIRESP coordena as unidades especializadas; a DIM foi criada pela Lei nº 15.186/2013; e a DASDH responde pela articulação social e direitos humanos."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre o Programa Juntos pela Segurança:",
+    "a": [
+     "Estrutura-se em cinco pilares estratégicos.",
+     "Territorializa o Estado em 26 AIS.",
+     "O CVLI é contabilizado pelo número de vítimas.",
+     "A reunião de monitoramento do Programa é semanal.",
+     "O NGR é um órgão operativo que executa o policiamento ostensivo."
+    ],
+    "c": 4,
+    "j": "O NGR é o Núcleo de Gestão por Resultados, composto de analistas que dão suporte a planejamento, monitoramento e divulgação de resultados; os órgãos operativos são PM, CBM, PC e Polícia Científica."
+   }
+  ],
+  "disc": [
+   {
+    "e": "Explique os atributos e os modos de atuar do poder de polícia, indicando em qual deles se insere o policiamento.",
+    "est": "Discursiva do simulado — vale 1,5 ponto; mínimo 8 e máximo 15 linhas.",
+    "p": 1.5,
+    "cri": [
+     "Conceito: poder de polícia é a faculdade de que dispõe a administração pública para o controle dos direitos e liberdades das pessoas, naturais ou jurídicas, inspirado nos ideais do bem comum.",
+     "Discricionariedade: aferir e valorar a atividade policiada segundo conveniência, oportunidade e justiça, nos limites da lei.",
+     "Autoexecutoriedade: o ato de polícia independe de prévia aprovação ou autorização do Poder Judiciário.",
+     "Coercibilidade: o ato de polícia é imperativo, admitindo o emprego de força, sem descambar para o arbítrio, a violência ou o excesso.",
+     "Modos de atuar: ordem de polícia (limitação imposta pelo Estado); consentimento de polícia (controle prévio, por licença — vinculada a um direito — ou autorização — discricionária e revogável); fiscalização de polícia (verificação do cumprimento das ordens e consentimentos, com dupla utilidade preventiva e repressiva); e sanção de polícia (intervenção punitiva para reprimir a infração).",
+     "Localização do policiamento: a fiscalização de polícia, quando exercida em matéria de ordem pública, recebe a denominação de POLICIAMENTO.",
+     "Ressalva: os atributos não se confundem com os modos de atuação."
+    ]
+   },
+   {
+    "e": "Disserte sobre o planejamento operacional na PMPE: as atividades de Estado-Maior, as fases da tomada de decisão e os principais documentos.",
+    "est": "Discursiva do simulado — vale 2,0 pontos; mínimo 12 e máximo 25 linhas.",
+    "p": 2.0,
+    "cri": [
+     "Estrutura: a PMPE organiza-se em órgãos de direção, de apoio e de execução; o Estado-Maior, órgão de direção geral, é o principal órgão de assessoramento do Comandante-Geral no estabelecimento da política da corporação.",
+     "Seções: 1ª (pessoal e legislação), 2ª (informação e contra-informação), 3ª (ensino, instrução e operações, além do cerimonial policial-militar), 4ª (apoio logístico), 5ª (assuntos civis) e 6ª (planejamento administrativo e orçamentário).",
+     "Atividades comuns aos oficiais de EM: produzir informações; elaborar estudos de situação; apresentar propostas; elaborar planos e ordens; e supervisionar a execução.",
+     "Metodologia de resolução de problemas: identificação ou definição do problema; levantamento dos fatores; estruturação do problema; apresentação das soluções possíveis; escolha da solução mais apropriada; e definição das providências.",
+     "Dados: informe é a notícia que ainda depende de confirmação; informação resulta de informe sobre o qual se exerceu trabalho ordenado; hipótese válida é lógica, realística e objetiva — a decisão do comandante, mesmo baseada em hipótese, é válida para elaborar planos.",
+     "Oito fases da tomada de decisão: definição do problema; coleta das informações disponíveis; diretriz de planejamento; estudo de situação, de Estado-Maior ou estudo; estudo de situação do comandante ou decisão; preparo de planos; supervisão; e avaliação e revisão.",
+     "Documentos: estudo (problema administrativo simples); estudo de situação (circunstâncias que influem em atividade operacional ou administrativa, propondo linha de ação); estudo de Estado-Maior (problemas complexos e controvertidos, com parecer conclusivo); diretriz (orientação por normas objetivas); plano (baseado em hipóteses); e ordem (baseada em fatos).",
+     "Espécies de ordem e notas: ordem preparatória, de operação, administrativa, de serviço e fragmentada ou complementar; notas de instrução, de serviço, de segurança (2ª Seções) e complementar. Documentos acessórios: anexo, apêndice, adendo e aditamento, em classificação alfabética e numérica alternada.",
+     "Ferramenta de gestão: o ciclo PDCA — planejar, executar, checar e agir —, método para solução de problemas cuja causa não é conhecida, criado por Shewart e popularizado por Deming, sendo a ação simultaneamente fim e começo do ciclo."
+    ]
+   }
+  ]
+ }
+}
