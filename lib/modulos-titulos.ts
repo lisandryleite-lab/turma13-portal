@@ -159,6 +159,15 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "Exercícios — Ten Vicente": "Exercícios — Ten Vicente",
     Gaivotas: "Gaivotas — questões da turma",
   },
+  PE: {
+    "1": "Planejamento, estratégia e pensamento estratégico",
+    "2": "Administração estratégica e escolas administrativas",
+    "3": "Níveis: planejamento estratégico, tático e operacional",
+    "4": "Técnicas: SWOT, BCG, forças de Porter e análise ambiental",
+    "5": "Missão, visão, valores, metas e plano de ação (5W2H)",
+    "6": "Indicadores de desempenho e o Plano de Comando da PMPE",
+    SIM: "Simulado — formato da prova (10,0 pontos · 100 min)",
+  },
   PJM: {
     "1": "Polícia judiciária militar: autoridades e competências",
     "2": "O IPM: características, prazos e encarregado",
