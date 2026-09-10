@@ -165,6 +165,15 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "Exercícios — Ten Vicente": "Exercícios — Ten Vicente",
     Gaivotas: "Gaivotas — questões da turma",
   },
+  EASE: {
+    "1": "Escassez, custo de oportunidade e os dez princípios",
+    "2": "Microeconomia: bens, oferta e demanda e equilíbrio",
+    "3": "Estruturas de mercado, fatores de produção e fluxo circular",
+    "4": "Macroeconomia: PIB, IDH, inflação e desemprego",
+    "5": "Políticas fiscal, monetária, cambial e austeridade",
+    "6": "Funções do Estado, empreendedorismo público e a PM",
+    SIM: "Simulado — formato da prova (10,0 pontos · 100 min)",
+  },
   DPPM: {
     "1": "Parte geral: DPM x DADM, especialidade e princípios",
     "2": "Aplicação da lei penal militar e crime militar (art. 9º)",

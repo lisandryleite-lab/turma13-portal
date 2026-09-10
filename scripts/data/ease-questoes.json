@@ -1,0 +1,1250 @@
+{
+ "banco": {
+  "1": {
+   "titulo": "Conceito de economia, escassez, custo de oportunidade e os dez princípios",
+   "legal": "Adam Smith, A Riqueza das Nações (1776); os dez princípios da economia",
+   "vf": [
+    {
+     "t": "A palavra economia vem do grego oikonomia, administração da casa, e do latim oeconomia, disposição, ordem.",
+     "r": true,
+     "j": "Correto — etimologia trazida no resumo da disciplina."
+    },
+    {
+     "t": "A economia surge como ciência através de Adam Smith (1723-1790), tendo A Riqueza das Nações (1776) como marco na história do pensamento econômico.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Economia é a ciência que estuda a relação dos fenômenos de produção, distribuição e consumo de bens e serviços, com o intuito de promover o bem-estar da comunidade.",
+     "r": true,
+     "j": "Correto — é a ciência social que procura trabalhar a escassez, minimizando problemas e maximizando benefícios em favor da vida em sociedade."
+    },
+    {
+     "t": "A escassez decorre da disparidade entre recursos limitados e necessidades ilimitadas, sendo o cerne do problema econômico fundamental.",
+     "r": true,
+     "j": "Correto — a capacidade de produzir bens e serviços é restrita, enquanto os desejos e necessidades humanas não são finitos."
+    },
+    {
+     "t": "Custo de oportunidade é o valor monetário efetivamente pago por um bem.",
+     "r": false,
+     "j": "Falso. Custo de oportunidade é aquilo de que se abre mão para obter algo — o melhor benefício renunciado ao optar por uma alternativa. Toda escolha tem um custo (trade-off)."
+    },
+    {
+     "t": "Diante da escassez, a economia responde a três questões centrais: o que produzir, como produzir e para quem produzir.",
+     "r": true,
+     "j": "Correto — respectivamente: escolha dos bens e quantidades; métodos e combinação dos fatores de produção; e distribuição da produção na sociedade."
+    },
+    {
+     "t": "O primeiro princípio da economia é o de que pessoas enfrentam trade-offs, porque cada escolha implica custo de oportunidade.",
+     "r": true,
+     "j": "Correto — exemplo do material: trabalho x lazer, em que horas extras aumentam a renda mas reduzem o tempo com a família ou de descanso."
+    },
+    {
+     "t": "Pensar na margem significa avaliar o benefício adicional de uma ação incremental: se a vantagem adicional supera o custo adicional, vale a pena.",
+     "r": true,
+     "j": "Correto — terceiro princípio; exemplo da hora extra de estudo que só compensa se o ganho de nota justificar o tempo gasto."
+    },
+    {
+     "t": "Incentivos são apenas recompensas, jamais punições.",
+     "r": false,
+     "j": "Falso. Incentivos são recompensas OU punições que afetam o custo-benefício de uma ação — o material traz tanto o crédito fiscal para energia solar (incentivo positivo) quanto o aumento de multas de trânsito (incentivo negativo)."
+    },
+    {
+     "t": "Pelo quinto princípio, o comércio pode ser bom para todos, pois permite que pessoas e países se especializem naquilo em que são mais eficientes.",
+     "r": true,
+     "j": "Correto — exemplo do país A, eficiente em trigo, que troca com o país B, eficiente em roupas: ambos produzem mais do que fariam isoladamente."
+    },
+    {
+     "t": "O padrão de vida de um país depende de sua capacidade de produzir bens e serviços, tendo a produtividade como motor.",
+     "r": true,
+     "j": "Correto — oitavo princípio; somam-se o acúmulo de capital (máquinas, infraestrutura, educação e tecnologia) e a tecnologia e inovação."
+    },
+    {
+     "t": "Segundo o nono princípio, os preços sobem quando o governo emite muito dinheiro, pois o aumento da quantidade de moeda em circulação desvaloriza a moeda e reduz seu poder de compra.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "No curto prazo, a sociedade enfrenta um trade-off entre inflação e desemprego, havendo relação inversa entre eles.",
+     "r": true,
+     "j": "Correto — décimo princípio: quando um aumenta, o outro tende a diminuir, e vice-versa."
+    },
+    {
+     "t": "Segundo o sétimo princípio, os governos nada podem fazer para melhorar os resultados do mercado.",
+     "r": false,
+     "j": "Falso. Governos PODEM melhorar os resultados do mercado: por políticas macroeconômicas estáveis, suavizam ciclos econômicos (política monetária e fiscal), reduzindo recessões, inflação descontrolada e desemprego."
+    },
+    {
+     "t": "Mercados normalmente são uma boa maneira de organizar a atividade econômica, porque mercados competitivos incentivam eficiência, inovação e melhoria contínua, além de oferecerem variedade e flexibilidade.",
+     "r": true,
+     "j": "Correto — sexto princípio."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre o conceito de economia e o problema da escassez, assinale a alternativa INCORRETA:",
+     "a": [
+      "Economia vem do grego oikonomia, administração da casa.",
+      "Adam Smith é o marco do surgimento da economia como ciência, com A Riqueza das Nações, de 1776.",
+      "A escassez traduz a disparidade entre recursos limitados e necessidades ilimitadas.",
+      "A economia é definida como ciência social que procura trabalhar a escassez.",
+      "A escassez desaparece nas economias desenvolvidas, em que a produção atende igualmente toda a sociedade."
+     ],
+     "c": 4,
+     "j": "A escassez é o problema econômico fundamental: não há produção e distribuição de bens e serviços que atendam igualmente todo o conjunto da sociedade."
+    },
+    {
+     "e": "Um policial militar de folga aceita um repasse de serviço de R$ 400 em vez de descansar em casa. Nessa escolha, o custo de oportunidade corresponde a:",
+     "a": [
+      "Os R$ 400 recebidos pelo serviço.",
+      "O descanso de que abriu mão para trabalhar.",
+      "O valor do transporte até o local do serviço.",
+      "A soma dos R$ 400 com o valor do descanso.",
+      "O salário mensal do policial."
+     ],
+     "c": 1,
+     "j": "O custo de oportunidade é aquilo de que se abre mão — o melhor benefício renunciado. Aqui, o descanso."
+    },
+    {
+     "e": "Assinale a alternativa que apresenta corretamente as três questões centrais diante da escassez:",
+     "a": [
+      "Quanto arrecadar, quanto gastar e quanto poupar.",
+      "O que produzir, como produzir e para quem produzir.",
+      "Quem produz, quem consome e quem tributa.",
+      "Produção, distribuição e consumo.",
+      "Oferta, demanda e equilíbrio."
+     ],
+     "c": 1,
+     "j": "São as três questões centrais: a escolha dos bens e quantidades, os métodos e a combinação dos fatores de produção, e a distribuição da produção na sociedade."
+    },
+    {
+     "e": "O governo aumenta o imposto sobre o refrigerante açucarado e o consumo cai. O fenômeno ilustra qual princípio da economia?",
+     "a": [
+      "O comércio pode ser bom para todos.",
+      "As pessoas reagem a incentivos.",
+      "Mercados normalmente são uma boa maneira de organizar a atividade econômica.",
+      "Os preços sobem quando o governo emite muito dinheiro.",
+      "O padrão de vida depende da capacidade de produzir bens e serviços."
+     ],
+     "c": 1,
+     "j": "Quarto princípio: incentivos são recompensas ou punições que afetam o custo-benefício. Aumentado o custo de consumir, as pessoas ajustam o comportamento."
+    },
+    {
+     "e": "Sobre os dez princípios da economia, assinale a alternativa CORRETA:",
+     "a": [
+      "Pensar na margem é considerar o custo total da atividade, e não o incremental.",
+      "O trade-off entre inflação e desemprego é permanente, valendo no longo prazo.",
+      "Os governos não têm meios de suavizar ciclos econômicos.",
+      "O custo de algo é aquilo de que se abre mão para obtê-lo.",
+      "A especialização e o comércio prejudicam o país menos eficiente."
+     ],
+     "c": 3,
+     "j": "Segundo princípio. Pensar na margem é avaliar o benefício adicional; o trade-off inflação-desemprego é de CURTO prazo; os governos podem suavizar ciclos com política fiscal e monetária; e o comércio pode ser bom para todos."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Conceitue economia e explique o problema da escassez, o custo de oportunidade e as três questões centrais que dele decorrem.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: do grego oikonomia (administração da casa) e do latim oeconomia (disposição, ordem); surge como ciência com Adam Smith e A Riqueza das Nações (1776).",
+      "Definição: ciência que estuda a relação dos fenômenos de produção, distribuição e consumo de bens e serviços, com o intuito de promover o bem-estar da comunidade; ciência social que procura trabalhar a escassez, minimizando problemas e maximizando benefícios.",
+      "Escassez: não há produção e distribuição que atendam igualmente todo o conjunto da sociedade — recursos limitados diante de necessidades ilimitadas; é o cerne do problema econômico fundamental.",
+      "Custo de oportunidade: toda escolha tem um custo (trade-off); o custo de oportunidade é aquilo de que se abre mão, o melhor benefício renunciado ao optar por uma alternativa.",
+      "O que produzir: escolha dos bens e serviços e da quantidade específica de cada um, para atender às necessidades sociais da forma mais eficiente.",
+      "Como produzir: métodos e processos de produção, pela combinação dos fatores de produção — trabalho, capital e tecnologia.",
+      "Para quem produzir: determina quem serão os consumidores, ou seja, como a produção será distribuída na sociedade."
+     ]
+    },
+    {
+     "e": "Explique, com exemplos, cinco dos dez princípios da economia.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Pessoas enfrentam trade-offs: escolher entre opções que não podem ser feitas ao mesmo tempo, pois cada escolha implica custo de oportunidade (trabalho x lazer).",
+      "O custo de algo é aquilo de que se abre mão para obtê-lo: reconhecer o custo de oportunidade ajuda a pesar benefícios presentes contra futuros (trabalhar hoje x qualificar-se para renda futura).",
+      "Pessoas racionais pensam na margem: se a vantagem adicional de fazer um pouco mais supera o custo adicional, vale a pena (a hora extra de estudo).",
+      "As pessoas reagem a incentivos: recompensas ou punições que alteram o custo-benefício — gratificação por produtividade eleva o esforço; imposto sobre refrigerante ou cigarro reduz o consumo; crédito fiscal estimula a energia solar; multas mais altas reduzem acidentes.",
+      "O comércio pode ser bom para todos: a especialização permite que cada um produza o que faz melhor e troque pelo que precisa (trigo por roupas).",
+      "Mercados normalmente organizam bem a atividade econômica: competição gera eficiência, inovação, variedade e adaptação rápida às preferências.",
+      "Governos podem melhorar os resultados do mercado: políticas macroeconômicas estáveis suavizam ciclos, reduzindo recessões, inflação descontrolada e desemprego.",
+      "O padrão de vida depende da capacidade de produzir: produtividade, acúmulo de capital e tecnologia elevam o rendimento agregado.",
+      "Preços sobem quando o governo emite muito dinheiro; e, no curto prazo, há trade-off entre inflação e desemprego."
+     ]
+    }
+   ]
+  },
+  "2": {
+   "titulo": "Microeconomia: bens econômicos, teoria da oferta e demanda e equilíbrio de mercado",
+   "legal": "Teoria do Consumidor, da Empresa e da Produção; lei da oferta e da demanda",
+   "vf": [
+    {
+     "t": "A microeconomia estuda o comportamento econômico de unidades individuais, como consumidores e empresas, e como suas decisões afetam mercados específicos.",
+     "r": true,
+     "j": "Correto — seu foco é em mercados específicos, e não na economia como um todo."
+    },
+    {
+     "t": "A Teoria do Consumidor estuda as escolhas e preferências dos consumidores, levando em conta suas restrições orçamentárias.",
+     "r": true,
+     "j": "Correto — é o ponto de vista do consumidor; a Teoria da Empresa analisa a combinação de fatores de produção e a Teoria da Produção, a transformação de matérias-primas em produtos ou serviços."
+    },
+    {
+     "t": "Bens econômicos são aqueles cuja oferta é ilimitada e que, por isso, não têm custo.",
+     "r": false,
+     "j": "Falso. Bens econômicos são aqueles cuja oferta é LIMITADA e, por isso, têm custo. Os de oferta suficiente na natureza e sem custo são os bens LIVRES (ar puro, água da chuva)."
+    },
+    {
+     "t": "Bens coletivos são não rivais e muitas vezes não excludentes, como a segurança pública e a iluminação pública.",
+     "r": true,
+     "j": "Correto — o consumo de uma pessoa não impede o de outra e é difícil restringir o acesso, o que costuma exigir intervenção estatal ou institucional."
+    },
+    {
+     "t": "Quanto à esfera de uso, os bens econômicos classificam-se em bens de produção e bens de consumo.",
+     "r": true,
+     "j": "Correto — os de produção servem para produzir outros bens (máquinas, fábricas, insumos); os de consumo destinam-se diretamente à satisfação das necessidades humanas."
+    },
+    {
+     "t": "Pela lei da demanda, quanto maior o preço, maior a quantidade demandada, criando relação direta entre preço e quantidade.",
+     "r": false,
+     "j": "Falso. A relação é INVERSA: quanto maior o preço, menor a quantidade demandada. A relação direta entre preço e quantidade é a da OFERTA."
+    },
+    {
+     "t": "Pelo princípio da oferta, quanto maior o preço, maior a quantidade ofertada, criando relação direta entre preço e quantidade.",
+     "r": true,
+     "j": "Correto — a oferta representa a quantidade que os produtores estão dispostos a vender a diferentes preços."
+    },
+    {
+     "t": "São fatores que influenciam a demanda o preço, a renda dos consumidores, o gosto do consumidor e os preços de bens substitutos e complementares.",
+     "r": true,
+     "j": "Correto — já a oferta é influenciada pelo preço de produção, pela tecnologia e pelo número de empresas no mercado."
+    },
+    {
+     "t": "Se o preço da manteiga aumenta e o consumo da margarina também aumenta, trata-se de bens complementares.",
+     "r": false,
+     "j": "Falso. São bens SUBSTITUTOS — o consumo de um substitui o do outro, sendo o gosto do consumidor indiferente. Complementares são os de consumo conjunto: se o preço do pão sobe, cai também o consumo da margarina."
+    },
+    {
+     "t": "Quando a renda dos consumidores aumenta, aumenta o consumo da maioria dos bens, exceto dos bens inferiores.",
+     "r": true,
+     "j": "Correto — exemplo do material: com mais renda, deixa-se a carne de segunda pela de primeira (acém x filé mignon)."
+    },
+    {
+     "t": "No ponto de equilíbrio, a quantidade que os produtores estão dispostos a oferecer é igual à quantidade que os consumidores desejam comprar, determinando-se o preço de mercado.",
+     "r": true,
+     "j": "Correto — é o ponto em que oferta e demanda se encontram."
+    },
+    {
+     "t": "Se o preço estiver acima do ponto de equilíbrio, haverá excesso de demanda e os preços tenderão a subir.",
+     "r": false,
+     "j": "Falso — está invertido. Acima do equilíbrio há excesso de OFERTA (excedente) e os preços tendem a DIMINUIR; abaixo do equilíbrio há excesso de demanda (escassez) e os preços tendem a aumentar."
+    },
+    {
+     "t": "Uma safra ruim, ao reduzir a oferta de um produto agrícola, tende a elevar seu preço.",
+     "r": true,
+     "j": "Correto — exemplo do material sobre deslocamento da oferta."
+    },
+    {
+     "t": "Quando a demanda excede a oferta, os preços tendem a cair.",
+     "r": false,
+     "j": "Falso. Quando a demanda excede a oferta, os preços tendem a SUBIR; quando a oferta excede a demanda é que os preços tendem a cair."
+    },
+    {
+     "t": "A importância dos bens econômicos reside na escolha, pois, sendo escassos, as sociedades precisam decidir como alocar recursos, equilibrando custo, benefício e bem-estar.",
+     "r": true,
+     "j": "Correto — processo ligado à demanda, à oferta, ao preço e ao planejamento econômico, das decisões individuais às políticas públicas."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a classificação dos bens, assinale a alternativa CORRETA:",
+     "a": [
+      "Bens livres são aqueles cuja oferta é limitada e que têm custo.",
+      "Bens coletivos são rivais e excludentes.",
+      "Bens econômicos possuem utilidade e, por serem úteis e escassos, têm custo ou valor de troca.",
+      "Bens de produção destinam-se diretamente à satisfação das necessidades humanas.",
+      "Ar puro e água da chuva são exemplos de bens econômicos."
+     ],
+     "c": 2,
+     "j": "Bens livres existem em quantidade suficiente na natureza e não têm custo (ar puro, água da chuva); bens coletivos são não rivais e muitas vezes não excludentes; bens de produção servem para produzir outros bens."
+    },
+    {
+     "e": "Sobre a teoria da oferta e da demanda, assinale a alternativa INCORRETA:",
+     "a": [
+      "A demanda tem relação inversa com o preço.",
+      "A oferta tem relação direta com o preço.",
+      "A renda dos consumidores influencia a demanda.",
+      "A tecnologia e o número de empresas no mercado influenciam a oferta.",
+      "Quando a oferta excede a demanda, os preços tendem a subir."
+     ],
+     "c": 4,
+     "j": "Quando a oferta excede a demanda, os preços tendem a CAIR; é quando a demanda excede a oferta que os preços sobem."
+    },
+    {
+     "e": "O preço do pão aumenta e, com ele, cai o consumo de margarina. Trata-se de:",
+     "a": [
+      "Bens substitutos.",
+      "Bens complementares.",
+      "Bens inferiores.",
+      "Bens livres.",
+      "Bens de produção."
+     ],
+     "c": 1,
+     "j": "Bens complementares têm consumo conjunto: a queda no consumo de um arrasta a do outro. Nos substitutos, o encarecimento de um eleva o consumo do outro."
+    },
+    {
+     "e": "Sobre o equilíbrio de mercado, assinale a alternativa CORRETA:",
+     "a": [
+      "Acima do preço de equilíbrio há excesso de demanda.",
+      "Abaixo do preço de equilíbrio há excedente, e os preços caem.",
+      "No equilíbrio, a quantidade ofertada é igual à quantidade demandada, definindo-se o preço de mercado.",
+      "O equilíbrio é fixado pelo governo.",
+      "No equilíbrio, a oferta supera a demanda."
+     ],
+     "c": 2,
+     "j": "O equilíbrio é o encontro de oferta e demanda. Acima dele há excedente (excesso de oferta) e os preços caem; abaixo há escassez (excesso de demanda) e os preços sobem."
+    },
+    {
+     "e": "Sobre a microeconomia, assinale a alternativa INCORRETA:",
+     "a": [
+      "Foca nas decisões de agentes econômicos individuais.",
+      "Analisa mercados específicos para bens, serviços e fatores de produção.",
+      "Estuda como preços e quantidades são definidos pelo mecanismo de oferta e procura.",
+      "Examina estruturas de mercado, como a concorrência perfeita e o monopólio.",
+      "Tem por foco a economia como um todo, analisando PIB, inflação e desemprego."
+     ],
+     "c": 4,
+     "j": "Analisar a economia como um todo, com PIB, inflação e desemprego, é objeto da MACROeconomia."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique a teoria da oferta e da demanda e o conceito de equilíbrio de mercado, indicando os fatores que deslocam cada uma das curvas.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceitos: oferta é a quantidade de um bem ou serviço disponível, que os produtores estão dispostos a vender a diferentes preços; demanda é a quantidade desejada pelos consumidores, que estão dispostos e capazes de comprar a diferentes preços.",
+      "Lei da demanda: relação inversa entre preço e quantidade demandada — quanto maior o preço, menor a quantidade demandada.",
+      "Princípio da oferta: relação direta entre preço e quantidade ofertada — quanto maior o preço, maior a quantidade ofertada.",
+      "Fatores que influenciam a demanda: preço, renda dos consumidores, gosto do consumidor e preços de bens substitutos e complementares. Nos substitutos, o encarecimento de um eleva o consumo do outro (manteiga e margarina); nos complementares, o consumo é conjunto (pão e margarina). Com o aumento da renda, cresce o consumo da maioria dos bens, exceto dos inferiores.",
+      "Fatores que influenciam a oferta: preço de produção, tecnologia e número de empresas no mercado.",
+      "Equilíbrio: ponto em que oferta e demanda se encontram — a quantidade ofertada iguala a demandada e define-se o preço de mercado.",
+      "Desequilíbrios: acima do equilíbrio há excesso de oferta (excedente) e os preços tendem a cair; abaixo, há excesso de demanda (escassez) e os preços tendem a subir. Exemplos: lançamento com alta demanda e oferta limitada eleva o preço; safra ruim reduz a oferta e eleva o preço; perda de popularidade reduz a demanda e o preço."
+     ]
+    },
+    {
+     "e": "Classifique os bens econômicos quanto à disponibilidade e quanto à esfera de uso, com exemplos, e explique por que a segurança pública é tratada como bem coletivo.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Bens econômicos: possuem utilidade para as pessoas e, por serem úteis e de oferta limitada, têm custo ou valor de troca no mercado — automóveis, roupas, moradias, serviços médicos.",
+      "Bens livres: existem em tamanho suficiente na natureza para satisfazer qualquer demanda sem custo algum — ar puro e água da chuva.",
+      "Bens coletivos: não rivais e muitas vezes não excludentes — o consumo de uma pessoa não impede o de outra e é difícil restringir o acesso.",
+      "Segurança pública e iluminação pública são os exemplos clássicos de bens coletivos, e por isso costumam exigir intervenção estatal ou institucional para sua provisão.",
+      "Quanto à esfera de uso: bens de produção, que servem para produzir outros bens (máquinas, fábricas, insumos), e bens de consumo, destinados diretamente à satisfação das necessidades humanas (alimentos, vestuário, entretenimento).",
+      "Importância: como são escassos, a sociedade precisa decidir como alocar recursos, equilibrando custo, benefício e bem-estar — processo ligado à demanda, à oferta, ao preço e ao planejamento econômico."
+     ]
+    }
+   ]
+  },
+  "3": {
+   "titulo": "Estruturas de mercado, fatores de produção e fluxo circular da economia",
+   "legal": "Concorrência perfeita e imperfeita; fatores T.T.C.T.E; modelo do fluxo circular",
+   "vf": [
+    {
+     "t": "As estruturas de mercado dividem-se em concorrência perfeita e concorrência imperfeita.",
+     "r": true,
+     "j": "Correto — cada estrutura descreve a organização das empresas no mercado, como interagem e sua influência sobre preços e ofertas."
+    },
+    {
+     "t": "São características da concorrência perfeita o grande número de compradores e vendedores, produtos homogêneos e ausência de barreiras de entrada e saída.",
+     "r": true,
+     "j": "Correto — exemplo: mercados agrícolas, em que muitos produtores vendem produtos padronizados a muitos compradores."
+    },
+    {
+     "t": "No monopólio há apenas um comprador no mercado.",
+     "r": false,
+     "j": "Falso. Monopólio é apenas um VENDEDOR, sem substitutos próximos, com controle sobre o preço e barreiras de entrada. Apenas um comprador é o MONOPSÔNIO."
+    },
+    {
+     "t": "O oligopólio caracteriza-se pelo domínio do mercado por um pequeno número de empresas, como na aviação e nas telecomunicações.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Na concorrência monopolística há grande número de vendedores oferecendo produtos diferenciados, mas com substitutos próximos, como restaurantes e lojas de vestuário.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O oligopsônio caracteriza-se por um pequeno número de compradores, como grandes fábricas que compram a produção de muitos pequenos agricultores.",
+     "r": true,
+     "j": "Correto — exemplos: fruticultura e cooperativas."
+    },
+    {
+     "t": "São cinco os fatores de produção: terra, trabalho, capital, tecnologia e empreendedorismo.",
+     "r": true,
+     "j": "Correto — T.T.C.T.E; terra, trabalho e capital são os fatores tradicionais, enquanto tecnologia e empreendedorismo são os modernos."
+    },
+    {
+     "t": "A remuneração da terra é o salário e a do trabalho é o aluguel.",
+     "r": false,
+     "j": "Falso — está invertido. A remuneração da TERRA é o aluguel e a do TRABALHO é o salário."
+    },
+    {
+     "t": "A remuneração do capital são os juros, a da tecnologia são os royalties e a do empreendedorismo são os lucros.",
+     "r": true,
+     "j": "Correto — completa o quadro das remunerações dos fatores de produção."
+    },
+    {
+     "t": "O capital compreende os bens produzidos pelo homem e utilizados na produção de outros bens e serviços, como máquinas, ferramentas, edifícios e infraestruturas.",
+     "r": true,
+     "j": "Correto — não se confunde com a terra, que são os recursos naturais."
+    },
+    {
+     "t": "O empreendedorismo é a capacidade e a disposição de organizar os demais fatores de produção, identificando oportunidades, tomando decisões estratégicas e assumindo os riscos envolvidos.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O fluxo circular da economia descreve como o dinheiro, os bens e os serviços circulam entre os agentes econômicos, mostrando a interconexão entre produção, gastos e rendimento.",
+     "r": true,
+     "j": "Correto — modelo simplificado com famílias, empresas, governo e setor externo."
+    },
+    {
+     "t": "No mercado de bens e serviços, as famílias oferecem os fatores de produção e as empresas os remuneram.",
+     "r": false,
+     "j": "Falso. Isso ocorre no mercado de FATORES DE PRODUÇÃO. No mercado de bens e serviços, as empresas produzem e vendem e as famílias compram — é o lado da renda real."
+    },
+    {
+     "t": "No fluxo circular, o governo recebe impostos de famílias e empresas e injeta renda na economia através de gastos públicos, serviços e subsídios.",
+     "r": true,
+     "j": "Correto — e o setor financeiro intermedeia a poupança das famílias, canalizando-a como investimento às empresas."
+    },
+    {
+     "t": "As famílias são donas dos fatores de produção e consumidoras finais de bens e serviços; as empresas produzem bens e serviços e são consumidoras de fatores de produção.",
+     "r": true,
+     "j": "Correto — é a lógica do circuito fechado do fluxo circular."
+    }
+   ],
+   "me": [
+    {
+     "e": "Assinale a alternativa que associa corretamente a estrutura de mercado ao seu conceito:",
+     "a": [
+      "Monopólio — um único comprador.",
+      "Monopsônio — um único vendedor.",
+      "Oligopólio — pequeno número de compradores.",
+      "Oligopsônio — pequeno número de compradores.",
+      "Concorrência perfeita — produtos diferenciados e barreiras de entrada."
+     ],
+     "c": 3,
+     "j": "Monopólio: um vendedor; monopsônio: um comprador; oligopólio: poucas empresas vendedoras; oligopsônio: poucos compradores; concorrência perfeita: produtos homogêneos e ausência de barreiras."
+    },
+    {
+     "e": "Sobre os fatores de produção e suas remunerações, assinale a alternativa INCORRETA:",
+     "a": [
+      "Terra — aluguel.",
+      "Trabalho — salário.",
+      "Capital — juros.",
+      "Tecnologia — royalties.",
+      "Empreendedorismo — salário."
+     ],
+     "c": 4,
+     "j": "A remuneração do empreendedorismo são os LUCROS."
+    },
+    {
+     "e": "Sobre o fluxo circular da economia, assinale a alternativa CORRETA:",
+     "a": [
+      "No mercado de bens e serviços, as famílias vendem fatores de produção às empresas.",
+      "O mercado de fatores de produção corresponde ao lado da renda real.",
+      "No mercado de fatores, as empresas remuneram os fatores com salários, rendas e lucros — é o lado do fluxo monetário.",
+      "O governo não integra o modelo do fluxo circular.",
+      "O setor externo é irrelevante em uma economia aberta."
+     ],
+     "c": 2,
+     "j": "No mercado de bens e serviços (renda real), as empresas vendem e as famílias compram; no mercado de fatores (fluxo monetário), as famílias ofertam fatores e as empresas os remuneram. O modelo pode ser expandido para incluir governo, setor financeiro e setor externo."
+    },
+    {
+     "e": "Uma única usina de cana-de-açúcar é a única contratante de mão de obra em uma cidade. Trata-se de:",
+     "a": [
+      "Monopólio.",
+      "Oligopólio.",
+      "Monopsônio.",
+      "Oligopsônio.",
+      "Concorrência monopolística."
+     ],
+     "c": 2,
+     "j": "Um único comprador no mercado — no caso, do fator trabalho — configura monopsônio."
+    },
+    {
+     "e": "Sobre as estruturas de mercado, assinale a alternativa INCORRETA:",
+     "a": [
+      "Na concorrência imperfeita as empresas têm algum poder sobre o mercado.",
+      "O monopólio apresenta barreiras de entrada para outras empresas.",
+      "O oligopólio é exemplificado pelos setores de aviação e telecomunicações.",
+      "Na concorrência monopolística os produtos são idênticos e não há substitutos próximos.",
+      "Mercados agrícolas costumam ser citados como exemplo de concorrência perfeita."
+     ],
+     "c": 3,
+     "j": "Na concorrência monopolística os produtos são DIFERENCIADOS, embora com substitutos próximos — restaurantes e lojas de vestuário. Produtos idênticos (homogêneos) caracterizam a concorrência perfeita."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique as estruturas de mercado, diferenciando concorrência perfeita e imperfeita e apresentando as espécies desta última, com exemplos.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Noção geral: cada estrutura descreve a organização das empresas em um mercado, como elas interagem e sua influência sobre preços e ofertas de bens e serviços.",
+      "Concorrência perfeita: grande número de compradores e vendedores; produtos homogêneos (idênticos); ausência de barreiras de entrada e saída. Exemplo: mercados agrícolas.",
+      "Concorrência imperfeita: as empresas têm algum poder sobre o mercado.",
+      "Monopólio: apenas um vendedor, sem substitutos próximos, com controle sobre o preço e barreiras de entrada. Exemplo: única empresa de água ou eletricidade em uma região.",
+      "Oligopólio: pequeno número de empresas domina o mercado. Exemplos: aviação e telecomunicações.",
+      "Concorrência monopolística: grande número de vendedores com produtos diferenciados, mas com substitutos próximos. Exemplos: restaurantes e lojas de vestuário.",
+      "Monopsônio: apenas um comprador. Exemplo: única empresa que contrata mão de obra em uma cidade, como uma usina de cana-de-açúcar.",
+      "Oligopsônio: pequeno número de compradores. Exemplos: fruticultura e cooperativas, em que poucas fábricas compram a produção de muitos pequenos agricultores."
+     ]
+    },
+    {
+     "e": "Enumere os fatores de produção, indicando a remuneração de cada um, e explique o fluxo circular da economia.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Fatores (T.T.C.T.E): terra, trabalho, capital, tecnologia e empreendedorismo — os três primeiros são tradicionais; tecnologia e empreendedorismo, modernos.",
+      "Terra: todos os recursos naturais utilizados no processo produtivo (solo, água, ar, florestas, minerais); remuneração — aluguel.",
+      "Trabalho: esforço humano físico ou mental, abrangendo habilidades, conhecimento e tempo; remuneração — salário.",
+      "Capital: bens produzidos pelo homem e utilizados na produção de outros bens (máquinas, ferramentas, edifícios, estradas); remuneração — juros.",
+      "Tecnologia: conhecimento, inovações e processos que tornam a produção mais eficiente; remuneração — royalties. Empreendedorismo: organiza os demais fatores e assume riscos; remuneração — lucros.",
+      "Fluxo circular: modelo simplificado que descreve como dinheiro, bens e serviços circulam entre os agentes, mostrando a interconexão entre produção, gastos e rendimento em circuito fechado.",
+      "Mercado de bens e serviços: empresas produzem e vendem, famílias compram — lado da renda real.",
+      "Mercado de fatores de produção: famílias ofertam os fatores, empresas os utilizam e os remuneram com salários, rendas e lucros — lado do fluxo monetário.",
+      "Expansão do modelo: o governo arrecada impostos de famílias e empresas e injeta renda por gastos públicos, serviços e subsídios; o setor financeiro intermedeia a poupança, canalizando-a como investimento; e, em economia aberta, importações e exportações afetam o fluxo de renda."
+     ]
+    }
+   ]
+  },
+  "4": {
+   "titulo": "Macroeconomia: PIB, IDH, inflação, desemprego, risco Brasil e desenvolvimento",
+   "legal": "Indicadores macroeconômicos; IPCA; IBGE; PNUD/IDH",
+   "vf": [
+    {
+     "t": "A macroeconomia estuda a economia de um país ou região como um todo, analisando variáveis como PIB, inflação, desemprego e taxa de juros.",
+     "r": true,
+     "j": "Correto — seu foco NÃO é em consumidores ou empresas individuais."
+    },
+    {
+     "t": "São indicadores macroeconômicos o PIB, a inflação, a taxa de desemprego, a taxa de juros e o câmbio.",
+     "r": true,
+     "j": "Correto — o câmbio é o preço de uma moeda em relação a outra."
+    },
+    {
+     "t": "O PIB é a soma de todos os bens e serviços finais produzidos no país, calculado pelas óticas da oferta, da demanda e da renda.",
+     "r": true,
+     "j": "Correto — oferta (agropecuária, indústria e serviços), demanda (consumo, investimentos e exportações líquidas) e renda (salários, lucros, juros e aluguéis)."
+    },
+    {
+     "t": "O cálculo do PIB considera também os produtos intermediários usados na produção.",
+     "r": false,
+     "j": "Falso. Para evitar contagens duplicadas, o PIB só considera bens e serviços FINAIS, aqueles que chegam ao consumidor final."
+    },
+    {
+     "t": "O IBGE é o órgão responsável por calcular o PIB do país.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Os setores que mais contribuem para o PIB do Brasil são os de serviços e indústria, embora a agropecuária seja muito importante para as exportações.",
+     "r": true,
+     "j": "Correto — na ótica da oferta, serviços é o maior setor."
+    },
+    {
+     "t": "O PIB per capita é o PIB total dividido pelo número de habitantes e mede com precisão a distribuição de renda do país.",
+     "r": false,
+     "j": "Falso quanto à segunda parte. O PIB per capita permite comparar o padrão de vida médio, mas NÃO mostra como a riqueza é distribuída — pode haver PIB per capita alto com grande desigualdade — e não considera aspectos não econômicos do bem-estar."
+    },
+    {
+     "t": "O IDH avalia o progresso e o bem-estar de um país nas dimensões de renda, educação e saúde, variando de 0 a 1.",
+     "r": true,
+     "j": "Correto — a renda é avaliada pelo PIB per capita, a educação pelos anos médios de estudo e anos esperados de escolaridade, e a saúde pela expectativa de vida."
+    },
+    {
+     "t": "Pelo IDH, considera-se desenvolvimento muito alto o índice de 0,800 a 1.",
+     "r": true,
+     "j": "Correto — as faixas são: 0 a 0,554 baixo; 0,555 a 0,699 médio; 0,700 a 0,799 alto; e 0,800 a 1 muito alto. O IDH do Brasil é de 0,786."
+    },
+    {
+     "t": "Inflação é o aumento dos preços de bens e serviços, implicando a diminuição do poder de compra da moeda; o índice utilizado no sistema de metas é o IPCA.",
+     "r": true,
+     "j": "Correto — Índice Nacional de Preços ao Consumidor Amplo."
+    },
+    {
+     "t": "A deflação, por representar queda de preços, é sempre benéfica ao funcionamento da economia.",
+     "r": false,
+     "j": "Falso. Preços em queda podem ser prejudiciais — o comerciante pode ter prejuízo se ganhar menos amanhã pelo estoque feito hoje. O Banco Central busca inflação baixa e previsível, para que os preços sejam relativamente estáveis."
+    },
+    {
+     "t": "A inflação afeta particularmente as camadas menos favorecidas da população e gera incertezas que desestimulam o investimento.",
+     "r": true,
+     "j": "Correto — pessoas e firmas perdem a noção dos preços relativos, dificultando avaliar se algo está barato ou caro."
+    },
+    {
+     "t": "A taxa de desemprego é calculada dividindo-se o número de desempregados pelo total da população economicamente ativa e multiplicando o resultado por 100.",
+     "r": true,
+     "j": "Correto — a população ativa inclui empregados e desempregados; taxa elevada indica mercado de trabalho fraco."
+    },
+    {
+     "t": "O risco Brasil mede a percepção do mercado financeiro sobre a probabilidade de o país honrar suas obrigações, como o pagamento de dívidas.",
+     "r": true,
+     "j": "Correto — quanto maior, maior a chance de inadimplência e a exigência de retornos por parte dos investidores."
+    },
+    {
+     "t": "Crescimento econômico e desenvolvimento econômico são expressões sinônimas.",
+     "r": false,
+     "j": "Falso. Crescimento é o aumento quantitativo da produção, medido pelo PIB (ou PNB); desenvolvimento é mais amplo — crescimento somado à melhoria da qualidade de vida e do bem-estar, avaliada por indicadores como distribuição de renda, expectativa de vida e acesso à educação e saúde."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre o PIB, assinale a alternativa INCORRETA:",
+     "a": [
+      "É a soma dos bens e serviços finais produzidos no país.",
+      "É calculado pelas óticas da oferta, da demanda e da renda.",
+      "Na ótica da demanda, computam-se consumo, investimentos e exportações líquidas.",
+      "Na ótica da renda, computam-se salários, lucros, juros e aluguéis.",
+      "Inclui os produtos intermediários, para refletir toda a cadeia produtiva."
+     ],
+     "c": 4,
+     "j": "O PIB só considera bens e serviços finais, justamente para evitar contagens duplicadas."
+    },
+    {
+     "e": "Sobre o IDH, assinale a alternativa CORRETA:",
+     "a": [
+      "Varia de 0 a 100.",
+      "Considera renda, educação e saúde.",
+      "A dimensão renda é medida pelo PIB total.",
+      "Índice de 0,700 corresponde a desenvolvimento muito alto.",
+      "Substitui integralmente o PIB per capita como medida de riqueza."
+     ],
+     "c": 1,
+     "j": "O IDH vai de 0 a 1 e considera renda (pelo PIB per capita), educação (anos médios de estudo e anos esperados de escolaridade) e saúde (expectativa de vida). De 0,700 a 0,799 é alto desenvolvimento; muito alto vai de 0,800 a 1."
+    },
+    {
+     "e": "Sobre inflação e deflação, assinale a alternativa INCORRETA:",
+     "a": [
+      "A inflação implica diminuição do poder de compra da moeda.",
+      "O IPCA é o índice utilizado no sistema de metas para a inflação.",
+      "A inflação afeta particularmente as camadas menos favorecidas.",
+      "A deflação é sempre benéfica, por baratear os produtos.",
+      "O Banco Central busca manter a inflação baixa e previsível."
+     ],
+     "c": 3,
+     "j": "Preços em queda podem ser prejudiciais ao bom funcionamento da economia — o comerciante pode ter prejuízo se ganhar menos amanhã pelo estoque feito hoje."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a um fator que eleva o risco Brasil:",
+     "a": [
+      "Incertezas políticas e econômicas.",
+      "Desequilíbrios fiscais.",
+      "Dívida pública elevada.",
+      "Forte dependência da exportação de commodities em cenário volátil.",
+      "Solidez das instituições e confiança do mercado nas políticas públicas."
+     ],
+     "c": 4,
+     "j": "Solidez institucional e confiança do mercado REDUZEM o risco-país; os demais itens o elevam."
+    },
+    {
+     "e": "Sobre crescimento e desenvolvimento econômico, assinale a alternativa CORRETA:",
+     "a": [
+      "Crescimento e desenvolvimento são sempre correlacionados.",
+      "O desenvolvimento utiliza apenas indicadores econômicos.",
+      "O desenvolvimento abrange o crescimento, mas não se resume a ele.",
+      "O crescimento é medido pelo IDH.",
+      "O desenvolvimento prescinde de crescimento econômico."
+     ],
+     "c": 2,
+     "j": "Um país pode crescer sem desenvolver-se, se os benefícios não forem distribuídos adequadamente; o desenvolvimento requer crescimento, mas é mais abrangente e qualitativo, usando indicadores econômicos (PIB e renda) e não econômicos (IDH)."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique o que é o PIB, suas três óticas de cálculo, o PIB per capita e as limitações desse indicador.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: soma de todos os bens e serviços finais produzidos no país; o cálculo considera apenas bens e serviços finais, para evitar contagens duplicadas, e é feito pelo IBGE.",
+      "Ótica da oferta (tudo o que é produzido): serviços — o maior setor, com comércio, transportes, saúde, educação, finanças e tecnologia; indústria — veículos, roupas, produtos químicos, alimentos industrializados; agropecuária — alimentos, com papel crucial nas exportações.",
+      "Ótica da demanda (gastos e investimentos): consumo das famílias, consumo do governo, investimentos (formação bruta de capital fixo) e exportações líquidas.",
+      "Ótica da renda (distribuição da riqueza): salários, lucros, juros e aluguéis.",
+      "PIB per capita: PIB total dividido pelo número de habitantes; permite comparar o padrão de vida médio e a produção econômica entre países, e um valor mais alto sugere maior acesso a bens, serviços, educação e saúde.",
+      "Limitações: não mostra como a riqueza é distribuída — pode haver PIB per capita alto com grande desigualdade — e não considera aspectos não econômicos do bem-estar, como a degradação ambiental ou o trabalho doméstico não remunerado.",
+      "Exemplo: país populoso pode ter PIB total elevado e PIB per capita baixo; país pequeno pode ter PIB total menor e per capita alto."
+     ]
+    },
+    {
+     "e": "Diferencie crescimento econômico de desenvolvimento econômico e explique o desenvolvimento sustentável e seus três pilares.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Crescimento econômico: aumento quantitativo da produção, medido pelo aumento do PIB — podendo ser medido também pelo PNB; foco no aumento da riqueza e da produção.",
+      "Desenvolvimento econômico: crescimento do PIB somado à melhoria da qualidade de vida e do bem-estar, avaliada por indicadores como distribuição de renda, expectativa de vida e acesso à educação e à saúde; usa indicadores econômicos (PIB e renda) e não econômicos (IDH).",
+      "Relação: nem sempre são correlacionados — um país pode crescer sem desenvolver-se, se os benefícios da produção não forem distribuídos adequadamente; o desenvolvimento requer crescimento, mas não se resume a ele. Exemplo histórico: países sul-americanos com crescimento significativo sem melhorias estruturais na qualidade de vida.",
+      "Desenvolvimento sustentável: modelo que atende às necessidades da geração atual sem comprometer a capacidade das futuras gerações de satisfazer as próprias necessidades, buscando equilíbrio entre progresso econômico, justiça social e proteção ambiental.",
+      "Pilar ambiental: conservação da natureza, biodiversidade, qualidade do ar e da água e uso racional dos recursos naturais.",
+      "Pilar econômico: crescimento inclusivo que gere prosperidade para todos, sem esgotar recursos naturais nem causar danos ambientais.",
+      "Pilar social: justiça social, redução das desigualdades, saúde e educação de qualidade e promoção da dignidade humana.",
+      "Agenda 2030: plano de ação global adotado em 2015 pela ONU, com 17 Objetivos de Desenvolvimento Sustentável a alcançar até 2030."
+     ]
+    }
+   ]
+  },
+  "5": {
+   "titulo": "Políticas macroeconômicas: fiscal, monetária, cambial e austeridade",
+   "legal": "Instrumentos de política fiscal, monetária e cambial; SELIC; regime de câmbio flutuante",
+   "vf": [
+    {
+     "t": "A política fiscal é o uso de impostos e gastos governamentais para influenciar a economia.",
+     "r": true,
+     "j": "Correto — a palavra-chave é impostos e gastos públicos; engloba as decisões do governo sobre como arrecadar receitas e como gastá-las, afetando a demanda agregada."
+    },
+    {
+     "t": "São funções da política fiscal a estabilização macroeconômica, a redistribuição da renda e a alocação de recursos.",
+     "r": true,
+     "j": "Correto — suavizar ciclos econômicos, reduzir desigualdades por impostos progressivos e programas sociais, e direcionar recursos a áreas negligenciadas pelo mercado."
+    },
+    {
+     "t": "São instrumentos da política fiscal os impostos, os gastos do governo e as transferências.",
+     "r": true,
+     "j": "Correto — ex.: IPI zero para automóveis, aumento de gastos em infraestrutura e programas de transferência de renda."
+    },
+    {
+     "t": "A política fiscal é expansionista quando o governo reduz seus gastos ou aumenta impostos.",
+     "r": false,
+     "j": "Falso — está invertido. É EXPANSIONISTA quando o governo aumenta gastos ou reduz impostos; é CONTRACIONISTA quando reduz gastos ou aumenta impostos."
+    },
+    {
+     "t": "A política fiscal expansionista pode levar à inflação se a economia já estiver operando próximo ao pleno emprego.",
+     "r": true,
+     "j": "Correto — ela busca crescimento estimulando consumo e investimento e reduzindo o desemprego, mas com esse risco."
+    },
+    {
+     "t": "A austeridade fiscal é o conjunto de medidas destinadas a reduzir o déficit e a dívida pública, geralmente pela diminuição de gastos e/ou aumento de impostos.",
+     "r": true,
+     "j": "Correto — é uma estratégia para equilibrar as contas públicas, defendida como forma de restaurar a confiança dos mercados e garantir a sustentabilidade da dívida, mas criticada pelos impactos sociais negativos."
+    },
+    {
+     "t": "A política monetária tem como palavra-chave a taxa de juros e é conduzida pelo Banco Central.",
+     "r": true,
+     "j": "Correto — conjunto de ações para controlar a oferta de moeda e as taxas de juros, com o objetivo de estabilizar preços, alcançar o desenvolvimento sustentável e reduzir o desemprego."
+    },
+    {
+     "t": "São instrumentos principais da política monetária as operações de mercado aberto, os depósitos compulsórios e a taxa básica de juros.",
+     "r": true,
+     "j": "Correto — open market, compulsórios e SELIC."
+    },
+    {
+     "t": "Na política monetária expansionista, o Banco Central eleva a taxa de juros e vende títulos públicos.",
+     "r": false,
+     "j": "Falso. Na EXPANSIONISTA o BC reduz a taxa de juros, compra títulos públicos e reduz compulsórios, injetando liquidez. Elevar juros e vender títulos é política CONTRACIONISTA."
+    },
+    {
+     "t": "Ao reduzir o percentual dos depósitos compulsórios, o Banco Central libera mais dinheiro para empréstimos pelos bancos comerciais.",
+     "r": true,
+     "j": "Correto — o compulsório é a parcela dos depósitos que os bancos devem manter como reserva no BC, servindo para controlar a liquidez do sistema financeiro."
+    },
+    {
+     "t": "A política monetária contracionista encarece o crédito e desincentiva investimento e consumo para conter a inflação, podendo reduzir o crescimento e elevar o desemprego.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A política cambial tem como palavra-chave o valor da moeda e envolve definir o regime cambial e a intervenção do Banco Central.",
+     "r": true,
+     "j": "Correto — busca estabilidade de preços, equilíbrio da balança comercial e fomento do crescimento e do emprego."
+    },
+    {
+     "t": "O Brasil adota o regime de câmbio fixo, no qual o Banco Central não pode intervir.",
+     "r": false,
+     "j": "Falso. O Brasil adota o regime de câmbio FLUTUANTE, no qual o valor da moeda é determinado pela oferta e demanda no mercado — e, mesmo nesse regime, o BC PODE intervir para suavizar oscilações bruscas."
+    },
+    {
+     "t": "Quando há muito dólar na economia do país, a tendência é a queda do dólar e a valorização do real.",
+     "r": true,
+     "j": "Correto — e, quando há menos dólar, a tendência é o aumento deste e a desvalorização do real."
+    },
+    {
+     "t": "Superávit comercial ocorre quando o valor das importações supera o das exportações.",
+     "r": false,
+     "j": "Falso — está invertido. Superávit é quando as EXPORTAÇÕES superam as importações; se o país exporta 100 mi e importa 70 mi, o superávit é de 30 mi."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a política fiscal, assinale a alternativa INCORRETA:",
+     "a": [
+      "Tem como instrumentos os impostos, os gastos do governo e as transferências.",
+      "É expansionista quando o governo aumenta gastos ou reduz impostos.",
+      "É contracionista quando o governo reduz gastos ou aumenta impostos.",
+      "A política contracionista visa reduzir a demanda agregada e controlar a inflação.",
+      "A política expansionista jamais gera pressão inflacionária."
+     ],
+     "c": 4,
+     "j": "A política expansionista pode levar à inflação se a economia já estiver operando próximo ao pleno emprego."
+    },
+    {
+     "e": "O Banco Central deseja conter a inflação. A medida COERENTE com esse objetivo é:",
+     "a": [
+      "Reduzir a taxa SELIC.",
+      "Comprar títulos públicos no mercado aberto.",
+      "Reduzir os depósitos compulsórios.",
+      "Elevar a taxa SELIC, encarecendo o crédito.",
+      "Aumentar as transferências de renda."
+     ],
+     "c": 3,
+     "j": "Política monetária contracionista: elevar juros encarece o crédito, desincentiva consumo e investimento e contém a inflação — ao custo de menor crescimento e maior desemprego. As três primeiras alternativas são expansionistas e a última é política fiscal."
+    },
+    {
+     "e": "Sobre os instrumentos da política monetária, assinale a alternativa CORRETA:",
+     "a": [
+      "Nas operações de mercado aberto, o BC compra e vende títulos públicos, injetando ou retirando dinheiro da economia.",
+      "Os depósitos compulsórios são a parcela que o BC deposita nos bancos comerciais.",
+      "A SELIC não influencia as demais taxas de juros da economia.",
+      "A compra de títulos pelo BC retira liquidez da economia.",
+      "O aumento dos compulsórios amplia o crédito disponível."
+     ],
+     "c": 0,
+     "j": "Open market. Os compulsórios são a parcela dos depósitos que os bancos mantêm como reserva no BC; a SELIC influencia todas as demais taxas; comprar títulos injeta liquidez; e aumentar compulsórios reduz o crédito."
+    },
+    {
+     "e": "Sobre a política cambial brasileira, assinale a alternativa INCORRETA:",
+     "a": [
+      "O Brasil adota o regime de câmbio flutuante.",
+      "Mesmo no regime flutuante, o BC pode intervir para suavizar oscilações bruscas.",
+      "Instabilidades políticas e econômicas transferem-se imediatamente para a taxa de câmbio.",
+      "Taxa de câmbio é o preço de uma moeda expresso em outra moeda.",
+      "No câmbio flutuante o valor da moeda é fixado por decreto do governo."
+     ],
+     "c": 4,
+     "j": "No câmbio flutuante o valor da moeda é determinado pela oferta e demanda no mercado — não por fixação governamental."
+    },
+    {
+     "e": "Sobre a austeridade fiscal, assinale a alternativa CORRETA:",
+     "a": [
+      "Consiste no aumento de gastos públicos para estimular a economia.",
+      "É um conjunto de medidas para reduzir déficit e dívida pública, por corte de gastos e/ou aumento de impostos.",
+      "Não sofre críticas quanto a impactos sociais.",
+      "Aumenta necessariamente o consumo das famílias.",
+      "É sinônimo de política monetária expansionista."
+     ],
+     "c": 1,
+     "j": "A austeridade é estratégia para equilibrar as contas públicas; é defendida como forma de restaurar a confiança dos mercados e garantir a sustentabilidade da dívida, mas criticada pelo aumento da desigualdade, enfraquecimento dos serviços públicos e redução do consumo."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Diferencie política fiscal expansionista e contracionista e explique os instrumentos da política fiscal.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: política fiscal é o uso de impostos e gastos governamentais para influenciar a economia, buscando estabilidade de preços, crescimento econômico e pleno emprego; engloba as decisões sobre como arrecadar receitas e como gastá-las, afetando a demanda agregada.",
+      "Funções: estabilização macroeconômica (suavizar ciclos, reduzindo flutuações entre expansão e recessão); redistribuição da renda (impostos progressivos e programas sociais); e alocação de recursos (direcionar recursos a áreas negligenciadas pelo mercado, como infraestrutura e educação).",
+      "Instrumentos — impostos: alterar alíquotas para influenciar consumo e investimento (ex.: IPI zero para automóveis).",
+      "Instrumentos — gastos do governo: aumentar ou diminuir gastos em educação, infraestrutura etc.; o aumento de gastos em infraestrutura gera empregos e estimula o crescimento.",
+      "Instrumentos — transferências: subsídios e programas de transferência de renda, que afetam a demanda agregada.",
+      "Expansionista: o governo aumenta gastos ou reduz impostos, buscando crescimento pelo estímulo ao consumo das famílias e ao investimento das empresas e pela redução do desemprego — mas pode levar à inflação se a economia já operar próximo ao pleno emprego.",
+      "Contracionista: o governo reduz gastos ou aumenta impostos, visando reduzir a demanda agregada e controlar a inflação — podendo reduzir crescimento, consumo, investimento e emprego."
+     ]
+    },
+    {
+     "e": "Explique a política monetária, seus instrumentos e objetivos, diferenciando a atuação expansionista da contracionista.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: conjunto de ações governamentais, através do Banco Central, para controlar a oferta de moeda e as taxas de juros, com o objetivo de estabilizar os preços, alcançar o desenvolvimento sustentável e reduzir o desemprego; a palavra-chave é a taxa de juros.",
+      "Operações de mercado aberto (open market): o BC compra e vende títulos públicos, injetando ou retirando dinheiro da economia.",
+      "Depósitos compulsórios: o BC exige que os bancos comerciais mantenham parte dos depósitos como reserva, controlando a liquidez do sistema financeiro.",
+      "Taxa básica de juros (SELIC): ajustada para cima ou para baixo, influencia todas as demais taxas, tornando o crédito mais caro ou mais barato.",
+      "Expansionista: reduzir a SELIC, comprar títulos públicos e reduzir compulsórios — crédito acessível e mais moeda impulsionam consumo e investimento, ajudando a combater recessões e a reduzir o desemprego, com risco de elevar a inflação.",
+      "Contracionista: aumentar a taxa de juros, encarecendo o crédito e desincentivando investimento e consumo, com o objetivo de conter a inflação — podendo reduzir o crescimento e elevar o desemprego.",
+      "Objetivos: estabilidade de preços (inflação dentro da meta), crescimento econômico sustentável e controle do desemprego."
+     ]
+    }
+   ]
+  },
+  "6": {
+   "titulo": "Funções econômicas do Estado, empreendedorismo público e a PM na economia",
+   "legal": "Funções alocativa, distributiva e estabilizadora; empreendedorismo no setor público",
+   "vf": [
+    {
+     "t": "São três as funções econômicas do Estado: alocativa, distributiva e estabilizadora.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A função alocativa corrige falhas de mercado, fornecendo bens e serviços que o setor privado não oferece ou oferece de forma ineficiente, como rodovias, segurança pública, educação e saúde.",
+     "r": true,
+     "j": "Correto — o Estado pode cobrar taxas ou impostos para financiar esses bens públicos ou semipúblicos."
+    },
+    {
+     "t": "A função distributiva busca reduzir desigualdades por meio de tributação progressiva, programas sociais e subsídios.",
+     "r": true,
+     "j": "Correto — exemplos do material: Imposto de Renda, Bolsa Família e Vale-Gás."
+    },
+    {
+     "t": "A função estabilizadora emprega políticas fiscais e monetárias para controlar a inflação e o desemprego e promover o crescimento econômico.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O empreendedorismo no setor público, assim como o privado, tem por finalidade principal o lucro.",
+     "r": false,
+     "j": "Falso. Ao contrário do empreendedorismo privado, que visa o lucro, o empreendedorismo público foca na resolução de problemas sociais e na modernização da gestão pública."
+    },
+    {
+     "t": "O empreendedorismo público é a aplicação de práticas inovadoras e criativas na administração pública para melhorar a eficiência dos serviços e a qualidade de vida dos cidadãos.",
+     "r": true,
+     "j": "Correto — busca tornar a administração mais eficiente, transparente e voltada ao bem-estar da população, valorizando o capital humano."
+    },
+    {
+     "t": "São conceitos do empreendedorismo público a inovação e criatividade, o foco no bem-estar social, a eficiência e qualidade, o engajamento dos cidadãos e o valor público.",
+     "r": true,
+     "j": "Correto — valor público é a criação de valor para os cidadãos por meio da geração de novos recursos ou da melhor utilização dos existentes."
+    },
+    {
+     "t": "A assunção de riscos calculados é característica do empreendedorismo público.",
+     "r": true,
+     "j": "Correto — junto com liderança empreendedora, visão estratégica, colaboração, cultura de inovação, adaptabilidade, foco em resultados, transparência e ética e transformação digital."
+    },
+    {
+     "t": "O empreendedorismo público dispensa a participação dos cidadãos na tomada de decisões.",
+     "r": false,
+     "j": "Falso. O engajamento e a participação dos cidadãos na tomada de decisões e na construção de políticas é um de seus conceitos centrais."
+    },
+    {
+     "t": "A PMPE contribui para a economia ao criar um ambiente seguro que atrai investimentos, permite o funcionamento normal do comércio e dos serviços e protege o patrimônio público e privado.",
+     "r": true,
+     "j": "Correto — ao cumprir sua missão institucional, promove a confiança necessária à atividade econômica e ao bem-estar social."
+    },
+    {
+     "t": "A presença ostensiva e o policiamento preventivo e repressivo geram sensação de segurança, elemento de ambiente e confiança para a atividade econômica.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "As empresas tendem a se instalar em locais onde a ordem e a segurança prevalecem.",
+     "r": true,
+     "j": "Correto — é o aspecto da atração de investimentos."
+    },
+    {
+     "t": "Uma Polícia Militar eficiente tende a aumentar os gastos de empresas e cidadãos com segurança privada.",
+     "r": false,
+     "j": "Falso. Uma PM eficiente pode DIMINUIR a necessidade de gastos com segurança privada por parte de empresas e cidadãos."
+    },
+    {
+     "t": "A redução da criminalidade garante que o comércio e os serviços possam funcionar sem a ameaça de roubos e furtos, o que fortalece a economia local.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A melhora na qualidade de vida decorrente da segurança pública impacta positivamente a população e sua capacidade de gerar renda.",
+     "r": true,
+     "j": "Correto — item de prevenção e redução de custos."
+    }
+   ],
+   "me": [
+    {
+     "e": "Associe corretamente a função econômica do Estado ao exemplo:",
+     "a": [
+      "Alocativa — Bolsa Família.",
+      "Distributiva — construção de rodovias.",
+      "Estabilizadora — tributação progressiva do Imposto de Renda.",
+      "Alocativa — fornecimento de segurança pública, educação e saúde.",
+      "Distributiva — controle da inflação pela política monetária."
+     ],
+     "c": 3,
+     "j": "Alocativa: prover bens e serviços que o mercado não oferece adequadamente (rodovias, segurança pública, educação, saúde). Distributiva: reduzir desigualdades (IR progressivo, Bolsa Família, Vale-Gás). Estabilizadora: políticas fiscais e monetárias contra inflação e desemprego."
+    },
+    {
+     "e": "Sobre o empreendedorismo no setor público, assinale a alternativa INCORRETA:",
+     "a": [
+      "Aplica práticas inovadoras e criativas na administração pública.",
+      "Foca na resolução de problemas sociais e na modernização da gestão pública.",
+      "Tem por finalidade principal a obtenção de lucro.",
+      "Envolve o engajamento e a participação dos cidadãos na tomada de decisões.",
+      "Busca criar valor público, gerando novos recursos ou utilizando melhor os existentes."
+     ],
+     "c": 2,
+     "j": "O lucro é a finalidade do empreendedorismo PRIVADO; o público foca na resolução de problemas sociais e na modernização da gestão."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a uma característica do empreendedorismo público:",
+     "a": [
+      "Liderança empreendedora e visão estratégica.",
+      "Assunção de riscos calculados.",
+      "Cultura de inovação e adaptabilidade.",
+      "Transparência e ética.",
+      "Centralização decisória e aversão a mudanças."
+     ],
+     "c": 4,
+     "j": "O empreendedorismo público valoriza a colaboração, a flexibilidade e a capacidade de se ajustar a mudanças — o oposto de centralização e aversão a mudanças."
+    },
+    {
+     "e": "Sobre a importância da Polícia Militar para a economia do Estado, assinale a alternativa INCORRETA:",
+     "a": [
+      "A presença ostensiva gera sensação de segurança e confiança.",
+      "A proteção do patrimônio evita perdas financeiras e garante a continuidade dos negócios.",
+      "Empresas tendem a se instalar em locais onde a ordem e a segurança prevalecem.",
+      "A redução da criminalidade fortalece o comércio e os serviços locais.",
+      "Uma PM eficiente eleva os gastos de empresas e cidadãos com segurança privada."
+     ],
+     "c": 4,
+     "j": "Uma PM eficiente pode DIMINUIR a necessidade de gastos com segurança privada."
+    },
+    {
+     "e": "Sobre a função alocativa do Estado, assinale a alternativa CORRETA:",
+     "a": [
+      "Consiste em reduzir desigualdades por meio de transferências de renda.",
+      "Consiste em controlar a inflação e o desemprego.",
+      "Corrige falhas de mercado, provendo bens e serviços que o setor privado não oferece ou oferece de forma ineficiente.",
+      "É exercida exclusivamente por meio de subsídios.",
+      "Não admite a cobrança de taxas ou impostos para financiar os bens fornecidos."
+     ],
+     "c": 2,
+     "j": "É a função de correção de falhas de mercado — rodovias, segurança pública, educação e saúde —, podendo o Estado cobrar taxas ou impostos para financiar esses bens públicos ou semipúblicos."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique as três funções econômicas do Estado, com exemplos de cada uma.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Função alocativa: corrige falhas de mercado, fornecendo bens e serviços que o setor privado não oferece ou oferece de forma ineficiente — construção de rodovias, fornecimento de segurança pública, educação e saúde; o Estado pode cobrar taxas ou impostos para financiar esses bens públicos ou semipúblicos.",
+      "Função distributiva: reduzir desigualdades. Tributação progressiva, com impostos mais altos sobre os mais ricos para financiar serviços (Imposto de Renda); programas sociais de transferência de renda (Bolsa Família); e subsídios, que reduzem o custo de bens e serviços essenciais para famílias de baixa renda (Vale-Gás).",
+      "Função estabilizadora: emprego de políticas fiscais e monetárias para controlar a inflação e o desemprego e promover o crescimento econômico.",
+      "Relação com os bens coletivos: a segurança pública é bem não rival e não excludente, o que justifica a atuação estatal na função alocativa.",
+      "Fechamento: as três funções operam de forma articulada — alocar recursos, distribuir renda e estabilizar a economia."
+     ]
+    },
+    {
+     "e": "Disserte sobre o empreendedorismo no setor público, diferenciando-o do privado, e explique a contribuição da Polícia Militar para a economia do Estado.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Conceito: aplicação de práticas inovadoras e criativas na administração pública para melhorar a eficiência dos serviços e a qualidade de vida dos cidadãos.",
+      "Diferença em relação ao privado: enquanto o empreendedorismo no setor privado visa o lucro, o público foca na resolução de problemas sociais e na modernização da gestão pública, tornando-a mais eficiente, transparente e voltada ao bem-estar da população.",
+      "Conceitos: inovação e criatividade; foco no bem-estar social, especialmente dos grupos mais vulneráveis; eficiência e qualidade, com princípios de gestão do setor privado adaptados ao contexto governamental; engajamento e participação dos cidadãos; e valor público.",
+      "Características: liderança empreendedora, visão estratégica, assunção de riscos calculados, colaboração e trabalho em equipe, cultura de inovação, adaptabilidade e flexibilidade, foco em resultados, transparência e ética, e transformação digital.",
+      "PM e economia — estabilidade e segurança: a PMPE contribui ao criar um ambiente seguro que atrai investimentos, permite o funcionamento normal do comércio e dos serviços e protege o patrimônio público e privado.",
+      "Ambiente e confiança: a presença ostensiva e o policiamento preventivo e repressivo geram sensação de segurança; a proteção do patrimônio evita perdas financeiras e garante a continuidade dos negócios.",
+      "Atração de investimentos e comércio: empresas tendem a se instalar onde a ordem e a segurança prevalecem, e a redução da criminalidade permite que comércio e serviços funcionem sem ameaça de roubos e furtos, fortalecendo a economia local.",
+      "Prevenção e redução de custos: uma PM eficiente diminui a necessidade de gastos com segurança privada, e a melhora na qualidade de vida impacta positivamente a população e sua capacidade de gerar renda."
+     ]
+    }
+   ]
+  }
+ },
+ "sim": {
+  "vf": [
+   {
+    "t": "A economia surge como ciência com Adam Smith e sua obra A Riqueza das Nações, de 1776.",
+    "r": true,
+    "j": "Correto — marco na história do pensamento econômico.",
+    "g": "Questão 01 — Conceitos e princípios"
+   },
+   {
+    "t": "Custo de oportunidade é o valor monetário efetivamente desembolsado em uma compra.",
+    "r": false,
+    "j": "Falso — é aquilo de que se abre mão para obter algo, o melhor benefício renunciado.",
+    "g": "Questão 01 — Conceitos e princípios"
+   },
+   {
+    "t": "No curto prazo há relação inversa entre inflação e desemprego.",
+    "r": true,
+    "j": "Correto — décimo princípio da economia.",
+    "g": "Questão 01 — Conceitos e princípios"
+   },
+   {
+    "t": "Incentivos são apenas recompensas, jamais punições.",
+    "r": false,
+    "j": "Falso — são recompensas OU punições que afetam o custo-benefício de uma ação.",
+    "g": "Questão 01 — Conceitos e princípios"
+   },
+   {
+    "t": "As três questões centrais diante da escassez são o que produzir, como produzir e para quem produzir.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 01 — Conceitos e princípios"
+   },
+   {
+    "t": "Pela lei da demanda, há relação inversa entre preço e quantidade demandada.",
+    "r": true,
+    "j": "Correto — quanto maior o preço, menor a quantidade demandada.",
+    "g": "Questão 02 — Microeconomia e mercados"
+   },
+   {
+    "t": "Se o preço da manteiga sobe e o consumo de margarina aumenta, trata-se de bens complementares.",
+    "r": false,
+    "j": "Falso — são bens SUBSTITUTOS; nos complementares o consumo é conjunto (pão e margarina).",
+    "g": "Questão 02 — Microeconomia e mercados"
+   },
+   {
+    "t": "Acima do preço de equilíbrio há excesso de oferta, e os preços tendem a cair.",
+    "r": true,
+    "j": "Correto — abaixo do equilíbrio há excesso de demanda e os preços tendem a subir.",
+    "g": "Questão 02 — Microeconomia e mercados"
+   },
+   {
+    "t": "O monopsônio caracteriza-se pela existência de um único vendedor no mercado.",
+    "r": false,
+    "j": "Falso — monopsônio é um único COMPRADOR; um único vendedor é o monopólio.",
+    "g": "Questão 02 — Microeconomia e mercados"
+   },
+   {
+    "t": "A remuneração do fator tecnologia são os royalties e a do empreendedorismo, os lucros.",
+    "r": true,
+    "j": "Correto — terra: aluguel; trabalho: salário; capital: juros.",
+    "g": "Questão 02 — Microeconomia e mercados"
+   },
+   {
+    "t": "O PIB considera apenas bens e serviços finais, para evitar contagens duplicadas.",
+    "r": true,
+    "j": "Correto — o cálculo é feito pelo IBGE.",
+    "g": "Questão 03 — Macroeconomia e indicadores"
+   },
+   {
+    "t": "O IDH varia de 0 a 1 e considera renda, educação e saúde.",
+    "r": true,
+    "j": "Correto — o IDH do Brasil é de 0,786, faixa de alto desenvolvimento.",
+    "g": "Questão 03 — Macroeconomia e indicadores"
+   },
+   {
+    "t": "O PIB per capita revela com precisão como a riqueza é distribuída na sociedade.",
+    "r": false,
+    "j": "Falso — não mostra a distribuição: pode haver PIB per capita alto com grande desigualdade.",
+    "g": "Questão 03 — Macroeconomia e indicadores"
+   },
+   {
+    "t": "O índice utilizado no sistema de metas para a inflação é o IPCA.",
+    "r": true,
+    "j": "Correto — Índice Nacional de Preços ao Consumidor Amplo.",
+    "g": "Questão 03 — Macroeconomia e indicadores"
+   },
+   {
+    "t": "A deflação é sempre benéfica para o funcionamento da economia.",
+    "r": false,
+    "j": "Falso — preços em queda podem ser prejudiciais; o BC busca inflação baixa e previsível.",
+    "g": "Questão 03 — Macroeconomia e indicadores"
+   },
+   {
+    "t": "A política fiscal é contracionista quando o governo reduz gastos ou aumenta impostos.",
+    "r": true,
+    "j": "Correto — visa reduzir a demanda agregada e controlar a inflação.",
+    "g": "Questão 04 — Políticas e papel do Estado"
+   },
+   {
+    "t": "Na política monetária expansionista o BC eleva a SELIC e vende títulos públicos.",
+    "r": false,
+    "j": "Falso — na expansionista o BC reduz a SELIC, compra títulos e reduz compulsórios.",
+    "g": "Questão 04 — Políticas e papel do Estado"
+   },
+   {
+    "t": "O Brasil adota o regime de câmbio flutuante, no qual o BC ainda pode intervir para suavizar oscilações bruscas.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 04 — Políticas e papel do Estado"
+   },
+   {
+    "t": "A função distributiva do Estado é exercida por meio de tributação progressiva, programas sociais e subsídios.",
+    "r": true,
+    "j": "Correto — Imposto de Renda, Bolsa Família e Vale-Gás.",
+    "g": "Questão 04 — Políticas e papel do Estado"
+   },
+   {
+    "t": "O empreendedorismo no setor público tem por finalidade principal a obtenção de lucro.",
+    "r": false,
+    "j": "Falso — o lucro é finalidade do empreendedorismo privado; o público foca na resolução de problemas sociais e na modernização da gestão.",
+    "g": "Questão 04 — Políticas e papel do Estado"
+   }
+  ],
+  "me": [
+   {
+    "e": "Assinale a alternativa INCORRETA sobre a microeconomia e a macroeconomia:",
+    "a": [
+     "A microeconomia foca em unidades individuais e mercados específicos.",
+     "A macroeconomia analisa a economia como um todo, por meio de agregados.",
+     "A macroeconomia estuda PIB, inflação, desemprego, juros e câmbio.",
+     "A microeconomia utiliza a Teoria do Consumidor, da Empresa e da Produção.",
+     "A macroeconomia tem por foco as preferências dos consumidores individuais."
+    ],
+    "c": 4,
+    "j": "O foco da macroeconomia NÃO é em consumidores ou empresas individuais, e sim na totalidade dos gastos, preços, produção e emprego."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre bens econômicos:",
+    "a": [
+     "Bens livres têm oferta limitada e custo de produção.",
+     "Bens coletivos são rivais e excludentes.",
+     "A segurança pública é exemplo de bem coletivo, não rival e de difícil restrição de acesso.",
+     "Bens de consumo servem para produzir outros bens.",
+     "Todo bem útil é necessariamente um bem econômico."
+    ],
+    "c": 2,
+    "j": "Bens livres existem em quantidade suficiente na natureza e não têm custo; bens coletivos são não rivais e muitas vezes não excludentes; bens de consumo destinam-se diretamente à satisfação das necessidades humanas."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre o fluxo circular da economia:",
+    "a": [
+     "No mercado de bens e serviços, empresas vendem e famílias compram.",
+     "No mercado de fatores, famílias ofertam fatores e empresas os remuneram.",
+     "O governo arrecada impostos e injeta renda por gastos, serviços e subsídios.",
+     "O setor financeiro intermedeia a poupança das famílias, canalizando-a como investimento.",
+     "O mercado de fatores de produção corresponde ao lado da renda real."
+    ],
+    "c": 4,
+    "j": "O mercado de fatores corresponde ao lado do FLUXO MONETÁRIO; o lado da renda real é o mercado de bens e serviços."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre as políticas macroeconômicas:",
+    "a": [
+     "A palavra-chave da política monetária são os impostos.",
+     "A palavra-chave da política fiscal é a taxa de juros.",
+     "A palavra-chave da política cambial é o valor da moeda.",
+     "A austeridade fiscal consiste em ampliar gastos públicos.",
+     "Os compulsórios são instrumento de política fiscal."
+    ],
+    "c": 2,
+    "j": "Fiscal: impostos e gastos públicos. Monetária: taxa de juros. Cambial: valor da moeda. A austeridade reduz déficit e dívida por corte de gastos e/ou aumento de impostos, e os compulsórios são instrumento monetário."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre o papel do Estado e da Polícia Militar na economia:",
+    "a": [
+     "A função alocativa corrige falhas de mercado.",
+     "A função estabilizadora emprega políticas fiscais e monetárias.",
+     "A PMPE contribui para a economia ao criar um ambiente seguro que atrai investimentos.",
+     "Uma PM eficiente reduz a necessidade de gastos com segurança privada.",
+     "A segurança pública é bem rival e excludente, por isso é provida pelo mercado."
+    ],
+    "c": 4,
+    "j": "A segurança pública é bem coletivo — não rival e de difícil restrição de acesso —, o que justifica a atuação estatal na função alocativa."
+   }
+  ],
+  "disc": [
+   {
+    "e": "Explique o problema da escassez, o custo de oportunidade e as três questões centrais da economia.",
+    "est": "Discursiva do simulado — vale 1,5 ponto; mínimo 8 e máximo 15 linhas.",
+    "p": 1.5,
+    "cri": [
+     "Escassez: não há produção e distribuição de bens e serviços que atendam igualmente todo o conjunto da sociedade; recursos limitados diante de necessidades ilimitadas — o cerne do problema econômico fundamental.",
+     "Custo de oportunidade: toda escolha tem um custo (trade-off); é aquilo de que se abre mão, o melhor benefício renunciado ao optar por uma alternativa.",
+     "O que produzir: escolha dos bens e serviços e das quantidades a produzir, para atender às necessidades sociais da forma mais eficiente.",
+     "Como produzir: métodos e processos, pela combinação dos fatores de produção — trabalho, capital e tecnologia.",
+     "Para quem produzir: quem serão os consumidores, isto é, como a produção será distribuída na sociedade.",
+     "Fechamento: a economia é a ciência social que procura trabalhar a escassez, minimizando problemas e maximizando benefícios em favor da vida em sociedade."
+    ]
+   },
+   {
+    "e": "Disserte sobre as políticas macroeconômicas fiscal, monetária e cambial, indicando instrumentos e objetivos de cada uma, e relacione-as às funções econômicas do Estado.",
+    "est": "Discursiva do simulado — vale 2,0 pontos; mínimo 12 e máximo 25 linhas.",
+    "p": 2.0,
+    "cri": [
+     "Política fiscal (impostos e gastos públicos): decisões do governo sobre como arrecadar e gastar, afetando a demanda agregada; funções de estabilização macroeconômica, redistribuição de renda e alocação de recursos.",
+     "Instrumentos fiscais: alíquotas de impostos (IPI zero para automóveis), gastos do governo (infraestrutura, educação) e transferências (subsídios e transferência de renda). Expansionista: mais gastos ou menos impostos, estimulando consumo, investimento e emprego, com risco inflacionário; contracionista: menos gastos ou mais impostos, contendo a inflação ao custo de crescimento e emprego.",
+     "Austeridade fiscal: medidas para reduzir déficit e dívida pública, por corte de gastos e/ou aumento de impostos; defendida para restaurar a confiança dos mercados e a sustentabilidade da dívida, criticada pelos impactos sociais (desigualdade, enfraquecimento de serviços públicos e queda do consumo).",
+     "Política monetária (taxa de juros): conduzida pelo Banco Central para controlar a oferta de moeda e os juros, buscando estabilidade de preços, desenvolvimento sustentável e redução do desemprego.",
+     "Instrumentos monetários: operações de mercado aberto (compra e venda de títulos públicos), depósitos compulsórios e taxa SELIC. Expansionista: reduzir juros, comprar títulos e reduzir compulsórios; contracionista: elevar juros, encarecendo o crédito para conter a inflação.",
+     "Política cambial (valor da moeda): medidas para gerenciar o valor da moeda nacional frente a outras, buscando estabilidade de preços, equilíbrio da balança comercial e crescimento; o Brasil adota o câmbio flutuante, no qual o valor é determinado pela oferta e demanda, podendo o BC intervir para suavizar oscilações bruscas.",
+     "Impactos cambiais: a taxa de câmbio afeta o custo de importações e exportações e a competitividade — moeda desvalorizada torna os produtos nacionais mais competitivos; alterações no câmbio podem gerar pressões inflacionárias; superávit comercial ocorre quando as exportações superam as importações.",
+     "Relação com as funções do Estado: a alocativa provê bens e serviços que o mercado não oferece adequadamente (segurança pública, educação, saúde); a distributiva reduz desigualdades por tributação progressiva, programas sociais e subsídios; e a estabilizadora emprega justamente as políticas fiscal e monetária para controlar inflação e desemprego e promover o crescimento."
+    ]
+   }
+  ]
+ }
+}
