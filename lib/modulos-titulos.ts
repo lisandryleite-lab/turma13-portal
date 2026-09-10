@@ -165,6 +165,15 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "Exercícios — Ten Vicente": "Exercícios — Ten Vicente",
     Gaivotas: "Gaivotas — questões da turma",
   },
+  PJM: {
+    "1": "Polícia judiciária militar: autoridades e competências",
+    "2": "O IPM: características, prazos e encarregado",
+    "3": "Instauração, portaria, escrivão e atos cartoriais",
+    "4": "Provas: depoimentos, acareação, perícias e reconhecimento",
+    "5": "Prisões na investigação e relatório do IPM",
+    "6": "Auto de Prisão em Flagrante Delito Militar (APFDM)",
+    SIM: "Simulado — formato da prova (10,0 pontos · 100 min)",
+  },
   EPCR: {
     "1": "7ª EMG, transferências fiscais e natureza da despesa",
     "2": "Política de segurança pública x política pública de segurança",
