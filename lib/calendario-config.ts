@@ -2,8 +2,8 @@
 //  Configuração do calendário acadêmico.
 //
 //  Tudo o que muda de instituição para instituição (ou de ano
-//  para ano) vive aqui: nome, ano letivo, data da formatura,
-//  cronômetro, tipos de evento e suas cores, níveis de escopo.
+//  para ano) vive aqui: nome, ano letivo, contagens regressivas,
+//  tipos de evento e suas cores, níveis de escopo.
 //  A página não conhece nenhum desses valores — só lê daqui.
 // ─────────────────────────────────────────────────────────────
 
@@ -42,14 +42,28 @@ export const CONFIG_CALENDARIO = {
   siglaInstituicao: "APMP",
   /** ano letivo coberto pelas abas de mês */
   anoLetivo: { rotulo: "2026 · CFO", inicio: "2026-02-01", fim: "2027-01-31" },
-  formatura: {
-    ativo: true,
-    rotulo: "Formatura",
-    /** data e hora locais da formatura */
-    dataIso: "2027-01-23",
-    hora: "19:00",
-  },
 } as const
+
+// ── contagens regressivas do cabeçalho ───────────────────────
+
+export type Cronometro = {
+  ativo: boolean
+  rotulo: string
+  /** data local do alvo, ISO "AAAA-MM-DD" */
+  dataIso: string
+  /** hora local "HH:MM". Sem hora, conta até o início do dia. */
+  hora?: string
+}
+
+/**
+ * Aparecem no cabeçalho na ordem declarada, e somem sozinhas depois
+ * que a data passa (comparação com o dia de hoje, no servidor e no
+ * cliente, para o HTML dos dois bater).
+ */
+export const CRONOMETROS: Cronometro[] = [
+  { ativo: true, rotulo: "Término do curso", dataIso: "2027-01-05" },
+  { ativo: true, rotulo: "Formatura", dataIso: "2027-01-23", hora: "19:00" },
+]
 
 // ── escopo: rede → unidade → segmento → turma ────────────────
 // A agregação é hierárquica. Cada nível filtra o seguinte; um

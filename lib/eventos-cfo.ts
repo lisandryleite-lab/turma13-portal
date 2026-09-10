@@ -30,6 +30,12 @@ export const EVENTOS_CFO: EventoCFO[] = [
     confirmado: true,
   },
   {
+    data: "2027-01-05",
+    titulo: "Término do curso",
+    descricao: "Último dia letivo do CFO 2026.",
+    confirmado: false,
+  },
+  {
     data: "2027-01-19",
     titulo: "Culto Ecumênico",
     descricao: "Previsão — data ainda não confirmada.",
