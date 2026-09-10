@@ -165,6 +165,15 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "Exercícios — Ten Vicente": "Exercícios — Ten Vicente",
     Gaivotas: "Gaivotas — questões da turma",
   },
+  DPPM: {
+    "1": "Parte geral: DPM x DADM, especialidade e princípios",
+    "2": "Aplicação da lei penal militar e crime militar (art. 9º)",
+    "3": "Teoria do crime militar, excludentes e tentativa",
+    "4": "Crimes contra a autoridade e a disciplina militar",
+    "5": "Crimes contra o serviço, o dever e a administração militar",
+    "6": "Processo penal militar: rito, ação penal e prisões",
+    SIM: "Simulado — formato da prova (10,0 pontos · 100 min)",
+  },
   AM: {
     "1": "Conceito de arma, espécies e as 09 classificações",
     "2": "Armas em espécie, DARGI/MAC e nomenclaturas",
