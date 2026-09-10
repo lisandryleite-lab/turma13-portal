@@ -167,6 +167,7 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "5": "Missão, visão, valores, metas e plano de ação (5W2H)",
     "6": "Indicadores de desempenho e o Plano de Comando da PMPE",
     SIM: "Simulado — formato da prova (10,0 pontos · 100 min)",
+    "AE-T2": "Prova antiga — AE de Planejamento Estratégico (CFO 2025 · T2)",
   },
   PJM: {
     "1": "Polícia judiciária militar: autoridades e competências",
@@ -194,6 +195,7 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "5": "Políticas fiscal, monetária, cambial e austeridade",
     "6": "Funções do Estado, empreendedorismo público e a PM",
     SIM: "Simulado — formato da prova (10,0 pontos · 100 min)",
+    "AE-T2": "Prova antiga — AE de EASPE (CFO 2025 · T2) · trecho de 5,0 pts",
   },
   DPPM: {
     "1": "Parte geral: DPM x DADM, especialidade e princípios",

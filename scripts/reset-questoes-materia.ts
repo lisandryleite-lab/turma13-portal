@@ -2,7 +2,8 @@
  * reset-questoes-materia.ts — RESET TOTAL do banco de questões de uma matéria.
  *
  * Fonte: scripts/data/<sigla em minúsculas>-questoes.json — banco por tema
- * (módulos "1".."6") mais o simulado (módulo SIM).
+ * (módulos "1".."6"), o simulado (módulo SIM) e, quando houver, uma prova
+ * antiga em seu próprio módulo.
  *
  * Ação DESTRUTIVA: apaga TODAS as questões da matéria — o cascade leva junto
  * as Respostas dos alunos a essas questões — e reinsere a partir do arquivo.
@@ -35,7 +36,8 @@ type VF = { t: string; r: boolean; j: string; g?: string }
 type ME = { e: string; a: string[]; c: number; j: string }
 type DISC = { e: string; est: string; cri: string[]; p?: number }
 type Tema = { titulo: string; legal: string; vf: VF[]; me: ME[]; disc: DISC[] }
-type Fonte = { banco: Record<string, Tema>; sim: { vf: VF[]; me: ME[]; disc: DISC[] } }
+type Prova = { modulo: string; titulo: string; vf: VF[]; me: ME[]; disc: DISC[] }
+type Fonte = { banco: Record<string, Tema>; sim: { vf: VF[]; me: ME[]; disc: DISC[] }; prova?: Prova }
 
 type Alt = { id: string; texto: string }
 type Rec = {
@@ -91,6 +93,14 @@ async function main() {
   for (const v of data.sim.vf) buildCE(MOD_SIM, v, fonteSim)
   for (const m of data.sim.me) buildMC(MOD_SIM, m, fonteSim)
   for (const d of data.sim.disc) buildDisc(MOD_SIM, d, fonteSim)
+
+  // ── Prova antiga, quando o arquivo traz uma ──
+  if (data.prova) {
+    const { modulo, titulo } = data.prova
+    for (const v of data.prova.vf) buildCE(modulo, v, titulo)
+    for (const m of data.prova.me) buildMC(modulo, m, titulo)
+    for (const d of data.prova.disc) buildDisc(modulo, d, titulo)
+  }
 
   // ── Dedupe por hash (mantém o primeiro) ──
   const seen = new Set<string>()
