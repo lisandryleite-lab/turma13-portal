@@ -13,6 +13,8 @@
 //  existir, cria a conta. O aluno troca a senha em /trocar-senha.
 //
 //  Uso: npx tsx scripts/acesso-147-janderson.ts
+//  (atrás de proxy HTTPS, prefixe com NODE_USE_ENV_PROXY=1 — o fetch nativo do
+//  Node só lê HTTPS_PROXY com essa variável)
 // ─────────────────────────────────────────────────────────────
 import "dotenv/config"
 import bcrypt from "bcryptjs"
@@ -22,6 +24,15 @@ import { neonConfig } from "@neondatabase/serverless"
 import ws from "ws"
 
 neonConfig.webSocketConstructor = ws
+
+// Em ambientes cuja saída passa por um proxy HTTPS (ex.: runner do Claude Code
+// na web), o upgrade WebSocket não atravessa o túnel CONNECT. Aí o driver faz
+// as queries por HTTP, que o proxy atende normalmente. Na máquina local e na
+// Vercel não existe HTTPS_PROXY, então nada muda: segue por WebSocket.
+if (process.env.HTTPS_PROXY || process.env.https_proxy) {
+  neonConfig.poolQueryViaFetch = true
+}
+
 const prisma = new PrismaClient({ adapter: new PrismaNeon({ connectionString: process.env.DATABASE_URL! }) })
 
 const MATRICULA = 147
