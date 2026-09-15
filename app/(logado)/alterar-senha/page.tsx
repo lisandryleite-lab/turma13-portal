@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { signOut } from "next-auth/react"
 
 export default function AlterarSenhaPage() {
   const router = useRouter()
@@ -55,15 +56,21 @@ export default function AlterarSenhaPage() {
             Senha alterada!
           </h2>
           <p style={{ color: "var(--cinza-texto)", fontSize: 14, marginBottom: 24 }}>
-            Na próxima vez que fizer login, use a nova senha.
+            Entre novamente com a nova senha.
           </p>
-          <Link href="/dashboard" style={{
-            display: "inline-block", background: "var(--azul-profundo)", color: "#fff",
-            borderRadius: 8, padding: "10px 24px", textDecoration: "none",
-            fontSize: 14, fontWeight: 600,
-          }}>
-            Voltar ao início
-          </Link>
+          {/* Encerra a sessão: o token em uso ainda diz que a senha é a inicial,
+              e com ele o portal devolveria o aluno para a tela de troca. */}
+          <button
+            type="button"
+            onClick={() => signOut({ callbackUrl: "/login" })}
+            style={{
+              background: "var(--azul-profundo)", color: "#fff", border: "none",
+              borderRadius: 8, padding: "10px 24px", fontSize: 14, fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            Ir para o login
+          </button>
         </div>
       </div>
     )

@@ -15,6 +15,8 @@ declare module "next-auth" {
       // opcional: sessões emitidas antes deste campo existir não o trazem —
       // ver lib/acesso.ts, que consulta o banco nesse caso
       turma13?: boolean
+      // false = ainda está com a senha inicial; undefined = token antigo
+      senhaTrocada?: boolean
     }
   }
 
@@ -26,6 +28,7 @@ declare module "next-auth" {
     isAdmin: boolean
     financeiroAdmin?: boolean
     turma13?: boolean
+    senhaTrocada?: boolean
   }
 }
 
@@ -37,5 +40,6 @@ declare module "next-auth/jwt" {
     isAdmin: boolean
     financeiroAdmin: boolean
     turma13?: boolean
+    senhaTrocada?: boolean
   }
 }

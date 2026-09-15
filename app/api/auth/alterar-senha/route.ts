@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Senha atual incorreta" }, { status: 400 })
 
   const hash = await bcrypt.hash(novaSenha, 12)
-  await prisma.user.update({ where: { matricula }, data: { password: hash } })
+  await prisma.user.update({ where: { matricula }, data: { password: hash, senhaTrocada: true } })
 
   return NextResponse.json({ ok: true })
 }
