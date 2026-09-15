@@ -31,6 +31,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           email: user.email,
           isAdmin: user.isAdmin,
           financeiroAdmin: user.financeiroAdmin,
+          turma13: user.turma13,
         }
       },
     }),
@@ -43,6 +44,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.nomeGuerra = user.nomeGuerra
         token.isAdmin = user.isAdmin
         token.financeiroAdmin = (user as { financeiroAdmin?: boolean }).financeiroAdmin ?? false
+        token.turma13 = (user as { turma13?: boolean }).turma13 ?? false
       }
       return token
     },
@@ -52,6 +54,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.user.nomeGuerra = token.nomeGuerra
       session.user.isAdmin = token.isAdmin
       session.user.financeiroAdmin = (token as { financeiroAdmin?: boolean }).financeiroAdmin ?? false
+      // sem `?? false`: undefined aqui é o sinal de token antigo, e é o que faz
+      // lib/acesso.ts cair no banco em vez de barrar o aluno por engano
+      session.user.turma13 = (token as { turma13?: boolean }).turma13
       return session
     },
   },
