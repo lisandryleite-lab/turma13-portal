@@ -6,7 +6,9 @@
 //  script decide caso a caso: compara a senha gravada com a própria matrícula
 //  (o padrão do portal) e marca `senhaTrocada: true` para quem NÃO bate.
 //
-//  Rodar UMA vez, logo depois do `npm run db:push` que cria a coluna.
+//  Rodar UMA vez, depois de `npm run db:push` (cria a coluna) E de
+//  `npm run db:generate`. O db:push não regenera o Prisma Client aqui, e sem o
+//  generate o script morre com "Unknown field `senhaTrocada`".
 //  É idempotente: rodar de novo apenas reconfirma o mesmo resultado.
 //
 //  Uso: npx tsx scripts/marcar-senha-trocada.ts
