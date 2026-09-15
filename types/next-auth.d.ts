@@ -12,6 +12,9 @@ declare module "next-auth" {
       nomeGuerra: string
       isAdmin: boolean
       financeiroAdmin: boolean
+      // opcional: sessões emitidas antes deste campo existir não o trazem —
+      // ver lib/acesso.ts, que consulta o banco nesse caso
+      turma13?: boolean
     }
   }
 
@@ -22,6 +25,7 @@ declare module "next-auth" {
     nomeGuerra: string
     isAdmin: boolean
     financeiroAdmin?: boolean
+    turma13?: boolean
   }
 }
 
@@ -32,5 +36,6 @@ declare module "next-auth/jwt" {
     nomeGuerra: string
     isAdmin: boolean
     financeiroAdmin: boolean
+    turma13?: boolean
   }
 }

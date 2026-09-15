@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { auth } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
+import { podeVerTurma13 } from "@/lib/acesso"
 import { ViewToggle } from "../view-toggle"
 
 type Tile = "olive" | "gold"
@@ -12,6 +12,7 @@ const cards: {
   bg: Tile
   externo?: boolean
   nota?: string
+  soT13?: boolean // só aparece para quem tem acesso ao portal da Turma 13
   icon: React.ReactNode
 }[] = [
   {
@@ -112,6 +113,7 @@ const cards: {
     label: "Turma 13",
     href: "/dashboard",
     bg: "gold",
+    soT13: true, // aluno de fora do 1º Pelotão só veria a tela de área restrita
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z" />
@@ -199,11 +201,11 @@ export default async function PortalCfoHome() {
   const isAdmin = !!session?.user?.isAdmin
   const admView = await adminAtivo(isAdmin)
 
-  // Alunos fora da Turma 13 ganham um 6º card "Modificar senha"
-  const eu = session?.user?.id
-    ? await prisma.user.findUnique({ where: { id: session.user.id }, select: { turma13: true } })
-    : null
-  const cardsToShow = eu?.turma13 ? cards : [...cards, cardSenha]
+  // Quem é de fora do 1º Pelotão não vê o card "Turma 13" (levava a uma porta
+  // fechada) e ganha no lugar o card "Modificar senha", já que a troca de senha
+  // mora dentro do portal T13.
+  const t13 = session ? await podeVerTurma13(session) : false
+  const cardsToShow = t13 ? cards : [...cards.filter(c => !c.soT13), cardSenha]
 
   return (
     <main
