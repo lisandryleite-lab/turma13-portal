@@ -20,7 +20,12 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const data: any = { ...rest }
   if (rest.matricula) data.matricula = Number(rest.matricula)
   data.cangaPar = rest.cangaPar ? Number(rest.cangaPar) : null
-  if (password) data.password = await bcrypt.hash(password, 12)
+  // Senha redefinida pelo admin volta a ser provisória: o aluno troca no
+  // próximo acesso, senão continuaria com uma senha que outra pessoa conhece.
+  if (password) {
+    data.password = await bcrypt.hash(password, 12)
+    data.senhaTrocada = false
+  }
 
   await prisma.user.update({ where: { id }, data })
   return NextResponse.json({ ok: true })
