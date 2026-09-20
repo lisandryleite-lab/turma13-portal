@@ -146,6 +146,8 @@ Transcrição dos documentos assinados pelo Cmt da 1ª CIA (mapa de equipes, esc
 O mapa de setembro/2026 abrange 201 militares da CIA e serve de dicionário matrícula → nome de guerra (`nomeDaMatricula`, `grupoDaMatricula`). **Atenção:** ele diverge em alguns pontos da tabela de grupos abaixo (ex.: 108 LISANDRY aparece em ÍNDIA, não em MIKE) — o documento do mês é a fonte de verdade.
 
 ### Grupos de plantão — 8 grupos (atualizado jul/2026 — Mapa de Equipes, escala 7x1)
+> ⚠️ **O regime de plantão MUDA de mês para mês — conferir sempre.** A tabela abaixo retrata a 7x1 de jul/2026; houve meses em regime 3X1, e setembro/2026 voltou à 7x1. Em caso de divergência, vale o documento assinado do mês, não esta tabela.
+
 Ciclo **diário** (todos os dias, incluindo fins de semana).
 Ordem: GOLF → HOTEL → INDIA → JULIETT → KILO → LIMA → MIKE → NOVEMBER → (repete).
 Referência confirmada: **26/05/2026 = GOLF**. Verificação: 02/06/2026 = NOVEMBER.
