@@ -10,6 +10,11 @@
  *
  * Rodar:     node_modules/.bin/tsx scripts/reset-questoes-materia.ts AM
  * Simulação: DRY=1 node_modules/.bin/tsx scripts/reset-questoes-materia.ts AM
+ * Aditivo:   ADD=1 node_modules/.bin/tsx scripts/reset-questoes-materia.ts AM
+ *
+ * Com ADD=1 nada é apagado: as questões do arquivo são inseridas ou atualizadas
+ * por hash (materia|modulo|enunciado), preservando as Respostas dos alunos.
+ * É o modo a usar quando o arquivo apenas GANHOU questões novas.
  */
 import "dotenv/config"
 import { readFileSync } from "node:fs"
@@ -33,8 +38,8 @@ const MOD_SIM = "SIM"
 
 // ── Formato do JSON de origem ──
 type VF = { t: string; r: boolean; j: string; g?: string }
-type ME = { e: string; a: string[]; c: number; j: string }
-type DISC = { e: string; est: string; cri: string[]; p?: number }
+type ME = { e: string; a: string[]; c: number; j: string; ctx?: string }
+type DISC = { e: string; est: string; cri: string[]; p?: number; resp?: string }
 type Tema = { titulo: string; legal: string; vf: VF[]; me: ME[]; disc: DISC[] }
 type Prova = { modulo: string; titulo: string; vf: VF[]; me: ME[]; disc: DISC[] }
 type Fonte = { banco: Record<string, Tema>; sim: { vf: VF[]; me: ME[]; disc: DISC[] }; prova?: Prova }
@@ -64,16 +69,17 @@ const buildCE = (modulo: string, q: VF, fonte: string) =>
     fonte: q.g ? `${fonte} · ${q.g}` : fonte })
 
 const buildMC = (modulo: string, q: ME, fonte: string) =>
-  push({ materia: MATERIA, modulo, tipo: "multipla", contexto: null, enunciado: q.e,
+  push({ materia: MATERIA, modulo, tipo: "multipla", contexto: q.ctx?.trim() || null, enunciado: q.e,
     alternativas: q.a.map((texto, i) => ({ id: LETRAS[i], texto })), gabarito: LETRAS[q.c],
     explicacao: q.j?.trim() || null, modelo: null, fonte })
 
 // O espelho já vem em tópicos (`cri`); `resposta` é o texto corrido que a tela
-// mostra abaixo dos critérios, então junta-se os mesmos tópicos em um parágrafo.
+// mostra abaixo dos critérios — usa-se o `resp` do arquivo quando houver e,
+// na falta dele, juntam-se os mesmos tópicos em um parágrafo.
 const buildDisc = (modulo: string, q: DISC, fonte: string) =>
   push({ materia: MATERIA, modulo, tipo: "dissertativa", contexto: null, enunciado: q.e,
     alternativas: [], gabarito: "", explicacao: null,
-    modelo: { estrutura: q.est, criterios: q.cri, resposta: q.cri.join(" ") }, fonte })
+    modelo: { estrutura: q.est, criterios: q.cri, resposta: q.resp?.trim() || q.cri.join(" ") }, fonte })
 
 async function main() {
   const data = JSON.parse(
@@ -117,6 +123,20 @@ async function main() {
   if (process.env.DRY) {
     console.log("\n[DRY-RUN] Nada foi alterado no banco. Amostra de 3 registros:")
     console.log(JSON.stringify(unicos.slice(0, 3), null, 2))
+    await prisma.$disconnect(); return
+  }
+
+  // ── ADD: insere/atualiza sem apagar nada (preserva as Respostas dos alunos) ──
+  if (process.env.ADD) {
+    let criadas = 0, atualizadas = 0
+    for (const { hash, ...r } of unicos) {
+      const reg = { ...r, alternativas: r.alternativas as any, modelo: r.modelo as any, hash }
+      const existia = await prisma.questao.findUnique({ where: { hash }, select: { id: true } })
+      await prisma.questao.upsert({ where: { hash }, update: reg, create: reg })
+      existia ? atualizadas++ : criadas++
+    }
+    const total = await prisma.questao.count({ where: { materia: MATERIA } })
+    console.log(`\n[ADD] ${criadas} criadas, ${atualizadas} atualizadas. Total ${MATERIA} agora: ${total}.`)
     await prisma.$disconnect(); return
   }
 
