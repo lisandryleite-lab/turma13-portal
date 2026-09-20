@@ -46,6 +46,21 @@ const cards: {
     ),
   },
   {
+    label: "Calendário",
+    href: "/calendario",
+    nota: "Provas · Eventos · Escalas",
+    bg: "gold",
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M8 2v4" />
+        <path d="M16 2v4" />
+        <rect width="18" height="18" x="3" y="4" rx="2" />
+        <path d="M3 10h18" />
+        <path d="m9 16 2 2 4-4" />
+      </svg>
+    ),
+  },
+  {
     label: "Mementos",
     href: "/mementos",
     bg: "olive",
@@ -71,9 +86,10 @@ const cards: {
   },
   {
     label: "Psicologia",
-    href: "https://agendamento-apmp.vercel.app/",
+    // passa pela página interna, que explica o processo antes de mandar
+    // para o sistema da APMP — antes o card pulava direto para fora
+    href: "/psicologia",
     bg: "olive",
-    externo: true,
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />

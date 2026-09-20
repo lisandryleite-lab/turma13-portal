@@ -5,8 +5,9 @@ export default function LinksPage() {
     { label: "Decreto CFO 2024", url: "https://legis.alepe.pe.gov.br/texto.aspx?tiponorma=6&numero=57694&complemento=0&ano=2024&tipo=&url=", desc: "Decreto 57.694/2024" },
     { label: "Drive da Turma 13", url: "https://drive.google.com/drive/folders/1wrNtI9TyT6jNBdMfWlwcGJOwVL-wDqqJ", desc: "Google Drive" },
     { label: "Portal ACIDES / EAD", url: "https://acidesead.sds.pe.gov.br/login/index.php", desc: "Plataforma EAD" },
-    { label: "Mementos", url: null, desc: "Em breve" },
-    { label: "Plataforma de Questões", url: null, desc: "Em breve" },
+    { label: "Mementos", url: "/mementos", desc: "Resumos, vídeo, áudio e mapa mental por matéria" },
+    { label: "Plataforma de Questões", url: "/questoes", desc: "Banco de questões da turma" },
+    { label: "Calendário", url: "/calendario", desc: "Provas, eventos, feriados e escalas" },
   ]
 
   return (

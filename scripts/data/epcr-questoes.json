@@ -1,0 +1,1246 @@
+{
+ "banco": {
+  "1": {
+   "titulo": "A 7ª EMG, transferências fiscais e natureza da despesa",
+   "legal": "Lei de criação da 7ª EMG (2013); FPM; classificação da despesa pública",
+   "vf": [
+    {
+     "t": "Em 2013, por meio de lei, surge a 7ª EMG, no lugar do antigo Núcleo de Análise e Monitoramento de Programas e Projetos (NAMPP).",
+     "r": true,
+     "j": "Correto — marco de criação trazido na introdução da disciplina."
+    },
+    {
+     "t": "A 7ª EMG tem por missão assessorar o Comando-Geral e a Chefia do EMG nas decisões estratégicas quanto ao desenvolvimento de projetos estruturadores que necessitem de captação de recursos extraorçamentários.",
+     "r": true,
+     "j": "Correto — cabe-lhe ainda acompanhar, gerir e apoiar os gerentes de projetos no fluxo do trabalho a ser desenvolvido."
+    },
+    {
+     "t": "As transferências fiscais são mecanismo de redistribuição de recursos entre os diversos níveis de governo, visando promover a equidade e o desenvolvimento regional.",
+     "r": true,
+     "j": "Correto — dividem-se em obrigatórias e voluntárias (discricionárias)."
+    },
+    {
+     "t": "As transferências obrigatórias dependem da conveniência política do governo e são formalizadas por convênio.",
+     "r": false,
+     "j": "Falso. As OBRIGATÓRIAS decorrem de força de lei e devem ser feitas independentemente da vontade ou das condições financeiras do governo. Conveniência política e convênio caracterizam as VOLUNTÁRIAS."
+    },
+    {
+     "t": "O Fundo de Participação dos Municípios (FPM) é exemplo de transferência obrigatória.",
+     "r": true,
+     "j": "Correto — garante que os municípios recebam parte da arrecadação de impostos federais, sendo essencial à equidade entre regiões e ao apoio aos serviços públicos locais."
+    },
+    {
+     "t": "O repasse de recurso do Ministério da Justiça ao Estado para aquisição de câmeras corporais, mediante convênio e contrapartida, é exemplo de transferência voluntária.",
+     "r": true,
+     "j": "Correto — decidida com base em conveniências políticas ou administrativas, por meio de convênio e critérios técnicos, não sendo garantida por lei."
+    },
+    {
+     "t": "Despesas correntes são todas aquelas que não contribuem diretamente para a formação ou aquisição de um bem de capital.",
+     "r": true,
+     "j": "Correto — exemplo: manutenção de equipamentos e funcionamento dos serviços em geral."
+    },
+    {
+     "t": "Despesas de custeio destinam-se à manutenção dos serviços anteriormente criados e a obras de conservação e adaptação de bens imóveis.",
+     "r": true,
+     "j": "Correto — material de consumo, pessoal e serviços de terceiros."
+    },
+    {
+     "t": "Despesas de capital são as que contribuem diretamente para a formação ou aquisição de um bem de capital.",
+     "r": true,
+     "j": "Correto — opõem-se às despesas correntes."
+    },
+    {
+     "t": "Os investimentos compreendem a aquisição ou formação de novos bens, ou o acréscimo de novo valor aos já existentes, como a compra de instalações e equipamentos e o planejamento e execução de obras.",
+     "r": true,
+     "j": "Correto — exemplos: construção de uma escola e aquisição de terreno para construção de um hospital."
+    },
+    {
+     "t": "A aquisição de material de consumo classifica-se como despesa de capital.",
+     "r": false,
+     "j": "Falso. Material de consumo é despesa de CUSTEIO, espécie de despesa corrente."
+    },
+    {
+     "t": "A construção de um quartel classifica-se como investimento, espécie de despesa de capital.",
+     "r": true,
+     "j": "Correto — contribui diretamente para a formação de um bem de capital."
+    },
+    {
+     "t": "As transferências voluntárias ocorrem geralmente por meio de convênios e podem ser destinadas a projetos específicos, como infraestrutura e educação.",
+     "r": true,
+     "j": "Correto — dependem de acordo e não são garantidas por lei."
+    },
+    {
+     "t": "As transferências obrigatórias dispensam a existência de previsão legal, bastando a decisão do gestor.",
+     "r": false,
+     "j": "Falso. São obrigatórias justamente por FORÇA DE LEI — o governo deve realizá-las independentemente de sua vontade."
+    },
+    {
+     "t": "A 7ª EMG substituiu o NAMPP e passou a acompanhar, gerir e apoiar os gerentes de projetos.",
+     "r": true,
+     "j": "Correto."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a 7ª EMG, assinale a alternativa INCORRETA:",
+     "a": [
+      "Foi criada em 2013, por meio de lei.",
+      "Substituiu o antigo Núcleo de Análise e Monitoramento de Programas e Projetos (NAMPP).",
+      "Assessora o Comando-Geral e a Chefia do EMG nas decisões estratégicas.",
+      "Atua no desenvolvimento de projetos estruturadores que necessitem de captação de recursos extraorçamentários.",
+      "Tem por missão exclusiva a execução do policiamento ostensivo."
+     ],
+     "c": 4,
+     "j": "A missão da 7ª EMG é de assessoria estratégica, gestão e apoio a projetos e à captação de recursos, não de execução do policiamento."
+    },
+    {
+     "e": "Sobre as transferências fiscais, assinale a alternativa CORRETA:",
+     "a": [
+      "As voluntárias decorrem de força de lei.",
+      "As obrigatórias são decididas por conveniência política.",
+      "O FPM é exemplo de transferência voluntária.",
+      "As voluntárias ocorrem geralmente por convênio e não são garantidas por lei.",
+      "As obrigatórias exigem sempre contrapartida financeira."
+     ],
+     "c": 3,
+     "j": "Obrigatórias: por força de lei, independentemente da vontade do governo (FPM). Voluntárias ou discricionárias: por conveniência política ou administrativa, geralmente por convênio, com critérios técnicos e contrapartida."
+    },
+    {
+     "e": "Assinale a alternativa que apresenta exemplo de DESPESA DE CAPITAL:",
+     "a": [
+      "Aquisição de material de consumo.",
+      "Pagamento de pessoal.",
+      "Serviços de terceiros.",
+      "Construção de uma escola e aquisição de terreno para um hospital.",
+      "Manutenção de equipamentos em funcionamento."
+     ],
+     "c": 3,
+     "j": "Investimentos — aquisição ou formação de novos bens — são espécie de despesa de capital. Os demais itens são despesas correntes ou de custeio."
+    },
+    {
+     "e": "Sobre a natureza da despesa, assinale a alternativa INCORRETA:",
+     "a": [
+      "Despesas correntes não contribuem diretamente para a formação ou aquisição de bem de capital.",
+      "Despesas de custeio destinam-se à manutenção dos serviços anteriormente criados.",
+      "Despesas de custeio incluem obras de conservação e adaptação de bens imóveis.",
+      "Despesas de capital contribuem diretamente para a formação ou aquisição de bem de capital.",
+      "Investimentos são espécie de despesa corrente."
+     ],
+     "c": 4,
+     "j": "Investimentos são espécie de despesa DE CAPITAL — aquisição ou formação de novos bens, ou acréscimo de valor aos existentes."
+    },
+    {
+     "e": "O Ministério da Justiça repassa recursos ao Estado para aquisição de câmeras corporais, mediante convênio, critérios técnicos e contrapartida financeira. Trata-se de:",
+     "a": [
+      "Transferência obrigatória.",
+      "Transferência voluntária (discricionária).",
+      "Transferência fundo a fundo automática.",
+      "Emenda de relator.",
+      "Despesa de custeio do Tesouro Estadual."
+     ],
+     "c": 1,
+     "j": "É o exemplo de transferência voluntária trazido no material: decidida por conveniência, formalizada por convênio e não garantida por lei."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique as transferências fiscais, diferenciando as obrigatórias das voluntárias, e cite exemplos de cada uma.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Conceito: mecanismo importante de redistribuição de recursos entre os diversos níveis de governo, visando promover a equidade e o desenvolvimento regional.",
+      "Obrigatórias: decorrem de força de lei — o governo deve realizá-las independentemente de sua vontade ou de suas condições financeiras.",
+      "Exemplo de obrigatória: transferências do Fundo de Participação dos Municípios (FPM), que garante aos municípios parte da arrecadação de impostos federais; são essenciais para a equidade entre regiões e para apoiar serviços públicos locais, como saúde e educação.",
+      "Voluntárias (discricionárias): não obrigatórias, decididas com base em conveniências políticas ou administrativas; ocorrem geralmente por meio de convênios e podem destinar-se a projetos específicos, como infraestrutura e educação; dependem de acordo e não são garantidas por lei.",
+      "Exemplo de voluntária: repasse do Ministério da Justiça ao Estado para aquisição de câmeras corporais, por celebração de convênio, mediante critérios técnicos e garantias, com contrapartida financeira."
+     ]
+    },
+    {
+     "e": "Classifique a despesa pública quanto à sua natureza, explicando cada categoria com exemplos.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Despesas correntes: todas as que não contribuem diretamente para a formação ou aquisição de um bem de capital — por exemplo, despesas com a manutenção dos equipamentos e o funcionamento dos serviços em geral.",
+      "Despesas de custeio: manutenção dos serviços anteriormente criados e gastos destinados a atender obras de conservação e adaptação de bens imóveis — material de consumo, pessoal e serviços de terceiros.",
+      "Despesas de capital: as que contribuem diretamente para a formação ou aquisição de um bem de capital.",
+      "Investimentos: aquisição ou formação de novos bens, ou acréscimo de novo valor aos já existentes — compra de instalações, equipamentos e material permanente, e planejamento e execução de obras.",
+      "Exemplos de investimento: construção de uma escola e aquisição de terreno para a construção de um hospital; no contexto da PMPE, construção e ampliação de quartéis e aquisição de novas viaturas."
+     ]
+    }
+   ]
+  },
+  "2": {
+   "titulo": "Política de segurança pública x política pública de segurança",
+   "legal": "Aspecto comparativo: foco, âmbito, horizonte de resultados e pilares",
+   "vf": [
+    {
+     "t": "A política de segurança pública tem foco operacional e tático, voltado à prevenção, ao controle e à repressão da criminalidade.",
+     "r": true,
+     "j": "Correto — envolve policiamento, investigações criminais e implementação de leis."
+    },
+    {
+     "t": "A política pública de segurança tem foco mais amplo, abrangendo não só a criminalidade, mas outras dimensões da segurança, e considera aspectos sociais, econômicos e políticos.",
+     "r": true,
+     "j": "Correto — inclui a própria instituição e seus integrantes."
+    },
+    {
+     "t": "São pilares da política pública de segurança a valorização profissional, o fortalecimento da instituição e a proteção da sociedade.",
+     "r": true,
+     "j": "Correto — três pilares fundamentais."
+    },
+    {
+     "t": "A política de segurança pública opera com horizonte de médio e longo prazo, enquanto a política pública de segurança busca resposta imediata.",
+     "r": false,
+     "j": "Falso — está invertido. A política de segurança pública opera no CURTO prazo (resposta imediata); a política pública de segurança tem horizonte de MÉDIO E LONGO prazo."
+    },
+    {
+     "t": "O âmbito da política de segurança pública é operacional, de ação direta; o da política pública de segurança é estratégico e institucional.",
+     "r": true,
+     "j": "Correto — quadro do aspecto comparativo."
+    },
+    {
+     "t": "A política de segurança pública é tradicionalmente repressiva e reativa, lidando com as consequências do crime.",
+     "r": true,
+     "j": "Correto — atua diretamente nas ruas, com ênfase na presença e na resposta policial."
+    },
+    {
+     "t": "São exemplos de política de segurança pública na PMPE o patrulhamento ostensivo e preventivo, as operações de repressão ao crime organizado e as ações de choque em grandes eventos.",
+     "r": true,
+     "j": "Correto — somam-se o uso de drones e câmeras corporais para aumentar eficiência e transparência."
+    },
+    {
+     "t": "A política pública de segurança busca construir uma segurança cidadã e sustentável, atuando nas causas e não apenas nos efeitos da criminalidade.",
+     "r": true,
+     "j": "Correto — é seu objetivo principal."
+    },
+    {
+     "t": "A política pública de segurança envolve órgãos e políticas intersetoriais, como educação, saúde, justiça e direitos humanos.",
+     "r": true,
+     "j": "Correto — atua com planejamento estratégico e visão de longo prazo."
+    },
+    {
+     "t": "O instrumento central da política de segurança pública são as forças de segurança — Polícia Militar, Polícia Civil, Bombeiros e PRF.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Cursos de formação e capacitação na ACIDES e programas de saúde mental para servidores são exemplos de política de segurança pública em sentido estrito.",
+     "r": false,
+     "j": "Falso. São exemplos de POLÍTICA PÚBLICA DE SEGURANÇA — valorização profissional e fortalecimento institucional, e não ação operacional de repressão à criminalidade."
+    },
+    {
+     "t": "A política pública de segurança estimula a participação social, a transparência e o controle público dos recursos.",
+     "r": true,
+     "j": "Correto — além de promover gestão eficiente e inovação institucional."
+    },
+    {
+     "t": "Parcerias com órgãos como Detran, TJPE e PNUD em projetos de prevenção social e educação cidadã ilustram a política pública de segurança.",
+     "r": true,
+     "j": "Correto — exemplos na PMPE e na SDS."
+    },
+    {
+     "t": "O objetivo principal da política de segurança pública é reduzir índices de violência e criminalidade, assegurando a aplicação das leis e o cumprimento da ordem pública.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A valorização profissional, como pilar, consiste em investimentos em capacitação, saúde e qualidade de vida dos policiais.",
+     "r": true,
+     "j": "Correto — o fortalecimento da instituição envolve projetos estruturantes, modernização e novas tecnologias; a proteção da sociedade, a integração de políticas públicas de prevenção e promoção de direitos."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre o aspecto comparativo entre política de segurança pública e política pública de segurança, assinale a alternativa INCORRETA:",
+     "a": [
+      "O foco da primeira é a prevenção, o controle e a repressão à criminalidade.",
+      "O foco da segunda é o fortalecimento da instituição e do profissional e a integração com políticas sociais.",
+      "O âmbito da primeira é operacional, de ação direta.",
+      "O âmbito da segunda é estratégico e institucional.",
+      "O horizonte de resultados da primeira é de médio e longo prazo."
+     ],
+     "c": 4,
+     "j": "O horizonte da política de segurança pública é de CURTO prazo (resposta imediata); o de médio e longo prazo é da política pública de segurança."
+    },
+    {
+     "e": "Assinale a alternativa que apresenta exemplo de POLÍTICA PÚBLICA DE SEGURANÇA:",
+     "a": [
+      "Patrulhamento ostensivo e preventivo nas áreas urbanas.",
+      "Operações especiais de repressão ao tráfico de drogas.",
+      "Ações de choque e controle de distúrbios em grandes eventos.",
+      "Criação de programas de saúde mental e assistência social para servidores.",
+      "Abordagem policial a suspeitos em via pública."
+     ],
+     "c": 3,
+     "j": "Programas de saúde mental e assistência social integram a valorização profissional, um dos pilares da política pública de segurança. Os demais são ações operacionais da política de segurança pública."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a um pilar fundamental da política pública de segurança:",
+     "a": [
+      "Valorização profissional.",
+      "Fortalecimento da instituição.",
+      "Proteção da sociedade.",
+      "Repressão imediata à criminalidade nas ruas.",
+      "Integração de políticas públicas de prevenção e promoção de direitos."
+     ],
+     "c": 3,
+     "j": "A repressão imediata nas ruas é característica da política de segurança pública, de âmbito operacional; os pilares da política pública de segurança são a valorização profissional, o fortalecimento da instituição e a proteção da sociedade."
+    },
+    {
+     "e": "Sobre a política de segurança pública, assinale a alternativa CORRETA:",
+     "a": [
+      "Atua com planejamento estratégico e visão de longo prazo.",
+      "É tradicionalmente repressiva e reativa, lidando com as consequências do crime.",
+      "Foca prioritariamente na formação e no bem-estar dos servidores.",
+      "Dispensa o emprego das forças de segurança.",
+      "Abrange segurança alimentar e sanitária."
+     ],
+     "c": 1,
+     "j": "A política de segurança pública atua diretamente nas ruas, com resultados imediatos, sendo tradicionalmente repressiva e reativa; as demais alternativas descrevem a política pública de segurança."
+    },
+    {
+     "e": "Sobre a política pública de segurança, assinale a alternativa INCORRETA:",
+     "a": [
+      "Vai além da dimensão criminal, abrangendo aspectos sociais, institucionais, econômicos e humanos.",
+      "Busca construir uma segurança cidadã e sustentável, atuando nas causas da criminalidade.",
+      "Envolve órgãos e políticas intersetoriais.",
+      "Estimula participação social, transparência e controle público dos recursos.",
+      "Tem como instrumento central exclusivamente o policiamento ostensivo."
+     ],
+     "c": 4,
+     "j": "O policiamento ostensivo é instrumento da política de segurança pública; a política pública de segurança é intersetorial e estruturante."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Diferencie política de segurança pública e política pública de segurança quanto ao foco, ao âmbito e ao horizonte de resultados, com exemplos na PMPE.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Política de segurança pública: conjunto de ações, medidas e estratégias adotadas pelo Estado para garantir a manutenção da ordem pública e a proteção da vida e do patrimônio; foco operacional e tático, voltado à prevenção, controle e repressão da criminalidade.",
+      "Objetivo e características: reduzir índices de violência e criminalidade, assegurando a aplicação das leis; atua diretamente nas ruas, com resultados imediatos, sendo tradicionalmente repressiva e reativa, baseada em táticas de policiamento, investigação e operações integradas; tem como instrumento central as forças de segurança.",
+      "Exemplos na PMPE: patrulhamento ostensivo e preventivo; operações especiais de repressão ao crime organizado e ao tráfico; uso de drones e câmeras corporais; ações de choque e controle de distúrbios pelo BPChoque em grandes eventos.",
+      "Política pública de segurança: política estruturante e abrangente, que vai além da dimensão criminal e alcança aspectos sociais, institucionais, econômicos e humanos; busca valorizar o profissional, fortalecer as instituições e proteger a sociedade de forma integrada.",
+      "Objetivo e características: construir uma segurança cidadã e sustentável, atuando nas causas e não apenas nos efeitos; envolve órgãos e políticas intersetoriais (educação, saúde, justiça, direitos humanos), planejamento estratégico de longo prazo, gestão eficiente, inovação institucional, participação social e transparência.",
+      "Pilares: valorização profissional (capacitação, saúde e qualidade de vida), fortalecimento da instituição (projetos estruturantes, modernização e novas tecnologias) e proteção da sociedade (integração de políticas de prevenção e promoção de direitos).",
+      "Quadro comparativo: foco — repressão à criminalidade x fortalecimento institucional e do profissional; âmbito — operacional x estratégico e institucional; horizonte — curto prazo x médio e longo prazo."
+     ]
+    },
+    {
+     "e": "Explique a lógica da captação de recursos públicos e como ela conecta as duas dimensões da segurança pública.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: captação de recursos públicos é o processo de buscar e obter recursos financeiros externos ao orçamento regular do Estado.",
+      "Meios: emendas parlamentares (individuais, de bancada, de comissão); convênios e termos de fomento com ministérios, especialmente o MJSP; fundos específicos, como o FNSP e o Fundo Estadual de Segurança Pública; e parcerias e cooperações internacionais, com organismos como BID e PNUD.",
+      "Natureza: é instrumento de gestão estratégica para ampliar investimentos e viabilizar projetos institucionais que não caberiam no orçamento anual da corporação.",
+      "Finalidade 1 — reduzir a pressão sobre o orçamento estadual: o orçamento é limitado e precisa atender saúde, educação, segurança e infraestrutura; a captação permite executar projetos complexos sem comprometer as verbas ordinárias, deixando o Tesouro concentrado na manutenção da máquina pública.",
+      "Finalidade 2 — melhorar a infraestrutura institucional e operacional: investir em modernização, inovação tecnológica e valorização profissional — construção e ampliação de quartéis, centros de saúde e escolas de formação; viaturas e equipamentos de comunicação; câmeras corporais, sistemas de informação, drones e centrais de monitoramento; programas de capacitação.",
+      "Exemplos práticos: drones de monitoramento via convênio com o MJSP (transferência voluntária); EPIs via emendas parlamentares de bancada, sem usar o caixa estadual; reforma de batalhões com apoio de fundos específicos.",
+      "Conexão entre as dimensões: a captação melhora a capacidade de resposta policial (política de segurança pública, investimentos operacionais) e fortalece a corporação em seu aspecto institucional e social (política pública de segurança, investimentos estruturantes e humanos) — cada projeto captado deve contribuir simultaneamente para o desempenho operacional e para o fortalecimento institucional.",
+      "Resultados esperados: sustentabilidade financeira da PMPE, maior eficiência na aplicação dos recursos do Estado e cumprimento das metas do planejamento estratégico estadual e do Plano Plurianual (PPA)."
+     ]
+    }
+   ]
+  },
+  "3": {
+   "titulo": "Captação de recursos públicos: fontes, emendas parlamentares e fluxo",
+   "legal": "Fontes de captação na União; espécies de emendas; convênio, termo de fomento e contrato de repasse",
+   "vf": [
+    {
+     "t": "A captação de recursos serve para fomentar políticas públicas, investir em profissionais e na instituição e economizar recursos de investimento do Estado.",
+     "r": true,
+     "j": "Correto — permitindo ao Estado custear salários, saúde e recomposição de efetivo."
+    },
+    {
+     "t": "Os recursos podem ser captados do Estado, da União, de órgãos internacionais e de países estrangeiros.",
+     "r": true,
+     "j": "Correto — o material destaca o foco na captação junto à União."
+    },
+    {
+     "t": "São quatro as fontes de captação junto à União: Congresso Nacional, Ministérios, Bancos Nacionais e Fundos.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "As emendas parlamentares podem ser individuais, de bancada, de comissão e de relator.",
+     "r": true,
+     "j": "Correto — a individual é proposta por um único parlamentar; a de bancada visa necessidades regionais; a de comissão atende políticas públicas setoriais; e a de relator tem ampla margem de prioridades."
+    },
+    {
+     "t": "A emenda de bancada é proposta por um único parlamentar para projetos de seu interesse.",
+     "r": false,
+     "j": "Falso. Essa é a emenda INDIVIDUAL. A de bancada visa ao atendimento de necessidades regionais."
+    },
+    {
+     "t": "Na emenda parlamentar federal, o parlamentar indica o órgão responsável pela execução do recurso.",
+     "r": true,
+     "j": "Correto — por exemplo, secretarias de segurança pública estaduais, municipais ou órgãos federais."
+    },
+    {
+     "t": "O órgão beneficiado elabora um plano de trabalho detalhando como os recursos serão utilizados.",
+     "r": true,
+     "j": "Correto — o plano é submetido à avaliação do órgão responsável."
+    },
+    {
+     "t": "O Ministério da Justiça e Segurança Pública paga a verba e também executa diretamente o objeto da emenda.",
+     "r": false,
+     "j": "Falso. O MJSP paga a verba, mas quem EXECUTA é o órgão beneficiado."
+    },
+    {
+     "t": "Após a aprovação do plano de trabalho, formaliza-se convênio, termo de fomento ou contrato de repasse, dependendo da natureza do projeto.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A prestação de contas é obrigatória, devendo o órgão beneficiado comprovar o uso correto dos recursos com relatórios e comprovantes.",
+     "r": true,
+     "j": "Correto — os Tribunais de Contas e a CGU podem auditar os gastos."
+    },
+    {
+     "t": "A captação de recursos é instrumento de gestão estratégica que permite viabilizar projetos institucionais que não caberiam no orçamento anual da corporação.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A captação reduz a pressão sobre o orçamento estadual, permitindo que o Tesouro se concentre na manutenção da máquina pública enquanto projetos especiais são financiados com recursos externos.",
+     "r": true,
+     "j": "Correto — é a primeira finalidade principal."
+    },
+    {
+     "t": "São parceiros internacionais citados na captação de recursos o BID e o PNUD.",
+     "r": true,
+     "j": "Correto — Banco Interamericano de Desenvolvimento e Programa das Nações Unidas para o Desenvolvimento."
+    },
+    {
+     "t": "São resultados esperados da captação a sustentabilidade financeira da PMPE, maior eficiência na aplicação dos recursos e o cumprimento das metas do planejamento estratégico estadual e do PPA.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A aquisição de drones para monitoramento e de EPIs para o BPCHOQUE são exemplos de aquisição por meio de projetos institucionais.",
+     "r": true,
+     "j": "Correto — o material cita ainda equipamentos e insumos hospitalares e veículos de transporte para o Centro de Assistência Social."
+    }
+   ],
+   "me": [
+    {
+     "e": "Assinale a alternativa que associa corretamente a espécie de emenda parlamentar à sua finalidade:",
+     "a": [
+      "Individual — atendimento de necessidades regionais.",
+      "De bancada — proposta por um único parlamentar para projetos de seu interesse.",
+      "De comissão — atendimento de políticas públicas setoriais.",
+      "De relator — restrita a um único município.",
+      "Individual — ampla margem de prioridades."
+     ],
+     "c": 2,
+     "j": "Individual: um único parlamentar, para projetos de seu interesse. De bancada: necessidades regionais. De comissão: políticas públicas setoriais. De relator: ampla margem de prioridades."
+    },
+    {
+     "e": "Sobre o fluxo da emenda parlamentar federal na segurança pública, assinale a alternativa INCORRETA:",
+     "a": [
+      "O parlamentar define a destinação dos recursos e indica o órgão responsável pela execução.",
+      "O órgão beneficiado elabora plano de trabalho detalhando o uso dos recursos.",
+      "O MJSP avalia a documentação e o plano de trabalho.",
+      "Aprovado o plano, formaliza-se convênio, termo de fomento ou contrato de repasse.",
+      "O MJSP executa diretamente as aquisições e obras previstas."
+     ],
+     "c": 4,
+     "j": "O MJSP paga a verba, mas a execução é do órgão beneficiado, que adquire equipamentos, realiza obras ou executa serviços."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a uma das quatro fontes de captação junto à União:",
+     "a": [
+      "Congresso Nacional.",
+      "Ministérios.",
+      "Bancos Nacionais.",
+      "Fundos.",
+      "Câmaras Municipais."
+     ],
+     "c": 4,
+     "j": "As quatro fontes indicadas no material são Congresso Nacional, Ministérios, Bancos Nacionais e Fundos."
+    },
+    {
+     "e": "Sobre a prestação de contas na captação de recursos, assinale a alternativa CORRETA:",
+     "a": [
+      "É facultativa quando o valor é baixo.",
+      "O órgão beneficiado deve comprovar o uso correto dos recursos, com relatórios e comprovantes.",
+      "Apenas o órgão repassador pode auditar os gastos.",
+      "Dispensa-se a prestação de contas em emendas de bancada.",
+      "A CGU não tem competência para auditar recursos de emendas."
+     ],
+     "c": 1,
+     "j": "A prestação de contas é OBRIGATÓRIA, e tanto os Tribunais de Contas quanto a CGU podem auditar os gastos, para garantir o uso adequado dos recursos."
+    },
+    {
+     "e": "Sobre a lógica e as finalidades da captação de recursos, assinale a alternativa INCORRETA:",
+     "a": [
+      "Busca recursos financeiros externos ao orçamento regular do Estado.",
+      "Permite executar projetos complexos sem comprometer as verbas ordinárias.",
+      "Viabiliza modernização, inovação tecnológica e valorização profissional.",
+      "Substitui integralmente o orçamento estadual na manutenção da máquina pública.",
+      "Contribui para o cumprimento das metas do planejamento estratégico estadual e do PPA."
+     ],
+     "c": 3,
+     "j": "A captação não substitui o orçamento estadual: o Tesouro segue concentrado na manutenção da máquina pública, enquanto os projetos especiais são financiados com recursos externos."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Descreva o fluxo de uma emenda parlamentar federal destinada à segurança pública, do ato do parlamentar à prestação de contas.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Espécies: as emendas podem ser individuais (um único parlamentar, projetos de seu interesse), de bancada (necessidades regionais), de comissão (políticas públicas setoriais) e de relator (ampla margem de prioridades).",
+      "Destinação: o parlamentar define que os recursos sejam destinados à área de segurança pública — compra de equipamentos, capacitação de policiais, construção de delegacias etc.",
+      "Indicação do executor: o parlamentar indica o órgão responsável pela execução do recurso, como secretarias de segurança pública estaduais, municipais ou órgãos federais.",
+      "Plano de trabalho: o órgão beneficiado elabora plano detalhado explicando como os recursos serão utilizados.",
+      "Papel do MJSP: paga a verba, mas quem executa é o órgão beneficiado; o MJSP (ou outro órgão responsável) avalia a documentação e o plano de trabalho.",
+      "Formalização: aprovado, formaliza-se convênio, termo de fomento ou contrato de repasse, conforme a natureza do projeto.",
+      "Execução local: o órgão beneficiado utiliza os recursos para adquirir equipamentos, realizar obras ou executar serviços de segurança pública.",
+      "Prestação de contas: obrigatória — o órgão deve comprovar o uso correto dos recursos, enviando relatórios e comprovantes ao órgão repassador; Tribunais de Contas e CGU podem auditar os gastos, assegurando uso planejado, transparente e eficiente."
+     ]
+    },
+    {
+     "e": "Explique as fontes de captação de recursos públicos disponíveis à PMPE e cite exemplos de aquisições viabilizadas por projetos institucionais.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Finalidades: a captação serve para fomentar políticas públicas, investir em profissionais e na instituição e economizar recursos de investimento do Estado, permitindo custear salários, saúde e recomposição de efetivo.",
+      "Origens possíveis: Estado, União, órgãos internacionais e países estrangeiros.",
+      "Fontes junto à União: Congresso Nacional (emendas parlamentares), Ministérios (convênios e termos de fomento, especialmente o MJSP), Bancos Nacionais e Fundos.",
+      "Fundos específicos: Fundo Nacional de Segurança Pública (FNSP) e Fundo Estadual de Segurança Pública.",
+      "Cooperação internacional: organismos como o BID (Banco Interamericano de Desenvolvimento) e o PNUD (Programa das Nações Unidas para o Desenvolvimento).",
+      "Exemplos de aquisição por projetos institucionais: drones para monitoramento; equipamentos e insumos hospitalares; EPIs para o BPCHOQUE; veículos de transporte para o Centro de Assistência Social; e ainda construção e ampliação de quartéis e aquisição de viaturas e equipamentos de comunicação."
+     ]
+    }
+   ]
+  },
+  "4": {
+   "titulo": "Fundo Nacional de Segurança Pública e transferência fundo a fundo",
+   "legal": "FNSP; Plano Nacional de Segurança Pública; SENASP; vedações da transferência fundo a fundo",
+   "vf": [
+    {
+     "t": "O FNSP é fundo especial de natureza contábil, com o objetivo de garantir recursos para apoiar projetos, atividades e ações nas áreas de segurança pública e de prevenção à violência.",
+     "r": true,
+     "j": "Correto — observadas as diretrizes do Plano Nacional de Segurança Pública."
+    },
+    {
+     "t": "O repasse do FNSP fica condicionado à instituição e ao funcionamento de Conselho Estadual ou Distrital de Segurança Pública e Defesa Social e de Fundo Estadual ou Distrital de Segurança Pública.",
+     "r": true,
+     "j": "Correto — condiciona-se ainda à existência de plano de segurança e de aplicação dos recursos no âmbito estadual."
+    },
+    {
+     "t": "A transferência fundo a fundo é transferência obrigatória de recursos do FNSP de, no mínimo, 50% das receitas decorrentes da exploração de loterias, para o Fundo Estadual de Segurança Pública.",
+     "r": true,
+     "j": "Correto — destina-se a financiar ações e projetos voltados à segurança pública e defesa social."
+    },
+    {
+     "t": "O objetivo principal da transferência fundo a fundo é ampliar a burocracia e o controle prévio sobre os Estados.",
+     "r": false,
+     "j": "Falso. O objetivo principal é REDUZIR a burocracia e agilizar a aplicação dos recursos, assegurando maior eficiência na implementação de políticas públicas."
+    },
+    {
+     "t": "São objetivos da transferência fundo a fundo a simplificação e celeridade na pactuação e execução, a autonomia nas ações com adequação às demandas locais e a gestão por resultados.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A celebração do Termo de Adesão para recebimento dos recursos federais ocorre entre a SENASP e as Secretarias Estaduais correspondentes.",
+     "r": true,
+     "j": "Correto — estas detêm competência para firmar acordos, conforme delegação do Governador."
+    },
+    {
+     "t": "A transferência fundo a fundo exige que os Estados mantenham fundos específicos de segurança pública e capacidade técnica para aplicar e gerir os recursos.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Falhas na prestação de contas ou no cumprimento das finalidades dos repasses podem acarretar penalidades, como a suspensão de novos repasses.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O fluxo processual da transferência fundo a fundo compreende formalização, acompanhamento, prestação de contas e apurações.",
+     "r": true,
+     "j": "Correto — quatro etapas."
+    },
+    {
+     "t": "É permitido usar recursos da transferência fundo a fundo para pagamento de gratificação por operação planejada, como o PJES.",
+     "r": false,
+     "j": "Falso. Despesa com pessoal, incluindo gratificação por operação planejada (trabalhar no período de descanso), é VEDAÇÃO expressa — não se pode pagar o PJES com a verba do Fundo Nacional."
+    },
+    {
+     "t": "É vedado destinar recursos da transferência fundo a fundo a unidades de órgãos e entidades destinadas exclusivamente à realização de atividades administrativas.",
+     "r": true,
+     "j": "Correto — segunda vedação."
+    },
+    {
+     "t": "É vedada a transferência de recursos para outra conta do ente ou de outro ente federativo.",
+     "r": true,
+     "j": "Correto — terceira vedação."
+    },
+    {
+     "t": "É permitido realizar despesa fora da vigência do prazo de execução, antes ou depois, sem qualquer restrição.",
+     "r": false,
+     "j": "Falso. Realizar despesa fora da vigência do prazo de execução é VEDADO, ressalvado apenas o pagamento após a entrega do bem ou a prestação do serviço."
+    },
+    {
+     "t": "É vedado o remanejamento de recursos entre as categorias econômicas e naturezas de despesa.",
+     "r": true,
+     "j": "Correto — quinta vedação."
+    },
+    {
+     "t": "O FNSP dispensa a existência de plano de segurança estadual como condição para o repasse.",
+     "r": false,
+     "j": "Falso. O repasse fica condicionado também à existência de plano de segurança e de aplicação dos recursos no âmbito estadual."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre o Fundo Nacional de Segurança Pública, assinale a alternativa INCORRETA:",
+     "a": [
+      "É fundo especial de natureza contábil.",
+      "Destina-se a apoiar projetos, atividades e ações de segurança pública e prevenção à violência.",
+      "Observa as diretrizes do Plano Nacional de Segurança Pública.",
+      "O repasse condiciona-se à existência de Conselho e Fundo Estadual de Segurança Pública.",
+      "O repasse independe da existência de plano de segurança no âmbito estadual."
+     ],
+     "c": 4,
+     "j": "O repasse fica condicionado também à existência de plano de segurança e de aplicação dos recursos no âmbito estadual."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a uma vedação da transferência fundo a fundo:",
+     "a": [
+      "Despesa com pessoal, como gratificação por operação planejada.",
+      "Unidades destinadas exclusivamente a atividades administrativas.",
+      "Transferência para outra conta do ente ou de outro ente federativo.",
+      "Remanejamento entre categorias econômicas e naturezas de despesa.",
+      "Pagamento após a entrega do bem ou a prestação do serviço."
+     ],
+     "c": 4,
+     "j": "O pagamento após a entrega do bem ou a prestação do serviço é justamente a EXCEÇÃO admitida à vedação de despesa fora da vigência do prazo de execução."
+    },
+    {
+     "e": "Sobre a transferência fundo a fundo, assinale a alternativa CORRETA:",
+     "a": [
+      "É transferência voluntária, sujeita a convênio.",
+      "Corresponde a, no mínimo, 50% das receitas decorrentes da exploração de loterias.",
+      "É celebrada diretamente entre o Governador e o Presidente da República.",
+      "Dispensa que os Estados mantenham fundos específicos de segurança pública.",
+      "Tem por objetivo aumentar o controle prévio da União sobre a execução."
+     ],
+     "c": 1,
+     "j": "É transferência OBRIGATÓRIA de recursos do FNSP, de no mínimo 50% das receitas de loterias, ao Fundo Estadual; o Termo de Adesão é celebrado entre a SENASP e as Secretarias Estaduais; exige fundos estaduais e capacidade técnica; e busca reduzir a burocracia."
+    },
+    {
+     "e": "O fluxo processual da transferência fundo a fundo compreende, nesta ordem:",
+     "a": [
+      "Acompanhamento, formalização, apurações e prestação de contas.",
+      "Formalização, acompanhamento, prestação de contas e apurações.",
+      "Prestação de contas, formalização, acompanhamento e apurações.",
+      "Apurações, prestação de contas, formalização e acompanhamento.",
+      "Formalização, prestação de contas, apurações e acompanhamento."
+     ],
+     "c": 1,
+     "j": "São quatro etapas na ordem: formalização, acompanhamento, prestação de contas e apurações."
+    },
+    {
+     "e": "Sobre os objetivos da transferência fundo a fundo, assinale a alternativa INCORRETA:",
+     "a": [
+      "Simplificação e celeridade na pactuação e execução.",
+      "Autonomia nas ações, com adequação às demandas locais.",
+      "Gestão por resultados.",
+      "Redução da burocracia e agilidade na aplicação dos recursos.",
+      "Centralização da execução no Ministério da Justiça e Segurança Pública."
+     ],
+     "c": 4,
+     "j": "A lógica é justamente a oposta: autonomia do ente estadual, com simplificação e celeridade na pactuação e na execução."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique o Fundo Nacional de Segurança Pública e as condicionantes para o repasse de seus recursos.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Conceito: o FNSP é fundo especial de natureza contábil, que tem por objetivo garantir recursos para apoiar projetos, atividades e ações nas áreas de segurança pública e de prevenção à violência.",
+      "Diretrizes: observadas as diretrizes do Plano Nacional de Segurança Pública.",
+      "Condicionante 1: instituição e funcionamento de Conselho Estadual ou Distrital de Segurança Pública e Defesa Social.",
+      "Condicionante 2: instituição e funcionamento de Fundo Estadual ou Distrital de Segurança Pública.",
+      "Condicionante 3: existência de plano de segurança e de aplicação dos recursos no âmbito estadual.",
+      "Exigência adicional: os Estados devem manter fundos específicos de segurança pública e ter capacidade técnica para aplicar e gerir os recursos adequadamente.",
+      "Consequência do descumprimento: falhas na prestação de contas ou no cumprimento das finalidades dos repasses podem acarretar penalidades, como a suspensão de novos repasses."
+     ]
+    },
+    {
+     "e": "Disserte sobre a transferência fundo a fundo: conceito, objetivos, fluxo processual e vedações.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: transferência obrigatória de recursos do FNSP, de no mínimo 50% das receitas decorrentes da exploração de loterias, para o Fundo Estadual de Segurança Pública, destinada a financiar ações e projetos de segurança pública e defesa social.",
+      "Objetivo principal: reduzir a burocracia e agilizar a aplicação dos recursos, assegurando maior eficiência na implementação de políticas públicas.",
+      "Objetivos específicos: simplificação e celeridade na pactuação e execução; autonomia nas ações, com adequação às demandas locais; e gestão por resultados.",
+      "Formalização: a celebração do Termo de Adesão para recebimento dos recursos federais ocorre entre a SENASP e as Secretarias Estaduais correspondentes, que detêm competência para firmar acordos conforme delegação do Governador.",
+      "Fluxo processual: formalização, acompanhamento, prestação de contas e apurações.",
+      "Vedação 1: despesa com pessoal, como gratificação por operação planejada — não se pode pagar o PJES com verba do Fundo Nacional.",
+      "Vedação 2: unidades de órgãos e entidades destinadas exclusivamente à realização de atividades administrativas.",
+      "Vedação 3: transferência para outra conta do ente ou de outro ente federativo. Vedação 4: realizar despesa fora da vigência do prazo de execução, antes ou depois, excetuado o pagamento após a entrega do bem ou a prestação do serviço. Vedação 5: remanejamento de recursos entre categorias econômicas e naturezas de despesa."
+     ]
+    }
+   ]
+  },
+  "5": {
+   "titulo": "Plataformas de gestão: Transfere Gov, Compras SUSP e PE-Integrado",
+   "legal": "Plataforma Transfere Gov; Plataforma Compras SUSP (módulos Demandas e Emendas); PE-Integrado",
+   "vf": [
+    {
+     "t": "A Plataforma Transfere Gov é ferramenta online que centraliza informações sobre transferências de recursos da União.",
+     "r": true,
+     "j": "Correto — permite que gestores públicos, cidadãos e organizações da sociedade civil acessem dados sobre convênios, contratos de repasse e outras transferências."
+    },
+    {
+     "t": "São cinco os propósitos da Plataforma Transfere Gov: transparência, facilitação de acesso, gestão eficiente, integração de dados e apoio à tomada de decisão.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A Transfere Gov é de acesso restrito a gestores públicos, sendo vedado o acesso do cidadão comum.",
+     "r": false,
+     "j": "Falso. A transparência é justamente um de seus propósitos: qualquer cidadão pode acessar informações sobre transferências, o que promove a transparência na gestão pública e o controle social."
+    },
+    {
+     "t": "São três as finalidades da Plataforma Transfere Gov: consultar transferências, acompanhar convênios e realizar pesquisas.",
+     "r": true,
+     "j": "Correto — a pesquisa permite filtrar dados por tipo de transferência, órgão responsável e período."
+    },
+    {
+     "t": "A Plataforma Compras SUSP visa otimizar e centralizar as aquisições de bens e serviços para órgãos integrantes do Sistema Único de Segurança Pública.",
+     "r": true,
+     "j": "Correto — seu objetivo é promover eficiência, transparência e economia nas contratações relacionadas à segurança pública."
+    },
+    {
+     "t": "A Plataforma Compras SUSP oferece dois módulos principais: Demandas SUSP e Emendas SUSP.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O módulo Demandas SUSP permite que as instituições informem diretamente ao MJSP suas necessidades de bens e serviços.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O módulo Emendas SUSP destina-se à aquisição direta de bens e serviços com recursos provenientes de emendas parlamentares.",
+     "r": true,
+     "j": "Correto — a plataforma apresenta um portfólio de contratações no qual os parlamentares podem indicar suas emendas ou atender a demandas específicas dos órgãos solicitantes."
+    },
+    {
+     "t": "O MJSP disponibiliza, anualmente, a cartilha de emendas parlamentares.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "São finalidades da Compras SUSP a inovação no processo de compras, a modernização de equipamentos e tecnologias, a elaboração de referências e padrões, a economia de recursos e a transparência nas aquisições.",
+     "r": true,
+     "j": "Correto — a elaboração de padrões é feita em conjunto com as instituições do SUSP."
+    },
+    {
+     "t": "A Compras SUSP é instrumento destinado à captação eficiente das demandas prioritárias, sendo solução digital de apoio à gestão das aquisições.",
+     "r": true,
+     "j": "Correto — auxilia na aquisição de equipamentos e na contratação de serviços."
+    },
+    {
+     "t": "O PE-Integrado é a principal ferramenta de compras e licitações do Estado de Pernambuco.",
+     "r": true,
+     "j": "Correto — representa a inovação na gestão estadual, permitindo a simplificação dos processos e maior foco na atenção à população."
+    },
+    {
+     "t": "A Transfere Gov e a Compras SUSP são a mesma plataforma, com nomes distintos.",
+     "r": false,
+     "j": "Falso. São plataformas diferentes: a Transfere Gov centraliza informações sobre transferências de recursos da União; a Compras SUSP centraliza as aquisições de bens e serviços dos órgãos do SUSP."
+    },
+    {
+     "t": "A integração de dados na Transfere Gov reúne informações de diferentes órgãos, promovendo visão mais integrada das transferências e melhor análise e planejamento.",
+     "r": true,
+     "j": "Correto — quarto propósito da plataforma."
+    },
+    {
+     "t": "A Compras SUSP busca gerar economia de tempo e de recursos humanos, materiais, técnicos e financeiros para as instituições e órgãos integrantes do SUSP.",
+     "r": true,
+     "j": "Correto — é a finalidade de economia de recursos."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a Plataforma Transfere Gov, assinale a alternativa INCORRETA:",
+     "a": [
+      "Centraliza informações sobre transferências de recursos da União.",
+      "Permite acesso de gestores públicos, cidadãos e organizações da sociedade civil.",
+      "Tem entre seus propósitos a transparência e o controle social.",
+      "Permite consultar transferências, acompanhar convênios e realizar pesquisas.",
+      "É destinada exclusivamente à aquisição de bens e serviços do SUSP."
+     ],
+     "c": 4,
+     "j": "A aquisição de bens e serviços para os órgãos do SUSP é objeto da Plataforma Compras SUSP, não da Transfere Gov."
+    },
+    {
+     "e": "Sobre os módulos da Plataforma Compras SUSP, assinale a alternativa CORRETA:",
+     "a": [
+      "Demandas SUSP destina-se à aquisição com recursos de emendas parlamentares.",
+      "Emendas SUSP permite que as instituições informem suas necessidades ao MJSP.",
+      "Demandas SUSP permite que as instituições informem diretamente ao MJSP suas necessidades de bens e serviços.",
+      "A plataforma possui um único módulo.",
+      "Os módulos são Convênios SUSP e Fundos SUSP."
+     ],
+     "c": 2,
+     "j": "São dois módulos: Demandas SUSP, para as instituições informarem suas necessidades ao MJSP; e Emendas SUSP, para a aquisição direta com recursos de emendas parlamentares."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a um propósito da Plataforma Transfere Gov:",
+     "a": [
+      "Transparência.",
+      "Facilitação de acesso.",
+      "Gestão eficiente.",
+      "Integração de dados.",
+      "Substituição das licitações estaduais."
+     ],
+     "c": 4,
+     "j": "Os cinco propósitos são transparência, facilitação de acesso, gestão eficiente, integração de dados e apoio à tomada de decisão. A ferramenta de compras e licitações do Estado é o PE-Integrado."
+    },
+    {
+     "e": "Sobre o PE-Integrado, assinale a alternativa CORRETA:",
+     "a": [
+      "É a plataforma federal de transferências voluntárias.",
+      "É a principal ferramenta de compras e licitações do Estado de Pernambuco.",
+      "É o módulo de emendas da Compras SUSP.",
+      "É o fundo estadual de segurança pública.",
+      "É o sistema de prestação de contas do FNSP."
+     ],
+     "c": 1,
+     "j": "O PE-Integrado representa a inovação na gestão estadual, simplificando os processos de compras e licitações."
+    },
+    {
+     "e": "Sobre as finalidades da Plataforma Compras SUSP, assinale a alternativa INCORRETA:",
+     "a": [
+      "Inovação no processo de compras.",
+      "Modernização de equipamentos e tecnologias.",
+      "Elaboração de referências e padrões em conjunto com as instituições do SUSP.",
+      "Economia de tempo e de recursos humanos, materiais, técnicos e financeiros.",
+      "Dispensa da prestação de contas dos recursos aplicados."
+     ],
+     "c": 4,
+     "j": "A prestação de contas é obrigatória em qualquer hipótese de aplicação de recursos públicos captados; a plataforma promove, ao contrário, mais transparência nas aquisições."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique a Plataforma Transfere Gov, seus propósitos e finalidades.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Conceito: ferramenta online que centraliza informações sobre transferências de recursos da União, permitindo que gestores públicos, cidadãos e organizações da sociedade civil acessem dados sobre convênios, contratos de repasse e outras transferências; visa facilitar e aprimorar a gestão das transferências entre União, Estados, Municípios e outras entidades.",
+      "Propósito 1 — transparência: qualquer cidadão tem acesso a informações sobre transferências, promovendo transparência na gestão pública e controle social.",
+      "Propósito 2 — facilitação de acesso: gestores acessam informações sobre recursos disponíveis, facilitando a busca por financiamentos para projetos e programas.",
+      "Propósito 3 — gestão eficiente: otimiza a gestão das transferências, o acompanhamento e a prestação de contas.",
+      "Propósito 4 — integração de dados: reúne informações de diferentes órgãos, promovendo visão integrada e melhor análise e planejamento.",
+      "Propósito 5 — apoio à tomada de decisão: com dados centralizados e acessíveis, os gestores decidem de forma mais informada sobre alocação de recursos e implementação de políticas.",
+      "Finalidades: consultar transferências (valores, destinatários e finalidades); acompanhar convênios; e realizar pesquisas, filtrando por tipo de transferência, órgão responsável e período."
+     ]
+    },
+    {
+     "e": "Explique a Plataforma Compras SUSP, suas finalidades e seus dois módulos, e situe o PE-Integrado no âmbito estadual.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Conceito: plataforma que visa otimizar e centralizar as aquisições de bens e serviços para os órgãos integrantes do Sistema Único de Segurança Pública (SUSP), promovendo eficiência, transparência e economia nas contratações.",
+      "Finalidade 1 — inovação no processo de compras: modernizar e aprimorar os procedimentos de aquisição destinados ao SUSP.",
+      "Finalidade 2 — modernização de equipamentos e tecnologias: incentivar a atualização e a melhoria dos recursos utilizados pelos órgãos de segurança pública.",
+      "Finalidade 3 — elaboração de referências e padrões: desenvolver, em conjunto com as instituições do SUSP, especificações e requisitos para aquisições e contratações.",
+      "Finalidade 4 — economia de recursos: gerar economia de tempo e de recursos humanos, materiais, técnicos e financeiros. Finalidade 5 — transparência nas aquisições.",
+      "Módulo Demandas SUSP: permite que as instituições informem diretamente ao MJSP suas necessidades de bens e serviços.",
+      "Módulo Emendas SUSP: destina-se à aquisição direta de bens e serviços com recursos de emendas parlamentares, apresentando portfólio de contratações no qual os parlamentares podem indicar suas emendas ou atender a demandas específicas; o MJSP disponibiliza anualmente a cartilha de emendas parlamentares.",
+      "PE-Integrado: principal ferramenta de compras e licitações do Estado de Pernambuco, que representa a inovação na gestão estadual, permitindo a simplificação dos processos e maior foco na atenção à população."
+     ]
+    }
+   ]
+  },
+  "6": {
+   "titulo": "Planejamento da contratação: PCA, DFD, ETP, TR, ARP e IRP",
+   "legal": "Instrumentos de planejamento e formalização da contratação pública",
+   "vf": [
+    {
+     "t": "O Plano de Contratação Anual (PCA) é instrumento de planejamento que reúne todas as contratações que os órgãos e entidades do Estado pretendem realizar no exercício financeiro subsequente.",
+     "r": true,
+     "j": "Correto — pode ser revisado durante o ano, com inclusão, exclusão ou redimensionamento de itens conforme a necessidade."
+    },
+    {
+     "t": "São objetivos do PCA o alinhamento estratégico, a elaboração das leis orçamentárias e a prevenção do fracionamento de despesas.",
+     "r": true,
+     "j": "Correto — o PCA serve de base para a criação das leis orçamentárias e evita a fragmentação das despesas."
+    },
+    {
+     "t": "O PCA, uma vez aprovado, não pode ser alterado durante o exercício.",
+     "r": false,
+     "j": "Falso. O PCA PODE ser revisado durante o ano, admitindo inclusão, exclusão ou redimensionamento de itens conforme a necessidade."
+    },
+    {
+     "t": "O Documento de Formalização da Demanda (DFD) tem por objetivo formalizar a necessidade da Administração Pública de adquirir bens ou serviços.",
+     "r": true,
+     "j": "Correto — serve como base para o planejamento da contratação."
+    },
+    {
+     "t": "O DFD pode ser dispensado quando o valor da contratação for reduzido.",
+     "r": false,
+     "j": "Falso. O material é expresso: o DFD NÃO PODE ser dispensado."
+    },
+    {
+     "t": "São finalidades do DFD o planejamento, a transparência e o alinhamento com o planejamento estratégico do órgão e com o PCA.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O DFD é utilizado para a elaboração do Termo de Referência, que detalha as especificações técnicas e as condições do serviço a ser contratado.",
+     "r": true,
+     "j": "Correto — exemplo do material: contratação de serviço de limpeza, com detalhamento da área, frequência e estimativa de custos no DFD."
+    },
+    {
+     "t": "O Estudo Técnico Preliminar (ETP) é análise detalhada e fundamentada que antecede a elaboração do Termo de Referência ou do Projeto Básico.",
+     "r": true,
+     "j": "Correto — depende do objeto da contratação."
+    },
+    {
+     "t": "São cinco os objetivos do ETP: identificar e justificar a necessidade; avaliar a viabilidade técnica, econômica e jurídica; subsidiar a decisão sobre a melhor forma de contratar; evitar desperdícios; e garantir conformidade com a Lei de Licitações.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O Termo de Referência descreve detalhadamente as necessidades do órgão e serve de base para a elaboração do edital.",
+     "r": true,
+     "j": "Correto — seu principal objetivo é garantir que todas as especificações e requisitos sejam claramente definidos, assegurando transparência, eficiência e igualdade de condições entre os participantes."
+    },
+    {
+     "t": "O Termo de Referência ajuda a evitar falhas na contratação, como a aquisição de produtos ou serviços que não atendam às reais necessidades da Administração.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A Ata de Registro de Preço (ARP) formaliza os preços obtidos em uma licitação, que poderão ser utilizados por órgãos da Administração em futuras aquisições sem novo processo licitatório.",
+     "r": true,
+     "j": "Correto — traz agilidade, economia de recursos e redução de burocracia."
+    },
+    {
+     "t": "É possível constituir uma Ata de Registro de Preço sem prévia licitação.",
+     "r": false,
+     "j": "Falso. O material é expresso: não se pode ter uma ARP sem licitação."
+    },
+    {
+     "t": "A Intenção de Registro de Preço (IRP) é etapa preliminar no processo de formação de uma ARP.",
+     "r": true,
+     "j": "Correto — é o procedimento pelo qual órgãos ou entidades manifestam interesse em participar de licitação que resultará no registro de preços."
+    },
+    {
+     "t": "A ARP permite que múltiplos órgãos utilizem os preços registrados por período determinado.",
+     "r": true,
+     "j": "Correto — é o que otimiza o processo de compra pública."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre o Plano de Contratação Anual, assinale a alternativa INCORRETA:",
+     "a": [
+      "Reúne as contratações pretendidas para o exercício financeiro subsequente.",
+      "Pode ser revisado durante o ano, com inclusão, exclusão ou redimensionamento de itens.",
+      "Assegura o alinhamento das contratações com o planejamento estratégico do Governo.",
+      "Serve de base para a criação das leis orçamentárias.",
+      "Tem por objetivo permitir o fracionamento das despesas."
+     ],
+     "c": 4,
+     "j": "Um dos objetivos do PCA é justamente PREVENIR o fracionamento de despesas, evitando a fragmentação para garantir maior eficiência nas contratações."
+    },
+    {
+     "e": "Sobre o Documento de Formalização da Demanda, assinale a alternativa CORRETA:",
+     "a": [
+      "Pode ser dispensado em contratações de pequeno valor.",
+      "Formaliza a necessidade da Administração de adquirir bens ou serviços e não pode ser dispensado.",
+      "Substitui o Termo de Referência.",
+      "É elaborado pelo fornecedor vencedor da licitação.",
+      "Dispensa o alinhamento com o PCA."
+     ],
+     "c": 1,
+     "j": "O DFD é o ponto de partida do planejamento da contratação, não pode ser dispensado e deve estar alinhado ao planejamento estratégico do órgão e ao PCA; serve de base para a elaboração do Termo de Referência."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a um dos objetivos do Estudo Técnico Preliminar:",
+     "a": [
+      "Identificar e justificar a necessidade da contratação.",
+      "Avaliar a viabilidade técnica, econômica e jurídica do objeto.",
+      "Subsidiar a decisão sobre a melhor forma de realizar a contratação.",
+      "Evitar desperdícios e garantir o uso adequado dos recursos públicos.",
+      "Definir o vencedor da licitação."
+     ],
+     "c": 4,
+     "j": "A definição do vencedor decorre do procedimento licitatório. O quinto objetivo do ETP é garantir conformidade com as normas legais (Lei de Licitações)."
+    },
+    {
+     "e": "Sobre a Ata de Registro de Preço e a Intenção de Registro de Preço, assinale a alternativa INCORRETA:",
+     "a": [
+      "A ARP formaliza os preços obtidos em licitação para futuras aquisições.",
+      "A ARP permite que múltiplos órgãos utilizem os preços registrados por período determinado.",
+      "A ARP traz agilidade, economia de recursos e redução de burocracia.",
+      "A IRP é etapa preliminar no processo de formação de uma ARP.",
+      "É admissível constituir ARP sem prévia licitação, desde que haja justificativa."
+     ],
+     "c": 4,
+     "j": "Não é possível ter uma ARP sem licitação — a ata formaliza justamente os preços obtidos em um processo licitatório."
+    },
+    {
+     "e": "Assinale a alternativa que apresenta a ordem CORRETA dos instrumentos no planejamento da contratação:",
+     "a": [
+      "Termo de Referência → DFD → ETP → edital.",
+      "DFD → ETP → Termo de Referência → edital.",
+      "Edital → DFD → ETP → Termo de Referência.",
+      "ETP → DFD → edital → Termo de Referência.",
+      "Termo de Referência → edital → DFD → ETP."
+     ],
+     "c": 1,
+     "j": "O DFD formaliza a necessidade e é o ponto de partida; o ETP antecede a elaboração do Termo de Referência ou do Projeto Básico; e o TR serve de base para a elaboração do edital."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique o PCA, o DFD e o ETP, indicando a função de cada um no planejamento da contratação pública.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "PCA — conceito: instrumento de planejamento que reúne todas as contratações que os órgãos e entidades do Estado de Pernambuco pretendem realizar no exercício financeiro subsequente; pode ser revisado durante o ano, com inclusão, exclusão ou redimensionamento de itens.",
+      "PCA — objetivos: alinhamento estratégico, assegurando que as contratações estejam alinhadas ao planejamento estratégico do Governo; base para a elaboração das leis orçamentárias; e prevenção do fracionamento de despesas.",
+      "DFD — conceito: Documento de Formalização da Demanda, documento essencial que formaliza a necessidade da Administração Pública de adquirir bens ou serviços, servindo de base para o planejamento da contratação; não pode ser dispensado.",
+      "DFD — finalidades: planejamento (ponto de partida das aquisições), transparência (detalha necessidades e justificativa) e alinhamento (com o planejamento estratégico do órgão e com o PCA).",
+      "DFD — exemplo: na contratação de serviço de limpeza, a área requisitante elabora o DFD detalhando a necessidade, a área a ser limpa, a frequência, a estimativa de custos e outras informações relevantes.",
+      "ETP — conceito: Estudo Técnico Preliminar, análise detalhada e fundamentada que antecede a elaboração do Termo de Referência ou do Projeto Básico, conforme o objeto.",
+      "ETP — objetivos: identificar e justificar a necessidade da contratação; avaliar a viabilidade técnica, econômica e jurídica do objeto; subsidiar a decisão sobre a melhor forma de contratar; evitar desperdícios e garantir o uso adequado dos recursos públicos; e garantir conformidade com a Lei de Licitações.",
+      "Encadeamento: DFD formaliza a demanda, o ETP fundamenta a decisão e o Termo de Referência traduz as especificações que baseiam o edital."
+     ]
+    },
+    {
+     "e": "Explique o Termo de Referência, a Ata de Registro de Preço e a Intenção de Registro de Preço.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Termo de Referência — conceito: documento essencial no processo de compra pública, que descreve detalhadamente as necessidades do órgão que realiza a aquisição e serve de base para a elaboração do edital.",
+      "Termo de Referência — objetivo: garantir que todas as especificações e requisitos para a contratação sejam claramente definidos, assegurando transparência, eficiência e igualdade de condições entre os participantes, e evitando falhas como a aquisição de produtos ou serviços que não atendam às reais necessidades da Administração.",
+      "ARP — conceito: instrumento utilizado no processo de compra pública para formalizar os preços obtidos em uma licitação, que poderão ser utilizados por órgãos da Administração em futuras aquisições sem novo processo licitatório.",
+      "ARP — objetivo e efeitos: otimizar o processo de compra pública, permitindo que múltiplos órgãos utilizem os preços registrados por período determinado, com agilidade, economia de recursos e redução de burocracia.",
+      "ARP — limite: não se pode ter uma ARP sem licitação; a ata pressupõe o procedimento licitatório prévio.",
+      "IRP — conceito: Intenção de Registro de Preço, etapa preliminar no processo de formação de uma ARP; procedimento pelo qual órgãos ou entidades públicas manifestam interesse em participar de processo licitatório que resultará no registro de preços para aquisição de bens, contratação de serviços ou execução de obras."
+     ]
+    }
+   ]
+  }
+ },
+ "sim": {
+  "vf": [
+   {
+    "t": "A 7ª EMG foi criada em 2013, por lei, em substituição ao antigo NAMPP.",
+    "r": true,
+    "j": "Correto — assessora o Comando-Geral e a Chefia do EMG em projetos estruturadores e captação de recursos extraorçamentários.",
+    "g": "Questão 01 — 7ª EMG, transferências e despesa"
+   },
+   {
+    "t": "As transferências obrigatórias decorrem de força de lei, como o FPM.",
+    "r": true,
+    "j": "Correto — devem ser feitas independentemente da vontade ou das condições financeiras do governo.",
+    "g": "Questão 01 — 7ª EMG, transferências e despesa"
+   },
+   {
+    "t": "As transferências voluntárias são garantidas por lei e independem de convênio.",
+    "r": false,
+    "j": "Falso — são discricionárias, decididas por conveniência política ou administrativa, ocorrem por convênio e não são garantidas por lei.",
+    "g": "Questão 01 — 7ª EMG, transferências e despesa"
+   },
+   {
+    "t": "A aquisição de material de consumo é despesa de custeio, espécie de despesa corrente.",
+    "r": true,
+    "j": "Correto — despesas de capital são as que contribuem diretamente para a formação ou aquisição de bem de capital.",
+    "g": "Questão 01 — 7ª EMG, transferências e despesa"
+   },
+   {
+    "t": "A construção de um quartel classifica-se como despesa corrente.",
+    "r": false,
+    "j": "Falso — é investimento, espécie de despesa de capital.",
+    "g": "Questão 01 — 7ª EMG, transferências e despesa"
+   },
+   {
+    "t": "A política de segurança pública tem foco operacional e horizonte de curto prazo.",
+    "r": true,
+    "j": "Correto — atua nas ruas, com resposta imediata, sendo tradicionalmente repressiva e reativa.",
+    "g": "Questão 02 — Políticas e captação"
+   },
+   {
+    "t": "São pilares da política pública de segurança a valorização profissional, o fortalecimento da instituição e a proteção da sociedade.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 02 — Políticas e captação"
+   },
+   {
+    "t": "A emenda de comissão é proposta por um único parlamentar para projetos de seu interesse.",
+    "r": false,
+    "j": "Falso — essa é a emenda individual; a de comissão visa atender políticas públicas setoriais.",
+    "g": "Questão 02 — Políticas e captação"
+   },
+   {
+    "t": "O MJSP paga a verba da emenda parlamentar, mas quem executa é o órgão beneficiado.",
+    "r": true,
+    "j": "Correto — o órgão beneficiado elabora o plano de trabalho e executa as aquisições, obras ou serviços.",
+    "g": "Questão 02 — Políticas e captação"
+   },
+   {
+    "t": "A prestação de contas dos recursos captados é facultativa quando há convênio firmado.",
+    "r": false,
+    "j": "Falso — é OBRIGATÓRIA, com relatórios e comprovantes; Tribunais de Contas e CGU podem auditar.",
+    "g": "Questão 02 — Políticas e captação"
+   },
+   {
+    "t": "O FNSP é fundo especial de natureza contábil, que observa as diretrizes do Plano Nacional de Segurança Pública.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 03 — FNSP e fundo a fundo"
+   },
+   {
+    "t": "O repasse do FNSP condiciona-se à existência de Conselho e de Fundo Estadual de Segurança Pública em funcionamento.",
+    "r": true,
+    "j": "Correto — e ainda a plano de segurança e de aplicação dos recursos no âmbito estadual.",
+    "g": "Questão 03 — FNSP e fundo a fundo"
+   },
+   {
+    "t": "A transferência fundo a fundo corresponde a, no mínimo, 50% das receitas decorrentes da exploração de loterias.",
+    "r": true,
+    "j": "Correto — repasse obrigatório do FNSP ao Fundo Estadual de Segurança Pública.",
+    "g": "Questão 03 — FNSP e fundo a fundo"
+   },
+   {
+    "t": "É permitido pagar gratificação por operação planejada (PJES) com recursos da transferência fundo a fundo.",
+    "r": false,
+    "j": "Falso — despesa com pessoal é vedação expressa.",
+    "g": "Questão 03 — FNSP e fundo a fundo"
+   },
+   {
+    "t": "É vedado o remanejamento de recursos entre categorias econômicas e naturezas de despesa.",
+    "r": true,
+    "j": "Correto — uma das cinco vedações da transferência fundo a fundo.",
+    "g": "Questão 03 — FNSP e fundo a fundo"
+   },
+   {
+    "t": "A Plataforma Transfere Gov permite que qualquer cidadão acesse informações sobre transferências de recursos da União.",
+    "r": true,
+    "j": "Correto — a transparência e o controle social são um de seus cinco propósitos.",
+    "g": "Questão 04 — Plataformas e planejamento"
+   },
+   {
+    "t": "O módulo Emendas SUSP permite que as instituições informem ao MJSP suas necessidades de bens e serviços.",
+    "r": false,
+    "j": "Falso — quem faz isso é o módulo Demandas SUSP; o Emendas SUSP destina-se à aquisição com recursos de emendas parlamentares.",
+    "g": "Questão 04 — Plataformas e planejamento"
+   },
+   {
+    "t": "O Documento de Formalização da Demanda não pode ser dispensado.",
+    "r": true,
+    "j": "Correto — é o ponto de partida do planejamento da contratação e base para o Termo de Referência.",
+    "g": "Questão 04 — Plataformas e planejamento"
+   },
+   {
+    "t": "É possível constituir Ata de Registro de Preço sem prévia licitação.",
+    "r": false,
+    "j": "Falso — não se pode ter uma ARP sem licitação; a ata formaliza os preços obtidos no certame.",
+    "g": "Questão 04 — Plataformas e planejamento"
+   },
+   {
+    "t": "O PCA tem entre seus objetivos a prevenção do fracionamento de despesas.",
+    "r": true,
+    "j": "Correto — junto com o alinhamento estratégico e a base para a elaboração das leis orçamentárias.",
+    "g": "Questão 04 — Plataformas e planejamento"
+   }
+  ],
+  "me": [
+   {
+    "e": "Assinale a alternativa INCORRETA sobre a natureza da despesa e as transferências fiscais:",
+    "a": [
+     "Despesas correntes não contribuem diretamente para a formação de bem de capital.",
+     "Investimentos são espécie de despesa de capital.",
+     "O FPM é exemplo de transferência obrigatória.",
+     "Transferências voluntárias ocorrem geralmente por convênio.",
+     "Transferências obrigatórias dependem de juízo de conveniência do gestor."
+    ],
+    "c": 4,
+    "j": "As obrigatórias decorrem de força de lei e independem da vontade ou das condições financeiras do governo."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre política de segurança pública e política pública de segurança:",
+    "a": [
+     "Ambas têm âmbito exclusivamente operacional.",
+     "A política pública de segurança tem horizonte de curto prazo.",
+     "A política de segurança pública é estratégica e institucional.",
+     "A política pública de segurança atua nas causas, com visão de médio e longo prazo e caráter intersetorial.",
+     "A política de segurança pública abrange segurança alimentar e sanitária."
+    ],
+    "c": 3,
+    "j": "A política pública de segurança busca segurança cidadã e sustentável, atuando nas causas, com planejamento estratégico e articulação com educação, saúde, justiça e direitos humanos."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre a transferência fundo a fundo:",
+    "a": [
+     "Busca reduzir a burocracia e agilizar a aplicação dos recursos.",
+     "Tem entre seus objetivos a gestão por resultados.",
+     "O Termo de Adesão é celebrado entre a SENASP e as Secretarias Estaduais.",
+     "Exige que os Estados mantenham fundos específicos e capacidade técnica de gestão.",
+     "Admite a realização de despesa antes do início da vigência do prazo de execução."
+    ],
+    "c": 4,
+    "j": "Realizar despesa fora da vigência do prazo de execução, antes ou depois, é vedado — excetuado apenas o pagamento após a entrega do bem ou a prestação do serviço."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre os instrumentos de planejamento da contratação:",
+    "a": [
+     "O ETP é elaborado depois do Termo de Referência.",
+     "O Termo de Referência serve de base para a elaboração do edital.",
+     "O PCA é imutável durante o exercício.",
+     "A IRP é etapa posterior à assinatura da ARP.",
+     "O DFD é elaborado pelo licitante vencedor."
+    ],
+    "c": 1,
+    "j": "O ETP antecede o Termo de Referência ou o Projeto Básico; o PCA pode ser revisado; a IRP é etapa preliminar à formação da ARP; e o DFD é elaborado pela área requisitante da Administração."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre as plataformas de gestão:",
+    "a": [
+     "A Transfere Gov centraliza informações sobre transferências de recursos da União.",
+     "A Compras SUSP centraliza aquisições de bens e serviços dos órgãos do SUSP.",
+     "O PE-Integrado é a principal ferramenta de compras e licitações do Estado de Pernambuco.",
+     "A Compras SUSP possui os módulos Demandas SUSP e Emendas SUSP.",
+     "A Transfere Gov é de acesso exclusivo dos gestores federais."
+    ],
+    "c": 4,
+    "j": "A transparência é um de seus propósitos: gestores públicos, cidadãos e organizações da sociedade civil podem acessar os dados."
+   }
+  ],
+  "disc": [
+   {
+    "e": "Diferencie política de segurança pública e política pública de segurança, indicando foco, âmbito e horizonte de resultados.",
+    "est": "Discursiva do simulado — vale 1,5 ponto; mínimo 8 e máximo 15 linhas.",
+    "p": 1.5,
+    "cri": [
+     "Política de segurança pública: conjunto de ações do Estado para manter a ordem pública e proteger a vida e o patrimônio; foco na prevenção, controle e repressão da criminalidade.",
+     "Características: atua diretamente nas ruas, com ênfase na presença e resposta policial; resultados imediatos; tradicionalmente repressiva e reativa; instrumento central são as forças de segurança. Exemplos: patrulhamento ostensivo, operações contra o crime organizado, ações do BPChoque.",
+     "Política pública de segurança: política estruturante e abrangente, que vai além da dimensão criminal e alcança aspectos sociais, institucionais, econômicos e humanos; busca segurança cidadã e sustentável, atuando nas causas.",
+     "Características: intersetorial (educação, saúde, justiça, direitos humanos), com planejamento estratégico, foco na formação e valorização dos servidores, gestão eficiente, inovação, participação social e transparência. Exemplos: cursos na ACIDES, programas de saúde mental, parcerias com Detran, TJPE e PNUD.",
+     "Pilares da política pública de segurança: valorização profissional, fortalecimento da instituição e proteção da sociedade.",
+     "Quadro comparativo: foco — repressão à criminalidade x fortalecimento institucional e do profissional; âmbito — operacional x estratégico e institucional; horizonte — curto prazo x médio e longo prazo."
+    ]
+   },
+   {
+    "e": "Disserte sobre a captação de recursos públicos pela PMPE: fontes, instrumentos, o papel do FNSP e da transferência fundo a fundo e as exigências de prestação de contas.",
+    "est": "Discursiva do simulado — vale 2,0 pontos; mínimo 12 e máximo 25 linhas.",
+    "p": 2.0,
+    "cri": [
+     "Conceito e finalidade: processo de buscar recursos financeiros externos ao orçamento regular do Estado, para fomentar políticas públicas, investir em profissionais e na instituição e economizar recursos de investimento do Estado; é instrumento de gestão estratégica que viabiliza projetos que não caberiam no orçamento anual.",
+     "Fontes junto à União: Congresso Nacional, Ministérios, Bancos Nacionais e Fundos; somam-se órgãos internacionais como BID e PNUD.",
+     "Emendas parlamentares: individuais, de bancada, de comissão e de relator; o parlamentar define a destinação e indica o órgão executor; o órgão beneficiado elabora o plano de trabalho; o MJSP paga a verba, mas a execução é do órgão beneficiado; aprovado o plano, formaliza-se convênio, termo de fomento ou contrato de repasse.",
+     "FNSP: fundo especial de natureza contábil, destinado a apoiar projetos, atividades e ações de segurança pública e prevenção à violência, observadas as diretrizes do Plano Nacional de Segurança Pública.",
+     "Condicionantes do repasse: instituição e funcionamento de Conselho Estadual ou Distrital de Segurança Pública e Defesa Social, de Fundo Estadual ou Distrital de Segurança Pública, e existência de plano de segurança e de aplicação dos recursos.",
+     "Transferência fundo a fundo: repasse obrigatório de, no mínimo, 50% das receitas de loterias do FNSP ao Fundo Estadual, com o objetivo de reduzir burocracia e agilizar a aplicação; objetivos de simplificação e celeridade, autonomia com adequação às demandas locais e gestão por resultados; Termo de Adesão celebrado entre a SENASP e as Secretarias Estaduais.",
+     "Vedações: despesa com pessoal (como o PJES); unidades exclusivamente administrativas; transferência para outra conta do ente ou de outro ente; despesa fora da vigência do prazo de execução, salvo pagamento após a entrega do bem ou prestação do serviço; e remanejamento entre categorias econômicas e naturezas de despesa.",
+     "Prestação de contas: obrigatória — relatórios e comprovantes ao órgão repassador, com possibilidade de auditoria pelos Tribunais de Contas e pela CGU; falhas podem acarretar penalidades, como a suspensão de novos repasses.",
+     "Ferramentas de apoio: Plataforma Transfere Gov (transferências da União), Compras SUSP (aquisições do SUSP, com os módulos Demandas e Emendas) e PE-Integrado (compras e licitações no Estado); e os instrumentos de planejamento PCA, DFD, ETP, TR, ARP e IRP."
+    ]
+   }
+  ]
+ }
+}

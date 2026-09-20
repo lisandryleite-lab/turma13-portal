@@ -36,24 +36,12 @@ NEXTAUTH_URL          # URL base da aplicação — produção: https://portalcf
 
 ## Estrutura de páginas
 
-### Grupo autenticado — `app/(logado)/` — **exclusivo da Turma 13**
-
-O layout de `app/(logado)/layout.tsx` barra quem tem `turma13 === false` (mostra "Área
-restrita" e manda de volta para `/inicio`). **A plataforma tem alunos do CFO de outras
-turmas**: eles logam normalmente e usam o hub `/inicio` (questões, mementos, ranking,
-documentos), mas nada do 1º Pelotão. Ao cadastrar aluno novo, a primeira pergunta é
-**se ele é da Turma 13** — se não for, `turma13: false` e ele fica fora de
-`MEMBROS_PLANTAO`, `MATRICULAS_ORDEM`, grupos de faxina e cotas financeiras.
-Exemplo: `scripts/add-214-damascena.ts` (214 DAMASCENA, outra turma).
-
-Cuidado com os mapas da 1ª CIA: eles são da **companhia inteira**, não da Turma 13 —
-aparecer no mapa de equipes de plantão não significa ser do 1º Pelotão.
+### Grupo autenticado — `app/(logado)/`
 
 | Rota | Arquivo | Função |
 |------|---------|--------|
 | `/dashboard` | `dashboard/page.tsx` | Visão geral: progresso do curso, últimas notas, xerife, missão da semana, links rápidos |
 | `/aulas` | `aulas/page.tsx` + `aulas-client.tsx` | Lista de disciplinas com carga horária e status (Server + Client) |
-| `/faltas` | `faltas/page.tsx` + `faltas-client.tsx` | Limite de faltas por disciplina — 25% da carga total (Decreto 57.694/2024, frequência mínima de 75%). O contador "Faltei" é anotação pessoal em `localStorage` (`t13:faltas:v1`), nunca no banco — o portal não tem frequência oficial |
 | `/escalas` | `escalas/page.tsx` + `escalas-client.tsx` | Escalas de serviço, faxina, plantão — semana atual e visualização mensal |
 | `/avisos` | `avisos/page.tsx` + `avisos-client.tsx` | Quadro de avisos com fixação e destaque; admin pode criar/editar |
 | `/missao` | `missao/page.tsx` + `missao-admin.tsx` | Missão da semana; admin pode editar |
@@ -72,9 +60,11 @@ aparecer no mapa de equipes de plantão não significa ser do 1º Pelotão.
 | Rota | Função |
 |------|--------|
 | `/inicio`, `/painel` | Hub de estudo / painel geral |
-| `/mementos` | Mementos resumidos por disciplina + flashcards |
+| `/calendario` | 3 abas: **Calendário** (abas de mês do ano letivo e sub-abas de semana, visões Lista e Grade, filtros por tipo com contador, escopo rede→unidade→segmento→turma, "Próximos eventos" e cronômetro da Formatura; estado espelhado na URL), **Escalas e documentos** (mapa de equipes, observações, PDFs assinados e recado da Seção de Provas) e **Administrar eventos** (só admin: cadastra/exclui eventos). Configuração em `lib/calendario-config.ts`; eventos em `lib/calendario-eventos.ts` (fonte única, alimentada por `calendario-provas.ts`, `eventos-cfo.ts`, `escalas-cia.ts` e pela tabela `EventoCalendario`); datas em `lib/calendario-datas.ts` |
+| `/mementos` | Abas fixas por disciplina: Memento · Apostila · Memento em vídeo · Memento em áudio · Mapa mental · Questões · Tutor IA · Gaivotas — o que não existe mostra "em breve". Mídias vêm de `lib/midias-drive.ts` (links do Drive/YouTube), da tabela `MementoMidia` (cadastro do admin) ou de `public/midias/<SIGLA>/` (arquivos leves; vídeo e áudio barrados no `.gitignore`). Aceita `?materia=SIGLA` para abrir a matéria direto |
 | `/questoes` | Banco de questões por disciplina/bateria |
 | `/ranking` | Ranking da turma |
+| `/permutas` | Permuta de plantões (cadeia direta/triangular, SEI opcional; cada aluno vê só as permutas de que participa) — usa `MilitarPlantao` |
 | `/psicologia` | Conteúdo de psicologia |
 | `/documentos` | Links institucionais (SEI, ACIDES, Decreto 57.694/2024) + modelos de documentos (.docx/.pdf/.xlsx) em `public/modelos/`, com instruções (prazo, destinatário, base legal). Server component, `<details>` nativo — sem `"use client"` |
 | `/ajuda-senha`, `/trocar-senha` | Suporte de senha |
@@ -90,7 +80,7 @@ Subconjunto antigo (`/ranking`, `/notas`, `/escalas`, `/avisos`, `/links`, `/adm
 ## Schema Prisma — modelos principais
 
 ### `User`
-Aluno ou admin. `matricula` é o identificador humano (Int, único). `isAdmin` controla acesso a rotas restritas. Campos de escala: `grupoPlantao` (ALPHA/BRAVO/CHARLIE/DELTA), `grupoFaxina` (G1–G8), `canga` (nome da canga), `cangaPar` (matrícula do par, Int).
+Aluno ou admin. `matricula` é o identificador humano (Int, único). `isAdmin` controla acesso a rotas restritas. Campos de escala: `grupoPlantao` (LIMA/GOLF/…), `grupoFaxina` (G1–G8), `canga` (nome da canga), `cangaPar` (matrícula do par, Int).
 
 ### `Nota`
 Nota de avaliação de um aluno em uma disciplina. Campos: `disciplina` (sigla), `avaliacao` (ex: "P1"), `nota` (Float), `peso` (Float, padrão 1), `ehAF` (se é 2ª chamada), `apto` (aprovado sem nota numérica). Toda criação/edição/exclusão gera um `HistoricoNota`.
@@ -108,7 +98,7 @@ Escalas nominais da turma com data exata, posição e userId.
 Escala individual de um aluno (plantão externo, faxina de alojamento, etc.) com data, hora e função.
 
 ### `PlantaoDia`
-Plantão externo por dia. Admin insere mensalmente. Campo `grupoPlantao`: GOLF | HOTEL | INDIA | JULIETT | KILO | LIMA | MIKE | NOVEMBER na 7X1 vigente (set/2026 em diante); ALPHA | BRAVO | CHARLIE | DELTA na 3X1 de ago/2026 — ver "Grupos de plantão". Tabela hoje vazia — o grupo do dia sai de `grupoPlantaoPorData()`.
+Plantão externo da 2ª CIA por dia. Admin insere mensalmente. Campo `grupoPlantao`: GOLF | HOTEL | INDIA | JULIETT | KILO | LIMA | MIKE | NOVEMBER (8 grupos).
 
 ### `FuncaoDestaqueDia`
 Funções de destaque diárias (Mestre, Leitor, Discurso, Comandante) com matrícula do responsável.
@@ -131,7 +121,7 @@ Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 ### Demais modelos (schema tem 43 no total)
 - **Estudo**: `Memento`, `Flashcard`, `Questao`, `Resposta`, `Gaivota` (dúvidas), `NotaCFO`/`HistoricoNotaCFO`/`NotaHistorica` (notas oficiais do CFO)
 - **Financeiro**: `CotaFinanceira`, `PagamentoCota` (token público de pagamento), `PedidoLanche`, `ItemLanche`, `PedidoLancheAluno`, `LinhaPedidoLanche`
-- **Permutas (DESATIVADO)**: `MilitarPlantao`, `PermutaOferta`, `PermutaSolicitacao`, `PermutaParticipante` — o módulo `/permutas` e as rotas `/api/permutas/*` foram **removidos do site** em ago/2026 a pedido da turma. Os modelos e os dados continuam no banco (nada foi apagado); se voltar, o roster em `MilitarPlantao` está com os grupos ANTIGOS da 7x1 e precisa ser refeito pelo mapa 3X1. O modelo de documento "Permuta de serviço" segue disponível em `/documentos`
+- **Permutas**: `MilitarPlantao` (roster completo da CIA), `PermutaOferta`, `PermutaSolicitacao`, `PermutaParticipante`
 - **Faxina**: `FaxinaGrupoMembro` (composição viva dos grupos G1–G8)
 - **Outros**: `OPM`/`PreferenciaOPM` (batalhões RMR), `MissaoConcluida`, `LogAcesso`
 
@@ -140,89 +130,36 @@ Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 ### Semana atual (`lib/utils.ts`)
 `DATA_INICIO = new Date("2026-01-12")` (primeira segunda-feira do curso) → semana 20 = 25/05 a 31/05/2026. Consistente com a referência das escalas (`REF_SEMANA = 20` em `lib/escalas.ts`).
 
-### Término do curso (`lib/utils.ts`)
-`DATA_FIM_CFO = 05/01/2027` (previsão da turma, ago/2026) e `diasParaFimCFO()`. A contagem
-regressiva aparece no topo do `/dashboard` (`components/contagem-cfo.tsx`). `DATA_INICIO` e
-`DATA_FIM_CFO` são meia-noite **UTC**, então todo cálculo com elas usa acessores UTC.
-
-### Fuso horário — regra absoluta (`lib/utils.ts`)
-
-As funções da Vercel rodam em **UTC**; a turma vive em **America/Recife** (UTC−3, sem horário
-de verão). No **servidor**, `new Date().getDate()` vira o dia às **21h** — foi assim que o
-portal passou a mostrar o plantão e a faxina de amanhã, as funções do dia errado, a contagem
-regressiva um dia a menos e a semana pulando no domingo à noite.
-
-- Todo "que dia é hoje" no servidor passa por **`partesEmRecife()`** (→ `{ano, mes, dia}`) ou
-  **`hojeEmRecife()`** (→ `Date` de meia-noite, para repassar a `grupoPlantaoPorData()` /
-  `grupoFaxinaPorData()`, que leem `getDate()`/`getDay()`).
-- **Componentes client não precisam** — o navegador do aluno já está no fuso certo.
-- **`new Date()` como carimbo de instante** (`dataPagamento`, `expires`) continua correto:
-  não trocar.
-
-### Região das funções (`vercel.json`)
-`"regions": ["gru1"]` — o Neon está em `sa-east-1` (São Paulo). Rodando no padrão `iad1`
-(Washington), cada consulta atravessava o continente: ~250 ms por roundtrip. Não remover.
-
 ### Turma
 34 alunos ativos. Matrículas **206 e 207 removidas** da turma em maio/2026.
 **1 (Hellton Fernandes) e 54 (Elder Carvalho) saíram** da Turma 13 em jun/2026; **213 (R Silva) entrou** em jun/2026 — ver `scripts/update-roster-213.ts` e `scripts/update-roster-julho.ts`. **211 (Dário)** e **212 (Camila Buonora) entraram** em jul/2026 — ver `scripts/add-dario.ts`, `scripts/add-212-camila.ts` e `scripts/integra-novatos-escalas.ts`. Lista oficial de antiguidade em `lib/escalas.ts` (`MATRICULAS_ORDEM`).
 
+### Usuários fora da Turma 13 (`turma13: false`)
+O portal também hospeda alunos de outros pelotões do CFO 2026. Eles têm `turma13: false` e por isso só acessam a **área CFO** (`app/(cfo)/`: `/inicio`, `/mementos`, `/questoes`, `/ranking`, `/permutas`, `/documentos`, `/trocar-senha`) — o grupo `(logado)` é bloqueado pelo próprio `app/(logado)/layout.tsx`. Com `turma: 3` contam no `turmaSize` do `/ranking` e do `/painel`.
+**Turma 19** (set/2026, `scripts/add-turma19.ts`): 199 BARROS, 203 J LUIZ, 217 SALUSTIANO, 218 COELHO, 219 BRENER, 220 RATIS. Senha inicial = a própria matrícula.
+
 ### Grupos de faxina — fonte viva no banco
 A composição exibida em `/escalas` vem da tabela **`FaxinaGrupoMembro`** quando não vazia; `COMPOSICAO_FAXINA` em `lib/escalas.ts` é só fallback (mantida em sincronia). `User.grupoFaxina` (dashboard) deve espelhar a tabela — `scripts/integra-novatos-escalas.ts` sincroniza. Em jul/2026: G7 = Thais, Gabriele, Cleyton, 211 Dário, 213 R Silva; G8 = Aldo, Rodolfo, André, Pablo, 212 Camila (grupos com 5).
 
-### Grupos de plantão — o regime MUDA de mês para mês; conferir sempre
+### Escalas da 1ª CIA — fonte estática em `lib/escalas-cia.ts`
+Transcrição dos documentos assinados pelo Cmt da 1ª CIA (mapa de equipes, escala de plantão 7x1 e funções nas formaturas), com os PDFs originais em `public/escalas/`. Exibido em `/calendario` (aba "Escalas e documentos"), para **todo o portal** — não só a Turma 13. Ao chegar um novo mês: acrescentar um bloco em `MESES_ESCALA` e copiar os PDFs.
+O mapa de setembro/2026 abrange 201 militares da CIA e serve de dicionário matrícula → nome de guerra (`nomeDaMatricula`, `grupoDaMatricula`). **Atenção:** ele diverge em alguns pontos da tabela de grupos abaixo (ex.: 108 LISANDRY aparece em ÍNDIA, não em MIKE) — o documento do mês é a fonte de verdade.
 
-`grupoPlantaoPorData()` carrega **dois regimes** e escolhe pela data. Não presumir
-que o vigente é o do mês passado: a 1ª CIA já trocou duas vezes em 2026.
+### Grupos de plantão — 8 grupos (atualizado jul/2026 — Mapa de Equipes, escala 7x1)
+Ciclo **diário** (todos os dias, incluindo fins de semana).
+Ordem: GOLF → HOTEL → INDIA → JULIETT → KILO → LIMA → MIKE → NOVEMBER → (repete).
+Referência confirmada: **26/05/2026 = GOLF**. Verificação: 02/06/2026 = NOVEMBER.
 
-| Período | Escala | Grupos | Referência |
-|---|---|---|---|
-| até jul/2026 | 7X1 | GOLF…NOVEMBER | 26/05/2026 = GOLF |
-| **ago/2026** | 3X1 | ALPHA…DELTA | 25/08/2026 = BRAVO |
-| **set/2026 em diante** | 7X1 | GOLF…NOVEMBER | **01/09/2026 = ÍNDIA** |
-
-Ciclo **diário** nos dois casos (fins de semana incluídos), um grupo por dia corrido.
-A virada 3X1 → 7X1 é **01/09/2026** (`INICIO_7X1_UTC` em `lib/escalas.ts`). A semana 34
-do portal começa em 31/08, então os dois regimes precisam conviver.
-
-A referência de setembro foi conferida contra os **30 dias** da escala diária oficial —
-bate em todos. E bate com a referência antiga de 26/05 (98 dias, `98 mod 8 = 2` = ÍNDIA):
-o ciclo de 8 dias **nunca se perdeu por baixo**; agosto foi uma sobreposição de 4 grupos.
-
-**7X1 · setembro/2026** (`MEMBROS_7X1`) — 32 dos 34 alunos:
-
-| Grupo | Mats |
-|---|---|
-| GOLF | 7, 19, 57, 143, 191 |
-| HOTEL | 13, 23, 105, 144 |
-| INDIA | 41, 60, 108, 116 |
-| JULIETT | 94, 153 |
-| KILO | 26, 37, 65, 98, 212 |
-| LIMA | 114, 131, 167, 174, 186 |
-| MIKE | 45, 81, 106, 165 |
-| NOVEMBER | 55, 71, 76 |
-
-A 3X1 de agosto segue em `MEMBROS_3X1`; `MEMBROS_PLANTAO` é a união das duas (12 chaves),
-porque `grupoPlantaoPorData()` devolve nome de qualquer um dos dois regimes.
-
-**211 DÁRIO e 213 R SILVA seguem sem equipe** (`SEM_EQUIPE_PLANTAO`, e `User.grupoPlantao`
-nulo) — ausentes também do mapa de setembro. Não chutar: esperar a 1ª CIA publicar.
-Ao contrário do mapa de agosto, o de setembro traz **108 LISANDRY** explicitamente (ÍNDIA).
-
-O documento escreve o grupo ora como "JULIET", ora como "JULIETT"; no código é **JULIETT**.
-Obs. do documento: **105 LUCAS EDUARDO é adventista** — plantão de sexta vai para quinta,
-o de sábado para domingo.
-
-Carregador do mês: `scripts/load-setembro-2026.ts` (idempotente — grupo de plantão,
-funções nas formaturas, guarda-bandeira e QTS).
-
-### Numeração das semanas — o portal e a Divisão de Ensino divergem
-
-O QTS oficial rotulou **31/08–06/09 como "SEMANA 33"**, mas `semanaAtual()` põe essa
-semana na **34** (a 33 do portal é 24–30/08). A numeração oficial está **uma semana
-atrás** da do portal. O QTS é gravado sob o número do **portal**, senão o dashboard não
-acha a semana corrente. Mexer em `DATA_INICIO`/`REF_SEMANA` para alinhar deslocaria
-junto a rotação de P1/P3/P4 (`calcularServico`) — não fazer sem decisão da turma.
+| Grupo    | Mats                      | Membros                                                                          |
+|----------|---------------------------|----------------------------------------------------------------------------------|
+| GOLF     | 7, 19, 57, 143, 191       | Aldo Silva, Thais Figueiredo, Cleyton, Vidal, Gomes Nascimento                   |
+| HOTEL    | 13, 23, 105, 144, 211     | Jonas, Rodolfo Moura, Lucas Eduardo, Samuel Santos, Dário                        |
+| INDIA    | 41, 60, 116               | Alan Silva, João Nunes, Bertipalha                                               |
+| JULIETT  | 94, 213                   | André Cardoso, R Silva                                                          |
+| KILO     | 26, 37, 65, 98, 212       | André, Pablo Torres, Kauhanni, José Menezes, Camila Buonora                      |
+| LIMA     | 114, 131, 167, 174, 186   | Josiane Farias, José Inácio, Gustavo Neto, Alexandre, Samuel Silva               |
+| MIKE     | 45, 81, 106, 108, 153, 165| Gabriele Costa, Fernando Rocha, Rafael Ribeiro, Lisandry, Hugo, Kevin Gomes      |
+| NOVEMBER | 55, 71, 76                | Shirlayne, Leimig, Araújo Junior                                                 |
 
 ## Autenticação — padrão de uso
 
@@ -238,53 +175,12 @@ const { matricula, isAdmin, nomeGuerra } = session.user  // tipado — sem as an
 
 Middleware em `auth.config.ts` protege todas as rotas fora de `PUBLIC_PATHS`.
 
-## Rotas de API — padrão obrigatório (`lib/api.ts`)
-
-Toda rota é envolvida por `rotaApi()` e todo corpo é lido com `lerCorpo()`.
-Nunca chamar `req.json()` direto: corpo malformado estoura sem catch e vira 500.
-
-```ts
-import { rotaApi, lerCorpo, proibido, naoEncontrado, ErroHttp, z, zId } from "@/lib/api"
-
-const Corpo = z.object({ id: zId, titulo: z.string().trim().min(1, "obrigatório") })
-
-export const POST = rotaApi(async (req: NextRequest) => {
-  const session = await auth()
-  if (!session?.user?.isAdmin) throw proibido()      // 403
-  const { id, titulo } = await lerCorpo(req, Corpo)  // 400 se inválido
-  ...
-})
-```
-
-- **Erro se comunica com `throw`**, não com `return NextResponse.json(...)`:
-  `proibido()` 403, `naoAutorizado()` 401, `naoEncontrado(x)` 404,
-  `new ErroHttp(status, msg)` para o resto.
-- **Mapeamento automático:** P2025 → 404, P2002/P2003 → 409,
-  `PrismaClientValidationError` → 400, inesperado → 500 com `console.error`.
-- **Nunca espalhar o corpo no Prisma** (`data: { ...body }`): o schema zod é a
-  lista fechada de campos graváveis. Foi assim que `PUT /api/admin/alunos/[id]`
-  deixava a requisição escrever `isAdmin` e `turma13`.
-- **Escrita em mais de uma tabela vai em `$transaction`** (nota + histórico,
-  xerife atual + novo xerife). Laço de upsert também: uma transação em vez de
-  um roundtrip por item.
-- `/api/*` sem sessão responde **401 JSON** (`lib/auth.config.ts`); só as
-  páginas redirecionam para `/login`.
-- Peças de schema prontas: `zMatricula`, `zId`, `zData`, `zSemana`.
-
 ## Prisma — padrão de importação
 
 ```ts
 import { prisma } from "@/lib/prisma"
 // Cliente gerado em lib/generated/prisma — não importar de @prisma/client diretamente
 ```
-
-**Índices:** o Prisma **não** cria índice automático em FK no PostgreSQL. Ao adicionar
-uma coluna `userId`/`xxxId` nova, declarar o `@@index` na mão.
-
-**Migração:** `prisma db push` aplica direto no banco de produção (não há pasta
-`migrations/`). Antes de rodar, conferir o SQL com
-`npx prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --script`
-e guardar o script + o rollback em `prisma/sql/`.
 
 ## Comandos úteis
 
@@ -294,28 +190,4 @@ npm run db:push       # prisma db push (sincronizar schema com banco)
 npm run db:seed       # seed inicial de alunos, disciplinas e escalas
 npm run dev           # Next.js dev server
 npm run build         # build de produção
-
-npx tsx scripts/load-qts-semana<N>.ts   # carrega o QTS da semana N e ajusta a carga das disciplinas
-powershell -File scripts/gerar-bi.ps1 -Semana <N>   # gera "BI SEMANA N.html" + .pdf (Chrome headless)
 ```
-
-## QTS e carga horária — como sincronizar
-
-O QTS oficial da Divisão de Ensino traz, a partir da **semana 32**, o **contador de tempos**
-por disciplina em cada aula (`POE 7/60`). Esse contador é a fonte da verdade: `load-qts-semana32.ts`
-grava `cargaMinistrada` de forma **absoluta** (o último `X/Y` da semana), em vez de somar as horas
-da grade como faziam os carregadores anteriores. Somar incrementalmente acumula erro quando uma
-aula é cancelada ou remarcada — foi assim que POE e EASE ficaram 4h à frente e AP e TCEM 2h.
-Ao carregar uma nova semana, prefira sempre transcrever os contadores oficiais.
-
-No bloco da noite (17h30 e 18h20), a extração de texto do PDF do QTS sai desalinhada e não dá para
-confiar em qual dia cada aula caiu — resolva pela **ordem crescente dos contadores** (um `TPE 9/40`
-só pode vir depois do `TPE 8/40`).
-
-## BI da Semana
-
-`scripts/gerar-bi.ts` monta o "BI DA SEMANA" em HTML lendo tudo do banco e de `lib/escalas.ts`
-(QTS, progresso do curso, xerife, aniversariantes, P1/P3/P4, faxina, plantão, funções de destaque)
-— nada é digitado à mão, para o BI nunca divergir do portal. `scripts/gerar-bi.ps1` converte para
-PDF A4 com Chrome headless. O BI tem que caber em **uma página**: o único ajuste é o `zoom`
-(3º argumento do script, padrão `0.82`) — se sair uma página em branco no fim, baixe um pouco.

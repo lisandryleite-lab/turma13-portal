@@ -1,0 +1,1249 @@
+{
+ "banco": {
+  "1": {
+   "titulo": "Polícia Judiciária Militar: conceito, autoridades e competências",
+   "legal": "Arts. 7º e 8º do CPPM; art. 5º, LXI, da CF",
+   "vf": [
+    {
+     "t": "Polícia judiciária é o ramo da atividade policial que visa desenvolver papéis que anteveem as ações do Judiciário, sendo-lhe muitas vezes imprescindível.",
+     "r": true,
+     "j": "Correto — o Inquérito Policial é o procedimento típico dessa atividade."
+    },
+    {
+     "t": "As autoridades de polícia judiciária militar estão descritas no art. 7º do CPPM.",
+     "r": true,
+     "j": "Correto — o rol abrange ministros, chefes de Estado-Maior, comandantes de Exército, de Região Militar, diretores e chefes de órgãos e comandantes de forças, unidades ou navios."
+    },
+    {
+     "t": "Na PM e no CBM, a autoridade de polícia judiciária militar originária é dos comandantes de unidades, diretores ou do próprio Comandante-Geral.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O Governador, o Secretário de Defesa Social e o Corregedor são autoridades de polícia judiciária militar.",
+     "r": false,
+     "j": "Falso. Ser militar é condição precedente ao exercício da PJM — logo, Governador, Secretário de Defesa Social e Corregedor NÃO são autoridades de PJM."
+    },
+    {
+     "t": "É inconstitucional o texto de lei estadual que atribua à Corregedoria-Geral da SDS instaurar ou requisitar a instauração de IPM.",
+     "r": true,
+     "j": "Correto — observação expressa do material."
+    },
+    {
+     "t": "Compete à polícia judiciária militar apurar os crimes militares, bem como os que, por lei especial, estão sujeitos à jurisdição militar, e sua autoria.",
+     "r": true,
+     "j": "Correto — art. 8º, “a”, do CPPM: dizer quem fez e o que fez, o que se materializa no IPM."
+    },
+    {
+     "t": "Compete à PJM cumprir os mandados de prisão expedidos pela Justiça Militar.",
+     "r": true,
+     "j": "Correto — art. 8º, “c”."
+    },
+    {
+     "t": "Compete à PJM representar às autoridades judiciárias militares acerca da prisão preventiva e da insanidade mental do indiciado.",
+     "r": true,
+     "j": "Correto — art. 8º, “d”."
+    },
+    {
+     "t": "A PJM não pode requisitar da polícia civil e das repartições técnicas civis pesquisas e exames.",
+     "r": false,
+     "j": "Falso. O art. 8º, “g”, prevê expressamente essa requisição, para complemento e subsídio do inquérito policial militar."
+    },
+    {
+     "t": "O rol de competências do art. 8º do CPPM é taxativo, não admitindo outras atividades.",
+     "r": false,
+     "j": "Falso. O material qualifica o rol como EXEMPLIFICATIVO."
+    },
+    {
+     "t": "O inquérito policial militar é a apuração sumária de fato que configure crime militar e de sua autoria, com caráter de instrução provisória.",
+     "r": true,
+     "j": "Correto — art. 9º do CPPM; sua finalidade precípua é ministrar elementos necessários à propositura da ação penal."
+    },
+    {
+     "t": "São efetivamente instrutórios da ação penal os exames, perícias e avaliações realizados regularmente no curso do inquérito, por peritos idôneos e com obediência às formalidades do CPPM.",
+     "r": true,
+     "j": "Correto — parágrafo único do art. 9º, exceção ao caráter meramente informativo do IPM."
+    },
+    {
+     "t": "Chama-se inquérito policial militar porque é sempre realizado pela Polícia Militar.",
+     "r": false,
+     "j": "Falso. Chama-se IPM porque é confeccionado em qualquer esfera militar, federal ou estadual."
+    },
+    {
+     "t": "Compete à PJM solicitar das autoridades civis informações e medidas úteis à elucidação das infrações penais a seu cargo.",
+     "r": true,
+     "j": "Correto — art. 8º, “f”."
+    },
+    {
+     "t": "Compete à PJM prestar aos órgãos e juízes da Justiça Militar e aos membros do Ministério Público as informações necessárias à instrução e julgamento dos processos, bem como realizar as diligências requisitadas.",
+     "r": true,
+     "j": "Correto — art. 8º, “b”."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre as autoridades de polícia judiciária militar, assinale a alternativa INCORRETA:",
+     "a": [
+      "Estão descritas no art. 7º do CPPM.",
+      "Na PM e no CBM, a competência originária é dos comandantes de unidades, diretores ou do Comandante-Geral.",
+      "Ser militar é condição precedente ao exercício da PJM.",
+      "O Corregedor-Geral da SDS é autoridade de PJM.",
+      "É inconstitucional lei estadual que atribua à Corregedoria-Geral da SDS instaurar ou requisitar IPM."
+     ],
+     "c": 3,
+     "j": "Governador, Secretário de Defesa Social e Corregedor não são autoridades de polícia judiciária militar, pois ser militar é condição precedente ao exercício da PJM."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a uma competência da polícia judiciária militar prevista no art. 8º do CPPM:",
+     "a": [
+      "Apurar os crimes militares e sua autoria.",
+      "Cumprir os mandados de prisão expedidos pela Justiça Militar.",
+      "Representar acerca da prisão preventiva e da insanidade mental do indiciado.",
+      "Requisitar da polícia civil pesquisas e exames necessários ao inquérito.",
+      "Julgar os crimes militares apurados no inquérito."
+     ],
+     "c": 4,
+     "j": "Julgar é atribuição da Justiça Militar. A PJM apura, informa, cumpre mandados, representa e requisita."
+    },
+    {
+     "e": "Sobre o inquérito policial militar, assinale a alternativa CORRETA:",
+     "a": [
+      "É procedimento definitivo, apto a fundamentar condenação.",
+      "É a apuração sumária de fato que configure crime militar e de sua autoria, com caráter de instrução provisória.",
+      "Só pode ser realizado pela Polícia Militar estadual.",
+      "Tem por finalidade aplicar sanção disciplinar ao indiciado.",
+      "Dispensa qualquer forma escrita."
+     ],
+     "c": 1,
+     "j": "Art. 9º do CPPM. Sua finalidade precípua é ministrar elementos necessários à propositura da ação penal; é confeccionado em qualquer esfera militar, federal ou estadual."
+    },
+    {
+     "e": "Sobre os exames e perícias produzidos no curso do IPM, assinale a alternativa CORRETA:",
+     "a": [
+      "Precisam ser inteiramente repetidos em juízo, sem exceção.",
+      "São efetivamente instrutórios da ação penal, se realizados regularmente por peritos idôneos e com obediência às formalidades do CPPM.",
+      "Não têm valor probatório algum.",
+      "Só podem ser determinados pelo juiz.",
+      "Dispensam a nomeação de peritos."
+     ],
+     "c": 1,
+     "j": "Parágrafo único do art. 9º do CPPM — é a exceção ao caráter meramente informativo do inquérito."
+    },
+    {
+     "e": "Sobre a natureza da atividade de polícia judiciária, assinale a alternativa INCORRETA:",
+     "a": [
+      "Desenvolve papéis que anteveem as ações do Judiciário.",
+      "O inquérito policial é procedimento típico dessa atividade.",
+      "O rol de competências do art. 8º do CPPM é exemplificativo.",
+      "A PJM pode atender a pedido de apresentação de militar à autoridade civil competente, desde que legal e fundamentado.",
+      "A PJM é exercida por qualquer autoridade administrativa, militar ou não."
+     ],
+     "c": 4,
+     "j": "Ser militar é condição precedente ao exercício da PJM, e as autoridades competentes estão descritas no art. 7º do CPPM."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique quem são as autoridades de polícia judiciária militar e por que Governador, Secretário de Defesa Social e Corregedor não o são.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Previsão: as autoridades de polícia judiciária militar estão descritas no art. 7º do CPPM, conforme as respectivas jurisdições.",
+      "Rol do art. 7º: ministros da Marinha, do Exército e da Aeronáutica; chefe do Estado-Maior das Forças Armadas; chefes de Estado-Maior e secretário-geral da Marinha; comandantes de Exército e comandante-chefe da Esquadra; comandantes de Região Militar, Distrito Naval ou Zona Aérea; secretário do Ministério do Exército e chefe de Gabinete do Ministério da Aeronáutica; diretores e chefes de órgãos, repartições, estabelecimentos ou serviços; e comandantes de forças, unidades ou navios.",
+      "Na PM e no CBM: a autoridade de PJM originária é dos comandantes de unidades, dos diretores ou do próprio Comandante-Geral.",
+      "Condição precedente: ser militar é condição precedente ao exercício da PJM.",
+      "Consequência: Governador, Secretário de Defesa Social e Corregedor não são autoridades de PJM; é inconstitucional o texto de lei estadual que traga como atribuição da Corregedoria-Geral da SDS instaurar ou requisitar a instauração de IPM."
+     ]
+    },
+    {
+     "e": "Enumere as competências da polícia judiciária militar previstas no art. 8º do CPPM e explique o conceito de IPM do art. 9º.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Natureza do rol: as atividades do art. 8º constituem rol exemplificativo.",
+      "Apurar os crimes militares, bem como os que por lei especial estão sujeitos à jurisdição militar, e sua autoria — é onde entra a figura do IPM.",
+      "Prestar aos órgãos e juízes da Justiça Militar e aos membros do Ministério Público as informações necessárias à instrução e ao julgamento, e realizar as diligências requisitadas.",
+      "Cumprir os mandados de prisão expedidos pela Justiça Militar; e representar às autoridades judiciárias militares acerca da prisão preventiva e da insanidade mental do indiciado.",
+      "Cumprir as determinações da Justiça Militar relativas aos presos sob sua guarda e responsabilidade; solicitar das autoridades civis informações e medidas úteis à elucidação das infrações; requisitar da polícia civil e das repartições técnicas civis pesquisas e exames; e atender a pedido de apresentação de militar ou funcionário de repartição militar à autoridade civil competente, desde que legal e fundamentado.",
+      "Conceito de IPM (art. 9º): apuração sumária de fato que, nos termos legais, configure crime militar, e de sua autoria; tem caráter de instrução provisória, cuja finalidade precípua é ministrar os elementos necessários à propositura da ação penal.",
+      "Exceção do parágrafo único: são efetivamente instrutórios da ação penal os exames, perícias e avaliações realizados regularmente no curso do inquérito, por peritos idôneos e com obediência às formalidades do Código.",
+      "Observação: chama-se IPM não porque seja realizado pela PM, mas porque é confeccionado em qualquer esfera militar, federal ou estadual."
+     ]
+    }
+   ]
+  },
+  "2": {
+   "titulo": "O IPM: características, prazos e o encarregado",
+   "legal": "Arts. 10, 15 e 16 do CPPM; art. 7º, §§ 2º a 5º",
+   "vf": [
+    {
+     "t": "O inquérito é sigiloso, mas seu encarregado pode permitir que dele tome conhecimento o advogado do indiciado.",
+     "r": true,
+     "j": "Correto — art. 16 do CPPM; se o advogado solicitar vista de um IPM, deve-se ceder sempre, por ser prerrogativa do advogado."
+    },
+    {
+     "t": "O IPM é provisório: a decisão lavrada em desfavor do imputado em sede de inquérito só se torna definitiva com a decisão do juiz na ação penal.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Por ser informativo, as notícias trazidas nos autos do IPM devem ser novamente produzidas em juízo para serem tomadas como provas cabais.",
+     "r": true,
+     "j": "Correto — consequência do caráter provisório."
+    },
+    {
+     "t": "O IPM é inquisitorial, dispensando os recursos que assegurem ao investigado a ampla defesa e o contraditório, pois seu papel é apenas subsidiar a ação penal.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O IPM é disponível, podendo o encarregado transacionar sobre sua marcha e determinar o próprio arquivamento.",
+     "r": false,
+     "j": "Falso. O IPM é INDISPONÍVEL: iniciado, deve ser encerrado nas mãos da autoridade judiciária competente para determinar seu arquivamento, não sendo possível transacionar a marcha."
+    },
+    {
+     "t": "O fluxo do IPM é: autoridade de PJM indicia ou não indicia; promotor militar denuncia, não denuncia ou pede novas diligências; e o juiz militar decide se arquiva ou não.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O prazo do IPM é de 20 dias com o indiciado preso, contados da execução da ordem de prisão, e de 40 dias com o indiciado solto, contados da instauração.",
+     "r": true,
+     "j": "Correto — art. 20 do CPPM."
+    },
+    {
+     "t": "O prazo do IPM com indiciado solto é prorrogável por mais 20 dias, desde que não estejam concluídos exames ou perícias já iniciados ou haja necessidade de diligências indispensáveis à elucidação do fato.",
+     "r": true,
+     "j": "Correto — o pedido de prorrogação deve ser feito em tempo oportuno, para ser atendido antes do término do prazo."
+    },
+    {
+     "t": "Após a prorrogação de 20 dias, admite-se nova prorrogação sempre que o encarregado julgar conveniente.",
+     "r": false,
+     "j": "Falso. Não haverá nova prorrogação, SALVO dificuldade insuperável a juízo do Ministro de Estado competente."
+    },
+    {
+     "t": "São deduzidas dos prazos do IPM as interrupções por motivo de suspeição de oficial superior.",
+     "r": true,
+     "j": "Correto — art. 10, §5º, do CPPM."
+    },
+    {
+     "t": "A competência para instaurar IPM é originária dos comandantes e pode ser transferida a terceiros por delegação.",
+     "r": true,
+     "j": "Correto — diferentemente da polícia judiciária comum, em que o delegado tem competência originária para instaurar o IP."
+    },
+    {
+     "t": "A delegação para instauração de IPM deve recair em oficial de posto superior ao do indiciado.",
+     "r": true,
+     "j": "Correto — art. 7º, §2º; não sendo possível, poderá recair em oficial do mesmo posto, desde que mais antigo (§3º)."
+    },
+    {
+     "t": "Se o indiciado é oficial da reserva ou reformado, prevalece, para a delegação, a antiguidade de posto.",
+     "r": false,
+     "j": "Falso. O art. 7º, §4º, é expresso: nesse caso NÃO prevalece, para a delegação, a antiguidade de posto."
+    },
+    {
+     "t": "Será encarregado do IPM, sempre que possível, oficial de posto não inferior ao de capitão ou capitão-tenente.",
+     "r": true,
+     "j": "Correto — art. 15; em infração contra a segurança nacional, sempre que possível, oficial superior."
+    },
+    {
+     "t": "Se, no curso do IPM, o encarregado verificar a existência de indícios contra oficial de posto superior ao seu ou mais antigo, deve prosseguir normalmente na apuração.",
+     "r": false,
+     "j": "Falso. Nessa hipótese, tomará as providências necessárias para que suas funções sejam delegadas a outros oficiais."
+    }
+   ],
+   "me": [
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a uma característica do inquérito policial militar:",
+     "a": [
+      "Sigiloso.",
+      "Provisório.",
+      "Informativo.",
+      "Inquisitorial.",
+      "Disponível."
+     ],
+     "c": 4,
+     "j": "O IPM é INDISPONÍVEL: iniciado, deve ser encerrado nas mãos da autoridade judiciária competente, não sendo possível transacionar a marcha."
+    },
+    {
+     "e": "Sobre os prazos do IPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "Indiciado preso: 20 dias, contados da execução da ordem de prisão.",
+      "Indiciado solto: 40 dias, contados da instauração do IPM.",
+      "Cabe prorrogação de 20 dias no caso do indiciado solto.",
+      "O pedido de prorrogação deve ser feito em tempo oportuno.",
+      "Cabem sucessivas prorrogações a critério do encarregado."
+     ],
+     "c": 4,
+     "j": "Não haverá nova prorrogação além daquela, salvo dificuldade insuperável a juízo do Ministro de Estado competente."
+    },
+    {
+     "e": "Sobre a delegação para instauração de IPM, assinale a alternativa CORRETA:",
+     "a": [
+      "Deve recair em oficial de posto inferior ao do indiciado.",
+      "Deve recair em oficial de posto superior ao do indiciado; não sendo possível, em oficial do mesmo posto, desde que mais antigo.",
+      "Se o indiciado é oficial da reserva, prevalece a antiguidade de posto.",
+      "O escrivão pode ser designado encarregado.",
+      "A competência originária é do encarregado, e não do comandante."
+     ],
+     "c": 1,
+     "j": "Art. 7º, §§2º e 3º. Se o indiciado é da reserva ou reformado, não prevalece a antiguidade de posto (§4º); a competência originária é dos comandantes, transferível por delegação."
+    },
+    {
+     "e": "Sobre o sigilo do IPM, assinale a alternativa CORRETA:",
+     "a": [
+      "O sigilo é absoluto, alcançando também o advogado do indiciado.",
+      "O encarregado pode permitir que o advogado do indiciado tome conhecimento do inquérito.",
+      "O sigilo impede a lavratura de termos escritos.",
+      "O sigilo obriga a publicação da portaria em Boletim Interno.",
+      "O sigilo afasta o caráter inquisitorial do inquérito."
+     ],
+     "c": 1,
+     "j": "Art. 16 do CPPM — e, se o advogado solicitar vista, deve-se ceder sempre, por ser prerrogativa do advogado. Por ser peça sigilosa, não há obrigatoriedade de publicação da portaria em BI."
+    },
+    {
+     "e": "Sobre o fluxo decisório do IPM, assinale a alternativa CORRETA:",
+     "a": [
+      "O encarregado indicia e determina o arquivamento.",
+      "O promotor militar arquiva o inquérito.",
+      "A autoridade de PJM indicia ou não; o promotor denuncia, não denuncia ou pede novas diligências; e o juiz decide sobre o arquivamento.",
+      "O juiz militar indicia o investigado.",
+      "O comandante da unidade denuncia o indiciado."
+     ],
+     "c": 2,
+     "j": "É a sequência descrita no material — o arquivamento é decisão do juiz militar."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique as características do inquérito policial militar.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Sigiloso: art. 16 do CPPM — o inquérito é sigiloso, mas seu encarregado pode permitir que dele tome conhecimento o advogado do indiciado; se o advogado solicitar vista, deve-se ceder sempre, por ser prerrogativa da advocacia.",
+      "Provisório: a decisão lavrada em desfavor do imputado em sede de IPM não é definitiva; só o será quando lhe suceder uma ação penal e nela decidir o juiz.",
+      "Informativo: consequência do caráter provisório — as notícias trazidas nos autos devem ser novamente produzidas em juízo para serem tomadas como provas cabais para condenar ou absolver.",
+      "Escrito: tudo no IPM é reduzido a termo.",
+      "Inquisitorial: dispensa a aplicabilidade de recursos que assegurem ao investigado a ampla defesa e o contraditório, pois seu papel é apenas subsidiar uma ação penal.",
+      "Indisponível: iniciado, deve ser encerrado nas mãos da autoridade judiciária competente para determinar o arquivamento; não é possível transacionar a marcha.",
+      "Fluxo: autoridade de PJM (indicia ou não indicia) → promotor militar (denuncia, não denuncia ou pede novas diligências) → juiz militar (decide se arquiva ou não)."
+     ]
+    },
+    {
+     "e": "Disserte sobre os prazos do IPM e sobre as regras de designação do encarregado.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Prazo com indiciado preso: 20 dias, contados da execução da ordem de prisão.",
+      "Prazo com indiciado solto: 40 dias, contados da instauração do IPM, prorrogável por mais 20 dias, desde que não estejam concluídos exames ou perícias já iniciados ou haja necessidade de diligências indispensáveis à elucidação do fato.",
+      "Pedido de prorrogação: deve ser feito em tempo oportuno, para ser atendido antes do término do prazo; não haverá nova prorrogação além dessa, salvo dificuldade insuperável a juízo do Ministro de Estado competente; laudos e perícias não concluídos são posteriormente remetidos ao juiz para juntada.",
+      "Deduções: são deduzidas dos prazos as interrupções por motivo de suspeição de oficial superior (art. 10, §5º).",
+      "Competência: originária dos comandantes, podendo ser transferida a terceiros por delegação — diferença em relação à polícia judiciária comum, em que o delegado tem competência originária.",
+      "Regras de delegação (art. 7º): deve recair em oficial de posto superior ao do indiciado (§2º); não sendo possível, em oficial do mesmo posto, desde que mais antigo (§3º); se o indiciado é da reserva ou reformado, não prevalece a antiguidade de posto (§4º); e, esgotadas as hipóteses, caberá ao ministro competente designar oficial da reserva de posto mais elevado, podendo avocar o inquérito já iniciado (§5º).",
+      "Posto do encarregado (art. 15): sempre que possível, oficial de posto não inferior ao de capitão ou capitão-tenente; em infração contra a segurança nacional, sempre que possível, oficial superior, atendida a hierarquia se oficial o indiciado.",
+      "Superveniência de indícios: se, no curso do IPM, o encarregado verificar indícios contra oficial de posto superior ao seu ou mais antigo, tomará as providências necessárias para que suas funções sejam delegadas a outros oficiais."
+     ]
+    }
+   ]
+  },
+  "3": {
+   "titulo": "Instauração do IPM e atos cartoriais: portaria, escrivão, despachos e intimações",
+   "legal": "Arts. 10 a 13, 301 e 349 do CPPM",
+   "vf": [
+    {
+     "t": "O IPM é iniciado mediante portaria, não sendo possível instaurá-lo por despacho.",
+     "r": true,
+     "j": "Correto — o próprio legislador apontou que deverá ser confeccionada portaria."
+    },
+    {
+     "t": "Por se tratar de peça indiciária e sigilosa, não há obrigatoriedade de publicação da portaria de instauração em Boletim Interno da OME.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "As portarias de instauração de PADs e IPMs devem mencionar a narração sucinta do fato e, quando possível, a sua autoria.",
+     "r": true,
+     "j": "Correto — e nada impede que normas administrativas imponham outros dados."
+    },
+    {
+     "t": "Se a dinâmica administrativa da unidade impedir a lavratura da portaria pela autoridade originária, o próprio encarregado poderá lavrá-la, servindo o instrumento também para a nomeação do escrivão.",
+     "r": true,
+     "j": "Correto — fazendo-se tudo em um ato só."
+    },
+    {
+     "t": "A designação do escrivão deve recair em 2º ou 1º tenente se o indiciado for oficial, e em sargento, subtenente ou suboficial nos demais casos.",
+     "r": true,
+     "j": "Correto — art. 11 do CPPM."
+    },
+    {
+     "t": "O escrivão prestará compromisso de manter o sigilo do inquérito e de cumprir fielmente as determinações do CPPM.",
+     "r": true,
+     "j": "Correto — parágrafo único do art. 11; o termo de nomeação deve ser seguido imediatamente do termo de compromisso."
+    },
+    {
+     "t": "O aguardamento da delegação obsta que o oficial de dia ou de serviço tome as providências cabíveis previstas no art. 12.",
+     "r": false,
+     "j": "Falso. O art. 10, §2º, é expresso: o aguardamento da delegação NÃO obsta que o oficial responsável por comando, direção ou chefia, ou quem o substitua ou esteja de dia, de serviço ou de quarto, tome ou determine que sejam tomadas imediatamente as providências cabíveis."
+    },
+    {
+     "t": "Entre as providências imediatas do art. 12 estão dirigir-se ao local preservando o estado das coisas, apreender instrumentos e objetos, efetuar a prisão do infrator e colher provas.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Na formação do inquérito, o encarregado deve ouvir primeiro o indiciado, depois o ofendido e por último as testemunhas.",
+     "r": false,
+     "j": "Falso — a ordem do art. 13 é: ouvir o OFENDIDO (1º), o INDICIADO (2º) e as TESTEMUNHAS (3º)."
+    },
+    {
+     "t": "O encarregado pode proceder à reprodução simulada dos fatos, desde que esta não contrarie a moralidade ou a ordem pública, nem atente contra a hierarquia ou a disciplina militar.",
+     "r": true,
+     "j": "Correto — parágrafo único do art. 13."
+    },
+    {
+     "t": "É no despacho ordinatório que o encarregado escolhe as provas que pretende produzir naquela fase da apuração.",
+     "r": true,
+     "j": "Correto — é imprescindível refletir sobre o objeto apuratório para delimitar, no mínimo de despachos possível, todas as provas vislumbradas."
+    },
+    {
+     "t": "A certidão deve ser feita assim que a última ordem do despacho for cumprida, não se exigindo que se tenha obtido a resposta pretendida, mas a provocação da medida.",
+     "r": true,
+     "j": "Correto — ex.: certifico que intimei as testemunhas X e Y para comparecerem à audiência."
+    },
+    {
+     "t": "A juntada refere-se a todos os documentos do IPM, inclusive aos ofícios expedidos pelo próprio inquérito.",
+     "r": false,
+     "j": "Falso. A juntada refere-se APENAS aos documentos estranhos ao IPM — não se faz juntada de ofícios expedidos pelo próprio inquérito, mas apenas das respostas que se juntarem aos autos."
+    },
+    {
+     "t": "Civis podem ser intimados por intimação assinada pelo encarregado, sem necessidade de autorização judicial ou do comandante.",
+     "r": true,
+     "j": "Correto — é discricionário do encarregado no exercício do seu múnus."
+    },
+    {
+     "t": "A intimação assinada pelo encarregado corresponde a ordem de condução coercitiva.",
+     "r": false,
+     "j": "Falso. NÃO corresponde: a condução coercitiva é determinada pelo juiz. Se a oitiva do indiciado que se recusou a atender for indispensável, o encarregado deve noticiar o fato ao juiz, pleiteando a condução coercitiva."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a portaria de instauração do IPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "É o documento que inaugura o inquérito.",
+      "Não é possível instaurar IPM por despacho.",
+      "Deve mencionar a narração sucinta do fato e, quando possível, a autoria.",
+      "É obrigatória a sua publicação em Boletim Interno da OME.",
+      "Pode, em certas hipóteses, ser lavrada pelo próprio encarregado, servindo também para nomear o escrivão."
+     ],
+     "c": 3,
+     "j": "Por se tratar de peça indiciária e sigilosa, não há obrigatoriedade de publicação em BI."
+    },
+    {
+     "e": "Sobre a ordem das oitivas na formação do inquérito (art. 13 do CPPM), assinale a alternativa CORRETA:",
+     "a": [
+      "Indiciado, ofendido e testemunhas.",
+      "Testemunhas, ofendido e indiciado.",
+      "Ofendido, indiciado e testemunhas.",
+      "Ofendido, testemunhas e indiciado.",
+      "Indiciado, testemunhas e ofendido."
+     ],
+     "c": 2,
+     "j": "O art. 13 estabelece: ouvir o ofendido (b), ouvir o indiciado (c) e ouvir testemunhas (d)."
+    },
+    {
+     "e": "Sobre a designação do escrivão, assinale a alternativa INCORRETA:",
+     "a": [
+      "Cabe ao encarregado, se não tiver sido feita pela autoridade que lhe deu delegação.",
+      "Recai em 2º ou 1º tenente, se o indiciado for oficial.",
+      "Recai em sargento, subtenente ou suboficial nos demais casos.",
+      "O escrivão presta compromisso de manter o sigilo do inquérito.",
+      "O termo de nomeação dispensa termo de compromisso subsequente."
+     ],
+     "c": 4,
+     "j": "O termo de nomeação do escrivão deve ser seguido IMEDIATAMENTE do termo de compromisso."
+    },
+    {
+     "e": "Sobre os atos cartoriais, assinale a alternativa CORRETA:",
+     "a": [
+      "O recebimento é lançado pelo encarregado.",
+      "A certidão exige que se tenha obtido a resposta pretendida.",
+      "A juntada alcança os ofícios expedidos pelo próprio IPM.",
+      "O recebimento registra o dia em que os autos retornam ao escrivão após lançados os despachos ordinatórios.",
+      "Os atos cartoriais não podem ser substituídos por carimbos."
+     ],
+     "c": 3,
+     "j": "O recebimento é lançado em folha própria pelo escrivão; a certidão exige apenas a provocação da medida; a juntada refere-se a documentos estranhos ao IPM; e os três atos podem ser substituídos por carimbos apostos no verso da folha de despachos."
+    },
+    {
+     "e": "Sobre a intimação no IPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "Civis podem ser intimados por intimação assinada pelo encarregado.",
+      "O comparecimento de servidor público, inclusive militar, será requisitado ao respectivo chefe.",
+      "O comparecimento é obrigatório, salvo motivo de força maior devidamente justificado.",
+      "A testemunha que faltar sem justo motivo pode ser conduzida por oficial de justiça e multada.",
+      "A intimação assinada pelo encarregado equivale a ordem de condução coercitiva."
+     ],
+     "c": 4,
+     "j": "A condução coercitiva é determinada pelo juiz; ao encarregado cabe noticiar o fato e pleiteá-la."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique a instauração do IPM: portaria, nomeação do escrivão, autos conclusos e despacho ordinatório.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Portaria: o IPM é iniciado mediante portaria, não sendo possível instaurá-lo por despacho, pois o próprio legislador apontou a necessidade da portaria; por ser peça indiciária e sigilosa, não há obrigatoriedade de publicação em BI da OME.",
+      "Conteúdo da portaria: comandantes, chefes ou diretores devem mencionar a narração sucinta do fato e, quando possível, a autoria; sugere-se responder a quatro perguntas — quem (dados do acusado e do ofendido), quando (data do fato), onde (local) e o que (fato a ser apurado).",
+      "Hipótese especial: se a dinâmica administrativa impedir a lavratura da portaria pela autoridade originária, o próprio encarregado a lavrará, podendo o instrumento servir para substituir a nomeação do escrivão, fazendo-se tudo em um ato só.",
+      "Nomeação do escrivão (art. 11): cabe ao encarregado, se não feita pela autoridade delegante, recaindo em 2º ou 1º tenente se o indiciado for oficial, e em sargento, subtenente ou suboficial nos demais casos; o escrivão presta compromisso de manter o sigilo e cumprir o CPPM, devendo o termo de nomeação ser seguido imediatamente do termo de compromisso.",
+      "Funções do escrivão: prestar toda assistência ao encarregado, reunir e ordenar as peças do IPM, digitar as oitivas, numerar, receber documentos e guardar os autos em local protegido.",
+      "Autos conclusos: prestado o compromisso e autuados os documentos, a primeira parte do IPM está pronta — conclusa; sempre que uma determinação for cumprida e os autos estiverem prontos para nova movimentação, o escrivão deve consigná-lo, por termo próprio ou carimbo no verso da última folha.",
+      "Despacho ordinatório: conclusos os autos, retornam ao encarregado, que dá as primeiras determinações instrutórias; é nele que o encarregado escolhe as provas que pretende produzir, devendo delimitar, no mínimo de despachos possível, todas as provas vislumbradas."
+     ]
+    },
+    {
+     "e": "Explique os atos cartoriais do IPM (recibo, certidão e juntada) e as regras de intimação de civis e militares.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Recebimento (recibo): registro do dia em que os autos retornam ao escrivão após lançados os despachos ordinatórios; cabe ao escrivão providenciar o cumprimento de todas as ordens, sendo o recebimento lançado em folha própria.",
+      "Certidão: feita assim que a última ordem do despacho for cumprida; não se exige que se tenha a resposta pretendida, mas a provocação da medida — por exemplo, certificar que intimou as testemunhas para comparecerem à audiência.",
+      "Juntada: refere-se apenas aos documentos estranhos ao IPM — não se faz juntada de ofícios expedidos pelo próprio inquérito, mas apenas das respostas que se juntarem aos autos, com a data do último documento recebido.",
+      "Juntada de documento não decorrente de despacho: deve passar pelo encarregado, que determinará a punho, no canto superior, a expressão “junte-se”, seguida de data e rubrica.",
+      "Forma: os três atos podem ser substituídos por carimbos apostos preferencialmente no verso da folha de despachos; sem carimbos, lança-se mão de folha com os termos.",
+      "Intimação de civis: pode ser feita por intimação assinada pelo encarregado, sem necessidade de autorização judicial ou do comandante — é discricionário do encarregado no exercício do seu múnus.",
+      "Intimação de militares e servidores (art. 349): o comparecimento será requisitado ao respectivo chefe pela autoridade que ordenar a notificação; se o militar é da mesma OME do encarregado, basta oficiar o comandante da companhia ou o chefe da 1ª Seção, pois o encarregado já atua por delegação do comandante; sendo de outra OME, oficia-se o comandante daquela unidade.",
+      "Consequências da ausência: o comparecimento é obrigatório, salvo força maior justificada; a testemunha regularmente notificada que faltar sem justo motivo será conduzida por oficial de justiça e multada, podendo o juiz impor prisão de até 15 dias em caso de recusa ou resistência, sem prejuízo da persecução pelo crime de desobediência. A intimação do encarregado não equivale a condução coercitiva, que é determinada pelo juiz."
+     ]
+    }
+   ]
+  },
+  "4": {
+   "titulo": "Provas no IPM: depoimentos, interrogatório, acareação, perícias e reconhecimento",
+   "legal": "Arts. 19, 156, 300, 301, 305, 306, 328, 346, 361 e 365 a 368 do CPPM",
+   "vf": [
+    {
+     "t": "As testemunhas e o indiciado devem ser ouvidos durante o dia, entre as sete e as dezoito horas, salvo caso de urgência inadiável que constará da respectiva assentada.",
+     "r": true,
+     "j": "Correto — art. 19 do CPPM."
+    },
+    {
+     "t": "A testemunha não será inquirida por mais de quatro horas consecutivas, sendo-lhe facultado descanso de meia hora sempre que tiver de prestar declarações além daquele termo.",
+     "r": true,
+     "j": "Correto — art. 19, §2º; o depoimento não concluído às dezoito horas será encerrado para prosseguir no dia seguinte."
+    },
+    {
+     "t": "O interrogatório é voltado ao imputado; a testemunha depõe, não havendo interrogatório para ela.",
+     "r": true,
+     "j": "Correto — o interrogatório compõe-se da qualificação e das perguntas do art. 306."
+    },
+    {
+     "t": "A parte final do art. 305 do CPPM, segundo a qual o silêncio do acusado poderá ser interpretado em prejuízo da própria defesa, foi recepcionada pela Constituição.",
+     "r": false,
+     "j": "Falso. Essa parte final NÃO foi recepcionada pela CF, pois prevalece o nemo tenetur se detegere — o direito de permanecer em silêncio."
+    },
+    {
+     "t": "São três as maneiras de confeccionar um termo de depoimento: meramente expositivo, cerimonial e misto.",
+     "r": true,
+     "j": "Correto — no expositivo registram-se apenas as respostas com “QUE’s”; no cerimonial (art. 300) registra-se “PERGUNTADO” e “RESPONDEU”; e o misto reúne os dois modelos."
+    },
+    {
+     "t": "O falso testemunho no CPM é punido com reclusão de dois a seis anos, sendo a pena aumentada de um terço se praticado mediante suborno.",
+     "r": true,
+     "j": "Correto — art. 346 do CPM; o fato deixa de ser punível se, antes da sentença, o agente se retrata ou declara a verdade."
+    },
+    {
+     "t": "O encarregado pode dar voz de prisão em flagrante à testemunha que mentir durante o depoimento.",
+     "r": false,
+     "j": "Falso. O falso testemunho não é passível de flagrante: a verdade só poderá ser definida ao término da apuração, e o próprio legislador prevê a retratação (arts. 346 do CPM e 342 do CP)."
+    },
+    {
+     "t": "Não prestam compromisso os ascendentes, descendentes, afins em linha reta, o cônjuge, o irmão do acusado e quem com ele tenha vínculo de adoção, salvo quando não for possível obter a prova por outro modo.",
+     "r": true,
+     "j": "Correto — assim como as pessoas que, em razão da função, ministério ou profissão, devam guardar segredo, salvo se desobrigadas pela parte interessada."
+    },
+    {
+     "t": "A acareação é meio de prova inicial, podendo ser determinada antes de qualquer depoimento.",
+     "r": false,
+     "j": "Falso. A acareação é meio de prova ACESSÓRIO, cabível apenas para dirimir pontos controversos entre depoimentos."
+    },
+    {
+     "t": "É possível haver acareação com uma só pessoa presente, dando-se a conhecer a ela os pontos de divergência das declarações da testemunha ausente.",
+     "r": true,
+     "j": "Correto — art. 367 do CPPM."
+    },
+    {
+     "t": "No curso do IPM, o encarregado poderá expedir carta precatória à autoridade militar superior do local onde a testemunha estiver servindo ou residindo, a fim de notificá-la e inquiri-la.",
+     "r": true,
+     "j": "Correto — art. 361; com a precatória enviam-se cópias da parte que deu origem ao inquérito, da portaria e os quesitos formulados."
+    },
+    {
+     "t": "O ofício de requisição de perícia precisa ser assinado pelo comandante da OME, não bastando a assinatura do encarregado.",
+     "r": false,
+     "j": "Falso. O ofício NÃO precisa ser assinado pelo comandante da OME: basta a assinatura do encarregado, pois a requisição de perícias é competência sua (art. 13, “f”)."
+    },
+    {
+     "t": "Se a infração deixar vestígios, será indispensável o exame de corpo de delito, direto ou indireto, não podendo supri-lo a confissão do acusado.",
+     "r": true,
+     "j": "Correto — art. 328 do CPPM."
+    },
+    {
+     "t": "O exame de sanidade mental pode ser ordenado na fase do inquérito policial militar, por iniciativa do encarregado.",
+     "r": true,
+     "j": "Correto — art. 156, §2º, do CPPM."
+    },
+    {
+     "t": "No reconhecimento de pessoas, a primeira providência é colocar o reconhecendo ao lado de outras pessoas semelhantes.",
+     "r": false,
+     "j": "Falso. A primeira providência (art. 368, “a”) é convidar quem fará o reconhecimento a DESCREVER a pessoa que deve ser reconhecida; só depois vem a colocação ao lado de pessoas semelhantes."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a inquirição no IPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "Testemunhas e indiciado devem ser ouvidos entre as sete e as dezoito horas.",
+      "Admite-se a inquirição fora desse período em caso de urgência inadiável, que constará da assentada.",
+      "A testemunha não será inquirida por mais de quatro horas consecutivas.",
+      "Facultado o descanso de meia hora quando o depoimento exceder aquele termo.",
+      "O depoimento não concluído às dezoito horas deve ser encerrado definitivamente, sem prosseguimento."
+     ],
+     "c": 4,
+     "j": "O depoimento é encerrado para PROSSEGUIR no dia seguinte, em hora determinada pelo encarregado; não sendo útil o dia seguinte, adia-se para o primeiro dia útil, salvo urgência."
+    },
+    {
+     "e": "Sobre o interrogatório do imputado, assinale a alternativa CORRETA:",
+     "a": [
+      "A testemunha também é interrogada.",
+      "O silêncio do acusado pode ser interpretado em prejuízo da própria defesa.",
+      "O interrogatório compõe-se da qualificação e das perguntas do art. 306, sendo oportunidade de o imputado apresentar sua versão.",
+      "O rol de perguntas do art. 306 é taxativo.",
+      "O imputado é obrigado a responder a todas as perguntas."
+     ],
+     "c": 2,
+     "j": "O rol do art. 306 é exemplificativo; prevalece o direito ao silêncio (nemo tenetur se detegere), não tendo sido recepcionada a parte final do art. 305 que autorizava interpretar o silêncio em prejuízo da defesa."
+    },
+    {
+     "e": "Sobre a acareação, assinale a alternativa INCORRETA:",
+     "a": [
+      "É admitida tanto na instrução criminal quanto no inquérito.",
+      "Cabe sempre que houver divergência em declarações sobre fatos ou circunstâncias relevantes.",
+      "Pode ocorrer entre acusados, entre testemunhas, entre acusado e testemunha e entre ofendidos.",
+      "É meio de prova inicial, apto a iniciar a investigação.",
+      "Da acareação lavra-se termo, com as perguntas e respostas."
+     ],
+     "c": 3,
+     "j": "A acareação é meio de prova ACESSÓRIO, cabível apenas para dirimir pontos controversos entre depoimentos já colhidos."
+    },
+    {
+     "e": "Sobre as perícias no IPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "A requisição de perícia é competência do encarregado, prevista no art. 13, “f”, do CPPM.",
+      "O ofício de requisição basta ser assinado pelo encarregado.",
+      "Se a infração deixar vestígios, é indispensável o exame de corpo de delito, direto ou indireto.",
+      "A confissão do acusado supre o exame de corpo de delito.",
+      "O encarregado pode nomear perito ad hoc para áreas que não domina."
+     ],
+     "c": 3,
+     "j": "O art. 328 é expresso: a confissão do acusado NÃO pode suprir o exame de corpo de delito."
+    },
+    {
+     "e": "Sobre o reconhecimento de pessoas, assinale a alternativa CORRETA:",
+     "a": [
+      "Inicia-se pela colocação do reconhecendo ao lado de outras pessoas semelhantes.",
+      "A providência de evitar que o reconhecedor seja visto aplica-se também no curso do processo.",
+      "A primeira providência é convidar o reconhecedor a descrever a pessoa que deve ser reconhecida.",
+      "Dispensa-se a lavratura de termo.",
+      "O imputado é obrigado a participar do procedimento."
+     ],
+     "c": 2,
+     "j": "Art. 368, “a”. A providência da alínea “c” só tem aplicação no curso do inquérito; lavra-se termo pormenorizado subscrito pela autoridade, pelo reconhecedor e por duas testemunhas; e o imputado não é obrigado a participar (nemo tenetur se detegere)."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique as regras de tomada de depoimento no IPM, as formas do termo e o tratamento do falso testemunho.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Horário (art. 19): testemunhas e indiciado devem ser ouvidos durante o dia, entre as sete e as dezoito horas, salvo caso de urgência inadiável que constará da respectiva assentada; o escrivão lavra assentada do dia e hora do início, das interrupções e do encerramento.",
+      "Limite de tempo (art. 19, §2º): a testemunha não será inquirida por mais de quatro horas consecutivas, facultado descanso de meia hora; o depoimento não concluído às dezoito horas é encerrado para prosseguir no dia seguinte, em hora determinada pelo encarregado, ou no primeiro dia útil, salvo urgência.",
+      "Formas do termo: meramente expositivo (apenas as respostas, com “QUE’s” em caixa alta, separadas por ponto e vírgula); cerimonial (art. 300 — “PERGUNTADO” e “RESPONDEU”, em caixa alta, separados por vírgula); e misto, que reúne os dois modelos.",
+      "Interrogatório: voltado ao imputado — a testemunha depõe, não há interrogatório para ela; compõe-se da qualificação e das perguntas do art. 306, que é rol exemplificativo, sendo oportunidade de o imputado apresentar sua versão.",
+      "Direito ao silêncio: a parte final do art. 305, que autorizava interpretar o silêncio em prejuízo da defesa, não foi recepcionada pela Constituição, prevalecendo o nemo tenetur se detegere.",
+      "Falso testemunho: art. 346 do CPM — fazer afirmação falsa, negar ou calar a verdade em inquérito policial, processo administrativo ou judicial militar, com pena de reclusão de dois a seis anos, aumentada de um terço se praticado mediante suborno; o fato deixa de ser punível se, antes da sentença, o agente se retrata ou declara a verdade.",
+      "Impossibilidade de flagrante: o encarregado não pode dar voz de prisão à testemunha que mente, pois a verdade só será definida ao término da apuração e o legislador admite a retratação; sendo a testemunha civil, resta sugerir a extração de peças para que o MP avalie a denúncia na Justiça Comum.",
+      "Dispensa de compromisso: ascendentes, descendentes, afins em linha reta, cônjuge, irmão do acusado e quem tenha com ele vínculo de adoção — salvo quando não for possível obter a prova de outro modo —, além de quem deva guardar segredo em razão de função, ministério ou profissão."
+     ]
+    },
+    {
+     "e": "Explique a acareação, a carta precatória e o reconhecimento de pessoas no âmbito do IPM.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Acareação — natureza: só é cabível para dirimir pontos controversos entre depoimentos; não é meio de prova inicial, mas acessório.",
+      "Acareação — cabimento (art. 365): admitida na instrução criminal e no inquérito, sempre que houver divergência em declarações sobre fatos ou circunstâncias relevantes, entre acusados, entre testemunhas, entre acusado e testemunha, entre acusado ou testemunha e a pessoa ofendida, e entre as pessoas ofendidas.",
+      "Acareação — procedimento (art. 366): a autoridade explica aos acareados os pontos em que divergem e os reinquire, cada um de per si e na presença do outro, lavrando-se termo com perguntas e respostas; ausente uma das testemunhas, dão-se a conhecer à presente os pontos de divergência, consignando-se o que explicar (art. 367).",
+      "Carta precatória (art. 361): no curso do IPM, o encarregado pode expedi-la à autoridade militar superior do local onde a testemunha estiver servindo ou residindo, a fim de notificá-la e inquiri-la, ou designar oficial que a inquira, atendidas as normas de hierarquia se militar a testemunha; envia-se com ela cópia da parte que deu origem ao inquérito, da portaria de abertura e os quesitos formulados. Diz-se deprecante quem pede a diligência e deprecada a autoridade que a cumpre.",
+      "Reconhecimento de pessoas (art. 368): convida-se o reconhecedor a descrever a pessoa a ser reconhecida; coloca-se o reconhecendo, se possível, ao lado de outras que com ele tenham semelhança; e, havendo receio de intimidação, providencia-se para que o reconhecedor não seja visto — providência aplicável apenas no curso do inquérito.",
+      "Formalização: do ato lavra-se termo pormenorizado, subscrito pela autoridade, pelo reconhecedor e por duas testemunhas presenciais; o imputado não é obrigado a participar; e a prova exige muita cautela, por ser a mais falha e precária, em razão das falsas memórias.",
+      "Reconhecimento fotográfico: não previsto expressamente em lei, mas admissível; exige três peças — o termo, a folha de reconhecimento (fotos padronizadas 3x4 de militares uniformizados, identificadas apenas por números) e a folha de confrontação (as mesmas imagens, com matrícula e nome de guerra)."
+     ]
+    }
+   ]
+  },
+  "5": {
+   "titulo": "Prisões na fase de investigação e o relatório do IPM",
+   "legal": "Arts. 18, 22, 225 e 243 do CPPM; art. 5º, LXI, da CF",
+   "vf": [
+    {
+     "t": "Independentemente de flagrante delito, o indiciado poderá ficar detido durante as investigações policiais até trinta dias, comunicando-se a detenção à autoridade judiciária competente.",
+     "r": true,
+     "j": "Correto — art. 18 do CPPM; o prazo é prorrogável por mais vinte dias pelo comandante da Região, Distrito Naval ou Zona Aérea, mediante solicitação fundamentada do encarregado, por via hierárquica."
+    },
+    {
+     "t": "A detenção do art. 18 do CPPM confunde-se com a prisão preventiva.",
+     "r": false,
+     "j": "Falso. Não se confunde nem com a prisão em flagrante nem com a preventiva — é ferramenta discricionária do encarregado."
+    },
+    {
+     "t": "A detenção do art. 18 é constitucional na hipótese de crime propriamente militar, à luz do art. 5º, LXI, da CF.",
+     "r": true,
+     "j": "Correto — a CF ressalva os casos de transgressão militar ou crime propriamente militar, definidos em lei."
+    },
+    {
+     "t": "Crimes propriamente militares são aqueles que só podem ser praticados por militares, com exceção da insubmissão.",
+     "r": true,
+     "j": "Correto — exemplo clássico: a deserção."
+    },
+    {
+     "t": "São três as prisões admitidas na fase de investigação policial militar: preventiva, em flagrante e detenção pelo encarregado do IPM.",
+     "r": true,
+     "j": "Correto — a prisão temporária não se aplica aos crimes militares; a menagem também é possível no curso do IPM."
+    },
+    {
+     "t": "A prisão temporária da Lei nº 7.960/1989 aplica-se normalmente aos crimes militares.",
+     "r": false,
+     "j": "Falso. Não se aplica aos crimes militares."
+    },
+    {
+     "t": "O mandado de prisão expedido pela autoridade judiciária ou pelo encarregado do inquérito deve ser lavrado em duas vias, designar a pessoa sujeita à prisão, mencionar o motivo e designar o executor.",
+     "r": true,
+     "j": "Correto — art. 225 do CPPM; é lavrado pelo escrivão do processo ou do inquérito, ou ad hoc, e assinado pela autoridade que ordenar a expedição."
+    },
+    {
+     "t": "São requisitos da prisão decretada pelo encarregado do IPM a existência do crime e indícios de autoria, o perigo na liberdade do investigado, a imprescindibilidade para o IPM e a inexistência de outros meios legais para o objetivo.",
+     "r": true,
+     "j": "Correto — quatro requisitos."
+    },
+    {
+     "t": "Representada a prisão preventiva, basta encaminhar ao juiz a representação, dispensando-se cópia dos autos.",
+     "r": false,
+     "j": "Falso. Uma cópia INTEGRAL dos autos deve ser encaminhada junto à representação, para deliberação do juiz."
+    },
+    {
+     "t": "O relatório é a peça mais importante do IPM, e a partir dele o comandante, autoridade de PJM originária, expedirá sua solução.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O inquérito será encerrado com minucioso relatório, no qual o encarregado mencionará as diligências feitas, as pessoas ouvidas e os resultados obtidos, com indicação do dia, hora e lugar do fato delituoso.",
+     "r": true,
+     "j": "Correto — art. 22 do CPPM; em conclusão, dirá se há infração disciplinar a punir ou indício de crime."
+    },
+    {
+     "t": "A parte final do art. 22, que determina ao encarregado pronunciar-se sobre a conveniência da prisão preventiva, foi integralmente recepcionada pela Constituição.",
+     "r": false,
+     "j": "Falso. O material indica que a parte final NÃO foi recepcionada pela CF."
+    },
+    {
+     "t": "No relatório, o encarregado deve dizer de forma clara e objetiva se indicia ou deixa de indiciar o imputado, mencionando o tipo penal ou o motivo de não indiciar.",
+     "r": true,
+     "j": "Correto — e a decisão em sede de IPM é meramente provisória."
+    },
+    {
+     "t": "Havendo transgressão disciplinar, pode-se opinar pela extração de cópias das peças para dar lastro à instauração de PADE.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Se o encarregado não estiver convencido do cometimento ou não de infração penal, deve necessariamente indiciar o imputado.",
+     "r": false,
+     "j": "Falso. Poderá dizer por que não está convencido e relacionar diligências não encerradas, para que o MP decida sobre a conveniência de ofertar a denúncia ou devolver para novas diligências."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a detenção prevista no art. 18 do CPPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "Independe de flagrante delito.",
+      "Pode durar até trinta dias, comunicando-se à autoridade judiciária competente.",
+      "É prorrogável por mais vinte dias pelo comandante da Região, Distrito Naval ou Zona Aérea.",
+      "É ferramenta discricionária do encarregado.",
+      "Confunde-se com a prisão preventiva, tendo os mesmos requisitos."
+     ],
+     "c": 4,
+     "j": "Não se confunde nem com a prisão em flagrante nem com a preventiva; sua constitucionalidade decorre da ressalva do art. 5º, LXI, da CF quanto aos crimes propriamente militares."
+    },
+    {
+     "e": "Assinale a alternativa que apresenta as prisões admitidas na fase de investigação policial militar:",
+     "a": [
+      "Preventiva, temporária e em flagrante.",
+      "Preventiva, em flagrante e detenção pelo encarregado do IPM.",
+      "Temporária, em flagrante e menagem.",
+      "Preventiva, temporária e detenção pelo encarregado.",
+      "Somente a prisão em flagrante."
+     ],
+     "c": 1,
+     "j": "A prisão temporária não se aplica aos crimes militares. A menagem também é possível no curso do IPM, mas o rol das três prisões é o indicado."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a um requisito da prisão decretada pelo encarregado do IPM:",
+     "a": [
+      "Existência do crime e indícios de autoria.",
+      "Perigo na liberdade do investigado.",
+      "Imprescindibilidade para o IPM.",
+      "Inexistência de outros meios legais para o objetivo.",
+      "Concordância expressa do indiciado."
+     ],
+     "c": 4,
+     "j": "Os quatro requisitos são os das alternativas anteriores; a concordância do indiciado é irrelevante."
+    },
+    {
+     "e": "Sobre o relatório do IPM, assinale a alternativa INCORRETA:",
+     "a": [
+      "É a peça mais importante do inquérito.",
+      "Deve mencionar as diligências feitas, as pessoas ouvidas e os resultados obtidos.",
+      "Deve indicar o dia, a hora e o lugar do fato delituoso.",
+      "Deve concluir se há infração disciplinar a punir ou indício de crime.",
+      "Sua conclusão sobre o indiciamento é definitiva e vincula o Ministério Público."
+     ],
+     "c": 4,
+     "j": "A decisão em sede de IPM é meramente provisória; o MP pode denunciar, não denunciar ou pedir novas diligências, e o arquivamento cabe ao juiz."
+    },
+    {
+     "e": "Sobre o mandado de prisão no âmbito do IPM, assinale a alternativa CORRETA:",
+     "a": [
+      "Basta ser verbal, dispensando-se forma escrita.",
+      "Deve ser expedido em duas vias, designar a pessoa presa, mencionar o motivo e designar o executor.",
+      "É lavrado pelo próprio indiciado.",
+      "Dispensa a assinatura da autoridade que ordena a expedição.",
+      "Não admite escrivão ad hoc."
+     ],
+     "c": 1,
+     "j": "Art. 225 do CPPM — o mandado é lavrado pelo escrivão do processo ou do inquérito, ou ad hoc, e assinado pela autoridade que ordenar a expedição."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique a detenção do art. 18 do CPPM, seus requisitos e sua constitucionalidade, e indique as prisões admitidas na fase de investigação.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Previsão (art. 18): independentemente de flagrante delito, o indiciado poderá ficar detido durante as investigações policiais até trinta dias, comunicando-se a detenção à autoridade judiciária competente; o prazo é prorrogável por mais vinte dias pelo comandante da Região, Distrito Naval ou Zona Aérea, mediante solicitação fundamentada do encarregado, por via hierárquica.",
+      "Natureza: não se confunde com a prisão em flagrante nem com a preventiva; é ferramenta discricionária do encarregado do inquérito.",
+      "Constitucionalidade: é constitucional na hipótese de crime propriamente militar, pois o art. 5º, LXI, da CF ressalva os casos de transgressão militar ou crime propriamente militar definidos em lei; crimes propriamente militares são os que só podem ser praticados por militares, com exceção da insubmissão — exemplo: deserção.",
+      "Requisitos da medida: existência do crime e indícios de autoria; perigo na liberdade do investigado (periculum libertatis); imprescindibilidade para o IPM; e inexistência de outros meios legais para alcançar o objetivo.",
+      "Formalização (art. 225): mandado em duas vias, lavrado pelo escrivão do processo ou do inquérito, ou ad hoc, assinado pela autoridade que ordenar a expedição, designando a pessoa sujeita à prisão com identificação e moradia, mencionando o motivo e designando o executor.",
+      "Prisões admitidas na investigação: preventiva, em flagrante e detenção pelo encarregado do IPM; a prisão temporária não se aplica aos crimes militares, e a menagem também é possível no curso do inquérito.",
+      "Representação pela preventiva: uma cópia integral dos autos deve ser encaminhada junto à representação, para deliberação do juiz."
+     ]
+    },
+    {
+     "e": "Explique o relatório do IPM: conteúdo, conclusão e efeitos.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Importância: o relatório é a peça mais importante do IPM; a partir dele o comandante, autoridade de PJM originária, expedirá sua solução.",
+      "Conteúdo (art. 22): o inquérito será encerrado com minucioso relatório, em que o encarregado mencionará as diligências feitas, as pessoas ouvidas e os resultados obtidos, com indicação do dia, hora e lugar onde ocorreu o fato delituoso.",
+      "Conclusão: dirá se há infração disciplinar a punir ou indício de crime; a parte final do dispositivo, que determina pronunciar-se sobre a conveniência da prisão preventiva, não foi recepcionada pela Constituição.",
+      "Indiciamento: o encarregado deve dizer, de forma clara e objetiva, se indicia ou deixa de indiciar o imputado, mencionando o tipo penal ou o motivo de não indiciar; a decisão em sede de IPM é meramente provisória.",
+      "Transgressão disciplinar: havendo transgressão, pode-se opinar pela extração de cópias das peças, para dar lastro à instauração de PADE.",
+      "Dúvida do encarregado: não estando convencido do cometimento ou não de infração penal, poderá dizer por que não está convencido e relacionar diligências não encerradas, para que o MP decida entre ofertar denúncia ou devolver para novas diligências — nesse caso, o encaminhamento se dá ao juiz, que devolve ao encarregado para proceder."
+     ]
+    }
+   ]
+  },
+  "6": {
+   "titulo": "Auto de Prisão em Flagrante Delito Militar (APFDM)",
+   "legal": "Arts. 27, 243 a 248, 251 e 262 do CPPM; Resolução nº 213/2015 do CNJ",
+   "vf": [
+    {
+     "t": "Há um rol de militares que, mesmo não exercendo o papel de comandante, têm competência para instaurar procedimento de polícia judiciária militar limitada ao APFDM e sem poder de delegação — é a autoridade de PJM originária mitigada.",
+     "r": true,
+     "j": "Correto — oficial de dia, de serviço ou de quarto e autoridade correspondente."
+    },
+    {
+     "t": "A autoridade originária mitigada pode instaurar APFDM, IPM e IPD.",
+     "r": false,
+     "j": "Falso. Sua competência é limitada à lavratura do APFDM — não pode instaurar IPM nem IPD, e não pode delegar."
+    },
+    {
+     "t": "A autoridade originária plena é a dos comandantes em geral, que podem instaurar APFDM, IPM e IPD, além de delegar.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Considera-se em flagrante delito quem está cometendo o crime, acaba de cometê-lo, é perseguido logo após o fato ou é encontrado logo depois com instrumentos ou objetos que façam presumir sua participação.",
+     "r": true,
+     "j": "Correto — art. 244 do CPPM; nas infrações permanentes, o agente está em flagrante enquanto não cessar a permanência."
+    },
+    {
+     "t": "Se o imputado se apresentar espontaneamente, deve-se lavrar o APFDM.",
+     "r": false,
+     "j": "Falso. Não se lavra APFDM: toma-se, em seu lugar, o termo de declarações previsto no art. 262 do CPPM, assinado por duas testemunhas."
+    },
+    {
+     "t": "Qualquer pessoa poderá e os militares deverão prender quem seja encontrado em flagrante delito, ainda que se trate de superior hierárquico.",
+     "r": true,
+     "j": "Correto — art. 243 do CPPM."
+    },
+    {
+     "t": "O flagrante apresenta-se em duas fases: inicia-se com a voz de prisão do condutor, no momento da captura, e encerra-se com a expedição da nota de culpa.",
+     "r": true,
+     "j": "Correto — é ato complexo, que não se completa por um único ato."
+    },
+    {
+     "t": "Após a Resolução nº 213/2015 do CNJ, o exaurimento do flagrante só se dá após a audiência de custódia.",
+     "r": true,
+     "j": "Correto — instituto inspirado no art. 7º, V, do Pacto de San José da Costa Rica e no Pacto Internacional sobre Direitos Civis e Políticos, em prática desde 2016."
+    },
+    {
+     "t": "No APFDM cabe liberdade provisória com fiança fixada pelo presidente do auto.",
+     "r": false,
+     "j": "Falso. No APFDM NÃO cabe liberdade provisória, com ou sem fiança — diferentemente do APFD comum."
+    },
+    {
+     "t": "Não há lavratura de TCO nos crimes militares, por vedação expressa do art. 90-A da Lei nº 9.099/95.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O APFD, após a reforma, passou a ser confeccionado com depoimentos individualizados, enquanto o APFDM segue o modelo antigo, em que todos assinam conjuntamente um só termo sequenciado.",
+     "r": true,
+     "j": "Correto — é uma das diferenças formais entre os dois autos."
+    },
+    {
+     "t": "O APFDM pode dispensar o IPM, constituindo ele próprio o inquérito, se por si só for suficiente para a elucidação do fato e sua autoria.",
+     "r": true,
+     "j": "Correto — art. 27 do CPPM, ressalvados o exame de corpo de delito no crime que deixe vestígios, a identificação da coisa e sua avaliação, quando o valor influir na pena."
+    },
+    {
+     "t": "Na coleta de depoimentos do APFDM, a sequência é: condutor, testemunhas, ofendido e, por último, o imputado.",
+     "r": true,
+     "j": "Correto — a primeira folha deve ser rubricada por todos e a última assinada por todos."
+    },
+    {
+     "t": "A falta de testemunhas impede a lavratura do APFDM.",
+     "r": false,
+     "j": "Falso. A falta de testemunhas não impede o APFDM, que será assinado por, pelo menos, duas pessoas que hajam testemunhado a apresentação do preso."
+    },
+    {
+     "t": "O auto de prisão em flagrante deve ser remetido imediatamente ao juiz competente e, no máximo, em cinco dias, se depender das diligências do art. 246.",
+     "r": true,
+     "j": "Correto — art. 251 do CPPM."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre as autoridades competentes para a lavratura do APFDM, assinale a alternativa INCORRETA:",
+     "a": [
+      "A autoridade originária plena é a dos comandantes em geral.",
+      "A autoridade originária plena pode instaurar APFDM, IPM e IPD e pode delegar.",
+      "A autoridade originária mitigada abrange o oficial de dia, de serviço ou de quarto.",
+      "A autoridade originária mitigada tem competência limitada ao APFDM e não pode delegar.",
+      "A autoridade delegada recebe atribuição genérica e por prazo indeterminado."
+     ],
+     "c": 4,
+     "j": "A autoridade delegada é o oficial da ativa designado por autoridade superior (art. 7º, §1º), que recebe atribuição ESPECÍFICA e por TEMPO LIMITADO, conforme os termos da delegação."
+    },
+    {
+     "e": "Sobre as diferenças entre o APFD e o APFDM, assinale a alternativa INCORRETA:",
+     "a": [
+      "No APFDM não cabe liberdade provisória, com ou sem fiança.",
+      "Não há lavratura de TCO nos crimes militares.",
+      "O APFD é confeccionado com depoimentos individualizados; o APFDM, em termo sequenciado assinado por todos.",
+      "O APFDM pode dispensar o IPM, constituindo ele próprio o inquérito.",
+      "O relaxamento da prisão pelo encarregado é possível apenas no APFD."
+     ],
+     "c": 4,
+     "j": "O relaxamento pelo encarregado é possível em ambos — embora a expressão seja discutível no APFDM, pois, entendendo inexistir infração, o presidente não expede nota de culpa e por isso não se configura a prisão."
+    },
+    {
+     "e": "Sobre a apresentação espontânea do imputado, assinale a alternativa CORRETA:",
+     "a": [
+      "Lavra-se normalmente o APFDM.",
+      "Toma-se o termo de declarações do art. 262 do CPPM, assinado por duas testemunhas.",
+      "Determina-se de imediato a prisão preventiva.",
+      "Impede qualquer providência da autoridade militar.",
+      "Converte-se automaticamente em IPM."
+     ],
+     "c": 1,
+     "j": "Comparecendo espontaneamente o indiciado ou acusado, tomam-se por termo as declarações que fizer; não perante a autoridade judiciária, a esta serão apresentados o termo e o indiciado, para deliberação sobre a preventiva ou outra medida cabível."
+    },
+    {
+     "e": "Sobre a sequência de depoimentos no APFDM, assinale a alternativa CORRETA:",
+     "a": [
+      "Imputado, condutor, testemunhas e ofendido.",
+      "Condutor, testemunhas, ofendido e imputado.",
+      "Testemunhas, condutor, imputado e ofendido.",
+      "Ofendido, imputado, condutor e testemunhas.",
+      "Condutor, imputado, ofendido e testemunhas."
+     ],
+     "c": 1,
+     "j": "A sequência é: 1º condutor, 2º testemunhas, 3º ofendido e, por último, o imputado (preso)."
+    },
+    {
+     "e": "Sobre as providências após a lavratura do APFDM, assinale a alternativa INCORRETA:",
+     "a": [
+      "Se das respostas resultarem fundadas suspeitas, a autoridade mandará recolher o conduzido à prisão.",
+      "Procede-se, se for o caso, a exame de corpo de delito, busca e apreensão dos instrumentos do crime e demais diligências.",
+      "Verificada a manifesta inexistência de infração penal militar, relaxa-se a prisão.",
+      "Tratando-se de infração penal comum, remete-se o preso à autoridade civil competente.",
+      "O auto deve ser remetido ao juiz no prazo máximo de trinta dias."
+     ],
+     "c": 4,
+     "j": "O auto deve ser remetido IMEDIATAMENTE ao juiz competente e, no máximo, em CINCO dias, se depender das diligências previstas no art. 246."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Explique a competência para a lavratura do APFDM, distinguindo autoridade originária plena, originária mitigada e delegada.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Base legal: art. 245 do CPPM — apresentado o preso ao comandante, ao oficial de dia, de serviço ou de quarto, à autoridade correspondente ou à autoridade judiciária, será por qualquer deles ouvido o condutor e as testemunhas e inquirido o indiciado, lavrando-se auto assinado por todos.",
+      "Autoridade originária plena: os comandantes em geral; podem instaurar APFDM, IPM e IPD, e podem delegar.",
+      "Autoridade originária mitigada: oficial de dia, de serviço ou de quarto e autoridade correspondente; sua competência é limitada à lavratura do APFDM — não pode instaurar IPM nem IPD — e não tem poder de delegação.",
+      "Razões da mitigação: porque a competência é limitada à abertura do APFDM e porque não cabe delegação.",
+      "Autoridade delegada: oficial da ativa designado por autoridade superior (art. 7º, §1º), que recebe atribuição específica e por tempo limitado, conforme os termos da delegação.",
+      "Preferência: quanto à instauração, deve-se preferencialmente adotar as mesmas regras de competência do IPM, ou seja, presidência por capitão."
+     ]
+    },
+    {
+     "e": "Disserte sobre o APFDM: hipóteses de flagrante, fases, estrutura do auto e diferenças em relação ao APFD comum.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Fundamento constitucional: art. 5º, LXI, da CF — ninguém será preso senão em flagrante delito ou por ordem escrita e fundamentada de autoridade judiciária competente, salvo nos casos de transgressão militar ou crime propriamente militar definidos em lei.",
+      "Hipóteses de flagrante (art. 244): está cometendo o crime; acaba de cometê-lo; é perseguido logo após o fato delituoso em situação que faça acreditar ser ele o autor; é encontrado logo depois com instrumentos, objetos, material ou papéis que façam presumir sua participação; nas infrações permanentes, enquanto não cessar a permanência.",
+      "Quem pode prender: art. 243 — qualquer pessoa poderá e os militares deverão prender quem seja encontrado em flagrante delito, inclusive superior hierárquico.",
+      "Fases: o flagrante é ato complexo, apresentando-se em duas fases — inicia-se na voz de prisão do condutor, no momento da captura, e encerra-se com a expedição da nota de culpa; após a Resolução nº 213/2015 do CNJ, o exaurimento só se dá com a audiência de custódia.",
+      "Estrutura do auto: capa (cabeçalho, dados indicativos e autuação), portaria de instauração (documento inaugural, de ofício, com designação do escrivão), nota de ciência de direitos constitucionais, coleta de depoimentos em texto corrido na ordem condutor, testemunhas, ofendido e imputado, conclusão, relatório e decisão.",
+      "Apresentação espontânea: não se lavra APFDM — toma-se o termo de declarações do art. 262, assinado por duas testemunhas.",
+      "Diferenças em relação ao APFD: no APFDM não cabe liberdade provisória, com ou sem fiança; não há lavratura de TCO nos crimes militares (art. 90-A da Lei nº 9.099/95); o APFD tem depoimentos individualizados, enquanto o APFDM segue termo sequenciado assinado por todos; e o APFD dá início a inquérito, enquanto o APFDM pode dispensá-lo, constituindo ele próprio o inquérito (art. 27).",
+      "Providências finais: se resultarem fundadas suspeitas, recolhe-se o conduzido à prisão, com exame de corpo de delito, busca e apreensão e demais diligências (art. 246); verificada a manifesta inexistência de infração penal militar ou a não participação, relaxa-se a prisão, remetendo-se o preso à autoridade civil se a infração for comum (art. 247, §2º); o auto vai imediatamente ao juiz, ou em até cinco dias se depender de diligências (art. 251)."
+     ]
+    }
+   ]
+  }
+ },
+ "sim": {
+  "vf": [
+   {
+    "t": "Ser militar é condição precedente ao exercício da polícia judiciária militar.",
+    "r": true,
+    "j": "Correto — por isso Governador, Secretário de Defesa Social e Corregedor não são autoridades de PJM.",
+    "g": "Questão 01 — PJM e IPM"
+   },
+   {
+    "t": "O IPM tem caráter de instrução provisória, destinando-se a ministrar elementos para a propositura da ação penal.",
+    "r": true,
+    "j": "Correto — art. 9º do CPPM.",
+    "g": "Questão 01 — PJM e IPM"
+   },
+   {
+    "t": "O IPM é disponível, podendo o encarregado arquivá-lo quando entender conveniente.",
+    "r": false,
+    "j": "Falso — é INDISPONÍVEL: o arquivamento cabe à autoridade judiciária competente.",
+    "g": "Questão 01 — PJM e IPM"
+   },
+   {
+    "t": "O prazo do IPM é de 20 dias com o indiciado preso e de 40 dias com o indiciado solto.",
+    "r": true,
+    "j": "Correto — o primeiro conta da execução da ordem de prisão; o segundo, da instauração.",
+    "g": "Questão 01 — PJM e IPM"
+   },
+   {
+    "t": "O IPM pode ser instaurado por despacho da autoridade originária.",
+    "r": false,
+    "j": "Falso — o IPM é iniciado mediante PORTARIA.",
+    "g": "Questão 01 — PJM e IPM"
+   },
+   {
+    "t": "A delegação para instauração de IPM deve recair em oficial de posto superior ao do indiciado.",
+    "r": true,
+    "j": "Correto — não sendo possível, em oficial do mesmo posto, desde que mais antigo.",
+    "g": "Questão 02 — Encarregado e atos do inquérito"
+   },
+   {
+    "t": "Na formação do inquérito, ouve-se primeiro o indiciado e depois o ofendido.",
+    "r": false,
+    "j": "Falso — a ordem do art. 13 é ofendido, indiciado e testemunhas.",
+    "g": "Questão 02 — Encarregado e atos do inquérito"
+   },
+   {
+    "t": "A juntada refere-se apenas aos documentos estranhos ao IPM.",
+    "r": true,
+    "j": "Correto — não se faz juntada de ofícios expedidos pelo próprio inquérito, apenas das respostas.",
+    "g": "Questão 02 — Encarregado e atos do inquérito"
+   },
+   {
+    "t": "A intimação assinada pelo encarregado equivale a ordem de condução coercitiva.",
+    "r": false,
+    "j": "Falso — a condução coercitiva é determinada pelo juiz; ao encarregado cabe noticiar o fato e pleiteá-la.",
+    "g": "Questão 02 — Encarregado e atos do inquérito"
+   },
+   {
+    "t": "O escrivão presta compromisso de manter o sigilo do inquérito, devendo o termo de nomeação ser seguido imediatamente do termo de compromisso.",
+    "r": true,
+    "j": "Correto — art. 11, parágrafo único, do CPPM.",
+    "g": "Questão 02 — Encarregado e atos do inquérito"
+   },
+   {
+    "t": "Testemunhas e indiciado devem ser ouvidos entre as sete e as dezoito horas, salvo urgência inadiável.",
+    "r": true,
+    "j": "Correto — art. 19 do CPPM.",
+    "g": "Questão 03 — Provas e prisões"
+   },
+   {
+    "t": "O encarregado pode dar voz de prisão em flagrante à testemunha que mentir em depoimento.",
+    "r": false,
+    "j": "Falso — o falso testemunho não é passível de flagrante: a verdade só se define ao término da apuração e o legislador admite a retratação.",
+    "g": "Questão 03 — Provas e prisões"
+   },
+   {
+    "t": "Se a infração deixar vestígios, é indispensável o exame de corpo de delito, não podendo supri-lo a confissão do acusado.",
+    "r": true,
+    "j": "Correto — art. 328 do CPPM.",
+    "g": "Questão 03 — Provas e prisões"
+   },
+   {
+    "t": "A acareação é meio de prova inicial, apto a deflagrar a investigação.",
+    "r": false,
+    "j": "Falso — é meio acessório, cabível para dirimir pontos controversos entre depoimentos.",
+    "g": "Questão 03 — Provas e prisões"
+   },
+   {
+    "t": "A prisão temporária não se aplica aos crimes militares.",
+    "r": true,
+    "j": "Correto — as prisões admitidas na investigação são a preventiva, a em flagrante e a detenção do art. 18.",
+    "g": "Questão 03 — Provas e prisões"
+   },
+   {
+    "t": "A autoridade de PJM originária mitigada pode instaurar APFDM, mas não IPM nem IPD, e não pode delegar.",
+    "r": true,
+    "j": "Correto — oficial de dia, de serviço ou de quarto e autoridade correspondente.",
+    "g": "Questão 04 — APFDM e relatório"
+   },
+   {
+    "t": "No APFDM cabe liberdade provisória com fiança arbitrada pelo presidente do auto.",
+    "r": false,
+    "j": "Falso — no APFDM não cabe liberdade provisória, com ou sem fiança.",
+    "g": "Questão 04 — APFDM e relatório"
+   },
+   {
+    "t": "Se o imputado se apresenta espontaneamente, não se lavra APFDM, tomando-se o termo de declarações do art. 262.",
+    "r": true,
+    "j": "Correto — assinado por duas testemunhas.",
+    "g": "Questão 04 — APFDM e relatório"
+   },
+   {
+    "t": "O APFDM pode dispensar o IPM se, por si só, for suficiente para a elucidação do fato e sua autoria.",
+    "r": true,
+    "j": "Correto — art. 27 do CPPM, ressalvados o exame de corpo de delito, a identificação e a avaliação da coisa.",
+    "g": "Questão 04 — APFDM e relatório"
+   },
+   {
+    "t": "O relatório é peça acessória do IPM, dispensável quando o encarregado indicia o imputado.",
+    "r": false,
+    "j": "Falso — é a peça mais importante do inquérito, e o inquérito é encerrado com minucioso relatório (art. 22).",
+    "g": "Questão 04 — APFDM e relatório"
+   }
+  ],
+  "me": [
+   {
+    "e": "Assinale a alternativa INCORRETA sobre a polícia judiciária militar:",
+    "a": [
+     "As autoridades estão descritas no art. 7º do CPPM.",
+     "Na PM, a competência originária é dos comandantes de unidades, diretores ou do Comandante-Geral.",
+     "Compete à PJM apurar os crimes militares e sua autoria.",
+     "Compete à PJM cumprir os mandados de prisão expedidos pela Justiça Militar.",
+     "O Corregedor-Geral da SDS pode requisitar a instauração de IPM."
+    ],
+    "c": 4,
+    "j": "É inconstitucional o texto de lei estadual que traga como atribuição da Corregedoria-Geral da SDS instaurar ou requisitar a instauração de IPM."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre as características e prazos do IPM:",
+    "a": [
+     "O sigilo é absoluto, alcançando o advogado do indiciado.",
+     "O IPM é contraditório e admite ampla defesa em todas as fases.",
+     "O prazo do indiciado solto é prorrogável por mais 20 dias, em hipóteses específicas.",
+     "A prorrogação pode ser renovada indefinidamente pelo encarregado.",
+     "O IPM pode ser instaurado por despacho."
+    ],
+    "c": 2,
+    "j": "A prorrogação exige exames ou perícias não concluídos ou diligências indispensáveis; não há nova prorrogação, salvo dificuldade insuperável a juízo do Ministro de Estado. O encarregado pode dar vista ao advogado, o IPM é inquisitorial e a instauração é por portaria."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre as provas no IPM:",
+    "a": [
+     "A testemunha não será inquirida por mais de quatro horas consecutivas.",
+     "O encarregado pode expedir carta precatória para inquirição de testemunha em outra localidade.",
+     "O exame de sanidade mental pode ser ordenado na fase do inquérito.",
+     "O reconhecimento de pessoas inicia-se pela descrição feita pelo reconhecedor.",
+     "O ofício de requisição de perícia exige assinatura do comandante da OME."
+    ],
+    "c": 4,
+    "j": "Basta a assinatura do encarregado — a requisição de perícias é competência sua, prevista no art. 13, “f”, do CPPM."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre a detenção do art. 18 do CPPM:",
+    "a": [
+     "Depende de prévia decretação judicial.",
+     "Pode durar até trinta dias, prorrogáveis por mais vinte, comunicando-se à autoridade judiciária.",
+     "Aplica-se indistintamente a qualquer crime militar impropriamente militar.",
+     "Substitui a prisão em flagrante.",
+     "Dispensa a demonstração de imprescindibilidade para o IPM."
+    ],
+    "c": 1,
+    "j": "É medida do encarregado, independente de flagrante, com comunicação ao juiz; sua constitucionalidade decorre da ressalva do art. 5º, LXI, da CF quanto aos crimes propriamente militares, e exige os quatro requisitos, entre eles a imprescindibilidade para o IPM."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre o APFDM:",
+    "a": [
+     "Qualquer pessoa poderá e os militares deverão prender quem seja encontrado em flagrante delito.",
+     "A sequência de depoimentos é condutor, testemunhas, ofendido e imputado.",
+     "A falta de testemunhas impede a lavratura do auto.",
+     "O auto deve ser remetido imediatamente ao juiz, ou em até cinco dias se depender de diligências.",
+     "Não há lavratura de TCO nos crimes militares."
+    ],
+    "c": 2,
+    "j": "A falta de testemunhas não impede o APFDM, que será assinado por, pelo menos, duas pessoas que hajam testemunhado a apresentação do preso."
+   }
+  ],
+  "disc": [
+   {
+    "e": "Explique as características do inquérito policial militar e o fluxo decisório que se segue ao seu encerramento.",
+    "est": "Discursiva do simulado — vale 1,5 ponto; mínimo 8 e máximo 15 linhas.",
+    "p": 1.5,
+    "cri": [
+     "Sigiloso (art. 16): o encarregado pode permitir que o advogado do indiciado tome conhecimento dos autos, sendo prerrogativa da advocacia a vista.",
+     "Provisório: a decisão em desfavor do imputado só se torna definitiva com a decisão do juiz na ação penal. Informativo: as notícias dos autos devem ser reproduzidas em juízo para valerem como prova.",
+     "Escrito: tudo é reduzido a termo. Inquisitorial: dispensa ampla defesa e contraditório, pois só subsidia a ação penal.",
+     "Indisponível: iniciado, deve encerrar-se nas mãos da autoridade judiciária competente para determinar o arquivamento; não se transaciona a marcha.",
+     "Fluxo: a autoridade de PJM indicia ou deixa de indiciar; o promotor militar denuncia, não denuncia ou pede novas diligências; o juiz militar decide se arquiva ou não o IPM.",
+     "Encerramento (art. 22): minucioso relatório com as diligências feitas, as pessoas ouvidas e os resultados obtidos, com dia, hora e lugar do fato, concluindo se há infração disciplinar a punir ou indício de crime."
+    ]
+   },
+   {
+    "e": "Disserte sobre o Auto de Prisão em Flagrante Delito Militar: autoridades competentes, hipóteses de flagrante, fases e diferenças em relação ao auto comum.",
+    "est": "Discursiva do simulado — vale 2,0 pontos; mínimo 12 e máximo 25 linhas.",
+    "p": 2.0,
+    "cri": [
+     "Fundamento: art. 5º, LXI, da CF, que ressalva os casos de transgressão militar e crime propriamente militar; e art. 245 do CPPM, que trata da apresentação do preso e da lavratura do auto.",
+     "Autoridade originária plena: comandantes em geral — podem instaurar APFDM, IPM e IPD, e podem delegar.",
+     "Autoridade originária mitigada: oficial de dia, de serviço ou de quarto e autoridade correspondente — competência limitada ao APFDM, sem poder de delegação e sem competência para IPM ou IPD.",
+     "Autoridade delegada: oficial da ativa designado por autoridade superior (art. 7º, §1º), com atribuição específica e por tempo limitado.",
+     "Hipóteses de flagrante (art. 244): está cometendo o crime; acaba de cometê-lo; é perseguido logo após o fato em situação que faça acreditar ser o autor; é encontrado logo depois com instrumentos, objetos, material ou papéis que façam presumir sua participação; e, nas infrações permanentes, enquanto não cessar a permanência.",
+     "Quem prende: art. 243 — qualquer pessoa poderá e os militares deverão prender quem seja encontrado em flagrante, inclusive superior hierárquico.",
+     "Fases: ato complexo em duas fases — da voz de prisão do condutor, na captura, até a expedição da nota de culpa; após a Resolução nº 213/2015 do CNJ, o exaurimento só ocorre com a audiência de custódia, inspirada no Pacto de San José da Costa Rica.",
+     "Estrutura: capa (cabeçalho, dados indicativos e autuação), portaria de instauração de ofício com designação do escrivão, nota de ciência de direitos constitucionais, depoimentos em texto corrido na ordem condutor, testemunhas, ofendido e imputado, conclusão, relatório e decisão.",
+     "Apresentação espontânea: não se lavra APFDM — toma-se o termo de declarações do art. 262, assinado por duas testemunhas.",
+     "Diferenças em relação ao APFD: no APFDM não cabe liberdade provisória, com ou sem fiança; não há TCO nos crimes militares (art. 90-A da Lei nº 9.099/95); o APFD tem depoimentos individualizados e o APFDM termo sequenciado assinado por todos; e o APFD dá início a inquérito, enquanto o APFDM pode dispensá-lo, constituindo ele próprio o inquérito (art. 27)."
+    ]
+   }
+  ]
+ }
+}

@@ -6,20 +6,35 @@ import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { PDF_PARTS, type PdfPart } from "@/lib/mementos-pdfs"
 import { APOSTILA_PARTS, type ApostilaPart } from "@/lib/apostilas"
+import { hojeRecifeISO } from "@/lib/calendario-provas"
+import { tipoPorExtensao, tituloDeArquivo } from "@/lib/midia-embed"
+import { MIDIAS_DRIVE } from "@/lib/midias-drive"
 import { MementosClient } from "./mementos-client"
 
-export default async function MementosPage() {
+export default async function MementosPage({ searchParams }: {
+  searchParams: Promise<{ materia?: string | string[] }>
+}) {
   const session = await auth()
   if (!session?.user) redirect("/login")
 
-  const [mementos, fcGroups, disciplinas] = await Promise.all([
+  // ?materia=SIGLA abre direto a matéria (usado pelo /calendario)
+  const { materia } = await searchParams
+  const materiaInicial = (Array.isArray(materia) ? materia[0] : materia)?.toUpperCase() || null
+
+  const [mementos, fcGroups, disciplinas, midias] = await Promise.all([
     prisma.memento.findMany({
       select: { id: true, materia: true, modulo: true, titulo: true },
       orderBy: [{ materia: "asc" }, { modulo: "asc" }, { ordem: "asc" }],
     }),
     // mantido apenas para a área "Limpar matéria" do admin (conteudoMaterias)
     prisma.flashcard.groupBy({ by: ["materia", "modulo"], _count: { _all: true } }),
-    prisma.disciplina.findMany({ select: { sigla: true, nome: true }, orderBy: { sigla: "asc" } }),
+    prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true }, orderBy: { sigla: "asc" } }),
+    // vídeo / áudio / mapa mental por matéria (links do Drive ou YouTube)
+    // (tolerante: se a tabela ainda não existir no banco — antes do db:push — segue sem itens)
+    prisma.mementoMidia.findMany({
+      select: { id: true, materia: true, tipo: true, titulo: true, url: true, ordem: true },
+      orderBy: [{ materia: "asc" }, { tipo: "asc" }, { ordem: "asc" }, { createdAt: "asc" }],
+    }).catch(() => [] as { id: string; materia: string; tipo: string; titulo: string; url: string; ordem: number }[]),
   ])
 
   const nomeMap = new Map(disciplinas.map(d => [d.sigla, d.nome]))
@@ -66,6 +81,29 @@ export default async function MementosPage() {
     }).filter(m => m.parts.length > 0).sort((a, b) => a.sigla.localeCompare(b.sigla))
   } catch { /* pasta ausente — sem apostilas */ }
 
+  // mídias locais em /public/midias/<SIGLA>/ (vídeo, áudio ou mapa mental
+  // detectados pela extensão; título vem do nome do arquivo). Somam-se às do banco.
+  type MidiaItem = (typeof midias)[number]
+  const midiasLocais: MidiaItem[] = []
+  try {
+    const raiz = path.join(process.cwd(), "public", "midias")
+    for (const pasta of await readdir(raiz)) {
+      const sigla = pasta.toUpperCase()
+      let arquivos: string[] = []
+      try { arquivos = await readdir(path.join(raiz, pasta)) } catch { continue }
+      for (const [i, f] of arquivos.sort().entries()) {
+        const tipo = tipoPorExtensao(f)
+        if (!tipo) continue
+        midiasLocais.push({ id: `file:${sigla}/${f}`, materia: sigla, tipo, titulo: tituloDeArquivo(f), url: `/midias/${encodeURIComponent(pasta)}/${encodeURIComponent(f)}`, ordem: -1000 + i })
+      }
+    }
+  } catch { /* pasta ausente — sem mídias locais */ }
+  // mídias declaradas em código (links do Drive/YouTube) — não pesam no repositório
+  const midiasDrive: MidiaItem[] = Object.entries(MIDIAS_DRIVE).flatMap(([sigla, itens]) =>
+    itens.map((m, i) => ({ id: `drive:${sigla}/${i}`, materia: sigla.toUpperCase(), tipo: m.tipo, titulo: m.titulo, url: m.url, ordem: -500 + i }))
+  )
+  const todasMidias = [...midiasLocais, ...midiasDrive, ...midias].sort((a, b) => a.materia.localeCompare(b.materia) || a.tipo.localeCompare(b.tipo) || a.ordem - b.ordem)
+
   // matérias com conteúdo (mementos + flashcards) — para a área de limpar
   const contMap = new Map<string, Set<string>>()
   for (const m of mementos) (contMap.get(m.materia) || contMap.set(m.materia, new Set()).get(m.materia)!).add(m.modulo)
@@ -83,6 +121,9 @@ export default async function MementosPage() {
       currentUser={{ matricula: session.user.matricula, nomeGuerra: session.user.nomeGuerra }}
       pdfMaterias={pdfMaterias}
       apostilaMaterias={apostilaMaterias}
+      materiaInicial={materiaInicial}
+      midias={todasMidias}
+      hojeISO={hojeRecifeISO()}
     />
   )
 }

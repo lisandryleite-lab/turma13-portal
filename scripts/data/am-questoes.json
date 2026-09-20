@@ -1,0 +1,1225 @@
+{
+ "banco": {
+  "1": {
+   "titulo": "Conceito de arma, espécies e as 09 classificações das armas de fogo",
+   "legal": "RABELLO; Portaria nº 067, CMT EX, 02FEV2017; Decreto nº 2.998, de 23MAR1999; CGCFN-201 (Marinha do Brasil, 2020)",
+   "vf": [
+    {
+     "t": "Arma é todo instrumento ou objeto concebido pelo homem com a finalidade específica de ser utilizada como meio de ataque e defesa, para ferir, matar ou causar danos diversos.",
+     "r": true,
+     "j": "Correto — conceito de RABELLO, tal como consta no material."
+    },
+    {
+     "t": "Arma de fogo é o artefato ou engenho que arremessa projéteis empregando a força expansiva dos gases gerados pela combustão de um propelente, cuja finalidade seja causar dano letal ou não a pessoas ou coisas.",
+     "r": true,
+     "j": "Correto — conceito da Portaria nº 067, CMT EX, 02FEV2017."
+    },
+    {
+     "t": "Armas brancas caracterizam-se por utilizarem meios manuais ou mecânicos para o lançamento de seus projéteis, como o arco e flecha, a besta e a catapulta.",
+     "r": false,
+     "j": "Falso. Essa é a definição das armas impulsivas ou de arremesso. As armas brancas são geralmente em metal, atuando de forma perfurante, contundente ou cortante (espada, baioneta e punhal)."
+    },
+    {
+     "t": "Armamento leve é toda aquela de calibre inferior a 0,60” (15,24mm), sendo exceções a espingarda 18,6mm (calibre 12) e o lança-granadas 40mm M-203.",
+     "r": true,
+     "j": "Correto — inclusive a observação da exceção (CGCFN-201, Marinha do Brasil, 2020)."
+    },
+    {
+     "t": "Há 09 tipos de classificações das armas de fogo.",
+     "r": true,
+     "j": "Correto: tipo, emprego, refrigeração, funcionamento, princípio de funcionamento, alimentação, sentido da alimentação, raiamento e carregamento."
+    },
+    {
+     "t": "Quanto ao tipo, o armamento de porte é o de peso e dimensões reduzidos, podendo ser conduzido no coldre, como pistolas e revólveres.",
+     "r": true,
+     "j": "Correto — definição de armamento de porte."
+    },
+    {
+     "t": "Submetralhadoras, fuzis, carabinas e espingardas são exemplos de armamento não portátil.",
+     "r": false,
+     "j": "Falso. São exemplos de armamento PORTÁTIL — peso significativamente maior que o de porte, mas facilmente conduzido por um só homem, geralmente dotado de bandoleira."
+    },
+    {
+     "t": "Armamento não portátil é o de volume e peso relativamente grandes, devendo ser conduzido somente por uma viatura ou em fardos, por vários homens.",
+     "r": true,
+     "j": "Correto — ex.: metralhadora Vickers e metralhadora Browning."
+    },
+    {
+     "t": "Quanto ao emprego, a arma é considerada coletiva quando o efeito esperado de sua utilização eficiente destina-se ao proveito da ação de um grupo.",
+     "r": true,
+     "j": "Correto — Decreto nº 2.998, de 23MAR1999."
+    },
+    {
+     "t": "Na refrigeração a água, é o próprio ar ambiente que produz o resfriamento do armamento.",
+     "r": false,
+     "j": "Falso. Na refrigeração a ÁGUA o cano é envolvido por uma camisa d’água; é na refrigeração a AR que o próprio ar ambiente produz o resfriamento (pistola, revólver, metralhadora, fuzil e cal.12)."
+    },
+    {
+     "t": "Armas de repetição são aquelas em que se emprega a força muscular do atirador para executar as diferentes fases do funcionamento, decorrendo daí a necessidade de repetir a ação para cada disparo.",
+     "r": true,
+     "j": "Correto — carregamento, trancamento, ejeção etc. dependem da ação do atirador."
+    },
+    {
+     "t": "Arma semi-automática é aquela que realiza automaticamente todas as fases do funcionamento, inclusive o disparo.",
+     "r": false,
+     "j": "Falso. A semi-automática realiza automaticamente todas as fases do funcionamento, COM EXCEÇÃO DO DISPARO. Quem realiza todas as fases automaticamente é a automática (ex.: MT M134 Minigun)."
+    },
+    {
+     "t": "Quanto ao sentido da alimentação, o mais comum é de baixo para cima, como em pistolas, fuzis e submetralhadoras.",
+     "r": true,
+     "j": "Correto — de baixo para cima é o sentido mais comum."
+    },
+    {
+     "t": "Quanto ao carregamento, o bacamarte é exemplo de arma de retrocarga e o Fz Mauser de antecarga.",
+     "r": false,
+     "j": "Falso — está invertido. O bacamarte é exemplo de ANTECARGA e o Fz Mauser de RETROCARGA."
+    },
+    {
+     "t": "A maioria das armas é de alma raiada.",
+     "r": true,
+     "j": "Correto — observação expressa do material quanto ao raiamento (alma raiada x alma lisa)."
+    }
+   ],
+   "me": [
+    {
+     "e": "Assinale a alternativa INCORRETA quanto à classificação das armas de fogo em relação ao TIPO:",
+     "a": [
+      "De porte é o armamento de peso e dimensões reduzidos, podendo ser conduzido no coldre.",
+      "Portátil é o armamento cujo peso é significativamente maior que o de porte, mas pode ser facilmente conduzido por um só homem.",
+      "O armamento portátil geralmente é dotado de bandoleira, para facilidade e comodidade de transporte.",
+      "Não portátil é o armamento de volume e peso relativamente grandes, conduzido por viatura ou em fardos, por vários homens.",
+      "São exemplos de armamento de porte as submetralhadoras, os fuzis, as carabinas e as espingardas."
+     ],
+     "c": 4,
+     "j": "Submetralhadoras, fuzis, carabinas e espingardas são exemplos de armamento PORTÁTIL. De porte: pistolas e revólveres."
+    },
+    {
+     "e": "Quanto ao princípio de funcionamento, assinale a alternativa que apresenta APENAS exemplos de armas que funcionam por ação dos gases:",
+     "a": [
+      "Carabina Puma, espingarda cal.12 e revólver.",
+      "Pistolas, H&K MP5 e Hatsan Escort MPA-TS cal.12.",
+      "Revólver, FZ AW e bacamarte.",
+      "Bacamarte, besta e zarabatana.",
+      "Fz Mauser, carabina Puma e revólver."
+     ],
+     "c": 1,
+     "j": "Ação dos gases: pistolas, H&K MP5 e Hatsan Escort MPA-TS cal.12. Força muscular: carabina Puma, espingarda cal.12, revólver e FZ AW."
+    },
+    {
+     "e": "Quanto ao sentido da alimentação, assinale a alternativa CORRETA:",
+     "a": [
+      "Bergman MP 32 — da direita para a esquerda.",
+      "Submetralhadora Sten — de cima para baixo.",
+      "Metralhadora leve ZB26 — de baixo para cima.",
+      "SMT 40 — da esquerda para a direita.",
+      "Revólver — de baixo para cima."
+     ],
+     "c": 0,
+     "j": "Bergman MP 32: direita para esquerda; Sten: esquerda para direita; ZB26: de cima para baixo; SMT 40: de baixo para cima (mais comum); revólver: da esquerda para a direita."
+    },
+    {
+     "e": "Sobre a classificação quanto ao emprego (Decreto nº 2.998, de 23MAR1999), assinale a INCORRETA:",
+     "a": [
+      "É de emprego individual quando o efeito esperado da utilização destina-se ao proveito da ação de um indivíduo.",
+      "É de emprego coletivo quando o efeito esperado da utilização eficiente destina-se ao proveito da ação de um grupo.",
+      "A classificação alcança arma, munição e equipamento.",
+      "Revólver e pistola são exemplos de armamento de emprego individual.",
+      "A classificação quanto ao emprego leva em conta exclusivamente o peso e as dimensões do armamento."
+     ],
+     "c": 4,
+     "j": "Peso e dimensões dizem respeito à classificação quanto ao TIPO. O emprego é definido pelo efeito esperado da utilização (proveito de um indivíduo ou de um grupo)."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO corresponde a uma das 09 classificações das armas de fogo:",
+     "a": [
+      "Quanto à refrigeração.",
+      "Quanto ao raiamento.",
+      "Quanto ao sentido da alimentação.",
+      "Quanto ao poder de parada.",
+      "Quanto ao carregamento."
+     ],
+     "c": 3,
+     "j": "“Poder de parada” (stopping power) é conteúdo de balística/munição, não integra as 09 classificações das armas de fogo."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Enumere as 09 classificações das armas de fogo e explique, com exemplos, as classificações quanto ao tipo, ao funcionamento e ao carregamento.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "As 09 classificações: quanto ao tipo; ao emprego; à refrigeração; ao funcionamento; ao princípio de funcionamento; à alimentação; ao sentido da alimentação; ao raiamento; ao carregamento.",
+      "Quanto ao tipo: de porte (peso e dimensões reduzidos, conduzido no coldre — pistolas e revólveres); portátil (peso significativamente maior, conduzido por um só homem, geralmente com bandoleira — submetralhadoras, fuzis, carabinas, espingardas); não portátil (volume e peso relativamente grandes, conduzido por viatura ou em fardos por vários homens — MT Vickers, MT Browning).",
+      "Quanto ao funcionamento: repetição (emprega-se a força muscular do atirador nas diferentes fases — carregamento, trancamento, ejeção —, repetindo-se a ação a cada disparo); semi-automática (realiza automaticamente todas as fases, exceto o disparo — pistola, metralhadora e fuzil); automática (realiza automaticamente todas as fases — MT M134 Minigun).",
+      "Quanto ao carregamento: antecarga (ex.: bacamarte) e retrocarga (ex.: Fz Mauser).",
+      "Fechamento: referências — RABELLO (conceito de arma), Portaria nº 067/CMT EX (arma de fogo) e Decreto nº 2.998/1999 (emprego)."
+     ]
+    },
+    {
+     "e": "Diferencie armamento de porte, portátil e não portátil, e explique o conceito de armamento leve, indicando as exceções.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "De porte: peso e dimensões reduzidos, podendo ser conduzido no coldre. Ex.: pistolas e revólveres.",
+      "Portátil: peso significativamente maior que o de porte, porém facilmente conduzido por um só homem; geralmente dotado de bandoleira, para facilidade e comodidade de transporte. Ex.: submetralhadoras, fuzis, carabinas e espingardas.",
+      "Não portátil: volume e peso relativamente grandes, devendo ser conduzido somente por viatura ou em fardos, por vários homens. Ex.: metralhadora Vickers e metralhadora Browning.",
+      "Armamento leve: toda arma de calibre inferior a 0,60” (15,24mm).",
+      "Exceções: a espingarda 18,6mm (calibre 12) e o lança-granadas 40mm M-203 (CGCFN-201 — manual do fuzileiro naval, Marinha do Brasil, 2020)."
+     ]
+    }
+   ]
+  },
+  "2": {
+   "titulo": "Armas de fogo em espécie, procedimentos preliminares (DARGI/MAC) e nomenclaturas",
+   "legal": "Resumo de A.M — estudo detalhado do revólver, pistola, submetralhadora, fuzil, carabina e espingarda cal.12; nomenclaturas externas (PT 100, PT 24/7, SMT 40 FAMAE, Fz)",
+   "vf": [
+    {
+     "t": "Os procedimentos preliminares (inspeção de segurança) são resumidos na sigla DARGI e, após, executa-se o MAC — Municiar, Alimentar e Carregar.",
+     "r": true,
+     "j": "Correto — DARGI antecede o MAC."
+    },
+    {
+     "t": "Municiar é o ato de colocar a munição na câmara da arma.",
+     "r": false,
+     "j": "Falso. Municiar é colocar munição no tambor (revólver), no carregador (pistola) ou no tubo do depósito (espingarda cal.12). Colocar munição na câmara é CARREGAR."
+    },
+    {
+     "t": "Alimentar consiste em fechar o tambor, no revólver, ou colocar o carregador municiado na arma.",
+     "r": true,
+     "j": "Correto — conceito de alimentar."
+    },
+    {
+     "t": "No revólver, o ato de alimentar e carregar é simultâneo.",
+     "r": true,
+     "j": "Correto — observação expressa do material."
+    },
+    {
+     "t": "Na espingarda cal.12, a alimentação é feita juntamente com o municiamento.",
+     "r": true,
+     "j": "Correto — segunda observação do material sobre o MAC."
+    },
+    {
+     "t": "O revólver classifica-se, quanto ao sentido da alimentação, como da direita para a esquerda.",
+     "r": false,
+     "j": "Falso. O revólver é da ESQUERDA PARA A DIREITA."
+    },
+    {
+     "t": "O revólver tem funcionamento por repetição, princípio de funcionamento por ação muscular e alimentação manual.",
+     "r": true,
+     "j": "Correto — além de: de porte, individual, a ar, esquerda para direita, alma raiada e retrocarga."
+    },
+    {
+     "t": "A pistola tem funcionamento semi-automático, princípio de funcionamento por ação dos gases, alimentação com carregador e sentido de alimentação de baixo para cima.",
+     "r": true,
+     "j": "Correto — além de: de porte, individual, a ar, alma raiada e retrocarga."
+    },
+    {
+     "t": "A submetralhadora classifica-se, quanto ao tipo, como arma de porte.",
+     "r": false,
+     "j": "Falso. A submetralhadora é PORTÁTIL (individual, a ar, automática, ação dos gases, com carregador, de baixo para cima, alma raiada e retrocarga)."
+    },
+    {
+     "t": "O fuzil é portátil, de emprego individual, refrigeração a ar, funcionamento automático, princípio de ação dos gases, alimentação com carregador, de baixo para cima, alma raiada e retrocarga.",
+     "r": true,
+     "j": "Correto — classificação completa do fuzil."
+    },
+    {
+     "t": "A espingarda cal.12 possui alma raiada.",
+     "r": false,
+     "j": "Falso. A espingarda cal.12 possui ALMA LISA."
+    },
+    {
+     "t": "A espingarda cal.12 tem funcionamento por repetição, princípio de ação muscular, alimentação manual e sentido de alimentação de trás para frente.",
+     "r": true,
+     "j": "Correto — além de portátil, individual, a ar, alma lisa e retrocarga."
+    },
+    {
+     "t": "São nomenclaturas externas do revólver: massa de mira, vareta do extrator, guarda-mato, tambor, dedal serrilhado, cão e alça de mira.",
+     "r": true,
+     "j": "Correto — conforme a figura de nomenclaturas externas do revólver."
+    },
+    {
+     "t": "O retém do ferrolho e o retém do carregador são nomenclaturas externas da pistola.",
+     "r": true,
+     "j": "Correto — como na PT 100 e na PT 24/7."
+    },
+    {
+     "t": "Todas as armas objeto do estudo detalhado (revólver, pistola, submetralhadora, fuzil, carabina e espingarda) são de emprego individual e refrigeração a ar.",
+     "r": true,
+     "j": "Correto — todas classificadas como individuais e refrigeradas a ar."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a classificação do REVÓLVER, assinale a alternativa INCORRETA:",
+     "a": [
+      "Tipo: de porte.",
+      "Funcionamento: repetição.",
+      "Princípio de funcionamento: ação muscular.",
+      "Sentido da alimentação: da direita para a esquerda.",
+      "Carregamento: retrocarga."
+     ],
+     "c": 3,
+     "j": "O revólver é alimentado da ESQUERDA PARA A DIREITA."
+    },
+    {
+     "e": "Sobre a PISTOLA, assinale a alternativa CORRETA:",
+     "a": [
+      "Funcionamento por repetição e alimentação manual.",
+      "Princípio de funcionamento por ação muscular.",
+      "Semi-automática, ação dos gases, alimentação com carregador e sentido de baixo para cima.",
+      "Portátil, coletiva e de alma lisa.",
+      "Antecarga e refrigeração a água."
+     ],
+     "c": 2,
+     "j": "A pistola é de porte, individual, a ar, semi-automática, ação dos gases, com carregador, de baixo para cima, alma raiada e retrocarga."
+    },
+    {
+     "e": "Sobre a ESPINGARDA CAL.12, assinale a alternativa INCORRETA:",
+     "a": [
+      "Tipo: portátil.",
+      "Funcionamento: repetição.",
+      "Princípio de funcionamento: ação muscular.",
+      "Sentido da alimentação: de trás para frente.",
+      "Raiamento: alma raiada."
+     ],
+     "c": 4,
+     "j": "A espingarda cal.12 é de ALMA LISA."
+    },
+    {
+     "e": "Sobre o MAC (Municiar, Alimentar e Carregar), assinale a alternativa CORRETA:",
+     "a": [
+      "Carregar é colocar munição no carregador da pistola.",
+      "No revólver, o ato de alimentar e carregar é simultâneo.",
+      "Alimentar é colocar a munição na câmara.",
+      "Na espingarda cal.12 o municiamento ocorre depois do carregamento da câmara.",
+      "O MAC antecede o DARGI."
+     ],
+     "c": 1,
+     "j": "No revólver, alimentar (fechar o tambor) e carregar ocorrem ao mesmo tempo. Carregar é colocar munição na câmara; o DARGI antecede o MAC."
+    },
+    {
+     "e": "Sobre a SUBMETRALHADORA e o FUZIL, assinale a alternativa INCORRETA:",
+     "a": [
+      "Ambos são portáteis.",
+      "Ambos são de emprego individual.",
+      "Ambos têm funcionamento semi-automático.",
+      "Ambos funcionam pelo princípio da ação dos gases.",
+      "Ambos são alimentados com carregador, de baixo para cima."
+     ],
+     "c": 2,
+     "j": "Tanto a submetralhadora quanto o fuzil são classificados, no material, como de funcionamento AUTOMÁTICO."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Classifique o revólver e a pistola segundo as 09 classificações das armas de fogo e aponte as diferenças entre eles.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Revólver: tipo — de porte; emprego — individual; refrigeração — a ar; funcionamento — repetição; princípio — ação muscular; alimentação — manual; sentido — da esquerda para a direita; raiamento — alma raiada; carregamento — retrocarga.",
+      "Pistola: tipo — de porte; emprego — individual; refrigeração — a ar; funcionamento — semi-automática; princípio — ação dos gases; alimentação — com carregador; sentido — de baixo para cima; raiamento — alma raiada; carregamento — retrocarga.",
+      "Diferenças: funcionamento (repetição x semi-automática), princípio (ação muscular x ação dos gases), alimentação (manual x com carregador) e sentido da alimentação (esquerda-direita x baixo-cima).",
+      "Semelhanças: ambos de porte, individuais, refrigerados a ar, de alma raiada e de retrocarga."
+     ]
+    },
+    {
+     "e": "Explique os procedimentos de Municiar, Alimentar e Carregar (MAC) e as particularidades do revólver e da espingarda cal.12.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Municiar: colocar munição no tambor (revólver), no carregador (pistola) ou no tubo do depósito (espingarda cal.12).",
+      "Alimentar: fechar o tambor (revólver) ou colocar o carregador municiado na arma.",
+      "Carregar: colocar munição na câmara.",
+      "Particularidade do revólver: o ato de alimentar e carregar é simultâneo.",
+      "Particularidade da cal.12: a alimentação é feita juntamente com o municiamento.",
+      "Observação: o MAC é executado após os procedimentos preliminares de inspeção de segurança (DARGI)."
+     ]
+    }
+   ]
+  },
+  "3": {
+   "titulo": "Munição: calibres, alma, raiamento, componentes do cartucho e espoletamento",
+   "legal": "Art. 2º, XII, do Decreto nº 11.615; CÂMARA JR (2002); resumo de A.M — Munição e Balística",
+   "vf": [
+    {
+     "t": "Calibre real é a medição do diâmetro da boca do cano que, caso seja raiado, é feita medindo-se os “cheios” das raias; o calibre do projétil é medido pelos “fundos” das raias.",
+     "r": true,
+     "j": "Correto — noções básicas sobre calibres."
+    },
+    {
+     "t": "Alma é a parte oca do interior do cano, que vai geralmente da câmara de explosão até a boca do cano, destinando-se a resistir à pressão dos gases e a orientar o projétil.",
+     "r": true,
+     "j": "Correto — conceito de alma."
+    },
+    {
+     "t": "A alma lisa tem o interior do cano totalmente polido, sem raiamento, pois não há necessidade de estabilização dos projéteis, como nas espingardas e no revólver Taurus RT 410 cal.36.",
+     "r": true,
+     "j": "Correto — exemplos expressos no material."
+    },
+    {
+     "t": "As raias de uma alma raiada só podem ter orientação da esquerda para a direita.",
+     "r": false,
+     "j": "Falso. A alma raiada pode ter raias da esquerda para a direita ou da direita para a esquerda (orientação destrógira ou sinistrógira)."
+    },
+    {
+     "t": "Segundo o Art. 2º, XII, do Decreto nº 11.615, raias são sulcos feitos na parte interna dos canos das armas de fogo, geralmente de forma helicoidal, com a finalidade de propiciar o movimento de rotação dos projéteis, garantindo estabilidade na trajetória.",
+     "r": true,
+     "j": "Correto — conforme o dispositivo citado no material."
+    },
+    {
+     "t": "Nas armas de alma lisa o calibre é expresso nominalmente, correspondendo ao número de esferas de chumbo de diâmetro igual ao da alma necessário para atingir o peso de 453,6g (1 libra); assim, o calibre 12 equivale a 18,5mm.",
+     "r": true,
+     "j": "Correto — daí decorre a lógica dos calibres 12 e 20."
+    },
+    {
+     "t": "O calibre 5,56mm (AR-15) equivale ao calibre 22 e o 7,62 (fuzil FAL/SAR) ao calibre 30.",
+     "r": true,
+     "j": "Correto — equivalências entre o sistema inglês (milímetros) e o americano (polegadas)."
+    },
+    {
+     "t": "Munição é o conjunto formado por estojo, projétil, propelente e espoleta, destinado a armas de retrocarga de pequeno porte ou médio calibre.",
+     "r": true,
+     "j": "Correto — munição = cartucho."
+    },
+    {
+     "t": "O culote é a base do estojo, podendo apresentar ou não diâmetro maior que o estojo.",
+     "r": true,
+     "j": "Correto — nas armas de repetição, com extrator, o estojo exibe sulco ou gola entre o culote e o corpo."
+    },
+    {
+     "t": "Os estojos classificam-se, quanto à forma do corpo, em cilíndrico, cônico e garrafa.",
+     "r": true,
+     "j": "Correto — três formas indicadas no material."
+    },
+    {
+     "t": "A espoleta Boxer caracteriza-se por ter a bigorna montada no próprio estojo, ao redor da qual existem dois ou mais eventos.",
+     "r": false,
+     "j": "Falso. Na BOXER a bigorna é montada dentro da cápsula, com um único evento central, o que facilita o desespoletamento; a bigorna no estojo, com dois ou mais eventos, é característica da BERDAN."
+    },
+    {
+     "t": "A espoleta Berdan é utilizada principalmente em armas de uso militar, sendo a bigorna um pequeno ressalto no centro da base do estojo.",
+     "r": true,
+     "j": "Correto — utiliza estojos tipo Berdan (estojo com bigorna)."
+    },
+    {
+     "t": "A espoleta Bateria é constituída por cápsula, bigorna e estojo próprio com evento, sendo montada no bolso dos cartuchos de caça.",
+     "r": true,
+     "j": "Correto — terceiro tipo de espoletamento."
+    },
+    {
+     "t": "As pólvoras podem ser divididas em dois grandes grupos: pólvoras negras e sem fumaça.",
+     "r": true,
+     "j": "Correto — classificação dos propelentes."
+    },
+    {
+     "t": "A incapacitação imediata é produzida por efeito fisiológico, causada pela perda de sangue contínua e redução de oxigenação.",
+     "r": false,
+     "j": "Falso. Essa é a incapacitação MEDIATA. A imediata decorre de efeito biológico — lesão causada no sistema nervoso central."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre calibres, assinale a alternativa CORRETA:",
+     "a": [
+      "Calibre real é medido pelos “fundos” das raias.",
+      "Cal. 9mm equivale ao cal. 380, ao cal. 38 e ao cal. 357.",
+      "Nas armas de alma lisa o calibre é sempre expresso em polegadas.",
+      "O calibre 12 equivale a 15,24mm.",
+      "O calibre do projétil é medido pelos “cheios” das raias."
+     ],
+     "c": 1,
+     "j": "9mm = .380 = .38 = .357. O calibre real mede-se pelos cheios e o do projétil pelos fundos; o cal.12 equivale a 18,5mm."
+    },
+    {
+     "e": "Assinale a alternativa INCORRETA sobre os componentes da munição:",
+     "a": [
+      "Estojo ou casquilho é a porção cilíndrica, cônica ou em forma de garrafa que aloja espoleta, projétil e propelente.",
+      "Espoleta é o recipiente que contém a mistura detonante e uma bigorna, utilizado em cartuchos de fogo central.",
+      "Propelente é a substância capaz de efetuar a propulsão de um corpo sólido.",
+      "Projétil é a parte vulnerável do cartucho, de forma cilíndrica com a parte anterior cônica ou ogival.",
+      "A munição é composta por estojo, projétil, propelente e coronha."
+     ],
+     "c": 4,
+     "j": "Coronha é parte do armamento, não da munição. Os componentes são estojo, projétil, propelente e espoleta."
+    },
+    {
+     "e": "Sobre os tipos de espoletamento, assinale a alternativa CORRETA:",
+     "a": [
+      "A Boxer possui bigorna no estojo e dois ou mais eventos.",
+      "A Berdan utiliza estojo com bigorna e é empregada principalmente em armas de uso militar.",
+      "A Bateria é a mais usada atualmente em cartuchos de pistola.",
+      "A Boxer não é utilizada em cartuchos de fogo central.",
+      "Todas as espoletas dispensam a bigorna."
+     ],
+     "c": 1,
+     "j": "Berdan: estojo com bigorna (ressalto no centro da base), uso militar. Boxer: bigorna na cápsula, evento central, muito usada atualmente. Bateria: cartuchos de caça."
+    },
+    {
+     "e": "Sobre a alma e o raiamento, assinale a alternativa INCORRETA:",
+     "a": [
+      "A alma pode ser lisa ou raiada, conforme o tipo de munição para a qual a arma foi projetada.",
+      "Na alma raiada há sulcos helicoidais dispostos no eixo longitudinal que forçam o projétil a um movimento de rotação.",
+      "Segundo CÂMARA JR (2002), raiamentos são ranhuras de pequena profundidade, usinadas, de forma helicoidal ao longo do cano.",
+      "A alma lisa dispensa a estabilização dos projéteis.",
+      "As raias têm por finalidade reduzir a velocidade do projétil no interior do cano, evitando a explosão da arma."
+     ],
+     "c": 4,
+     "j": "A finalidade das raias é propiciar o movimento de rotação do projétil, garantindo estabilidade na trajetória (Art. 2º, XII, Decreto 11.615)."
+    },
+    {
+     "e": "Sobre a incapacitação, assinale a alternativa CORRETA:",
+     "a": [
+      "A incapacitação psicológica exige necessariamente lesão no agressor.",
+      "A incapacitação imediata decorre de efeito biológico, por lesão no sistema nervoso central.",
+      "A incapacitação mediata decorre de lesão no sistema nervoso central.",
+      "O que se busca na munição é a letalidade do agressor.",
+      "A incapacitação psicológica é produzida por efeito fisiológico."
+     ],
+     "c": 1,
+     "j": "Imediata: efeito biológico, lesão no SNC. Mediata: efeito fisiológico, perda contínua de sangue e redução de oxigenação. Psicológica: o agressor desiste do combate, não necessariamente por ter sido lesionado. O que se busca é incapacitar a ação do agressor."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Descreva os componentes da munição e a função de cada um deles no disparo.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: munição (cartucho) é o conjunto formado por estojo, projétil, propelente e espoleta, destinado a armas de retrocarga de pequeno porte ou médio calibre.",
+      "Estojo ou casquilho: porção cilíndrica, cônica ou em forma de garrafa que aloja a espoleta e o projétil e recebe o propelente; sua base é o culote; nas armas de repetição exibe sulco ou gola para o extrator.",
+      "Espoleta: recipiente com a mistura detonante e a bigorna (fogo central); percutida, a mistura queima e o calor passa ao propelente pelos eventos.",
+      "Propelente (pólvora): substância que, ao queimar, gera grande volume de gases e aumento gradual de pressão (suportado pelo conjunto cartucho/câmara/ferrolho — princípio de Pascal), cedendo o projétil; divide-se em pólvoras negras e sem fumaça.",
+      "Projétil: parte vulnerável do cartucho, cilíndrica com a parte anterior cônica ou ogival; há projéteis sem ogiva, de ogiva truncada, revestidos e deformáveis.",
+      "Fecho: o que se busca na munição é efetividade suficiente para incapacitar a ação do agressor."
+     ]
+    },
+    {
+     "e": "Explique os três tipos de espoletamento para recarga de cartuchos de fogo central.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "Boxer: bigorna montada dentro da cápsula que contém a mistura iniciadora; a bigorna dá apoio ao percussor, que comprime a cápsula e esmaga a mistura, gerando chamas que passam pelo evento do estojo e iniciam a queima da pólvora; é montada no bolso de estojos tipo Boxer (sem bigorna); muito usada atualmente e com apenas um evento central, o que facilita o desespoletamento na recarga.",
+      "Bateria: constituída por cápsula, bigorna e estojo próprio com evento; montada no bolso dos cartuchos de caça.",
+      "Berdan: constituída por cápsula com mistura, utilizada em estojos tipo Berdan (estojo com bigorna); a iniciação ocorre quando o percussor comprime a cápsula contra a bigorna existente no estojo; empregada principalmente em armas de uso militar; a bigorna é um pequeno ressalto no centro da base do estojo, com dois ou mais eventos ao seu redor."
+     ]
+    }
+   ]
+  },
+  "4": {
+   "titulo": "Noções de balística, energia cinética, o cano, trajetória, balística terminal e poder de parada",
+   "legal": "Resumo de A.M — Noções de Balística; dados CBC; Marshall & Sanow; Fakler; câmara de mina de Hoffman",
+   "vf": [
+    {
+     "t": "Balística interna estuda todos os fenômenos químicos e físicos que ocorrem antes da saída do projétil pelo cano da arma.",
+     "r": true,
+     "j": "Correto — divisão da balística."
+    },
+    {
+     "t": "Balística de transição é o comportamento do projétil quando ele sai do cano da arma, mas ainda está sob influência dos gases remanescentes do disparo.",
+     "r": true,
+     "j": "Correto — fase intermediária entre interna e externa."
+    },
+    {
+     "t": "Balística externa foca no estudo das interações do projétil ao impactar estruturas físicas ou biológicas.",
+     "r": false,
+     "j": "Falso. Isso é a balística TERMINAL (final ou de efeitos). A externa estuda o movimento do projétil durante seu deslocamento pelo ar e as variáveis que incidem na trajetória."
+    },
+    {
+     "t": "A energia cinética é a massa do projétil multiplicada pela velocidade elevada ao quadrado, dividida por 2, sendo o Joule (J) sua unidade de medida.",
+     "r": true,
+     "j": "Correto — Ec = m.v²/2."
+    },
+    {
+     "t": "Mantida a velocidade de 10m/s e dobrando-se apenas a massa de 10kg para 20kg, a energia cinética passa de 500J para 2.000J.",
+     "r": false,
+     "j": "Falso. Dobrando apenas a massa, a Ec passa de 500J para 1.000J. É ao dobrar a VELOCIDADE (para 20m/s) que a Ec chega a 2.000J — quatro vezes maior."
+    },
+    {
+     "t": "A munição CBC M193, cal. 5,56x45mm, com projétil de 55 grains a aproximadamente 995 m/s, apresenta energia cinética de cerca de 1.658 J, superior aos cerca de 629 J da CBC Gold .40 S&W.",
+     "r": true,
+     "j": "Correto — a diferença justifica-se pela velocidade, quase 3 vezes maior, ainda que o projétil de fuzil pese cerca de 1/3."
+    },
+    {
+     "t": "Conclui-se do estudo que, necessariamente, uma maior energia cinética, de forma isolada, garante plena incapacitação.",
+     "r": false,
+     "j": "Falso. NÃO necessariamente. A balística terminal está diretamente ligada às questões físicas e biológicas do alvo — interessa a interação com órgãos e tecidos, não apenas a quantidade de energia cinética."
+    },
+    {
+     "t": "Câmara é a parte posterior do cano onde é alojada a munição, sendo lisa e acomodando perfeitamente o estojo.",
+     "r": true,
+     "j": "Correto — parte do cano."
+    },
+    {
+     "t": "Coroa é a diminuição ou estrangulamento da boca do cano de alma lisa, influenciando a dispersão do chumbo.",
+     "r": false,
+     "j": "Falso. Essa é a definição de CHOCKE. A coroa é a forma de acabamento final da boca do cano e proteção do raiamento."
+    },
+    {
+     "t": "Passo de raiamento é a distância que o projétil percorre dando uma volta em seu próprio eixo, podendo ser passo simples ou passo misto.",
+     "r": true,
+     "j": "Correto — além de tipo de raiamento (poligonal ou com cantos vivos), número e orientação das raias (destrógiro e sinistrógiro)."
+    },
+    {
+     "t": "Velocidade inicial (Vo) é a velocidade linear com que o projétil deixa o estojo após o disparo, tendo se deslocado pelo interior do cano da arma.",
+     "r": true,
+     "j": "Correto — conceito de Vo."
+    },
+    {
+     "t": "O forçamento nas raias produz atrito capaz de transferir energia cinética ao cano, transformando-a em energia térmica e diminuindo a velocidade do projétil.",
+     "r": true,
+     "j": "Correto — a massa continua praticamente a mesma, mas a energia diminui."
+    },
+    {
+     "t": "Estabilidade giroscópica é a habilidade do projétil de se manter apontado na direção da trajetória e retornar a essa orientação caso haja distúrbio, podendo ser obtida por giro ou aletas.",
+     "r": true,
+     "j": "Correto — segundo fator que atua na trajetória."
+    },
+    {
+     "t": "Um projétil da munição 30-60mm (7,62/63mm) alcança no vácuo aproximadamente 4km, enquanto na atmosfera atinge 69km.",
+     "r": false,
+     "j": "Falso — está invertido. No vácuo alcança 69km e na atmosfera atinge “apenas” aproximadamente 4km, em razão da resistência das capas de ar atmosférico."
+    },
+    {
+     "t": "O poder de parada decorre do impacto do tiro, sendo o calibre o responsável por impedir o avanço do agressor.",
+     "r": false,
+     "j": "Falso. Não é o impacto do tiro (calibre) o responsável por impedir o avanço do agressor, mas a REGIÃO DO CORPO ATINGIDA e/ou a quantidade de sangue perdida por quem foi atingido (Marshall & Sanow; Fakler)."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre as divisões da balística, assinale a alternativa INCORRETA:",
+     "a": [
+      "Interna: fenômenos químicos e físicos anteriores à saída do projétil pelo cano.",
+      "Transição: comportamento do projétil ao sair do cano, ainda sob influência dos gases remanescentes.",
+      "Externa: movimentos do projétil no ar, considerando gravidade, altitude, umidade, densidade, temperatura e vento.",
+      "Terminal: interações do projétil ao impactar estruturas físicas ou biológicas.",
+      "Interna: estuda a trajetória, o impacto e as marcas deixadas no alvo."
+     ],
+     "c": 4,
+     "j": "Trajetória, impacto e marcas no alvo pertencem à balística externa e terminal, não à interna."
+    },
+    {
+     "e": "Sobre as partes do cano, assinale a alternativa CORRETA:",
+     "a": [
+      "Corpo do cano é a parte posterior onde se aloja a munição.",
+      "Chocke é o estrangulamento da boca do cano de alma lisa, influenciando a dispersão do chumbo.",
+      "Coroa é a câmara de explosão do cartucho.",
+      "A câmara é raiada para melhor acomodar o estojo.",
+      "O corpo do cano é a forma de acabamento final da boca do cano."
+     ],
+     "c": 1,
+     "j": "Câmara: parte posterior, lisa, aloja a munição. Corpo: prolongamento cilíndrico onde a energia expande e acelera o projétil. Coroa: acabamento final da boca do cano e proteção do raiamento. Chocke: estrangulamento em cano de alma lisa."
+    },
+    {
+     "e": "Um objeto de 10 kg deslocando-se a 20 m/s possui energia cinética de:",
+     "a": [
+      "500 J",
+      "1.000 J",
+      "1.658 J",
+      "2.000 J",
+      "629 J"
+     ],
+     "c": 3,
+     "j": "Ec = m.v²/2 = 10 × 20²/2 = 2.000 J — quatro vezes maior do que a 10 m/s (500 J), pois a velocidade está elevada ao quadrado."
+    },
+    {
+     "e": "Sobre os efeitos dos projéteis no corpo humano, assinale a alternativa CORRETA:",
+     "a": [
+      "No disparo à distância verificam-se orla de contusão, orla de enxugo, zona de tatuagem e de chamuscamento.",
+      "No disparo à curta distância verificam-se apenas orla de contusão e orla de enxugo.",
+      "No disparo à curta distância verificam-se orla de contusão, orla de enxugo, zona de tatuagem e de chamuscamento.",
+      "A câmara de mina de Hoffman é típica do disparo à distância.",
+      "A zona de esfumaçamento é exclusiva do disparo à distância."
+     ],
+     "c": 2,
+     "j": "À distância: orla de contusão e orla de enxugo. À curta distância: acrescem-se tatuagem e chamuscamento. Com o cano encostado no alvo pode surgir a câmara de mina de Hoffman."
+    },
+    {
+     "e": "Sobre os fatores que atuam na trajetória do projétil, assinale a alternativa INCORRETA:",
+     "a": [
+      "Gravidade é a força física, perpendicular ao seu centro, que a Terra exerce sobre todos os corpos.",
+      "Inclinação é a relação do grau de inclinação do disparo (distância de rampa) em relação à distância horizontal do alvo.",
+      "Arrasto é a força que impulsiona o projétil, acelerando-o durante a trajetória.",
+      "Os movimentos dos projéteis são rotação, nutação e precessão.",
+      "Obstáculos, como o vidro, influenciam na trajetória dos projéteis."
+     ],
+     "c": 2,
+     "j": "Arrasto é a força RESISTENTE ao avanço do projétil, dependente dos fatores atmosféricos."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Conceitue balística e explique suas quatro divisões.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: balística é a ciência que estuda o movimento dos projéteis, particularmente os disparados por armas de fogo, seu comportamento no interior destas e também no exterior — trajetória, impacto, marcas, explosão etc.",
+      "Interna: todos os fenômenos químicos e físicos que ocorrem antes da saída do projétil pelo cano da arma.",
+      "Transição: comportamento do projétil quando sai do cano, mas ainda sob influência dos gases remanescentes do disparo.",
+      "Externa: movimentos do projétil durante o deslocamento pelo ar e variáveis de sua configuração — gravidade, altitude, umidade, densidade e temperatura do ar, direção e velocidade do vento —, alterando velocidade, energia cinética e ponto de impacto.",
+      "Terminal (final ou de efeitos): interações do projétil ao impactar estruturas físicas ou biológicas."
+     ]
+    },
+    {
+     "e": "Disserte sobre o “poder de parada” (stopping power) e sua relação com a energia cinética e a incapacitação.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Conceito: stopping power é forma abstrata de indicar a capacidade de um projétil de parar ou neutralizar um atacante em seu curso de ataque, pondo-o fora de combate — não sendo intencional a morte, embora possa ocorrer, ou apenas sua momentânea incapacitação.",
+      "Crítica: o poder de parada é uma ilusão — não existem projéteis mágicos nem calibres “paradores de homens”; não existe poder de parada com um tiro (Marshall & Sanow).",
+      "Fator determinante: não é o impacto do tiro (calibre), mas a região do corpo atingida e/ou a quantidade de sangue perdida pelo atingido.",
+      "Fakler: a relação entre poder de parada e munição vincula-se à biologia de quem recebe o disparo e ao seu estado emocional, e não à energia cinética liberada traduzida em cavidade temporária (cavitação) no momento do impacto.",
+      "Energia cinética: não necessariamente uma maior energia cinética, isoladamente, garante plena incapacitação; a balística terminal liga-se às questões físicas e biológicas do alvo — a interação com órgãos e tecidos.",
+      "Resposta não convencional: múltiplos disparos contra a ameaça letal, buscando incapacitação imediata; a quantidade é definida pela reação do alvo, cessando o fogo quando o agressor não constituir mais ameaça letal."
+     ]
+    }
+   ]
+  },
+  "5": {
+   "titulo": "Fundamentos do tiro policial: posição, empunhadura, visada, respiração e acionamento do gatilho",
+   "legal": "B. Enos e R. Leatham (1980); Ayoob; J. Weaver (1950); R. Chapman (1975); técnica Straight-Thumbs",
+   "vf": [
+    {
+     "t": "São 05 os fundamentos do tiro: posição, empunhadura, visada, respiração e acionamento do gatilho.",
+     "r": true,
+     "j": "Correto — os cinco fundamentos são a base do tiro policial."
+    },
+    {
+     "t": "O tiro policial é o último recurso a ser utilizado, pois pode trazer dano ao bem jurídico de maior valor do ordenamento (uso progressivo da força).",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Na posição isósceles, os pés devem estar paralelos entre si, ligeiramente flexionados e apontando direto para o alvo, mais ou menos na largura dos ombros.",
+     "r": true,
+     "j": "Correto — B. Enos e R. Leatham, 1980; vantagem de tiro em alvos múltiplos num ângulo de 180º."
+    },
+    {
+     "t": "A isósceles modificada (Ayoob) é conhecida como posição de combate, sendo a mais indicada para defesa individual e forças de segurança.",
+     "r": true,
+     "j": "Correto — proporciona maior controle dos disparos e do recuo, rápido enquadramento e maior cadenciamento."
+    },
+    {
+     "t": "Na posição Weaver há tensão isométrica sobre a arma: a mão ativa empurra a arma para frente enquanto a mão reativa a pressiona para trás.",
+     "r": true,
+     "j": "Correto — J. Weaver, 1950; utiliza a estrutura muscular."
+    },
+    {
+     "t": "Na Weaver modificada (R. Chapman, 1975), o braço da mão ativa fica totalmente esticado e o da mão reativa fica dobrado.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A vantagem da posição Weaver é reduzir a área de exposição do atirador, pois ele fica lateralizado, reduzindo a silhueta.",
+     "r": true,
+     "j": "Correto — a desvantagem é oferecer ao agressor, com colete balístico, a parte menos protegida."
+    },
+    {
+     "t": "Na posição de joelhos com apoio, o cotovelo deve ser apoiado sobre o joelho, garantindo contato osso com osso.",
+     "r": false,
+     "j": "Falso. O contato deve ser feito entre o TRÍCEPS e o joelho (músculo com osso); jamais se apoia o cotovelo no joelho (osso x osso)."
+    },
+    {
+     "t": "São características da empunhadura: altura, envolvimento e pressão.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A mão reativa, por dar suporte ao armamento, emprega um pouco mais de pressão do que a mão ativa.",
+     "r": true,
+     "j": "Correto — a ativa emprega um pouco menos de pressão porque aciona o gatilho."
+    },
+    {
+     "t": "Nas armas portáteis (SMT.40/CT, fuzil e cal.12) a empunhadura é dotada de 3 pontos de contato, sendo o rosto do policial encostado na arma considerado um deles.",
+     "r": false,
+     "j": "Falso. O rosto do policial encostado (ou não) na arma NÃO é considerado ponto de contato, e não deve fazer qualquer pressão sobre o armamento, sob pena de prejudicar a visada e a posição."
+    },
+    {
+     "t": "A empunhadura C Clamp é a mais favorável ao uso de aparelhos de pontaria baixos, por não encobrir a linha de mira.",
+     "r": false,
+     "j": "Falso. A mais favorável a aparelhos de pontaria baixos é a RODESIANA (polegar indexador). Na C Clamp devem-se priorizar alças e massas altas e miras holográficas."
+    },
+    {
+     "t": "A alça de mira é a parte mais à retaguarda e a massa de mira a parte mais à frente do aparelho de pontaria; quanto maior a distância entre elas, maior a precisão.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "No plano focal, o alvo deve estar em foco no momento do disparo.",
+     "r": false,
+     "j": "Falso. A MASSA de mira deve estar em foco no momento do disparo, pois o ser humano não consegue focar mais de 1 ponto em distâncias (profundidades) variadas."
+    },
+    {
+     "t": "O policial deverá deixar cerca de 30% de oxigênio nos pulmões e bloquear a respiração até concluir o disparo.",
+     "r": true,
+     "j": "Correto — disparo próximo ao término da expiração, resolvendo a oscilação dos braços e a falta de oxigênio da apneia."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre as posições de tiro, assinale a alternativa INCORRETA:",
+     "a": [
+      "Na posição pronado dinâmico o policial permanece em decúbito ventral, com maior contato da lateral ativa do corpo.",
+      "Na posição oblíqua o policial permanece deitado, perpendicular ao alvo, com o lado da mão ativa em maior contato com o solo.",
+      "Na posição dorsal o policial permanece deitado, com costas e planta dos pés no solo, pernas dobradas, braços estendidos em isósceles.",
+      "Na posição convencional deitado o policial deve estar ligeiramente inclinado (30º) em relação ao alvo.",
+      "Na posição torre, de joelhos com arma portátil, é vedado o uso em situações táticas de alto e baixo."
+     ],
+     "c": 4,
+     "j": "A posição torre é justamente de uso em situações táticas (alto e baixo), aplicada quando o policial busca cobertas e abrigos reduzidos, muito utilizada na patrulha com a técnica de ponto-a-ponto."
+    },
+    {
+     "e": "Sobre as técnicas de empunhadura em armas portáteis, assinale a alternativa CORRETA:",
+     "a": [
+      "Na convencional a mão reativa realiza resistência contrária à direção do recuo.",
+      "Na Rodesiana o polegar é utilizado como ferramenta indexadora, espécie de mira que apontará para o alvo.",
+      "Na Magwell a mão reativa deve empunhar o carregador.",
+      "A C Clamp é indicada para aparelhos de pontaria baixos.",
+      "São 06 as técnicas de empunhadura mais adotadas."
+     ],
+     "c": 1,
+     "j": "Rodesiana: palma e dedos em “concha”, travando a placa do guarda-mão, polegar como ferramenta indexadora. Na Magwell a mão reativa fica próxima ao carregador, mas NÃO se empunha o carregador. São 04 técnicas: convencional, C Clamp, Rodesiana e MagWell."
+    },
+    {
+     "e": "Sobre a visada, assinale a alternativa INCORRETA:",
+     "a": [
+      "Linha de mira é a distância, partindo do olho do atirador, compreendendo a alça e a massa de mira.",
+      "Linha de visada é o prolongamento da linha de mira ao alvo, passando por dentro da alça e tangenciando a massa até o ponto desejável do alvo.",
+      "A tomada da linha de mira deve ser feita pelo olho diretor ou dominante.",
+      "As técnicas do fundamento são alinhamento do aparelho de pontaria, enquadramento de mira no alvo e plano focal.",
+      "No momento do disparo, o alvo deve estar em foco, e não a massa de mira."
+     ],
+     "c": 4,
+     "j": "A MASSA de mira deve estar em foco no momento do disparo."
+    },
+    {
+     "e": "Sobre os principais erros no acionamento do gatilho, assinale a alternativa CORRETA:",
+     "a": [
+      "Gatilhada é o acionamento contínuo e progressivo do gatilho.",
+      "A esquiva ocorre em armas portáteis, quando o policial movimenta o ombro levemente para trás para evitar a “pancada”, sendo comum fechar os olhos.",
+      "A antecipação do tiro é facilmente percebida pelo policial.",
+      "A puxada diagonal melhora o direcionamento da arma ao alvo.",
+      "É recomendável realizar pausas durante o acionamento do gatilho."
+     ],
+     "c": 1,
+     "j": "Gatilhada é o acionamento brusco; a antecipação é de difícil percepção por causa do recuo; a puxada diagonal DESLOCA o direcionamento da arma; o policial NÃO deve realizar pausas durante o acionamento."
+    },
+    {
+     "e": "Sobre precisão e acurácia, assinale a alternativa CORRETA:",
+     "a": [
+      "Precisão é a proximidade entre os disparos e o centro do alvo.",
+      "Acurácia é disparar repetidamente no mesmo ponto, ainda que fora do alvo.",
+      "Precisão é adotar repetidas vezes o mesmo procedimento, relacionando-se à proximidade dos valores obtidos pela repetição.",
+      "Precisão e acurácia são sinônimos.",
+      "Um agrupamento fechado fora do centro do alvo indica boa acurácia e má precisão."
+     ],
+     "c": 2,
+     "j": "Precisão: repetição do mesmo procedimento (disparar praticamente no mesmo ponto). Acurácia: proximidade entre os disparos e o objetivo — centro do alvo. Agrupamento fechado fora do centro = precisão OK, acurácia X."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Cite e explique os cinco fundamentos do tiro policial.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Posição: escolhida conforme as circunstâncias, o risco à segurança do policial, a busca de maior estabilidade corporal e o consumo de energia x conforto. Em pé com arma de porte: isósceles, isósceles modificada (Ayoob — posição de combate), Weaver e Weaver modificada (Chapman); há ainda de joelhos (torre e com apoio), deitado (convencional, pronado dinâmico, oblíquo e dorsal) e tiro barricado.",
+      "Empunhadura: influencia velocidade de tiro (split), saque, transição de alvos e armas, precisão, recarga e solução de panes; características: altura, envolvimento e pressão; preferencialmente dupla.",
+      "Visada: ajuste do aparelho de pontaria ao alvo, por meio do alinhamento da mira, do enquadramento no alvo e do plano focal — a massa de mira deve estar em foco; a tomada da linha de mira é feita pelo olho diretor.",
+      "Respiração: inspirar e expirar algumas vezes, oxigenando cérebro e músculos, e disparar próximo ao término da expiração, deixando cerca de 30% de oxigênio nos pulmões e bloqueando a respiração até concluir o disparo.",
+      "Acionamento do gatilho: contínuo (lento ou rápido), de modo que o atirador seja surpreendido pelo disparo, sem pausas; observar posicionamento do dedo (falange distal até, no máximo, a medial), direção da força (à retaguarda, na direção do olho do atirador) e retorno do gatilho (reset); manter a “luz do gatilho”."
+     ]
+    },
+    {
+     "e": "Explique as características da empunhadura e as quatro técnicas de empunhadura mais adotadas em armas portáteis.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Altura: ajuste correto da mão ativa ao armamento, pela técnica do “C da mão”; quanto mais alta, próxima/justa ao beaver tail, melhor o controle, pois a ação do ferrolho é linear e horizontal para trás.",
+      "Envolvimento: o punho do armamento deve estar completamente envolvido pelas mãos, sem espaços, com as mãos bem ajustadas entre si.",
+      "Pressão: a mão reativa dá suporte e emprega um pouco mais de pressão; ambas atuam conjuntamente, sem excesso e sem relaxamento (aperto de mão firme).",
+      "Convencional: a mão reativa apenas apoia a sustentação da arma portátil; mais conforto em deslocamentos longos, menos estabilidade.",
+      "C Clamp: abraço sobre a placa do guarda-mão, criando resistência contrária à direção do recuo; exige alças e massas altas ou miras holográficas.",
+      "Rodesiana: mãos em “concha” travando a placa do guarda-mão, com o polegar como ferramenta indexadora; favorável a aparelhos de pontaria baixos.",
+      "MagWell: mão reativa próxima ao carregador, cotovelo flexionado junto ao corpo; traz conforto — sem empunhar o carregador.",
+      "Observações: nas armas portáteis são 3 pontos de contato; o rosto não é ponto de contato; toda a coronha deve se ajustar no cavalo do ombro."
+     ]
+    }
+   ]
+  },
+  "6": {
+   "titulo": "Procedimentos do tiro policial, recargas, transição, panes, tiro em seco e regras de segurança",
+   "legal": "Resumo de A.M — Procedimentos do Tiro Policial; Patrick Urey (FBI); DARGI; regras de segurança no estande",
+   "vf": [
+    {
+     "t": "Condicionamento mental é a junção da preparação física, técnica e psicológica, sendo o fator que exerce maior influência na execução do disparo por parte do atirador.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "São sintomas do medo, estresse e ansiedade: diminuição da visão periférica (visão de túnel/taquipsiquia), da capacidade auditiva e da habilidade motora, além da descarga de adrenalina.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O saque da arma de porte relaciona-se mais propriamente aos fundamentos da posição e da empunhadura, sendo a apresentação o ajuste até deixar a arma em condições para o disparo.",
+     "r": true,
+     "j": "Correto — o ajuste é simultâneo ao saque."
+    },
+    {
+     "t": "Na posição 1 do saque, o policial faz contato com a arma adotando empunhadura alta e firme com a mão ativa, liberando a trava do coldre.",
+     "r": true,
+     "j": "Correto — a mão reativa posiciona-se próxima ao abdome, inclinada para receber a pistola."
+    },
+    {
+     "t": "A saída da posição 2 para a posição 3 deve ser realizada em movimento de arco, abaixando-se a cabeça até a arma.",
+     "r": false,
+     "j": "Falso. Deve ser realizada com movimento diagonal-retilíneo ao alvo (espetagem/flecha); o policial NÃO abaixa a cabeça até a arma nem faz movimento de arco."
+    },
+    {
+     "t": "O Double Tap foi desmistificado por Patrick Urey (FBI), que demonstrou que o intervalo da ressonância de choque entre dois disparos teria que ser de até 0,019s (aproximadamente 53 disparos por segundo), o que é humanamente impossível.",
+     "r": true,
+     "j": "Correto — a média humana é de 4 disparos em 1 segundo."
+    },
+    {
+     "t": "No “N” Tap, o operador pode efetuar quantos disparos quiser até se sentir seguro.",
+     "r": false,
+     "j": "Falso. O operador deve efetuar quantos disparos forem NECESSÁRIOS para cessar a agressão e garantir sua segurança, avaliando rapidamente o uso da força para não incorrer em excesso."
+    },
+    {
+     "t": "O follow through é o conjunto de procedimentos realizados após o disparo, com o objetivo de checar o alvo, varrer o ambiente e preparar o policial para o disparo subsequente.",
+     "r": true,
+     "j": "Correto — a arma deve ser preparada para novo disparo (reset do gatilho e nova visada)."
+    },
+    {
+     "t": "Recarga tática é a troca de carregador realizada fora de situação de combate.",
+     "r": false,
+     "j": "Falso. Fora de situação de combate é a recarga ADMINISTRATIVA. A tática é feita em situação de confronto, com a arma carregada, para aumentar a quantidade de munições."
+    },
+    {
+     "t": "Recarga emergencial é aquela realizada em confronto no momento em que findam as munições do carregador que está na arma, terminando ela aberta.",
+     "r": true,
+     "j": "Correto — exige troca rápida para recolocar a arma em condições de uso."
+    },
+    {
+     "t": "A bandoleira de 2 pontas tem como vantagem manter a arma mais fixada e próxima ao corpo na transição para a arma de porte, e como desvantagem impossibilitar a troca de plataforma.",
+     "r": true,
+     "j": "Correto — conforme o quadro comparativo das bandoleiras."
+    },
+    {
+     "t": "Para a transição de armamento é condição sine qua non o uso da bandoleira.",
+     "r": true,
+     "j": "Correto — e o tipo de bandoleira influencia sobremaneira a estabilização da arma portátil."
+    },
+    {
+     "t": "Na pane de chaminé, o estojo permanece preso na janela de ejeção da arma, sendo solucionada pelo Tap-Rap (golpe do ferrolho para recarregamento, lateralizando a arma).",
+     "r": true,
+     "j": "Correto — motivo: ciclagem incompleta do ferrolho, falha no extrator ou ejetor."
+    },
+    {
+     "t": "A pane de embuxamento tem como motivo a munição inchada e é solucionada com o Tap-Rap.",
+     "r": false,
+     "j": "Falso. A solução do embuxamento é envolver o ferrolho por cima e, com a mão fraca, dar uma pancada na traseira do punho com a mão forte. O motivo, de fato, é munição inchada."
+    },
+    {
+     "t": "O DARGI compreende: dedo sempre fora do gatilho; apontar a arma para local seguro; retirar o carregador; golpes de segurança/abertura da arma; e inspeção visual e tátil.",
+     "r": true,
+     "j": "Correto — procedimentos preliminares de inspeção de segurança."
+    }
+   ],
+   "me": [
+    {
+     "e": "Sobre a resolução de panes, assinale a alternativa INCORRETA:",
+     "a": [
+      "Pane de nega: após o acionamento do gatilho não ocorre o disparo, pois a espoleta pina ou a munição não se apresentou à câmara.",
+      "Pane de trancamento: a munição, apesar de empurrada pelo ferrolho para adentrar a câmara, não se acopla devidamente.",
+      "Pane de duplo carregamento: duas munições se apresentam na entrada da câmara, interrompendo o carregamento.",
+      "Pane de embuxamento: após a deflagração o estojo não é extraído, ficando afixado na parte inicial do cano.",
+      "A solução do duplo carregamento é o Tap-Rap, com golpe do ferrolho para recarregamento."
+     ],
+     "c": 4,
+     "j": "A solução do duplo carregamento é a abertura do ferrolho com retirada do carregador, lateralização da arma para saída da munição obstante, realimentação e carregamento."
+    },
+    {
+     "e": "Sobre as recargas, assinale a alternativa CORRETA:",
+     "a": [
+      "Administrativa é a realizada em confronto, com a arma carregada.",
+      "Tática é a realizada em situação de confronto, com a arma carregada, podendo desprezar ou não o carregador trocado.",
+      "Emergencial é a troca feita fora de combate.",
+      "Durante a recarga o armamento deve ser mantido abaixo da linha da cintura.",
+      "Antes da recarga em situação real, deve-se avançar sobre o agressor."
+     ],
+     "c": 1,
+     "j": "Administrativa: fora de combate. Tática: em confronto, com arma carregada (recarga rápida). Emergencial: quando findam as munições. O armamento deve ser mantido na altura da visão (área de trabalho) e, preferencialmente, deve-se abrigar ou reduzir silhueta."
+    },
+    {
+     "e": "Sobre as regras de segurança no estande, assinale a alternativa INCORRETA:",
+     "a": [
+      "O armamento deverá permanecer sempre descarregado, desalimentado e desmuniciado, salvo sob comando expresso do instrutor.",
+      "Ao completar a sequência de disparos, retorna-se à posição “pronto retido”, com o cano voltado para a linha de tiro, ligeiramente para baixo.",
+      "Qualquer pessoa que observar ato atentatório à segurança deverá comandar “suspender fogo!”.",
+      "Caso não haja a deflagração da munição, o atirador deve imediatamente virar-se e apresentar a arma ao instrutor.",
+      "Deve-se evitar atirar em superfícies planas, duras ou em água, pois os projéteis podem ricochetear."
+     ],
+     "c": 3,
+     "j": "Caso não haja deflagração, mantenha a arma apontada para o alvo por alguns segundos (pode haver retardamento da ignição do cartucho), retire o dedo do gatilho e levante o braço oposto ao da arma para ser atendido pelo instrutor."
+    },
+    {
+     "e": "Sobre o Double Tap e o “N” Tap, assinale a alternativa CORRETA:",
+     "a": [
+      "O Double Tap é técnica infalível de incapacitação, por isso permanece recomendada.",
+      "O objetivo do agente de segurança ao efetuar o disparo no oponente é cessar a agressão.",
+      "O “N” Tap autoriza disparos ilimitados.",
+      "O Double Tap busca provocar choque hipovolêmico, tendo sido confirmado por Patrick Urey (FBI).",
+      "A média humana é de 53 disparos por segundo."
+     ],
+     "c": 1,
+     "j": "O que se busca é CESSAR A AGRESSÃO. O Double Tap foi desmistificado por Patrick Urey (FBI): exigiria intervalo de até 0,019s (~53 disparos/segundo), sendo a média humana de 4 disparos em 1 segundo."
+    },
+    {
+     "e": "Sobre o uso de bandoleiras e a transição de armamento, assinale a alternativa INCORRETA:",
+     "a": [
+      "As bandoleiras mantêm a arma portátil fixada ao corpo, auxiliando no transporte e na estabilidade do armamento.",
+      "As mais comuns são as de 1, 2 e 3 pontas.",
+      "A bandoleira de 1 ponta tem como vantagem a agilidade na troca de plataforma e a soltura rápida da arma.",
+      "A transição tática ocorre quando o operador prevê a necessidade de mudança para adaptação ao cenário.",
+      "O principal risco da transição é a perda da arma portátil, sendo dispensável o travamento do armamento."
+     ],
+     "c": 4,
+     "j": "O principal risco da transição é o DISPARO ACIDENTAL; por isso, atenção total ao posicionamento do dedo fora do gatilho e deve ser realizado o travamento da arma portátil."
+    }
+   ],
+   "disc": [
+    {
+     "e": "Cite os tipos de pane, seus motivos e as respectivas soluções.",
+     "est": "Discursiva — mínimo 12 e máximo 25 linhas.",
+     "cri": [
+      "Conceito: pane é a circunstância de falha de funcionamento da arma, que impede seu carregamento e coloca o operador em risco; muitas vezes é causada pelo próprio atirador, por empunhadura incorreta ou erro nos movimentos do MAC.",
+      "Nega: acionado o gatilho não ocorre o disparo (espoleta pina ou munição não apresentada à câmara). Motivos: espoleta danificada; problema no percussor; ciclagem incompleta. Solução: Tap-Rap.",
+      "Trancamento: a munição empurrada pelo ferrolho não se acopla à câmara. Motivos: munição inchada/inadequada; ciclagem incompleta; condução do ferrolho. Solução: Tap-Rap.",
+      "Duplo carregamento: duas munições na entrada da câmara. Motivos: falha no extrator; culote gasto; carregador com lábio frouxo. Solução: abertura do ferrolho com retirada do carregador, lateralização da arma, realimentação e carregamento.",
+      "Chaminé: estojo preso na janela de ejeção. Motivos: ciclagem incompleta; falha no extrator ou ejetor. Solução: Tap-Rap.",
+      "Embuxamento: o estojo não é extraído e fica afixado na parte inicial do cano. Motivo: munição inchada. Solução: envolver o ferrolho por cima e, com a mão fraca, dar pancada na traseira do punho com a mão forte.",
+      "Orientação: como a maior parte das panes é sanável com o Tap-Rap-Bang (tapa, golpe e tiro), usa-se de imediato esse recurso; não sanada, faz-se o check e confirma-se a pane para a próxima solução."
+     ]
+    },
+    {
+     "e": "Explique o DARGI e as regras de segurança a serem observadas no estande de tiro.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "DARGI: 1) dedo sempre fora do gatilho; 2) apontar a arma para local seguro; 3) retirar o carregador; 4) golpes de segurança/abertura da arma; 5) inspeção visual e tátil (na pistola).",
+      "Objetivo das regras: garantir a integridade física do instrutor, do aluno e da sociedade, minimizando erros e evitando atos negligentes ou imprudentes.",
+      "No estande: dedo fora do gatilho; sempre apontar a arma para local seguro; manter o silêncio; evitar brincadeiras; agir sob comando.",
+      "Condição do armamento: descarregado, desalimentado e desmuniciado (MAC ao contrário), salvo sob comando expresso do instrutor.",
+      "EPIs: óculos, protetor auricular ou abafador e colete balístico; evitar disparos em superfícies planas, duras ou na água, pelo risco de ricochete.",
+      "Incidentes: retirar o dedo do gatilho, manter a arma apontada ao alvo e levantar o braço oposto ao da arma; concluída a série, adotar o “pronto retido”; qualquer pessoa que observe ato atentatório à segurança comanda “suspender fogo!”.",
+      "Observação: as travas de segurança são dispositivos mecânicos relativamente confiáveis, mas não substituem o bom senso; atenção aos “10 segundos do homem morto”."
+     ]
+    }
+   ]
+  }
+ },
+ "sim": {
+  "vf": [
+   {
+    "t": "A arma de fogo emprega a força expansiva dos gases gerados pela combustão de um propelente, conforme a Portaria nº 067, CMT EX, 02FEV2017.",
+    "r": true,
+    "j": "Correto — conceito literal do material.",
+    "g": "Questão 01 — Classificação das armas de fogo"
+   },
+   {
+    "t": "A besta e a zarabatana são exemplos de armas brancas.",
+    "r": false,
+    "j": "Falso — são armas impulsivas ou de arremesso.",
+    "g": "Questão 01 — Classificação das armas de fogo"
+   },
+   {
+    "t": "A metralhadora refrigerada por camisa d’água classifica-se, quanto à refrigeração, como a água.",
+    "r": true,
+    "j": "Correto — o cano é envolvido por uma camisa d’água (ex.: MT Alemã MG-08 e MT Browning M1917).",
+    "g": "Questão 01 — Classificação das armas de fogo"
+   },
+   {
+    "t": "A arma automática realiza automaticamente todas as fases do funcionamento, exceto o disparo.",
+    "r": false,
+    "j": "Falso — quem excetua o disparo é a semi-automática; a automática realiza todas as fases.",
+    "g": "Questão 01 — Classificação das armas de fogo"
+   },
+   {
+    "t": "O armamento leve é o de calibre inferior a 0,60” (15,24mm), excetuando-se a espingarda 18,6mm e o lança-granadas 40mm M-203.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 01 — Classificação das armas de fogo"
+   },
+   {
+    "t": "O calibre real é medido pelos “cheios” das raias e o calibre do projétil pelos “fundos”.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 02 — Munição e balística"
+   },
+   {
+    "t": "A espoleta Bateria é montada no bolso dos cartuchos de caça, sendo constituída por cápsula, bigorna e estojo próprio com evento.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 02 — Munição e balística"
+   },
+   {
+    "t": "A balística de transição estuda os movimentos do projétil durante seu deslocamento pelo ar.",
+    "r": false,
+    "j": "Falso — isso é a balística externa; a de transição trata do projétil ao sair do cano, ainda sob influência dos gases remanescentes.",
+    "g": "Questão 02 — Munição e balística"
+   },
+   {
+    "t": "Dobrando-se a velocidade de um objeto, mantida a massa, a energia cinética torna-se quatro vezes maior.",
+    "r": true,
+    "j": "Correto — a velocidade está elevada ao quadrado na fórmula Ec = m.v²/2.",
+    "g": "Questão 02 — Munição e balística"
+   },
+   {
+    "t": "O choke é a forma de acabamento final da boca do cano e proteção do raiamento.",
+    "r": false,
+    "j": "Falso — isso é a coroa; o choke é o estrangulamento da boca do cano de alma lisa, influenciando a dispersão do chumbo.",
+    "g": "Questão 02 — Munição e balística"
+   },
+   {
+    "t": "São fundamentos do tiro: posição, empunhadura, visada, respiração e acionamento do gatilho.",
+    "r": true,
+    "j": "Correto — 05 fundamentos.",
+    "g": "Questão 03 — Fundamentos do tiro policial"
+   },
+   {
+    "t": "A posição isósceles modificada, atribuída a Ayoob, é conhecida como posição de combate.",
+    "r": true,
+    "j": "Correto — mais indicada para defesa individual e forças de segurança.",
+    "g": "Questão 03 — Fundamentos do tiro policial"
+   },
+   {
+    "t": "No fundamento da visada, o alvo deve estar em foco no momento do disparo, e não a massa de mira.",
+    "r": false,
+    "j": "Falso — a MASSA de mira deve estar em foco.",
+    "g": "Questão 03 — Fundamentos do tiro policial"
+   },
+   {
+    "t": "Na empunhadura, a mão ativa deve empregar um pouco mais de pressão do que a mão reativa, pois aciona o gatilho.",
+    "r": false,
+    "j": "Falso — a mão REATIVA emprega um pouco mais de pressão; a ativa, um pouco menos, porque aciona o gatilho.",
+    "g": "Questão 03 — Fundamentos do tiro policial"
+   },
+   {
+    "t": "Recomenda-se deixar cerca de 30% de oxigênio nos pulmões e bloquear a respiração até concluir o disparo.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 03 — Fundamentos do tiro policial"
+   },
+   {
+    "t": "A recarga administrativa é a troca do carregador realizada fora de situação de combate.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 04 — Procedimentos, panes e segurança"
+   },
+   {
+    "t": "A pane de chaminé caracteriza-se pelo estojo preso na janela de ejeção, solucionada pelo Tap-Rap.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 04 — Procedimentos, panes e segurança"
+   },
+   {
+    "t": "No DARGI, a primeira providência é retirar o carregador.",
+    "r": false,
+    "j": "Falso — a primeira é manter o dedo sempre fora do gatilho; a retirada do carregador é o terceiro passo.",
+    "g": "Questão 04 — Procedimentos, panes e segurança"
+   },
+   {
+    "t": "O follow through destina-se a checar o alvo, varrer o ambiente e preparar o policial para o disparo subsequente.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 04 — Procedimentos, panes e segurança"
+   },
+   {
+    "t": "No estande, o armamento deve permanecer sempre carregado e alimentado, para pronta resposta.",
+    "r": false,
+    "j": "Falso — deve permanecer descarregado, desalimentado e desmuniciado, salvo sob comando expresso do instrutor.",
+    "g": "Questão 04 — Procedimentos, panes e segurança"
+   }
+  ],
+  "me": [
+   {
+    "e": "Assinale a alternativa INCORRETA quanto à classificação do FUZIL:",
+    "a": [
+     "Tipo: portátil.",
+     "Emprego: individual.",
+     "Funcionamento: automática.",
+     "Alimentação: manual.",
+     "Carregamento: retrocarga."
+    ],
+    "c": 3,
+    "j": "O fuzil é alimentado COM CARREGADOR, de baixo para cima."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre os componentes da munição:",
+    "a": [
+     "O culote é a parte anterior ogival do projétil.",
+     "Eventos são os pequenos furos no estojo por onde o calor da queima da espoleta atinge o propelente.",
+     "A espoleta Boxer possui bigorna no estojo.",
+     "O propelente é a parte vulnerável do cartucho.",
+     "As pólvoras dividem-se em antecarga e retrocarga."
+    ],
+    "c": 1,
+    "j": "Eventos são os furos no estojo por onde passa o calor da mistura detonante. Culote é a base do estojo; a Boxer tem bigorna na cápsula; parte vulnerável é o projétil; as pólvoras são negras e sem fumaça."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre a balística terminal e o poder de parada:",
+    "a": [
+     "A balística terminal está diretamente ligada às questões físicas e biológicas do alvo.",
+     "Não necessariamente uma maior energia cinética, isoladamente, garante plena incapacitação.",
+     "Segundo Marshall & Sanow, não existe poder de parada com um tiro.",
+     "O impedimento do avanço do agressor decorre do calibre empregado no disparo.",
+     "Segundo Fakler, a relação entre poder de parada e munição vincula-se à biologia de quem recebe o disparo."
+    ],
+    "c": 3,
+    "j": "Não é o calibre, mas a região do corpo atingida e/ou a quantidade de sangue perdida por quem foi atingido."
+   },
+   {
+    "e": "Assinale a alternativa CORRETA sobre as posições e a empunhadura:",
+    "a": [
+     "Na posição de joelhos com apoio, apoia-se o cotovelo no joelho.",
+     "Na posição de tiro barricado o corpo deve estar inclinado para frente, em diagonal com o abrigo (regra dos 45º).",
+     "Na Weaver o braço da mão ativa fica totalmente esticado e o da reativa dobrado.",
+     "O rosto encostado na arma portátil é o terceiro ponto de contato da empunhadura.",
+     "A empunhadura simples deve ser a regra no serviço policial."
+    ],
+    "c": 1,
+    "j": "Barricado: inclinação para frente, em diagonal com o abrigo (regra dos 45º). O apoio é tríceps/joelho; braço ativo totalmente esticado é da Weaver modificada (Chapman); o rosto não é ponto de contato; a empunhadura no serviço policial deve ser, preferencialmente, dupla."
+   },
+   {
+    "e": "Assinale a alternativa INCORRETA sobre segurança e procedimentos:",
+    "a": [
+     "Ao receber ou entregar uma arma de fogo deve-se certificar que esteja aberta, descarregada e desalimentada.",
+     "Os “10 segundos do homem morto” referem-se à capacidade humana de, mesmo ferido mortalmente, ter ação voluntária contra você.",
+     "O tiro em seco deve ser praticado com munição real, para maior realismo.",
+     "Nunca se deve transportar ou coldrear a arma com o cão armado (à retaguarda).",
+     "As travas de segurança são dispositivos mecânicos relativamente confiáveis, mas não substituem o bom senso."
+    ],
+    "c": 2,
+    "j": "No tiro em seco NÃO se utiliza, em nenhuma hipótese, munição real — devem-se usar munições de treino (snap cap), em local adequado e com a arma sempre apontada para local seguro."
+   }
+  ],
+  "disc": [
+   {
+    "e": "Explique os procedimentos preliminares de inspeção de segurança (DARGI) e a sequência MAC, indicando a particularidade do revólver.",
+    "est": "Discursiva do simulado — vale 1,5 ponto; mínimo 8 e máximo 15 linhas.",
+    "p": 1.5,
+    "cri": [
+     "DARGI: dedo sempre fora do gatilho; apontar a arma para local seguro; retirar o carregador; golpes de segurança/abertura da arma; inspeção visual e tátil (na pistola).",
+     "MAC: municiar (colocar munição no tambor, no carregador ou no tubo do depósito); alimentar (fechar o tambor ou colocar o carregador municiado na arma); carregar (colocar munição na câmara).",
+     "Particularidade do revólver: alimentar e carregar são atos simultâneos.",
+     "Complemento: na espingarda cal.12 a alimentação é feita juntamente com o municiamento; no estande, o armamento permanece descarregado, desalimentado e desmuniciado — o MAC ao contrário."
+    ]
+   },
+   {
+    "e": "Disserte sobre a balística terminal e o chamado “poder de parada”, relacionando-os à incapacitação e à busca da resposta não convencional.",
+    "est": "Discursiva do simulado — vale 2,0 pontos; mínimo 12 e máximo 25 linhas.",
+    "p": 2.0,
+    "cri": [
+     "Balística terminal: foca no estudo das interações do projétil ao impactar estruturas físicas ou biológicas; está diretamente ligada às questões físicas e biológicas do alvo — interessa a interação com órgãos e tecidos, e não apenas a quantidade de energia cinética.",
+     "Efeitos no corpo: orla de contusão, orla de enxugo, zona de tatuagem e zona de esfumaçamento; à distância — contusão e enxugo; à curta distância — acrescem tatuagem e chamuscamento; encostado — câmara de mina de Hoffman, com depósitos de fuligem, pólvora e queimaduras.",
+     "Poder de parada: forma abstrata de indicar a capacidade do projétil de parar ou neutralizar o atacante, pondo-o fora de combate; é uma ilusão — não existem projéteis mágicos nem calibres paradores de homens (Marshall & Sanow).",
+     "Fator determinante: a região do corpo atingida e/ou a quantidade de sangue perdida; segundo Fakler, vincula-se à biologia e ao estado emocional de quem recebe o disparo, e não à energia cinética traduzida em cavitação.",
+     "Incapacitação: psicológica (o agressor desiste do combate), imediata (efeito biológico, lesão no SNC) e mediata (efeito fisiológico, perda contínua de sangue e redução de oxigenação).",
+     "Resposta não convencional: múltiplos disparos contra a ameaça letal, buscando a incapacitação imediata; a quantidade é definida pela reação do alvo, cessando o fogo somente quando o agressor não constituir mais ameaça letal — o que se busca é cessar a agressão (“N” Tap), observado o uso progressivo da força."
+    ]
+   }
+  ]
+ }
+}
