@@ -78,6 +78,116 @@
      "t": "A 7ª EMG substituiu o NAMPP e passou a acompanhar, gerir e apoiar os gerentes de projetos.",
      "r": true,
      "j": "Correto."
+    },
+    {
+     "t": "A Lei Estadual nº 15.186, de 12 de dezembro de 2013, instituiu na Polícia Militar a 7ª Seção de Estado-Maior Geral.",
+     "r": true,
+     "j": "Correto, conforme a introdução da apostila."
+    },
+    {
+     "t": "A 7ª EMG era anteriormente denominada Núcleo de Análise e Monitoramento de Programas e Projetos (NAMPP).",
+     "r": true,
+     "j": "Correto: a 7ª EMG surgiu para dar lugar ao antigo NAMPP."
+    },
+    {
+     "t": "A missão da 7ª EMG é assessorar o Comando Geral e a Chefia do EMG no desenvolvimento de projetos estruturadores que necessitem de captação de recursos orçamentários ordinários do Estado.",
+     "r": false,
+     "j": "Errado: os projetos estruturadores necessitam de captação de recursos EXTRAORÇAMENTÁRIOS."
+    },
+    {
+     "t": "Também compete à 7ª EMG acompanhar, gerir e apoiar os gerentes de projetos no fluxo do trabalho a ser desenvolvido.",
+     "r": true,
+     "j": "Correto, integra a missão da seção."
+    },
+    {
+     "t": "No organograma da 7ª EMG, abaixo do Chefe Adjunto, estão as Subseções de Projetos, de Monitoramento, de Avaliação e Fomento e de Apoio Administrativo.",
+     "r": true,
+     "j": "Correto: são quatro subseções."
+    },
+    {
+     "t": "A Subseção de Licitações e Contratos integra o organograma da 7ª EMG.",
+     "r": false,
+     "j": "Errado: não há essa subseção. As quatro são Projetos, Monitoramento, Avaliação e Fomento, e Apoio Administrativo."
+    },
+    {
+     "t": "A 7ª EMG foi instituída por decreto do Governador no ano de 2009.",
+     "r": false,
+     "j": "Errado: foi instituída pela Lei Estadual nº 15.186/2013."
+    },
+    {
+     "t": "Quanto aos requisitos legais, as transferências fiscais classificam-se em obrigatórias e voluntárias (discricionárias).",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "As transferências obrigatórias dependem da vontade do governo e de suas condições financeiras no exercício.",
+     "r": false,
+     "j": "Errado: ocorrem por força de lei, INDEPENDENTEMENTE da vontade ou das condições financeiras do governo."
+    },
+    {
+     "t": "As transferências do Fundo de Participação dos Municípios (FPM) são o exemplo clássico de transferência voluntária.",
+     "r": false,
+     "j": "Errado: o FPM é o exemplo clássico de transferência OBRIGATÓRIA."
+    },
+    {
+     "t": "As transferências voluntárias geralmente ocorrem por meio de convênios e podem destinar-se a projetos específicos, como infraestrutura, saúde ou educação.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A transferência voluntária é garantida por lei e independe de acordo entre os entes.",
+     "r": false,
+     "j": "Errado: a voluntária depende de um acordo e NÃO é garantida por lei."
+    },
+    {
+     "t": "O repasse do Ministério da Justiça ao Estado para aquisição de câmeras corporais, por convênio, mediante critérios técnicos e contrapartida financeira, é exemplo de transferência voluntária.",
+     "r": true,
+     "j": "Correto, exemplo dado na apostila."
+    },
+    {
+     "t": "As transferências obrigatórias são essenciais para garantir a equidade entre regiões e apoiar serviços públicos locais, como saúde e educação.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Classificam-se como despesas correntes todas as despesas que não contribuem, diretamente, para a formação ou aquisição de um bem de capital.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "As despesas com a manutenção dos equipamentos e com o funcionamento dos serviços públicos em geral são despesas correntes.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "As despesas de custeio abrangem gastos destinados a obras de conservação e adaptação de bens imóveis.",
+     "r": true,
+     "j": "Correto, ao lado da manutenção dos serviços anteriormente criados."
+    },
+    {
+     "t": "Despesas com material de consumo, pessoal e serviços de terceiros são exemplos de despesas de capital.",
+     "r": false,
+     "j": "Errado: são exemplos de despesas de CUSTEIO."
+    },
+    {
+     "t": "O planejamento e a execução de obras classificam-se como investimentos.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A aquisição de computadores novos é exemplo de despesa de custeio.",
+     "r": false,
+     "j": "Errado: é exemplo de despesa de capital (investimento)."
+    },
+    {
+     "t": "A aquisição de terreno necessário à construção de um hospital é exemplo de investimento.",
+     "r": true,
+     "j": "Correto, exemplo da apostila."
+    },
+    {
+     "t": "A compra de instalações, equipamentos e material permanente integra os investimentos.",
+     "r": true,
+     "j": "Correto."
     }
    ],
    "me": [
@@ -140,6 +250,90 @@
      ],
      "c": 1,
      "j": "É o exemplo de transferência voluntária trazido no material: decidida por conveniência, formalizada por convênio e não garantida por lei."
+    },
+    {
+     "e": "Segundo a Lei Estadual nº 15.186/2013, a missão da 7ª EMG é:",
+     "a": [
+      "Fiscalizar os convênios firmados pela PMPE com empresas públicas.",
+      "Assessorar o Comando Geral e a Chefia do EMG nas decisões estratégicas relativas a projetos estruturadores que necessitem de captação de recursos extraorçamentários.",
+      "Elaborar normas sobre despesas de capital da corporação.",
+      "Executar as licitações e contratos da Polícia Militar.",
+      "Gerir a folha de pagamento dos projetos institucionais."
+     ],
+     "c": 1,
+     "j": "A missão é assessorar o Cmt Geral e a Chefia do EMG quanto a projetos estruturadores com captação de recursos extraorçamentários, além de acompanhar, gerir e apoiar os gerentes de projetos."
+    },
+    {
+     "e": "Sobre o organograma da 7ª EMG, assinale a alternativa INCORRETA:",
+     "a": [
+      "O Chefe ocupa o topo da estrutura.",
+      "Há um Chefe Adjunto subordinado ao Chefe.",
+      "Existe uma Subseção de Projetos.",
+      "Existe uma Subseção de Avaliação e Fomento.",
+      "Existe uma Subseção de Prestação de Contas."
+     ],
+     "c": 4,
+     "j": "Não há Subseção de Prestação de Contas. As subseções são: Projetos, Monitoramento, Avaliação e Fomento, e Apoio Administrativo."
+    },
+    {
+     "e": "As transferências obrigatórias de recursos públicos caracterizam-se por:",
+     "a": [
+      "Acordo prévio entre os entes federativos.",
+      "Contrapartida financeira do ente recebedor.",
+      "Previsão legal que obriga o repasse.",
+      "Conveniência política do governo repassador.",
+      "Celebração de convênio com critérios técnicos."
+     ],
+     "c": 2,
+     "j": "Obrigatórias ocorrem por força de lei; acordo, convênio e contrapartida são traços das voluntárias."
+    },
+    {
+     "e": "É exemplo de transferência voluntária, segundo a apostila:",
+     "a": [
+      "Transferência do FPM aos municípios.",
+      "Repasse ao município para construção de escola, dependente de acordo.",
+      "Repasse constitucional de parte de impostos federais.",
+      "Transferência que independe da vontade do governo.",
+      "Transferência garantida por lei a todos os municípios."
+     ],
+     "c": 1,
+     "j": "A construção de escola mediante acordo, não garantida por lei, é o exemplo de voluntária dado no material."
+    },
+    {
+     "e": "Assinale a alternativa ERRADA:",
+     "a": [
+      "Transferências voluntárias são decididas com base em conveniências políticas ou administrativas.",
+      "Transferências obrigatórias ocorrem por força de lei.",
+      "O FPM garante que os municípios recebam parte da arrecadação de impostos federais.",
+      "Transferências voluntárias independem de acordo e são garantidas por lei.",
+      "Transferências voluntárias geralmente ocorrem por convênios."
+     ],
+     "c": 3,
+     "j": "Voluntárias DEPENDEM de acordo e NÃO são garantidas por lei."
+    },
+    {
+     "e": "Qual das opções é considerada despesa corrente (custeio)?",
+     "a": [
+      "Construção de uma escola.",
+      "Aquisição de terreno para hospital.",
+      "Compra de material permanente.",
+      "Pagamento de serviços de terceiros.",
+      "Aquisição de computadores novos."
+     ],
+     "c": 3,
+     "j": "Serviços de terceiros são custeio; as demais são despesas de capital (investimentos)."
+    },
+    {
+     "e": "Assinale a alternativa que NÃO constitui investimento:",
+     "a": [
+      "Aquisição ou formação de novos bens.",
+      "Planejamento e execução de obras.",
+      "Manutenção dos serviços anteriormente criados.",
+      "Aquisição de imóveis necessários à realização de obras.",
+      "Compra de equipamentos e material permanente."
+     ],
+     "c": 2,
+     "j": "Manutenção dos serviços anteriormente criados é despesa de custeio."
     }
    ],
    "disc": [
@@ -164,6 +358,38 @@
       "Investimentos: aquisição ou formação de novos bens, ou acréscimo de novo valor aos já existentes — compra de instalações, equipamentos e material permanente, e planejamento e execução de obras.",
       "Exemplos de investimento: construção de uma escola e aquisição de terreno para a construção de um hospital; no contexto da PMPE, construção e ampliação de quartéis e aquisição de novas viaturas."
      ]
+    },
+    {
+     "e": "Discorra sobre a 7ª Seção do Estado-Maior Geral da PMPE, abordando sua origem normativa, a denominação anterior e a sua missão.",
+     "est": "Discursiva — mínimo 5 e máximo 10 linhas.",
+     "cri": [
+      "A 7ª EMG foi instituída pela Lei Estadual nº 15.186, de 12/12/2013, sendo anteriormente denominada Núcleo de Análise e Monitoramento de Programas e Projetos (NAMPP).",
+      "Sua missão é assessorar o Comando Geral e a Chefia do EMG nas decisões estratégicas quanto ao desenvolvimento de projetos estruturadores que necessitem de captação de recursos extraorçamentários, bem como acompanhar, gerir e apoiar os gerentes de projetos no fluxo do trabalho.",
+      "Estrutura: Chefe, Chefe Adjunto e as Subseções de Projetos, Monitoramento, Avaliação e Fomento, e Apoio Administrativo."
+     ],
+     "resp": "A 7ª EMG foi instituída pela Lei Estadual nº 15.186, de 12/12/2013, sendo anteriormente denominada Núcleo de Análise e Monitoramento de Programas e Projetos (NAMPP). Sua missão é assessorar o Comando Geral e a Chefia do EMG nas decisões estratégicas quanto ao desenvolvimento de projetos estruturadores que necessitem de captação de recursos extraorçamentários, bem como acompanhar, gerir e apoiar os gerentes de projetos no fluxo do trabalho. Estrutura: Chefe, Chefe Adjunto e as Subseções de Projetos, Monitoramento, Avaliação e Fomento, e Apoio Administrativo."
+    },
+    {
+     "e": "Diferencie transferências obrigatórias e voluntárias, apresentando um exemplo de cada.",
+     "est": "Discursiva — mínimo 5 e máximo 10 linhas.",
+     "cri": [
+      "Obrigatórias: ocorrem por força de lei; o governo deve realizá-las independentemente de sua vontade ou condições financeiras.",
+      "Ex.: FPM, que garante aos municípios parte da arrecadação de impostos federais, promovendo equidade e apoiando saúde e educação.",
+      "Voluntárias (discricionárias): decididas por conveniência política ou administrativa, geralmente por convênios, dependem de acordo e não são garantidas por lei.",
+      "Ex.: repasse do MJ ao Estado para aquisição de câmeras corporais, mediante convênio, critérios técnicos e contrapartida financeira."
+     ],
+     "resp": "Obrigatórias: ocorrem por força de lei; o governo deve realizá-las independentemente de sua vontade ou condições financeiras. Ex.: FPM, que garante aos municípios parte da arrecadação de impostos federais, promovendo equidade e apoiando saúde e educação. Voluntárias (discricionárias): decididas por conveniência política ou administrativa, geralmente por convênios, dependem de acordo e não são garantidas por lei. Ex.: repasse do MJ ao Estado para aquisição de câmeras corporais, mediante convênio, critérios técnicos e contrapartida financeira."
+    },
+    {
+     "e": "Diferencie despesas correntes (custeio) e despesas de capital (investimentos), com exemplos.",
+     "est": "Discursiva — mínimo 5 e máximo 10 linhas.",
+     "cri": [
+      "Despesas correntes não contribuem diretamente para a formação ou aquisição de bem de capital: manutenção de equipamentos e funcionamento dos serviços.",
+      "Custeio abrange manutenção dos serviços já criados e obras de conservação e adaptação de imóveis (ex.: material de consumo, pessoal, serviços de terceiros).",
+      "Despesas de capital contribuem diretamente para formação ou aquisição de bem de capital.",
+      "Investimentos: novos bens ou acréscimo de valor, obras, imóveis necessários às obras, instalações, equipamentos e material permanente (ex.: construção de escola, terreno para hospital, computadores novos)."
+     ],
+     "resp": "Despesas correntes não contribuem diretamente para a formação ou aquisição de bem de capital: manutenção de equipamentos e funcionamento dos serviços. Custeio abrange manutenção dos serviços já criados e obras de conservação e adaptação de imóveis (ex.: material de consumo, pessoal, serviços de terceiros). Despesas de capital contribuem diretamente para formação ou aquisição de bem de capital. Investimentos: novos bens ou acréscimo de valor, obras, imóveis necessários às obras, instalações, equipamentos e material permanente (ex.: construção de escola, terreno para hospital, computadores novos)."
     }
    ]
   },
@@ -245,6 +471,21 @@
      "t": "A valorização profissional, como pilar, consiste em investimentos em capacitação, saúde e qualidade de vida dos policiais.",
      "r": true,
      "j": "Correto — o fortalecimento da instituição envolve projetos estruturantes, modernização e novas tecnologias; a proteção da sociedade, a integração de políticas públicas de prevenção e promoção de direitos."
+    },
+    {
+     "t": "A política de segurança pública possui foco mais amplo, abrangendo segurança alimentar e segurança sanitária.",
+     "r": false,
+     "j": "Errado: esse foco amplo é da POLÍTICA PÚBLICA de segurança pública. A política de segurança pública foca a prevenção, o controle e a repressão da criminalidade."
+    },
+    {
+     "t": "A política de segurança pública concentra-se em ações como policiamento, investigações criminais e implementação de leis.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A política pública de segurança pública considera a própria instituição e seus integrantes, visando à valorização profissional, ao fortalecimento da instituição e à proteção da sociedade.",
+     "r": true,
+     "j": "Correto."
     }
    ],
    "me": [
@@ -307,6 +548,18 @@
      ],
      "c": 4,
      "j": "O policiamento ostensivo é instrumento da política de segurança pública; a política pública de segurança é intersetorial e estruturante."
+    },
+    {
+     "e": "A política pública de segurança pública, ao incluir a instituição e seus integrantes, busca:",
+     "a": [
+      "Apenas repressão da criminalidade.",
+      "Valorização profissional, fortalecimento da instituição e proteção da sociedade.",
+      "Exclusivamente investigações criminais.",
+      "Somente implementação de leis penais.",
+      "Apenas policiamento ostensivo."
+     ],
+     "c": 1,
+     "j": "Os três eixos: valorização profissional, fortalecimento da instituição e proteção da sociedade."
     }
    ],
    "disc": [
@@ -336,6 +589,17 @@
       "Conexão entre as dimensões: a captação melhora a capacidade de resposta policial (política de segurança pública, investimentos operacionais) e fortalece a corporação em seu aspecto institucional e social (política pública de segurança, investimentos estruturantes e humanos) — cada projeto captado deve contribuir simultaneamente para o desempenho operacional e para o fortalecimento institucional.",
       "Resultados esperados: sustentabilidade financeira da PMPE, maior eficiência na aplicação dos recursos do Estado e cumprimento das metas do planejamento estratégico estadual e do Plano Plurianual (PPA)."
      ]
+    },
+    {
+     "e": "Distinga política de segurança pública de política pública de segurança pública e explique a lógica da captação de recursos, se a instituição já possui dotação orçamentária.",
+     "est": "Discursiva — mínimo 5 e máximo 10 linhas.",
+     "cri": [
+      "Política de segurança pública: foco na prevenção, controle e repressão da criminalidade (policiamento, investigação, implementação de leis).",
+      "Política pública de segurança pública: foco amplo, incluindo segurança alimentar, pública e sanitária, com aspectos sociais, econômicos e políticos, e a própria instituição e seus integrantes (valorização profissional, fortalecimento da instituição, proteção da sociedade).",
+      "A captação serve para fomentar políticas públicas, investir em profissionais e instituição e economizar recursos de investimento do Estado, que podem custear salários, saúde e recomposição de efetivo.",
+      "Fontes: Estado, União, órgãos internacionais e países estrangeiros."
+     ],
+     "resp": "Política de segurança pública: foco na prevenção, controle e repressão da criminalidade (policiamento, investigação, implementação de leis). Política pública de segurança pública: foco amplo, incluindo segurança alimentar, pública e sanitária, com aspectos sociais, econômicos e políticos, e a própria instituição e seus integrantes (valorização profissional, fortalecimento da instituição, proteção da sociedade). A captação serve para fomentar políticas públicas, investir em profissionais e instituição e economizar recursos de investimento do Estado, que podem custear salários, saúde e recomposição de efetivo. Fontes: Estado, União, órgãos internacionais e países estrangeiros."
     }
    ]
   },
@@ -417,6 +681,96 @@
      "t": "A aquisição de drones para monitoramento e de EPIs para o BPCHOQUE são exemplos de aquisição por meio de projetos institucionais.",
      "r": true,
      "j": "Correto — o material cita ainda equipamentos e insumos hospitalares e veículos de transporte para o Centro de Assistência Social."
+    },
+    {
+     "t": "Como a instituição possui dotação orçamentária estadual, a captação de recursos externos é dispensável.",
+     "r": false,
+     "j": "Errado: a captação serve para fomentar políticas públicas, investir em profissionais e instituição e economizar recursos de investimento do Estado."
+    },
+    {
+     "t": "A economia de recursos de investimento do Estado, obtida com a captação, permite custear salários, saúde e recomposição de efetivo.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "No âmbito da União, as fontes de captação apresentadas são o Congresso Nacional, os Ministérios, os Bancos Nacionais e os Fundos.",
+     "r": true,
+     "j": "Correto: são as 04 fontes da União."
+    },
+    {
+     "t": "Emendas parlamentares são instrumentos utilizados pelo Poder Legislativo para sugerir alterações no orçamento público, direcionando recursos para projetos e ações específicas.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A emenda individual é proposta por um único parlamentar, possui valor limite e destina-se a projetos ou ações de seu interesse.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A emenda de bancada é proposta coletivamente pela bancada de um Estado (federal) ou regional (estadual) e visa ao atendimento de necessidades regionais.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "As emendas de comissão são propostas pelo relator do projeto de lei orçamentária.",
+     "r": false,
+     "j": "Errado: essa é a emenda de RELATOR. As de comissão são propostas por comissões temáticas."
+    },
+    {
+     "t": "A emenda de relator é proposta pelo relator da PLOA ou da LDO e possui ampla margem de prioridades.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Acordos entre governadores e deputados são exemplos de emendas parlamentares individuais.",
+     "r": false,
+     "j": "Errado: emenda individual é proposta por um único parlamentar ao orçamento; acordo com governador não é tipo de emenda."
+    },
+    {
+     "t": "No âmbito federal, as emendas ao Projeto de Lei Orçamentária Anual são propostas por deputados federais ou senadores.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A Comissão Mista de Orçamento analisa a emenda quanto à viabilidade técnica e à adequação aos limites orçamentários.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A Lei Orçamentária Anual é sancionada pelo Presidente do Congresso Nacional.",
+     "r": false,
+     "j": "Errado: é sancionada pelo Presidente da República."
+    },
+    {
+     "t": "O Plano de Trabalho, que detalha como os recursos serão utilizados, é elaborado pelo órgão beneficiado.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O MJSP paga a verba da emenda e também executa diretamente as aquisições do órgão beneficiado.",
+     "r": false,
+     "j": "Errado: o MJSP paga a verba, mas quem EXECUTA é o órgão beneficiado."
+    },
+    {
+     "t": "Após a aprovação do plano de trabalho, é formalizado o convênio, termo de fomento ou contrato de repasse, conforme a natureza do projeto.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "No empenho, o governo federal reserva o valor no orçamento.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A prestação de contas é facultativa quando o recurso provém de emenda individual.",
+     "r": false,
+     "j": "Errado: a prestação de contas é OBRIGATÓRIA; o órgão deve comprovar o uso correto dos recursos."
+    },
+    {
+     "t": "No cronograma de captação no Congresso, a LDO prevê outubro para alimentar o sistema LEXOR, com lançamento no SIOP de outubro a fevereiro.",
+     "r": true,
+     "j": "Correto, conforme o slide do cronograma."
     }
    ],
    "me": [
@@ -479,6 +833,90 @@
      ],
      "c": 3,
      "j": "A captação não substitui o orçamento estadual: o Tesouro segue concentrado na manutenção da máquina pública, enquanto os projetos especiais são financiados com recursos externos."
+    },
+    {
+     "e": "Sobre a lógica da captação de recursos, assinale a INCORRETA:",
+     "a": [
+      "Serve para fomentar políticas públicas.",
+      "Serve para investir em profissionais e na instituição.",
+      "Serve para economizar recursos de investimento do Estado.",
+      "Permite custear salários, saúde e recomposição de efetivo.",
+      "Serve para substituir integralmente a dotação orçamentária estadual."
+     ],
+     "c": 4,
+     "j": "A apostila não fala em substituir a dotação estadual; a captação complementa e gera economia de investimento."
+    },
+    {
+     "e": "Na classificação das fontes de captação, é exemplo de órgão internacional:",
+     "a": [
+      "DETRAN.",
+      "Ministérios.",
+      "Tribunal de Justiça.",
+      "Bancos Nacionais.",
+      "BID."
+     ],
+     "c": 4,
+     "j": "Órgãos internacionais: BID, Banco Mundial, Rede de Cidades e PNUD. DETRAN e TJ são do Estado; Ministérios e Bancos Nacionais, da União."
+    },
+    {
+     "e": "Qual tipo de emenda visa atender políticas públicas setoriais, como saúde, educação, segurança e meio ambiente?",
+     "a": [
+      "Emenda individual.",
+      "Emenda de bancada.",
+      "Emenda de comissão.",
+      "Emenda de relator.",
+      "Emenda de plenário."
+     ],
+     "c": 2,
+     "j": "Emendas de comissão são propostas por comissões temáticas voltadas a políticas setoriais."
+    },
+    {
+     "e": "Assinale a sequência correta do fluxo da emenda parlamentar federal:",
+     "a": [
+      "Sanção da LOA; proposição; aprovação no Congresso; execução; indicação.",
+      "Proposição; aprovação no Congresso; sanção da LOA; indicação dos recursos; análise pelo órgão gestor; execução orçamentária; fiscalização e prestação de contas.",
+      "Indicação dos recursos; proposição; empenho; sanção; aprovação.",
+      "Proposição; indicação; sanção; aprovação pela CMO; fiscalização.",
+      "Análise pelo órgão gestor; proposição; sanção; aprovação; execução."
+     ],
+     "c": 1,
+     "j": "São 7 etapas nessa ordem, conforme a apostila."
+    },
+    {
+     "e": "Sobre a fiscalização e a prestação de contas das emendas, assinale a INCORRETA:",
+     "a": [
+      "O órgão beneficiado deve comprovar o uso correto dos recursos.",
+      "São enviados relatórios e comprovantes ao órgão repassador.",
+      "A CGU pode auditar os gastos.",
+      "Tribunais de Contas podem auditar os gastos.",
+      "A fiscalização é exclusiva do órgão repassador, vedada a atuação dos Tribunais de Contas."
+     ],
+     "c": 4,
+     "j": "Tribunais de Contas e CGU podem auditar os gastos."
+    },
+    {
+     "e": "No cronograma de captação no Congresso, o período de maio a julho destina-se a:",
+     "a": [
+      "Reuniões preparatórias da equipe.",
+      "Reuniões pontuais nos locais onde se deseja captar e apresentação do portfólio de programas e projetos.",
+      "Sanção da LOA.",
+      "Lançamento das emendas no SIOP.",
+      "Prestação de contas do exercício."
+     ],
+     "c": 1,
+     "j": "Janeiro a abril: reuniões preparatórias; maio a julho: reuniões pontuais e portfólio; agosto a dezembro: LEXOR/SIOP."
+    },
+    {
+     "e": "Na etapa de execução orçamentária, o repasse ao ente beneficiário ocorre geralmente por meio de:",
+     "a": [
+      "Ordem judicial.",
+      "Convênio ou contrato de repasse firmado com a Caixa Econômica Federal ou outros agentes intermediários.",
+      "Decreto estadual.",
+      "Ata de Registro de Preços.",
+      "Termo de Referência."
+     ],
+     "c": 1,
+     "j": "Conforme o item 6 do fluxo (repasse)."
     }
    ],
    "disc": [
@@ -507,6 +945,31 @@
       "Cooperação internacional: organismos como o BID (Banco Interamericano de Desenvolvimento) e o PNUD (Programa das Nações Unidas para o Desenvolvimento).",
       "Exemplos de aquisição por projetos institucionais: drones para monitoramento; equipamentos e insumos hospitalares; EPIs para o BPCHOQUE; veículos de transporte para o Centro de Assistência Social; e ainda construção e ampliação de quartéis e aquisição de viaturas e equipamentos de comunicação."
      ]
+    },
+    {
+     "e": "Apresente os quatro principais tipos de emendas parlamentares destinadas à segurança pública, caracterizando cada um.",
+     "est": "Discursiva — mínimo 5 e máximo 10 linhas.",
+     "cri": [
+      "1) Individual: proposta por um único parlamentar, com valor limite, para projetos de seu interesse.",
+      "2) De bancada: proposta coletivamente pela bancada de um Estado (federal) ou regional (estadual), para necessidades regionais.",
+      "3) De comissão: proposta por comissões temáticas, para políticas públicas setoriais (saúde, educação, segurança, meio ambiente).",
+      "4) De relator: proposta pelo relator da PLOA ou da LDO, com ampla margem de prioridades."
+     ],
+     "resp": "1) Individual: proposta por um único parlamentar, com valor limite, para projetos de seu interesse. 2) De bancada: proposta coletivamente pela bancada de um Estado (federal) ou regional (estadual), para necessidades regionais. 3) De comissão: proposta por comissões temáticas, para políticas públicas setoriais (saúde, educação, segurança, meio ambiente). 4) De relator: proposta pelo relator da PLOA ou da LDO, com ampla margem de prioridades."
+    },
+    {
+     "e": "Descreva o fluxo da emenda parlamentar federal, da proposição à prestação de contas.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "1) Proposição: deputados federais/senadores propõem emendas ao PLOA, definindo destinação à segurança pública.",
+      "2) Aprovação no CN: análise pela CMO (viabilidade técnica e limites) e incorporação à LOA votada.",
+      "3) Sanção da LOA pelo Presidente da República.",
+      "4) Indicação dos recursos ao órgão executor; o beneficiado elabora o Plano de Trabalho.",
+      "5) Análise e aprovação pelo órgão gestor (MJSP), formalizando convênio, termo de fomento ou contrato de repasse.",
+      "6) Execução orçamentária: empenho, repasse (convênio/contrato de repasse com a CEF) e execução local.",
+      "7) Fiscalização e prestação de contas obrigatória; Tribunais de Contas e CGU podem auditar."
+     ],
+     "resp": "1) Proposição: deputados federais/senadores propõem emendas ao PLOA, definindo destinação à segurança pública. 2) Aprovação no CN: análise pela CMO (viabilidade técnica e limites) e incorporação à LOA votada. 3) Sanção da LOA pelo Presidente da República. 4) Indicação dos recursos ao órgão executor; o beneficiado elabora o Plano de Trabalho. 5) Análise e aprovação pelo órgão gestor (MJSP), formalizando convênio, termo de fomento ou contrato de repasse. 6) Execução orçamentária: empenho, repasse (convênio/contrato de repasse com a CEF) e execução local. 7) Fiscalização e prestação de contas obrigatória; Tribunais de Contas e CGU podem auditar."
     }
    ]
   },
@@ -588,6 +1051,71 @@
      "t": "O FNSP dispensa a existência de plano de segurança estadual como condição para o repasse.",
      "r": false,
      "j": "Falso. O repasse fica condicionado também à existência de plano de segurança e de aplicação dos recursos no âmbito estadual."
+    },
+    {
+     "t": "O FNSP é um fundo especial de natureza contábil, destinado a apoiar projetos, atividades e ações de segurança pública e de prevenção à violência.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O FNSP foi criado pela Lei nº 10.201, de 2001.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Segundo o art. 8º da Lei nº 13.756/2018, o repasse fica condicionado à instituição e ao funcionamento do Conselho Estadual de Segurança Pública e Defesa Social e do Fundo Estadual de Segurança Pública.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Para o repasse do FNSP, basta a instituição formal do Conselho Estadual, sendo dispensado o seu funcionamento.",
+     "r": false,
+     "j": "Errado: exige-se a instituição E o funcionamento."
+    },
+    {
+     "t": "O repasse também fica condicionado ao desenvolvimento e implantação de plano estadual de combate à violência contra a mulher.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A transferência fundo a fundo é modalidade de transferência voluntária, dependente de convênio.",
+     "r": false,
+     "j": "Errado: é transferência OBRIGATÓRIA do FNSP para o Fundo Estadual."
+    },
+    {
+     "t": "A transferência fundo a fundo corresponde a, no mínimo, 50% das receitas decorrentes da exploração de loterias.",
+     "r": true,
+     "j": "Correto, nos termos da Lei nº 13.756/2018."
+    },
+    {
+     "t": "O objetivo principal do modelo fundo a fundo é reduzir a burocracia e agilizar a aplicação dos recursos.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Pela Portaria nº 685/2024, 10% dos recursos destinam-se ao enfrentamento à violência contra a mulher.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Pela Portaria nº 685/2024, 80% dos recursos destinam-se à melhoria da qualidade de vida do servidor de segurança pública.",
+     "r": false,
+     "j": "Errado: 80% vão para redução de MVI, enfrentamento ao crime organizado e proteção patrimonial; a qualidade de vida do servidor recebe 10%."
+    },
+    {
+     "t": "O Termo de Adesão é celebrado entre a SENASP e as Secretarias de Segurança Pública estaduais e distrital, ou congêneres, conforme delegação do Governador.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A prestação de contas analisa a execução financeira por meio de Relatório de Gestão referente ao exercício financeiro anterior à sua apresentação.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "É permitido custear o PJES (gratificação por operação planejada) com a verba do Fundo Nacional.",
+     "r": false,
+     "j": "Errado: despesa com pessoal, como gratificação por operação planejada, é VEDADA."
     }
    ],
    "me": [
@@ -650,6 +1178,66 @@
      ],
      "c": 4,
      "j": "A lógica é justamente a oposta: autonomia do ente estadual, com simplificação e celeridade na pactuação e na execução."
+    },
+    {
+     "e": "Na fase de apurações do fluxo processual fundo a fundo, ocorre:",
+     "a": [
+      "Celebração do Termo de Adesão.",
+      "Monitoramento das contas bancárias vinculadas.",
+      "Instauração de Tomada de Contas Especial, por omissão no dever de prestar contas ou dano ao erário.",
+      "Análise do Relatório de Gestão.",
+      "Cadastro dos programas no TransfereGov."
+     ],
+     "c": 2,
+     "j": "Apurações: instauração de TCE por omissão ou dano/indício de dano ao erário."
+    },
+    {
+     "e": "Sobre as vedações da transferência fundo a fundo, assinale a INCORRETA:",
+     "a": [
+      "É vedada despesa com pessoal, como gratificação por operação planejada.",
+      "É vedado destinar a unidades exclusivamente administrativas.",
+      "É vedado realizar despesa fora da vigência, salvo pagamento após entrega do bem ou prestação do serviço.",
+      "É vedado remanejar recursos entre categorias econômicas e naturezas de despesa.",
+      "É permitido transferir os recursos para outra conta do próprio ente, desde que vinculada à Secretaria."
+     ],
+     "c": 4,
+     "j": "É vedada a transferência para outra conta do próprio ente ou de outro ente federativo."
+    },
+    {
+     "e": "A distribuição das áreas temáticas da Portaria nº 685/2024 é:",
+     "a": [
+      "50% MVI; 25% mulher; 25% servidor.",
+      "80% MVI, crime organizado e proteção patrimonial; 10% violência contra a mulher; 10% qualidade de vida do servidor.",
+      "80% servidor; 10% mulher; 10% MVI.",
+      "70% MVI; 20% mulher; 10% servidor.",
+      "60% MVI; 20% mulher; 20% servidor."
+     ],
+     "c": 1,
+     "j": "80/10/10, conforme o slide."
+    },
+    {
+     "e": "NÃO é condicionante do repasse do FNSP ao Estado:",
+     "a": [
+      "Plano de segurança e de aplicação dos recursos.",
+      "Critérios de promoção e progressão funcional por antiguidade e merecimento.",
+      "Integração aos sistemas nacionais e fornecimento de dados ao Ministério.",
+      "Aprovação prévia do repasse pela Assembleia Legislativa estadual.",
+      "Cumprimento de percentual máximo de profissionais atuando fora das corporações."
+     ],
+     "c": 3,
+     "j": "A aprovação pela Assembleia não consta entre as condicionantes."
+    },
+    {
+     "e": "Falhas na prestação de contas ou no cumprimento das finalidades dos repasses podem acarretar:",
+     "a": [
+      "Aumento do percentual repassado.",
+      "Suspensão de novos repasses.",
+      "Conversão em transferência voluntária.",
+      "Dispensa do Termo de Adesão.",
+      "Transferência automática ao município."
+     ],
+     "c": 1,
+     "j": "A penalidade citada é a suspensão de novos repasses."
     }
    ],
    "disc": [
@@ -679,6 +1267,28 @@
       "Vedação 2: unidades de órgãos e entidades destinadas exclusivamente à realização de atividades administrativas.",
       "Vedação 3: transferência para outra conta do ente ou de outro ente federativo. Vedação 4: realizar despesa fora da vigência do prazo de execução, antes ou depois, excetuado o pagamento após a entrega do bem ou a prestação do serviço. Vedação 5: remanejamento de recursos entre categorias econômicas e naturezas de despesa."
      ]
+    },
+    {
+     "e": "Discorra sobre o FNSP: natureza, finalidade, lei de criação e condicionantes do repasse aos Estados.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "O FNSP é fundo especial de natureza contábil, criado pela Lei nº 10.201/2001, para garantir recursos a projetos, atividades e ações de segurança pública e prevenção à violência, observadas as diretrizes do Plano Nacional de SP e Defesa Social.",
+      "Pelo art. 8º da Lei nº 13.756/2018, o repasse depende da instituição e funcionamento do Conselho Estadual de SP e Defesa Social e do Fundo Estadual de SP.",
+      "Depende ainda de: plano de segurança e de aplicação dos recursos; critérios de promoção e progressão por antiguidade e merecimento; integração aos sistemas nacionais e fornecimento de dados; percentual máximo de profissionais fora das corporações; e plano estadual de combate à violência contra a mulher."
+     ],
+     "resp": "O FNSP é fundo especial de natureza contábil, criado pela Lei nº 10.201/2001, para garantir recursos a projetos, atividades e ações de segurança pública e prevenção à violência, observadas as diretrizes do Plano Nacional de SP e Defesa Social. Pelo art. 8º da Lei nº 13.756/2018, o repasse depende da instituição e funcionamento do Conselho Estadual de SP e Defesa Social e do Fundo Estadual de SP. Depende ainda de: plano de segurança e de aplicação dos recursos; critérios de promoção e progressão por antiguidade e merecimento; integração aos sistemas nacionais e fornecimento de dados; percentual máximo de profissionais fora das corporações; e plano estadual de combate à violência contra a mulher."
+    },
+    {
+     "e": "Explique a transferência fundo a fundo: conceito, objetivos, fluxo processual e vedações.",
+     "est": "Discursiva — mínimo 10 e máximo 20 linhas.",
+     "cri": [
+      "Transferência obrigatória do FNSP ao Fundo Estadual de, no mínimo, 50% das receitas de loterias (Lei nº 13.756/2018), para ações e projetos de SP e defesa social, com o objetivo principal de reduzir a burocracia e agilizar a aplicação.",
+      "Objetivos: simplificação e celeridade; autonomia com adequação às demandas locais; gestão por resultados.",
+      "Termo de Adesão entre SENASP e Secretarias estaduais.",
+      "Fluxo: 1) formalização (análise das condicionantes, Termo de Adesão, repasse); 2) acompanhamento (contas vinculadas, visitas in loco); 3) prestação de contas (Relatório de Gestão do exercício anterior); 4) apurações (Tomada de Contas Especial).",
+      "Vedações: despesa com pessoal (ex.: PJES); unidades exclusivamente administrativas; transferência para outra conta; despesa fora da vigência (salvo pagamento após entrega); remanejamento entre categorias econômicas e naturezas de despesa (art. 167, VI, CF)."
+     ],
+     "resp": "Transferência obrigatória do FNSP ao Fundo Estadual de, no mínimo, 50% das receitas de loterias (Lei nº 13.756/2018), para ações e projetos de SP e defesa social, com o objetivo principal de reduzir a burocracia e agilizar a aplicação. Objetivos: simplificação e celeridade; autonomia com adequação às demandas locais; gestão por resultados. Termo de Adesão entre SENASP e Secretarias estaduais. Fluxo: 1) formalização (análise das condicionantes, Termo de Adesão, repasse); 2) acompanhamento (contas vinculadas, visitas in loco); 3) prestação de contas (Relatório de Gestão do exercício anterior); 4) apurações (Tomada de Contas Especial). Vedações: despesa com pessoal (ex.: PJES); unidades exclusivamente administrativas; transferência para outra conta; despesa fora da vigência (salvo pagamento após entrega); remanejamento entre categorias econômicas e naturezas de despesa (art. 167, VI, CF)."
     }
    ]
   },
@@ -760,6 +1370,81 @@
      "t": "A Compras SUSP busca gerar economia de tempo e de recursos humanos, materiais, técnicos e financeiros para as instituições e órgãos integrantes do SUSP.",
      "r": true,
      "j": "Correto — é a finalidade de economia de recursos."
+    },
+    {
+     "t": "A plataforma TransfereGov é iniciativa do governo federal para facilitar e aprimorar a gestão das transferências entre União, estados, municípios e outras entidades.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A TransfereGov foi criada para promover maior transparência, eficiência e controle nas transferências, especialmente as voluntárias.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O acesso às informações da TransfereGov é restrito a gestores públicos, vedado ao cidadão comum.",
+     "r": false,
+     "j": "Errado: qualquer cidadão pode ter acesso, promovendo transparência e controle social."
+    },
+    {
+     "t": "São propósitos da TransfereGov: transparência, facilitação de acesso, gestão eficiente, integração de dados e apoio à tomada de decisão.",
+     "r": true,
+     "j": "Correto: são os 5 propósitos."
+    },
+    {
+     "t": "Pela facilitação de acesso, gestores podem buscar informações sobre recursos disponíveis e financiamentos para projetos em suas localidades.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Na TransfereGov é possível consultar transferências, acompanhar convênios e realizar pesquisas com filtros por tipo, órgão e período.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "A principal finalidade da TransfereGov é executar obras públicas e arrecadar impostos federais.",
+     "r": false,
+     "j": "Errado: sua finalidade é promover transparência e controle nas transferências de recursos."
+    },
+    {
+     "t": "A Plataforma ComprasSUSP é iniciativa da Secretaria de Administração de Pernambuco.",
+     "r": false,
+     "j": "Errado: é iniciativa do Ministério da Justiça e Segurança Pública (MJSP)."
+    },
+    {
+     "t": "A ComprasSUSP visa otimizar e centralizar as aquisições de bens e serviços para os órgãos integrantes do SUSP.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "No Módulo Demandas SUSP, as instituições informam ao MJSP suas necessidades, e o Escritório ComprasSUSP consolida as demandas e adquire por atas de registro de preços.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O Módulo Emendas SUSP destina-se à aquisição direta de bens e serviços com recursos próprios dos órgãos solicitantes.",
+     "r": false,
+     "j": "Errado: destina-se à aquisição com recursos provenientes de EMENDAS PARLAMENTARES."
+    },
+    {
+     "t": "O MJSP disponibiliza anualmente a cartilha de emendas parlamentares para auxiliar os parlamentares na indicação de emendas ao Orçamento Geral da União.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O PE-Integrado é o sistema integrado de gestão de compras, contratos, licitações, patrimônio e almoxarifado do Estado de Pernambuco.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O Sistema PE-Integrado foi instituído pela Lei Complementar nº 141/2009.",
+     "r": false,
+     "j": "Errado: a LC nº 141/2009 instituiu o Modelo Integrado de Gestão; o PE-Integrado foi instituído pelo Decreto nº 40.222/2013."
+    },
+    {
+     "t": "O PE-Integrado atua integrado a plataformas como SADRH, e-Fisco e +Brasil.",
+     "r": true,
+     "j": "Correto."
     }
    ],
    "me": [
@@ -822,6 +1507,66 @@
      ],
      "c": 4,
      "j": "A prestação de contas é obrigatória em qualquer hipótese de aplicação de recursos públicos captados; a plataforma promove, ao contrário, mais transparência nas aquisições."
+    },
+    {
+     "e": "Qual a principal finalidade da Plataforma TransfereGov?",
+     "a": [
+      "Executar obras públicas.",
+      "Arrecadar impostos federais.",
+      "Promover transparência e controle nas transferências de recursos.",
+      "Comprar equipamentos para os órgãos do SUSP.",
+      "Julgar as prestações de contas dos entes."
+     ],
+     "c": 2,
+     "j": "Transparência, eficiência e controle nas transferências."
+    },
+    {
+     "e": "São finalidades da ComprasSUSP, EXCETO:",
+     "a": [
+      "Inovação no processo de compras.",
+      "Modernização de equipamentos e tecnologias.",
+      "Elaboração de referências e padrões.",
+      "Economia de recursos.",
+      "Repasse obrigatório de recursos das loterias."
+     ],
+     "c": 4,
+     "j": "O repasse das loterias é característica da transferência fundo a fundo, não da ComprasSUSP."
+    },
+    {
+     "e": "Os dois módulos principais da ComprasSUSP são:",
+     "a": [
+      "Demandas SUSP e Emendas SUSP.",
+      "Convênios e Contratos.",
+      "Adesão e Prestação de Contas.",
+      "Planejamento e Execução.",
+      "Licitações e Patrimônio."
+     ],
+     "c": 0,
+     "j": "Módulo Demandas SUSP e Módulo Emendas SUSP."
+    },
+    {
+     "e": "Quanto às normas do PE-Integrado, é correto afirmar:",
+     "a": [
+      "A LC nº 141/2009 instituiu o Sistema PE-Integrado.",
+      "O Decreto nº 40.222/2013 instituiu o Sistema PE-Integrado, como parte do Modelo Integrado de Gestão da LC nº 141/2009.",
+      "A Lei nº 14.133/2021 criou o PE-Integrado.",
+      "O PE-Integrado foi criado pela Lei nº 15.186/2013.",
+      "O Decreto nº 49.881/2020 instituiu o PE-Integrado."
+     ],
+     "c": 1,
+     "j": "LC 141/2009: Modelo Integrado de Gestão; Decreto 40.222/2013: Sistema PE-Integrado."
+    },
+    {
+     "e": "O propósito da TransfereGov que reúne informações de diferentes órgãos, promovendo visão mais integrada e melhor planejamento, é:",
+     "a": [
+      "Transparência.",
+      "Facilitação de acesso.",
+      "Integração de dados.",
+      "Gestão eficiente.",
+      "Apoio à tomada de decisão."
+     ],
+     "c": 2,
+     "j": "Integração de dados."
     }
    ],
    "disc": [
@@ -851,6 +1596,26 @@
       "Módulo Emendas SUSP: destina-se à aquisição direta de bens e serviços com recursos de emendas parlamentares, apresentando portfólio de contratações no qual os parlamentares podem indicar suas emendas ou atender a demandas específicas; o MJSP disponibiliza anualmente a cartilha de emendas parlamentares.",
       "PE-Integrado: principal ferramenta de compras e licitações do Estado de Pernambuco, que representa a inovação na gestão estadual, permitindo a simplificação dos processos e maior foco na atenção à população."
      ]
+    },
+    {
+     "e": "Discorra sobre a Plataforma TransfereGov: conceito e seus cinco propósitos.",
+     "est": "Discursiva — mínimo 5 e máximo 10 linhas.",
+     "cri": [
+      "Ferramenta online do governo federal que centraliza informações sobre transferências de recursos da União, permitindo que gestores, cidadãos e organizações da sociedade civil acessem dados sobre convênios, contratos de repasse e outras transferências.",
+      "Propósitos: 1) transparência (acesso de qualquer cidadão e controle social); 2) facilitação de acesso (busca de financiamentos); 3) gestão eficiente (acompanhamento e prestação de contas); 4) integração de dados; 5) apoio à tomada de decisão."
+     ],
+     "resp": "Ferramenta online do governo federal que centraliza informações sobre transferências de recursos da União, permitindo que gestores, cidadãos e organizações da sociedade civil acessem dados sobre convênios, contratos de repasse e outras transferências. Propósitos: 1) transparência (acesso de qualquer cidadão e controle social); 2) facilitação de acesso (busca de financiamentos); 3) gestão eficiente (acompanhamento e prestação de contas); 4) integração de dados; 5) apoio à tomada de decisão."
+    },
+    {
+     "e": "Explique a Plataforma ComprasSUSP e seus módulos, e o que é o PE-Integrado.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "ComprasSUSP: iniciativa do MJSP para otimizar e centralizar aquisições dos órgãos do SUSP, promovendo eficiência, transparência e economia.",
+      "Finalidades: inovação nas compras, modernização de equipamentos, referências e padrões, economia de recursos e transparência.",
+      "Módulos: Demandas SUSP (instituições informam necessidades; o Escritório consolida e adquire por ARP) e Emendas SUSP (aquisição direta com recursos de emendas parlamentares, via portfólio; cartilha anual do MJSP).",
+      "PE-Integrado: sistema de gestão de compras, contratos, licitações, patrimônio e almoxarifado de PE, integrado ao SADRH, e-Fisco e +Brasil; Modelo Integrado de Gestão (LC 141/2009) e sistema instituído pelo Decreto 40.222/2013."
+     ],
+     "resp": "ComprasSUSP: iniciativa do MJSP para otimizar e centralizar aquisições dos órgãos do SUSP, promovendo eficiência, transparência e economia. Finalidades: inovação nas compras, modernização de equipamentos, referências e padrões, economia de recursos e transparência. Módulos: Demandas SUSP (instituições informam necessidades; o Escritório consolida e adquire por ARP) e Emendas SUSP (aquisição direta com recursos de emendas parlamentares, via portfólio; cartilha anual do MJSP). PE-Integrado: sistema de gestão de compras, contratos, licitações, patrimônio e almoxarifado de PE, integrado ao SADRH, e-Fisco e +Brasil; Modelo Integrado de Gestão (LC 141/2009) e sistema instituído pelo Decreto 40.222/2013."
     }
    ]
   },
@@ -932,6 +1697,71 @@
      "t": "A ARP permite que múltiplos órgãos utilizem os preços registrados por período determinado.",
      "r": true,
      "j": "Correto — é o que otimiza o processo de compra pública."
+    },
+    {
+     "t": "O PCA reúne todas as contratações que os órgãos e entidades de Pernambuco pretendem realizar no exercício financeiro subsequente.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O PCA deve ser aprovado até 30 de abril do ano em vigor e validado pela Câmara de Programação Financeira (CPF).",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Uma vez aprovado, o PCA não pode ser revisado durante o ano.",
+     "r": false,
+     "j": "Errado: pode ser revisado, especialmente após a LOA, com inclusão, exclusão ou redimensionamento de itens."
+    },
+    {
+     "t": "São objetivos do PCA: alinhamento estratégico, base para as leis orçamentárias e prevenção do fracionamento de despesas.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "Após a aprovação, o PCA é disponibilizado no Portal Nacional de Contratação e no PE-Integrado.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O DFD pode ser dispensado nas aquisições de pequeno valor.",
+     "r": false,
+     "j": "Errado: o DFD NÃO PODE ser dispensado."
+    },
+    {
+     "t": "São finalidades do DFD: planejamento, transparência e alinhamento ao PCA.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O ETP é análise detalhada e fundamentada que antecede a elaboração do Termo de Referência ou do Projeto Básico.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O ETP tem como finalidade avaliar a viabilidade técnica, econômica e jurídica do objeto da contratação.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "O Termo de Proposta de Projeto (TPP) é o documento utilizado para prestar contas à CGU.",
+     "r": false,
+     "j": "Errado: o TPP integra o edital e orienta os proponentes a estruturar suas propostas técnicas e financeiras."
+    },
+    {
+     "t": "A ARP formaliza os preços obtidos em licitação, que poderão ser usados em futuras aquisições sem novo processo licitatório.",
+     "r": true,
+     "j": "Correto."
+    },
+    {
+     "t": "É possível formar uma Ata de Registro de Preços sem licitação.",
+     "r": false,
+     "j": "Errado: não existe ARP sem licitação."
+    },
+    {
+     "t": "A IRP é etapa preliminar na formação da ARP, na qual órgãos manifestam interesse em participar do processo licitatório.",
+     "r": true,
+     "j": "Correto."
     }
    ],
    "me": [
@@ -994,6 +1824,66 @@
      ],
      "c": 1,
      "j": "O DFD formaliza a necessidade e é o ponto de partida; o ETP antecede a elaboração do Termo de Referência ou do Projeto Básico; e o TR serve de base para a elaboração do edital."
+    },
+    {
+     "e": "No fluxo do processo de aquisição do PCA na PMPE, cabe à 7ª EMG:",
+     "a": [
+      "Homologar e encaminhar o PCA.",
+      "Empenhar a despesa.",
+      "Efetuar o pagamento.",
+      "Monitorar a proposta de projeto.",
+      "Remeter o PCA à SAD."
+     ],
+     "c": 3,
+     "j": "A 7ª EMG monitora; SAD homologa; 6ª EMG empenha; Diretoria de Finanças paga; PMPE (4ª EMG) remete à SAD."
+    },
+    {
+     "e": "Sobre os objetivos do ETP, assinale a INCORRETA:",
+     "a": [
+      "Identificar e justificar a necessidade da contratação.",
+      "Avaliar a viabilidade técnica, econômica e jurídica.",
+      "Subsidiar a tomada de decisão.",
+      "Evitar desperdícios.",
+      "Substituir o Termo de Referência, dispensando-o."
+     ],
+     "c": 4,
+     "j": "O ETP antecede o TR; não o substitui."
+    },
+    {
+     "e": "A Intenção de Registro de Preços (IRP) visa:",
+     "a": [
+      "Dispensar a licitação.",
+      "Viabilizar a formação de uma ARP que atenda a múltiplos órgãos ou entidades.",
+      "Formalizar a demanda de um único setor.",
+      "Aprovar o PCA.",
+      "Prestar contas do registro de preços."
+     ],
+     "c": 1,
+     "j": "O objetivo da IRP é viabilizar a ARP compartilhada."
+    },
+    {
+     "e": "Na lógica apresentada no material, a ordem dos documentos da contratação é:",
+     "a": [
+      "TR, ETP, DFD, ARP.",
+      "DFD, ETP, TR e, após a licitação, ARP.",
+      "ARP, TR, DFD, ETP.",
+      "ETP, ARP, DFD, TR.",
+      "TR, DFD, ARP, ETP."
+     ],
+     "c": 1,
+     "j": "DFD é o ponto de partida; o ETP antecede o TR; a ARP resulta da licitação."
+    },
+    {
+     "e": "Assinale a associação correta entre norma e conteúdo:",
+     "a": [
+      "Lei nº 16.595/2019 — Nova Lei de Licitações.",
+      "Lei nº 4.320/1964 — Fundo Nacional de Segurança Pública.",
+      "Lei nº 13.675/2018 — Política Nacional de Segurança Pública.",
+      "Decreto nº 49.881/2020 — institui o PE-Integrado.",
+      "Lei nº 14.133/2021 — cria o Fundo Estadual de Segurança Pública."
+     ],
+     "c": 2,
+     "j": "Lei 13.675/2018 cria a Política Nacional de SP. Lei 16.595/2019: Fundo Estadual; Lei 4.320/1964: direito financeiro; Decreto 49.881/2020: regula o Fundo Estadual; Lei 14.133/2021: licitações."
     }
    ],
    "disc": [
@@ -1022,6 +1912,29 @@
       "ARP — limite: não se pode ter uma ARP sem licitação; a ata pressupõe o procedimento licitatório prévio.",
       "IRP — conceito: Intenção de Registro de Preço, etapa preliminar no processo de formação de uma ARP; procedimento pelo qual órgãos ou entidades públicas manifestam interesse em participar de processo licitatório que resultará no registro de preços para aquisição de bens, contratação de serviços ou execução de obras."
      ]
+    },
+    {
+     "e": "Discorra sobre o Plano de Contratações Anual (PCA): conceito, objetivos, aprovação e revisão.",
+     "est": "Discursiva — mínimo 5 e máximo 10 linhas.",
+     "cri": [
+      "Instrumento de planejamento que reúne todas as contratações que órgãos e entidades de PE pretendem realizar no exercício subsequente (bens, serviços e obras), integrado ao planejamento estratégico e orçamentário.",
+      "Objetivos: alinhamento estratégico; base para as leis orçamentárias; prevenção do fracionamento.",
+      "Aprovação até 30 de abril do ano em vigor, validado pela Câmara de Programação Financeira, publicado no Portal Nacional de Contratação e no PE-Integrado.",
+      "Pode ser revisado durante o ano (inclusão, exclusão ou redimensionamento)."
+     ],
+     "resp": "Instrumento de planejamento que reúne todas as contratações que órgãos e entidades de PE pretendem realizar no exercício subsequente (bens, serviços e obras), integrado ao planejamento estratégico e orçamentário. Objetivos: alinhamento estratégico; base para as leis orçamentárias; prevenção do fracionamento. Aprovação até 30 de abril do ano em vigor, validado pela Câmara de Programação Financeira, publicado no Portal Nacional de Contratação e no PE-Integrado. Pode ser revisado durante o ano (inclusão, exclusão ou redimensionamento)."
+    },
+    {
+     "e": "Diferencie DFD, ETP, TR, ARP e IRP.",
+     "est": "Discursiva — mínimo 8 e máximo 15 linhas.",
+     "cri": [
+      "DFD: formaliza a necessidade de adquirir bens ou serviços; não pode ser dispensado; finalidades de planejamento, transparência e alinhamento ao PCA.",
+      "ETP: análise fundamentada que antecede o TR ou o PB; identifica e justifica a necessidade, avalia viabilidade técnica, econômica e jurídica, subsidia a decisão, evita desperdícios e assegura conformidade legal.",
+      "TR: descreve as necessidades e especificações; base do edital; garante transparência e igualdade.",
+      "ARP: formaliza preços obtidos em licitação para futuras aquisições sem nova licitação; não há ARP sem licitação.",
+      "IRP: etapa preliminar em que órgãos manifestam interesse em participar, viabilizando ARP compartilhada."
+     ],
+     "resp": "DFD: formaliza a necessidade de adquirir bens ou serviços; não pode ser dispensado; finalidades de planejamento, transparência e alinhamento ao PCA. ETP: análise fundamentada que antecede o TR ou o PB; identifica e justifica a necessidade, avalia viabilidade técnica, econômica e jurídica, subsidia a decisão, evita desperdícios e assegura conformidade legal. TR: descreve as necessidades e especificações; base do edital; garante transparência e igualdade. ARP: formaliza preços obtidos em licitação para futuras aquisições sem nova licitação; não há ARP sem licitação. IRP: etapa preliminar em que órgãos manifestam interesse em participar, viabilizando ARP compartilhada."
     }
    ]
   }
@@ -1147,6 +2060,108 @@
     "r": true,
     "j": "Correto — junto com o alinhamento estratégico e a base para a elaboração das leis orçamentárias.",
     "g": "Questão 04 — Plataformas e planejamento"
+   },
+   {
+    "t": "Construção de uma unidade operacional é um exemplo de despesa de capital (investimento).",
+    "r": true,
+    "j": "Obras são investimentos.",
+    "g": "Questão 05 — Kahoot da disciplina"
+   },
+   {
+    "t": "Acordos entre governadores e deputados são exemplos de emendas parlamentares individuais.",
+    "r": false,
+    "j": "Emenda individual é proposta por um único parlamentar.",
+    "g": "Questão 05 — Kahoot da disciplina"
+   },
+   {
+    "t": "As transferências obrigatórias ocorrem por força de lei.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 05 — Kahoot da disciplina"
+   },
+   {
+    "t": "O PE-Integrado tem como objetivo centralizar compras e contratos do Estado de Pernambuco.",
+    "r": true,
+    "j": "Sistema integrado de compras, contratos, licitações, patrimônio e almoxarifado.",
+    "g": "Questão 05 — Kahoot da disciplina"
+   },
+   {
+    "t": "A Plataforma ComprasSUSP é destinada à contratação direta de bens e serviços com recursos próprios.",
+    "r": false,
+    "j": "O Módulo Emendas usa recursos de emendas parlamentares.",
+    "g": "Questão 05 — Kahoot da disciplina"
+   },
+   {
+    "t": "O Estudo Técnico Preliminar tem como finalidade avaliar a viabilidade de uma contratação pública.",
+    "r": true,
+    "j": "Viabilidade técnica, econômica e jurídica.",
+    "g": "Questão 05 — Kahoot da disciplina"
+   },
+   {
+    "t": "A principal característica da ARP (Ata de Registro de Preços) é formalizar os preços para compras futuras.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 05 — Kahoot da disciplina"
+   },
+   {
+    "t": "O Fundo de Participação dos Municípios (FPM) é exemplo de transferência obrigatória.",
+    "r": true,
+    "j": "Exemplo clássico de obrigatória.",
+    "g": "Questão 06 — Inéditas de revisão"
+   },
+   {
+    "t": "A aquisição de material de consumo é exemplo de despesa de capital.",
+    "r": false,
+    "j": "É despesa de custeio.",
+    "g": "Questão 06 — Inéditas de revisão"
+   },
+   {
+    "t": "A emenda de relator é proposta pelo relator da PLOA ou da LDO e possui ampla margem de prioridades.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 06 — Inéditas de revisão"
+   },
+   {
+    "t": "O Fundo Nacional de Segurança Pública foi criado pela Lei nº 13.756/2018.",
+    "r": false,
+    "j": "Foi criado pela Lei nº 10.201/2001; a Lei nº 13.756/2018 dispõe sobre ele.",
+    "g": "Questão 06 — Inéditas de revisão"
+   },
+   {
+    "t": "Pela Portaria nº 685/2024, 10% dos recursos vão para o enfrentamento à violência contra a mulher.",
+    "r": true,
+    "j": "Divisão 80/10/10.",
+    "g": "Questão 06 — Inéditas de revisão"
+   },
+   {
+    "t": "A omissão no dever de prestar contas pode ensejar a instauração de Tomada de Contas Especial.",
+    "r": true,
+    "j": "Fase de apurações.",
+    "g": "Questão 06 — Inéditas de revisão"
+   },
+   {
+    "t": "No Módulo Demandas SUSP, o Escritório ComprasSUSP consolida as demandas e adquire por atas de registro de preços.",
+    "r": true,
+    "j": "Correto.",
+    "g": "Questão 06 — Inéditas de revisão"
+   },
+   {
+    "t": "O PCA pode ter inclusão, exclusão ou redimensionamento de itens durante o ano.",
+    "r": true,
+    "j": "Pode ser revisado.",
+    "g": "Questão 06 — Inéditas de revisão"
+   },
+   {
+    "t": "O DFD pode ser dispensado quando houver Estudo Técnico Preliminar.",
+    "r": false,
+    "j": "O DFD não pode ser dispensado.",
+    "g": "Questão 06 — Inéditas de revisão"
+   },
+   {
+    "t": "A IRP é etapa posterior à assinatura dos contratos decorrentes da ARP.",
+    "r": false,
+    "j": "É etapa PRELIMINAR à formação da ARP.",
+    "g": "Questão 06 — Inéditas de revisão"
    }
   ],
   "me": [
@@ -1209,6 +2224,259 @@
     ],
     "c": 4,
     "j": "A transparência é um de seus propósitos: gestores públicos, cidadãos e organizações da sociedade civil podem acessar os dados."
+   },
+   {
+    "e": "As transferências obrigatórias de recursos públicos são caracterizadas por:",
+    "a": [
+     "Acordo prévio entre os entes federativos",
+     "Previsão legal que obriga o repasse",
+     "Aconselhamento do secretariado estadual",
+     "Contrapartida financeira estadual"
+    ],
+    "c": 1,
+    "j": "Obrigatórias ocorrem por força de lei."
+   },
+   {
+    "e": "Qual é a missão da 7ª Seção do Estado-Maior Geral da PMPE?",
+    "a": [
+     "Fiscalizar convênios firmados com empresas públicas",
+     "Aplicar projetos e orçamentos extraorçamentário",
+     "Elaborar normas sobre captação de recursos e despesas de capital",
+     "Assessorar o Cmt Geral na elaboração e captação de projetos estruturadores"
+    ],
+    "c": 3,
+    "j": "Lei 15.186/2013."
+   },
+   {
+    "e": "Qual a principal finalidade da Plataforma TransfereGov?",
+    "a": [
+     "Executar obras públicas",
+     "Promover transparência e controle nas transferências de recursos",
+     "Arrecadar impostos federais",
+     "Comprar equipamentos para escolas públicas"
+    ],
+    "c": 1,
+    "j": "Transparência, eficiência e controle."
+   },
+   {
+    "e": "Qual das opções é considerada despesa corrente (custeio)?",
+    "a": [
+     "Aquisição de imóveis",
+     "Manutenção de serviços públicos",
+     "Compra de equipamento militar",
+     "Construção de hospital"
+    ],
+    "c": 1,
+    "j": "Manutenção dos serviços é custeio; as demais são capital."
+   },
+   {
+    "e": "A Intenção de Registro de Preços (IRP) visa:",
+    "a": [
+     "Tornar a licitação pública mais eficaz",
+     "Diminuir o uso de emendas parlamentares",
+     "Formar uma Ata de Registro de Preços compartilhada",
+     "Adquirir produtos por dispensa de licitação"
+    ],
+    "c": 2,
+    "j": "IRP viabiliza ARP para múltiplos órgãos."
+   },
+   {
+    "e": "Qual tipo de emenda é proposta por uma bancada estadual?",
+    "a": [
+     "Emenda de relator",
+     "Emenda de comissão",
+     "Emenda de bancada",
+     "Emenda individual"
+    ],
+    "c": 2,
+    "j": "Emenda de bancada."
+   },
+   {
+    "e": "As transferências voluntárias exigem:",
+    "a": [
+     "Obrigatoriedade legal",
+     "Ordem judicial",
+     "Convênios e acordos administrativos",
+     "Aprovação pela Assembleia Legislativa"
+    ],
+    "c": 2,
+    "j": "Dependem de acordo, geralmente convênio."
+   },
+   {
+    "e": "O Termo de Referência no processo de aquisição é utilizado para:",
+    "a": [
+     "Prestar contas à CGU",
+     "Emitir relatórios anuais",
+     "Descrever necessidades para aquisições públicas",
+     "Fazer referência a leis orçamentárias"
+    ],
+    "c": 2,
+    "j": "TR descreve as necessidades e baseia o edital."
+   },
+   {
+    "e": "O Plano de Contratações Anual (PCA) deve ser aprovado até:",
+    "a": [
+     "15 de outubro",
+     "1º de janeiro",
+     "30 de abril",
+     "31 de dezembro"
+    ],
+    "c": 2,
+    "j": "Até 30 de abril do ano em vigor."
+   },
+   {
+    "e": "Qual etapa inicia o fluxo de transferência Fundo a Fundo?",
+    "a": [
+     "Prestação de contas",
+     "Acompanhamento das contas",
+     "Análise das condicionantes",
+     "Apuração de danos"
+    ],
+    "c": 2,
+    "j": "Formalização: análise das condicionantes do art. 8º."
+   },
+   {
+    "e": "Qual documento formaliza a necessidade de aquisição pela administração pública?",
+    "a": [
+     "Termo de Referência",
+     "Protocolo de Execução",
+     "Documento de Formalização da Demanda (DFD)",
+     "Estudo Técnico Preliminar"
+    ],
+    "c": 2,
+    "j": "DFD."
+   },
+   {
+    "e": "Um exemplo de projeto institucional é:",
+    "a": [
+     "Contrato para fornecimento de alimentação",
+     "Aquisição de drones para patrulhamento",
+     "Manutenção do parque aquático",
+     "Pintura dos prédios e anexos da APMP"
+    ],
+    "c": 1,
+    "j": "Exemplo citado no material."
+   },
+   {
+    "e": "Qual é uma vedação na transferência fundo a fundo?",
+    "a": [
+     "Uso para construção de hospitais",
+     "Contratação de pessoal temporário",
+     "Realizar despesas fora da vigência do prazo",
+     "Aquisição de veículos adaptados"
+    ],
+    "c": 2,
+    "j": "Vedação nº 4."
+   },
+   {
+    "e": "A 7ª EMG deu lugar ao antigo:",
+    "a": [
+     "NAMPP",
+     "CIPCães",
+     "BPCHOQUE",
+     "DGA"
+    ],
+    "c": 0,
+    "j": "Núcleo de Análise e Monitoramento de Programas e Projetos."
+   },
+   {
+    "e": "Qual das fontes de captação é classificada como órgão internacional?",
+    "a": [
+     "DETRAN",
+     "PNUD",
+     "Ministérios",
+     "Prefeituras"
+    ],
+    "c": 1,
+    "j": "BID, Banco Mundial, Rede de Cidades e PNUD."
+   },
+   {
+    "e": "Quem sanciona a Lei Orçamentária Anual?",
+    "a": [
+     "Presidente do Congresso",
+     "Presidente da República",
+     "Comissão Mista de Orçamento",
+     "Ministro da Justiça"
+    ],
+    "c": 1,
+    "j": "Etapa 3 do fluxo."
+   },
+   {
+    "e": "A transferência fundo a fundo destina, no mínimo, qual percentual das receitas de loterias?",
+    "a": [
+     "10%",
+     "30%",
+     "50%",
+     "80%"
+    ],
+    "c": 2,
+    "j": "No mínimo 50%."
+   },
+   {
+    "e": "O Termo de Adesão do fundo a fundo é celebrado entre a SENASP e:",
+    "a": [
+     "As prefeituras",
+     "As Assembleias Legislativas",
+     "As Secretarias de Segurança Pública estaduais ou congêneres",
+     "Os Tribunais de Contas"
+    ],
+    "c": 2,
+    "j": "Conforme delegação do Governador."
+   },
+   {
+    "e": "NÃO é propósito da TransfereGov:",
+    "a": [
+     "Arrecadação tributária",
+     "Transparência",
+     "Integração de dados",
+     "Apoio à tomada de decisão"
+    ],
+    "c": 0,
+    "j": "Arrecadar não é propósito da plataforma."
+   },
+   {
+    "e": "O Sistema PE-Integrado foi instituído por:",
+    "a": [
+     "LC nº 141/2009",
+     "Decreto nº 40.222/2013",
+     "Lei nº 14.133/2021",
+     "Lei nº 16.595/2019"
+    ],
+    "c": 1,
+    "j": "A LC 141/2009 criou o Modelo Integrado de Gestão."
+   },
+   {
+    "e": "O PCA é validado pela:",
+    "a": [
+     "Câmara de Programação Financeira",
+     "ALEPE",
+     "CGU",
+     "SENASP"
+    ],
+    "c": 0,
+    "j": "CPF."
+   },
+   {
+    "e": "O Termo de Referência serve como base para:",
+    "a": [
+     "A prestação de contas",
+     "A elaboração do edital",
+     "A LOA",
+     "A indicação de emendas"
+    ],
+    "c": 1,
+    "j": "Base do edital e orientação aos fornecedores."
+   },
+   {
+    "e": "No fluxo do PCA na PMPE, quem empenha a despesa?",
+    "a": [
+     "7ª EMG",
+     "6ª EMG",
+     "DPO",
+     "SAD"
+    ],
+    "c": 1,
+    "j": "6ª EMG empenha; Diretoria de Finanças paga."
    }
   ],
   "disc": [
@@ -1228,7 +2496,7 @@
    {
     "e": "Disserte sobre a captação de recursos públicos pela PMPE: fontes, instrumentos, o papel do FNSP e da transferência fundo a fundo e as exigências de prestação de contas.",
     "est": "Discursiva do simulado — vale 2,0 pontos; mínimo 12 e máximo 25 linhas.",
-    "p": 2.0,
+    "p": 2,
     "cri": [
      "Conceito e finalidade: processo de buscar recursos financeiros externos ao orçamento regular do Estado, para fomentar políticas públicas, investir em profissionais e na instituição e economizar recursos de investimento do Estado; é instrumento de gestão estratégica que viabiliza projetos que não caberiam no orçamento anual.",
      "Fontes junto à União: Congresso Nacional, Ministérios, Bancos Nacionais e Fundos; somam-se órgãos internacionais como BID e PNUD.",
@@ -1240,6 +2508,28 @@
      "Prestação de contas: obrigatória — relatórios e comprovantes ao órgão repassador, com possibilidade de auditoria pelos Tribunais de Contas e pela CGU; falhas podem acarretar penalidades, como a suspensão de novos repasses.",
      "Ferramentas de apoio: Plataforma Transfere Gov (transferências da União), Compras SUSP (aquisições do SUSP, com os módulos Demandas e Emendas) e PE-Integrado (compras e licitações no Estado); e os instrumentos de planejamento PCA, DFD, ETP, TR, ARP e IRP."
     ]
+   },
+   {
+    "e": "Discorra sobre as vedações da transferência fundo a fundo e as consequências das falhas na prestação de contas.",
+    "est": "Discursiva do simulado — vale 1,0 ponto; mínimo 5 e máximo 10 linhas.",
+    "cri": [
+     "Vedações: 1) despesa com pessoal, como gratificação por operação planejada (ex.: PJES); 2) unidades destinadas exclusivamente a atividades administrativas; 3) transferência para outra conta do ente ou de outro ente; 4) despesa fora da vigência do prazo (antes ou depois), salvo pagamento após entrega do bem ou prestação do serviço; 5) remanejamento entre categorias econômicas e naturezas de despesa (art. 167, VI, CF).",
+     "Falhas na prestação de contas ou nas finalidades podem gerar penalidades como suspensão de novos repasses, e a omissão ou dano ao erário leva à Tomada de Contas Especial."
+    ],
+    "p": 1,
+    "resp": "Vedações: 1) despesa com pessoal, como gratificação por operação planejada (ex.: PJES); 2) unidades destinadas exclusivamente a atividades administrativas; 3) transferência para outra conta do ente ou de outro ente; 4) despesa fora da vigência do prazo (antes ou depois), salvo pagamento após entrega do bem ou prestação do serviço; 5) remanejamento entre categorias econômicas e naturezas de despesa (art. 167, VI, CF). Falhas na prestação de contas ou nas finalidades podem gerar penalidades como suspensão de novos repasses, e a omissão ou dano ao erário leva à Tomada de Contas Especial."
+   },
+   {
+    "e": "Explique o papel da 7ª EMG na captação de recursos e cite as principais fontes exploradas na disciplina (emendas e FNSP).",
+    "est": "Discursiva do simulado — vale 1,0 ponto; mínimo 5 e máximo 10 linhas.",
+    "cri": [
+     "A 7ª EMG (Lei 15.186/2013, antigo NAMPP) assessora o Cmt Geral e a Chefia do EMG em projetos estruturadores que necessitem de recursos extraorçamentários, e acompanha, gere e apoia os gerentes de projetos.",
+     "A captação serve para fomentar políticas públicas, investir em profissionais e instituição e economizar recursos de investimento do Estado.",
+     "Fontes: emendas parlamentares (individual, de bancada, de comissão e de relator), com plano de trabalho e execução pelo órgão beneficiado; e o FNSP, especialmente pela transferência obrigatória fundo a fundo (mínimo de 50% das loterias), condicionada ao Conselho e ao Fundo Estadual.",
+     "Instrumentos: cartilhas de projetos e TransfereGov/ComprasSUSP."
+    ],
+    "p": 1,
+    "resp": "A 7ª EMG (Lei 15.186/2013, antigo NAMPP) assessora o Cmt Geral e a Chefia do EMG em projetos estruturadores que necessitem de recursos extraorçamentários, e acompanha, gere e apoia os gerentes de projetos. A captação serve para fomentar políticas públicas, investir em profissionais e instituição e economizar recursos de investimento do Estado. Fontes: emendas parlamentares (individual, de bancada, de comissão e de relator), com plano de trabalho e execução pelo órgão beneficiado; e o FNSP, especialmente pela transferência obrigatória fundo a fundo (mínimo de 50% das loterias), condicionada ao Conselho e ao Fundo Estadual. Instrumentos: cartilhas de projetos e TransfereGov/ComprasSUSP."
    }
   ]
  }
