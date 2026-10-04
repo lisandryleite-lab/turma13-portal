@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
     "@neondatabase/serverless",
     "ws",
   ],
+  // Calendário e Psicologia saíram do portal (out/2026) — links antigos voltam ao início
+  async redirects() {
+    return [
+      { source: "/calendario", destination: "/inicio", permanent: false },
+      { source: "/psicologia", destination: "/inicio", permanent: false },
+    ];
+  },
   async headers() {
     return [
       {

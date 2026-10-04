@@ -456,7 +456,7 @@ function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes:
             })}
           </div>
           <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>
-            Previsão da Seção de Provas, atualizada em {CALENDARIO_ATUALIZADO_EM} · <a href="/calendario-provas-cfo-2026.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>ver PDF oficial ↗</a>. Toque na sigla para abrir o material da matéria. Veja a grade completa em <Link href="/calendario" style={{ color: "var(--olive)", fontWeight: 600 }}>Calendário</Link>.
+            Previsão da Seção de Provas, atualizada em {CALENDARIO_ATUALIZADO_EM} · <a href="/calendario-provas-cfo-2026.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>ver PDF oficial ↗</a>. Toque na sigla para abrir o material da matéria.
           </p>
         </div>
       )}

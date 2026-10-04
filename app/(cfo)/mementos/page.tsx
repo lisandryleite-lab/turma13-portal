@@ -17,7 +17,7 @@ export default async function MementosPage({ searchParams }: {
   const session = await auth()
   if (!session?.user) redirect("/login")
 
-  // ?materia=SIGLA abre direto a matéria (usado pelo /calendario)
+  // ?materia=SIGLA abre direto a matéria
   const { materia } = await searchParams
   const materiaInicial = (Array.isArray(materia) ? materia[0] : materia)?.toUpperCase() || null
 

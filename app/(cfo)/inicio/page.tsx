@@ -46,21 +46,6 @@ const cards: {
     ),
   },
   {
-    label: "Calendário",
-    href: "/calendario",
-    nota: "Provas · Eventos · Escalas",
-    bg: "gold",
-    icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M8 2v4" />
-        <path d="M16 2v4" />
-        <rect width="18" height="18" x="3" y="4" rx="2" />
-        <path d="M3 10h18" />
-        <path d="m9 16 2 2 4-4" />
-      </svg>
-    ),
-  },
-  {
     label: "Mementos",
     href: "/mementos",
     bg: "olive",
@@ -81,21 +66,6 @@ const cards: {
         <path d="M16 13H8" />
         <path d="M16 17H8" />
         <path d="M10 9H8" />
-      </svg>
-    ),
-  },
-  {
-    label: "Psicologia",
-    // passa pela página interna, que explica o processo antes de mandar
-    // para o sistema da APMP — antes o card pulava direto para fora
-    href: "/psicologia",
-    bg: "olive",
-    icon: (
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
-        <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" />
-        <path d="M12 6v12" />
-        <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" />
       </svg>
     ),
   },
@@ -190,7 +160,7 @@ export default async function PortalCfoHome() {
   const isAdmin = !!session?.user?.isAdmin
   const admView = await adminAtivo(isAdmin)
 
-  // Alunos fora da Turma 13 ganham um 6º card "Modificar senha"
+  // Alunos fora da Turma 13 ganham um card extra "Modificar senha"
   const eu = session?.user?.id
     ? await prisma.user.findUnique({ where: { id: session.user.id }, select: { turma13: true } })
     : null
@@ -237,18 +207,21 @@ export default async function PortalCfoHome() {
 
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+          // flex (não grid) para a última linha incompleta ficar centralizada
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
           gap: "32px 40px",
           width: "100%",
           maxWidth: 460,
           flex: 1,
-          justifyItems: "center",
-          alignContent: "start",
+          alignContent: "flex-start",
         }}
       >
         {cardsToShow.map(card => (
-          <CardTile key={card.href} card={card} />
+          <div key={card.href} style={{ width: "calc((100% - 80px) / 3)", display: "flex", justifyContent: "center" }}>
+            <CardTile card={card} />
+          </div>
         ))}
       </div>
 
