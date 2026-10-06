@@ -9,14 +9,12 @@ const NAV_ALUNO = [
   { href: "/ranking",  label: "Ranking" },
   { href: "/escalas",  label: "Escalas" },
   { href: "/avisos",   label: "Avisos" },
-  { href: "/links",    label: "Links" },
 ]
 
 const NAV_ADMIN = [
   { href: "/ranking",  label: "Ranking" },
   { href: "/escalas",  label: "Escalas" },
   { href: "/avisos",   label: "Avisos" },
-  { href: "/links",    label: "Links" },
   { href: "/admin",    label: "Admin" },
 ]
 

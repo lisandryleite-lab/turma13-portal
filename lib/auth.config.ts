@@ -1,10 +1,7 @@
 import type { NextAuthConfig } from "next-auth"
 import { NextResponse } from "next/server"
 
-// "/camisa": mockups da camisa do pelotão — precisam abrir sem login, senão o
-// formulário público de /pedido mostra imagem quebrada (o middleware redirecionava
-// os JPGs pra /login e o otimizador do Next devolvia 400).
-const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password", "/pagar", "/api/pagar", "/pedido", "/api/pedido", "/camisa"]
+const PUBLIC_PATHS = ["/login", "/forgot-password", "/reset-password"]
 
 export const authConfig: NextAuthConfig = {
   pages: { signIn: "/login" },
