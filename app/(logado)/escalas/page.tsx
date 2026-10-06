@@ -1,6 +1,8 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { EscalasClient } from "./escalas-client"
+import { EscalasTabs } from "./escalas-tabs"
+import { hojeRecifeISO } from "@/lib/calendario-provas"
 import {
   calcularServico,
   calendarioFaxinaMes,
@@ -95,6 +97,7 @@ export default async function EscalasPage() {
   const composicaoFinal = faxinaMembrosBD.length > 0 ? composicaoFaxinaBD : COMPOSICAO_FAXINA
 
   return (
+    <EscalasTabs hojeIso={hojeRecifeISO()} minhaMatricula={minhaMatricula ?? 0}>
     <EscalasClient
       semana={semana}
       ano={ano}
@@ -111,5 +114,6 @@ export default async function EscalasPage() {
       nomesPorMat={nomesPorMat}
       alunos={alunos}
     />
+    </EscalasTabs>
   )
 }

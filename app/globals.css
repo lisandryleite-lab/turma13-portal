@@ -162,48 +162,6 @@
   }
 }
 
-/* ── Sidebar lateral ──────────────────────────────────────── */
-.sidebar {
-  width: 64px;
-  min-width: 64px;
-  transition: width 0.28s cubic-bezier(0.4,0,0.2,1),
-              min-width 0.28s cubic-bezier(0.4,0,0.2,1);
-  overflow: hidden;
-}
-.sidebar:hover {
-  width: 220px;
-  min-width: 220px;
-}
-.sidebar .nav-label {
-  opacity: 0;
-  max-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  transition: opacity 0.18s ease 0.06s, max-width 0.25s ease;
-  pointer-events: none;
-}
-.sidebar:hover .nav-label {
-  opacity: 1;
-  max-width: 160px;
-  pointer-events: auto;
-}
-/* Desktop: bottom nav oculto */
-.bottom-nav {
-  display: none;
-}
-
-/* Mobile: sidebar oculta, bottom nav ativa */
-@media (max-width: 767px) {
-  .sidebar {
-    display: none;
-  }
-  .bottom-nav {
-    display: flex;
-  }
-  .main-logado {
-    padding-bottom: 72px;
-  }
-}
 /* ── Memento (Markdown renderizado) — Portal CFO ── */
 .memento-md { color: var(--ink); font-size: 15px; line-height: 1.6; }
 .memento-md .md-h1 { font-family: var(--serif-cfo); color: var(--olive); font-size: 1.5rem; font-weight: 600; margin: 24px 0 10px; border-bottom: 2px solid var(--gold); padding-bottom: 6px; }

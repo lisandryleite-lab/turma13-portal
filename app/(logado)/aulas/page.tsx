@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth"
 import { AulasClient } from "./aulas-client"
+import { AcompanhamentoTabs } from "@/components/acompanhamento-tabs"
 import { semanaAtual } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
@@ -17,6 +18,8 @@ export default async function AulasPage() {
   const hoje = Date.now()
 
   return (
+    <>
+    <AcompanhamentoTabs ativo="aulas" />
     <AulasClient
       disciplinas={disciplinas}
       isAdmin={isAdmin ?? false}
@@ -25,5 +28,6 @@ export default async function AulasPage() {
       totalMinistradas={totalMinistradas}
       hoje={hoje}
     />
+    </>
   )
 }
