@@ -109,6 +109,18 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
   },
 ]
 
+// Provas teóricas que ainda faltam depois da semana 39 (POE 1AE e PE), ainda
+// SEM semana definida pela Seção de Provas — informado pela turma em 06/10/2026.
+// Quando sair a data, mover a prova para CALENDARIO_PROVAS e tirar daqui.
+export const PROVAS_A_DEFINIR: ProvaCalendario[] = [
+  { sigla: "DPPM", siglaPdf: "DPPPM", avaliacao: "2AE" },
+  { sigla: "PJM", avaliacao: "2AE" },
+  { sigla: "POE", avaliacao: "2AE" },
+  { sigla: "QAGV" },
+  { sigla: "UDF", siglaPdf: "UDFIT" },
+  { sigla: "ABAA" },
+]
+
 /** A avaliação escrita acontece na QUARTA-FEIRA da semana planejada. */
 export function diaDaProva(s: SemanaCalendario): string {
   const [a, m, d] = s.inicioIso.split("-").map(Number)   // inicioIso é a segunda

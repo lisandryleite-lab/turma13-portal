@@ -5,7 +5,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { renderMarkdown } from "@/lib/markdown"
 import { MEMENTO_PROPRIO } from "@/lib/mementos-pdfs"
-import { CALENDARIO_PROVAS, CALENDARIO_ATUALIZADO_EM, diaDaProva, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
+import { CALENDARIO_PROVAS, CALENDARIO_ATUALIZADO_EM, PROVAS_A_DEFINIR, diaDaProva, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
+import { FASES, type Fase } from "@/lib/disciplinas-fase"
 import { DRIVE_MEMENTOS_URL, MIDIA_INFO, embedDe, ehLocal, extensaoDe, type TipoMidia } from "@/lib/midia-embed"
 
 type MementoMeta = { id: string; materia: string; modulo: string; titulo: string; nome: string }
@@ -14,7 +15,15 @@ type PdfPart = { file: string; label: string }
 type PdfMateria = { sigla: string; nome: string; parts: PdfPart[] }
 type ApostilaMateria = { sigla: string; parts: PdfPart[] }
 type GaivotaMsg = { id: string; matricula: number; nomeGuerra: string; texto: string; createdAt: string }
-type Disc = { sigla: string; nome: string; status: string }
+type Disc = { sigla: string; nome: string; status: string; fase: Fase; ordem: number }
+type Filtro = "todas" | Fase
+const semAcento = (t: string) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+const PENDENTE_A_DEFINIR = new Set(PROVAS_A_DEFINIR.map(p => p.sigla))
+const SUB_FASE: Record<Fase, string> = {
+  concluida: "da 1ª que terminou à mais recente",
+  andamento: "pela aula mais recente no QTS",
+  inicio: "ainda não começaram",
+}
 type Midia = { id: string; materia: string; tipo: string; titulo: string; url: string; ordem: number }
 type ContMat = { sigla: string; nome: string; modulos: string[] }
 type Aba = "mementos" | "admin"
@@ -185,12 +194,17 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
   const apostilaPartsMap = new Map(apostilaMaterias.map(a => [a.sigla, a.parts]))
   const comApostila = new Set(apostilaMaterias.map(a => a.sigla))
   const statusMap = new Map(disciplinas.map(d => [d.sigla, d.status]))
+  const faseMap = new Map(disciplinas.map(d => [d.sigla, d]))
+  // matérias só com PDF/apostila (fora da tabela de disciplinas) contam como concluídas
+  const faseDe = (sigla: string): Fase => faseMap.get(sigla)?.fase ?? "concluida"
   const provas = provasPorMateria(hojeISO)
   const [midias, setMidias] = useState<Midia[]>(midiasIniciais)
   const [materiaSel, setMateriaSel] = useState<string | null>(materiaInicial)
   const [subAba, setSubAba] = useState<SubAba>("memento")
   const [aberto, setAberto] = useState<{ titulo: string; html: string } | null>(null)
   const [carregando, setCarregando] = useState(false)
+  const [filtro, setFiltro] = useState<Filtro>("todas")
+  const [busca, setBusca] = useState("")
 
   async function abrir(m: MementoMeta) {
     setCarregando(true)
@@ -336,8 +350,44 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
       {materias.length === 0 ? (
         <p style={{ color: "var(--ink-60)" }}>Nenhum memento publicado ainda.</p>
       ) : (
+        <>
+          {/* Busca + filtro por situação (pelo QTS da Turma 13) */}
+          <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="🔍 Buscar matéria por sigla ou nome"
+            style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15, marginBottom: 10 }} />
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 18 }}>
+            {([["todas", "Todas"], ...FASES] as const).map(([f, rot]) => {
+              const n = f === "todas" ? materias.length : materias.filter(([sg]) => faseDe(sg) === f).length
+              const ativo = filtro === f
+              return (
+                <button key={f} onClick={() => setFiltro(f)}
+                  style={{ padding: "7px 13px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600,
+                    background: ativo ? "var(--olive)" : "var(--surface)", color: ativo ? "var(--canvas)" : "var(--ink-60)" }}>
+                  {rot} <span style={{ opacity: 0.7, fontWeight: 500 }}>{n}</span>
+                </button>
+              )
+            })}
+          </div>
+          {(() => {
+            const termo = semAcento(busca.trim())
+            const secoes = FASES
+              .filter(([f]) => filtro === "todas" || filtro === f)
+              .map(([f, rot]) => ({
+                fase: f, rot,
+                itens: materias
+                  .filter(([sg]) => faseDe(sg) === f)
+                  .filter(([sg, e]) => !termo || semAcento(`${sg} ${e.nome}`).includes(termo))
+                  .sort(([a], [b]) => (faseMap.get(a)?.ordem ?? -1000) - (faseMap.get(b)?.ordem ?? -1000) || a.localeCompare(b)),
+              }))
+              .filter(sec => sec.itens.length > 0)
+            if (secoes.length === 0) return <p style={{ color: "var(--ink-60)" }}>Nenhuma matéria encontrada.</p>
+            return secoes.map(sec => (
+              <section key={sec.fase} style={{ marginBottom: 24 }}>
+                <h3 style={{ margin: "0 0 10px", fontSize: 13, fontWeight: 700, color: "var(--olive)", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                  {sec.rot} <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>({sec.itens.length})</span>
+                  <span style={{ fontWeight: 400, color: "var(--ink-60)", textTransform: "none", letterSpacing: 0, fontSize: 12 }}> · {SUB_FASE[sec.fase]}</span>
+                </h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 12 }}>
-          {materias.map(([sigla, e]) => {
+          {sec.itens.map(([sigla, e]) => {
             const temPdf = comPdf.has(sigla)
             const temApostila = comApostila.has(sigla)
             const temMidia = midias.some(m => m.materia === sigla)
@@ -360,6 +410,12 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
                   border: sit === "atual" ? "1.5px solid var(--gold)" : "1px solid rgba(58,74,58,0.15)", background: vazio ? "var(--surface)" : "#fff",
                   boxShadow: vazio ? "none" : "0 2px 8px rgba(0,0,0,0.05)", opacity: vazio ? 0.72 : 1,
                 }}>
+                {(!prova || sit === "passada") && PENDENTE_A_DEFINIR.has(sigla) && (
+                  <span style={{ position: "absolute", top: 10, right: 10, fontSize: 10.5, fontWeight: 700, padding: "2px 7px", borderRadius: 999,
+                    background: "rgba(181,147,63,0.18)", color: "var(--olive)" }}>
+                    📝 a definir
+                  </span>
+                )}
                 {prova && sit !== "passada" && (
                   <span style={{ position: "absolute", top: 10, right: 10, fontSize: 10.5, fontWeight: 700, padding: "2px 7px", borderRadius: 999,
                     background: sit === "atual" ? "var(--gold)" : "rgba(181,147,63,0.18)", color: sit === "atual" ? "#fff" : "var(--olive)" }}>
@@ -373,6 +429,10 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
             )
           })}
         </div>
+              </section>
+            ))
+          })()}
+        </>
       )}
     </div>
   )
@@ -455,6 +515,28 @@ function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes:
               )
             })}
           </div>
+          {PROVAS_A_DEFINIR.length > 0 && (
+            <div style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "10px 12px", borderRadius: 12, marginTop: 8, background: "#fff", border: "1px dashed rgba(181,147,63,0.7)" }}>
+              <div style={{ flexShrink: 0, width: 92 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 0.5, color: "var(--gold)", textTransform: "uppercase" }}>Ainda faltam</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>data a definir</div>
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {PROVAS_A_DEFINIR.map(p => (
+                    <button key={`${p.sigla}-${p.avaliacao ?? ""}`} onClick={() => onAbrir(p.sigla)} title={nomes.get(p.sigla) ?? p.sigla}
+                      style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 11px", borderRadius: 999, cursor: "pointer", fontSize: 13, fontWeight: 700,
+                        background: "rgba(181,147,63,0.16)", color: "var(--olive)", border: "1px solid rgba(181,147,63,0.45)" }}>
+                      {p.siglaPdf ?? p.sigla}{p.avaliacao ? <span style={{ fontWeight: 500, opacity: 0.85 }}>{avaliacaoLabel(p.avaliacao)}</span> : null}
+                    </button>
+                  ))}
+                </div>
+                <div style={{ marginTop: 5, fontSize: 12, color: "var(--ink-60)", lineHeight: 1.4 }}>
+                  Provas teóricas que restam após POE (1ª AE) e PE · {[...new Set(PROVAS_A_DEFINIR.map(p => nomes.get(p.sigla) ?? p.sigla))].join(" · ")}
+                </div>
+              </div>
+            </div>
+          )}
           <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>
             Previsão da Seção de Provas, atualizada em {CALENDARIO_ATUALIZADO_EM} · <a href="/calendario-provas-cfo-2026.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>ver PDF oficial ↗</a>. Toque na sigla para abrir o material da matéria.
           </p>

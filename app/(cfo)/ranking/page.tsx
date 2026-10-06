@@ -2,18 +2,8 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { calcularMGCSimples, type Verificacao } from "@/lib/ranking"
+import { fasesDisciplinas } from "@/lib/disciplinas-fase"
 import { RankingClient } from "./ranking-client"
-
-// Ordem do curso (seed) — desempata as disciplinas que terminaram antes de o
-// QTS entrar no portal e por isso não têm última aula registrada.
-const ORDEM_CURSO = [
-  "SSP","TGA","GPGA","GPCL","GLOFP","FPC","PA","ACE","QAGV","DHAAPM","GC","SMQV","TFM1","TFM2",
-  "GPSEI","TIC","CMSCM2","INTSISP","ECRI","OU1","OU2","IG","DPP1","DPP2","UDF","PS","APHT",
-  "POE","EPCR","PE","GRAPP","TCEM","PJM","DADM","DPPM","LPMO","PO","EASE","HPMPE",
-  "AP","AV","AE","PU","AM","TP","TDV","ABAA","MAP1","MAP2","MPC","TPE","TCC",
-]
-
-const ALIAS_QTS: Record<string, string> = { "TFM-II": "TFM2", "OU-II": "OU2" }
 
 export default async function RankingPage() {
   const session = await auth()
@@ -41,30 +31,8 @@ export default async function RankingPage() {
     prisma.qTS.findMany({ select: { semana: true, dados: true } }),
   ])
 
-  // Ordem de término de cada disciplina = última aula dela no QTS (semana + dia).
-  // Sem aula registrada no QTS (semanas antigas, antes do QTS no portal) →
-  // ordem do curso, sempre antes das que têm data no QTS.
-  const ultimaAula = new Map<string, number>()
-  for (const q of qtss) {
-    const d = q.dados as { dias?: string[]; grade?: Record<string, string[]> } | null
-    if (!d?.grade) continue
-    const dias = d.dias ?? Object.keys(d.grade)
-    dias.forEach((dia, i) => {
-      for (const bruta of d.grade?.[dia] ?? []) {
-        // QTS antigos grafavam com hífen (TFM-II, OU-II)
-        const sigla = ALIAS_QTS[bruta] ?? bruta
-        if (!sigla) continue
-        const chave = q.semana * 10 + i
-        if (chave > (ultimaAula.get(sigla) ?? 0)) ultimaAula.set(sigla, chave)
-      }
-    })
-  }
-  const fase = (d: (typeof disciplinasBrutas)[number]): "concluida" | "andamento" | "inicio" =>
-    (d.cargaTotal > 0 ? d.cargaMinistrada >= d.cargaTotal : d.status === "Concluída") ? "concluida"
-      : d.cargaMinistrada > 0 ? "andamento" : "inicio"
-  const disciplinas = disciplinasBrutas.map(d => ({
-    sigla: d.sigla, nome: d.nome, status: d.status, fase: fase(d), ordem: ultimaAula.get(d.sigla) ?? (ORDEM_CURSO.indexOf(d.sigla) - 100),
-  }))
+  const fases = fasesDisciplinas(disciplinasBrutas, qtss)
+  const disciplinas = disciplinasBrutas.map(d => ({ sigla: d.sigla, nome: d.nome, status: d.status, ...fases.get(d.sigla)! }))
 
   // MGC dos OUTROS alunos T3 que já lançaram notas (para posicionar o ranking)
   const porUser = new Map<string, { nfdc: number; vs: Verificacao[] }>()

@@ -9,6 +9,7 @@ import { APOSTILA_PARTS, type ApostilaPart } from "@/lib/apostilas"
 import { hojeRecifeISO } from "@/lib/calendario-provas"
 import { tipoPorExtensao, tituloDeArquivo } from "@/lib/midia-embed"
 import { MIDIAS_DRIVE } from "@/lib/midias-drive"
+import { fasesDisciplinas } from "@/lib/disciplinas-fase"
 import { MementosClient } from "./mementos-client"
 
 export default async function MementosPage({ searchParams }: {
@@ -21,21 +22,25 @@ export default async function MementosPage({ searchParams }: {
   const { materia } = await searchParams
   const materiaInicial = (Array.isArray(materia) ? materia[0] : materia)?.toUpperCase() || null
 
-  const [mementos, fcGroups, disciplinas, midias] = await Promise.all([
+  const [mementos, fcGroups, disciplinasBrutas, midias, qtss] = await Promise.all([
     prisma.memento.findMany({
       select: { id: true, materia: true, modulo: true, titulo: true },
       orderBy: [{ materia: "asc" }, { modulo: "asc" }, { ordem: "asc" }],
     }),
     // mantido apenas para a área "Limpar matéria" do admin (conteudoMaterias)
     prisma.flashcard.groupBy({ by: ["materia", "modulo"], _count: { _all: true } }),
-    prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true }, orderBy: { sigla: "asc" } }),
+    prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true, cargaMinistrada: true, cargaTotal: true }, orderBy: { sigla: "asc" } }),
     // vídeo / áudio / mapa mental por matéria (links do Drive ou YouTube)
     // (tolerante: se a tabela ainda não existir no banco — antes do db:push — segue sem itens)
     prisma.mementoMidia.findMany({
       select: { id: true, materia: true, tipo: true, titulo: true, url: true, ordem: true },
       orderBy: [{ materia: "asc" }, { tipo: "asc" }, { ordem: "asc" }, { createdAt: "asc" }],
     }).catch(() => [] as { id: string; materia: string; tipo: string; titulo: string; url: string; ordem: number }[]),
+    prisma.qTS.findMany({ select: { semana: true, dados: true } }),
   ])
+  // situação (concluída / em andamento / pendente) e ordem pelo QTS da Turma 13
+  const fases = fasesDisciplinas(disciplinasBrutas, qtss)
+  const disciplinas = disciplinasBrutas.map(d => ({ sigla: d.sigla, nome: d.nome, status: d.status, ...fases.get(d.sigla)! }))
 
   const nomeMap = new Map(disciplinas.map(d => [d.sigla, d.nome]))
 
