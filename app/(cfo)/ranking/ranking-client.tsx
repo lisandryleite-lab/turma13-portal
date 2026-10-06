@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { calcularComponentes, calcularProjecaoConsolidada, calcularPosicaoHistorica, BASE_T1, BASE_T2, type Verificacao } from "@/lib/ranking"
 
 type Nota = { id: string; disciplina: string; avaliacao: string; valor: number; ehAF: boolean; apto: boolean }
-type Disc = { sigla: string; nome: string; status: string }
+type Disc = { sigla: string; nome: string; status: string; fase: "concluida" | "andamento" | "inicio"; ordem: number }
 type Opm = { id: string; sigla: string; nome: string; especial: boolean }
 type Pref = { opcao1Id: string; opcao2Id: string | null; opcao3Id: string | null }
 type Agregado = { sigla: string; nome: string; especial: boolean; count: number }
@@ -17,6 +17,12 @@ const inputStyle: React.CSSProperties = {
   width: "100%", padding: "10px 12px", borderRadius: 8,
   border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15,
 }
+
+const GRUPOS_DISC = [
+  ["concluida", "Concluídas — da 1ª que terminou à mais recente"],
+  ["andamento", "Em andamento"],
+  ["inicio", "Ainda não iniciadas"],
+] as const
 
 function toVerif(notas: Nota[]): Verificacao[] {
   return notas.map(n => ({ disciplina: n.disciplina, avaliacao: n.avaliacao, nota: n.valor, peso: 1, ehAF: n.ehAF, apto: n.apto }))
@@ -173,7 +179,16 @@ export function RankingClient({
             <label style={{ fontSize: 13, color: "var(--ink)", fontWeight: 600 }}>Disciplina
               <select style={{ ...inputStyle, marginTop: 4 }} value={disc} onChange={e => setDisc(e.target.value)}>
                 <option value="">— selecione —</option>
-                {disciplinas.map(d => <option key={d.sigla} value={d.sigla}>{d.sigla} — {d.nome}</option>)}
+                {GRUPOS_DISC.map(([fase, rotulo]) => {
+                  const lista = disciplinas.filter(d => d.fase === fase)
+                    .sort((a, b) => fase === "inicio" ? a.sigla.localeCompare(b.sigla) : a.ordem - b.ordem || a.sigla.localeCompare(b.sigla))
+                  if (lista.length === 0) return null
+                  return (
+                    <optgroup key={fase} label={`${rotulo} (${lista.length})`}>
+                      {lista.map(d => <option key={d.sigla} value={d.sigla}>{grupos.has(d.sigla) ? "✓ " : ""}{d.sigla} — {d.nome}</option>)}
+                    </optgroup>
+                  )
+                })}
               </select>
             </label>
             <label style={{ fontSize: 13, color: "var(--ink)", fontWeight: 600 }}>Avaliação
@@ -191,6 +206,9 @@ export function RankingClient({
             </button>
             {erro && <p style={{ gridColumn: "1 / -1", margin: 0, color: "var(--red)", fontSize: 13.5 }}>✗ {erro}</p>}
           </form>
+          <p style={{ margin: "6px 2px 0", fontSize: 12, color: "var(--ink-60)" }}>
+            Lista em ordem de término pelo QTS: concluídas primeiro, depois em andamento. ✓ = já tem nota lançada.
+          </p>
 
           {/* TCC e Nota Disciplinar */}
           <div style={{ marginTop: 14 }}>
@@ -283,18 +301,17 @@ export function RankingClient({
         </div>
       )}
 
-      {/* Ranking de batalhões — SEMPRE visível para todos os alunos (independe da aba) */}
-      <section style={{ marginTop: 36, paddingTop: 24, borderTop: "2px solid var(--surface)" }}>
+      {/* Ranking de batalhões — visível para todos os alunos, só na aba Batalhões */}
+      {aba === "batalhoes" && <section style={{ marginTop: 36, paddingTop: 24, borderTop: "2px solid var(--surface)" }}>
         <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.4rem", color: "var(--olive)", margin: 0 }}>
           Ranking de batalhões da turma
         </h2>
         <p style={{ color: "var(--ink-60)", fontSize: 13.5, margin: "6px 0 0", lineHeight: 1.5 }}>
           Batalhões mais pedidos pela turma (RMR / DIM). Contagem <strong>anônima</strong> — visível para todos os alunos.
-          {aba !== "batalhoes" && <> Para registrar a sua preferência, abra a aba <strong>Batalhões</strong>.</>}
         </p>
         <QuadroPedidos titulo="Mais pedidos como 1ª opção" dados={agregado1} />
         <QuadroPedidos titulo="Mais pedidos no total (1ª + 2ª + 3ª)" dados={agregadoTotal} />
-      </section>
+      </section>}
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>Desenvolvido por AL CFO PM 108 LISANDRY</footer>
     </main>

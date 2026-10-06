@@ -4,14 +4,16 @@ import { prisma } from "@/lib/prisma"
 import { calcularMGCSimples, type Verificacao } from "@/lib/ranking"
 import { RankingClient } from "./ranking-client"
 
+const ALIAS_QTS: Record<string, string> = { "TFM-II": "TFM2", "OU-II": "OU2" }
+
 export default async function RankingPage() {
   const session = await auth()
   if (!session?.user) redirect("/login")
   const userId = session.user.id!
 
-  const [minhasNotas, disciplinas, todasNotas, eu, turmaSize, opms, minhaPref, agregado] = await Promise.all([
+  const [minhasNotas, disciplinasBrutas, todasNotas, eu, turmaSize, opms, minhaPref, agregado, qtss] = await Promise.all([
     prisma.notaCFO.findMany({ where: { userId }, orderBy: [{ disciplina: "asc" }, { avaliacao: "asc" }] }),
-    prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true }, orderBy: { sigla: "asc" } }),
+    prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true, cargaMinistrada: true, cargaTotal: true }, orderBy: { sigla: "asc" } }),
     // Filtra no SQL: antes puxava a tabela INTEIRA (todas as turmas, todos os
     // campos) e descartava em JS — atravessando a rede à toa a cada abertura.
     prisma.notaCFO.findMany({
@@ -27,7 +29,33 @@ export default async function RankingPage() {
     prisma.oPM.findMany({ orderBy: { ordem: "asc" } }),
     prisma.preferenciaOPM.findUnique({ where: { userId } }),
     prisma.preferenciaOPM.findMany({ select: { opcao1Id: true, opcao2Id: true, opcao3Id: true } }),
+    prisma.qTS.findMany({ select: { semana: true, dados: true } }),
   ])
+
+  // Ordem de término de cada disciplina = última aula dela no QTS (semana + dia).
+  // Sem aula registrada no QTS (semanas antigas, antes do QTS no portal) → 0,
+  // ou seja, terminou antes de todas as outras.
+  const ultimaAula = new Map<string, number>()
+  for (const q of qtss) {
+    const d = q.dados as { dias?: string[]; grade?: Record<string, string[]> } | null
+    if (!d?.grade) continue
+    const dias = d.dias ?? Object.keys(d.grade)
+    dias.forEach((dia, i) => {
+      for (const bruta of d.grade?.[dia] ?? []) {
+        // QTS antigos grafavam com hífen (TFM-II, OU-II)
+        const sigla = ALIAS_QTS[bruta] ?? bruta
+        if (!sigla) continue
+        const chave = q.semana * 10 + i
+        if (chave > (ultimaAula.get(sigla) ?? 0)) ultimaAula.set(sigla, chave)
+      }
+    })
+  }
+  const fase = (d: (typeof disciplinasBrutas)[number]): "concluida" | "andamento" | "inicio" =>
+    (d.cargaTotal > 0 ? d.cargaMinistrada >= d.cargaTotal : d.status === "Concluída") ? "concluida"
+      : d.cargaMinistrada > 0 ? "andamento" : "inicio"
+  const disciplinas = disciplinasBrutas.map(d => ({
+    sigla: d.sigla, nome: d.nome, status: d.status, fase: fase(d), ordem: ultimaAula.get(d.sigla) ?? 0,
+  }))
 
   // MGC dos OUTROS alunos T3 que já lançaram notas (para posicionar o ranking)
   const porUser = new Map<string, { nfdc: number; vs: Verificacao[] }>()
