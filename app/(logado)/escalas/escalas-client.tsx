@@ -24,7 +24,7 @@ type ServicoSemana = {
   p3: {mat:number;nome:string}|null
   p4: {mat:number;nome:string}|null
 }
-type DiaCal     = { data:string; diaSemana:string; tipo:"util"|"fds"; grupoFaxina:GrupoFaxina|null; grupoPlantao:GrupoPlantao }
+type DiaCal     = { data:string; diaSemana:string; tipo:"util"|"fds"; grupoFaxina:GrupoFaxina|null; grupoPlantao:GrupoPlantao|null }
 type PlantaoDia = { id:string; data:string; grupoPlantao:string; adjuntoMat:number|null }
 type FuncaoDia  = { id:string; data:string; funcao:string; matricula:number }
 type FaxinaMembro = { id?:string; mat:number; nome:string }
@@ -402,7 +402,7 @@ export function EscalasClient({
                       Plantão de Hoje — {esteHoje.grupoPlantao}
                     </p>
                     <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:esteHoje.tipo==="util"&&esteHoje.grupoFaxina?14:0}}>
-                      {(membrosPlantao[esteHoje.grupoPlantao]||[]).map(m2=>{
+                      {(esteHoje.grupoPlantao ? membrosPlantao[esteHoje.grupoPlantao]||[] : []).map(m2=>{
                         const euSou=m2.mat===minhaMatricula
                         return <span key={m2.mat} style={{background:euSou?"var(--dourado)":"rgba(255,255,255,0.12)",color:"#fff",borderRadius:6,padding:"4px 10px",fontSize:12,fontWeight:euSou?700:400}}>{m2.mat} {m2.nome}{euSou?" ←":""}</span>
                       })}
@@ -504,7 +504,7 @@ export function EscalasClient({
                           {numDia}
                           {isHoje&&<span style={{fontSize:8,display:"block",color:"rgba(255,200,80,0.9)",letterSpacing:"0.04em"}}>HOJE</span>}
                         </p>
-                        <TagPlantao grupo={dia.grupoPlantao} small/>
+                        {dia.grupoPlantao ? <TagPlantao grupo={dia.grupoPlantao} small/> : <span style={{fontSize:11,color:"var(--cinza-texto)"}}>sem plantão</span>}
                       </div>
                     )
                   })}

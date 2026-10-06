@@ -5,6 +5,8 @@
 // Converte "YYYY-MM-DD" em Date de meia-noite LOCAL — nunca usar `new Date(string)`
 // direto com uma data-only string: o JS interpreta como UTC e, em fuso negativo,
 // `.getDate()` depois volta um dia (mesmo problema já registrado em calendarioFaxinaMes).
+import { mesDaData } from "./escalas-cia"
+
 export function parseDataLocal(iso: string): Date {
   const [ano, mes, dia] = iso.split("-").map(Number)
   return new Date(ano, mes - 1, dia)
@@ -100,7 +102,17 @@ function ciclico<T extends readonly string[]>(grupos: T, refUTC: number, refIdx:
   return grupos[(((refIdx + dias) % n) + n) % n]
 }
 
-export function grupoPlantaoPorData(data: Date): GrupoPlantao {
+export function grupoPlantaoPorData(data: Date): GrupoPlantao | null {
+  // Mês com escala publicada (lib/escalas-cia): o grupo vem da tabela do
+  // documento — outubro/2026, p.ex., tem fins de semana sem plantão e 10/10
+  // fora do ciclo. Sem tabela, cai na conta do ciclo.
+  const pad = (n: number) => String(n).padStart(2, "0")
+  const iso = `${data.getFullYear()}-${pad(data.getMonth() + 1)}-${pad(data.getDate())}`
+  const mes = mesDaData(iso)
+  if (mes) {
+    const dia = mes.plantao.find(p => p.data === iso)
+    if (dia) return dia.grupo
+  }
   const dataUTC = Date.UTC(data.getFullYear(), data.getMonth(), data.getDate())
   return dataUTC >= INICIO_7X1_UTC
     ? ciclico(GRUPOS_7X1, REF_7X1_UTC, REF_7X1_IDX, dataUTC)
@@ -152,7 +164,7 @@ export function calendarioFaxinaMes(ano: number, mes: number): {
   diaSemana: string
   tipo: "util" | "fds"
   grupoFaxina: GrupoFaxina | null
-  grupoPlantao: GrupoPlantao
+  grupoPlantao: GrupoPlantao | null
 }[] {
   const DIAS = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"]
   const pad = (n: number) => String(n).padStart(2, "0")

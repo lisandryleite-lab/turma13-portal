@@ -8,7 +8,7 @@ type DiaCal = {
   diaSemana: string
   tipo: "util" | "fds"
   grupoFaxina: string | null
-  grupoPlantao: string
+  grupoPlantao: string | null
 }
 
 interface Props {

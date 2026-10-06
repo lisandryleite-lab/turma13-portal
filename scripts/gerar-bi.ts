@@ -299,7 +299,7 @@ async function main() {
               ${ddmm(a.data)}${a.hoje ? ` <span style="color:${GOLD};font-size:7.5px">hoje</span>` : ""}
             </td>
             <td style="padding:4px 5px;color:${a.fds ? "#8a93a5" : "#1e2937"}">${a.diaSemana}</td>
-            <td style="padding:4px 5px;font-weight:700;color:${CORES_PLANTAO[a.plantao]}">${a.plantao}</td>
+            <td style="padding:4px 5px;font-weight:700;color:${a.plantao ? CORES_PLANTAO[a.plantao] : "#8a93a5"}">${a.plantao ?? "—"}</td>
             <td style="padding:4px 5px;font-weight:${a.faxina ? 700 : 400};color:${a.faxina ? NAVY : "#c3cad8"}">${a.faxina ?? "—"}</td>
             <td style="padding:4px 5px;text-align:right;font-weight:700;color:${GOLD}">${a.faltam}</td>
           </tr>`).join("")}

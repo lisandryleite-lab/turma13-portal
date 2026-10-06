@@ -12,7 +12,7 @@ const LABEL_FUNCAO: Record<string, string> = {
   AuxiliarOD: "Auxiliar do Oficial de Dia", AdjuntoOD: "Adjunto ao Aux. do Oficial de Dia",
   Adjunto1: "Adjunto da 1ª CIA", Adjunto2: "Adjunto da 2ª CIA",
   Mestre: "Mestre de Cerimônia", Leitor: "Leitor de BI",
-  Discurso: "Discurso ao CFO", Comandante: "Comandante da 2ª CIA",
+  Discurso: "Discurso ao CFO", Comandante: "Comandante da 1ª CIA",
 }
 const ordemFuncao = (f: string) => {
   const i = (FUNCOES_SERVICO as readonly string[]).indexOf(f)
@@ -57,7 +57,7 @@ export async function carregarResumoHoje() {
     grupoPlantao,
     grupoFaxina,
     nomesPorMat,
-    plantao: MEMBROS_PLANTAO[grupoPlantao] || [],
+    plantao: grupoPlantao ? MEMBROS_PLANTAO[grupoPlantao] || [] : [],
     faxina: grupoFaxina ? (composicao[grupoFaxina] || []) : [],
     funcoes: [...funcoesHoje].sort((a, b) => ordemFuncao(a.funcao) - ordemFuncao(b.funcao)),
   }
@@ -82,7 +82,7 @@ export function ResumoHoje({ matricula, dados }: { matricula: number; dados: Dad
   return (
     <div style={{ gridColumn: "1/-1", background: "var(--azul-profundo)", borderRadius: 14, padding: "18px 20px" }}>
       {/* Plantão */}
-      <p style={tituloStyle}>Plantão de Hoje — {grupoPlantao}</p>
+      <p style={tituloStyle}>Plantão de Hoje — {grupoPlantao ?? "sem plantão"}</p>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
         {plantao.map(m => chip(`p${m.mat}`, `${m.mat} ${m.nome}`, m.mat === matricula))}
       </div>
