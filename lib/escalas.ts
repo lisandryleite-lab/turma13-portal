@@ -12,27 +12,30 @@ export function parseDataLocal(iso: string): Date {
   return new Date(ano, mes - 1, dia)
 }
 
-// Matrícula ordenada por antiguidade (menor = mais antigo) — 34 alunos
-// (206 e 207 removidos; 1 HELLTON FERNANDES e 54 ELDER CARVALHO saíram da Turma 13 em jun/2026;
-// 213 R SILVA entrou em jun/2026; 211 DÁRIO e 212 CAMILA BUONORA entraram em jul/2026 — Mapa de Equipes JULHO/2026)
+// Matrícula ordenada por antiguidade (menor = mais antigo) — 31 alunos da Turma 13
+// (1 HELLTON FERNANDES e 54 ELDER CARVALHO saíram em jun/2026; em out/2026 saíram
+// 211 DÁRIO e 213 R SILVA, que deixaram a CIA, e 212 CAMILA BUONORA, que é do 7º Pelotão)
 export const MATRICULAS_ORDEM = [
   7, 13, 19, 23, 26, 37, 41, 45, 55, 57, 60, 65,
   71, 76, 81, 94, 98, 105, 106, 108, 114, 116, 131, 143,
-  144, 153, 165, 167, 174, 186, 191, 211, 212, 213,
+  144, 153, 165, 167, 174, 186, 191,
 ]
 
-// Semana de referência: semana 20 → P1=65 KAUHANNI (idx 11), P3=71 LEIMIG (idx 12), P4=76 ARAUJO JUNIOR (idx 13)
-// (idx recalibrado em jun/2026 após remoção de 1 e 54 do array, que ficavam antes do índice original 13)
-const REF_SEMANA = 20
-const REF_P1_IDX = 11
+// Rodízio de P1/P3/P4: anda UMA posição por semana (quem é P4 vira P3 e depois
+// P1) e, ao chegar no fim da lista, volta ao começo.
+// Reinício em out/2026: semana 39 → P1=191 GOMES NASCIMENTO, P3=7 ALDO SILVA,
+// P4=13 JONAS; semana 40 → 7 / 13 / 19, e assim por diante.
+const REF_SEMANA = 39
+const REF_P1_IDX = MATRICULAS_ORDEM.indexOf(191)
 
 export function calcularServico(semana: number): {
   p1: number | null
   p3: number | null
   p4: number | null
 } {
-  const offset = semana - REF_SEMANA
-  const get = (i: number) => MATRICULAS_ORDEM[REF_P1_IDX + offset + i] ?? null
+  const n = MATRICULAS_ORDEM.length
+  const base = REF_P1_IDX + (semana - REF_SEMANA)
+  const get = (i: number) => MATRICULAS_ORDEM[(((base + i) % n) + n) % n]
   return { p1: get(0), p3: get(1), p4: get(2) }
 }
 
@@ -186,7 +189,7 @@ export function calendarioFaxinaMes(ano: number, mes: number): {
 }
 
 // Composição dos grupos de faxina — fallback quando FaxinaGrupoMembro (BD) está vazia.
-// Sincronizada com o BD em jul/2026 (211 DÁRIO e 213 R SILVA no G7; 212 CAMILA BUONORA no G8).
+// Sincronizada com o BD em jul/2026; em out/2026 saíram 211 DÁRIO e 213 R SILVA (G7) e 212 CAMILA BUONORA (G8).
 export const COMPOSICAO_FAXINA: Record<GrupoFaxina, { mat: number; nome: string }[]> = {
   G1: [{ mat: 143, nome: "VIDAL" }, { mat: 153, nome: "HUGO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
   G2: [{ mat: 13, nome: "JONAS" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 186, nome: "SAMUEL SILVA" }],
@@ -194,17 +197,17 @@ export const COMPOSICAO_FAXINA: Record<GrupoFaxina, { mat: number; nome: string 
   G4: [{ mat: 81, nome: "FERNANDO ROCHA" }, { mat: 94, nome: "ANDRÉ CARDOSO" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 144, nome: "SAMUEL SANTOS" }],
   G5: [{ mat: 71, nome: "LEIMIG" }, { mat: 76, nome: "ARAÚJO JR" }, { mat: 98, nome: "JOSÉ MENEZES" }, { mat: 105, nome: "LUCAS EDUARDO" }],
   G6: [{ mat: 41, nome: "ALAN SILVA" }, { mat: 55, nome: "SHIRLAYNE" }, { mat: 60, nome: "JOÃO NUNES" }, { mat: 65, nome: "KAUHANNI" }],
-  G7: [{ mat: 19, nome: "THAIS FIGUEIREDO" }, { mat: 45, nome: "GABRIELE COSTA" }, { mat: 57, nome: "CLEYTON" }, { mat: 211, nome: "DÁRIO" }, { mat: 213, nome: "R SILVA" }],
-  G8: [{ mat: 7, nome: "ALDO SILVA" }, { mat: 23, nome: "RODOLFO MOURA" }, { mat: 26, nome: "ANDRÉ" }, { mat: 37, nome: "PABLO TORRES" }, { mat: 212, nome: "CAMILA BUONORA" }],
+  G7: [{ mat: 19, nome: "THAIS FIGUEIREDO" }, { mat: 45, nome: "GABRIELE COSTA" }, { mat: 57, nome: "CLEYTON" }],
+  G8: [{ mat: 7, nome: "ALDO SILVA" }, { mat: 23, nome: "RODOLFO MOURA" }, { mat: 26, nome: "ANDRÉ" }, { mat: 37, nome: "PABLO TORRES" }],
 }
 
 // Composição dos grupos de plantão — escala 7X1, SETEMBRO/2026 (vigente).
 // Transcrita do "MAPA DE DIVISÃO DAS EQUIPES DE PLANTÃO DA 1ª COMPANHIA -
 // ESCALA 7X1 · PERÍODO: SETEMBRO/2026" (1ª CIA, 1º Ten Tenório), filtrando as
-// 34 matrículas da Turma 13 das 26 linhas × 8 colunas da companhia inteira.
+// matrículas da Turma 13 das 26 linhas × 8 colunas da companhia inteira.
 //
 // Ao contrário do mapa 3X1 de agosto, este traz 108 LISANDRY explicitamente
-// (ÍNDIA, linha 14). Seguem de fora só 211 DÁRIO e 213 R SILVA.
+// (ÍNDIA, linha 14).
 //
 // Obs. do documento: 105 LUCAS EDUARDO é adventista — os plantões de sexta dele
 // vão para quinta, e os de sábado para domingo.
@@ -213,7 +216,7 @@ export const MEMBROS_7X1: Record<Grupo7x1, { mat: number; nome: string }[]> = {
   HOTEL:    [{ mat: 13,  nome: "JONAS" }, { mat: 23,  nome: "RODOLFO MOURA" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 144, nome: "SAMUEL SANTOS" }],
   INDIA:    [{ mat: 41,  nome: "ALAN SILVA" }, { mat: 60,  nome: "JOÃO NUNES" }, { mat: 108, nome: "LISANDRY" }, { mat: 116, nome: "BERTIPALHA" }],
   JULIETT:  [{ mat: 94,  nome: "ANDRÉ CARDOSO" }, { mat: 153, nome: "HUGO" }],
-  KILO:     [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }, { mat: 212, nome: "CAMILA BUONORA" }],
+  KILO:     [{ mat: 26,  nome: "ANDRÉ" }, { mat: 37,  nome: "PABLO TORRES" }, { mat: 65,  nome: "KAUHANNI" }, { mat: 98,  nome: "JOSÉ MENEZES" }],
   LIMA:     [{ mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 186, nome: "SAMUEL SILVA" }],
   MIKE:     [{ mat: 45,  nome: "GABRIELE COSTA" }, { mat: 81,  nome: "FERNANDO ROCHA" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 165, nome: "KEVIN GOMES" }],
   NOVEMBER: [{ mat: 55,  nome: "SHIRLAYNE" }, { mat: 71,  nome: "LEIMIG" }, { mat: 76,  nome: "ARAÚJO JR" }],
@@ -237,4 +240,4 @@ export const MEMBROS_PLANTAO: Record<GrupoPlantao, { mat: number; nome: string }
 
 // Alunos da Turma 13 ainda sem equipe no mapa da 1ª CIA (também ausentes do
 // mapa 7X1 de setembro). Não chutar: esperar a 1ª CIA publicar.
-export const SEM_EQUIPE_PLANTAO = [211, 213] as const
+export const SEM_EQUIPE_PLANTAO = [] as const
