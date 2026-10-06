@@ -4,6 +4,15 @@ import { prisma } from "@/lib/prisma"
 import { calcularMGCSimples, type Verificacao } from "@/lib/ranking"
 import { RankingClient } from "./ranking-client"
 
+// Ordem do curso (seed) — desempata as disciplinas que terminaram antes de o
+// QTS entrar no portal e por isso não têm última aula registrada.
+const ORDEM_CURSO = [
+  "SSP","TGA","GPGA","GPCL","GLOFP","FPC","PA","ACE","QAGV","DHAAPM","GC","SMQV","TFM1","TFM2",
+  "GPSEI","TIC","CMSCM2","INTSISP","ECRI","OU1","OU2","IG","DPP1","DPP2","UDF","PS","APHT",
+  "POE","EPCR","PE","GRAPP","TCEM","PJM","DADM","DPPM","LPMO","PO","EASE","HPMPE",
+  "AP","AV","AE","PU","AM","TP","TDV","ABAA","MAP1","MAP2","MPC","TPE","TCC",
+]
+
 const ALIAS_QTS: Record<string, string> = { "TFM-II": "TFM2", "OU-II": "OU2" }
 
 export default async function RankingPage() {
@@ -33,8 +42,8 @@ export default async function RankingPage() {
   ])
 
   // Ordem de término de cada disciplina = última aula dela no QTS (semana + dia).
-  // Sem aula registrada no QTS (semanas antigas, antes do QTS no portal) → 0,
-  // ou seja, terminou antes de todas as outras.
+  // Sem aula registrada no QTS (semanas antigas, antes do QTS no portal) →
+  // ordem do curso, sempre antes das que têm data no QTS.
   const ultimaAula = new Map<string, number>()
   for (const q of qtss) {
     const d = q.dados as { dias?: string[]; grade?: Record<string, string[]> } | null
@@ -54,7 +63,7 @@ export default async function RankingPage() {
     (d.cargaTotal > 0 ? d.cargaMinistrada >= d.cargaTotal : d.status === "Concluída") ? "concluida"
       : d.cargaMinistrada > 0 ? "andamento" : "inicio"
   const disciplinas = disciplinasBrutas.map(d => ({
-    sigla: d.sigla, nome: d.nome, status: d.status, fase: fase(d), ordem: ultimaAula.get(d.sigla) ?? 0,
+    sigla: d.sigla, nome: d.nome, status: d.status, fase: fase(d), ordem: ultimaAula.get(d.sigla) ?? (ORDEM_CURSO.indexOf(d.sigla) - 100),
   }))
 
   // MGC dos OUTROS alunos T3 que já lançaram notas (para posicionar o ranking)

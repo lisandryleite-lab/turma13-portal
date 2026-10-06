@@ -19,9 +19,9 @@ const inputStyle: React.CSSProperties = {
 }
 
 const GRUPOS_DISC = [
-  ["concluida", "Concluídas — da 1ª que terminou à mais recente"],
-  ["andamento", "Em andamento"],
-  ["inicio", "Ainda não iniciadas"],
+  ["concluida", "Concluídas", "da 1ª que terminou à mais recente, pelo QTS da Turma 13"],
+  ["andamento", "Em andamento", "pela aula mais recente no QTS"],
+  ["inicio", "Pendentes", "ainda não começaram"],
 ] as const
 
 function toVerif(notas: Nota[]): Verificacao[] {
@@ -176,21 +176,43 @@ export function RankingClient({
       {aba === "lancar" && (
         <>
           <form onSubmit={salvar} style={{ marginTop: 20, padding: 16, borderRadius: 12, background: "var(--surface)", display: "grid", gridTemplateColumns: "1fr 90px 90px", gap: 12, alignItems: "end" }}>
-            <label style={{ fontSize: 13, color: "var(--ink)", fontWeight: 600 }}>Disciplina
-              <select style={{ ...inputStyle, marginTop: 4 }} value={disc} onChange={e => setDisc(e.target.value)}>
-                <option value="">— selecione —</option>
-                {GRUPOS_DISC.map(([fase, rotulo]) => {
-                  const lista = disciplinas.filter(d => d.fase === fase)
-                    .sort((a, b) => fase === "inicio" ? a.sigla.localeCompare(b.sigla) : a.ordem - b.ordem || a.sigla.localeCompare(b.sigla))
-                  if (lista.length === 0) return null
-                  return (
-                    <optgroup key={fase} label={`${rotulo} (${lista.length})`}>
-                      {lista.map(d => <option key={d.sigla} value={d.sigla}>{grupos.has(d.sigla) ? "✓ " : ""}{d.sigla} — {d.nome}</option>)}
-                    </optgroup>
-                  )
-                })}
-              </select>
-            </label>
+            <div style={{ gridColumn: "1 / -1", display: "flex", flexDirection: "column", gap: 14 }}>
+              {GRUPOS_DISC.map(([fase, rotulo, sub]) => {
+                const lista = disciplinas.filter(d => d.fase === fase)
+                  .sort((a, b) => a.ordem - b.ordem || a.sigla.localeCompare(b.sigla))
+                if (lista.length === 0) return null
+                return (
+                  <div key={fase}>
+                    <p style={{ margin: "0 0 6px", fontSize: 13, fontWeight: 700, color: "var(--olive)" }}>
+                      {rotulo} ({lista.length}) <span style={{ fontWeight: 400, color: "var(--ink-60)", fontSize: 12 }}>· {sub}</span>
+                    </p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                      {lista.map(d => {
+                        const sel = disc === d.sigla
+                        const temNota = grupos.has(d.sigla)
+                        return (
+                          <button key={d.sigla} type="button" title={d.nome} onClick={() => setDisc(d.sigla)}
+                            style={{
+                              padding: "6px 10px", borderRadius: 999, fontSize: 13, fontWeight: 600, cursor: "pointer",
+                              border: sel ? "1px solid var(--olive)" : "1px solid rgba(58,74,58,0.25)",
+                              background: sel ? "var(--olive)" : temNota ? "#eef2ea" : "#fff",
+                              color: sel ? "var(--canvas)" : "var(--ink)",
+                            }}>
+                            {temNota && !sel ? "✓ " : ""}{d.sigla}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )
+              })}
+              <p style={{ margin: 0, fontSize: 12, color: "var(--ink-60)" }}>✓ = já tem nota lançada. Toque na sigla para escolher.</p>
+            </div>
+            <div style={{ fontSize: 13, color: "var(--ink)", fontWeight: 600 }}>Disciplina
+              <div style={{ ...inputStyle, marginTop: 4, background: disc ? "#fff" : "transparent", color: disc ? "var(--ink)" : "var(--ink-60)", fontWeight: disc ? 600 : 400, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {disc ? `${disc} — ${nomeDisc(disc)}` : "toque numa sigla acima"}
+              </div>
+            </div>
             <label style={{ fontSize: 13, color: "var(--ink)", fontWeight: 600 }}>Avaliação
               <input style={{ ...inputStyle, marginTop: 4 }} value={aval} onChange={e => setAval(e.target.value)} placeholder="P1" />
             </label>
@@ -206,9 +228,6 @@ export function RankingClient({
             </button>
             {erro && <p style={{ gridColumn: "1 / -1", margin: 0, color: "var(--red)", fontSize: 13.5 }}>✗ {erro}</p>}
           </form>
-          <p style={{ margin: "6px 2px 0", fontSize: 12, color: "var(--ink-60)" }}>
-            Lista em ordem de término pelo QTS: concluídas primeiro, depois em andamento. ✓ = já tem nota lançada.
-          </p>
 
           {/* TCC e Nota Disciplinar */}
           <div style={{ marginTop: 14 }}>
