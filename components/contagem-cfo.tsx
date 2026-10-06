@@ -1,6 +1,6 @@
-import { DATA_FIM_CFO, DATA_INICIO, diasParaFimCFO } from "@/lib/utils"
+import { DATA_FIM_CFO, DATA_FORMATURA, DATA_INICIO, diasParaFimCFO, diasParaFormatura } from "@/lib/utils"
 
-// Contagem regressiva para o término do CFO. Server component — a página que a usa
+// Contagem regressiva para o término do CFO e, logo abaixo, para a formatura. Server component — a página que a usa
 // é `force-dynamic`, então o número é recalculado a cada carregamento.
 //
 // `tema`: o portal tem duas paletas — "azul" no grupo (logado) e "olive" no hub
@@ -18,6 +18,8 @@ export function ContagemCFO({
   const percorrido = Math.min(100, Math.max(0, Math.round(((totalDias - dias) / totalDias) * 100)))
 
   const fim = DATA_FIM_CFO.toLocaleDateString("pt-BR", { timeZone: "UTC" })
+  const diasFormatura = diasParaFormatura()
+  const formatura = DATA_FORMATURA.toLocaleDateString("pt-BR", { timeZone: "UTC" })
 
   const paleta = tema === "olive"
     ? { fundo: "linear-gradient(135deg, #3a4a3a 0%, #45573f 55%, #4f6347 100%)",
@@ -60,6 +62,24 @@ export function ContagemCFO({
         </div>
         <p style={{ fontSize: 10.5, color: "rgba(255,255,255,0.6)", margin: "5px 0 0" }}>
           {percorrido}% do curso percorrido
+        </p>
+      </div>
+
+      {/* Formatura — linha inteira abaixo da contagem do término */}
+      <div style={{
+        flexBasis: "100%", display: "flex", alignItems: "center", gap: 12,
+        borderTop: "1px solid rgba(255,255,255,0.18)", paddingTop: 12,
+      }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={paleta.realce} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ flexShrink: 0 }}>
+          <path d="M22 10 12 5 2 10l10 5 10-5Z" />
+          <path d="M6 12v5c3 2 9 2 12 0v-5" />
+          <path d="M22 10v6" />
+        </svg>
+        <p style={{ fontSize: 13, margin: 0, color: "rgba(255,255,255,0.85)" }}>
+          {diasFormatura === 0 ? <strong style={{ color: paleta.realce }}>Formatura é hoje!</strong> : <>
+            <strong style={{ fontFamily: paleta.serif, fontSize: 20, color: paleta.realce }}>{diasFormatura}</strong>{" "}
+            {diasFormatura === 1 ? "dia" : "dias"} para a <strong>formatura</strong> · {formatura}
+          </>}
         </p>
       </div>
     </div>

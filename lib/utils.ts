@@ -62,7 +62,18 @@ export const DATA_FIM_CFO = new Date("2027-01-05T00:00:00.000Z")
 // Dias que faltam para o término, contando o dia de hoje como já vivido:
 // 25/08/2026 → 133. Nunca negativo — depois da data, zera.
 export function diasParaFimCFO(agora: Date = new Date()): number {
+  return diasAte(DATA_FIM_CFO, agora)
+}
+
+// Formatura da Turma — sábado, 23/01/2027 (depois do término do curso).
+export const DATA_FORMATURA = new Date("2027-01-23T00:00:00.000Z")
+
+export function diasParaFormatura(agora: Date = new Date()): number {
+  return diasAte(DATA_FORMATURA, agora)
+}
+
+function diasAte(alvo: Date, agora: Date): number {
   const { ano, mes, dia } = partesEmRecife(agora)
   const hojeUTC = Date.UTC(ano, mes - 1, dia)
-  return Math.max(0, Math.round((DATA_FIM_CFO.getTime() - hojeUTC) / 86_400_000))
+  return Math.max(0, Math.round((alvo.getTime() - hojeUTC) / 86_400_000))
 }
