@@ -41,7 +41,9 @@ const grade: Record<string, string[]> = {
 // Contador oficial da folha ("TP 21/60"), fonte de verdade da carga — gravado de
 // forma ABSOLUTA, então rodar de novo não soma nada. `antes` é a hora anterior à
 // primeira aula da semana. A semana 38 (sem contador, carga somada pela grade)
-// deixou o portal com PJM e TFM2 +2h, PE −4h e AE −2h; isto corrige.
+// deixou o portal com TFM2 +2h, PE −4h e AE −2h; isto corrige.
+// PJM: a folha da 38 termina em 24/40 e a da 39 recomeça em 23/40 — as folhas
+// oficiais se contradizem; vale a da 39 (mais recente), que fecha em 28/40.
 const CONTADOR_39: Record<string, { antes: number; depois: number }> = {
   AV:   { antes: 20, depois: 24 },  // 21/50 … 24/50  (seg 4)
   TCC:  { antes:  4, depois: 12 },  //  5/20 … 12/20  (seg 4 + qui 4)
