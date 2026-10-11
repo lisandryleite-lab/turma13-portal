@@ -9,7 +9,7 @@
 //  do memento resolva. Duas divergem da grafia do PDF, anotadas em `siglaPdf`.
 // ─────────────────────────────────────────────────────────────
 
-export const CALENDARIO_ATUALIZADO_EM = "02/09/2026"
+export const CALENDARIO_ATUALIZADO_EM = "11/10/2026"
 
 export type ProvaCalendario = {
   /** sigla da disciplina no portal — usada no link do memento */
@@ -32,6 +32,8 @@ export type SemanaCalendario = {
   /** semanas sem avaliação teórica trazem só a observação */
   semAvaliacao?: boolean
   obs?: string
+  /** dia da prova (ISO) quando NÃO é a quarta-feira da semana */
+  diaIso?: string
 }
 
 export const MENSAGEM_SECAO_PROVAS = [
@@ -107,25 +109,86 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
       { sigla: "PE" },
     ],
   },
+  // ── Cronograma de entregas e avaliações (divulgado em out/2026) ──
+  // Até 30/10 não há provas; nesse dia vence a entrega do TCC (até 12h).
+  {
+    semana: 40,
+    inicio: "12/10",
+    fim: "18/10",
+    inicioIso: "2026-10-12",
+    fimIso: "2026-10-18",
+    provas: [],
+    semAvaliacao: true,
+    obs: "Sem provas até 30/10 — prazo para a entrega do TCC.",
+  },
+  {
+    semana: 41,
+    inicio: "19/10",
+    fim: "25/10",
+    inicioIso: "2026-10-19",
+    fimIso: "2026-10-25",
+    provas: [],
+    semAvaliacao: true,
+    obs: "Sem provas até 30/10 — prazo para a entrega do TCC.",
+  },
+  {
+    semana: 42,
+    inicio: "26/10",
+    fim: "01/11",
+    inicioIso: "2026-10-26",
+    fimIso: "2026-11-01",
+    diaIso: "2026-10-30",
+    provas: [
+      { sigla: "QAGV" },
+      { sigla: "PJM", avaliacao: "2AE" },
+    ],
+    obs: "Provas à tarde. Entrega do TCC até as 12h do mesmo dia.",
+  },
+  {
+    semana: 43,
+    inicio: "02/11",
+    fim: "08/11",
+    inicioIso: "2026-11-02",
+    fimIso: "2026-11-08",
+    diaIso: "2026-11-06",
+    provas: [
+      { sigla: "ABAA", siglaPdf: "ABA" },
+      { sigla: "DPPM", siglaPdf: "DPPPM", avaliacao: "2AE" },
+    ],
+    obs: "Horário a confirmar.",
+  },
+  {
+    semana: 44,
+    inicio: "09/11",
+    fim: "15/11",
+    inicioIso: "2026-11-09",
+    fimIso: "2026-11-15",
+    diaIso: "2026-11-11",
+    provas: [
+      { sigla: "UDF", siglaPdf: "UDFIT", avaliacao: "1AE" },
+      { sigla: "POE", avaliacao: "2AE" },
+    ],
+    obs: "Horário a confirmar. A 2ª avaliação de UDF é prática.",
+  },
 ]
 
-// Provas teóricas que ainda faltam depois da semana 39 (POE 1AE e PE), ainda
-// SEM semana definida pela Seção de Provas — informado pela turma em 06/10/2026.
-// Quando sair a data, mover a prova para CALENDARIO_PROVAS e tirar daqui.
-export const PROVAS_A_DEFINIR: ProvaCalendario[] = [
-  { sigla: "DPPM", siglaPdf: "DPPPM", avaliacao: "2AE" },
-  { sigla: "PJM", avaliacao: "2AE" },
-  { sigla: "POE", avaliacao: "2AE" },
-  { sigla: "QAGV" },
-  { sigla: "UDF", siglaPdf: "UDFIT" },
-  { sigla: "ABAA" },
-]
+// Provas teóricas ainda SEM semana definida pela Seção de Provas. Quando sair a
+// data, mover a prova para CALENDARIO_PROVAS e tirar daqui. (Out/2026: todas as
+// que restavam ganharam data no cronograma de entregas e avaliações.)
+export const PROVAS_A_DEFINIR: ProvaCalendario[] = []
 
 /** A avaliação escrita acontece na QUARTA-FEIRA da semana planejada. */
 export function diaDaProva(s: SemanaCalendario): string {
+  if (s.diaIso) return s.diaIso
   const [a, m, d] = s.inicioIso.split("-").map(Number)   // inicioIso é a segunda
   const q = new Date(a, m - 1, d + 2)                     // +2 dias = quarta
   return `${q.getFullYear()}-${String(q.getMonth() + 1).padStart(2, "0")}-${String(q.getDate()).padStart(2, "0")}`
+}
+
+/** Dia da semana da prova por extenso: "Quarta", "Sexta"… */
+export function diaSemanaDaProva(s: SemanaCalendario): string {
+  const [a, m, d] = diaDaProva(s).split("-").map(Number)
+  return ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"][new Date(a, m - 1, d).getDay()]
 }
 
 /** Link direto para a matéria dentro de /mementos. */

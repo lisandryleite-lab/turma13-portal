@@ -123,39 +123,37 @@ export function grupoPlantaoPorData(data: Date): GrupoPlantao | null {
 }
 
 // ─────────────────────────────────────────────────────────────
-//  Faxina — cicla por dias úteis (seg-sex)
-//  Referência: 01/05/2026 (Sex, dia útil) = G3
+//  Faxina — "ESCALA SEMANAL DE MANUTENÇÃO DA SALA DE INSTRUÇÃO - TURMA 13"
+//  (vigente a partir da semana 40, 12/10/2026). Cinco equipes fixas, uma por
+//  dia útil. Obs. do documento: havendo instrução no domingo, escala-se primeiro
+//  a equipe SEGUNDA e as demais na sequência (TERÇA no domingo seguinte etc.).
+//  Substituiu o rodízio de 8 grupos (G1–G8) por dia útil.
 // ─────────────────────────────────────────────────────────────
-export const GRUPOS_FAXINA = ["G1","G2","G3","G4","G5","G6","G7","G8"] as const
+export const GRUPOS_FAXINA = ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"] as const
 export type GrupoFaxina = typeof GRUPOS_FAXINA[number]
 
-const REF_FAXINA_DATA = new Date(2026, 4, 1)  // 01/05/2026
-const REF_FAXINA_GRUPO_IDX = 2               // G3 = índice 2
+const INICIO_FAXINA_SEMANAL = "2026-10-12"
+
+// Domingos com instrução no QTS, em ordem — cada um recebe a próxima equipe.
+// Acrescentar aqui quando o QTS trouxer aula no domingo.
+const DOMINGOS_COM_INSTRUCAO = ["2026-10-18"]
 
 function isDiaUtil(d: Date): boolean {
   const dia = d.getDay()
   return dia !== 0 && dia !== 6
 }
 
-function contarDiasUteis(de: Date, ate: Date): number {
-  let count = 0
-  const cur = new Date(de)
-  cur.setHours(0, 0, 0, 0)
-  const fim = new Date(ate)
-  fim.setHours(0, 0, 0, 0)
-  const passo = de <= ate ? 1 : -1
-  while (cur.getTime() !== fim.getTime()) {
-    if (isDiaUtil(cur)) count += passo
-    cur.setDate(cur.getDate() + passo)
-  }
-  return count
-}
-
 export function grupoFaxinaPorData(data: Date): GrupoFaxina | null {
-  if (!isDiaUtil(data)) return null
-  const dias = contarDiasUteis(REF_FAXINA_DATA, data)
-  const idx = (((REF_FAXINA_GRUPO_IDX + dias) % 8) + 8) % 8
-  return GRUPOS_FAXINA[idx]
+  const pad = (n: number) => String(n).padStart(2, "0")
+  const iso = `${data.getFullYear()}-${pad(data.getMonth() + 1)}-${pad(data.getDate())}`
+  if (iso < INICIO_FAXINA_SEMANAL) return null
+  const dia = data.getDay()
+  if (dia >= 1 && dia <= 5) return GRUPOS_FAXINA[dia - 1]
+  if (dia === 0) {
+    const i = DOMINGOS_COM_INSTRUCAO.indexOf(iso)
+    return i >= 0 ? GRUPOS_FAXINA[i % GRUPOS_FAXINA.length] : null
+  }
+  return null
 }
 
 // Gera calendário de faxina de um mês inteiro
@@ -181,24 +179,21 @@ export function calendarioFaxinaMes(ano: number, mes: number): {
       data: `${ano}-${pad(mes)}-${pad(d)}`,
       diaSemana: DIAS[dataObj.getDay()],
       tipo: util ? "util" : "fds",
-      grupoFaxina: util ? grupoFaxinaPorData(dataObj) : null,
+      grupoFaxina: grupoFaxinaPorData(dataObj),
       grupoPlantao: grupoPlantaoPorData(dataObj),
     })
   }
   return dias
 }
 
-// Composição dos grupos de faxina — fallback quando FaxinaGrupoMembro (BD) está vazia.
-// Sincronizada com o BD em jul/2026; em out/2026 saíram 211 DÁRIO e 213 R SILVA (G7) e 212 CAMILA BUONORA (G8).
+// Composição das equipes de faxina — fallback quando FaxinaGrupoMembro (BD) está vazia.
+// Transcrita da "ESCALA SEMANAL DE MANUTENÇÃO DA SALA DE INSTRUÇÃO - TURMA 13" (out/2026).
 export const COMPOSICAO_FAXINA: Record<GrupoFaxina, { mat: number; nome: string }[]> = {
-  G1: [{ mat: 143, nome: "VIDAL" }, { mat: 153, nome: "HUGO" }, { mat: 174, nome: "ALEXANDRE" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
-  G2: [{ mat: 13, nome: "JONAS" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 167, nome: "GUSTAVO NETO" }, { mat: 186, nome: "SAMUEL SILVA" }],
-  G3: [{ mat: 108, nome: "LISANDRY" }, { mat: 114, nome: "JOSIANE FARIAS" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 165, nome: "KEVIN GOMES" }],
-  G4: [{ mat: 81, nome: "FERNANDO ROCHA" }, { mat: 94, nome: "ANDRÉ CARDOSO" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 144, nome: "SAMUEL SANTOS" }],
-  G5: [{ mat: 71, nome: "LEIMIG" }, { mat: 76, nome: "ARAÚJO JR" }, { mat: 98, nome: "JOSÉ MENEZES" }, { mat: 105, nome: "LUCAS EDUARDO" }],
-  G6: [{ mat: 41, nome: "ALAN SILVA" }, { mat: 55, nome: "SHIRLAYNE" }, { mat: 60, nome: "JOÃO NUNES" }, { mat: 65, nome: "KAUHANNI" }],
-  G7: [{ mat: 19, nome: "THAIS FIGUEIREDO" }, { mat: 45, nome: "GABRIELE COSTA" }, { mat: 57, nome: "CLEYTON" }],
-  G8: [{ mat: 7, nome: "ALDO SILVA" }, { mat: 23, nome: "RODOLFO MOURA" }, { mat: 26, nome: "ANDRÉ" }, { mat: 37, nome: "PABLO TORRES" }],
+  SEGUNDA: [{ mat: 7, nome: "ALDO SILVA" }, { mat: 13, nome: "JONAS" }, { mat: 37, nome: "PABLO TORRES" }, { mat: 23, nome: "RODOLFO MOURA" }, { mat: 153, nome: "HUGO" }, { mat: 26, nome: "ANDRÉ" }, { mat: 174, nome: "ALEXANDRE" }],
+  "TERÇA": [{ mat: 19, nome: "THAIS FIGUEIREDO" }, { mat: 41, nome: "ALAN SILVA" }, { mat: 45, nome: "GABRIELE COSTA" }, { mat: 60, nome: "JOÃO NUNES" }, { mat: 186, nome: "SAMUEL SILVA" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 167, nome: "GUSTAVO NETO" }],
+  QUARTA: [{ mat: 55, nome: "SHIRLAYNE" }, { mat: 71, nome: "LEIMIG" }, { mat: 65, nome: "KAUHANNI" }, { mat: 76, nome: "ARAÚJO JÚNIOR" }, { mat: 94, nome: "ANDRÉ CARDOSO" }, { mat: 144, nome: "SAMUEL SANTOS" }],
+  QUINTA: [{ mat: 81, nome: "FERNANDO ROCHA" }, { mat: 98, nome: "JOSÉ MENEZES" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 57, nome: "CLEYTON" }],
+  SEXTA: [{ mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 108, nome: "LISANDRY" }, { mat: 165, nome: "KEVIN GOMES" }, { mat: 114, nome: "JOSIANE FARIAS" }, { mat: 143, nome: "VIDAL" }, { mat: 191, nome: "GOMES NASCIMENTO" }],
 }
 
 // Composição dos grupos de plantão — escala 7X1, SETEMBRO/2026 (vigente).

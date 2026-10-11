@@ -16,7 +16,7 @@ const LABEL_FUNCAO: Record<string,string> = {
   Mestre:"Mestre de Cerimônia", Leitor:"Leitor de BI",
   Discurso:"Discurso ao CFO", Comandante:"Comandante da 1ª CIA",
 }
-const GRUPOS_FAXINA = ["G1","G2","G3","G4","G5","G6","G7","G8"] as const
+const GRUPOS_FAXINA = ["SEGUNDA","TERÇA","QUARTA","QUINTA","SEXTA"] as const
 
 type ServicoSemana = {
   semana: number; isOverride?: boolean
@@ -31,8 +31,7 @@ type FaxinaMembro = { id?:string; mat:number; nome:string }
 type ComposicaoFaxina = Record<string, FaxinaMembro[]>
 
 const CORES_GRUPO: Record<string,string> = {
-  G1:"#1D4ED8",G2:"#7C3AED",G3:"#B45309",G4:"#15803D",
-  G5:"#B91C1C",G6:"#0369A1",G7:"#7E22CE",G8:"#92400E",
+  SEGUNDA:"#1D4ED8","TERÇA":"#7C3AED",QUARTA:"#B45309",QUINTA:"#15803D",SEXTA:"#B91C1C",
 }
 function TagGrupo({grupo,small}:{grupo:string;small?:boolean}) {
   const cor = CORES_GRUPO[grupo]||"#475569"
@@ -387,8 +386,8 @@ export function EscalasClient({
                           {numDia}
                           {isHoje&&<span style={{fontSize:8,display:"block",color:"rgba(255,200,80,0.9)",letterSpacing:"0.04em"}}>HOJE</span>}
                         </p>
-                        {dia.tipo==="util"&&dia.grupoFaxina&&<TagGrupo grupo={dia.grupoFaxina} small/>}
-                        {dia.tipo==="fds"&&<span style={{fontSize:9,color:isHoje?"rgba(255,255,255,0.65)":"var(--cinza-texto)"}}>FDS<br/>{dia.grupoPlantao}</span>}
+                        {dia.grupoFaxina&&<TagGrupo grupo={dia.grupoFaxina} small/>}
+                        {dia.tipo==="fds"&&!dia.grupoFaxina&&<span style={{fontSize:9,color:isHoje?"rgba(255,255,255,0.65)":"var(--cinza-texto)"}}>FDS<br/>{dia.grupoPlantao}</span>}
                       </div>
                     )
                   })}
@@ -401,14 +400,14 @@ export function EscalasClient({
                     <p style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.65)",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:8}}>
                       Plantão de Hoje — {esteHoje.grupoPlantao}
                     </p>
-                    <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:esteHoje.tipo==="util"&&esteHoje.grupoFaxina?14:0}}>
+                    <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:esteHoje.grupoFaxina?14:0}}>
                       {(esteHoje.grupoPlantao ? membrosPlantao[esteHoje.grupoPlantao]||[] : []).map(m2=>{
                         const euSou=m2.mat===minhaMatricula
                         return <span key={m2.mat} style={{background:euSou?"var(--dourado)":"rgba(255,255,255,0.12)",color:"#fff",borderRadius:6,padding:"4px 10px",fontSize:12,fontWeight:euSou?700:400}}>{m2.mat} {m2.nome}{euSou?" ←":""}</span>
                       })}
                     </div>
                     {/* Faxina do dia */}
-                    {esteHoje.tipo==="util"&&esteHoje.grupoFaxina&&(
+                    {esteHoje.grupoFaxina&&(
                       <>
                         <div style={{borderTop:"1px solid rgba(255,255,255,0.15)",marginBottom:10}}/>
                         <p style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.65)",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:8}}>

@@ -22,11 +22,10 @@ interface Props {
 }
 
 const CORES_GRUPO: Record<string, string> = {
-  G1: "#1D4ED8", G2: "#7C3AED", G3: "#B45309", G4: "#15803D",
-  G5: "#B91C1C", G6: "#0369A1", G7: "#7E22CE", G8: "#92400E",
+  SEGUNDA: "#1D4ED8", "TERÇA": "#7C3AED", QUARTA: "#B45309", QUINTA: "#15803D", SEXTA: "#B91C1C",
 }
 
-const GRUPOS_FAXINA = ["G1","G2","G3","G4","G5","G6","G7","G8"]
+const GRUPOS_FAXINA = ["SEGUNDA","TERÇA","QUARTA","QUINTA","SEXTA"]
 
 export function PrintClient({ semana, mes, ano, nomeMes, semanasServico, diasCalendario, composicao }: Props) {
   useEffect(() => {
@@ -151,7 +150,7 @@ export function PrintClient({ semana, mes, ano, nomeMes, semanasServico, diasCal
                       <div style={{ fontWeight: 700, fontSize: 13, color: fds ? "#aaa" : "#0B2D5E" }}>
                         {numDia}
                       </div>
-                      {!fds && dia.grupoFaxina && (
+                      {dia.grupoFaxina && (
                         <div style={{
                           fontSize: 10, fontWeight: 800, color: cor!,
                           background: cor! + "25", borderRadius: 3, padding: "1px 4px", display: "inline-block",

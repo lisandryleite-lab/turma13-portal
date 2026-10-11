@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { renderMarkdown } from "@/lib/markdown"
 import { MEMENTO_PROPRIO } from "@/lib/mementos-pdfs"
-import { CALENDARIO_PROVAS, CALENDARIO_ATUALIZADO_EM, PROVAS_A_DEFINIR, diaDaProva, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
+import { CALENDARIO_PROVAS, CALENDARIO_ATUALIZADO_EM, PROVAS_A_DEFINIR, diaDaProva, diaSemanaDaProva, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
 import { FASES, type Fase } from "@/lib/disciplinas-fase"
 import { DRIVE_MEMENTOS_URL, MIDIA_INFO, embedDe, ehLocal, extensaoDe, type TipoMidia } from "@/lib/midia-embed"
 
@@ -297,7 +297,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
             background: situacao(prova.semana, hojeISO) === "passada" ? "var(--surface)" : "rgba(181,147,63,0.16)",
             color: situacao(prova.semana, hojeISO) === "passada" ? "var(--ink-60)" : "var(--olive)", border: "1px solid rgba(181,147,63,0.45)" }}>
             📝 {situacao(prova.semana, hojeISO) === "passada" ? "Prova realizada" : situacao(prova.semana, hojeISO) === "atual" ? "Prova ESTA semana" : "Prova prevista"}
-            {prova.prova.avaliacao ? ` (${avaliacaoLabel(prova.prova.avaliacao)})` : ""} · quarta, {dmyCurto(diaDaProva(prova.semana))} · semana {prova.semana.semana}
+            {prova.prova.avaliacao ? ` (${avaliacaoLabel(prova.prova.avaliacao)})` : ""} · {diaSemanaDaProva(prova.semana).toLowerCase()}, {dmyCurto(diaDaProva(prova.semana))} · semana {prova.semana.semana}
           </div>
         )}
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 18 }}>
@@ -507,8 +507,11 @@ function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes:
                     )}
                     {s.provas.length > 0 && (
                       <div style={{ marginTop: 5, fontSize: 12, color: "var(--ink-60)", lineHeight: 1.4 }}>
-                        Quarta, {dmyCurto(diaDaProva(s))} · {s.provas.map(p => nomes.get(p.sigla) ?? p.sigla).join(" · ")}
+                        {diaSemanaDaProva(s)}, {dmyCurto(diaDaProva(s))} · {s.provas.map(p => nomes.get(p.sigla) ?? p.sigla).join(" · ")}
                       </div>
+                    )}
+                    {s.provas.length > 0 && s.obs && (
+                      <div style={{ marginTop: 3, fontSize: 12, color: "var(--olive)", fontWeight: 600, lineHeight: 1.4 }}>{s.obs}</div>
                     )}
                   </div>
                 </div>
