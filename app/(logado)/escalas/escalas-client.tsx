@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { CORES_PLANTAO, GRUPOS_PLANTAO } from "@/lib/escalas"
+import { CORES_PLANTAO, GRUPOS_PLANTAO, grupoFaxinaPorData } from "@/lib/escalas"
 import type { MEMBROS_PLANTAO, GrupoFaxina, GrupoPlantao } from "@/lib/escalas"
 
 const MESES = ["","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
@@ -315,6 +315,33 @@ export function EscalasClient({
                 </div>
               )
             })}
+            {/* Domingo: as equipes se revezam (SEGUNDA, TERÇA, … na sequência) */}
+            {(()=>{
+              const hoje=new Date(); hoje.setHours(0,0,0,0)
+              const dom=new Date(hoje); dom.setDate(hoje.getDate()+((7-hoje.getDay())%7))
+              const proximos=Array.from({length:5},(_,i)=>{ const d=new Date(dom); d.setDate(dom.getDate()+7*i); return {d,g:grupoFaxinaPorData(d)} })
+              const meuDomingo=proximos.some(x=>x.g&&(composicao[x.g]||[]).some(p=>p.mat===minhaMatricula)&&x.d.getTime()===dom.getTime())
+              return (
+                <div style={{background:meuDomingo?"var(--azul-claro)":"#fff",border:`1.5px solid ${meuDomingo?"var(--azul-medio)":"var(--cinza-borda)"}`,borderRadius:12,padding:14}}>
+                  <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
+                    <span style={{fontSize:11,fontWeight:700,padding:"3px 10px",borderRadius:6,background:"rgba(43,42,39,0.08)",color:"var(--grafite)",letterSpacing:"0.04em"}}>DOMINGO</span>
+                    <span style={{fontSize:10.5,color:"var(--cinza-texto)"}}>rodízio das equipes</span>
+                  </div>
+                  <ul style={{listStyle:"none",padding:0,margin:0,fontSize:12,color:"var(--grafite)"}}>
+                    {proximos.map(({d,g})=>{
+                      const minha=!!g&&(composicao[g]||[]).some(p=>p.mat===minhaMatricula)
+                      return (
+                        <li key={d.toISOString()} style={{padding:"3px 0",display:"flex",alignItems:"center",justifyContent:"space-between",gap:8,fontWeight:minha?700:400}}>
+                          <span>{String(d.getDate()).padStart(2,"0")}/{String(d.getMonth()+1).padStart(2,"0")}</span>
+                          {g?<TagGrupo grupo={g} small/>:<span style={{fontSize:11,color:"var(--cinza-texto)"}}>—</span>}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                  <p style={{margin:"8px 0 0",fontSize:10.5,color:"var(--cinza-texto)",lineHeight:1.4}}>Começa pela SEGUNDA e segue a sequência, um domingo por equipe.</p>
+                </div>
+              )
+            })()}
           </div>
 
           {/* Admin: adicionar membro */}
