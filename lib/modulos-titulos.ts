@@ -88,6 +88,17 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "15": "Abordagem à edificação",
     SIM: "Simulado — formato da prova (10,0 pontos)",
   },
+  UDF: {
+    "1": "Conceitos e Código de Conduta (CCEAL, ONU 1979)",
+    "2": "Princípios Básicos sobre o Uso da Força e Armas de Fogo (ONU 1990)",
+    "3": "CPP, CPPM, Lei 13.060/2014 e Decreto 12.341/2024",
+    "4": "Portaria MJSP 855/2025: alcance, conceitos e princípios",
+    "5": "Portaria 855/2025: arma de fogo, IMPO, lesão ou morte e capacitação",
+    "6": "Modelos de uso da força",
+    "7": "Níveis de submissão, níveis de força e técnicas de menor potencial ofensivo",
+    "8": "Instrumentos de menor potencial ofensivo, espargidores e descontaminação",
+    SIM: "Simulado — formato da prova (10,0 pontos)",
+  },
   ABAA: {
     "1": "Histórico, estrutura, missão e acionamento do GTA",
     "2": "Segurança de voo e SIPAER",
