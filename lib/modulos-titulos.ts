@@ -88,6 +88,15 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "15": "Abordagem à edificação",
     SIM: "Simulado — formato da prova (10,0 pontos)",
   },
+  ABAA: {
+    "1": "Histórico, estrutura, missão e acionamento do GTA",
+    "2": "Segurança de voo e SIPAER",
+    "3": "Briefing de passageiros: aproximação, embarque e desembarque",
+    "4": "Locais de pouso, ZPH, balizamento e isolamento",
+    "5": "Equipamentos especiais, orientação e coordenadas",
+    "6": "Operações aerotransportadas e resgate aeromédico",
+    SIM: "Simulado — formato da prova (10,0 pontos)",
+  },
   QAGV: {
     "1": "Minorias × grupos vulneráveis e direitos humanos",
     "2": "Estatuto da Criança e do Adolescente (Lei 8.069/90)",
