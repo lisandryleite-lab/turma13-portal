@@ -88,6 +88,18 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "15": "Abordagem à edificação",
     SIM: "Simulado — formato da prova (10,0 pontos)",
   },
+  QAGV: {
+    "1": "Minorias × grupos vulneráveis e direitos humanos",
+    "2": "Estatuto da Criança e do Adolescente (Lei 8.069/90)",
+    "3": "Lei Maria da Penha (Lei 11.340/06)",
+    "4": "Pessoa idosa, pessoa com deficiência e TEA",
+    "5": "LGBTQIAPN+: conceitos e abordagem conforme o POP",
+    "6": "Indígenas, comunidades tradicionais, refugiados e situação de rua",
+    "7": "POP: crianças e adolescentes, deficiência mental e violência contra a mulher",
+    "8": "POP: pessoa com deficiência, território indígena, maracatus e situação de rua",
+    "9": "Rede de enfrentamento, atendimento humanizado e temas correlatos",
+    SIM: "Simulado — formato da prova (10,0 pontos)",
+  },
   INTSISP: {
     "1": "Fundamentos históricos da inteligência no Brasil",
     "2": "Sistema Brasileiro de Inteligência (SISBIN / ABIN)",
