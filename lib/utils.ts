@@ -65,11 +65,24 @@ export function diasParaFimCFO(agora: Date = new Date()): number {
   return diasAte(DATA_FIM_CFO, agora)
 }
 
-// Formatura da Turma — sábado, 23/01/2027 (depois do término do curso).
-export const DATA_FORMATURA = new Date("2027-01-23T00:00:00.000Z")
+// Marcos com contagem regressiva, abaixo da do término do CFO (em ordem de data).
+// `fim` = último dia de um evento de vários dias: até ele, o marco segue no card
+// como "em andamento"; depois some.
+export type MarcoCFO = { id: string; rotulo: string; inicio: Date; fim?: Date; nota?: string }
 
-export function diasParaFormatura(agora: Date = new Date()): number {
-  return diasAte(DATA_FORMATURA, agora)
+export const MARCOS_CFO: MarcoCFO[] = [
+  { id: "mapom", rotulo: "MAPOM", inicio: new Date("2026-11-29T00:00:00.000Z"), fim: new Date("2026-12-04T00:00:00.000Z"), nota: "data possível · 29/11 a 04/12" },
+  { id: "formatura", rotulo: "formatura", inicio: new Date("2026-12-15T00:00:00.000Z") },
+  { id: "baile", rotulo: "baile", inicio: new Date("2027-01-23T00:00:00.000Z") },
+]
+
+/** Marcos ainda por vir (ou em andamento), com os dias que faltam para o início. */
+export function marcosPendentes(agora: Date = new Date()): (MarcoCFO & { dias: number; emAndamento: boolean })[] {
+  const { ano, mes, dia } = partesEmRecife(agora)
+  const hojeUTC = Date.UTC(ano, mes - 1, dia)
+  return MARCOS_CFO
+    .filter(m => (m.fim ?? m.inicio).getTime() >= hojeUTC)
+    .map(m => ({ ...m, dias: diasAte(m.inicio, agora), emAndamento: m.inicio.getTime() <= hojeUTC }))
 }
 
 function diasAte(alvo: Date, agora: Date): number {

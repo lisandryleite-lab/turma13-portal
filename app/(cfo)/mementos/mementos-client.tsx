@@ -478,7 +478,8 @@ function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes:
       {aberto && (
         <div style={{ padding: "0 18px 14px" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {CALENDARIO_PROVAS.map(s => {
+            {/* só a semana atual e as próximas — as que já passaram saem da lista */}
+            {proximas.map(s => {
               const sit = situacao(s, hojeISO)
               return (
                 <div key={s.semana} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "10px 12px", borderRadius: 12,
