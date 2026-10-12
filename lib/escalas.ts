@@ -125,8 +125,9 @@ export function grupoPlantaoPorData(data: Date): GrupoPlantao | null {
 // ─────────────────────────────────────────────────────────────
 //  Faxina — "ESCALA SEMANAL DE MANUTENÇÃO DA SALA DE INSTRUÇÃO - TURMA 13"
 //  (vigente a partir da semana 40, 12/10/2026). Cinco equipes fixas, uma por
-//  dia útil. Obs. do documento: havendo instrução no domingo, escala-se primeiro
-//  a equipe SEGUNDA e as demais na sequência (TERÇA no domingo seguinte etc.).
+//  dia útil. DOMINGO também tem faxina: as equipes se revezam, começando pela
+//  SEGUNDA em 18/10 e seguindo a sequência (TERÇA em 25/10, QUARTA em 01/11…),
+//  conforme a obs. do documento.
 //  Substituiu o rodízio de 8 grupos (G1–G8) por dia útil.
 // ─────────────────────────────────────────────────────────────
 export const GRUPOS_FAXINA = ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"] as const
@@ -134,9 +135,8 @@ export type GrupoFaxina = typeof GRUPOS_FAXINA[number]
 
 const INICIO_FAXINA_SEMANAL = "2026-10-12"
 
-// Domingos com instrução no QTS, em ordem — cada um recebe a próxima equipe.
-// Acrescentar aqui quando o QTS trouxer aula no domingo.
-const DOMINGOS_COM_INSTRUCAO = ["2026-10-18"]
+// Primeiro domingo do rodízio (equipe SEGUNDA).
+const PRIMEIRO_DOMINGO_UTC = Date.UTC(2026, 9, 18)
 
 function isDiaUtil(d: Date): boolean {
   const dia = d.getDay()
@@ -150,8 +150,8 @@ export function grupoFaxinaPorData(data: Date): GrupoFaxina | null {
   const dia = data.getDay()
   if (dia >= 1 && dia <= 5) return GRUPOS_FAXINA[dia - 1]
   if (dia === 0) {
-    const i = DOMINGOS_COM_INSTRUCAO.indexOf(iso)
-    return i >= 0 ? GRUPOS_FAXINA[i % GRUPOS_FAXINA.length] : null
+    const semanas = Math.round((Date.UTC(data.getFullYear(), data.getMonth(), data.getDate()) - PRIMEIRO_DOMINGO_UTC) / (7 * 86_400_000))
+    return semanas >= 0 ? GRUPOS_FAXINA[semanas % GRUPOS_FAXINA.length] : null
   }
   return null
 }
