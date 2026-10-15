@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
@@ -266,6 +267,7 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
                 {aspirantado && aspirantado.registros.length > 0
                   ? <Aspirantado asp={aspirantado} temVagas={camposDo("vagas").length > 0} />
                   : <p style={semInfo}>Sem designações de aspirantes publicadas para este batalhão.</p>}
+                <Link href="/batalhoes/remuneracao" style={{ display: "inline-block", marginTop: 18, fontSize: 13.5, fontWeight: 700, color: "var(--olive)" }}>💰 Quanto ganha cada função e nossa previsão de salário →</Link>
               </>
             )}
 

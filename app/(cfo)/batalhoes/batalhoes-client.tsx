@@ -128,6 +128,15 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
         {minha && <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>★ = sua escolha</p>}
       </section>
 
+      {/* ── Remuneração e carreira ── */}
+      <Link href="/batalhoes/remuneracao" style={{ ...cartao, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, textDecoration: "none", color: "var(--ink)", background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.35)" }}>
+        <span>
+          <span style={{ ...tituloSecao, display: "block" }}>💰 Remuneração e carreira</span>
+          <span style={{ fontSize: 13, color: "var(--ink-60)", lineHeight: 1.5 }}>Quanto ganha cada função (aspirante e 2º Ten), comparação entre T1 e T2, nossa previsão e o efetivo de oficiais — dados públicos do Portal da Transparência.</span>
+        </span>
+        <span style={{ fontSize: 22, color: "var(--gold)", fontWeight: 700 }}>›</span>
+      </Link>
+
       {/* ── Aspirantes das turmas anteriores ── */}
       <section style={cartao}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap" }}>

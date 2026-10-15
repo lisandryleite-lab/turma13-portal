@@ -1,0 +1,442 @@
+{
+ "atualizado": "15/10/2026",
+ "turmas": [
+  {
+   "rotulo": "T1 como aspirante",
+   "mes": "03/2026",
+   "quando": "4 meses depois da formatura",
+   "pessoas": 145,
+   "soldo": 11731,
+   "bruto": 13315,
+   "liquido": 9682,
+   "distribuicao": {
+    "Sem função": 49,
+    "Função de supervisão (FGS)": 12,
+    "Comandante de pelotão": 23,
+    "Comandante de companhia": 16
+   },
+   "porFuncao": {
+    "Sem função": {
+     "n": 71,
+     "bruto": 12993,
+     "liquido": 9467,
+     "remuneracao": 12628,
+     "gratificacao": 0
+    },
+    "Função de supervisão (FGS)": {
+     "n": 17,
+     "bruto": 13672,
+     "liquido": 9960,
+     "remuneracao": 13308,
+     "gratificacao": 680
+    },
+    "Comandante de pelotão": {
+     "n": 34,
+     "bruto": 14037,
+     "liquido": 10145,
+     "remuneracao": 13672,
+     "gratificacao": 0
+    },
+    "Comandante de companhia": {
+     "n": 23,
+     "bruto": 15405,
+     "liquido": 11033,
+     "remuneracao": 15040,
+     "gratificacao": 0
+    }
+   },
+   "extras": {
+    "pessoas": 33,
+    "pct": 23,
+    "mediana": 300
+   }
+  },
+  {
+   "rotulo": "T2 como aspirante",
+   "mes": "09/2026",
+   "quando": "3 meses depois da formatura",
+   "pessoas": 177,
+   "soldo": 12552,
+   "bruto": 13979,
+   "liquido": 10120,
+   "distribuicao": {
+    "Sem função": 66,
+    "Função de supervisão (FGS)": 19,
+    "Comandante de pelotão": 15,
+    "Comandante de companhia": 1
+   },
+   "porFuncao": {
+    "Sem função": {
+     "n": 117,
+     "bruto": 13339,
+     "liquido": 9705,
+     "remuneracao": 12937,
+     "gratificacao": 0
+    },
+    "Função de supervisão (FGS)": {
+     "n": 33,
+     "bruto": 14358,
+     "liquido": 10444,
+     "remuneracao": 13957,
+     "gratificacao": 680
+    },
+    "Comandante de pelotão": {
+     "n": 26,
+     "bruto": 15023,
+     "liquido": 10798,
+     "remuneracao": 14622,
+     "gratificacao": 0
+    },
+    "Comandante de companhia": {
+     "n": 1,
+     "bruto": 17274,
+     "liquido": 12258,
+     "remuneracao": 16872,
+     "gratificacao": 0
+    }
+   },
+   "extras": {
+    "pessoas": 56,
+    "pct": 32,
+    "mediana": 600
+   }
+  },
+  {
+   "rotulo": "T1 como 2º Tenente",
+   "mes": "09/2026",
+   "quando": "10 meses depois da formatura",
+   "pessoas": 143,
+   "soldo": 12937,
+   "bruto": 15986,
+   "liquido": 11550,
+   "distribuicao": {
+    "Sem função": 11,
+    "Função de supervisão (FGS)": 12,
+    "Comandante de pelotão": 36,
+    "Comandante de companhia": 40
+   },
+   "porFuncao": {
+    "Sem função": {
+     "n": 15,
+     "bruto": 14131,
+     "liquido": 10141,
+     "remuneracao": 13610,
+     "gratificacao": 0
+    },
+    "Função de supervisão (FGS)": {
+     "n": 16,
+     "bruto": 14999,
+     "liquido": 10860,
+     "remuneracao": 14598,
+     "gratificacao": 1020
+    },
+    "Comandante de pelotão": {
+     "n": 48,
+     "bruto": 15023,
+     "liquido": 10798,
+     "remuneracao": 14622,
+     "gratificacao": 0
+    },
+    "Comandante de companhia": {
+     "n": 53,
+     "bruto": 17274,
+     "liquido": 12258,
+     "remuneracao": 16872,
+     "gratificacao": 0
+    }
+   },
+   "extras": {
+    "pessoas": 105,
+    "pct": 80,
+    "mediana": 1200
+   }
+  }
+ ],
+ "previsao": {
+  "aspirante": {
+   "periodo": "jan–jun/2027",
+   "soldo": 12552,
+   "brutoEsperado": 13799,
+   "liquidoEsperado": 10018,
+   "base": "distribuição de funções da T2 nos primeiros meses"
+  },
+  "segundoTenente": {
+   "periodo": "a partir de ~jun/2027 (interstício de 6 meses como aspirante)",
+   "soldo": 12937,
+   "brutoEsperado": 15823,
+   "liquidoEsperado": 11317,
+   "base": "distribuição de funções da T1 como 2º Ten"
+  }
+ },
+ "efetivo": [
+  {
+   "posto": "Coronel",
+   "previsto": 51,
+   "folha": 52,
+   "diferenca": 1
+  },
+  {
+   "posto": "Tenente-Coronel",
+   "previsto": 119,
+   "folha": 161,
+   "diferenca": 42
+  },
+  {
+   "posto": "Major",
+   "previsto": 218,
+   "folha": 82,
+   "diferenca": -136
+  },
+  {
+   "posto": "Capitão",
+   "previsto": 364,
+   "folha": 35,
+   "diferenca": -329
+  },
+  {
+   "posto": "1º Tenente",
+   "previsto": 353,
+   "folha": 52,
+   "diferenca": -301
+  },
+  {
+   "posto": "2º Tenente",
+   "previsto": 387,
+   "folha": 260,
+   "diferenca": -127
+  }
+ ],
+ "asp": 182,
+ "soldos": {
+  "03/2026": {
+   "aspirante": 11731,
+   "segundoTenente": 12031,
+   "primeiroTenente": 12750,
+   "capitao": 14073
+  },
+  "09/2026": {
+   "aspirante": 12552,
+   "segundoTenente": 12937,
+   "primeiroTenente": 13578,
+   "capitao": 15552
+  }
+ },
+ "funcoesComando": {
+  "1º BPM": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM",
+    "3ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 2ª CPM",
+    "1º Pelotão da 3ª CPM",
+    "PCT"
+   ]
+  },
+  "6º BPM": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM",
+    "3ª CPM",
+    "4ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 1ª CPM",
+    "1º Pelotão da 2ª CPM",
+    "PCT"
+   ]
+  },
+  "11º BPM": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM",
+    "3ª CPM",
+    "4ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 2ª CPM",
+    "1º Pelotão da 3ª CPM",
+    "PCT"
+   ]
+  },
+  "12º BPM": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM",
+    "3ª CPM",
+    "4ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 2ª CPM",
+    "1º Pelotão da 3ª CPM",
+    "PCT"
+   ]
+  },
+  "13º BPM": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM",
+    "3ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 1ª CPM",
+    "1º Pelotão da 2ª CPM",
+    "PCT"
+   ]
+  },
+  "16º BPM": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 1ª CPM",
+    "1º Pelotão da 2ª CPM",
+    "PCT"
+   ]
+  },
+  "17º BPM": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM",
+    "3ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 1ª CPM",
+    "1º Pelotão da 2ª CPM",
+    "PCT"
+   ]
+  },
+  "18º BPM": {
+   "cpm": [
+    "2ª CPM",
+    "3ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 2ª CPM",
+    "1º Pelotão da 3ª CPM",
+    "PCT"
+   ]
+  },
+  "19º BPM": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM",
+    "3ª CPM",
+    "4ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 2ª CPM",
+    "1º Pelotão da 3ª CPM",
+    "PCT"
+   ]
+  },
+  "20º BPM": {
+   "cpm": [
+    "1ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 1ª CPM",
+    "1º Pelotão da 2ª CPM",
+    "PCT"
+   ]
+  },
+  "25º BPM": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM",
+    "3ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 1ª CPM",
+    "1º Pelotão da 2ª CPM",
+    "PCT"
+   ]
+  },
+  "26º BPM": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM",
+    "3ª CPM"
+   ],
+   "pelotoes": [
+    "1º Pelotão da 1ª CPM",
+    "1º Pelotão da 2ª CPM",
+    "PCT"
+   ]
+  },
+  "BPTur": {
+   "cpm": [
+    "1ª CPM",
+    "2ª CPM",
+    "3ª CPM"
+   ],
+   "pelotoes": []
+  }
+ },
+ "interesticios": [
+  [
+   "Aspirante a Oficial",
+   "6 meses"
+  ],
+  [
+   "2º Tenente",
+   "5 anos"
+  ],
+  [
+   "1º Tenente",
+   "5 anos"
+  ],
+  [
+   "Capitão",
+   "4 anos"
+  ],
+  [
+   "Major",
+   "4 anos"
+  ],
+  [
+   "Tenente-Coronel",
+   "3 anos"
+  ]
+ ],
+ "fontes": [
+  {
+   "rotulo": "Remuneração de servidores ativos — set/2026 (CSV)",
+   "url": "https://dados.pe.gov.br/dataset/7bbfeed7-3019-4c6a-bee7-e1b7411f616b/resource/6c686073-4043-4718-8a1f-483198f2c88f/download/2026_9_remuneracao_ativos.csv"
+  },
+  {
+   "rotulo": "Remuneração de servidores ativos — mar/2026 (CSV)",
+   "url": "https://dados.pe.gov.br/dataset/7bbfeed7-3019-4c6a-bee7-e1b7411f616b/resource/6291cece-23d0-47db-a020-05c94341defe/download/2026_3_remuneracao_ativos.csv"
+  },
+  {
+   "rotulo": "Dados Abertos PE — Remuneração de servidores",
+   "url": "https://dados.pe.gov.br/dataset/remuneracao-de-servidores"
+  },
+  {
+   "rotulo": "Portal da Transparência PE — Remunerações",
+   "url": "https://transparencia.pe.gov.br/recursos-humanos/remuneracoes/"
+  },
+  {
+   "rotulo": "LC nº 152/2009 — efetivo fixado da PMPE (Alepe)",
+   "url": "https://legis.alepe.pe.gov.br/arquivoTexto.aspx?tiponorma=2&numero=152&complemento=0&ano=2009&tipo=TEXTOATUALIZADO"
+  },
+  {
+   "rotulo": "LC nº 470/2021 — promoções e interstícios",
+   "url": "https://www.lai.pe.gov.br/cbmpe/wp-content/uploads/sites/15/2022/03/LEI-COMPLEMENTAR-no-470-de-21DEZ2021-1.pdf"
+  },
+  {
+   "rotulo": "INCG nº 605/2023 — encargos de comando por OME",
+   "url": "https://www.pm.pe.gov.br/incg605-2023-textoatualizado/"
+  },
+  {
+   "rotulo": "BGSDS nº 221 (29/11/2025) — nomeação da T1",
+   "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2025/11%20-%20Novembro/1764551131_221%20BGSDS%20DE%2029NOV2025.pdf"
+  },
+  {
+   "rotulo": "BGSDS nº 103 (09/06/2026) — nomeação da T2",
+   "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/06%20-%20Junho/103%20BGSDS%20DE%2009JUN2026.pdf"
+  }
+ ]
+}
