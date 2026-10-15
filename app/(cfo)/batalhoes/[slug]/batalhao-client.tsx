@@ -108,6 +108,30 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, mapaEmbutidoUrl, isAdm
         ))}
       </div>
 
+      {/* Quem escolheu — visualizador 1ª / 2ª opção */}
+      <section style={cartao}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
+          <h2 style={{ ...titulo, margin: 0, fontFamily: "var(--serif-cfo)", fontSize: "1.2rem" }}>Quem escolheu o {sigla}</h2>
+          <div style={{ display: "flex", gap: 6 }}>
+            {([[1, "1ª opção", primeira.length], [2, "2ª opção", segunda.length]] as const).map(([n, r, q]) => (
+              <button key={n} onClick={() => setAbaLista(n)}
+                style={{ padding: "7px 14px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600,
+                  background: abaLista === n ? "var(--olive)" : "var(--surface)", color: abaLista === n ? "var(--canvas)" : "var(--ink-60)" }}>
+                {r} <span style={{ opacity: 0.75 }}>{q}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        {abaLista === 1
+          ? <ListaPessoas key="p1" pessoas={primeira} minhaMatricula={minhaMatricula} rotuloOutra="2ª:" />
+          : <ListaPessoas key="p2" pessoas={segunda} minhaMatricula={minhaMatricula} rotuloOutra="1ª:" />}
+        <a href={FORMULARIO_DAG_URL} target="_blank" rel="noopener noreferrer"
+          style={{ display: "inline-block", marginTop: 14, fontSize: 13, fontWeight: 600, color: "var(--olive)" }}>
+          Quer mudar sua escolha? Responda de novo o formulário da DAG ↗
+        </a>
+      </section>
+      {!planilhaOk && <p style={{ margin: 0, fontSize: 12.5, color: "var(--red)" }}>Não foi possível abrir a planilha da DAG agora — as listas podem estar vazias.</p>}
+
       {/* Atalhos */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 8 }}>
         <a href={mapaUrl} target="_blank" rel="noopener noreferrer" style={botao("var(--olive)", "var(--canvas)")}>📍 Abrir no Google Maps ↗</a>
@@ -211,30 +235,6 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, mapaEmbutidoUrl, isAdm
           </div>
         )}
       </section>
-
-      {/* Quem escolheu — visualizador 1ª / 2ª opção */}
-      <section style={cartao}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
-          <h2 style={{ ...titulo, margin: 0, fontFamily: "var(--serif-cfo)", fontSize: "1.2rem" }}>Quem escolheu o {sigla}</h2>
-          <div style={{ display: "flex", gap: 6 }}>
-            {([[1, "1ª opção", primeira.length], [2, "2ª opção", segunda.length]] as const).map(([n, r, q]) => (
-              <button key={n} onClick={() => setAbaLista(n)}
-                style={{ padding: "7px 14px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600,
-                  background: abaLista === n ? "var(--olive)" : "var(--surface)", color: abaLista === n ? "var(--canvas)" : "var(--ink-60)" }}>
-                {r} <span style={{ opacity: 0.75 }}>{q}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-        {abaLista === 1
-          ? <ListaPessoas key="p1" pessoas={primeira} minhaMatricula={minhaMatricula} rotuloOutra="2ª:" />
-          : <ListaPessoas key="p2" pessoas={segunda} minhaMatricula={minhaMatricula} rotuloOutra="1ª:" />}
-        <a href={FORMULARIO_DAG_URL} target="_blank" rel="noopener noreferrer"
-          style={{ display: "inline-block", marginTop: 14, fontSize: 13, fontWeight: 600, color: "var(--olive)" }}>
-          Quer mudar sua escolha? Responda de novo o formulário da DAG ↗
-        </a>
-      </section>
-      {!planilhaOk && <p style={{ margin: 0, fontSize: 12.5, color: "var(--red)" }}>Não foi possível abrir a planilha da DAG agora — as listas podem estar vazias.</p>}
 
       {/* Contribuições da turma */}
       <section id="contribuicoes" style={{ ...cartao, scrollMarginTop: 16 }}>

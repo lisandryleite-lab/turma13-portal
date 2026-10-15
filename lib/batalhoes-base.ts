@@ -64,7 +64,6 @@ export const GRUPOS_FICHA = [
   { id: "operacao", titulo: "🚓 Operação" },
   { id: "vagas", titulo: "🎯 Vagas para aspirantes" },
   { id: "morar", titulo: "🏠 Onde morar" },
-  { id: "dicas", titulo: "💡 Dicas ao estagiário" },
 ] as const
 
 export const GRUPO_LINK_PADRAO = "Links úteis"
@@ -86,7 +85,6 @@ export const CAMPOS_FICHA = [
   { chave: "sobreArea", rotulo: "Como é o serviço / o que saber", grupo: "operacao", longo: true },
   { chave: "vagas", rotulo: "Vagas", grupo: "vagas", longo: true },
   { chave: "morarPerto", rotulo: "Sobre moradia", grupo: "morar", longo: true },
-  { chave: "dicas", rotulo: "Dicas", grupo: "dicas", longo: true },
   { chave: "linkGrupo", rotulo: "Grupo de WhatsApp dos interessados (https://…)", grupo: "grupo", oculto: true },
 ] as const
 
