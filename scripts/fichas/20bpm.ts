@@ -30,7 +30,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "20º BPM, Avenida Um, Muribara, São Lourenço da Mata - PE",
   telefone: "(81) 3181-3580 / 3181-3584 (PMPE). Também publicados: 3181-3581 / 3181-3582 / 3181-3583 (relação de comandantes da PMPE, mar/2026).",
   email: "20bpm@pm.pe.gov.br (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~21 km, ~17 min de carro sem trânsito — o batalhão da lista mais perto da APMP.\nAté o Marco Zero (Recife): ~29 km, ~27 min sem trânsito.\nAcesso pela BR-408 e pela PE-005 (Camaragibe); perto da Arena de Pernambuco (Cidade da Copa).",
+  distanciaBR: "Acesso pela BR-408 e pela PE-005 (Camaragibe); perto da Arena de Pernambuco (Cidade da Copa).",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Ilson de Oliveira Gonçalves (relação de comandantes da PMPE, mar/2026).",
   subcomandante: "Maj QOPM Anacleto da Silva Melo — Portaria nº 1570 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025.",

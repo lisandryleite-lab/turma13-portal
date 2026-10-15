@@ -25,7 +25,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "17º BPM, Rua Nova Mangueira, 05, Aurora, Paulista - PE",
   telefone: "(81) 3181-3600 / 3181-3603 (PMPE). Também publicado: 3181-3602 (relação de comandantes da PMPE, mar/2026).",
   email: "17bpm@pm.pe.gov.br (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~46 km, ~47 min de carro sem trânsito.\nAté o Marco Zero (Recife): ~18 km, ~22 min sem trânsito.\nA área é cortada pela BR-101 Norte e pela PE-15, que liga Paulista a Olinda e ao Recife.",
+  distanciaBR: "A área é cortada pela BR-101 Norte e pela PE-15, que liga Paulista a Olinda e ao Recife.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Carlos André Ferraz da Silva — Portaria nº 1566 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025; mantido na relação de comandantes da PMPE (mar/2026).",
   subcomandante: "Maj QOPM Manasses Ferreira da Silva — Portaria nº 1567 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025.",

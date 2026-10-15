@@ -27,7 +27,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "18º BPM, Rua Marechal Dantas Barreto, 205, Centro, Cabo de Santo Agostinho - PE",
   telefone: "(81) 3181-3546 (unidades operacionais, PMPE). Também publicados: 3181-3540 / 3181-3541 / 3181-3542 / 3181-3543 (relação de comandantes da PMPE, mar/2026).",
   email: "18bpm@pm.pe.gov.br (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~65 km, ~58 min de carro sem trânsito — um dos mais distantes da APMP.\nAté o Marco Zero (Recife): ~34 km, ~33 min sem trânsito.\nO Cabo é cortado pela BR-101 Sul; a PE-060 segue para Suape, Ipojuca e Porto de Galinhas.",
+  distanciaBR: "O Cabo é cortado pela BR-101 Sul; a PE-060 segue para Suape, Ipojuca e Porto de Galinhas.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Rubens Jorge Rocha Barreto Filho (relação de comandantes da PMPE, mar/2026).",
   subcomandante: "",

@@ -28,7 +28,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "19º BPM, Rua Manoel de Brito, 815, Pina, Recife - PE",
   telefone: "(81) 3181-3573 / 3181-3563 (PMPE). Também publicados: 3181-3561 / 3181-3562 (relação de comandantes da PMPE, mar/2026).",
   email: "19bpm@pm.pe.gov.br (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~45 km, ~39 min de carro sem trânsito.\nAté o Marco Zero (Recife): ~5 km, ~6 min sem trânsito.\nA sede fica no Pina, entre Boa Viagem e o centro, com acesso pela Av. Antônio de Góes, Av. Herculano Bandeira e Via Mangue.",
+  distanciaBR: "A sede fica no Pina, entre Boa Viagem e o centro, com acesso pela Av. Antônio de Góes, Av. Herculano Bandeira e Via Mangue.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Davidson Michel Ramos da Cunha — Portaria nº 1568 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025; mantido na relação de comandantes da PMPE (mar/2026).",
   subcomandante: "",

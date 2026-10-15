@@ -12,7 +12,6 @@ type Pessoa = { mat: number; nome: string; pelotao: number | null; outra: string
 type Msg = { id: string; texto: string; tipo: string; bairro: string | null; valor: string | null; link: string | null; criadoEm: string; mat: number; nome: string }
 
 const cartao: React.CSSProperties = { background: "#fff", borderRadius: 16, border: "1px solid rgba(58,74,58,0.14)", boxShadow: "0 2px 8px rgba(0,0,0,0.04)", padding: 18 }
-const titulo: React.CSSProperties = { margin: "0 0 12px", fontSize: 15, color: "var(--olive)" }
 const rotuloCampo: React.CSSProperties = { fontSize: 11, fontWeight: 700, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 3px" }
 const inputStyle: React.CSSProperties = { width: "100%", padding: "9px 11px", borderRadius: 8, border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 14, fontFamily: "inherit" }
 const tituloGrupo: React.CSSProperties = { margin: "0 0 8px", fontSize: 13, color: "var(--gold)", textTransform: "uppercase", letterSpacing: "0.06em" }
@@ -46,19 +45,69 @@ function ListaPessoas({ pessoas, minhaMatricula, rotuloOutra }: { pessoas: Pesso
   )
 }
 
-export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, mapaEmbutidoUrl, isAdmin, minhaMatricula, planilhaOk, info, bairros, links, fontes, operacoes, aspirantado, atualizadoEm, primeira, segunda, mural }: {
-  sigla: string; mapaUrl: string; rotaUrl: string; mapaEmbutidoUrl: string; isAdmin: boolean; minhaMatricula: number; planilhaOk: boolean
+type Aba = "escolha" | "localizacao" | "comando" | "operacao" | "vagas" | "morar" | "colab" | "fontes"
+const ABAS: { id: Aba; rot: string }[] = [
+  { id: "escolha", rot: "👥 Quem escolheu" },
+  { id: "localizacao", rot: "📍 Localização" },
+  { id: "comando", rot: "🎖️ Comando" },
+  { id: "operacao", rot: "🚓 Operação" },
+  { id: "vagas", rot: "🎓 Aspirantado" },
+  { id: "morar", rot: "🏠 Onde morar" },
+  { id: "colab", rot: "🤝 Colaborativo" },
+  { id: "fontes", rot: "📚 Links e fontes" },
+]
+const tituloAba: React.CSSProperties = { margin: "0 0 16px", fontFamily: "var(--serif-cfo)", fontSize: "1.25rem", color: "var(--olive)" }
+
+// Texto da ficha com respiro: cada linha vira um parágrafo; "1ª CPM: ..." ganha o prefixo em negrito.
+function Texto({ texto }: { texto: string }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      {texto.split("\n").filter(l => l.trim()).map((l, i) => {
+        const m = l.match(/^(\d+ª (?:CPM|CIA)[^:]{0,40}):\s*(.*)$/)
+        return <p key={i} style={{ margin: 0, fontSize: 14.5, lineHeight: 1.65 }}>{m ? <><strong style={{ color: "var(--olive)" }}>{m[1]}:</strong> {m[2]}</> : l}</p>
+      })}
+    </div>
+  )
+}
+
+function Campos({ campos, info }: { campos: { chave: ChaveFicha; rotulo: string; longo?: boolean }[]; info: Record<ChaveFicha, string> }) {
+  const curtos = campos.filter(c => !c.longo), longos = campos.filter(c => c.longo)
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      {curtos.length > 0 && (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: 18 }}>
+          {curtos.map(c => (
+            <div key={c.chave} style={{ padding: "12px 14px", borderRadius: 12, background: "var(--surface)" }}>
+              <p style={{ ...rotuloCampo, marginBottom: 6 }}>{c.rotulo}</p>
+              <Texto texto={info[c.chave]} />
+            </div>
+          ))}
+        </div>
+      )}
+      {longos.map(c => (
+        <div key={c.chave}>
+          <p style={{ ...rotuloCampo, marginBottom: 8 }}>{c.rotulo}</p>
+          <Texto texto={info[c.chave]} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minhaMatricula, planilhaOk, info, bairros, links, fontes, operacoes, aspirantado, atualizadoEm, primeira, segunda, mural }: {
+  sigla: string; mapaUrl: string; mapaEmbutidoUrl: string; isAdmin: boolean; minhaMatricula: number; planilhaOk: boolean
   info: Record<ChaveFicha, string>; bairros: BairroFicha[]; links: LinkFicha[]; fontes: FonteFicha[]; operacoes: OperacaoFicha[]; aspirantado: AspirantadoFicha | null; atualizadoEm: string | null
   primeira: Pessoa[]; segunda: Pessoa[]; mural: Msg[]
 }) {
   const router = useRouter()
+  const [aba, setAba] = useState<Aba>("escolha")
   const [editando, setEditando] = useState(false)
   const [form, setForm] = useState(info)
   const [listas, setListas] = useState({ bairros: bairrosParaTexto(bairros), links: linksParaTexto(links), fontes: fontesParaTexto(fontes), operacoes: operacoesParaTexto(operacoes) })
   const [salvando, setSalvando] = useState(false)
   const [erro, setErro] = useState("")
   const [abaLista, setAbaLista] = useState<1 | 2>(1)
-  // contribuições da turma
+  // espaço colaborativo
   const [tipo, setTipo] = useState<TipoContribuicao>("moradia")
   const [contrib, setContrib] = useState({ texto: "", bairro: "", valor: "", link: "" })
   const [enviando, setEnviando] = useState(false)
@@ -88,71 +137,50 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, mapaEmbutidoUrl, isAdm
     if (res.ok) router.refresh()
   }
 
-  const moradias = mural.filter(m => m.tipo === "moradia")
   const muralFiltrado = filtro === "todos" ? mural : mural.filter(m => m.tipo === filtro)
-  const visiveis = (g: string) => CAMPOS_FICHA.filter(c => c.grupo === g && !("oculto" in c && c.oculto) && info[c.chave])
+  const camposDo = (g: string) => CAMPOS_FICHA.filter(c => c.grupo === g && !("oculto" in c && c.oculto) && info[c.chave])
+    .map(c => ({ chave: c.chave as ChaveFicha, rotulo: c.rotulo, longo: "longo" in c && !!c.longo }))
   const filtros = [
     { id: "todos" as const, rotulo: "Todas", n: mural.length },
     ...TIPOS_CONTRIBUICAO.map(t => ({ id: t.id, rotulo: t.rotulo, n: mural.filter(m => m.tipo === t.id).length })),
   ].filter(f => f.id === "todos" || f.n > 0)
+  const nAsp = aspirantado ? aspirantado.t1 + aspirantado.t2 : 0
+  const irPara = (a: Aba) => { setAba(a); setEditando(false); document.getElementById("abas-ficha")?.scrollIntoView({ behavior: "smooth", block: "start" }) }
+  const vazio = <p style={semInfo}>Sem informação ainda.</p>
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      {/* Números */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10 }}>
-        {[{ n: primeira.length, r: "querem como 1ª opção" }, { n: segunda.length, r: "como 2ª opção" }, { n: mural.length, r: "contribuições da turma" }].map(x => (
-          <div key={x.r} style={{ ...cartao, padding: 14, textAlign: "center" }}>
-            <div style={{ fontFamily: "var(--serif-cfo)", fontSize: 28, fontWeight: 700, color: "var(--olive)" }}>{x.n}</div>
-            <div style={{ fontSize: 12.5, color: "var(--ink-60)" }}>{x.r}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Quem escolheu — visualizador 1ª / 2ª opção */}
-      <section style={cartao}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
-          <h2 style={{ ...titulo, margin: 0, fontFamily: "var(--serif-cfo)", fontSize: "1.2rem" }}>Quem escolheu o {sigla}</h2>
-          <div style={{ display: "flex", gap: 6 }}>
-            {([[1, "1ª opção", primeira.length], [2, "2ª opção", segunda.length]] as const).map(([n, r, q]) => (
-              <button key={n} onClick={() => setAbaLista(n)}
-                style={{ padding: "7px 14px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600,
-                  background: abaLista === n ? "var(--olive)" : "var(--surface)", color: abaLista === n ? "var(--canvas)" : "var(--ink-60)" }}>
-                {r} <span style={{ opacity: 0.75 }}>{q}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-        {abaLista === 1
-          ? <ListaPessoas key="p1" pessoas={primeira} minhaMatricula={minhaMatricula} rotuloOutra="2ª:" />
-          : <ListaPessoas key="p2" pessoas={segunda} minhaMatricula={minhaMatricula} rotuloOutra="1ª:" />}
-        <a href={FORMULARIO_DAG_URL} target="_blank" rel="noopener noreferrer"
-          style={{ display: "inline-block", marginTop: 14, fontSize: 13, fontWeight: 600, color: "var(--olive)" }}>
-          Quer mudar sua escolha? Responda de novo o formulário da DAG ↗
-        </a>
-      </section>
-      {!planilhaOk && <p style={{ margin: 0, fontSize: 12.5, color: "var(--red)" }}>Não foi possível abrir a planilha da DAG agora — as listas podem estar vazias.</p>}
-
-      {/* Atalhos */}
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {/* Resumo + atalhos */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 8 }}>
         <a href={mapaUrl} target="_blank" rel="noopener noreferrer" style={botao("var(--olive)", "var(--canvas)")}>📍 Abrir no Google Maps ↗</a>
-        {info.streetView && <a href={info.streetView} target="_blank" rel="noopener noreferrer" style={botao("var(--surface)", "var(--olive)")}>🚶 Ver a fachada (Street View) ↗</a>}
-        <a href={rotaUrl} target="_blank" rel="noopener noreferrer" style={botao("var(--surface)", "var(--olive)")}>🧭 Traçar rota até o batalhão ↗</a>
-        {info.linkGrupo
-          ? <a href={info.linkGrupo} target="_blank" rel="noopener noreferrer" style={botao("#25D366", "#fff")}>💬 Grupo do WhatsApp ↗</a>
-          : <span title="O link do grupo será publicado em breve" style={{ ...botao("var(--surface)", "var(--ink-60)"), cursor: "default" }}>💬 Grupo do WhatsApp · em breve</span>}
+        <button onClick={() => irPara("escolha")} style={{ ...botao(aba === "escolha" ? "#fbf7ec" : "var(--surface)", "var(--olive)"), border: "none", cursor: "pointer", fontFamily: "inherit" }}>
+          👥 Quem escolheu · <span style={{ color: "var(--gold)" }}>{primeira.length} + {segunda.length}</span>
+        </button>
+        <button onClick={() => irPara("vagas")} style={{ ...botao(aba === "vagas" ? "#fbf7ec" : "var(--surface)", "var(--olive)"), border: "none", cursor: "pointer", fontFamily: "inherit" }}>
+          🎓 Aspirantado T1/T2{nAsp ? <> · <span style={{ color: "var(--gold)" }}>{nAsp}</span></> : ""}
+        </button>
       </div>
 
-      {/* Ficha padrão */}
-      <section style={cartao}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginBottom: 6 }}>
-          <h2 style={{ ...titulo, margin: 0, fontFamily: "var(--serif-cfo)", fontSize: "1.2rem" }}>Conheça o batalhão</h2>
-          {isAdmin && !editando && (
+      {/* Abas */}
+      <nav id="abas-ficha" style={{ display: "flex", gap: 6, flexWrap: "wrap", padding: "2px 0 4px", scrollMarginTop: 12 }}>
+        {ABAS.map(a => (
+          <button key={a.id} onClick={() => { setAba(a.id); setEditando(false) }}
+            style={{ flex: "0 0 auto", padding: "8px 14px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600, fontFamily: "inherit", whiteSpace: "nowrap",
+              background: aba === a.id ? "var(--olive)" : "#fff", color: aba === a.id ? "var(--canvas)" : "var(--ink-60)", boxShadow: aba === a.id ? "none" : "inset 0 0 0 1px rgba(58,74,58,0.18)" }}>
+            {a.rot}{a.id === "colab" && mural.length ? ` · ${mural.length}` : ""}
+          </button>
+        ))}
+      </nav>
+
+      <section style={{ ...cartao, padding: "20px 20px 22px" }}>
+        {isAdmin && !editando && aba !== "escolha" && aba !== "colab" && (
+          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
             <button onClick={() => setEditando(true)} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 13, cursor: "pointer" }}>Editar ficha</button>
-          )}
-        </div>
+          </div>
+        )}
 
         {editando ? (
-          <form onSubmit={salvarFicha} style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 10 }}>
+          <form onSubmit={salvarFicha} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {[...GRUPOS_FICHA, { id: "grupo", titulo: "💬 Grupo" }].map(g => (
               <fieldset key={g.id} style={{ border: "1px solid var(--surface)", borderRadius: 12, padding: 12, display: "flex", flexDirection: "column", gap: 10 }}>
                 <legend style={{ ...tituloGrupo, padding: "0 6px" }}>{g.titulo}</legend>
@@ -176,127 +204,178 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, mapaEmbutidoUrl, isAdm
             </div>
           </form>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-            <nav style={{ display: "flex", gap: 6, flexWrap: "wrap", padding: "4px 0 12px" }}>
-              {[...GRUPOS_FICHA.map(g => ({ id: g.id, rot: g.titulo })), ...(links.length ? [{ id: "links", rot: "🔗 Links" }] : [])].map(s => (
-                <a key={s.id} href={`#ficha-${s.id}`} style={{ padding: "5px 10px", borderRadius: 999, background: "var(--surface)", color: "var(--olive)", fontSize: 12.5, fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>{s.rot}</a>
-              ))}
-            </nav>
-            {GRUPOS_FICHA.map(g => {
-              const campos = visiveis(g.id)
-              const temBairros = g.id === "morar" && bairros.length > 0
-              const temOperacoes = g.id === "operacao" && operacoes.length > 0
-              const temAspirantado = g.id === "vagas" && !!aspirantado && aspirantado.registros.length > 0
-              return (
-                <div key={g.id} id={`ficha-${g.id}`} style={{ padding: "14px 0", borderTop: "1px solid var(--surface)", scrollMarginTop: 12 }}>
-                  <h3 style={tituloGrupo}>{g.titulo}</h3>
-                  {campos.length === 0 && !temBairros && !temOperacoes && !temAspirantado && <p style={semInfo}>{g.id === "vagas" ? "Sem informação oficial sobre vagas ainda." : "Sem informação ainda."}</p>}
-                  {temAspirantado && <Aspirantado asp={aspirantado!} temVagas={campos.length > 0} />}
-                  {temBairros && <TabelaBairros bairros={bairros} />}
-                  {campos.length > 0 && (
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10, marginTop: temBairros ? 12 : 0 }}>
-                      {campos.map(c => (
-                        <div key={c.chave} style={{ gridColumn: "longo" in c && c.longo ? "1 / -1" : undefined }}>
-                          {campos.length > 1 || temBairros ? <p style={rotuloCampo}>{c.rotulo}</p> : null}
-                          <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55, whiteSpace: "pre-wrap" }}>{info[c.chave]}</p>
-                        </div>
-                      ))}
+          <>
+            {aba === "escolha" && (
+              <>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
+                  <h2 style={{ ...tituloAba, margin: 0 }}>Quem escolheu o {sigla}</h2>
+                  <div style={{ display: "flex", gap: 6 }}>
+                    {([[1, "1ª opção", primeira.length], [2, "2ª opção", segunda.length]] as const).map(([n, r, q]) => (
+                      <button key={n} onClick={() => setAbaLista(n)}
+                        style={{ padding: "7px 14px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600,
+                          background: abaLista === n ? "var(--olive)" : "var(--surface)", color: abaLista === n ? "var(--canvas)" : "var(--ink-60)" }}>
+                        {r} <span style={{ opacity: 0.75 }}>{q}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                {abaLista === 1
+                  ? <ListaPessoas key="p1" pessoas={primeira} minhaMatricula={minhaMatricula} rotuloOutra="2ª:" />
+                  : <ListaPessoas key="p2" pessoas={segunda} minhaMatricula={minhaMatricula} rotuloOutra="1ª:" />}
+                <a href={FORMULARIO_DAG_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 16, fontSize: 13, fontWeight: 600, color: "var(--olive)" }}>
+                  Quer mudar sua escolha? Responda de novo o formulário da DAG ↗
+                </a>
+                {!planilhaOk && <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "var(--red)" }}>Não foi possível abrir a planilha da DAG agora — a lista pode estar vazia.</p>}
+              </>
+            )}
+
+            {aba === "localizacao" && (
+              <>
+                <h2 style={tituloAba}>Localização e contato</h2>
+                {camposDo("localizacao").length ? <Campos campos={camposDo("localizacao")} info={info} /> : vazio}
+                {info.streetView && <a href={info.streetView} target="_blank" rel="noopener noreferrer" style={{ ...botao("var(--surface)", "var(--olive)"), display: "inline-block", marginTop: 16 }}>🚶 Ver a fachada (Street View) ↗</a>}
+                <iframe src={mapaEmbutidoUrl} title={`Mapa — ${sigla}`} loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                  style={{ width: "100%", height: 280, border: 0, borderRadius: 12, marginTop: 18, background: "var(--surface)" }} />
+              </>
+            )}
+
+            {aba === "comando" && (
+              <>
+                <h2 style={tituloAba}>Comando e efetivo</h2>
+                {camposDo("comando").length ? <Campos campos={camposDo("comando")} info={info} /> : vazio}
+              </>
+            )}
+
+            {aba === "operacao" && (
+              <>
+                <h2 style={tituloAba}>Operação</h2>
+                {camposDo("operacao").length ? <Campos campos={camposDo("operacao")} info={info} /> : (operacoes.length ? null : vazio)}
+                {operacoes.length > 0 && (
+                  <>
+                    <p style={{ ...rotuloCampo, margin: "24px 0 0" }}>Operações e notícias ({operacoes.length})</p>
+                    <Operacoes operacoes={operacoes} />
+                  </>
+                )}
+              </>
+            )}
+
+            {aba === "vagas" && (
+              <>
+                <h2 style={tituloAba}>Aspirantado das turmas anteriores (T1 e T2)</h2>
+                {camposDo("vagas").length > 0 && <Campos campos={camposDo("vagas")} info={info} />}
+                {aspirantado && aspirantado.registros.length > 0
+                  ? <Aspirantado asp={aspirantado} temVagas={camposDo("vagas").length > 0} />
+                  : <p style={semInfo}>Sem designações de aspirantes publicadas para este batalhão.</p>}
+              </>
+            )}
+
+            {aba === "morar" && (
+              <>
+                <h2 style={tituloAba}>Onde morar</h2>
+                {bairros.length > 0 && <TabelaBairros bairros={bairros} />}
+                {camposDo("morar").length > 0 && <div style={{ marginTop: bairros.length ? 20 : 0 }}><Campos campos={camposDo("morar")} info={info} /></div>}
+                {!bairros.length && !camposDo("morar").length && vazio}
+                <button onClick={() => { setTipo("moradia"); setFiltro(mural.some(m => m.tipo === "moradia") ? "moradia" : "todos"); setAba("colab") }}
+                  style={{ marginTop: 18, padding: 0, border: "none", background: "none", cursor: "pointer", color: "var(--olive)", fontWeight: 700, fontSize: 13.5, fontFamily: "inherit" }}>
+                  🏠 Conhece um lugar para alugar? Indique no espaço colaborativo →
+                </button>
+              </>
+            )}
+
+            {aba === "colab" && (
+              <>
+                <h2 style={{ ...tituloAba, marginBottom: 6 }}>Espaço colaborativo — {sigla}</h2>
+                <p style={{ margin: "0 0 16px", fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.6 }}>Acrescente o que você sabe: lugar para alugar, como é o serviço, contatos úteis, dúvidas. Fica visível para a turma, com seu nome.</p>
+                {info.linkGrupo
+                  ? <a href={info.linkGrupo} target="_blank" rel="noopener noreferrer" style={{ ...botao("#25D366", "#fff"), display: "inline-block", marginBottom: 18 }}>💬 Entrar no grupo do WhatsApp ↗</a>
+                  : <p style={{ margin: "0 0 18px", padding: "10px 14px", borderRadius: 10, background: "var(--surface)", fontSize: 13.5, color: "var(--ink-60)" }}>💬 Grupo do WhatsApp dos interessados — <strong>link em breve</strong>.</p>}
+
+                <form onSubmit={publicar} style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20, padding: 14, borderRadius: 12, background: "var(--surface)" }}>
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                    {TIPOS_CONTRIBUICAO.map(t => (
+                      <button key={t.id} type="button" onClick={() => setTipo(t.id)}
+                        style={{ padding: "6px 12px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600,
+                          background: tipo === t.id ? "var(--olive)" : "#fff", color: tipo === t.id ? "var(--canvas)" : "var(--ink-60)" }}>{t.rotulo}</button>
+                    ))}
+                  </div>
+                  {tipo === "moradia" && (
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 8 }}>
+                      <input value={contrib.bairro} maxLength={80} onChange={e => setContrib({ ...contrib, bairro: e.target.value })} placeholder="Bairro" style={inputStyle} />
+                      <input value={contrib.valor} maxLength={60} onChange={e => setContrib({ ...contrib, valor: e.target.value })} placeholder="Valor (ex.: R$ 1.200/mês)" style={inputStyle} />
+                      <input value={contrib.link} maxLength={500} onChange={e => setContrib({ ...contrib, link: e.target.value })} placeholder="Link do anúncio (opcional)" style={inputStyle} />
                     </div>
                   )}
-                  {g.id === "localizacao" && (
-                    <iframe src={mapaEmbutidoUrl} title={`Mapa — ${sigla}`} loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                      style={{ width: "100%", height: 260, border: 0, borderRadius: 12, marginTop: 12, background: "var(--surface)" }} />
-                  )}
-                  {temOperacoes && <Operacoes operacoes={operacoes} />}
-                  {g.id === "morar" && (
-                    <p style={{ margin: "10px 0 0", fontSize: 13 }}>
-                      <a href="#contribuicoes" onClick={() => { setFiltro(moradias.length ? "moradia" : "todos"); setTipo("moradia") }} style={{ color: "var(--olive)", fontWeight: 700 }}>
-                        🏠 {moradias.length ? `${moradias.length} sugest${moradias.length > 1 ? "ões" : "ão"} de moradia da turma` : "Indique um lugar para alugar"} ↓
-                      </a>
-                    </p>
-                  )}
-                </div>
-              )
-            })}
-            {[...new Set(links.map(l => l.grupo || GRUPO_LINK_PADRAO))].map(grupo => (
-              <div key={grupo} id={/legisla/i.test(grupo) ? undefined : "ficha-links"} style={{ padding: "14px 0", borderTop: "1px solid var(--surface)", scrollMarginTop: 12 }}>
-                <h3 style={tituloGrupo}>{/legisla/i.test(grupo) ? "⚖️" : "🔗"} {grupo}</h3>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                  {links.filter(l => (l.grupo || GRUPO_LINK_PADRAO) === grupo).map(l => (
-                    <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" style={{ padding: "6px 12px", borderRadius: 999, background: "var(--surface)", color: "var(--olive)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>{l.rotulo} ↗</a>
-                  ))}
-                </div>
-              </div>
-            ))}
-            {fontes.length > 0 && (
-              <details style={{ padding: "14px 0", borderTop: "1px solid var(--surface)" }}>
-                <summary style={{ ...tituloGrupo, cursor: "pointer", margin: 0 }}>📚 Fontes das informações ({fontes.length})</summary>
-                <ul style={{ margin: "10px 0 0", paddingLeft: 18, display: "flex", flexDirection: "column", gap: 6, fontSize: 13, lineHeight: 1.45 }}>
-                  {fontes.map((f, i) => (
-                    <li key={i}><strong>{f.info}:</strong> {f.url ? <a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>{f.rotulo || f.url} ↗</a> : f.rotulo}</li>
-                  ))}
-                </ul>
-              </details>
-            )}
-            {atualizadoEm && <p style={{ margin: "4px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>Ficha atualizada em {new Date(atualizadoEm).toLocaleDateString("pt-BR")}. Cada informação traz a fonte entre parênteses — a lista completa está em Fontes.</p>}
-          </div>
-        )}
-      </section>
+                  <textarea rows={3} value={contrib.texto} maxLength={1000} onChange={e => setContrib({ ...contrib, texto: e.target.value })}
+                    placeholder={tipo === "moradia" ? "Descreva: tipo de imóvel, mobiliado, contato, se dá para ir a pé…" : tipo === "duvida" ? "Qual sua dúvida sobre o batalhão?" : "Escreva a informação…"}
+                    style={{ ...inputStyle, resize: "vertical" }} />
+                  {erroContrib && <p style={{ margin: 0, color: "var(--red)", fontSize: 13 }}>✗ {erroContrib}</p>}
+                  <button type="submit" disabled={enviando || !contrib.texto.trim()} style={{ alignSelf: "flex-end", padding: "8px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer", opacity: contrib.texto.trim() ? 1 : 0.5 }}>
+                    {enviando ? "Publicando…" : "Acrescentar"}
+                  </button>
+                </form>
 
-      {/* Contribuições da turma */}
-      <section id="contribuicoes" style={{ ...cartao, scrollMarginTop: 16 }}>
-        <h2 style={{ ...titulo, fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", marginBottom: 4 }}>Contribuições da turma — {sigla}</h2>
-        <p style={{ margin: "0 0 12px", fontSize: 12.5, color: "var(--ink-60)" }}>Indique lugares para alugar, dicas do serviço, informações e dúvidas. Fica visível para a turma, com seu nome.</p>
-
-        <form onSubmit={publicar} style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 16, padding: 12, borderRadius: 12, background: "var(--surface)" }}>
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-            {TIPOS_CONTRIBUICAO.map(t => (
-              <button key={t.id} type="button" onClick={() => setTipo(t.id)}
-                style={{ padding: "6px 12px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600,
-                  background: tipo === t.id ? "var(--olive)" : "#fff", color: tipo === t.id ? "var(--canvas)" : "var(--ink-60)" }}>{t.rotulo}</button>
-            ))}
-          </div>
-          {tipo === "moradia" && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 8 }}>
-              <input value={contrib.bairro} maxLength={80} onChange={e => setContrib({ ...contrib, bairro: e.target.value })} placeholder="Bairro" style={inputStyle} />
-              <input value={contrib.valor} maxLength={60} onChange={e => setContrib({ ...contrib, valor: e.target.value })} placeholder="Valor (ex.: R$ 1.200/mês)" style={inputStyle} />
-              <input value={contrib.link} maxLength={500} onChange={e => setContrib({ ...contrib, link: e.target.value })} placeholder="Link do anúncio (opcional)" style={inputStyle} />
-            </div>
-          )}
-          <textarea rows={3} value={contrib.texto} maxLength={1000} onChange={e => setContrib({ ...contrib, texto: e.target.value })}
-            placeholder={tipo === "moradia" ? "Descreva: tipo de imóvel, mobiliado, contato, se dá para ir a pé…" : tipo === "duvida" ? "Qual sua dúvida sobre o batalhão?" : "Escreva sua contribuição…"}
-            style={{ ...inputStyle, resize: "vertical" }} />
-          {erroContrib && <p style={{ margin: 0, color: "var(--red)", fontSize: 13 }}>✗ {erroContrib}</p>}
-          <button type="submit" disabled={enviando || !contrib.texto.trim()} style={{ alignSelf: "flex-end", padding: "8px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer", opacity: contrib.texto.trim() ? 1 : 0.5 }}>
-            {enviando ? "Publicando…" : "Publicar"}
-          </button>
-        </form>
-
-        {mural.length > 0 && (
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
-            {filtros.map(f => (
-              <button key={f.id} onClick={() => setFiltro(f.id)}
-                style={{ padding: "5px 11px", borderRadius: 999, border: "1px solid rgba(58,74,58,0.2)", cursor: "pointer", fontSize: 12.5, fontWeight: 600,
-                  background: filtro === f.id ? "var(--olive)" : "#fff", color: filtro === f.id ? "var(--canvas)" : "var(--ink-60)" }}>{f.rotulo} · {f.n}</button>
-            ))}
-          </div>
-        )}
-        {muralFiltrado.length === 0 ? <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-60)" }}>{filtro === "todos" ? "Nenhuma contribuição ainda — seja o primeiro." : "Nenhuma contribuição desse tipo ainda."}</p> : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {muralFiltrado.map(m => (
-              <div key={m.id} style={{ padding: "10px 12px", borderRadius: 10, background: "var(--surface)" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: 12, color: "var(--ink-60)", marginBottom: 4, flexWrap: "wrap" }}>
-                  <span><span style={{ fontWeight: 700, color: "var(--gold)" }}>{rotuloTipo(m.tipo)}</span> · <strong style={{ color: "var(--olive)" }}>{m.mat} {m.nome}</strong> · {new Date(m.criadoEm).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}</span>
-                  {(isAdmin || m.mat === minhaMatricula) && <button onClick={() => apagar(m.id)} style={{ background: "none", border: "none", color: "var(--red)", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>apagar</button>}
-                </div>
-                {(m.bairro || m.valor) && (
-                  <p style={{ margin: "0 0 4px", fontSize: 13.5, fontWeight: 700 }}>{[m.bairro && `📍 ${m.bairro}`, m.valor && `💰 ${m.valor}`].filter(Boolean).join("  ·  ")}</p>
+                {mural.length > 0 && (
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
+                    {filtros.map(f => (
+                      <button key={f.id} onClick={() => setFiltro(f.id)}
+                        style={{ padding: "5px 11px", borderRadius: 999, border: "1px solid rgba(58,74,58,0.2)", cursor: "pointer", fontSize: 12.5, fontWeight: 600,
+                          background: filtro === f.id ? "var(--olive)" : "#fff", color: filtro === f.id ? "var(--canvas)" : "var(--ink-60)" }}>{f.rotulo} · {f.n}</button>
+                    ))}
+                  </div>
                 )}
-                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, whiteSpace: "pre-wrap" }}>{m.texto}</p>
-                {m.link && <a href={m.link} target="_blank" rel="noopener noreferrer nofollow" style={{ display: "inline-block", marginTop: 4, fontSize: 13, fontWeight: 600, color: "var(--olive)" }}>Ver anúncio ↗</a>}
-              </div>
-            ))}
-          </div>
+                {muralFiltrado.length === 0 ? <p style={semInfo}>{filtro === "todos" ? "Nada por aqui ainda — seja o primeiro a acrescentar." : "Nada desse tipo ainda."}</p> : (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {muralFiltrado.map(m => (
+                      <div key={m.id} style={{ padding: "12px 14px", borderRadius: 12, background: "var(--surface)" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: 12, color: "var(--ink-60)", marginBottom: 6, flexWrap: "wrap" }}>
+                          <span><span style={{ fontWeight: 700, color: "var(--gold)" }}>{rotuloTipo(m.tipo)}</span> · <strong style={{ color: "var(--olive)" }}>{m.mat} {m.nome}</strong> · {new Date(m.criadoEm).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}</span>
+                          {(isAdmin || m.mat === minhaMatricula) && <button onClick={() => apagar(m.id)} style={{ background: "none", border: "none", color: "var(--red)", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>apagar</button>}
+                        </div>
+                        {(m.bairro || m.valor) && <p style={{ margin: "0 0 4px", fontSize: 13.5, fontWeight: 700 }}>{[m.bairro && `📍 ${m.bairro}`, m.valor && `💰 ${m.valor}`].filter(Boolean).join("  ·  ")}</p>}
+                        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{m.texto}</p>
+                        {m.link && <a href={m.link} target="_blank" rel="noopener noreferrer nofollow" style={{ display: "inline-block", marginTop: 6, fontSize: 13, fontWeight: 600, color: "var(--olive)" }}>Ver anúncio ↗</a>}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+
+            {aba === "fontes" && (
+              <>
+                <h2 style={tituloAba}>Links e fontes</h2>
+                {links.length === 0 && fontes.length === 0 && vazio}
+                <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+                  {[...new Set(links.map(l => l.grupo || GRUPO_LINK_PADRAO))].map(grupo => (
+                    <div key={grupo}>
+                      <p style={{ ...rotuloCampo, marginBottom: 10 }}>{/legisla/i.test(grupo) ? "⚖️" : "🔗"} {grupo}</p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                        {links.filter(l => (l.grupo || GRUPO_LINK_PADRAO) === grupo).map(l => (
+                          <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" style={{ padding: "7px 12px", borderRadius: 999, background: "var(--surface)", color: "var(--olive)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>{l.rotulo} ↗</a>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                  {fontes.length > 0 && (
+                    <div>
+                      <p style={{ ...rotuloCampo, marginBottom: 10 }}>📚 De onde veio cada informação</p>
+                      <ul style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 8, fontSize: 13.5, lineHeight: 1.5 }}>
+                        {fontes.map((f, i) => (
+                          <li key={i}><strong>{f.info}:</strong> {f.url ? <a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>{f.rotulo || f.url} ↗</a> : f.rotulo}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+
+            {atualizadoEm && aba !== "escolha" && aba !== "colab" && (
+              <p style={{ margin: "22px 0 0", paddingTop: 12, borderTop: "1px solid var(--surface)", fontSize: 11.5, color: "var(--ink-60)" }}>
+                Ficha atualizada em {new Date(atualizadoEm).toLocaleDateString("pt-BR")} · cada informação traz a fonte entre parênteses (lista completa em “Links e fontes”).
+              </p>
+            )}
+          </>
         )}
       </section>
     </div>

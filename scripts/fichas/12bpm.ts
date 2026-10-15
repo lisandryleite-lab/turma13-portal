@@ -26,7 +26,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "12º BPM, Rua Dona Maria Lacerda, Várzea, Recife - PE",
   telefone: "(81) 3183-5392 / 3183-5395 (PMPE). Também publicados: 3183-5393 / 3183-5394 (relação de comandantes da PMPE, mar/2026).",
   email: "12bpm@pm.pe.gov.br (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~33 km, ~33 min de carro sem trânsito — é um dos batalhões mais perto da APMP.\nAté o Marco Zero (Recife): ~15 km, ~17 min sem trânsito.\nA sede fica na Zona Oeste, com acesso pela Av. Caxangá e saída para a BR-232 e Camaragibe.",
+  distanciaBR: "A sede fica na Zona Oeste, com acesso pela Av. Caxangá e saída para a BR-232 e Camaragibe.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Everaldo Vitor Alves Júnior (relação de comandantes da PMPE, mar/2026).",
   subcomandante: "Maj QOPM Elton Máximo de Macedo — Portaria nº 1562 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025.",

@@ -29,7 +29,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "26º BPM, Rua Barão de Itapissuma, Itapissuma - PE",
   telefone: "(81) 3181-1915 (unidades operacionais, PMPE). Também publicados: 3181-1749 / 3181-1750 (relação de comandantes da PMPE, mar/2026).",
   email: "26bpm@pm.pe.gov.br (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~47 km, ~59 min de carro sem trânsito.\nAté o Marco Zero (Recife): ~37 km, ~43 min sem trânsito.\nItapissuma fica na entrada da Ilha de Itamaracá, junto à BR-101 Norte; Igarassu fica a ~8 km.",
+  distanciaBR: "Itapissuma fica na entrada da Ilha de Itamaracá, junto à BR-101 Norte; Igarassu fica a ~8 km.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Fábio Carneiro Pereira — Portaria nº 1573 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025; mantido na relação de comandantes da PMPE (mar/2026).",
   subcomandante: "",

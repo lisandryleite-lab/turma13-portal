@@ -25,7 +25,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "25º BPM, Rua Padre Cromácio Leão, Centro, Jaboatão dos Guararapes - PE",
   telefone: "(81) 3181-1660 (unidades operacionais, PMPE). Também publicados: 3181-1650 / 3181-1662 / 3181-1663 (relação de comandantes da PMPE, mar/2026).",
   email: "25bpm@pm.pe.gov.br (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~39 km, ~33 min de carro sem trânsito.\nAté o Marco Zero (Recife): ~20 km, ~25 min sem trânsito.\nA sede fica em Jaboatão Centro (Jaboatão velho), com acesso pela BR-232 e pela Estrada da Batalha; Moreno fica a ~9 km.",
+  distanciaBR: "A sede fica em Jaboatão Centro (Jaboatão velho), com acesso pela BR-232 e pela Estrada da Batalha; Moreno fica a ~9 km.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Ladstone Pereira da Silva — Portaria nº 1571 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025; mantido na relação de comandantes da PMPE (mar/2026).",
   subcomandante: "Maj QOPM Clariça Mayanna dos Santos França — Portaria nº 1572 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025.",

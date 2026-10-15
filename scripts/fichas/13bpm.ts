@@ -27,7 +27,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "13º BPM, Rua Odorico Mendes, 700, Campo Grande, Recife - PE",
   telefone: "(81) 3183-5438 / 3183-5429 (página do 13º BPM, PMPE). Também publicados: 3183-5440 / 3183-5439 (unidades operacionais) e 3183-5426 / 5428 (relação de comandantes, mar/2026).",
   email: "13bpm@pm.pe.gov.br · secretaria: secretaria13bpm@gmail.com (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~46 km, ~40 min de carro sem trânsito.\nAté o Marco Zero (Recife): ~4 km, ~6 min sem trânsito.\nA sede fica no eixo da Av. Agamenon Magalhães, principal corredor do Recife, com acesso rápido ao centro, a Olinda e à BR-101.",
+  distanciaBR: "A sede fica no eixo da Av. Agamenon Magalhães, principal corredor do Recife, com acesso rápido ao centro, a Olinda e à BR-101.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Carla Cristina de Oliveira — Portaria nº 1563 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025; mantida na relação de comandantes da PMPE (mar/2026).",
   subcomandante: "Maj QOPM Gilson Monteiro da Silva — Portaria nº 1564 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025.",

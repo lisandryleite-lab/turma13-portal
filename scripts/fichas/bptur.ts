@@ -30,7 +30,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "Avenida Sigismundo Gonçalves, 515, Varadouro, Olinda - PE",
   telefone: "(81) 3181-3700 / 3181-3702 / 3181-1700 (relação de comandantes da PMPE, mar/2026)",
   email: "ciatur@pm.pe.gov.br (página de unidades da PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~49 km, ~45 min de carro sem trânsito.\nAté o Marco Zero (Recife Antigo): ~7 km, ~10 min sem trânsito.\nAcesso pela Av. Sigismundo Gonçalves (liga Varadouro e Carmo), PE-15 e Av. Cruz Cabugá. Trânsito pesado no pico, nas prévias e no Carnaval, com ruas bloqueadas no Sítio Histórico.",
+  distanciaBR: "Acesso pela Av. Sigismundo Gonçalves (liga Varadouro e Carmo), PE-15 e Av. Cruz Cabugá. Trânsito pesado no pico, nas prévias e no Carnaval, com ruas bloqueadas no Sítio Histórico.",
   // 🎖️ Comando e efetivo
   comandante: "TC PM Arthur Cezar Belo dos Santos — citado como comandante do BPTur na Operação Verão (SDS, 05/09/2026).",
   subcomandante: "Maj QOPM George Anderson Gomes da Silva — Portaria nº 4282/2025 (BGSDS nº 142, de 07/08/2025); citado como subcomandante em fev/2026.",

@@ -25,7 +25,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "11º BPM, Rua Apipucos, 15, Apipucos, Recife - PE",
   telefone: "(81) 3183-5459 / 3183-5474 (página do 11º BPM, PMPE). Também publicado: 3183-5460 (unidades operacionais, PMPE).",
   email: "11bpm@pm.pe.gov.br (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~35 km, ~35 min de carro sem trânsito.\nAté o Marco Zero (Recife): ~10 km, ~14 min sem trânsito.\nA sede fica na Zona Norte, perto do Açude de Apipucos e da Av. Dezessete de Agosto, com saída para a BR-101 e a BR-232.",
+  distanciaBR: "A sede fica na Zona Norte, perto do Açude de Apipucos e da Av. Dezessete de Agosto, com saída para a BR-101 e a BR-232.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Marcos Antonio Vasconcelos de Melo Junior — Portaria nº 1559 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025; mantido na relação de comandantes da PMPE (mar/2026).",
   subcomandante: "Maj QOPM Wellington José de Araújo — Portaria nº 1560 (BGSDS nº 046, de 14/03/2025), a contar de 10/03/2025.",

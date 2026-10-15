@@ -75,7 +75,7 @@ export const CAMPOS_FICHA = [
   { chave: "streetView", rotulo: "Link do Google Street View da fachada (https://…)", grupo: "localizacao", oculto: true },
   { chave: "telefone", rotulo: "Telefone", grupo: "localizacao" },
   { chave: "email", rotulo: "E-mail", grupo: "localizacao" },
-  { chave: "distanciaBR", rotulo: "Deslocamento (APMP, Recife, vias de acesso)", grupo: "localizacao", longo: true },
+  { chave: "distanciaBR", rotulo: "Acesso e deslocamento", grupo: "localizacao", longo: true },
   { chave: "comandante", rotulo: "Comandante", grupo: "comando" },
   { chave: "subcomandante", rotulo: "Subcomandante", grupo: "comando" },
   { chave: "cpm", rotulo: "Subordinação", grupo: "comando" },

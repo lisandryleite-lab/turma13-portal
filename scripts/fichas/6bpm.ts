@@ -30,7 +30,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "6º BPM, Estrada da Batalha, Prazeres, Jaboatão dos Guararapes - PE",
   telefone: "(81) 3181-1650 / 3181-1657 (página do 6º BPM, PMPE). Também publicados: 3183-5450 / 3183-5445 (unidades operacionais, PMPE) e 3183-5442 / 5443 / 5454 (relação de comandantes da PMPE, mar/2026).",
   email: "6bpm@pm.pe.gov.br · secretaria: sec.6bpm.pmpe@gmail.com (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~47 km, ~45 min de carro sem trânsito.\nAté o Marco Zero (Recife): ~13 km, ~16 min sem trânsito.\nAcesso pela Estrada da Batalha, ligada a Prazeres, à BR-101 e à região do aeroporto e dos Montes Guararapes. De ônibus/metrô: TI Prazeres e estações Prazeres, Monte dos Guararapes e Cajueiro Seco (Linha Sul); a linha 118 (Prazeres/Boa Viagem) passa pela Estrada da Batalha (Grande Recife).",
+  distanciaBR: "Acesso pela Estrada da Batalha, ligada a Prazeres, à BR-101 e à região do aeroporto e dos Montes Guararapes. De ônibus/metrô: TI Prazeres e estações Prazeres, Monte dos Guararapes e Cajueiro Seco (Linha Sul); a linha 118 (Prazeres/Boa Viagem) passa pela Estrada da Batalha (Grande Recife).",
   // 🎖️ Comando e efetivo
   comandante: "TC PM Carlos Fernando de Souza Santos (relação de comandantes da PMPE, mar/2026).",
   subcomandante: "Maj QOPM Wilson Carlos Silva Queiroz — Portaria nº 1558 (BGSDS nº 046, de 14/03/2025), a contar de 10/03/2025.",

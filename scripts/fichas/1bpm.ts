@@ -30,7 +30,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "Avenida Governador Carlos de Lima Cavalcanti, 5075, Rio Doce, Olinda - PE",
   telefone: "(81) 3181-1720 / 3181-1723 (PMPE). Também publicados: 3181-1721 / 3181-1722 (relação de comandantes da PMPE, mar/2026).",
   email: "1bpm@pm.pe.gov.br (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~56 km, ~50 min de carro sem trânsito.\nAté o Marco Zero (Recife): ~13 km, ~15 min sem trânsito.\nA sede fica na Av. Carlos de Lima Cavalcanti, corredor que liga Olinda a Paulista; o Terminal Integrado Rio Doce é a referência para quem vai de ônibus.",
+  distanciaBR: "A sede fica na Av. Carlos de Lima Cavalcanti, corredor que liga Olinda a Paulista; o Terminal Integrado Rio Doce é a referência para quem vai de ônibus.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Lenildo de Freitas Paixão — Portaria nº 1557 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025; citado como comandante na Operação Break (07/08/2026).",
   subcomandante: "",

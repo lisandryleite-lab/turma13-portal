@@ -29,7 +29,7 @@ export const FICHA: Ficha = {
   referenciaMapa: "16º BPM, Cais de Santa Rita, São José, Recife - PE",
   telefone: "(81) 3181-1791 / 3181-1783 (PMPE). Também publicado: 3181-1782 (relação de comandantes da PMPE, mar/2026).",
   email: "16bpm@pm.pe.gov.br (PMPE)",
-  distanciaBR: "Até a APMP (Paudalho): ~46 km, ~39 min de carro sem trânsito.\nAté o Marco Zero (Recife Antigo): ~1,6 km, ~2 min sem trânsito.\nA sede fica no centro do Recife, junto ao Cais de Santa Rita, com acesso às pontes para o Recife Antigo, Boa Vista e Zona Sul.",
+  distanciaBR: "A sede fica no centro do Recife, junto ao Cais de Santa Rita, com acesso às pontes para o Recife Antigo, Boa Vista e Zona Sul.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Rodrigo Jorge Grisi da Costa Vasconcelos (relação de comandantes da PMPE, mar/2026).",
   subcomandante: "Maj QOPM Daniel Augusto da Silva — Portaria nº 6768 (BGSDS nº 218, de 19/11/2024), a contar de 01/11/2024.",
