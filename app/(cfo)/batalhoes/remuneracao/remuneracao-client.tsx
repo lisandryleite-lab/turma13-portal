@@ -14,19 +14,44 @@ const td: React.CSSProperties = { padding: "10px", borderTop: "1px solid var(--s
 const brl = (v: number | null | undefined) => v == null ? "—" : v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })
 const FUNCOES = ["Sem função", "Função de supervisão (FGS)", "Comandante de pelotão", "Comandante de companhia"] as const
 const COR = { "Sem função": "#c9cfc4", "Função de supervisão (FGS)": "#8a9a7b", "Comandante de pelotão": "#b5933f", "Comandante de companhia": "#3a4a3a" } as const
-type Aba = "ganho" | "historico"
+type Aba = "ganho" | "extras" | "historico"
+type Grat = { simbolo: string; funcao: string; quant: number; valor: number; turma?: boolean }
+type Diarias = { total: number; pagamentos: number; mediana: number; principais: { operacao: string; valor: number }[] } | null
+const mi = (v: number) => `R$ ${(v / 1e6).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} mi`
 
 export function RemuneracaoClient() {
   const [aba, setAba] = useState<Aba>("ganho")
   const turmas = dados.turmas as Turma[]
   const [t1asp, t2asp, t1ten] = turmas
+  const g = dados.gratificacoes
+  const diarias = Object.entries(dados.porBatalhao as Record<string, { diarias: Diarias }>)
+    .flatMap(([o, p]) => p.diarias ? [[o, p.diarias] as const] : []).sort((a, b) => b[1].total - a[1].total)
+  const maxDiarias = Math.max(1, ...diarias.map(([, d]) => d.total))
+  const medianaDiaria = diarias.map(([, d]) => d.mediana).sort((a, b) => a - b)[Math.floor(diarias.length / 2)] ?? 0
+  const tabelaGrat = (itens: Grat[]) => (
+    <div style={{ overflowX: "auto" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead><tr><th style={th}>Símbolo</th><th style={th}>Função</th><th style={th}>Valor/mês</th><th style={th}>Vagas PMPE</th></tr></thead>
+        <tbody>
+          {itens.map(i => (
+            <tr key={i.simbolo} style={{ background: i.turma ? "#fbf7ec" : undefined }}>
+              <td style={{ ...td, fontWeight: 700, color: "var(--olive)" }}>{i.simbolo}</td>
+              <td style={{ ...td, whiteSpace: "normal", fontSize: 13.5 }}>{i.funcao}{i.turma && <span style={{ color: "var(--gold)", fontSize: 12, fontWeight: 700 }}> · alcance do aspirante/tenente</span>}</td>
+              <td style={td}><strong>{brl(i.valor)}</strong></td>
+              <td style={td}>{i.quant}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
   const cel = (l: Linha) => !l ? <span style={{ color: "var(--ink-60)" }}>—</span> : l.n < 3 ? <span style={{ color: "var(--ink-60)", fontSize: 12.5 }}>poucos casos</span>
     : <><strong>{brl(l.liquido)}</strong> <span style={{ color: "var(--ink-60)", fontSize: 12 }}>líquido</span><br /><span style={{ color: "var(--ink-60)", fontSize: 12.5 }}>{brl(l.bruto)} bruto · {l.n} pessoas</span></>
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
       <nav style={{ display: "flex", gap: 4, borderBottom: "1px solid rgba(58,74,58,0.15)" }}>
-        {([["ganho", "Quanto ganha"], ["historico", "Histórico e previsão"]] as const).map(([id, rot]) => (
+        {([["ganho", "Quanto ganha"], ["extras", "Gratificações e extras"], ["historico", "Histórico e previsão"]] as const).map(([id, rot]) => (
           <button key={id} onClick={() => setAba(id)} style={{ padding: "9px 12px", border: "none", background: "none", cursor: "pointer", fontSize: 14, fontFamily: "inherit",
             fontWeight: aba === id ? 700 : 500, color: aba === id ? "var(--olive)" : "var(--ink-60)", borderBottom: aba === id ? "2px solid var(--gold)" : "2px solid transparent", marginBottom: -1 }}>{rot}</button>
         ))}
@@ -53,8 +78,63 @@ export function RemuneracaoClient() {
             </div>
             <p style={{ ...sub, margin: "14px 0 0" }}>
               Soldo: aspirante {brl(dados.soldos["09/2026"].aspirante)} · 2º Ten {brl(dados.soldos["09/2026"].segundoTenente)}.
-              Além disso, parte recebe jornada extra/diárias em linha separada (mediana {brl(t2asp.extras.mediana)}–{brl(t1ten.extras.mediana)} para quem recebe), não somadas acima.
+              Além disso, parte recebe jornada extra/diárias em linha separada (mediana {brl(t2asp.extras.mediana)}–{brl(t1ten.extras.mediana)} para quem recebe), não somadas acima — veja a aba Gratificações e extras.
             </p>
+          </>
+        )}
+
+        {aba === "extras" && (
+          <>
+            <h2 style={titulo}>Gratificações de comando (GEC)</h2>
+            <p style={sub}>{g.gec.norma}. Somam-se ao salário enquanto a pessoa está designada para a função.</p>
+            {tabelaGrat(g.gec.itens)}
+
+            <h2 style={{ ...titulo, marginTop: 22 }}>Funções de supervisão (FGS)</h2>
+            <p style={sub}>{g.fgs.norma}: aspirante na FGS-3, 2º Ten na FGS-2.</p>
+            {tabelaGrat(g.fgs.itens)}
+            <p style={{ ...sub, margin: "8px 0 0", fontSize: 12 }}>{g.quotasFonte}</p>
+
+            <h2 style={{ ...titulo, marginTop: 22 }}>PJES — jornada extra</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 10 }}>
+              <div style={{ padding: 14, borderRadius: 12, background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)" }}>
+                <div style={{ fontFamily: "var(--serif-cfo)", fontSize: 24, fontWeight: 700, color: "var(--olive)" }}>{brl(g.pjes.valorOficial)}</div>
+                <div style={{ fontSize: 12.5, color: "var(--ink-60)" }}>por {g.pjes.unidade} (oficial) · praça {brl(g.pjes.valorPraca)}</div>
+              </div>
+              <div style={{ padding: 14, borderRadius: 12, background: "var(--surface)", fontSize: 13, lineHeight: 1.55 }}>
+                Créditos extras na folha (mediana de quem recebeu): T1 aspirante <strong>{brl(t1asp.extras.mediana)}</strong> ({t1asp.extras.pct}%) · T2 aspirante <strong>{brl(t2asp.extras.mediana)}</strong> ({t2asp.extras.pct}%) · T1 2º Ten <strong>{brl(t1ten.extras.mediana)}</strong> ({t1ten.extras.pct}%) — cerca de 1, 2 e 4 plantões por mês.
+              </div>
+            </div>
+            <p style={{ ...sub, margin: "8px 0 0", fontSize: 12 }}>{g.pjes.obs}</p>
+
+            <h2 style={{ ...titulo, marginTop: 22 }}>Diárias por batalhão — 2026</h2>
+            <p style={sub}>Diárias operacionais pagas até {dados.diariasAte} cuja finalidade cita o batalhão (todo o efetivo, não só oficiais). Diária típica: {brl(medianaDiaria)}. Mais diárias = mais operação paga (PE Seguro, Carnaval, São João).</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {diarias.map(([o, d], i) => (
+                <div key={o}>
+                  <div style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: 13.5 }}>
+                    <span><span style={{ color: "var(--ink-60)", fontSize: 12 }}>{i + 1}º</span> <strong style={{ color: "var(--olive)" }}>{o}</strong></span>
+                    <span><strong>{mi(d.total)}</strong> <span style={{ color: "var(--ink-60)", fontSize: 12 }}>· {d.pagamentos.toLocaleString("pt-BR")} pagamentos</span></span>
+                  </div>
+                  <div style={{ height: 8, borderRadius: 99, background: "var(--surface)", marginTop: 4 }}>
+                    <div style={{ width: `${(d.total / maxDiarias) * 100}%`, height: "100%", borderRadius: 99, background: "var(--gold)" }} />
+                  </div>
+                  <div style={{ fontSize: 11.5, color: "var(--ink-60)", marginTop: 2 }}>{d.principais.filter(x => !/^Outras/.test(x.operacao)).map(x => x.operacao).join(" · ")}</div>
+                </div>
+              ))}
+            </div>
+
+            <details style={{ marginTop: 20 }}>
+              <summary style={{ cursor: "pointer", fontSize: 13.5, fontWeight: 700, color: "var(--olive)" }}>Funções de comando previstas por batalhão (SUNOR nº 62/2023 · INCG nº 605)</summary>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 8, marginTop: 10 }}>
+                {Object.entries(dados.funcoesComando).map(([o, v]) => (
+                  <div key={o} style={{ padding: "10px 12px", borderRadius: 12, background: "var(--surface)", fontSize: 12.5, lineHeight: 1.55 }}>
+                    <strong style={{ color: "var(--olive)" }}>{o}</strong><br />
+                    Cmt de companhia (GEC-2): {v.cpm.length ? v.cpm.join(", ") : "—"}<br />
+                    Cmt de pelotão (GEC-3): {v.pelotoes.length ? v.pelotoes.join(", ") : "—"}
+                  </div>
+                ))}
+              </div>
+            </details>
           </>
         )}
 
@@ -96,7 +176,7 @@ export function RemuneracaoClient() {
       <details style={{ padding: "0 4px" }}>
         <summary style={{ cursor: "pointer", fontSize: 13, fontWeight: 600, color: "var(--ink-60)" }}>Fontes e método</summary>
         <div style={{ marginTop: 8, fontSize: 12.5, lineHeight: 1.6 }}>
-          {dados.fontes.filter(f => !/Diárias|SUNOR|INCG|LC nº 152/.test(f.rotulo)).map(f => <div key={f.url}><a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>{f.rotulo} ↗</a></div>)}
+          {dados.fontes.filter(f => !/LC nº 152/.test(f.rotulo)).map(f => <div key={f.url}><a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>{f.rotulo} ↗</a></div>)}
           <p style={{ margin: "8px 0 0", color: "var(--ink-60)" }}>Dados públicos (Lei nº 12.527/2011). Só medianas por turma e função — nenhum salário individual; grupos com menos de 3 pessoas não aparecem. Turmas identificadas pelos atos de nomeação. Atualizado em {dados.atualizado}.</p>
         </div>
       </details>

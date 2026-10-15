@@ -12,7 +12,7 @@ export type CardBatalhao = {
 }
 export type Pendente = { mat: number; nome: string; pelotao: number | null }
 
-type Rem = { vagasT2: number; pctT2: number; posT2: { mediana: number; n: number } | null }
+type Rem = { vagasT2: number; pctT2: number; posT2: { melhor: number; pior: number; n: number } | null; diarias: { total: number } | null }
 type Crime = { cvli: { taxa2025: number; variacao: number | null }; compartilhado: string | null }
 const REM = remuneracao.porBatalhao as Record<string, Rem>
 const CRIME = criminalidade.porBatalhao as Record<string, Crime>
@@ -25,11 +25,12 @@ const titulo: React.CSSProperties = { fontFamily: "var(--serif-cfo)", fontSize: 
 const th: React.CSSProperties = { padding: "8px 10px", textAlign: "left", fontSize: 11, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600, whiteSpace: "nowrap" }
 const td: React.CSSProperties = { padding: "10px", borderTop: "1px solid var(--surface)", fontSize: 13.5, whiteSpace: "nowrap" }
 
-type Ordem = "turma" | "vagas" | "disputa" | "seguranca"
+type Ordem = "turma" | "vagas" | "disputa" | "diarias" | "seguranca"
 const ORDENS: { id: Ordem; rot: string }[] = [
   { id: "turma", rot: "Mais escolhidos pela turma" },
   { id: "vagas", rot: "Mais vagas (T2)" },
   { id: "disputa", rot: "Mais disputados (T2)" },
+  { id: "diarias", rot: "Mais diárias" },
   { id: "seguranca", rot: "Menor violência" },
 ]
 
@@ -53,7 +54,8 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
 
   const linhas = useMemo(() => {
     const v = (c: CardBatalhao) => ordem === "turma" ? c.opcao1 : ordem === "vagas" ? (REM[c.sigla]?.vagasT2 ?? 0)
-      : ordem === "disputa" ? -(REM[c.sigla]?.posT2?.mediana ?? 999) : -(CRIME[c.sigla]?.cvli.taxa2025 ?? 999)
+      : ordem === "disputa" ? -(REM[c.sigla]?.posT2?.pior ?? 999) : ordem === "diarias" ? (REM[c.sigla]?.diarias?.total ?? 0)
+      : -(CRIME[c.sigla]?.cvli.taxa2025 ?? 999)
     return [...cards].sort((a, b) => v(b) - v(a) || numero(a.sigla) - numero(b.sigla))
   }, [cards, ordem])
   const emOrdem = useMemo(() => {
@@ -96,7 +98,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead><tr>
-              <th style={th}>Batalhão</th><th style={th}>Turma (1ª opção)</th><th style={th}>Vagas T2</th><th style={th}>Posição típica T2</th><th style={th}>CVLI /100 mil</th>
+              <th style={th}>Batalhão</th><th style={th}>Turma (1ª opção)</th><th style={th}>Vagas T2</th><th style={th}>Último colocado T2</th><th style={th}>Diárias 2026</th><th style={th}>CVLI /100 mil</th>
             </tr></thead>
             <tbody>
               {linhas.map(c => {
@@ -114,7 +116,8 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
                       <strong>{c.opcao1}</strong> <span style={{ color: "var(--ink-60)", fontSize: 12 }}>{pct(c.opcao1, respondentes).toLocaleString("pt-BR")}%</span>
                     </td>
                     <td style={td}>{r?.vagasT2 ?? "—"}</td>
-                    <td style={td}>{r?.posT2 ? <>{r.posT2.mediana}º <span style={{ color: "var(--ink-60)", fontSize: 11.5 }}>(n={r.posT2.n})</span></> : "—"}</td>
+                    <td style={td}>{r?.posT2 ? <><strong>{r.posT2.pior}º</strong> <span style={{ color: "var(--ink-60)", fontSize: 11.5 }}>(melhor {r.posT2.melhor}º · n={r.posT2.n})</span></> : "—"}</td>
+                    <td style={td}>{r?.diarias ? `R$ ${(r.diarias.total / 1e6).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} mi` : "—"}</td>
                     <td style={td}>
                       <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, marginRight: 6, background: nivel < 0.34 ? "#7aa36f" : nivel < 0.67 ? "#d6b45a" : "#c0704f" }} />
                       {t.toLocaleString("pt-BR")} <Tendencia v={cr?.cvli.variacao ?? null} />{cr?.compartilhado ? <span style={{ color: "var(--ink-60)", fontSize: 11 }}> *</span> : ""}
@@ -126,7 +129,8 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
           </table>
         </div>
         <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
-          <strong>Posição típica T2</strong>: mediana da classificação dos aspirantes da T2 vistos no batalhão — quanto menor, mais cedo foi escolhido.
+          <strong>Último colocado T2</strong>: pior classificação (1º a 182º) entre os aspirantes da T2 vistos no batalhão — é o parâmetro de corte: quanto menor, mais disputado. n = tamanho da amostra.
+          <strong> Diárias</strong>: diárias operacionais pagas em 2026 citando o batalhão (todo o efetivo).
           <strong> CVLI</strong>: mortes violentas intencionais por 100 mil habitantes (2025) e variação jan–set 2026. * dado do município inteiro (Recife ou Jaboatão).
           Fontes: <a href="https://www.sds.pe.gov.br/estatisticas/crimes-violentos-letais-intencionais" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>SDS</a>, <a href="https://sidra.ibge.gov.br/tabela/4709" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>IBGE</a>, quadro de vagas da escolha da T2 e boletins da SDS · <a href={planilhaUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>planilha da DAG</a>.
         </p>
