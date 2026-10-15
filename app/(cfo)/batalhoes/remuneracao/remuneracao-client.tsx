@@ -15,8 +15,9 @@ const brl = (v: number | null | undefined) => v == null ? "—" : v.toLocaleStri
 const FUNCOES = ["Sem função", "Função de supervisão (FGS)", "Comandante de pelotão", "Comandante de companhia"] as const
 const COR = { "Sem função": "#c9cfc4", "Função de supervisão (FGS)": "#8a9a7b", "Comandante de pelotão": "#b5933f", "Comandante de companhia": "#3a4a3a" } as const
 type Aba = "funcao" | "turmas" | "previsao" | "batalhao" | "efetivo" | "fontes"
-type PorBat = { vagasT2: number; t2ComFuncao: number; pctT2: number; t2NoComando: number; t1ComFuncao: number; diarias: { total: number; pagamentos: number; mediana: number; principais: { operacao: string; valor: number }[] } | null }
-type Ordem = "vagasT2" | "pctT2" | "t1ComFuncao" | "diarias"
+type Pos = { n: number; melhor: number; mediana: number; pior: number } | null
+type PorBat = { posT1: Pos; posT2: Pos; vagasT2: number; t2ComFuncao: number; pctT2: number; t2NoComando: number; t1ComFuncao: number; diarias: { total: number; pagamentos: number; mediana: number; principais: { operacao: string; valor: number }[] } | null }
+type Ordem = "vagasT2" | "pctT2" | "t1ComFuncao" | "diarias" | "posT2"
 const ABAS: { id: Aba; rot: string }[] = [
   { id: "funcao", rot: "💵 Por função" }, { id: "turmas", rot: "📊 Comparação entre turmas" }, { id: "previsao", rot: "🔮 Nossa previsão" }, { id: "batalhao", rot: "🏢 Por batalhão" },
   { id: "efetivo", rot: "🧩 Efetivo e funções" }, { id: "fontes", rot: "📚 Fontes" },
@@ -26,7 +27,7 @@ export function RemuneracaoClient() {
   const [aba, setAba] = useState<Aba>("funcao")
   const [ordem, setOrdem] = useState<Ordem>("vagasT2")
   const porBat = dados.porBatalhao as Record<string, PorBat>
-  const valorOrdem = (p: PorBat) => ordem === "diarias" ? (p.diarias?.total ?? 0) : p[ordem]
+  const valorOrdem = (p: PorBat) => ordem === "diarias" ? (p.diarias?.total ?? 0) : ordem === "posT2" ? -(p.posT2?.mediana ?? 999) : p[ordem]
   const linhasBat = Object.entries(porBat).sort((a, b) => valorOrdem(b[1]) - valorOrdem(a[1]))
   const maxDiarias = Math.max(1, ...Object.values(porBat).map(p => p.diarias?.total ?? 0))
   const turmas = dados.turmas as Turma[]
@@ -142,22 +143,27 @@ export function RemuneracaoClient() {
             <h2 style={titulo}>Comparação por batalhão</h2>
             <p style={sub}>
               <strong>Vagas da T2</strong>: quadro oficial da escolha de {dados.escolhaT2.data} ({dados.escolhaT2.local}), {dados.escolhaT2.total} vagas. {dados.escolhaT2.regra}<br />
+              <strong>Posição</strong>: mediana da classificação no CFO dos aspirantes vistos no batalhão (T2 de 1º a 182º; T1 de 1º a 148º) — quanto menor, mais cedo o batalhão foi escolhido. Amostra: {dados.posicoes.cruzados} aspirantes com função publicada e nome na lista de nomeação.<br />
               <strong>Com função</strong>: aspirantes com designação publicada no Boletim da SDS (dez/2025–out/2026). <strong>Diárias</strong>: diárias operacionais pagas em 2026 (até {dados.diariasAte}) cuja finalidade cita o batalhão — todo o efetivo da unidade, não só aspirantes.
             </p>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
               <span style={{ fontSize: 12.5, color: "var(--ink-60)", alignSelf: "center" }}>Ordenar por:</span>
-              {([["vagasT2", "Vagas T2"], ["pctT2", "% T2 com função"], ["t1ComFuncao", "T1 com função"], ["diarias", "Diárias 2026"]] as const).map(([k, r]) => (
+              {([["vagasT2", "Vagas T2"], ["posT2", "Mais disputado (posição T2)"], ["pctT2", "% T2 com função"], ["t1ComFuncao", "T1 com função"], ["diarias", "Diárias 2026"]] as const).map(([k, r]) => (
                 <button key={k} onClick={() => setOrdem(k)} style={{ padding: "5px 11px", borderRadius: 999, border: "1px solid rgba(58,74,58,0.2)", cursor: "pointer", fontSize: 12.5, fontWeight: 600, background: ordem === k ? "var(--olive)" : "#fff", color: ordem === k ? "var(--canvas)" : "var(--ink-60)" }}>{r}</button>
               ))}
             </div>
             <div style={{ overflowX: "auto" }}>
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead><tr><th style={th}>Batalhão</th><th style={th}>Vagas T2</th><th style={th}>T2 com função</th><th style={th}>T1 com função</th><th style={th}>Diárias 2026</th></tr></thead>
+                <thead><tr><th style={th}>Batalhão</th><th style={th}>Vagas T2</th><th style={th}>Posição (T2 · T1)</th><th style={th}>T2 com função</th><th style={th}>T1 com função</th><th style={th}>Diárias 2026</th></tr></thead>
                 <tbody>
                   {linhasBat.map(([o, p]) => (
                     <tr key={o}>
                       <td style={{ ...td, fontWeight: 700, color: "var(--olive)" }}>{o}</td>
                       <td style={td}>{p.vagasT2}</td>
+                      <td style={td}>
+                        {p.posT2 ? <><strong>{p.posT2.mediana}º</strong> <span style={{ color: "var(--ink-60)", fontSize: 12 }}>T2 (melhor {p.posT2.melhor}º · n={p.posT2.n})</span></> : <span style={{ color: "var(--ink-60)" }}>T2 —</span>}<br />
+                        {p.posT1 ? <><strong>{p.posT1.mediana}º</strong> <span style={{ color: "var(--ink-60)", fontSize: 12 }}>T1 (melhor {p.posT1.melhor}º · n={p.posT1.n})</span></> : <span style={{ color: "var(--ink-60)" }}>T1 —</span>}
+                      </td>
                       <td style={td}>{p.t2ComFuncao} <span style={{ color: "var(--ink-60)", fontSize: 12.5 }}>({p.pctT2}% · {p.t2NoComando} no comando)</span></td>
                       <td style={td}>{p.t1ComFuncao}</td>
                       <td style={{ ...td, minWidth: 170 }}>
@@ -173,7 +179,7 @@ export function RemuneracaoClient() {
               </table>
             </div>
             <p style={{ ...sub, margin: "14px 0 0" }}>
-              Leitura: em proporção às vagas, a T2 recebeu mais funções no 16º, 11º, 20º, 18º e 19º BPM; menos no 17º e no 26º. As diárias mostram onde há mais operação paga (PE Seguro, Carnaval, São João) — maiores no 11º, BPTur, 13º e 12º.
+              Leitura: na T2, os aspirantes vistos no 6º, 26º, 20º, 13º BPM e BPTur estavam entre os mais bem classificados (mediana até ~40º); no 18º, 11º, 1º e 12º, mais para o fim da lista. A amostra é pequena (1 a 7 por batalhão) — use como indicativo. Em proporção às vagas, a T2 recebeu mais funções no 16º, 11º, 20º, 18º e 19º BPM; menos no 17º e no 26º. As diárias mostram onde há mais operação paga (PE Seguro, Carnaval, São João) — maiores no 11º, BPTur, 13º e 12º.
               A diária não identifica o posto de quem recebe, então não dá para separar os valores dos aspirantes.
             </p>
           </>
