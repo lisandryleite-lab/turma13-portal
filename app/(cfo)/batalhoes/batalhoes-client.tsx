@@ -3,6 +3,9 @@
 import Link from "next/link"
 import { useMemo, useState } from "react"
 import { FONTES_ASPIRANTADO } from "@/lib/batalhoes-base"
+import remuneracao from "@/lib/remuneracao-oficiais.json"
+
+const VAGAS_T2 = Object.fromEntries(Object.entries(remuneracao.porBatalhao).map(([o, p]) => [o, p.vagasT2])) as Record<string, number>
 
 export type CardBatalhao = {
   sigla: string; slug: string; nome: string; sede: string; municipio: string
@@ -150,11 +153,11 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
           </div>
         </div>
         <p style={subSecao}>
-          Aspirantes com função publicada no Boletim da SDS (dez/2025–out/2026) nestes 13 batalhões: <strong style={{ color: "#3a4a3a" }}>T1 {totT1}</strong> (148 formados em 28/11/2025) · <strong style={{ color: "#b5933f" }}>T2 {totT2}</strong> (182 formados em 08/06/2026). É um mínimo — nem todo lotado recebe função publicada.
+          Vagas oficiais da escolha da T2 (28/06/2026, 182 vagas) e aspirantes com função publicada no Boletim da SDS (dez/2025–out/2026) nestes 13 batalhões: <strong style={{ color: "#3a4a3a" }}>T1 {totT1}</strong> (148 formados em 28/11/2025) · <strong style={{ color: "#b5933f" }}>T2 {totT2}</strong> (182 formados em 08/06/2026). É um mínimo — nem todo lotado recebe função publicada.
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
           {rankAsp.map(c => (
-            <Link key={c.slug} href={`/batalhoes/${c.slug}#ficha-vagas`} style={{ display: "grid", gridTemplateColumns: "78px 1fr 70px", alignItems: "center", gap: 10, textDecoration: "none", color: "var(--ink)" }}>
+            <Link key={c.slug} href={`/batalhoes/${c.slug}#ficha-vagas`} style={{ display: "grid", gridTemplateColumns: "78px 1fr 84px", alignItems: "center", gap: 10, textDecoration: "none", color: "var(--ink)" }}>
               <span style={{ fontWeight: 700, color: "var(--olive)", fontSize: 13.5, whiteSpace: "nowrap" }}>{c.sigla}</span>
               <span style={{ display: "flex", height: 14, borderRadius: 99, background: "var(--surface)", overflow: "hidden" }}>
                 {turmaAsp !== "t2" && <span style={{ width: `${(c.t1 / maxAsp) * 100}%`, background: "#3a4a3a" }} />}
@@ -162,6 +165,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
               </span>
               <span style={{ fontSize: 12.5, textAlign: "right", whiteSpace: "nowrap" }}>
                 {turmaAsp === "ambas" ? <><strong>{c.t1 + c.t2}</strong> <span style={{ color: "var(--ink-60)" }}>({c.t1}+{c.t2})</span></> : <strong>{valAsp(c)}</strong>}
+                {VAGAS_T2[c.sigla] ? <span style={{ display: "block", fontSize: 11, color: "var(--ink-60)" }}>{VAGAS_T2[c.sigla]} vagas T2</span> : null}
               </span>
             </Link>
           ))}

@@ -437,6 +437,365 @@
   {
    "rotulo": "BGSDS nº 103 (09/06/2026) — nomeação da T2",
    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/06%20-%20Junho/103%20BGSDS%20DE%2009JUN2026.pdf"
+  },
+  {
+   "rotulo": "Diárias pagas 2026 (CSV, Dados Abertos PE)",
+   "url": "https://dados.pe.gov.br/dataset/441681f2-108d-4e06-968f-6bbe49ad6834/resource/b6332afb-fee5-43e3-968e-a3f90863c1a0/download/diarias_2026_20261015.csv"
+  },
+  {
+   "rotulo": "Dados Abertos PE — Diárias",
+   "url": "https://dados.pe.gov.br/dataset/all-diarias"
+  },
+  {
+   "rotulo": "SUNOR nº 62 (27/12/2023) — publicação da INCG nº 605/2023 (DGP/PMPE)",
+   "url": "https://www.pm.pe.gov.br/dgp/"
   }
- ]
+ ],
+ "porBatalhao": {
+  "1º BPM": {
+   "vagasT2": 13,
+   "t2ComFuncao": 4,
+   "pctT2": 31,
+   "t2NoComando": 2,
+   "t1ComFuncao": 9,
+   "diarias": {
+    "total": 2304540,
+    "pagamentos": 4958,
+    "mediana": 360,
+    "principais": [
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 845820
+     },
+     {
+      "operacao": "Outras operações",
+      "valor": 795240
+     },
+     {
+      "operacao": "Outras",
+      "valor": 548460
+     }
+    ]
+   }
+  },
+  "6º BPM": {
+   "vagasT2": 17,
+   "t2ComFuncao": 5,
+   "pctT2": 29,
+   "t2NoComando": 3,
+   "t1ComFuncao": 12,
+   "diarias": {
+    "total": 2342160,
+    "pagamentos": 5301,
+    "mediana": 360,
+    "principais": [
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 1038960
+     },
+     {
+      "operacao": "Outras",
+      "valor": 664020
+     },
+     {
+      "operacao": "Outras operações",
+      "valor": 542520
+     }
+    ]
+   }
+  },
+  "11º BPM": {
+   "vagasT2": 17,
+   "t2ComFuncao": 9,
+   "pctT2": 53,
+   "t2NoComando": 5,
+   "t1ComFuncao": 8,
+   "diarias": {
+    "total": 3132900,
+    "pagamentos": 4245,
+    "mediana": 540,
+    "principais": [
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 1603800
+     },
+     {
+      "operacao": "Carnaval",
+      "valor": 680400
+     },
+     {
+      "operacao": "Outras",
+      "valor": 621900
+     }
+    ]
+   }
+  },
+  "12º BPM": {
+   "vagasT2": 14,
+   "t2ComFuncao": 5,
+   "pctT2": 36,
+   "t2NoComando": 3,
+   "t1ComFuncao": 5,
+   "diarias": {
+    "total": 2665800,
+    "pagamentos": 6687,
+    "mediana": 180,
+    "principais": [
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 1533060
+     },
+     {
+      "operacao": "Carnaval",
+      "valor": 747000
+     },
+     {
+      "operacao": "Outras operações",
+      "valor": 158940
+     }
+    ]
+   }
+  },
+  "13º BPM": {
+   "vagasT2": 14,
+   "t2ComFuncao": 3,
+   "pctT2": 21,
+   "t2NoComando": 2,
+   "t1ComFuncao": 5,
+   "diarias": {
+    "total": 2774340,
+    "pagamentos": 5693,
+    "mediana": 360,
+    "principais": [
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 2077560
+     },
+     {
+      "operacao": "Carnaval",
+      "valor": 356220
+     },
+     {
+      "operacao": "Outras",
+      "valor": 138060
+     }
+    ]
+   }
+  },
+  "16º BPM": {
+   "vagasT2": 13,
+   "t2ComFuncao": 8,
+   "pctT2": 62,
+   "t2NoComando": 2,
+   "t1ComFuncao": 11,
+   "diarias": {
+    "total": 1870740,
+    "pagamentos": 6721,
+    "mediana": 180,
+    "principais": [
+     {
+      "operacao": "Outras",
+      "valor": 958320
+     },
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 320400
+     },
+     {
+      "operacao": "Outras operações",
+      "valor": 270180
+     }
+    ]
+   }
+  },
+  "17º BPM": {
+   "vagasT2": 13,
+   "t2ComFuncao": 1,
+   "pctT2": 8,
+   "t2NoComando": 1,
+   "t1ComFuncao": 3,
+   "diarias": {
+    "total": 1655280,
+    "pagamentos": 4095,
+    "mediana": 360,
+    "principais": [
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 754380
+     },
+     {
+      "operacao": "Outras",
+      "valor": 550620
+     },
+     {
+      "operacao": "Carnaval",
+      "valor": 180720
+     }
+    ]
+   }
+  },
+  "18º BPM": {
+   "vagasT2": 17,
+   "t2ComFuncao": 8,
+   "pctT2": 47,
+   "t2NoComando": 4,
+   "t1ComFuncao": 8,
+   "diarias": {
+    "total": 1190340,
+    "pagamentos": 3029,
+    "mediana": 180,
+    "principais": [
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 719460
+     },
+     {
+      "operacao": "Outras",
+      "valor": 258840
+     },
+     {
+      "operacao": "Carnaval",
+      "valor": 141840
+     }
+    ]
+   }
+  },
+  "19º BPM": {
+   "vagasT2": 17,
+   "t2ComFuncao": 8,
+   "pctT2": 47,
+   "t2NoComando": 3,
+   "t1ComFuncao": 7,
+   "diarias": {
+    "total": 1795860,
+    "pagamentos": 4496,
+    "mediana": 180,
+    "principais": [
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 1136160
+     },
+     {
+      "operacao": "Outras",
+      "valor": 418500
+     },
+     {
+      "operacao": "Carnaval",
+      "valor": 126000
+     }
+    ]
+   }
+  },
+  "20º BPM": {
+   "vagasT2": 12,
+   "t2ComFuncao": 6,
+   "pctT2": 50,
+   "t2NoComando": 2,
+   "t1ComFuncao": 5,
+   "diarias": {
+    "total": 1406700,
+    "pagamentos": 3252,
+    "mediana": 360,
+    "principais": [
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 1214100
+     },
+     {
+      "operacao": "Carnaval",
+      "valor": 137520
+     },
+     {
+      "operacao": "São João",
+      "valor": 36360
+     }
+    ]
+   }
+  },
+  "25º BPM": {
+   "vagasT2": 16,
+   "t2ComFuncao": 6,
+   "pctT2": 38,
+   "t2NoComando": 1,
+   "t1ComFuncao": 6,
+   "diarias": {
+    "total": 1648620,
+    "pagamentos": 3671,
+    "mediana": 360,
+    "principais": [
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 955080
+     },
+     {
+      "operacao": "Outras",
+      "valor": 378000
+     },
+     {
+      "operacao": "Carnaval",
+      "valor": 226800
+     }
+    ]
+   }
+  },
+  "26º BPM": {
+   "vagasT2": 13,
+   "t2ComFuncao": 2,
+   "pctT2": 15,
+   "t2NoComando": 1,
+   "t1ComFuncao": 6,
+   "diarias": {
+    "total": 1604880,
+    "pagamentos": 3075,
+    "mediana": 360,
+    "principais": [
+     {
+      "operacao": "Outras",
+      "valor": 526500
+     },
+     {
+      "operacao": "Outras operações",
+      "valor": 432900
+     },
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 412560
+     }
+    ]
+   }
+  },
+  "BPTur": {
+   "vagasT2": 6,
+   "t2ComFuncao": 2,
+   "pctT2": 33,
+   "t2NoComando": 0,
+   "t1ComFuncao": 5,
+   "diarias": {
+    "total": 2824380,
+    "pagamentos": 8660,
+    "mediana": 180,
+    "principais": [
+     {
+      "operacao": "Carnaval",
+      "valor": 2310480
+     },
+     {
+      "operacao": "Op. PE Seguro",
+      "valor": 393480
+     },
+     {
+      "operacao": "Outras operações",
+      "valor": 54360
+     }
+    ]
+   }
+  }
+ },
+ "diariasAte": "13/10/2026",
+ "escolhaT2": {
+  "data": "28/06/2026",
+  "local": "Auditório da APMP",
+  "total": 182,
+  "regra": "Quem já era PM de Pernambuco não pôde escolher a OME em que servia antes do CFO."
+ }
 }

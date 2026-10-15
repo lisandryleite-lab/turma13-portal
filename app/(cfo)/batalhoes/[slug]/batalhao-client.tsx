@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useMemo, useState } from "react"
+import remuneracao from "@/lib/remuneracao-oficiais.json"
 import { useRouter } from "next/navigation"
 import {
   CAMPOS_FICHA, FONTES_ASPIRANTADO, FORMULARIO_DAG_URL, GRUPO_LINK_PADRAO, GRUPOS_FICHA, TIPOS_CONTRIBUICAO,
@@ -263,6 +264,31 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
             {aba === "vagas" && (
               <>
                 <h2 style={tituloAba}>Aspirantado das turmas anteriores (T1 e T2)</h2>
+                {(() => {
+                  const p = (remuneracao.porBatalhao as Record<string, { vagasT2: number; t2ComFuncao: number; pctT2: number; diarias: { total: number; pagamentos: number } | null }>)[sigla]
+                  if (!p) return null
+                  return (
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 8, marginBottom: 16 }}>
+                      <div style={{ padding: "10px 12px", borderRadius: 12, background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)" }}>
+                        <div style={{ fontFamily: "var(--serif-cfo)", fontSize: 22, fontWeight: 700, color: "var(--gold)" }}>{p.vagasT2}</div>
+                        <div style={{ fontSize: 12.5, fontWeight: 700 }}>vagas na escolha da T2</div>
+                        <div style={{ fontSize: 11, color: "var(--ink-60)" }}>quadro oficial de {remuneracao.escolhaT2.data}</div>
+                      </div>
+                      <div style={{ padding: "10px 12px", borderRadius: 12, background: "var(--surface)" }}>
+                        <div style={{ fontFamily: "var(--serif-cfo)", fontSize: 22, fontWeight: 700, color: "var(--olive)" }}>{p.pctT2}%</div>
+                        <div style={{ fontSize: 12.5, fontWeight: 700 }}>da T2 já com função</div>
+                        <div style={{ fontSize: 11, color: "var(--ink-60)" }}>{p.t2ComFuncao} de {p.vagasT2} vagas</div>
+                      </div>
+                      {p.diarias && (
+                        <div style={{ padding: "10px 12px", borderRadius: 12, background: "var(--surface)" }}>
+                          <div style={{ fontFamily: "var(--serif-cfo)", fontSize: 22, fontWeight: 700, color: "var(--olive)" }}>{p.diarias.total.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}</div>
+                          <div style={{ fontSize: 12.5, fontWeight: 700 }}>em diárias operacionais 2026</div>
+                          <div style={{ fontSize: 11, color: "var(--ink-60)" }}>todo o efetivo · até {remuneracao.diariasAte}</div>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })()}
                 {camposDo("vagas").length > 0 && <Campos campos={camposDo("vagas")} info={info} />}
                 {aspirantado && aspirantado.registros.length > 0
                   ? <Aspirantado asp={aspirantado} temVagas={camposDo("vagas").length > 0} />
