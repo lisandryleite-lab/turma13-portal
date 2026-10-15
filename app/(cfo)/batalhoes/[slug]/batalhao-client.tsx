@@ -65,7 +65,7 @@ const kpiSub: React.CSSProperties = { fontSize: 11.5, color: "var(--ink-60)" }
 type Crime = { municipios: string[]; populacao: number; compartilhado: string | null
   cvli: { a2023: number; a2024: number; a2025: number; jan_set_2025: number; jan_set_2026: number; taxa2025: number; variacao: number | null }
   cvp: { a2023: number; a2024: number; a2025: number; jan_set_2025: number; jan_set_2026: number; taxa2025: number; variacao: number | null } }
-type PorBatRem = { vagasT2: number; t2ComFuncao: number; pctT2: number; posT2: { melhor: number; pior: number; n: number } | null; diarias: { total: number } | null }
+type PorBatRem = { vagasT2: number; t2ComFuncao: number; pctT2: number; posT1: { melhor: number; pior: number; n: number } | null; posT2: { melhor: number; pior: number; n: number } | null; diarias: { total: number } | null }
 
 // Texto da ficha com respiro: cada linha vira um parágrafo; "1ª CPM: ..." ganha o prefixo em negrito.
 function Texto({ texto }: { texto: string }) {
@@ -198,7 +198,7 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
               <>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginBottom: 18 }}>
                   <div style={kpi}><div style={kpiNum}>{rem?.vagasT2 ?? "—"}</div><div style={kpiRot}>vagas na escolha da T2</div><div style={kpiSub}>quadro oficial, 28/06/2026</div></div>
-                  <div style={kpi}><div style={kpiNum}>{rem?.posT2 ? `${rem.posT2.pior}º` : "—"}</div><div style={kpiRot}>último colocado da T2</div><div style={kpiSub}>{rem?.posT2 ? `melhor ${rem.posT2.melhor}º · n=${rem.posT2.n} · ` : ""}quanto menor, mais disputado</div></div>
+                  <div style={kpi}><div style={kpiNum}>{rem?.posT2 ? `${rem.posT2.pior}º` : "—"}</div><div style={kpiRot}>último colocado da T2</div><div style={kpiSub}>{rem?.posT2 ? `melhor ${rem.posT2.melhor}º · n=${rem.posT2.n}${rem.posT2.n < 3 ? " (amostra pequena)" : ""}` : ""}{rem?.posT1 ? ` · T1: ${rem.posT1.pior}º (n=${rem.posT1.n})` : ""}</div></div>
                   <div style={kpi}><div style={kpiNum}>{rem ? `${rem.pctT2}%` : "—"}</div><div style={kpiRot}>da T2 já com função</div><div style={kpiSub}>comando ou seção</div></div>
                   <div style={kpi}><div style={kpiNum}>{crime ? crime.cvli.taxa2025.toLocaleString("pt-BR") : "—"}</div><div style={kpiRot}>CVLI por 100 mil (2025)</div><div style={kpiSub}>{crime && <>2026: <Variacao v={crime.cvli.variacao} /> vs 2025</>}</div></div>
                 </div>
