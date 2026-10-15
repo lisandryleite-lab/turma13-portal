@@ -2,7 +2,6 @@
  * Ficha padrão do BPTur (modelo para os demais batalhões).
  * Seções: localização · comando e efetivo · operação (com fotos) · vagas ·
  * onde morar · dicas + links úteis, legislação para estudo e fontes.
- * Sobrescreve a ficha do BPTur (rodar só para atualizar).
  *
  * Regra: só entra informação com fonte; a fonte vai no próprio campo.
  * Conferido em 15/10/2026:
@@ -12,13 +11,9 @@
  *  - Subcomandante: BGSDS nº 142 (07/08/2025), Portaria nº 4282; citado em fev/2026.
  *  - Distâncias: rota de carro OSRM/OpenStreetMap, sem trânsito; a pé a ~5 km/h.
  */
-import "dotenv/config"
-import { PrismaClient } from "../lib/generated/prisma/client"
-import { PrismaNeon } from "@prisma/adapter-neon"
-import { neonConfig } from "@neondatabase/serverless"
-import ws from "ws"
-neonConfig.webSocketConstructor = ws
-const prisma = new PrismaClient({ adapter: new PrismaNeon({ connectionString: process.env.DATABASE_URL! }) })
+import type { Ficha } from "./tipos"
+
+export const SIGLA = "BPTur"
 
 const LEI_18892 = "https://legis.alepe.pe.gov.br/texto.aspx?id=83619"
 const OLINDA_2026 = "https://olinda.pe.gov.br/noticias/perdidos-e-achados-de-olinda-saiba-como-recuperar-o-que-perdeu-no-carnaval"
@@ -29,7 +24,7 @@ const MEIA_NOITE = "https://portaldeprefeitura.com.br/regiao-metropolitana/olind
 const VIATURAS = "https://portaldeprefeitura.com.br/pernambuco/pernambuco-investimento-seguranca-publica-fuzis-viaturas/633340/"
 const NOVA_SEDE = "https://www.cbnrecife.com/2026/05/26/pernambuco-anuncia-pacote-de-r-200-milhoes-para-obras-em-seguranca-educacao-e-patrimonio-no-recife/"
 
-const FICHA = {
+export const FICHA: Ficha = {
   // 📍 Localização e contato
   endereco: "Av. Sigismundo Gonçalves, 515 – Varadouro, Olinda-PE (Prefeitura de Olinda, Carnaval 2026).\nSede definitiva prevista no Bairro do Recife (Recife Antigo) — Lei nº 18.892/2025, art. 8º. A obra da nova sede (R$ 8,7 milhões) foi anunciada pelo Governo em 26/05/2026.",
   referenciaMapa: "Avenida Sigismundo Gonçalves, 515, Varadouro, Olinda - PE",
@@ -90,14 +85,3 @@ const FICHA = {
     { info: "Distâncias", rotulo: "Rotas de carro OSRM/OpenStreetMap, sem trânsito — calculadas em 15/10/2026" },
   ],
 }
-
-async function main() {
-  const opm = await prisma.oPM.findUnique({ where: { sigla: "BPTur" } })
-  if (!opm) throw new Error("OPM BPTur não encontrada")
-  const atual = await prisma.opmInfo.findUnique({ where: { opmId: opm.id }, select: { streetView: true, linkGrupo: true } })
-  // preserva o que o admin colou pelo portal (Street View e grupo do WhatsApp)
-  const dados = { ...FICHA, streetView: atual?.streetView ?? null, linkGrupo: atual?.linkGrupo ?? null, atualizadoPor: "Portal — pesquisa 15/10/2026" }
-  await prisma.opmInfo.upsert({ where: { opmId: opm.id }, update: dados, create: { opmId: opm.id, ...dados } })
-  console.log("Ficha do BPTur gravada.")
-}
-main().finally(() => prisma.$disconnect())
