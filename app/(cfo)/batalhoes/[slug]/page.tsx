@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { carregarLevantamento } from "@/lib/levantamento-ome"
-import { baseDoSlug } from "@/lib/batalhoes-base"
+import { baseDoSlug, foraDoLevantamento, linkMapa } from "@/lib/batalhoes-base"
 import { BatalhaoClient } from "./batalhao-client"
 
 export const dynamic = "force-dynamic"
@@ -32,7 +32,7 @@ export default async function BatalhaoPage({ params }: { params: Promise<{ slug:
 
   const porMat = new Map(alunos.map(a => [a.matricula, a]))
   const pessoa = (mat: number, qra: string) => ({ mat, nome: porMat.get(mat)?.nomeGuerra ?? qra, pelotao: porMat.get(mat)?.pelotao ?? null })
-  const lista = respostas ?? []
+  const lista = (respostas ?? []).filter(r => !foraDoLevantamento(r.mat, porMat.get(r.mat)?.pelotao))
   const primeira = lista.filter(r => r.opcao1 === base.sigla).map(r => ({ ...pessoa(r.mat, r.qra), outra: r.opcao2 }))
   const segunda = lista.filter(r => r.opcao2 === base.sigla).map(r => ({ ...pessoa(r.mat, r.qra), outra: r.opcao1 }))
 
@@ -41,9 +41,12 @@ export default async function BatalhaoPage({ params }: { params: Promise<{ slug:
     <main style={{ maxWidth: 860, margin: "0 auto", padding: "32px 20px 40px" }}>
       <Link href="/batalhoes" style={{ color: "var(--olive)", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>← Todos os batalhões</Link>
       <h1 style={{ fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "2rem", color: "var(--olive)", margin: "16px 0 2px" }}>{base.sigla}</h1>
-      <p style={{ margin: "0 0 20px", color: "var(--ink-60)", fontSize: 14.5 }}>{base.nome} · 📍 {base.sede}, {base.municipio}</p>
+      <p style={{ margin: "0 0 20px", color: "var(--ink-60)", fontSize: 14.5 }}>{base.nome} · 📍 {base.sede}, {base.municipio}{" · "}
+        <a href={linkMapa(base)} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 700 }}>Abrir no Google Maps ↗</a>
+      </p>
       <BatalhaoClient
         sigla={base.sigla}
+        mapaUrl={linkMapa(base)}
         isAdmin={isAdmin}
         minhaMatricula={session.user.matricula}
         planilhaOk={respostas !== null}

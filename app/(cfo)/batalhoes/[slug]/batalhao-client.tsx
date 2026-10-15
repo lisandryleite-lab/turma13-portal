@@ -45,8 +45,8 @@ function ListaPessoas({ pessoas, minhaMatricula, rotuloOutra }: { pessoas: Pesso
   )
 }
 
-export function BatalhaoClient({ sigla, isAdmin, minhaMatricula, planilhaOk, info, atualizadoEm, primeira, segunda, mural }: {
-  sigla: string; isAdmin: boolean; minhaMatricula: number; planilhaOk: boolean
+export function BatalhaoClient({ sigla, mapaUrl, isAdmin, minhaMatricula, planilhaOk, info, atualizadoEm, primeira, segunda, mural }: {
+  sigla: string; mapaUrl: string; isAdmin: boolean; minhaMatricula: number; planilhaOk: boolean
   info: Record<ChaveFicha, string>; atualizadoEm: string | null
   primeira: Pessoa[]; segunda: Pessoa[]; mural: Msg[]
 }) {
@@ -132,6 +132,9 @@ export function BatalhaoClient({ sigla, isAdmin, minhaMatricula, planilhaOk, inf
                         <div key={c.chave} style={{ gridColumn: "longo" in c && c.longo ? "1 / -1" : undefined }}>
                           <p style={rotuloCampo}>{c.rotulo}</p>
                           <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, whiteSpace: "pre-wrap" }}>{info[c.chave]}</p>
+                          {c.chave === "endereco" && (
+                            <a href={mapaUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 4, fontSize: 13, fontWeight: 700, color: "var(--olive)" }}>📍 Ver no Google Maps ↗</a>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -139,12 +142,23 @@ export function BatalhaoClient({ sigla, isAdmin, minhaMatricula, planilhaOk, inf
                 )
               })}
             </div>
-            {info.linkGrupo && (
-              <a href={info.linkGrupo} target="_blank" rel="noopener noreferrer"
-                style={{ display: "inline-block", marginTop: 14, padding: "9px 16px", borderRadius: 10, background: "#25D366", color: "#fff", fontWeight: 700, textDecoration: "none", fontSize: 14 }}>
-                Entrar no grupo dos interessados ↗
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 14 }}>
+              <a href={mapaUrl} target="_blank" rel="noopener noreferrer"
+                style={{ padding: "9px 16px", borderRadius: 10, background: "var(--olive)", color: "var(--canvas)", fontWeight: 700, textDecoration: "none", fontSize: 14 }}>
+                📍 Abrir no Google Maps ↗
               </a>
-            )}
+              {info.linkGrupo ? (
+                <a href={info.linkGrupo} target="_blank" rel="noopener noreferrer"
+                  style={{ padding: "9px 16px", borderRadius: 10, background: "#25D366", color: "#fff", fontWeight: 700, textDecoration: "none", fontSize: 14 }}>
+                  💬 Grupo do WhatsApp ↗
+                </a>
+              ) : (
+                <span title="O link do grupo será publicado em breve"
+                  style={{ padding: "9px 16px", borderRadius: 10, background: "var(--surface)", color: "var(--ink-60)", fontWeight: 700, fontSize: 14, cursor: "default" }}>
+                  💬 Grupo do WhatsApp · em breve
+                </span>
+              )}
+            </div>
             {atualizadoEm && <p style={{ margin: "12px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>Ficha atualizada em {new Date(atualizadoEm).toLocaleDateString("pt-BR")}.</p>}
           </>
         )}

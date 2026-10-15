@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { carregarLevantamento, PLANILHA_URL } from "@/lib/levantamento-ome"
-import { BATALHOES_BASE, FORMULARIO_DAG_URL } from "@/lib/batalhoes-base"
+import { BATALHOES_BASE, FORMULARIO_DAG_URL, foraDoLevantamento } from "@/lib/batalhoes-base"
 import { BatalhoesClient, type CardBatalhao, type Pendente } from "./batalhoes-client"
 
 export const dynamic = "force-dynamic"
@@ -13,16 +13,18 @@ export default async function BatalhoesPage() {
   if (!session?.user) redirect("/login")
   const minhaMat = session.user.matricula
 
-  const [respostas, opms, alunos] = await Promise.all([
+  const [respostas, opms, usuarios] = await Promise.all([
     carregarLevantamento(),
     prisma.oPM.findMany({ where: { especial: false }, include: { info: true, _count: { select: { mural: true } } } }),
-    // alunos da CIA que devem responder (exclui admin e contas de teste)
     prisma.user.findMany({
-      where: { turma: 3, ativo: true, isAdmin: false, matricula: { gt: 0, lt: 900 } },
-      select: { matricula: true, nomeGuerra: true, pelotao: true },
+      where: { matricula: { gt: 0 } },
+      select: { matricula: true, nomeGuerra: true, pelotao: true, turma: true, ativo: true, isAdmin: true },
     }),
   ])
-  const lista = respostas ?? []
+  const pelotaoDe = new Map(usuarios.map(u => [u.matricula, u.pelotao]))
+  // alunos da CIA que devem responder (exclui admin, contas de teste, desistentes e 7º pelotão)
+  const alunos = usuarios.filter(u => u.turma === 3 && u.ativo && !u.isAdmin && u.matricula < 900 && !foraDoLevantamento(u.matricula, u.pelotao))
+  const lista = (respostas ?? []).filter(r => !foraDoLevantamento(r.mat, pelotaoDe.get(r.mat)))
   const respondeu = new Set(lista.map(r => r.mat))
 
   const cards: CardBatalhao[] = BATALHOES_BASE.map(b => {
