@@ -10,7 +10,7 @@
 | ORM | Prisma 7 com adapter Neon (PostgreSQL serverless) |
 | Autenticação | NextAuth v5 beta (next-auth@5.0.0-beta.31), estratégia JWT |
 | E-mail | Resend |
-| Deploy | Vercel — repo `lisandryleite-lab/turma13-portal` · produção **https://portalcfo2026.com.br** (deploy MANUAL: `vercel --prod`; sem auto-deploy do GitHub) |
+| Deploy | Vercel — repo `lisandryleite-lab/turma13-portal` · produção **https://portalcfo2026.com.br** (deploy AUTOMÁTICO pela integração Vercel ↔ GitHub: push/merge no `master` publica em produção; cada branch/PR ganha um Preview. `vercel --prod` só é necessário para publicar sem passar pelo GitHub) |
 
 ## Regras absolutas
 
