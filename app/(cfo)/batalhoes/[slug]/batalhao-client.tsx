@@ -245,6 +245,16 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
               <>
                 <h2 style={tituloAba}>Comando e efetivo</h2>
                 {camposDo("comando").length ? <Campos campos={camposDo("comando")} info={info} /> : vazio}
+                {(() => {
+                  const p = (remuneracao.porBatalhao as Record<string, { porte: { maiorLote: number; faixa: number[] } | null }>)[sigla]?.porte
+                  if (!p) return null
+                  return (
+                    <div style={{ marginTop: 18, padding: "12px 14px", borderRadius: 12, background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)", fontSize: 13.5, lineHeight: 1.6 }}>
+                      <strong>📐 Perspectiva de efetivo (estimativa do portal): ~{p.faixa[0]}–{p.faixa[1]} policiais.</strong><br />
+                      <span style={{ color: "var(--ink-60)", fontSize: 12.5 }}>Até {p.maiorLote} PMs do batalhão receberam diárias da Op. PE Seguro num mesmo mês de 2026 (Dados Abertos PE), calibrado com o efetivo oficial do 18º e do 26º BPM. Não é o QO oficial, que é sigiloso. <Link href="/batalhoes/remuneracao" style={{ color: "var(--olive)", fontWeight: 600 }}>Ver método →</Link></span>
+                    </div>
+                  )
+                })()}
               </>
             )}
 

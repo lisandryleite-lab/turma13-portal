@@ -488,6 +488,15 @@
     "melhor": 89,
     "mediana": 89,
     "pior": 107
+   },
+   "porte": {
+    "maiorLote": 237,
+    "loteMediano": 214,
+    "lotes": 9,
+    "faixa": [
+     280,
+     450
+    ]
    }
   },
   "6º BPM": {
@@ -526,6 +535,15 @@
     "melhor": 13,
     "mediana": 17,
     "pior": 123
+   },
+   "porte": {
+    "maiorLote": 307,
+    "loteMediano": 247,
+    "lotes": 8,
+    "faixa": [
+     370,
+     580
+    ]
    }
   },
   "11º BPM": {
@@ -564,6 +582,15 @@
     "melhor": 41,
     "mediana": 109,
     "pior": 177
+   },
+   "porte": {
+    "maiorLote": 314,
+    "loteMediano": 79,
+    "lotes": 12,
+    "faixa": [
+     380,
+     600
+    ]
    }
   },
   "12º BPM": {
@@ -602,6 +629,15 @@
     "melhor": 8,
     "mediana": 85,
     "pior": 122
+   },
+   "porte": {
+    "maiorLote": 533,
+    "loteMediano": 311,
+    "lotes": 11,
+    "faixa": [
+     640,
+     1010
+    ]
    }
   },
   "13º BPM": {
@@ -640,6 +676,15 @@
     "melhor": 30,
     "mediana": 36,
     "pior": 40
+   },
+   "porte": {
+    "maiorLote": 562,
+    "loteMediano": 308,
+    "lotes": 11,
+    "faixa": [
+     670,
+     1070
+    ]
    }
   },
   "16º BPM": {
@@ -678,6 +723,15 @@
     "melhor": 50,
     "mediana": 55,
     "pior": 124
+   },
+   "porte": {
+    "maiorLote": 203,
+    "loteMediano": 122,
+    "lotes": 6,
+    "faixa": [
+     240,
+     390
+    ]
    }
   },
   "17º BPM": {
@@ -716,6 +770,15 @@
     "melhor": 46,
     "mediana": 46,
     "pior": 46
+   },
+   "porte": {
+    "maiorLote": 265,
+    "loteMediano": 138,
+    "lotes": 10,
+    "faixa": [
+     320,
+     500
+    ]
    }
   },
   "18º BPM": {
@@ -754,6 +817,15 @@
     "melhor": 11,
     "mediana": 163,
     "pior": 167
+   },
+   "porte": {
+    "maiorLote": 223,
+    "loteMediano": 167,
+    "lotes": 10,
+    "faixa": [
+     270,
+     420
+    ]
    }
   },
   "19º BPM": {
@@ -792,6 +864,15 @@
     "melhor": 6,
     "mediana": 77,
     "pior": 130
+   },
+   "porte": {
+    "maiorLote": 332,
+    "loteMediano": 174,
+    "lotes": 14,
+    "faixa": [
+     400,
+     630
+    ]
    }
   },
   "20º BPM": {
@@ -830,6 +911,15 @@
     "melhor": 20,
     "mediana": 33,
     "pior": 57
+   },
+   "porte": {
+    "maiorLote": 358,
+    "loteMediano": 223,
+    "lotes": 11,
+    "faixa": [
+     430,
+     680
+    ]
    }
   },
   "25º BPM": {
@@ -868,6 +958,15 @@
     "melhor": 3,
     "mediana": 68,
     "pior": 111
+   },
+   "porte": {
+    "maiorLote": 281,
+    "loteMediano": 178,
+    "lotes": 11,
+    "faixa": [
+     340,
+     530
+    ]
    }
   },
   "26º BPM": {
@@ -906,6 +1005,15 @@
     "melhor": 29,
     "mediana": 29,
     "pior": 146
+   },
+   "porte": {
+    "maiorLote": 253,
+    "loteMediano": 153,
+    "lotes": 4,
+    "faixa": [
+     300,
+     480
+    ]
    }
   },
   "BPTur": {
@@ -944,6 +1052,15 @@
     "melhor": 39,
     "mediana": 39,
     "pior": 45
+   },
+   "porte": {
+    "maiorLote": 294,
+    "loteMediano": 92,
+    "lotes": 10,
+    "faixa": [
+     350,
+     560
+    ]
    }
   }
  },
@@ -957,5 +1074,26 @@
  "posicoes": {
   "metodo": "Posição na classificação final do concurso (atos de nomeação BGSDS nº 221 e nº 103). T1 = 1º a 148º; T2 = 150º a 331º, convertida para 1º a 182º dentro da turma. Cruzada com o batalhão das designações publicadas — amostra: só quem recebeu função e teve o nome legível na lista.",
   "cruzados": 99
+ },
+ "porteMetodo": {
+  "resumo": "Estimativa do portal, não oficial. Base: diárias da Op. PE Seguro pagas em 2026 (Dados Abertos PE). Cada lote de pagamento citando o batalhão corresponde à relação mensal de policiais empregados; o maior lote mostra quantos PMs a unidade empregou num mês. A faixa de efetivo usa dois pontos oficiais de calibração.",
+  "calibracao": [
+   {
+    "batalhao": "18º BPM",
+    "efetivo": 430,
+    "fonte": "SDS — inauguração da nova sede",
+    "maiorLote": 223
+   },
+   {
+    "batalhao": "26º BPM",
+    "efetivo": 300,
+    "fonte": "Folha PE — inauguração (08/11/2019)",
+    "maiorLote": 253
+   }
+  ],
+  "fatores": [
+   1.2,
+   1.9
+  ]
  }
 }

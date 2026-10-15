@@ -16,7 +16,8 @@ const FUNCOES = ["Sem função", "Função de supervisão (FGS)", "Comandante de
 const COR = { "Sem função": "#c9cfc4", "Função de supervisão (FGS)": "#8a9a7b", "Comandante de pelotão": "#b5933f", "Comandante de companhia": "#3a4a3a" } as const
 type Aba = "funcao" | "turmas" | "previsao" | "batalhao" | "efetivo" | "fontes"
 type Pos = { n: number; melhor: number; mediana: number; pior: number } | null
-type PorBat = { posT1: Pos; posT2: Pos; vagasT2: number; t2ComFuncao: number; pctT2: number; t2NoComando: number; t1ComFuncao: number; diarias: { total: number; pagamentos: number; mediana: number; principais: { operacao: string; valor: number }[] } | null }
+type Porte = { maiorLote: number; loteMediano: number; lotes: number; faixa: number[] } | null
+type PorBat = { porte: Porte; posT1: Pos; posT2: Pos; vagasT2: number; t2ComFuncao: number; pctT2: number; t2NoComando: number; t1ComFuncao: number; diarias: { total: number; pagamentos: number; mediana: number; principais: { operacao: string; valor: number }[] } | null }
 type Ordem = "vagasT2" | "pctT2" | "t1ComFuncao" | "diarias" | "posT2"
 const ABAS: { id: Aba; rot: string }[] = [
   { id: "funcao", rot: "💵 Por função" }, { id: "turmas", rot: "📊 Comparação entre turmas" }, { id: "previsao", rot: "🔮 Nossa previsão" }, { id: "batalhao", rot: "🏢 Por batalhão" },
@@ -204,6 +205,24 @@ export function RemuneracaoClient() {
               </table>
             </div>
             <p style={{ ...sub, margin: "12px 0 18px" }}>Leitura: faltam muitos Capitães e 1º Tenentes em relação ao fixado — por isso tenentes recém-formados já assumem comando de companhia. O excesso de Tenentes-Coronéis pode vir de promoções fora do quadro (ex.: decenal) ou de alteração posterior da lei; a tabela é um indicativo.</p>
+            <p style={{ margin: "0 0 6px", fontSize: 13.5, fontWeight: 700 }}>Perspectiva de efetivo por batalhão — estimativa do portal</p>
+            <p style={{ ...sub, margin: "0 0 10px" }}>{dados.porteMetodo.resumo} Calibração: {dados.porteMetodo.calibracao.map(c => `${c.batalhao} tinha ${c.efetivo} PMs (${c.fonte}) e maior lote de ${c.maiorLote}`).join("; ")} — por isso a faixa vai de {dados.porteMetodo.fatores[0]}× a {dados.porteMetodo.fatores[1]}× o maior lote.</p>
+            <div style={{ overflowX: "auto", marginBottom: 18 }}>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead><tr><th style={th}>Batalhão</th><th style={th}>PMs na Op. PE Seguro (maior mês · típico)</th><th style={th}>Efetivo estimado</th><th style={th}>Vagas T2</th></tr></thead>
+                <tbody>
+                  {Object.entries(dados.porBatalhao as Record<string, PorBat>).sort((a, b) => (b[1].porte?.maiorLote ?? 0) - (a[1].porte?.maiorLote ?? 0)).map(([o, p]) => (
+                    <tr key={o}>
+                      <td style={{ ...td, fontWeight: 700, color: "var(--olive)" }}>{o}</td>
+                      <td style={td}>{p.porte ? <><strong>{p.porte.maiorLote}</strong> <span style={{ color: "var(--ink-60)", fontSize: 12.5 }}>· {p.porte.loteMediano} ({p.porte.lotes} lotes)</span></> : "—"}</td>
+                      <td style={td}>{p.porte ? <strong>~{p.porte.faixa[0]}–{p.porte.faixa[1]}</strong> : "—"}</td>
+                      <td style={td}>{p.vagasT2}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p style={{ ...sub, margin: "-8px 0 18px" }}>Use como ordem de grandeza: 13º e 12º BPM aparecem como os maiores; 16º, 18º e 1º, como os menores. A operação depende de escala e voluntários, então o número real pode ficar fora da faixa.</p>
             <p style={{ margin: "0 0 10px", fontSize: 13.5, fontWeight: 700 }}>Funções de comando previstas por batalhão (INCG nº 605/2023)</p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: 10 }}>
               {Object.entries(dados.funcoesComando).map(([o, v]) => (
