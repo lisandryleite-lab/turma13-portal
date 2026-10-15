@@ -6,6 +6,7 @@ import { useMemo, useState } from "react"
 export type CardBatalhao = {
   sigla: string; slug: string; nome: string; sede: string; municipio: string
   opcao1: number; opcao2: number; comandante: string | null; mensagens: number
+  t1: number; t2: number
 }
 export type Pendente = { mat: number; nome: string; pelotao: number | null }
 
@@ -23,6 +24,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
 }) {
   const [busca, setBusca] = useState("")
   const [criterio, setCriterio] = useState<"opcao1" | "opcao2">("opcao1")
+  const [turmaAsp, setTurmaAsp] = useState<"ambas" | "t1" | "t2">("ambas")
   const [verPendentes, setVerPendentes] = useState(false)
   const [buscaPend, setBuscaPend] = useState("")
 
@@ -45,6 +47,10 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
     return [...g.entries()]
   }, [pendFiltrados])
   const euFalto = pendentes.some(p => p.mat === minhaMatricula)
+  const valAsp = (c: CardBatalhao) => turmaAsp === "t1" ? c.t1 : turmaAsp === "t2" ? c.t2 : c.t1 + c.t2
+  const rankAsp = useMemo(() => [...cards].sort((a, b) => valAsp(b) - valAsp(a) || numero(a.sigla) - numero(b.sigla)), [cards, turmaAsp]) // eslint-disable-line react-hooks/exhaustive-deps
+  const maxAsp = Math.max(1, ...cards.map(c => c.t1 + c.t2))
+  const totT1 = cards.reduce((s, c) => s + c.t1, 0), totT2 = cards.reduce((s, c) => s + c.t2, 0)
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -121,6 +127,38 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
         {minha && <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>★ = sua escolha</p>}
       </section>
 
+      {/* ── Aspirantes das turmas anteriores ── */}
+      <section style={cartao}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+          <h2 style={tituloSecao}>Para onde foram as turmas anteriores</h2>
+          <div style={{ display: "flex", gap: 6 }}>
+            {([["ambas", "T1 + T2"], ["t1", "T1"], ["t2", "T2"]] as const).map(([k, r]) => (
+              <button key={k} onClick={() => setTurmaAsp(k)}
+                style={{ padding: "6px 12px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600,
+                  background: turmaAsp === k ? "var(--olive)" : "var(--surface)", color: turmaAsp === k ? "var(--canvas)" : "var(--ink-60)" }}>{r}</button>
+            ))}
+          </div>
+        </div>
+        <p style={subSecao}>
+          Aspirantes com função publicada no Boletim da SDS (dez/2025–out/2026) nestes 13 batalhões: <strong style={{ color: "#3a4a3a" }}>T1 {totT1}</strong> (148 formados em 28/11/2025) · <strong style={{ color: "#b5933f" }}>T2 {totT2}</strong> (182 formados em 08/06/2026). É um mínimo — nem todo lotado recebe função publicada.
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+          {rankAsp.map(c => (
+            <Link key={c.slug} href={`/batalhoes/${c.slug}#ficha-vagas`} style={{ display: "grid", gridTemplateColumns: "78px 1fr 70px", alignItems: "center", gap: 10, textDecoration: "none", color: "var(--ink)" }}>
+              <span style={{ fontWeight: 700, color: "var(--olive)", fontSize: 13.5, whiteSpace: "nowrap" }}>{c.sigla}</span>
+              <span style={{ display: "flex", height: 14, borderRadius: 99, background: "var(--surface)", overflow: "hidden" }}>
+                {turmaAsp !== "t2" && <span style={{ width: `${(c.t1 / maxAsp) * 100}%`, background: "#3a4a3a" }} />}
+                {turmaAsp !== "t1" && <span style={{ width: `${(c.t2 / maxAsp) * 100}%`, background: "#b5933f" }} />}
+              </span>
+              <span style={{ fontSize: 12.5, textAlign: "right", whiteSpace: "nowrap" }}>
+                {turmaAsp === "ambas" ? <><strong>{c.t1 + c.t2}</strong> <span style={{ color: "var(--ink-60)" }}>({c.t1}+{c.t2})</span></> : <strong>{valAsp(c)}</strong>}
+              </span>
+            </Link>
+          ))}
+        </div>
+        <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>■ <span style={{ color: "#3a4a3a" }}>T1</span> · ■ <span style={{ color: "#b5933f" }}>T2</span> · toque no batalhão para ver as funções (comando de pelotão, de companhia, PCT, seções) e o boletim de cada designação.</p>
+      </section>
+
       {/* ── Batalhões em ordem ── */}
       <section>
         <h2 style={{ ...tituloSecao, margin: "6px 0 4px" }}>Conheça cada batalhão</h2>
@@ -151,6 +189,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
                 <span style={{ fontSize: 11.5, color: "var(--ink-60)" }}>
                   {c.comandante ? `Cmt: ${c.comandante}` : "Ficha em construção"}{c.mensagens > 0 ? ` · 💬 ${c.mensagens}` : ""}
                 </span>
+                {(c.t1 > 0 || c.t2 > 0) && <span style={{ fontSize: 11.5, color: "var(--ink-60)" }}>🎓 Aspirantes com função: T1 <strong style={{ color: "#3a4a3a" }}>{c.t1}</strong> · T2 <strong style={{ color: "#b5933f" }}>{c.t2}</strong></span>}
                 <span style={{ fontSize: 12, color: "var(--gold)", fontWeight: 700 }}>Conheça o batalhão ›</span>
               </Link>
             )

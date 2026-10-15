@@ -400,6 +400,7 @@ model OpmInfo {
   fontes         Json?    // [{ info, rotulo, url }] — de onde veio cada informação
   operacoes      Json?    // [{ titulo, data, resumo, foto, fonte, url }] — operações com foto
   streetView     String?  // link do Google Street View da fachada
+  aspirantado    Json?    // { t1, t2, funcoes, registros[] } — aspirantes T1/T2 com função no batalhão (BGSDS)
   atualizadoEm  DateTime @updatedAt
   atualizadoPor String?
 

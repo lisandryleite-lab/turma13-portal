@@ -17,7 +17,7 @@ export const BATALHOES_BASE: BaseBatalhao[] = [
   { sigla: "17º BPM", slug: "17bpm", nome: "Batalhão Gen. Abreu e Lima", sede: "Aurora", municipio: "Paulista", email: "17bpm@pm.pe.gov.br" },
   { sigla: "18º BPM", slug: "18bpm", nome: "Batalhão Cel. Agenor Cavalcanti", sede: "Centro", municipio: "Cabo de Santo Agostinho", email: "18bpm@pm.pe.gov.br" },
   { sigla: "19º BPM", slug: "19bpm", nome: "Batalhão André Vidal de Negreiros", sede: "Pina", municipio: "Recife", email: "19bpm@pm.pe.gov.br" },
-  { sigla: "20º BPM", slug: "20bpm", nome: "Batalhão Cel. PM Olinto de Melo Viana", sede: "Parque Capibaribe", municipio: "São Lourenço da Mata", email: "20bpm@pm.pe.gov.br" },
+  { sigla: "20º BPM", slug: "20bpm", nome: "Batalhão Cel. PM Olinto de Melo Viana", sede: "Muribara", municipio: "São Lourenço da Mata", email: "20bpm@pm.pe.gov.br" },
   { sigla: "25º BPM", slug: "25bpm", nome: "Batalhão Cel. PM Claudio Galdino da Silva", sede: "Centro", municipio: "Jaboatão dos Guararapes", email: "25bpm@pm.pe.gov.br" },
   { sigla: "26º BPM", slug: "26bpm", nome: "Batalhão 1º Sgt PM José Mariano Pimentel Neto", sede: "Centro", municipio: "Itapissuma", email: "26bpm@pm.pe.gov.br" },
   { sigla: "BPTur", slug: "bptur", nome: "Batalhão de Policiamento Turístico", sede: "Varadouro", municipio: "Olinda" },
@@ -29,10 +29,10 @@ const ENDERECO_MAPA: Record<string, string> = {
   "6bpm": "6º BPM, Estrada da Batalha, Prazeres, Jaboatão dos Guararapes - PE",
   "11bpm": "11º BPM, Rua Apipucos, 15, Apipucos, Recife - PE",
   "12bpm": "12º BPM, Rua Dona Maria Lacerda, Várzea, Recife - PE",
-  "13bpm": "13º BPM, Av. Agamenon Magalhães, 700, Santo Amaro, Recife - PE",
+  "13bpm": "13º BPM, Rua Odorico Mendes, 700, Campo Grande, Recife - PE",
   "16bpm": "16º BPM, Cais de Santa Rita, São José, Recife - PE",
-  "17bpm": "17º BPM, Av. Senador Salgado Filho, 500, Centro, Paulista - PE",
-  "18bpm": "18º BPM, Rua 53, Vila da COHAB, Cabo de Santo Agostinho - PE",
+  "17bpm": "17º BPM, Rua Nova Mangueira, 05, Aurora, Paulista - PE",
+  "18bpm": "18º BPM, Rua Marechal Dantas Barreto, 205, Centro, Cabo de Santo Agostinho - PE",
   "19bpm": "19º BPM, Rua Manoel de Brito, Pina, Recife - PE",
   "20bpm": "20º BPM, Muribara, São Lourenço da Mata - PE",
   "25bpm": "25º BPM, Rua Padre Chromácio Leão, Centro, Jaboatão dos Guararapes - PE",
@@ -62,7 +62,7 @@ export const GRUPOS_FICHA = [
   { id: "localizacao", titulo: "📍 Localização e contato" },
   { id: "comando", titulo: "🎖️ Comando e efetivo" },
   { id: "operacao", titulo: "🚓 Operação" },
-  { id: "vagas", titulo: "🎯 Vagas para aspirantes" },
+  { id: "vagas", titulo: "🎓 Aspirantado e vagas" },
   { id: "morar", titulo: "🏠 Onde morar" },
 ] as const
 
@@ -91,6 +91,11 @@ export const CAMPOS_FICHA = [
 // Listas estruturadas da ficha (JSON no OpmInfo).
 export type BairroFicha = { nome: string; km: string; tempo: string; obs?: string }
 export type LinkFicha = { rotulo: string; url: string; grupo?: string }
+// Aspirantes das turmas anteriores com função publicada no BGSDS (scripts/fichas/aspirantado.json).
+export type RegistroAspirante = { turma: "T1" | "T2"; posto: string; nome: string; funcao: string; detalhe: string; desde: string; bg: string; url: string | null }
+export type AspirantadoFicha = { t1: number; t2: number; funcoes: Record<string, number>; registros: RegistroAspirante[] }
+// Comandante sem a portaria/fonte (para cards e listas).
+export const nomeCurto = (s: string | null | undefined) => (s ?? "").split(/ — | \(/)[0].trim()
 export type OperacaoFicha = { titulo: string; data: string; resumo: string; foto?: string; fonte: string; url?: string }
 export type FonteFicha = { info: string; rotulo: string; url?: string }
 

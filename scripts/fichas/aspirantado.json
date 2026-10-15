@@ -1,0 +1,1925 @@
+{
+ "1º BPM": {
+  "t1": 9,
+  "t2": 4,
+  "funcoes": {
+   "Seção de Planejamento": 2,
+   "Comandante de companhia": 2,
+   "Comandante de pelotão": 5,
+   "Função gratificada (seção não informada)": 2,
+   "Seção de Pessoal": 1,
+   "Seção de Ensino e Instrução": 1,
+   "Seção Correcional": 1,
+   "Pelotão de Comando Tático": 1
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Lucas Belizário de Paiva",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 030 (14FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/030%20BGSDS%20DE%2014FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Laryssa Castro Alves",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 1º BPM",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 032 (21FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/032%20BGSDS%20DE%2021FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Claudio Robson Silva Brito Junior",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 1º BPM",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 032 (21FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/032%20BGSDS%20DE%2021FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Bruna Gabrielle Costa de Melo",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 2",
+    "desde": "01/03/2026",
+    "bg": "BGSDS nº 053 (25MAR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/03%20-%20Marco/053%20BGSDS%20DE%2025MAR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Paulo Henrique Francisco Inacio",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 3",
+    "desde": "01/03/2026",
+    "bg": "BGSDS nº 053 (25MAR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/03%20-%20Marco/053%20BGSDS%20DE%2025MAR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Ramom Talyson das Neves Soares",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 1º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Paula da Silva Ramos",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 3ª CPM do 1º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Rodolfo Batista Lima",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 1º BPM",
+    "desde": "01/06/2026",
+    "bg": "BGSDS nº 110 (18JUN2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/06%20-%20Junho/110%20BGSDS%20DE%2018JUN2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Erivelton José da Silva Santos",
+    "funcao": "Seção de Pessoal",
+    "detalhe": "Supervisão 2 — Seção de Pessoal",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Paula da Silva Ramos",
+    "funcao": "Seção de Ensino e Instrução",
+    "detalhe": "Supervisão 2 — Seção de Ensino e Instrução",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Ígor Renato de Oliveira Aragão",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Claudio Robson Silva Brito Junior",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 1º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Gustavo Henrique da Silva",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Karoline Figueirêdo de Abreu",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 1º BPM",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Rafael Pereira da Silva",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1ª Pelotão da 3ª CPM do 1º BPM",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   }
+  ]
+ },
+ "6º BPM": {
+  "t1": 12,
+  "t2": 5,
+  "funcoes": {
+   "Função gratificada (seção não informada)": 2,
+   "Comandante de pelotão": 5,
+   "Comandante de companhia": 6,
+   "Pelotão de Comando Tático": 2,
+   "Seção de Planejamento": 2,
+   "Seção de Pessoal": 2
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "André Guimarães Reis",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 3",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 030 (14FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/030%20BGSDS%20DE%2014FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Anderson Luiz Ferreira Sales",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2º CPM do 6º BPM",
+    "desde": "01/03/2026",
+    "bg": "BGSDS nº 052 (24MAR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/03%20-%20Marco/052%20BGSDS%20DE%2024MAR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "João Vitor de Azevedo Florêncio Colombo",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 2",
+    "desde": "01/03/2026",
+    "bg": "BGSDS nº 053 (25MAR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/03%20-%20Marco/053%20BGSDS%20DE%2025MAR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "João Victor Xavier Gonçalves",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 1ª CPM do 6º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Juan Victor Oliveira Alves",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 6º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "André Guimarães Reis",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1º CPM do 6º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Valdemir Alves de Medeiros Neto",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2º CPM do 6º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Anderson Luiz Ferreira Sales",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão Comando Tático do 6º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Luiz Rodolfo Felix Ferreira",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "01/06/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Diogo Barbosa da Silva",
+    "funcao": "Seção de Pessoal",
+    "detalhe": "Supervisão 2 — Seção de Pessoal",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Deivson Lourenço Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 4ª CPM do 6º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "João Victor de Moraes Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 6º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Vinícius Matheus Silvestre Batista",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 6º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Felipe Silva Nonato dos Santos",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2º CPM do 6º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Lucas Hanrry Lima Gonzaga",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 6º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Matheus Victor Mesquita Silva",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1º CPM do 6º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Idginaldo Ferreira de Oliveira",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Marco Aurélio Pereira Santos",
+    "funcao": "Seção de Pessoal",
+    "detalhe": "Supervisão 2 — Seção de Pessoal",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Ana Manoela Felix da Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 1ª CPM do 6º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   }
+  ]
+ },
+ "11º BPM": {
+  "t1": 8,
+  "t2": 9,
+  "funcoes": {
+   "Seção de Planejamento": 2,
+   "Seção Correcional": 2,
+   "Secretaria": 2,
+   "Comandante de pelotão": 6,
+   "Comandante de companhia": 3,
+   "Função gratificada (seção não informada)": 1,
+   "Seção de Pessoal": 2,
+   "Pelotão de Comando Tático": 1
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Lucas Henrique Rocha da Silva",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 030 (14FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/030%20BGSDS%20DE%2014FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Júlio Kevin Coelho Silva",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 030 (14FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/030%20BGSDS%20DE%2014FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Jhonnatan Correia da Silva Sales",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 030 (14FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/030%20BGSDS%20DE%2014FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Vinícius Matheus Silvestre Batista",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 11º BPM",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 032 (21FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/032%20BGSDS%20DE%2021FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Wtemberg Dantas Cartaxo Neto",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 3ª CPM do 11º BPM",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 032 (21FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/032%20BGSDS%20DE%2021FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Jhonnatan Correia da Silva Sales",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 4ª CPM do 11º BPM",
+    "desde": "01/03/2026",
+    "bg": "BGSDS nº 052 (24MAR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/03%20-%20Marco/052%20BGSDS%20DE%2024MAR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Rodrigo Lima do Nascimento",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 3",
+    "desde": "01/03/2026",
+    "bg": "BGSDS nº 053 (25MAR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/03%20-%20Marco/053%20BGSDS%20DE%2025MAR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Alfredo Pereira dos Santos Júnior",
+    "funcao": "Seção de Pessoal",
+    "detalhe": "Supervisão 2 — Seção de Pessoal",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 096 (29MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/096%20BGSDS%20DE%2029MAI2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Ellio José da Cunha Silva",
+    "funcao": "Seção de Pessoal",
+    "detalhe": "Supervisão 2 — Seção de Pessoal",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Yasmin Cibele Santos da Silva",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Antonio Marcos Lima do Nascimento",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Patrícia Samara Melo Teixeira",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Vinícius José da Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 11º BPM",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Wtemberg Dantas Cartaxo Neto",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 11º BPM",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "José Luiz Leal de Souza",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 11º BPM",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Renata Cavalcante Camilo da Silva",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 3ª CPM do 11º BPM",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Samea Bezerra De Souza Ferraz",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 11º BPM",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "José Demétrio Neto",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 3ª CPM do 11º BPM",
+    "desde": "31/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Marcos Paulo Souza Silva",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 11º BPM",
+    "desde": "31/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   }
+  ]
+ },
+ "12º BPM": {
+  "t1": 5,
+  "t2": 5,
+  "funcoes": {
+   "Comandante de companhia": 5,
+   "Seção Correcional": 1,
+   "Pelotão de Comando Tático": 2,
+   "Comandante de pelotão": 2,
+   "Função gratificada (seção não informada)": 1
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Raul Vitor Andrade e Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 12º BPM",
+    "desde": "01/01/2026",
+    "bg": "BGSDS nº 019 (30JAN2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/01%20-%20Janeiro/019%20BGSDS%20DE%2030JAN2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Ruan Filipe Ferreira de Souza Silva",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Carolina Brito Cavalcanti",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 12º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Maria Isabel Oliveira Soares da Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 4ª CPM do 12º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Rafael de Carvalho Cavalcanti",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 12º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Marluce da Silva Costa",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 12º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Paulo Fernando Gouveia Filho",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 3ª CPM do 12º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Renato de Araújo Dutra",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 12º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Marluce da Silva Costa",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 4ª CPM do 12º BPM",
+    "desde": "01/08/2026",
+    "bg": "BGSDS nº 164 (05SET2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/09%20-%20Setembro/164%20BGSDS%20DE%2005SET2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Antônio Hiago Paiva Oliveira",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 12º BPM",
+    "desde": "01/08/2026",
+    "bg": "BGSDS nº 164 (05SET2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/09%20-%20Setembro/164%20BGSDS%20DE%2005SET2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Isabella Alaide Florentino da Silva",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 3",
+    "desde": "01/09/2026",
+    "bg": "BGSDS nº 172 (18SET2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/09%20-%20Setembro/172%20BGSDS%20DE%2018SET2026.pdf"
+   }
+  ]
+ },
+ "13º BPM": {
+  "t1": 5,
+  "t2": 3,
+  "funcoes": {
+   "Comandante de companhia": 3,
+   "Comandante de pelotão": 5,
+   "Seção de Planejamento": 1
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Priscila Raquel Torres Cipriano da Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 13º BPM",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 032 (21FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/032%20BGSDS%20DE%2021FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Paloma Mirtis Quidute Vieira",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 13º BPM",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 032 (21FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/032%20BGSDS%20DE%2021FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Marcus Vinicius Silva Araújo",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 13º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Priscila Raquel Torres Cipriano da Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 1ª CPM do 13º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Patrick Muniz Marques",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 13º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Valéria Azevedo de Deus",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 13º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Icaro Tiago Silva de Andrade",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 13º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 164 (05SET2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/09%20-%20Setembro/164%20BGSDS%20DE%2005SET2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Júlia Crispino de França",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 13º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 164 (05SET2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/09%20-%20Setembro/164%20BGSDS%20DE%2005SET2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Edjane Machado dos Santos",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "14/09/2026",
+    "bg": "BGSDS nº 188 (10OUT2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/10%20-%20Outubro/188%20BGSDS%20DE%2010OUT2026.pdf"
+   }
+  ]
+ },
+ "16º BPM": {
+  "t1": 11,
+  "t2": 8,
+  "funcoes": {
+   "Comandante de pelotão": 4,
+   "Pelotão de Comando Tático": 2,
+   "Função gratificada (seção não informada)": 4,
+   "Seção de Planejamento": 1,
+   "Secretaria": 1,
+   "Logística (almoxarifado, reserva, transporte)": 2,
+   "Comandante de companhia": 3,
+   "Seção de Pessoal": 1,
+   "Seção Correcional": 1
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Sheylla Almeida Bezerra de Arruda",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 16º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Tiago Andre da Silva",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 16º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Thiago Fernandes Uchôa",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão Comando Tático do 16º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Ivan Aquino de Araújo Brito",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 2",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 077 (01MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/077%20BGSDS%20DE%2001MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Lucas Aleksander Nunes Santos",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 2",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 077 (01MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/077%20BGSDS%20DE%2001MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "José Ewerton Bezerra Alves Duarte",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 3",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 077 (01MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/077%20BGSDS%20DE%2001MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Amilânia Delmondes Pereira",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 3",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 077 (01MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/077%20BGSDS%20DE%2001MAI2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Mayara Kamyla da Silva Santos",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Jônatas Henrique dos Santos",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Lucas Giovanni Bezerra Pinheiro",
+    "funcao": "Logística (almoxarifado, reserva, transporte)",
+    "detalhe": "Supervisão 3 — Reserva e Material Bélico",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Manuel Antunes de Oliveira Júnior",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 1ª CPM do 16º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Victor Igor da Silva Sousa",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 16º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Carla Cibele Pereira de Araújo Coelho",
+    "funcao": "Seção de Pessoal",
+    "detalhe": "Supervisão 2 — Seção de Pessoal",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Allatas Sousa da Silva",
+    "funcao": "Logística (almoxarifado, reserva, transporte)",
+    "detalhe": "Supervisão 3 — Subseção de Almoxarifado",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Williams Cordeiro da Silva",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Valéria Azevedo de Deus",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 16º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Diego Cruz de Lima",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 16º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Diógenes Heráclito da Silva",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 16º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Lincoln Marinho Batista Dos Santos",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 16º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   }
+  ]
+ },
+ "17º BPM": {
+  "t1": 3,
+  "t2": 1,
+  "funcoes": {
+   "Comandante de companhia": 1,
+   "Comandante de pelotão": 2,
+   "Pelotão de Comando Tático": 1
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Leonardo Vieira Ramos",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 1ª CPM do 17º BPM",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 032 (21FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/032%20BGSDS%20DE%2021FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Aldo Victor Alves Venceslau",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 17º BPM",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 032 (21FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/032%20BGSDS%20DE%2021FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Hugo Cavalcanti Seixas de Melo",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 17º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Iury Kley Amorim Leite",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 17º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   }
+  ]
+ },
+ "18º BPM": {
+  "t1": 8,
+  "t2": 8,
+  "funcoes": {
+   "Comandante de pelotão": 3,
+   "Pelotão de Comando Tático": 2,
+   "Seção de Ensino e Instrução": 2,
+   "Seção de Planejamento": 2,
+   "Secretaria": 2,
+   "Seção Correcional": 2,
+   "Comandante de companhia": 4
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Everton Costa de Lima",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 3ª CPM do 18º BPM",
+    "desde": "01/03/2026",
+    "bg": "BGSDS nº 052 (24MAR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/03%20-%20Marco/052%20BGSDS%20DE%2024MAR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Victor Sampaio Lima",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 18º BPM",
+    "desde": "01/03/2026",
+    "bg": "BGSDS nº 052 (24MAR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/03%20-%20Marco/052%20BGSDS%20DE%2024MAR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Eduardo Henrique Araújo Belmont",
+    "funcao": "Seção de Ensino e Instrução",
+    "detalhe": "Supervisão 2 — Seção de Ensino e Instrução",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 096 (29MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/096%20BGSDS%20DE%2029MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Jonas dos Santos Silva",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 096 (29MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/096%20BGSDS%20DE%2029MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Antonio Marcos de Oliveira da Silva",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 096 (29MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/096%20BGSDS%20DE%2029MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Janailson Alves de Oliveira",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 096 (29MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/096%20BGSDS%20DE%2029MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Danrley Leonardo de Souza Oliveira de Queiroga",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 18º BPM",
+    "desde": "01/06/2026",
+    "bg": "BGSDS nº 110 (18JUN2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/06%20-%20Junho/110%20BGSDS%20DE%2018JUN2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Felipe Belo da Silva",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Gabriel Francisco dos Santos",
+    "funcao": "Seção de Ensino e Instrução",
+    "detalhe": "Supervisão 2 — Seção de Ensino e Instrução",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "José Italo Félix da Silva",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Luan do Nascimento Pereira",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Janailson Alves de Oliveira",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 18º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Joelson Tássio Cerqueira Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 18º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Sérgio Murilo Oliveira Basílio da Silva Júnior",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 4ª CPM do 18º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Alexandre Oliveira Rodrigues da Costa",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 3ª CPM do 18º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Gabriel Cairo Arcoverde Falcão",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 18º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Paulo Victor Macedo Ferreira",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 18º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   }
+  ]
+ },
+ "19º BPM": {
+  "t1": 7,
+  "t2": 8,
+  "funcoes": {
+   "Pelotão de Comando Tático": 2,
+   "Comandante de pelotão": 4,
+   "Secretaria": 1,
+   "Seção Correcional": 2,
+   "Seção de Planejamento": 1,
+   "Seção de Pessoal": 1,
+   "Comandante de companhia": 3,
+   "Função gratificada (seção não informada)": 2
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Gustavo Melo de Lima",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 19º BPM",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 095 (28MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/095%20BGSDS%20DE%2028MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Carlos Henrique de Morais Barros Rodrigues",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 3ª CPM do 19º BPM",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 095 (28MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/095%20BGSDS%20DE%2028MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Pedro Henrique Carvalho das Neves",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 19º BPM",
+    "desde": "01/06/2026",
+    "bg": "BGSDS nº 110 (18JUN2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/06%20-%20Junho/110%20BGSDS%20DE%2018JUN2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Ana Manoela Felix da Silva",
+    "funcao": "Secretaria",
+    "detalhe": "função Gratificada de Supervisão 3 — Seção Secretaria",
+    "desde": "01/06/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Lucas Antonio Lima de Souza",
+    "funcao": "Seção Correcional",
+    "detalhe": "função Gratificada de Supervisão 3 — Seção Correcional",
+    "desde": "03/06/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Roberto Alves de Freitas Júnior",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Thaynara Carla De Souza Cavalcante",
+    "funcao": "Seção de Pessoal",
+    "detalhe": "Supervisão 2 — Seção de Pessoal",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Kelvis José de Figueredo Oliveira",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 19º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Paulo Victor dos Santos Almeida",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 1ª CPM do 19º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Dayane Santos da Silva",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 3ª CPM do 19º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Débora de Gouveia Staudinger",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 19º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "José Guilherme da Silva Neto",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 19º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Reverthon Rai Almeida Souza",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Lucas Antonio Lima de Souza",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 4ª CPM do 19º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Gabriel Moreira Valadares",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 2",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 164 (05SET2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/09%20-%20Setembro/164%20BGSDS%20DE%2005SET2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Roberta Mychelly Soares Medeiros",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 3",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 164 (05SET2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/09%20-%20Setembro/164%20BGSDS%20DE%2005SET2026.pdf"
+   }
+  ]
+ },
+ "20º BPM": {
+  "t1": 5,
+  "t2": 6,
+  "funcoes": {
+   "Seção Correcional": 2,
+   "Logística (almoxarifado, reserva, transporte)": 3,
+   "Secretaria": 1,
+   "Comandante de companhia": 2,
+   "Pelotão de Comando Tático": 1,
+   "Comandante de pelotão": 2
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Arthur Vinícius Alencar Praxedes",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 069 (18ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/069%20BGSDS%20DE%2018ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Cícero Jean Alves de Oliveira Filho",
+    "funcao": "Logística (almoxarifado, reserva, transporte)",
+    "detalhe": "Supervisão 3 — Subseção Almoxarifado",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 069 (18ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/069%20BGSDS%20DE%2018ABR2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Gabriel de Souza Silva",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "José Renan da Costa Furtado",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Matheus Henrique Albuquerque de Vasconcelos",
+    "funcao": "Logística (almoxarifado, reserva, transporte)",
+    "detalhe": "Supervisão 3 — Subseção Almoxarifado",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Richardd Gabriel Castanha Bonfim Leite",
+    "funcao": "Logística (almoxarifado, reserva, transporte)",
+    "detalhe": "Supervisão 3 — Reserva e Material Bélico",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Emily Silva de Moura",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 20º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "João Marcos Armstrong de Sousa",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 20º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Aryclayton Accioly da Silva",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 20º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Everton Costa de Lima",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 2ª CPM do 20º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Gideão Silva Gomes",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 20º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   }
+  ]
+ },
+ "25º BPM": {
+  "t1": 6,
+  "t2": 6,
+  "funcoes": {
+   "Secretaria": 3,
+   "Seção Correcional": 3,
+   "Função gratificada (seção não informada)": 1,
+   "Logística (almoxarifado, reserva, transporte)": 1,
+   "Comandante de companhia": 3,
+   "Pelotão de Comando Tático": 2,
+   "Comandante de pelotão": 2,
+   "Seção de Pessoal": 2
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Robson Felipe Nunes Medeiros",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 030 (14FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/030%20BGSDS%20DE%2014FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Maria Luana de Souza Lucena",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/02/2026",
+    "bg": "BGSDS nº 030 (14FEV2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/02%20-%20Fevereiro/030%20BGSDS%20DE%2014FEV2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Allan Alves Pinto",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 2",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 069 (18ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/069%20BGSDS%20DE%2018ABR2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Diego Valdeci de Lemos Silva",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Henrique de Oliveira Silva",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Matheus Henrique de Lima Serafim",
+    "funcao": "Logística (almoxarifado, reserva, transporte)",
+    "detalhe": "Supervisão 3 — Subseção de Transporte e Comunicação",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Ana Lucia Soares da Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2ª CPM do 25º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "João Pedro Barboza Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 1ª CPM do 25º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Edynandes Júlio da Silva",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 25º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Robson Felipe Nunes Medeiros",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 25º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Josinaldo Gomes de Lima Junior",
+    "funcao": "Seção de Pessoal",
+    "detalhe": "Supervisão 2 — Seção de Pessoal",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Diego Valdeci de Lemos Silva",
+    "funcao": "Seção de Pessoal",
+    "detalhe": "Supervisão 2 — Seção de Pessoal",
+    "desde": "01/08/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Amanda Barbosa Coelho",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/08/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Josinaldo Gomes de Lima Junior",
+    "funcao": "Seção Correcional",
+    "detalhe": "Supervisão 3 — Seção Correcional",
+    "desde": "01/08/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Edynandes Júlio da Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 25º BPM",
+    "desde": "01/08/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Erika Patrícia Ferreira dos Santos Duarte",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 25º BPM",
+    "desde": "01/08/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Robson Felipe Nunes Medeiros",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 25º BPM",
+    "desde": "01/08/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   }
+  ]
+ },
+ "26º BPM": {
+  "t1": 6,
+  "t2": 2,
+  "funcoes": {
+   "Comandante de companhia": 3,
+   "Comandante de pelotão": 3,
+   "Pelotão de Comando Tático": 2,
+   "Secretaria": 1,
+   "Função gratificada (seção não informada)": 1
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Yukas Wellington Gondim da Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 26º BPM",
+    "desde": "01/03/2026",
+    "bg": "BGSDS nº 052 (24MAR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/03%20-%20Marco/052%20BGSDS%20DE%2024MAR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Lenildo Noronha da Silva",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 26º BPM",
+    "desde": "01/04/2026",
+    "bg": "BGSDS nº 068 (17ABR2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/04%20-%20Abril/068%20BGSDS%20DE%2017ABR2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Lucas Meneses Muniz",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 26º BPM",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 095 (28MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/095%20BGSDS%20DE%2028MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Rafael Araújo dos Santos",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 26º BPM",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 095 (28MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/095%20BGSDS%20DE%2028MAI2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Maria Aline da Hora Silva",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Lenildo Noronha da Silva",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3ª CPM do 26º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Rafael Araújo dos Santos",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 1ª CPM do 26º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Amanda Antero Barbosa Felix",
+    "funcao": "Comandante de pelotão",
+    "detalhe": "Comandante do 1º Pelotão da 1ª CPM do 26º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Caio Cézar Oliveira Cavalcanti",
+    "funcao": "Pelotão de Comando Tático",
+    "detalhe": "Comandante do Pelotão de Comando Tático do 26º BPM",
+    "desde": "01/07/2026",
+    "bg": "BGSDS nº 133 (24JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/133%20BGSDS%20DE%2024JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Lídia Soares de Almeida",
+    "funcao": "Função gratificada (seção não informada)",
+    "detalhe": "Função Gratificada de Supervisão 2",
+    "desde": "11/08/2026",
+    "bg": "BGSDS nº 164 (05SET2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/09%20-%20Setembro/164%20BGSDS%20DE%2005SET2026.pdf"
+   }
+  ]
+ },
+ "BPTur": {
+  "t1": 5,
+  "t2": 2,
+  "funcoes": {
+   "Comandante de companhia": 4,
+   "Seção de Planejamento": 2,
+   "Secretaria": 1
+  },
+  "registros": [
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Maria Micaele Alves Lins",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2º CPM do BPTUR",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 095 (28MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/095%20BGSDS%20DE%2028MAI2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "Asp Of",
+    "nome": "Andre Carlos da Rocha Silva",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "01/05/2026",
+    "bg": "BGSDS nº 096 (29MAI2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/05%20-%20Maio/096%20BGSDS%20DE%2029MAI2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Juscelino Maciel Gomes Queiroz",
+    "funcao": "Seção de Planejamento",
+    "detalhe": "Supervisão 2 — Seção de Planejamento",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Bruna Gabrielle Costa de Melo",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 3º CPM do BPTUR",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 128 (16JUL2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/07%20-%20Julho/128%20BGSDS%20DE%2016JUL2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Amilânia Delmondes Pereira",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 2º CPM do BPTUR",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T1",
+    "posto": "2º Ten",
+    "nome": "Paulo Henrique Francisco Inacio",
+    "funcao": "Comandante de companhia",
+    "detalhe": "Comandante da 1º CPM do BPTUR",
+    "desde": "03/07/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   },
+   {
+    "turma": "T2",
+    "posto": "Asp Of",
+    "nome": "Marcus Antonio de Lima Reis",
+    "funcao": "Secretaria",
+    "detalhe": "Supervisão 3 — Seção Secretaria",
+    "desde": "01/08/2026",
+    "bg": "BGSDS nº 148 (14AGO2026)",
+    "url": "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/08%20-%20Agosto/148%20BGSDS%20DE%2014AGO2026.pdf"
+   }
+  ]
+ }
+}

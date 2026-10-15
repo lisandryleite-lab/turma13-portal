@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { carregarLevantamento, PLANILHA_URL } from "@/lib/levantamento-ome"
-import { BATALHOES_BASE, FORMULARIO_DAG_URL, foraDoLevantamento } from "@/lib/batalhoes-base"
+import { BATALHOES_BASE, FORMULARIO_DAG_URL, foraDoLevantamento, nomeCurto, type AspirantadoFicha } from "@/lib/batalhoes-base"
 import { BatalhoesClient, type CardBatalhao, type Pendente } from "./batalhoes-client"
 
 export const dynamic = "force-dynamic"
@@ -33,7 +33,9 @@ export default async function BatalhoesPage() {
       sigla: b.sigla, slug: b.slug, nome: b.nome, sede: b.sede, municipio: b.municipio,
       opcao1: lista.filter(r => r.opcao1 === b.sigla).length,
       opcao2: lista.filter(r => r.opcao2 === b.sigla).length,
-      comandante: opm?.info?.comandante ?? null,
+      comandante: nomeCurto(opm?.info?.comandante) || null,
+      t1: (opm?.info?.aspirantado as AspirantadoFicha | null)?.t1 ?? 0,
+      t2: (opm?.info?.aspirantado as AspirantadoFicha | null)?.t2 ?? 0,
       mensagens: opm?._count.mural ?? 0,
     }
   })

@@ -49,6 +49,7 @@ export const FICHA: Ficha = {
   ],
   dicas: "",
   operacoes: [
+    { titulo: "Réveillon 2026 — estreia dos aspirantes da T1", data: "31/12/2025", resumo: "A SDS montou 4.538 postos de trabalho e a PMPE contou, pela primeira vez, com os novos soldados e aspirantes do concurso estadual. Área reforçada pelo batalhão: Morro da Conceição.", fonte: "BGSDS nº 239 (31/12/2025) — SDS", url: "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2025/12%20-%20Dezembro/1767211340_239%20BGSDS%20DE%2031DEZ2025.pdf" },
     { titulo: "Patrulhamento na Zona Norte — Top Five e Eleições", data: "02/10/2026", resumo: "O 11º BPM coordenou 65 policiais e 30 viaturas em Macaxeira, Dois Unidos, Morro da Conceição e outros bairros, com patrulhamento ostensivo.", foto: "https://cdn.portaldeprefeitura.com.br/img/social/1200/1200/dn_arquivo/2026/10/policiais-militares-de-pernambuco.jpg", fonte: "Portal de Prefeitura", url: ZONA_NORTE },
     { titulo: "Operação Guardião no Vasco da Gama", data: "23/07/2025", resumo: "Em apoio ao 11º BPM, a CIPMoto prendeu um homem por tráfico, com 107 invólucros e mais 225 g de maconha, crack, simulacros e balanças.", foto: "https://cdn.portaldeprefeitura.com.br/img/social/1200/1200/dn_arquivo/2025/07/recife-policia-prende-homem-trafico-e-apreende-crack-vasco-gama.jpg", fonte: "Portal de Prefeitura", url: GUARDIAO },
   ],
