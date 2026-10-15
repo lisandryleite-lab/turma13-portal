@@ -20,6 +20,12 @@ const REM = remuneracao.porBatalhao as Record<string, Rem>
 const ultimo = (t: "posT1" | "posT2") => Object.entries(REM).reduce<[string, number] | null>((m, [o, r]) => r[t] && (!m || r[t]!.pior > m[1]) ? [o, r[t]!.pior] : m, null)
 const ULTIMO = { T2: ultimo("posT2"), T1: ultimo("posT1") }
 const AMOSTRA_MIN = 3
+const TAMANHO = { posT2: 182, posT1: 148 } as const
+// Disputa T1+T2: média do corte em % da turma, só com amostras suficientes (menor = mais disputado)
+const disputa = (r: Rem | undefined) => {
+  const v = (["posT2", "posT1"] as const).flatMap(t => r?.[t] && r[t]!.n >= AMOSTRA_MIN ? [r[t]!.pior / TAMANHO[t]] : [])
+  return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null
+}
 const CRIME = criminalidade.porBatalhao as Record<string, Crime>
 
 const semAcento = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
@@ -34,7 +40,7 @@ type Ordem = "turma" | "vagas" | "disputa" | "diarias" | "seguranca"
 const ORDENS: { id: Ordem; rot: string }[] = [
   { id: "turma", rot: "Mais escolhidos pela turma" },
   { id: "vagas", rot: "Mais vagas (T2)" },
-  { id: "disputa", rot: "Mais disputados (T2)" },
+  { id: "disputa", rot: "Mais disputados (T1+T2)" },
   { id: "diarias", rot: "Mais diárias" },
   { id: "seguranca", rot: "Menor violência" },
 ]
@@ -74,7 +80,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
 
   const linhas = useMemo(() => {
     const v = (c: CardBatalhao) => ordem === "turma" ? c.opcao1 : ordem === "vagas" ? (REM[c.sigla]?.vagasT2 ?? 0)
-      : ordem === "disputa" ? (REM[c.sigla]?.posT2 && REM[c.sigla]!.posT2!.n >= AMOSTRA_MIN ? -REM[c.sigla]!.posT2!.pior : -1000 - (REM[c.sigla]?.posT2?.pior ?? 999)) : ordem === "diarias" ? (REM[c.sigla]?.diarias?.total ?? 0)
+      : ordem === "disputa" ? -(disputa(REM[c.sigla]) ?? 9) : ordem === "diarias" ? (REM[c.sigla]?.diarias?.total ?? 0)
       : -(CRIME[c.sigla]?.cvli.taxa2025 ?? 999)
     return [...cards].sort((a, b) => v(b) - v(a) || numero(a.sigla) - numero(b.sigla))
   }, [cards, ordem])
@@ -179,7 +185,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
           </table>
         </div>
         <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
-          <strong>Corte</strong>: classificação do último aspirante da turma visto no batalhão (T2 de 1º a 182º; embaixo, a T1, de 1º a 148º) — quanto menor, mais disputado. Em cinza: menos de {AMOSTRA_MIN} aspirantes na amostra (vai para o fim em “Mais disputados”). A amostra só tem quem recebeu função publicada no BGSDS.
+          <strong>Corte</strong>: classificação do último aspirante da turma visto no batalhão (T2 de 1º a 182º; embaixo, a T1, de 1º a 148º) — quanto menor, mais disputado. Em cinza: menos de {AMOSTRA_MIN} aspirantes na amostra. “Mais disputados” junta T1 e T2: média do corte em % de cada turma, ignorando as amostras em cinza. A amostra só tem quem recebeu função publicada no BGSDS.
           <strong> Diárias</strong>: pagas em 2026 citando o batalhão (todo o efetivo).
           <strong> CVLI</strong>: mortes violentas por 100 mil habitantes (2025) e variação jan–set 2026. * dado do município inteiro (Recife ou Jaboatão).
           Fontes: <a href="https://www.sds.pe.gov.br/estatisticas/crimes-violentos-letais-intencionais" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>SDS</a>, <a href="https://sidra.ibge.gov.br/tabela/4709" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>IBGE</a>, quadro de vagas da escolha da T2 e boletins da SDS · <a href={planilhaUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>planilha da DAG</a>.
