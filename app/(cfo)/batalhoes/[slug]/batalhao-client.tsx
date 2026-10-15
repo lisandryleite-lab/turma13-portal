@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import { CAMPOS_FICHA, type ChaveFicha } from "@/lib/batalhoes-base"
+import { CAMPOS_FICHA, FORMULARIO_DAG_URL, type ChaveFicha } from "@/lib/batalhoes-base"
 
 type Pessoa = { mat: number; nome: string; pelotao: number | null; outra: string | null }
 type Msg = { id: string; texto: string; criadoEm: string; mat: number; nome: string }
@@ -57,6 +57,7 @@ export function BatalhaoClient({ sigla, isAdmin, minhaMatricula, planilhaOk, inf
   const [erro, setErro] = useState("")
   const [texto, setTexto] = useState("")
   const [enviando, setEnviando] = useState(false)
+  const [abaLista, setAbaLista] = useState<1 | 2>(1)
 
   async function salvarFicha(e: React.FormEvent) {
     e.preventDefault(); setSalvando(true); setErro("")
@@ -149,17 +150,28 @@ export function BatalhaoClient({ sigla, isAdmin, minhaMatricula, planilhaOk, inf
         )}
       </section>
 
-      {/* Quem escolheu */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16 }}>
-        <section style={cartao}>
-          <h2 style={titulo}>1ª opção <span style={{ color: "var(--ink-60)", fontWeight: 400 }}>({primeira.length})</span></h2>
-          <ListaPessoas pessoas={primeira} minhaMatricula={minhaMatricula} rotuloOutra="2ª:" />
-        </section>
-        <section style={cartao}>
-          <h2 style={titulo}>2ª opção <span style={{ color: "var(--ink-60)", fontWeight: 400 }}>({segunda.length})</span></h2>
-          <ListaPessoas pessoas={segunda} minhaMatricula={minhaMatricula} rotuloOutra="1ª:" />
-        </section>
-      </div>
+      {/* Quem escolheu — visualizador 1ª / 2ª opção */}
+      <section style={cartao}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
+          <h2 style={{ ...titulo, margin: 0, fontFamily: "var(--serif-cfo)", fontSize: "1.2rem" }}>Quem escolheu o {sigla}</h2>
+          <div style={{ display: "flex", gap: 6 }}>
+            {([[1, "1ª opção", primeira.length], [2, "2ª opção", segunda.length]] as const).map(([n, r, q]) => (
+              <button key={n} onClick={() => setAbaLista(n)}
+                style={{ padding: "7px 14px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600,
+                  background: abaLista === n ? "var(--olive)" : "var(--surface)", color: abaLista === n ? "var(--canvas)" : "var(--ink-60)" }}>
+                {r} <span style={{ opacity: 0.75 }}>{q}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        {abaLista === 1
+          ? <ListaPessoas key="p1" pessoas={primeira} minhaMatricula={minhaMatricula} rotuloOutra="2ª:" />
+          : <ListaPessoas key="p2" pessoas={segunda} minhaMatricula={minhaMatricula} rotuloOutra="1ª:" />}
+        <a href={FORMULARIO_DAG_URL} target="_blank" rel="noopener noreferrer"
+          style={{ display: "inline-block", marginTop: 14, fontSize: 13, fontWeight: 600, color: "var(--olive)" }}>
+          Quer mudar sua escolha? Responda de novo o formulário da DAG ↗
+        </a>
+      </section>
       {!planilhaOk && <p style={{ margin: 0, fontSize: 12.5, color: "var(--red)" }}>Não foi possível abrir a planilha da DAG agora — as listas podem estar vazias.</p>}
 
       {/* Mural */}

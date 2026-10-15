@@ -1,6 +1,10 @@
 // Dados-base dos batalhões da RMR (usados enquanto a ficha "Conheça o batalhão"
 // não for preenchida pelo admin no portal). Sede conforme o formulário da DAG.
 
+// Formulário da DAG (levantamento de interesse em OMEs) — responder de novo
+// com a mesma numérica substitui a escolha (vale a resposta mais recente).
+export const FORMULARIO_DAG_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe7i2R-Qw6ZLQ96CCR3eAVpVkpANDUi_o0kqczq63abhKSjMw/viewform"
+
 export type BaseBatalhao = { sigla: string; slug: string; nome: string; sede: string; municipio: string; email?: string }
 
 export const BATALHOES_BASE: BaseBatalhao[] = [
