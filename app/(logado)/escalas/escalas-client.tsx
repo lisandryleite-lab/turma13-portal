@@ -20,6 +20,7 @@ const GRUPOS_FAXINA = ["SEGUNDA","TERÇA","QUARTA","QUINTA","SEXTA"] as const
 
 type ServicoSemana = {
   semana: number; isOverride?: boolean
+  xerife?: {mat:number;nome:string}|null; xerifePrevisto?: boolean
   p1: {mat:number;nome:string}|null
   p3: {mat:number;nome:string}|null
   p4: {mat:number;nome:string}|null
@@ -184,6 +185,7 @@ export function EscalasClient({
   const euSouP1=servicoAtual.p1?.mat===minhaMatricula
   const euSouP3=servicoAtual.p3?.mat===minhaMatricula
   const euSouP4=servicoAtual.p4?.mat===minhaMatricula
+  const euSouXerife=servicoAtual.xerife?.mat===minhaMatricula
 
   const tabs=[{id:"servico",label:"Serviço P1/P3/P4"},{id:"faxina",label:"Faxina"},{id:"plantao",label:"Plantão"}] as const
 
@@ -209,13 +211,15 @@ export function EscalasClient({
       {/* ── SERVIÇO ── */}
       {aba==="servico"&&(
         <div>
-          {(euSouP1||euSouP3||euSouP4)&&<div style={{background:"var(--dourado)",borderRadius:10,padding:"10px 16px",marginBottom:20,color:"#fff",fontSize:13,fontWeight:600}}>⭐ Você está de {euSouP1?"P1 — Pessoal":euSouP3?"P3 — Operações":"P4 — Logística"} nessa semana</div>}
+          {(euSouXerife||euSouP1||euSouP3||euSouP4)&&<div style={{background:"var(--dourado)",borderRadius:10,padding:"10px 16px",marginBottom:20,color:"#fff",fontSize:13,fontWeight:600}}>⭐ Você está de {euSouXerife?"Xerife":euSouP1?"P1 — Pessoal":euSouP3?"P3 — Operações":"P4 — Logística"} nessa semana</div>}
           <h2 style={{fontSize:14,fontWeight:700,color:"var(--azul-profundo)",marginBottom:12,letterSpacing:"0.06em",textTransform:"uppercase"}}>Semana {semana} — Atual</h2>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,marginBottom:32}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:12,marginBottom:8}}>
+            <CardServico label="Xerife" pessoa={servicoAtual.xerife??null} destaque={euSouXerife}/>
             <CardServico label="P1 — Pessoal"   pessoa={servicoAtual.p1} destaque={euSouP1}/>
             <CardServico label="P3 — Operações" pessoa={servicoAtual.p3} destaque={euSouP3}/>
             <CardServico label="P4 — Logística" pessoa={servicoAtual.p4} destaque={euSouP4}/>
           </div>
+          <p style={{fontSize:11.5,color:"var(--cinza-texto)",margin:"0 0 28px",lineHeight:1.5}}>Xerife e P1/P3/P4 seguem a antiguidade sem coincidir: cada aluno faz P4 → P3 → P1 em semanas seguidas, folga uma semana e depois assume a xerifância. Xerife das próximas semanas = previsão.</p>
           <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
             <h2 style={{fontSize:14,fontWeight:700,color:"var(--azul-profundo)",letterSpacing:"0.06em",textTransform:"uppercase"}}>
               Semana {semanaVis.semana}/52
@@ -251,9 +255,9 @@ export function EscalasClient({
           ):(
             <div style={{background:"#fff",border:"1.5px solid var(--cinza-borda)",borderRadius:12,overflow:"hidden",marginBottom:16}}>
               <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
-                <thead><tr style={{background:"var(--azul-claro)"}}>{["P1 — Pessoal","P3 — Operações","P4 — Logística"].map(h=><th key={h} style={{padding:"10px 14px",textAlign:"left",fontWeight:700,color:"var(--azul-profundo)",fontSize:12}}>{h}</th>)}{isAdmin&&<th style={{width:80}}/>}</tr></thead>
+                <thead><tr style={{background:"var(--azul-claro)"}}>{[semanaVis.xerifePrevisto?"Xerife (previsto)":"Xerife","P1 — Pessoal","P3 — Operações","P4 — Logística"].map(h=><th key={h} style={{padding:"10px 14px",textAlign:"left",fontWeight:700,color:"var(--azul-profundo)",fontSize:12}}>{h}</th>)}{isAdmin&&<th style={{width:80}}/>}</tr></thead>
                 <tbody><tr style={{borderTop:"1px solid var(--cinza-borda)",background:"var(--creme)"}}>
-                  {[semanaVis.p1,semanaVis.p3,semanaVis.p4].map((p,i)=><td key={i} style={{padding:"12px 14px",fontWeight:p?.mat===minhaMatricula?700:400}}>{p?.nome??"—"}{p?.mat===minhaMatricula&&<span style={{fontSize:11,color:"var(--azul-medio)",marginLeft:6}}>← você</span>}</td>)}
+                  {[semanaVis.xerife??null,semanaVis.p1,semanaVis.p3,semanaVis.p4].map((p,i)=><td key={i} style={{padding:"12px 14px",fontWeight:p?.mat===minhaMatricula?700:400}}>{p?.nome??"—"}{p?.mat===minhaMatricula&&<span style={{fontSize:11,color:"var(--azul-medio)",marginLeft:6}}>← você</span>}</td>)}
                   {isAdmin&&<td style={{padding:"12px 14px"}}><button onClick={()=>{setEditandoSemana(semanaVis.semana);setEditP1(semanaVis.p1?String(semanaVis.p1.mat):"");setEditP3(semanaVis.p3?String(semanaVis.p3.mat):"");setEditP4(semanaVis.p4?String(semanaVis.p4.mat):"")}} style={{fontSize:11,color:"var(--azul-medio)",background:"#f0f4ff",border:"none",borderRadius:5,padding:"3px 10px",cursor:"pointer"}}>Editar</button></td>}
                 </tr></tbody>
               </table>
@@ -264,12 +268,13 @@ export function EscalasClient({
             <summary style={{fontSize:12,color:"var(--cinza-texto)",cursor:"pointer",userSelect:"none",marginBottom:8}}>Ver todas as semanas ({semanas.length})</summary>
             <div style={{background:"#fff",border:"1.5px solid var(--cinza-borda)",borderRadius:12,overflow:"hidden"}}>
               <table style={{width:"100%",borderCollapse:"collapse",fontSize:12}}>
-                <thead><tr style={{background:"var(--azul-profundo)",color:"#fff"}}><th style={{padding:"8px 12px",textAlign:"left",fontSize:11}}>Semana</th><th style={{padding:"8px 12px",textAlign:"left",fontSize:11}}>P1</th><th style={{padding:"8px 12px",textAlign:"left",fontSize:11}}>P3</th><th style={{padding:"8px 12px",textAlign:"left",fontSize:11}}>P4</th>{isAdmin&&<th style={{width:60}}/>}</tr></thead>
+                <thead><tr style={{background:"var(--azul-profundo)",color:"#fff"}}><th style={{padding:"8px 12px",textAlign:"left",fontSize:11}}>Semana</th><th style={{padding:"8px 12px",textAlign:"left",fontSize:11}}>Xerife</th><th style={{padding:"8px 12px",textAlign:"left",fontSize:11}}>P1</th><th style={{padding:"8px 12px",textAlign:"left",fontSize:11}}>P3</th><th style={{padding:"8px 12px",textAlign:"left",fontSize:11}}>P4</th>{isAdmin&&<th style={{width:60}}/>}</tr></thead>
                 <tbody>{semanas.map((s,i)=>{
-                  const eu=s.p1?.mat===minhaMatricula||s.p3?.mat===minhaMatricula||s.p4?.mat===minhaMatricula
+                  const eu=s.xerife?.mat===minhaMatricula||s.p1?.mat===minhaMatricula||s.p3?.mat===minhaMatricula||s.p4?.mat===minhaMatricula
                   const atual=s.semana===semana
                   return <tr key={s.semana} style={{borderTop:"1px solid var(--cinza-borda)",background:atual?"var(--azul-claro)":eu?"#fffbf0":"#fff",fontWeight:atual||eu?600:400}}>
                     <td style={{padding:"8px 12px",color:"var(--azul-profundo)"}}>{s.semana}{atual?" ✦":""}{s.isOverride&&<span style={{fontSize:9,background:"var(--dourado)",color:"#fff",borderRadius:3,padding:"1px 4px",marginLeft:4}}>ed</span>}</td>
+                    <td style={{padding:"8px 12px",fontStyle:s.xerifePrevisto?"italic":"normal"}}>{s.xerife?.nome??"—"}</td>
                     <td style={{padding:"8px 12px"}}>{s.p1?.nome??"—"}</td>
                     <td style={{padding:"8px 12px"}}>{s.p3?.nome??"—"}</td>
                     <td style={{padding:"8px 12px"}}>{s.p4?.nome??"—"}</td>

@@ -23,10 +23,14 @@ export const MATRICULAS_ORDEM = [
 
 // Rodízio de P1/P3/P4: anda UMA posição por semana (quem é P4 vira P3 e depois
 // P1) e, ao chegar no fim da lista, volta ao começo.
-// Reinício em out/2026: semana 39 → P1=191 GOMES NASCIMENTO, P3=7 ALDO SILVA,
-// P4=13 JONAS; semana 40 → 7 / 13 / 19, e assim por diante.
-const REF_SEMANA = 39
-const REF_P1_IDX = MATRICULAS_ORDEM.indexOf(191)
+// Out/2026: a xerifância passou a seguir a mesma antiguidade (13 JONAS na semana
+// 40, 19 THAIS na 41…) e os dois rodízios coincidiam — o mesmo aluno acumulava
+// xerife e P1/P3/P4. A escala de funções foi ADIANTADA 3 semanas (o que seria a
+// semana 43 passou para a 40): semana 40 → P1=23 RODOLFO MOURA, P3=26 ANDRÉ,
+// P4=37 PABLO TORRES. Assim cada aluno faz P4 → P3 → P1 em semanas seguidas,
+// folga uma semana e só então é xerife — nunca duas funções na mesma semana.
+const REF_SEMANA = 40
+const REF_P1_IDX = MATRICULAS_ORDEM.indexOf(23)
 
 export function calcularServico(semana: number): {
   p1: number | null
@@ -37,6 +41,16 @@ export function calcularServico(semana: number): {
   const base = REF_P1_IDX + (semana - REF_SEMANA)
   const get = (i: number) => MATRICULAS_ORDEM[(((base + i) % n) + n) % n]
   return { p1: get(0), p3: get(1), p4: get(2) }
+}
+
+// Xerife previsto — segue a antiguidade de MATRICULAS_ORDEM, uma semana cada.
+// Referência: semana 40 (13/10/2026) = 13 JONAS, xerife em exercício.
+const REF_XERIFE_SEMANA = 40
+const REF_XERIFE_IDX = MATRICULAS_ORDEM.indexOf(13)
+
+export function calcularXerife(semana: number): number {
+  const n = MATRICULAS_ORDEM.length
+  return MATRICULAS_ORDEM[(((REF_XERIFE_IDX + semana - REF_XERIFE_SEMANA) % n) + n) % n]
 }
 
 // ─────────────────────────────────────────────────────────────

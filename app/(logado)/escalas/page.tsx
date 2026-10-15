@@ -5,6 +5,7 @@ import { EscalasTabs } from "./escalas-tabs"
 import { hojeRecifeISO } from "@/lib/calendario-provas"
 import {
   calcularServico,
+  calcularXerife,
   calendarioFaxinaMes,
   COMPOSICAO_FAXINA,
   MEMBROS_PLANTAO,
@@ -40,7 +41,7 @@ export default async function EscalasPage() {
   // Gera semanas restantes do ano com cálculo automático
   const semanasAno = Array.from({ length: 52 - semana + 1 }, (_, i) => semana + i)
 
-  const [plantaoDias, funcoesDias, alunos, overridesBD, faxinaMembrosBD] = await Promise.all([
+  const [plantaoDias, funcoesDias, alunos, overridesBD, faxinaMembrosBD, xerifeAtual] = await Promise.all([
     // plantão do mês atual ao final do ano
     prisma.plantaoDia.findMany({
       where: { data: { gte: new Date(ano, mes - 1, 1), lte: new Date(ano, 11, 31) } },
@@ -59,6 +60,7 @@ export default async function EscalasPage() {
     prisma.escalaServico.findMany({ where: { semana: { in: semanasAno } } }),
     // Composição dos grupos de faxina (DB-backed)
     prisma.faxinaGrupoMembro.findMany({ orderBy: [{ grupo: "asc" }, { mat: "asc" }] }),
+    prisma.xerife.findFirst({ where: { atual: true }, select: { matricula: true, nomeGuerra: true } }),
   ])
 
   const nomesPorMat: Record<number, string> = {}
@@ -76,9 +78,14 @@ export default async function EscalasPage() {
     const p1Mat = ov?.p1 ?? auto.p1
     const p3Mat = ov?.p3 ?? auto.p3
     const p4Mat = ov?.p4 ?? auto.p4
+    // Xerife: na semana atual vale o registrado na Xerifância; nas seguintes, a
+    // previsão por antiguidade.
+    const xMat = s === semana && xerifeAtual ? xerifeAtual.matricula : calcularXerife(s)
     return {
       semana: s,
       isOverride: !!ov,
+      xerife: { mat: xMat, nome: nomesPorMat[xMat] ?? (s === semana && xerifeAtual ? xerifeAtual.nomeGuerra : `Mat.${xMat}`) },
+      xerifePrevisto: !(s === semana && xerifeAtual),
       p1: p1Mat ? { mat: p1Mat, nome: nomesPorMat[p1Mat] ?? `Mat.${p1Mat}` } : null,
       p3: p3Mat ? { mat: p3Mat, nome: nomesPorMat[p3Mat] ?? `Mat.${p3Mat}` } : null,
       p4: p4Mat ? { mat: p4Mat, nome: nomesPorMat[p4Mat] ?? `Mat.${p4Mat}` } : null,
