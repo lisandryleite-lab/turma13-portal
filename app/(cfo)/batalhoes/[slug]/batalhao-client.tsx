@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
-  CAMPOS_FICHA, FORMULARIO_DAG_URL, GRUPO_LINK_PADRAO, GRUPOS_FICHA, TIPOS_CONTRIBUICAO,
+  CAMPOS_FICHA, FONTES_ASPIRANTADO, FORMULARIO_DAG_URL, GRUPO_LINK_PADRAO, GRUPOS_FICHA, TIPOS_CONTRIBUICAO,
   bairrosDeTexto, bairrosParaTexto, fontesDeTexto, fontesParaTexto, linksDeTexto, linksParaTexto, operacoesDeTexto, operacoesParaTexto,
   type AspirantadoFicha, type BairroFicha, type ChaveFicha, type FonteFicha, type LinkFicha, type OperacaoFicha, type TipoContribuicao,
 } from "@/lib/batalhoes-base"
@@ -372,7 +372,13 @@ function Aspirantado({ asp, temVagas }: { asp: AspirantadoFicha; temVagas: boole
         )
       })}
       <p style={{ margin: 0, fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.5 }}>
-        Levantado nos Boletins Gerais da SDS de dez/2025 a out/2026 (atos de designação de Aspirante a Oficial e de 2º Ten das turmas T1 e T2). Conta só quem recebeu função publicada — o total lotado no batalhão pode ser maior. Não há publicação oficial de “vagas” por batalhão; esse é o melhor indicativo de onde as turmas anteriores foram empregadas.
+        Levantado nos Boletins Gerais da SDS de dez/2025 a out/2026 (atos de designação de Aspirante a Oficial e de 2º Ten das turmas T1 e T2). Conta só quem recebeu função publicada — o total lotado no batalhão pode ser maior. Não há publicação oficial de “vagas” por batalhão; esse é o melhor indicativo de onde as turmas anteriores foram empregadas. Cada designação acima traz o link do boletim.
+      </p>
+      <p style={{ margin: "0", fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.7 }}>
+        <strong>Fontes:</strong>{" "}
+        {FONTES_ASPIRANTADO.map((f, i) => (
+          <span key={f.url}>{i > 0 && " · "}<a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>{f.rotulo} ↗</a></span>
+        ))}
       </p>
     </div>
   )

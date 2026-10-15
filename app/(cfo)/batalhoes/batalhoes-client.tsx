@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useMemo, useState } from "react"
+import { FONTES_ASPIRANTADO } from "@/lib/batalhoes-base"
 
 export type CardBatalhao = {
   sigla: string; slug: string; nome: string; sede: string; municipio: string
@@ -157,6 +158,12 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
           ))}
         </div>
         <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>■ <span style={{ color: "#3a4a3a" }}>T1</span> · ■ <span style={{ color: "#b5933f" }}>T2</span> · toque no batalhão para ver as funções (comando de pelotão, de companhia, PCT, seções) e o boletim de cada designação.</p>
+        <p style={{ margin: "6px 0 0", fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.7 }}>
+          <strong>Fontes:</strong>{" "}
+          {FONTES_ASPIRANTADO.map((f, i) => (
+            <span key={f.url}>{i > 0 && " · "}<a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>{f.rotulo} ↗</a></span>
+          ))}
+        </p>
       </section>
 
       {/* ── Batalhões em ordem ── */}

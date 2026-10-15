@@ -94,6 +94,15 @@ export type LinkFicha = { rotulo: string; url: string; grupo?: string }
 // Aspirantes das turmas anteriores com função publicada no BGSDS (scripts/fichas/aspirantado.json).
 export type RegistroAspirante = { turma: "T1" | "T2"; posto: string; nome: string; funcao: string; detalhe: string; desde: string; bg: string; url: string | null }
 export type AspirantadoFicha = { t1: number; t2: number; funcoes: Record<string, number>; registros: RegistroAspirante[] }
+// Fontes do levantamento de aspirantado (T1 e T2).
+export const FONTES_ASPIRANTADO = [
+  { rotulo: "BGSDS nº 221 (29/11/2025) — nomeação da T1", url: "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2025/11%20-%20Novembro/1764551131_221%20BGSDS%20DE%2029NOV2025.pdf" },
+  { rotulo: "BGSDS nº 099 (03/06/2026) — T1 promovida a 2º Ten", url: "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/06%20-%20Junho/099%20BGSDS%20DE%2003JUN2026.pdf" },
+  { rotulo: "BGSDS nº 103 (09/06/2026) — nomeação da T2", url: "https://www.sds.pe.gov.br/images/media/arquivos/Boletim_Geral/2026/06%20-%20Junho/103%20BGSDS%20DE%2009JUN2026.pdf" },
+  { rotulo: "Formatura da T1 (148) — Portal de Prefeitura", url: "https://portaldeprefeitura.com.br/regiao-metropolitana/recife/raquel-lyra-comanda-oficiais-policia-militar-de-pernambuco/609635/" },
+  { rotulo: "Formatura da T2 (182) — Diario de Pernambuco", url: "https://www.diariodepernambuco.com.br/vida-urbana/2026/06/11716059-pmpe-forma-182-novos-oficiais-para-batalhoes-da-regiao-metropolitana-do-recife.html" },
+  { rotulo: "Índice do Boletim Geral da SDS", url: "https://www.sds.pe.gov.br/boletim-geral" },
+]
 // Comandante sem a portaria/fonte (para cards e listas).
 export const nomeCurto = (s: string | null | undefined) => (s ?? "").split(/ — | \(/)[0].trim()
 export type OperacaoFicha = { titulo: string; data: string; resumo: string; foto?: string; fonte: string; url?: string }
