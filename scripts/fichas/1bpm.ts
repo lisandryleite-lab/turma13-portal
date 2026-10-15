@@ -3,7 +3,7 @@
  * Regra: só entra informação com fonte; a fonte vai no próprio campo.
  * Conferido em 15/10/2026:
  *  - Comandante: BGSDS nº 046 (14/03/2025), Portaria nº 1557; citado como cmt em 07/08/2026.
- *  - Subcomandante: BGSDS nº 218 (19/11/2024), Portaria nº 6764.
+ *  - Subcomandante: o designado em nov/2024 (Portaria nº 6764) aparece em mar/2026 como comandante do 20º BPM — fica em branco.
  *  - Endereço, telefones, e-mail e bairros por CPM: páginas da PMPE (1º BPM e unidades operacionais).
  *  - Operações: matérias que citam o 1º BPM nominalmente.
  *  - Distâncias: rota de carro OSRM/OpenStreetMap até a Av. Carlos de Lima Cavalcanti (Rio Doce), sem trânsito.
@@ -16,7 +16,6 @@ export const SIGLA = "1º BPM"
 const PMPE_1BPM = "https://www.pm.pe.gov.br/1bpm-2/"
 const PMPE_UNIDADES = "https://www.pm.pe.gov.br/unidades-operacionais-2/"
 const BGSDS_046 = "https://www.sds.pe.gov.br/images/media/1741962113_046%20BGSDS%20DE%2014MAR2025.pdf"
-const BGSDS_218 = "https://www.sds.pe.gov.br/images/media/1732024781_218%20BGSDS%20DE%2019NOV2024.pdf"
 const BREAK = "https://www.diariodepernambuco.com.br/vida-urbana/2026/08/11720593-acao-integrada-remove-barricadas-instaladas-por-grupos-criminosos-na-comunidade-v8-em-olinda.html"
 const BREAK_2 = "https://portaldeprefeitura.com.br/cotidiano/operacao-break-remove-barricadas-v8-v9-olinda/629085/"
 const FUZIL = "https://portaldeprefeitura.com.br/policia/policia-militar-apreende-fuzil-com-28-municoes-em-comunidade-de-olinda/633941/"
@@ -34,7 +33,7 @@ export const FICHA: Ficha = {
   distanciaBR: "Até a APMP (Paudalho): ~56 km, ~50 min de carro sem trânsito.\nAté o Marco Zero (Recife): ~13 km, ~15 min sem trânsito.\nA sede fica na Av. Carlos de Lima Cavalcanti, corredor que liga Olinda a Paulista; o Terminal Integrado Rio Doce é a referência para quem vai de ônibus.",
   // 🎖️ Comando e efetivo
   comandante: "TC QOPM Lenildo de Freitas Paixão — Portaria nº 1557 (BGSDS nº 046, de 14/03/2025), a contar de 06/03/2025; citado como comandante na Operação Break (07/08/2026).",
-  subcomandante: "Maj QOPM Ilson de Oliveira Gonçalves — Portaria nº 6764 (BGSDS nº 218, de 19/11/2024), a contar de 01/11/2024.",
+  subcomandante: "",
   cpm: "DIM — Diretoria Integrada Metropolitana (PMPE).",
   estrutura: "Três companhias territoriais: 1ª, 2ª e 3ª CPM (PMPE — unidades operacionais).",
   efetivo: "Não divulgado.",
@@ -65,7 +64,6 @@ export const FICHA: Ficha = {
   ],
   links: [
     { rotulo: "BGSDS nº 046/2025 — designação do comandante", url: BGSDS_046, grupo: "Legislação para estudo" },
-    { rotulo: "BGSDS nº 218/2024 — designação do subcomandante", url: BGSDS_218, grupo: "Legislação para estudo" },
     { rotulo: "INCG nº 605/2023 — normas organizacionais da PMPE", url: "https://www.pm.pe.gov.br/incg605-2023-textoatualizado/", grupo: "Legislação para estudo" },
     { rotulo: "Legislação da PMPE (portal)", url: "https://www.pm.pe.gov.br/decretos-pmpe-legis/", grupo: "Legislação para estudo" },
     { rotulo: "1º BPM — página da PMPE", url: PMPE_1BPM },
@@ -80,7 +78,6 @@ export const FICHA: Ficha = {
     { info: "Companhias e bairros", rotulo: "PMPE — unidades operacionais", url: PMPE_UNIDADES },
     { info: "Comandante", rotulo: "BGSDS nº 046, de 14/03/2025 — Portaria nº 1557", url: BGSDS_046 },
     { info: "Comandante em 2026", rotulo: "Diario de Pernambuco — Operação Break, 07/08/2026", url: BREAK },
-    { info: "Subcomandante", rotulo: "BGSDS nº 218, de 19/11/2024 — Portaria nº 6764", url: BGSDS_218 },
     { info: "Unidades na Operação Break", rotulo: "Portal de Prefeitura, 07/08/2026", url: BREAK_2 },
     { info: "Apreensões de 2026", rotulo: "Diario de Pernambuco e Portal de Prefeitura (ver Operações)" },
     { info: "Dojo e instrução", rotulo: "PMPE (2020) e Prefeitura de Olinda (abr/2026)", url: INSTRUCAO },
