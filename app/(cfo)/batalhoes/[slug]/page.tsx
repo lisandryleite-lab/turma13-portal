@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { carregarLevantamento } from "@/lib/levantamento-ome"
-import { baseDoSlug, CAMPOS_FICHA, foraDoLevantamento, linkMapa, linkRota, type BairroFicha, type ChaveFicha, type FonteFicha, type LinkFicha } from "@/lib/batalhoes-base"
+import { baseDoSlug, CAMPOS_FICHA, foraDoLevantamento, linkMapa, linkMapaEmbutido, linkRota, type BairroFicha, type ChaveFicha, type FonteFicha, type LinkFicha, type OperacaoFicha } from "@/lib/batalhoes-base"
 import { BatalhaoClient } from "./batalhao-client"
 
 export const dynamic = "force-dynamic"
@@ -51,6 +51,7 @@ export default async function BatalhaoPage({ params }: { params: Promise<{ slug:
         sigla={base.sigla}
         mapaUrl={linkMapa(base, info?.referenciaMapa)}
         rotaUrl={linkRota(base, info?.referenciaMapa)}
+        mapaEmbutidoUrl={linkMapaEmbutido(base, info?.referenciaMapa)}
         isAdmin={isAdmin}
         minhaMatricula={session.user.matricula}
         planilhaOk={respostas !== null}
@@ -58,6 +59,7 @@ export default async function BatalhaoPage({ params }: { params: Promise<{ slug:
         bairros={lista<BairroFicha>(info?.bairros)}
         links={lista<LinkFicha>(info?.links)}
         fontes={lista<FonteFicha>(info?.fontes)}
+        operacoes={lista<OperacaoFicha>(info?.operacoes)}
         atualizadoEm={info?.atualizadoEm.toISOString() ?? null}
         primeira={primeira}
         segunda={segunda}

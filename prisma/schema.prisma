@@ -398,6 +398,8 @@ model OpmInfo {
   bairros        Json?    // [{ nome, km, tempo, obs }] — morar perto, com distância até a sede
   links          Json?    // [{ rotulo, url }] — links úteis
   fontes         Json?    // [{ info, rotulo, url }] — de onde veio cada informação
+  operacoes      Json?    // [{ titulo, data, resumo, foto, fonte, url }] — operações com foto
+  streetView     String?  // link do Google Street View da fachada
   atualizadoEm  DateTime @updatedAt
   atualizadoPor String?
 

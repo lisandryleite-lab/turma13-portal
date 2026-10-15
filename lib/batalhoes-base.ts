@@ -43,6 +43,8 @@ const enderecoMapa = (b: BaseBatalhao, referencia?: string | null) =>
   referencia?.trim() || ENDERECO_MAPA[b.slug] || `${b.sigla}, ${b.sede}, ${b.municipio} - PE`
 export const linkMapa = (b: BaseBatalhao, referencia?: string | null) =>
   "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(enderecoMapa(b, referencia))
+export const linkMapaEmbutido = (b: BaseBatalhao, referencia?: string | null) =>
+  "https://maps.google.com/maps?z=17&output=embed&q=" + encodeURIComponent(enderecoMapa(b, referencia))
 export const linkRota = (b: BaseBatalhao, referencia?: string | null) =>
   "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(enderecoMapa(b, referencia))
 
@@ -65,10 +67,13 @@ export const GRUPOS_FICHA = [
   { id: "dicas", titulo: "💡 Dicas ao estagiário" },
 ] as const
 
+export const GRUPO_LINK_PADRAO = "Links úteis"
+
 // Campos de texto, na ordem de exibição. `oculto` = só aparece no editor.
 export const CAMPOS_FICHA = [
   { chave: "endereco", rotulo: "Endereço de apresentação", grupo: "localizacao" },
   { chave: "referenciaMapa", rotulo: "Endereço para o Google Maps (só o endereço, sem observações)", grupo: "localizacao", oculto: true },
+  { chave: "streetView", rotulo: "Link do Google Street View da fachada (https://…)", grupo: "localizacao", oculto: true },
   { chave: "telefone", rotulo: "Telefone", grupo: "localizacao" },
   { chave: "email", rotulo: "E-mail", grupo: "localizacao" },
   { chave: "distanciaBR", rotulo: "Deslocamento (APMP, Recife, vias de acesso)", grupo: "localizacao", longo: true },
@@ -87,16 +92,20 @@ export const CAMPOS_FICHA = [
 
 // Listas estruturadas da ficha (JSON no OpmInfo).
 export type BairroFicha = { nome: string; km: string; tempo: string; obs?: string }
-export type LinkFicha = { rotulo: string; url: string }
+export type LinkFicha = { rotulo: string; url: string; grupo?: string }
+export type OperacaoFicha = { titulo: string; data: string; resumo: string; foto?: string; fonte: string; url?: string }
 export type FonteFicha = { info: string; rotulo: string; url?: string }
 
 // Editor do admin: uma linha por item, colunas separadas por " | ".
 const colunas = (t: string) => t.split("\n").map(l => l.split("|").map(c => c.trim())).filter(c => c[0])
 export const bairrosDeTexto = (t: string): BairroFicha[] => colunas(t).map(([nome, km = "", tempo = "", obs = ""]) => ({ nome, km, tempo, ...(obs ? { obs } : {}) }))
-export const linksDeTexto = (t: string): LinkFicha[] => colunas(t).filter(c => c[1]).map(([rotulo, url]) => ({ rotulo, url }))
+export const linksDeTexto = (t: string): LinkFicha[] => colunas(t).filter(c => c[1]).map(([rotulo, url, grupo = ""]) => ({ rotulo, url, ...(grupo ? { grupo } : {}) }))
+export const operacoesDeTexto = (t: string): OperacaoFicha[] => colunas(t).map(([titulo, data = "", resumo = "", foto = "", fonte = "", url = ""]) =>
+  ({ titulo, data, resumo, fonte, ...(foto ? { foto } : {}), ...(url ? { url } : {}) }))
 export const fontesDeTexto = (t: string): FonteFicha[] => colunas(t).map(([info, rotulo = "", url = ""]) => ({ info, rotulo, ...(url ? { url } : {}) }))
 export const bairrosParaTexto = (l: BairroFicha[]) => l.map(b => [b.nome, b.km, b.tempo, b.obs ?? ""].join(" | ").replace(/ \| $/, "")).join("\n")
-export const linksParaTexto = (l: LinkFicha[]) => l.map(x => `${x.rotulo} | ${x.url}`).join("\n")
+export const linksParaTexto = (l: LinkFicha[]) => l.map(x => [x.rotulo, x.url, x.grupo ?? ""].join(" | ").replace(/ \| $/, "")).join("\n")
+export const operacoesParaTexto = (l: OperacaoFicha[]) => l.map(x => [x.titulo, x.data, x.resumo, x.foto ?? "", x.fonte, x.url ?? ""].join(" | ").replace(/( \| )+$/, "")).join("\n")
 export const fontesParaTexto = (l: FonteFicha[]) => l.map(x => [x.info, x.rotulo, x.url ?? ""].join(" | ").replace(/ \| $/, "")).join("\n")
 
 // Tipos de contribuição da turma (mural).

@@ -3,9 +3,9 @@
 import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
-  CAMPOS_FICHA, FORMULARIO_DAG_URL, GRUPOS_FICHA, TIPOS_CONTRIBUICAO,
-  bairrosDeTexto, bairrosParaTexto, fontesDeTexto, fontesParaTexto, linksDeTexto, linksParaTexto,
-  type BairroFicha, type ChaveFicha, type FonteFicha, type LinkFicha, type TipoContribuicao,
+  CAMPOS_FICHA, FORMULARIO_DAG_URL, GRUPO_LINK_PADRAO, GRUPOS_FICHA, TIPOS_CONTRIBUICAO,
+  bairrosDeTexto, bairrosParaTexto, fontesDeTexto, fontesParaTexto, linksDeTexto, linksParaTexto, operacoesDeTexto, operacoesParaTexto,
+  type BairroFicha, type ChaveFicha, type FonteFicha, type LinkFicha, type OperacaoFicha, type TipoContribuicao,
 } from "@/lib/batalhoes-base"
 
 type Pessoa = { mat: number; nome: string; pelotao: number | null; outra: string | null }
@@ -46,15 +46,15 @@ function ListaPessoas({ pessoas, minhaMatricula, rotuloOutra }: { pessoas: Pesso
   )
 }
 
-export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, isAdmin, minhaMatricula, planilhaOk, info, bairros, links, fontes, atualizadoEm, primeira, segunda, mural }: {
-  sigla: string; mapaUrl: string; rotaUrl: string; isAdmin: boolean; minhaMatricula: number; planilhaOk: boolean
-  info: Record<ChaveFicha, string>; bairros: BairroFicha[]; links: LinkFicha[]; fontes: FonteFicha[]; atualizadoEm: string | null
+export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, mapaEmbutidoUrl, isAdmin, minhaMatricula, planilhaOk, info, bairros, links, fontes, operacoes, atualizadoEm, primeira, segunda, mural }: {
+  sigla: string; mapaUrl: string; rotaUrl: string; mapaEmbutidoUrl: string; isAdmin: boolean; minhaMatricula: number; planilhaOk: boolean
+  info: Record<ChaveFicha, string>; bairros: BairroFicha[]; links: LinkFicha[]; fontes: FonteFicha[]; operacoes: OperacaoFicha[]; atualizadoEm: string | null
   primeira: Pessoa[]; segunda: Pessoa[]; mural: Msg[]
 }) {
   const router = useRouter()
   const [editando, setEditando] = useState(false)
   const [form, setForm] = useState(info)
-  const [listas, setListas] = useState({ bairros: bairrosParaTexto(bairros), links: linksParaTexto(links), fontes: fontesParaTexto(fontes) })
+  const [listas, setListas] = useState({ bairros: bairrosParaTexto(bairros), links: linksParaTexto(links), fontes: fontesParaTexto(fontes), operacoes: operacoesParaTexto(operacoes) })
   const [salvando, setSalvando] = useState(false)
   const [erro, setErro] = useState("")
   const [abaLista, setAbaLista] = useState<1 | 2>(1)
@@ -67,7 +67,7 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, isAdmin, minhaMatricul
 
   async function salvarFicha(e: React.FormEvent) {
     e.preventDefault(); setSalvando(true); setErro("")
-    const corpo = { sigla, ...form, bairros: bairrosDeTexto(listas.bairros), links: linksDeTexto(listas.links), fontes: fontesDeTexto(listas.fontes) }
+    const corpo = { sigla, ...form, bairros: bairrosDeTexto(listas.bairros), links: linksDeTexto(listas.links), fontes: fontesDeTexto(listas.fontes), operacoes: operacoesDeTexto(listas.operacoes) }
     const res = await fetch("/api/batalhoes/info", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) })
     setSalvando(false)
     if (!res.ok) { const j = await res.json().catch(() => ({})); return setErro(j.error || "Erro ao salvar.") }
@@ -111,6 +111,7 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, isAdmin, minhaMatricul
       {/* Atalhos */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 8 }}>
         <a href={mapaUrl} target="_blank" rel="noopener noreferrer" style={botao("var(--olive)", "var(--canvas)")}>📍 Abrir no Google Maps ↗</a>
+        {info.streetView && <a href={info.streetView} target="_blank" rel="noopener noreferrer" style={botao("var(--surface)", "var(--olive)")}>🚶 Ver a fachada (Street View) ↗</a>}
         <a href={rotaUrl} target="_blank" rel="noopener noreferrer" style={botao("var(--surface)", "var(--olive)")}>🧭 Traçar rota até o batalhão ↗</a>
         {info.linkGrupo
           ? <a href={info.linkGrupo} target="_blank" rel="noopener noreferrer" style={botao("#25D366", "#fff")}>💬 Grupo do WhatsApp ↗</a>
@@ -138,10 +139,11 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, isAdmin, minhaMatricul
                       : <input value={form[c.chave]} onChange={e => setForm({ ...form, [c.chave]: e.target.value })} style={{ ...inputStyle, marginTop: 4 }} />}
                   </label>
                 ))}
+                {g.id === "operacao" && <EditorLista rotulo="Operações com foto" dica="Título | data | resumo | URL da foto | fonte | URL da matéria" valor={listas.operacoes} onChange={v => setListas({ ...listas, operacoes: v })} />}
                 {g.id === "morar" && <EditorLista rotulo="Bairros próximos" dica="Bairro | distância | tempo | observação" valor={listas.bairros} onChange={v => setListas({ ...listas, bairros: v })} />}
               </fieldset>
             ))}
-            <EditorLista rotulo="🔗 Links úteis" dica="Rótulo | https://…" valor={listas.links} onChange={v => setListas({ ...listas, links: v })} />
+            <EditorLista rotulo="🔗 Links úteis" dica="Rótulo | https://… | grupo (opcional, ex.: Legislação para estudo)" valor={listas.links} onChange={v => setListas({ ...listas, links: v })} />
             <EditorLista rotulo="📚 Fontes" dica="Informação | fonte | https://… (opcional)" valor={listas.fontes} onChange={v => setListas({ ...listas, fontes: v })} />
             {erro && <p style={{ margin: 0, color: "var(--red)", fontSize: 13 }}>✗ {erro}</p>}
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
@@ -154,10 +156,11 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, isAdmin, minhaMatricul
             {GRUPOS_FICHA.map(g => {
               const campos = visiveis(g.id)
               const temBairros = g.id === "morar" && bairros.length > 0
+              const temOperacoes = g.id === "operacao" && operacoes.length > 0
               return (
                 <div key={g.id} style={{ padding: "14px 0", borderTop: "1px solid var(--surface)" }}>
                   <h3 style={tituloGrupo}>{g.titulo}</h3>
-                  {campos.length === 0 && !temBairros && <p style={semInfo}>{g.id === "vagas" ? "Sem informação oficial sobre vagas ainda." : "Sem informação ainda."}</p>}
+                  {campos.length === 0 && !temBairros && !temOperacoes && <p style={semInfo}>{g.id === "vagas" ? "Sem informação oficial sobre vagas ainda." : "Sem informação ainda."}</p>}
                   {temBairros && <TabelaBairros bairros={bairros} />}
                   {campos.length > 0 && (
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10, marginTop: temBairros ? 12 : 0 }}>
@@ -169,6 +172,11 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, isAdmin, minhaMatricul
                       ))}
                     </div>
                   )}
+                  {g.id === "localizacao" && (
+                    <iframe src={mapaEmbutidoUrl} title={`Mapa — ${sigla}`} loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                      style={{ width: "100%", height: 260, border: 0, borderRadius: 12, marginTop: 12, background: "var(--surface)" }} />
+                  )}
+                  {temOperacoes && <Operacoes operacoes={operacoes} />}
                   {g.id === "morar" && (
                     <p style={{ margin: "10px 0 0", fontSize: 13 }}>
                       <a href="#contribuicoes" onClick={() => { setFiltro(moradias.length ? "moradia" : "todos"); setTipo("moradia") }} style={{ color: "var(--olive)", fontWeight: 700 }}>
@@ -179,16 +187,16 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, isAdmin, minhaMatricul
                 </div>
               )
             })}
-            {links.length > 0 && (
-              <div style={{ padding: "14px 0", borderTop: "1px solid var(--surface)" }}>
-                <h3 style={tituloGrupo}>🔗 Links úteis</h3>
+            {[...new Set(links.map(l => l.grupo || GRUPO_LINK_PADRAO))].map(grupo => (
+              <div key={grupo} style={{ padding: "14px 0", borderTop: "1px solid var(--surface)" }}>
+                <h3 style={tituloGrupo}>{/legisla/i.test(grupo) ? "⚖️" : "🔗"} {grupo}</h3>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                  {links.map(l => (
+                  {links.filter(l => (l.grupo || GRUPO_LINK_PADRAO) === grupo).map(l => (
                     <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" style={{ padding: "6px 12px", borderRadius: 999, background: "var(--surface)", color: "var(--olive)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>{l.rotulo} ↗</a>
                   ))}
                 </div>
               </div>
-            )}
+            ))}
             {fontes.length > 0 && (
               <details style={{ padding: "14px 0", borderTop: "1px solid var(--surface)" }}>
                 <summary style={{ ...tituloGrupo, cursor: "pointer", margin: 0 }}>📚 Fontes das informações ({fontes.length})</summary>
@@ -199,7 +207,7 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, isAdmin, minhaMatricul
                 </ul>
               </details>
             )}
-            {atualizadoEm && <p style={{ margin: "4px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>Ficha atualizada em {new Date(atualizadoEm).toLocaleDateString("pt-BR")}. Comando e contatos podem mudar — confirme com a unidade antes de se apresentar.</p>}
+            {atualizadoEm && <p style={{ margin: "4px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>Ficha atualizada em {new Date(atualizadoEm).toLocaleDateString("pt-BR")}. Cada informação traz a fonte entre parênteses — a lista completa está em Fontes.</p>}
           </div>
         )}
       </section>
@@ -284,6 +292,29 @@ export function BatalhaoClient({ sigla, mapaUrl, rotaUrl, isAdmin, minhaMatricul
           </div>
         )}
       </section>
+    </div>
+  )
+}
+
+function Operacoes({ operacoes }: { operacoes: OperacaoFicha[] }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: 12, marginTop: 12 }}>
+      {operacoes.map(o => (
+        <article key={o.titulo + o.data} style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(58,74,58,0.14)", background: "#fff", display: "flex", flexDirection: "column" }}>
+          {o.foto && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={o.foto} alt={o.titulo} loading="lazy" referrerPolicy="no-referrer" style={{ width: "100%", aspectRatio: "16 / 10", objectFit: "cover", background: "var(--surface)" }} />
+          )}
+          <div style={{ padding: "10px 12px", display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
+            <span style={{ fontSize: 11.5, fontWeight: 700, color: "var(--gold)" }}>{o.data}</span>
+            <strong style={{ fontSize: 14, color: "var(--olive)", lineHeight: 1.3 }}>{o.titulo}</strong>
+            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.45 }}>{o.resumo}</p>
+            <span style={{ marginTop: "auto", paddingTop: 6, fontSize: 11.5, color: "var(--ink-60)" }}>
+              {o.foto ? "Foto e texto: " : "Fonte: "}{o.url ? <a href={o.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>{o.fonte} ↗</a> : o.fonte}
+            </span>
+          </div>
+        </article>
+      ))}
     </div>
   )
 }
