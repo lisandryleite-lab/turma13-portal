@@ -449,6 +449,18 @@
   {
    "rotulo": "SUNOR nº 62 (27/12/2023) — publicação da INCG nº 605/2023 (DGP/PMPE)",
    "url": "https://www.pm.pe.gov.br/dgp/"
+  },
+  {
+   "rotulo": "LC nº 558/2025 — novos valores da GEC (Anexo II da Lei nº 13.487/2008)",
+   "url": "https://legis.policiacivil.pe.gov.br/b/api/files/4ce942417e510de87c40dbaeec46cc14.pdf"
+  },
+  {
+   "rotulo": "Lei nº 13.487/2008 — Gratificações de Encargo de Comando (PM PE)",
+   "url": "https://www.pm.pe.gov.br/gratificacoes/"
+  },
+  {
+   "rotulo": "Folha PE — reajuste dos valores do PJES",
+   "url": "https://www.folhape.com.br/colunistas/blogdafolha/governo-de-pernambuco-reajusta-os-valores-do-pjes/2056/"
   }
  ],
  "porBatalhao": {
@@ -1095,5 +1107,62 @@
    1.2,
    1.9
   ]
+ },
+ "gratificacoes": {
+  "gec": {
+   "norma": "Lei nº 13.487/2008, Anexo II, com valores da LC nº 558/2025 (a partir de jun/2025)",
+   "itens": [
+    {
+     "simbolo": "GEC",
+     "funcao": "Comandante de Batalhão",
+     "quant": 34,
+     "valor": 3480
+    },
+    {
+     "simbolo": "GEC-1",
+     "funcao": "Comandante de Companhia Independente ou Especializada",
+     "quant": 16,
+     "valor": 1530
+    },
+    {
+     "simbolo": "GEC-2",
+     "funcao": "Subcomandante de Batalhão / Comandante de Companhia",
+     "quant": 148,
+     "valor": 1320,
+     "turma": true
+    },
+    {
+     "simbolo": "GEC-3",
+     "funcao": "Comandante de Pelotão / Subcomandante de Cia Independente ou Especializada",
+     "quant": 139,
+     "valor": 1044,
+     "turma": true
+    }
+   ]
+  },
+  "fgs": {
+   "norma": "Função Gratificada de Supervisão — valor observado na folha de 09/2026",
+   "itens": [
+    {
+     "simbolo": "FGS-2",
+     "funcao": "Chefe de seção (supervisão)",
+     "quant": 366,
+     "valor": 1020
+    },
+    {
+     "simbolo": "FGS-3",
+     "funcao": "Supervisão (seções de Planejamento, Pessoal, Ensino etc.)",
+     "quant": 415,
+     "valor": 680
+    }
+   ]
+  },
+  "pjes": {
+   "valorOficial": 300,
+   "valorPraca": 200,
+   "unidade": "plantão de 12 h",
+   "obs": "Valor do último reajuste publicado do Programa de Jornada Extra de Segurança (oficiais R$ 300; praças R$ 200). Adesão voluntária, conforme cotas da DPO. Confirme no Portal PJES."
+  },
+  "quotasFonte": "Quantidades na PMPE pelo Quadro de Alocação de Gratificações (Anexo II da INCG nº 605/2023, publicada no SUNOR nº 62/2023)."
  }
 }
