@@ -391,6 +391,13 @@ model OpmInfo {
   morarPerto    String?  // bairros sugeridos, aluguel
   distanciaBR   String?  // distância/tempo até a BR, até a APMP etc.
   linkGrupo     String?  // grupo de WhatsApp dos interessados
+  estrutura      String?  // companhias / estrutura da unidade
+  vagas          String?  // vagas para aspirantes (se houver informação)
+  referenciaMapa String?  // endereço usado no link do Google Maps
+  dicas          String?  // dicas ao estagiário
+  bairros        Json?    // [{ nome, km, tempo, obs }] — morar perto, com distância até a sede
+  links          Json?    // [{ rotulo, url }] — links úteis
+  fontes         Json?    // [{ info, rotulo, url }] — de onde veio cada informação
   atualizadoEm  DateTime @updatedAt
   atualizadoPor String?
 
@@ -403,6 +410,10 @@ model OpmMural {
   opmId     String
   userId    String
   texto     String
+  tipo      String   @default("dica") // moradia | dica | info | duvida
+  bairro    String?
+  valor     String?  // valor de aluguel informado
+  link      String?  // anúncio / referência
   createdAt DateTime @default(now())
 
   opm  OPM  @relation(fields: [opmId], references: [id], onDelete: Cascade)
