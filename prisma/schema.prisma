@@ -36,6 +36,7 @@ model User {
   notasCfo         NotaCFO[]
   notasCfoAlteradas HistoricoNotaCFO[] @relation("CfoAlteradoPor")
   preferenciaOpm   PreferenciaOPM?
+  muralOpm         OpmMural[]
   respostas        Resposta[]
   escalasAluno     EscalaAluno[]
   missoesConcluidas MissaoConcluida[]
@@ -369,6 +370,45 @@ model OPM {
   prefsOpcao1 PreferenciaOPM[] @relation("Opcao1")
   prefsOpcao2 PreferenciaOPM[] @relation("Opcao2")
   prefsOpcao3 PreferenciaOPM[] @relation("Opcao3")
+  info        OpmInfo?
+  mural       OpmMural[]
+}
+
+// ── CFO 2026 — Escolha de Batalhões: ficha "Conheça o batalhão" (editável pelo admin)
+model OpmInfo {
+  id            String   @id @default(cuid())
+  opmId         String   @unique
+  comandante    String?
+  subcomandante String?
+  efetivo       String?
+  cpm           String?  // comando regional (ex.: 2º CPM)
+  sede          String?  // bairro e município da sede
+  endereco      String?
+  telefone      String?
+  email         String?
+  area          String?  // municípios e bairros da área de atuação
+  sobreArea     String?  // o que saber sobre a área
+  morarPerto    String?  // bairros sugeridos, aluguel
+  distanciaBR   String?  // distância/tempo até a BR, até a APMP etc.
+  linkGrupo     String?  // grupo de WhatsApp dos interessados
+  atualizadoEm  DateTime @updatedAt
+  atualizadoPor String?
+
+  opm OPM @relation(fields: [opmId], references: [id], onDelete: Cascade)
+}
+
+// ── CFO 2026 — Escolha de Batalhões: mural da turma por batalhão
+model OpmMural {
+  id        String   @id @default(cuid())
+  opmId     String
+  userId    String
+  texto     String
+  createdAt DateTime @default(now())
+
+  opm  OPM  @relation(fields: [opmId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([opmId, createdAt])
 }
 
 model PreferenciaOPM {
