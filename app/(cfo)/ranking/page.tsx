@@ -10,7 +10,7 @@ export default async function RankingPage() {
   if (!session?.user) redirect("/login")
   const userId = session.user.id!
 
-  const [minhasNotas, disciplinasBrutas, todasNotas, eu, turmaSize, opms, minhaPref, agregado, qtss] = await Promise.all([
+  const [minhasNotas, disciplinasBrutas, todasNotas, eu, turmaSize, qtss] = await Promise.all([
     prisma.notaCFO.findMany({ where: { userId }, orderBy: [{ disciplina: "asc" }, { avaliacao: "asc" }] }),
     prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true, cargaMinistrada: true, cargaTotal: true }, orderBy: { sigla: "asc" } }),
     // Filtra no SQL: antes puxava a tabela INTEIRA (todas as turmas, todos os
@@ -25,9 +25,6 @@ export default async function RankingPage() {
     }),
     prisma.user.findUnique({ where: { id: userId }, select: { nfdc: true } }),
     prisma.user.count({ where: { turma: 3 } }),
-    prisma.oPM.findMany({ orderBy: { ordem: "asc" } }),
-    prisma.preferenciaOPM.findUnique({ where: { userId } }),
-    prisma.preferenciaOPM.findMany({ select: { opcao1Id: true, opcao2Id: true, opcao3Id: true } }),
     prisma.qTS.findMany({ select: { semana: true, dados: true } }),
   ])
 
@@ -44,18 +41,6 @@ export default async function RankingPage() {
   const mgcsOutros: number[] = []
   for (const [, e] of porUser) { const m = calcularMGCSimples(e.vs, e.nfdc); if (m != null) mgcsOutros.push(m) }
 
-  // Contagem de preferências: 1ª opção e total (1ª + 2ª + 3ª)
-  const contagem1 = new Map<string, number>()
-  const contagemTotal = new Map<string, number>()
-  for (const p of agregado) {
-    contagem1.set(p.opcao1Id, (contagem1.get(p.opcao1Id) ?? 0) + 1)
-    for (const id of [p.opcao1Id, p.opcao2Id, p.opcao3Id]) {
-      if (id) contagemTotal.set(id, (contagemTotal.get(id) ?? 0) + 1)
-    }
-  }
-  // Exclui OPMs especiais (ex.: "—" Não decidiu) dos rankings — não são posições
-  const opmsReais = opms.filter(o => !o.especial)
-
   return (
     <RankingClient
       notasIniciais={minhasNotas.map(n => ({ id: n.id, disciplina: n.disciplina, avaliacao: n.avaliacao, valor: n.valor, ehAF: n.ehAF, apto: n.apto }))}
@@ -65,10 +50,6 @@ export default async function RankingPage() {
       turmaSize={turmaSize}
       mgcsOutros={mgcsOutros}
       nomeGuerra={session.user.nomeGuerra}
-      opms={opms.map(o => ({ id: o.id, sigla: o.sigla, nome: o.nome, especial: o.especial }))}
-      minhaPref={minhaPref ? { opcao1Id: minhaPref.opcao1Id, opcao2Id: minhaPref.opcao2Id, opcao3Id: minhaPref.opcao3Id } : null}
-      agregado1={opmsReais.map(o => ({ sigla: o.sigla, nome: o.nome, especial: o.especial, count: contagem1.get(o.id) ?? 0 }))}
-      agregadoTotal={opmsReais.map(o => ({ sigla: o.sigla, nome: o.nome, especial: o.especial, count: contagemTotal.get(o.id) ?? 0 }))}
     />
   )
 }

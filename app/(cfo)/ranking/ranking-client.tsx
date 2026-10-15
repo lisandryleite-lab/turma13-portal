@@ -7,10 +7,7 @@ import { calcularComponentes, calcularProjecaoConsolidada, calcularPosicaoHistor
 
 type Nota = { id: string; disciplina: string; avaliacao: string; valor: number; ehAF: boolean; apto: boolean }
 type Disc = { sigla: string; nome: string; status: string; fase: "concluida" | "andamento" | "inicio"; ordem: number }
-type Opm = { id: string; sigla: string; nome: string; especial: boolean }
-type Pref = { opcao1Id: string; opcao2Id: string | null; opcao3Id: string | null }
-type Agregado = { sigla: string; nome: string; especial: boolean; count: number }
-type Aba = "lancar" | "ranking" | "simular" | "batalhoes"
+type Aba = "lancar" | "ranking" | "simular"
 
 const card: React.CSSProperties = { padding: 16, borderRadius: 12, background: "var(--surface)" }
 const inputStyle: React.CSSProperties = {
@@ -50,10 +47,10 @@ function mdsReais(notas: Nota[]): number[] {
 }
 
 export function RankingClient({
-  notasIniciais, nfdc, disciplinas, totalDisciplinas, turmaSize, mgcsOutros, nomeGuerra, opms, minhaPref, agregado1, agregadoTotal,
+  notasIniciais, nfdc, disciplinas, totalDisciplinas, turmaSize, mgcsOutros, nomeGuerra,
 }: {
   notasIniciais: Nota[]; nfdc: number; disciplinas: Disc[]; totalDisciplinas: number; turmaSize: number; mgcsOutros: number[]
-  nomeGuerra: string; opms: Opm[]; minhaPref: Pref | null; agregado1: Agregado[]; agregadoTotal: Agregado[]
+  nomeGuerra: string
 }) {
   const router = useRouter()
   const [notas, setNotas] = useState<Nota[]>(notasIniciais)
@@ -75,14 +72,6 @@ export function RankingClient({
   const tccReal = notas.find(n => n.disciplina === "TCC")?.valor ?? null
   const [nfdcState, setNfdcState] = useState(nfdc)
   const [tccState, setTccState] = useState<number>(tccReal ?? 10)
-
-  // batalhões
-  const [op1, setOp1] = useState(minhaPref?.opcao1Id || "")
-  const [op2, setOp2] = useState(minhaPref?.opcao2Id || "")
-  const [op3, setOp3] = useState(minhaPref?.opcao3Id || "")
-  const [salvandoPref, setSalvandoPref] = useState(false)
-  const [prefMsg, setPrefMsg] = useState("")
-  const op1Especial = !!op1 && !!opms.find(o => o.id === op1)?.especial
 
   const comp = calcularComponentes(toVerif(notas), nfdcState)
   const mfic = comp.mfic
@@ -129,18 +118,6 @@ export function RankingClient({
     }
   }
 
-  async function salvarPref() {
-    if (!op1) return setPrefMsg("Escolha ao menos a 1ª opção.")
-    setSalvandoPref(true); setPrefMsg("")
-    const res = await fetch("/api/preferencia-opm", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ opcao1Id: op1, opcao2Id: op1Especial ? null : op2 || null, opcao3Id: op1Especial ? null : op3 || null }),
-    })
-    setSalvandoPref(false)
-    if (!res.ok) { const j = await res.json().catch(() => ({})); return setPrefMsg(j.error || "Erro ao salvar.") }
-    setPrefMsg("✓ Preferência salva."); router.refresh()
-  }
-
   const grupos = new Map<string, Nota[]>()
   for (const n of notas) { if (!grupos.has(n.disciplina)) grupos.set(n.disciplina, []); grupos.get(n.disciplina)!.push(n) }
   const nomeDisc = (s: string) => disciplinas.find(d => d.sigla === s)?.nome || s
@@ -159,7 +136,7 @@ export function RankingClient({
       <p style={{ color: "var(--ink-60)", margin: 0 }}>Olá, {nomeGuerra}</p>
 
       <div style={{ display: "flex", gap: 8, marginTop: 20, flexWrap: "wrap" }}>
-        {([["lancar", "Lançar notas"], ["ranking", "Meu ranking"], ["simular", "Simular"], ["batalhoes", "Batalhões"]] as const).map(([t, rot]) => (
+        {([["lancar", "Lançar notas"], ["ranking", "Meu ranking"], ["simular", "Simular"]] as const).map(([t, rot]) => (
           <button key={t} onClick={() => setAba(t)}
             style={{ padding: "8px 14px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 14, fontWeight: 600,
               background: aba === t ? "var(--olive)" : "var(--surface)", color: aba === t ? "var(--canvas)" : "var(--ink-60)" }}>
@@ -338,72 +315,11 @@ export function RankingClient({
           totalDisciplinas={totalDisciplinas} mgcsOutros={mgcsOutros} turmaSize={turmaSize} />
       )}
 
-      {aba === "batalhoes" && (
-        <div style={{ marginTop: 20 }}>
-          <p style={{ color: "var(--ink-60)", fontSize: 14, marginBottom: 14, lineHeight: 1.5 }}>
-            Escolha sua preferência de batalhão (DIM / RMR). 1ª obrigatória; 2ª e 3ª opcionais. O ranking de mais pedidos (logo abaixo) é <strong>anônimo</strong> e visível para toda a turma.
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {[{ rot: "1ª opção", val: op1, set: setOp1, esp: true }, { rot: "2ª opção (opcional)", val: op2, set: setOp2, esp: false }, { rot: "3ª opção (opcional)", val: op3, set: setOp3, esp: false }].map((s, i) => (
-              <label key={i} style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>{s.rot}
-                <select value={s.val} onChange={e => s.set(e.target.value)} disabled={i > 0 && op1Especial} style={{ ...inputStyle, marginTop: 4, opacity: i > 0 && op1Especial ? 0.5 : 1 }}>
-                  <option value="">— selecione —</option>
-                  {opms.filter(o => s.esp || !o.especial).map(o => <option key={o.id} value={o.id}>{o.especial ? o.nome : `${o.sigla} — ${o.nome}`}</option>)}
-                </select>
-              </label>
-            ))}
-          </div>
-          <button onClick={salvarPref} disabled={salvandoPref} style={{ marginTop: 14, padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontSize: 15, fontWeight: 600, cursor: salvandoPref ? "default" : "pointer" }}>
-            {salvandoPref ? "Salvando…" : "Salvar preferência"}
-          </button>
-          {prefMsg && <p style={{ marginTop: 8, fontSize: 13.5, color: prefMsg.startsWith("✓") ? "var(--olive)" : "var(--red)" }}>{prefMsg}</p>}
-        </div>
-      )}
-
-      {/* Ranking de batalhões — visível para todos os alunos, só na aba Batalhões */}
-      {aba === "batalhoes" && <section style={{ marginTop: 36, paddingTop: 24, borderTop: "2px solid var(--surface)" }}>
-        <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.4rem", color: "var(--olive)", margin: 0 }}>
-          Ranking de batalhões da turma
-        </h2>
-        <p style={{ color: "var(--ink-60)", fontSize: 13.5, margin: "6px 0 0", lineHeight: 1.5 }}>
-          Batalhões mais pedidos pela turma (RMR / DIM). Contagem <strong>anônima</strong> — visível para todos os alunos.
-        </p>
-        <QuadroPedidos titulo="Mais pedidos como 1ª opção" dados={agregado1} />
-        <QuadroPedidos titulo="Mais pedidos no total (1ª + 2ª + 3ª)" dados={agregadoTotal} />
-      </section>}
-
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>Desenvolvido por AL CFO PM 108 LISANDRY</footer>
     </main>
   )
 }
 
-// ── Quadro de mais pedidos (anônimo) — ordena desc, ignora zerados ──
-function QuadroPedidos({ titulo, dados }: { titulo: string; dados: Agregado[] }) {
-  const ord = [...dados].filter(a => a.count > 0).sort((a, b) => b.count - a.count)
-  const max = Math.max(1, ...ord.map(a => a.count))
-  return (
-    <>
-      <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", marginTop: 28, marginBottom: 12 }}>
-        {titulo} <span style={{ fontSize: 13, fontWeight: 400, color: "var(--ink-60)" }}>(anônimo)</span>
-      </h2>
-      {ord.length === 0 ? (
-        <p style={{ color: "var(--ink-60)", fontSize: 14 }}>Nenhuma preferência registrada ainda.</p>
-      ) : (
-        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-          {ord.map(a => (
-            <li key={a.sigla} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ width: 64, fontSize: 13, fontWeight: 600 }}>{a.sigla}</span>
-              <div style={{ flex: 1, height: 18, borderRadius: 6, background: "var(--surface)", overflow: "hidden" }}>
-                <div style={{ width: `${(a.count / max) * 100}%`, height: "100%", background: "var(--olive)" }} />
-              </div>
-              <span style={{ width: 28, textAlign: "right", fontSize: 14, fontWeight: 700, color: "var(--olive)" }}>{a.count}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-    </>
-  )
-}
 
 // ── Editor de NFDC e TCC (default 10) ──
 function NfdcTccEditor({ nfdc, tcc, tccDefinido, onSaveNfdc, onSaveTcc }: {
