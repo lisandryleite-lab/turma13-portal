@@ -3,9 +3,10 @@
 import Link from "next/link"
 import { useMemo, useState } from "react"
 import remuneracao from "@/lib/remuneracao-oficiais.json"
+import criminalidade from "@/lib/criminalidade-batalhoes.json"
 import { useRouter } from "next/navigation"
 import {
-  CAMPOS_FICHA, FONTES_ASPIRANTADO, FORMULARIO_DAG_URL, GRUPO_LINK_PADRAO, GRUPOS_FICHA, TIPOS_CONTRIBUICAO,
+  CAMPOS_FICHA, FONTES_ASPIRANTADO, FORMULARIO_DAG_URL, GRUPOS_FICHA, TIPOS_CONTRIBUICAO, nomeCurto,
   bairrosDeTexto, bairrosParaTexto, fontesDeTexto, fontesParaTexto, linksDeTexto, linksParaTexto, operacoesDeTexto, operacoesParaTexto,
   type AspirantadoFicha, type BairroFicha, type ChaveFicha, type FonteFicha, type LinkFicha, type OperacaoFicha, type TipoContribuicao,
 } from "@/lib/batalhoes-base"
@@ -47,18 +48,24 @@ function ListaPessoas({ pessoas, minhaMatricula, rotuloOutra }: { pessoas: Pesso
   )
 }
 
-type Aba = "escolha" | "localizacao" | "comando" | "operacao" | "vagas" | "morar" | "colab" | "fontes"
+type Aba = "resumo" | "seguranca" | "historico" | "area" | "morar" | "colab"
 const ABAS: { id: Aba; rot: string }[] = [
-  { id: "escolha", rot: "👥 Quem escolheu" },
-  { id: "localizacao", rot: "📍 Localização" },
-  { id: "comando", rot: "🎖️ Comando" },
-  { id: "operacao", rot: "🚓 Operação" },
-  { id: "vagas", rot: "🎓 Aspirantado" },
-  { id: "morar", rot: "🏠 Onde morar" },
-  { id: "colab", rot: "🤝 Colaborativo" },
-  { id: "fontes", rot: "📚 Links e fontes" },
+  { id: "resumo", rot: "Resumo" },
+  { id: "seguranca", rot: "Segurança" },
+  { id: "historico", rot: "Histórico T1/T2" },
+  { id: "area", rot: "Área e serviço" },
+  { id: "morar", rot: "Onde morar" },
+  { id: "colab", rot: "Colaborativo" },
 ]
-const tituloAba: React.CSSProperties = { margin: "0 0 16px", fontFamily: "var(--serif-cfo)", fontSize: "1.25rem", color: "var(--olive)" }
+const tituloAba: React.CSSProperties = { margin: "0 0 14px", fontFamily: "var(--serif-cfo)", fontSize: "1.15rem", color: "var(--olive)" }
+const kpi: React.CSSProperties = { padding: "12px 14px", borderRadius: 12, background: "var(--surface)" }
+const kpiNum: React.CSSProperties = { fontFamily: "var(--serif-cfo)", fontSize: 24, fontWeight: 700, color: "var(--olive)", lineHeight: 1.1 }
+const kpiRot: React.CSSProperties = { fontSize: 12.5, fontWeight: 600, marginTop: 2 }
+const kpiSub: React.CSSProperties = { fontSize: 11.5, color: "var(--ink-60)" }
+type Crime = { municipios: string[]; populacao: number; compartilhado: string | null
+  cvli: { a2023: number; a2024: number; a2025: number; jan_set_2025: number; jan_set_2026: number; taxa2025: number; variacao: number | null }
+  cvp: { a2023: number; a2024: number; a2025: number; jan_set_2025: number; jan_set_2026: number; taxa2025: number; variacao: number | null } }
+type PorBatRem = { vagasT2: number; t2ComFuncao: number; pctT2: number; posT2: { mediana: number; n: number } | null; diarias: { total: number } | null }
 
 // Texto da ficha com respiro: cada linha vira um parágrafo; "1ª CPM: ..." ganha o prefixo em negrito.
 function Texto({ texto }: { texto: string }) {
@@ -72,28 +79,26 @@ function Texto({ texto }: { texto: string }) {
   )
 }
 
-function Campos({ campos, info }: { campos: { chave: ChaveFicha; rotulo: string; longo?: boolean }[]; info: Record<ChaveFicha, string> }) {
-  const curtos = campos.filter(c => !c.longo), longos = campos.filter(c => c.longo)
+function Barras({ itens, max, cor }: { itens: { rot: string; v: number; destaque?: boolean }[]; max: number; cor: string }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-      {curtos.length > 0 && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: 18 }}>
-          {curtos.map(c => (
-            <div key={c.chave} style={{ padding: "12px 14px", borderRadius: 12, background: "var(--surface)" }}>
-              <p style={{ ...rotuloCampo, marginBottom: 6 }}>{c.rotulo}</p>
-              <Texto texto={info[c.chave]} />
-            </div>
-          ))}
-        </div>
-      )}
-      {longos.map(c => (
-        <div key={c.chave}>
-          <p style={{ ...rotuloCampo, marginBottom: 8 }}>{c.rotulo}</p>
-          <Texto texto={info[c.chave]} />
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      {itens.map(i => (
+        <div key={i.rot} style={{ display: "grid", gridTemplateColumns: "92px 1fr 52px", alignItems: "center", gap: 8, fontSize: 13 }}>
+          <span style={{ color: "var(--ink-60)" }}>{i.rot}</span>
+          <span style={{ height: 12, borderRadius: 99, background: "var(--surface)", overflow: "hidden" }}>
+            <span style={{ display: "block", height: "100%", width: `${max ? (i.v / max) * 100 : 0}%`, borderRadius: 99, background: i.destaque ? cor : "#c9cfc4" }} />
+          </span>
+          <strong style={{ textAlign: "right" }}>{i.v.toLocaleString("pt-BR")}</strong>
         </div>
       ))}
     </div>
   )
+}
+
+function Variacao({ v }: { v: number | null }) {
+  if (v == null) return null
+  const cor = v < 0 ? "#3a7a3a" : v > 0 ? "var(--red)" : "var(--ink-60)"
+  return <span style={{ color: cor, fontWeight: 700 }}>{v > 0 ? "▲" : v < 0 ? "▼" : "="} {Math.abs(v)}%</span>
 }
 
 export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minhaMatricula, planilhaOk, info, bairros, links, fontes, operacoes, aspirantado, atualizadoEm, primeira, segunda, mural }: {
@@ -102,14 +107,13 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
   primeira: Pessoa[]; segunda: Pessoa[]; mural: Msg[]
 }) {
   const router = useRouter()
-  const [aba, setAba] = useState<Aba>("escolha")
+  const [aba, setAba] = useState<Aba>("resumo")
   const [editando, setEditando] = useState(false)
   const [form, setForm] = useState(info)
   const [listas, setListas] = useState({ bairros: bairrosParaTexto(bairros), links: linksParaTexto(links), fontes: fontesParaTexto(fontes), operacoes: operacoesParaTexto(operacoes) })
   const [salvando, setSalvando] = useState(false)
   const [erro, setErro] = useState("")
   const [abaLista, setAbaLista] = useState<1 | 2>(1)
-  // espaço colaborativo
   const [tipo, setTipo] = useState<TipoContribuicao>("moradia")
   const [contrib, setContrib] = useState({ texto: "", bairro: "", valor: "", link: "" })
   const [enviando, setEnviando] = useState(false)
@@ -139,48 +143,31 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
     if (res.ok) router.refresh()
   }
 
+  const crime = (criminalidade.porBatalhao as Record<string, Crime>)[sigla]
+  const todosCrime = Object.values(criminalidade.porBatalhao as Record<string, Crime>)
+  const posTaxa = crime ? [...new Set(todosCrime.map(c => c.cvli.taxa2025))].sort((a, b) => a - b).indexOf(crime.cvli.taxa2025) + 1 : 0
+  const nTaxas = new Set(todosCrime.map(c => c.cvli.taxa2025)).size
+  const rem = (remuneracao.porBatalhao as Record<string, PorBatRem>)[sigla]
   const muralFiltrado = filtro === "todos" ? mural : mural.filter(m => m.tipo === filtro)
-  const camposDo = (g: string) => CAMPOS_FICHA.filter(c => c.grupo === g && !("oculto" in c && c.oculto) && info[c.chave])
-    .map(c => ({ chave: c.chave as ChaveFicha, rotulo: c.rotulo, longo: "longo" in c && !!c.longo }))
   const filtros = [
     { id: "todos" as const, rotulo: "Todas", n: mural.length },
     ...TIPOS_CONTRIBUICAO.map(t => ({ id: t.id, rotulo: t.rotulo, n: mural.filter(m => m.tipo === t.id).length })),
   ].filter(f => f.id === "todos" || f.n > 0)
-  const nAsp = aspirantado ? aspirantado.t1 + aspirantado.t2 : 0
-  const irPara = (a: Aba) => { setAba(a); setEditando(false); document.getElementById("abas-ficha")?.scrollIntoView({ behavior: "smooth", block: "start" }) }
-  const vazio = <p style={semInfo}>Sem informação ainda.</p>
+  const opsRecentes = [...operacoes].sort((a, b) => chaveData(b.data).localeCompare(chaveData(a.data))).slice(0, 4)
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      {/* Resumo + atalhos */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 8 }}>
-        <a href={mapaUrl} target="_blank" rel="noopener noreferrer" style={botao("var(--olive)", "var(--canvas)")}>📍 Abrir no Google Maps ↗</a>
-        <button onClick={() => irPara("escolha")} style={{ ...botao(aba === "escolha" ? "#fbf7ec" : "var(--surface)", "var(--olive)"), border: "none", cursor: "pointer", fontFamily: "inherit" }}>
-          👥 Quem escolheu · <span style={{ color: "var(--gold)" }}>{primeira.length} + {segunda.length}</span>
-        </button>
-        <button onClick={() => irPara("vagas")} style={{ ...botao(aba === "vagas" ? "#fbf7ec" : "var(--surface)", "var(--olive)"), border: "none", cursor: "pointer", fontFamily: "inherit" }}>
-          🎓 Aspirantado T1/T2{nAsp ? <> · <span style={{ color: "var(--gold)" }}>{nAsp}</span></> : ""}
-        </button>
-      </div>
-
-      {/* Abas */}
-      <nav id="abas-ficha" style={{ display: "flex", gap: 6, flexWrap: "wrap", padding: "2px 0 4px", scrollMarginTop: 12 }}>
+      <nav style={{ display: "flex", gap: 4, flexWrap: "wrap", borderBottom: "1px solid rgba(58,74,58,0.15)" }}>
         {ABAS.map(a => (
           <button key={a.id} onClick={() => { setAba(a.id); setEditando(false) }}
-            style={{ flex: "0 0 auto", padding: "8px 14px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600, fontFamily: "inherit", whiteSpace: "nowrap",
-              background: aba === a.id ? "var(--olive)" : "#fff", color: aba === a.id ? "var(--canvas)" : "var(--ink-60)", boxShadow: aba === a.id ? "none" : "inset 0 0 0 1px rgba(58,74,58,0.18)" }}>
+            style={{ padding: "9px 12px", border: "none", background: "none", cursor: "pointer", fontSize: 14, fontWeight: aba === a.id ? 700 : 500, fontFamily: "inherit",
+              color: aba === a.id ? "var(--olive)" : "var(--ink-60)", borderBottom: aba === a.id ? "2px solid var(--gold)" : "2px solid transparent", marginBottom: -1 }}>
             {a.rot}{a.id === "colab" && mural.length ? ` · ${mural.length}` : ""}
           </button>
         ))}
       </nav>
 
       <section style={{ ...cartao, padding: "20px 20px 22px" }}>
-        {isAdmin && !editando && aba !== "escolha" && aba !== "colab" && (
-          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
-            <button onClick={() => setEditando(true)} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 13, cursor: "pointer" }}>Editar ficha</button>
-          </div>
-        )}
-
         {editando ? (
           <form onSubmit={salvarFicha} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {[...GRUPOS_FICHA, { id: "grupo", titulo: "💬 Grupo" }].map(g => (
@@ -193,12 +180,12 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
                       : <input value={form[c.chave]} onChange={e => setForm({ ...form, [c.chave]: e.target.value })} style={{ ...inputStyle, marginTop: 4 }} />}
                   </label>
                 ))}
-                {g.id === "operacao" && <EditorLista rotulo="Operações com foto" dica="Título | data | resumo | URL da foto | fonte | URL da matéria" valor={listas.operacoes} onChange={v => setListas({ ...listas, operacoes: v })} />}
+                {g.id === "operacao" && <EditorLista rotulo="Operações" dica="Título | data | resumo | URL da foto | fonte | URL da matéria" valor={listas.operacoes} onChange={v => setListas({ ...listas, operacoes: v })} />}
                 {g.id === "morar" && <EditorLista rotulo="Bairros próximos" dica="Bairro | distância | tempo | observação" valor={listas.bairros} onChange={v => setListas({ ...listas, bairros: v })} />}
               </fieldset>
             ))}
-            <EditorLista rotulo="🔗 Links úteis" dica="Rótulo | https://… | grupo (opcional, ex.: Legislação para estudo)" valor={listas.links} onChange={v => setListas({ ...listas, links: v })} />
-            <EditorLista rotulo="📚 Fontes" dica="Informação | fonte | https://… (opcional)" valor={listas.fontes} onChange={v => setListas({ ...listas, fontes: v })} />
+            <EditorLista rotulo="Links úteis" dica="Rótulo | https://… | grupo (opcional)" valor={listas.links} onChange={v => setListas({ ...listas, links: v })} />
+            <EditorLista rotulo="Fontes" dica="Informação | fonte | https://… (opcional)" valor={listas.fontes} onChange={v => setListas({ ...listas, fontes: v })} />
             {erro && <p style={{ margin: 0, color: "var(--red)", fontSize: 13 }}>✗ {erro}</p>}
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
               <button type="button" onClick={() => { setEditando(false); setForm(info) }} style={{ padding: "9px 14px", borderRadius: 8, border: "1px solid rgba(58,74,58,0.3)", background: "#fff", cursor: "pointer", fontWeight: 600 }}>Cancelar</button>
@@ -207,14 +194,20 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
           </form>
         ) : (
           <>
-            {aba === "escolha" && (
+            {aba === "resumo" && (
               <>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
-                  <h2 style={{ ...tituloAba, margin: 0 }}>Quem escolheu o {sigla}</h2>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginBottom: 18 }}>
+                  <div style={kpi}><div style={kpiNum}>{rem?.vagasT2 ?? "—"}</div><div style={kpiRot}>vagas na escolha da T2</div><div style={kpiSub}>quadro oficial, 28/06/2026</div></div>
+                  <div style={kpi}><div style={kpiNum}>{rem?.posT2 ? `${rem.posT2.mediana}º` : "—"}</div><div style={kpiRot}>posição típica na T2</div><div style={kpiSub}>quanto menor, mais disputado</div></div>
+                  <div style={kpi}><div style={kpiNum}>{rem ? `${rem.pctT2}%` : "—"}</div><div style={kpiRot}>da T2 já com função</div><div style={kpiSub}>comando ou seção</div></div>
+                  <div style={kpi}><div style={kpiNum}>{crime ? crime.cvli.taxa2025.toLocaleString("pt-BR") : "—"}</div><div style={kpiRot}>CVLI por 100 mil (2025)</div><div style={kpiSub}>{crime && <>2026: <Variacao v={crime.cvli.variacao} /> vs 2025</>}</div></div>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
+                  <h2 style={{ ...tituloAba, margin: 0 }}>Quem escolheu</h2>
                   <div style={{ display: "flex", gap: 6 }}>
                     {([[1, "1ª opção", primeira.length], [2, "2ª opção", segunda.length]] as const).map(([n, r, q]) => (
                       <button key={n} onClick={() => setAbaLista(n)}
-                        style={{ padding: "7px 14px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600,
+                        style={{ padding: "6px 12px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600,
                           background: abaLista === n ? "var(--olive)" : "var(--surface)", color: abaLista === n ? "var(--canvas)" : "var(--ink-60)" }}>
                         {r} <span style={{ opacity: 0.75 }}>{q}</span>
                       </button>
@@ -224,111 +217,100 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
                 {abaLista === 1
                   ? <ListaPessoas key="p1" pessoas={primeira} minhaMatricula={minhaMatricula} rotuloOutra="2ª:" />
                   : <ListaPessoas key="p2" pessoas={segunda} minhaMatricula={minhaMatricula} rotuloOutra="1ª:" />}
-                <a href={FORMULARIO_DAG_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 16, fontSize: 13, fontWeight: 600, color: "var(--olive)" }}>
-                  Quer mudar sua escolha? Responda de novo o formulário da DAG ↗
-                </a>
-                {!planilhaOk && <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "var(--red)" }}>Não foi possível abrir a planilha da DAG agora — a lista pode estar vazia.</p>}
+                {!planilhaOk && <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "var(--red)" }}>Não foi possível abrir a planilha da DAG agora.</p>}
+                <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 16, fontSize: 13 }}>
+                  <a href={FORMULARIO_DAG_URL} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>Mudar minha escolha ↗</a>
+                  <a href={mapaUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>Ver no Google Maps ↗</a>
+                  {info.comandante && <span style={{ color: "var(--ink-60)" }}>Cmt: {nomeCurto(info.comandante)}</span>}
+                </div>
               </>
             )}
 
-            {aba === "localizacao" && (
+            {aba === "seguranca" && (
               <>
-                <h2 style={tituloAba}>Localização e contato</h2>
-                {camposDo("localizacao").length ? <Campos campos={camposDo("localizacao")} info={info} /> : vazio}
-                {info.streetView && <a href={info.streetView} target="_blank" rel="noopener noreferrer" style={{ ...botao("var(--surface)", "var(--olive)"), display: "inline-block", marginTop: 16 }}>🚶 Ver a fachada (Street View) ↗</a>}
-                <iframe src={mapaEmbutidoUrl} title={`Mapa — ${sigla}`} loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                  style={{ width: "100%", height: 280, border: 0, borderRadius: 12, marginTop: 18, background: "var(--surface)" }} />
-              </>
-            )}
-
-            {aba === "comando" && (
-              <>
-                <h2 style={tituloAba}>Comando e efetivo</h2>
-                {camposDo("comando").length ? <Campos campos={camposDo("comando")} info={info} /> : vazio}
-                {(() => {
-                  const p = (remuneracao.porBatalhao as Record<string, { porte: { maiorLote: number; faixa: number[] } | null }>)[sigla]?.porte
-                  if (!p) return null
-                  return (
-                    <div style={{ marginTop: 18, padding: "12px 14px", borderRadius: 12, background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)", fontSize: 13.5, lineHeight: 1.6 }}>
-                      <strong>📐 Perspectiva de efetivo (estimativa do portal): ~{p.faixa[0]}–{p.faixa[1]} policiais.</strong><br />
-                      <span style={{ color: "var(--ink-60)", fontSize: 12.5 }}>Até {p.maiorLote} PMs do batalhão receberam diárias da Op. PE Seguro num mesmo mês de 2026 (Dados Abertos PE), calibrado com o efetivo oficial do 18º e do 26º BPM. Não é o QO oficial, que é sigiloso. <Link href="/batalhoes/remuneracao" style={{ color: "var(--olive)", fontWeight: 600 }}>Ver método →</Link></span>
-                    </div>
-                  )
-                })()}
-              </>
-            )}
-
-            {aba === "operacao" && (
-              <>
-                <h2 style={tituloAba}>Operação</h2>
-                {camposDo("operacao").length ? <Campos campos={camposDo("operacao")} info={info} /> : (operacoes.length ? null : vazio)}
-                {operacoes.length > 0 && (
+                <h2 style={tituloAba}>Criminalidade na área do batalhão</h2>
+                {!crime ? <p style={semInfo}>Sem dados.</p> : (
                   <>
-                    <p style={{ ...rotuloCampo, margin: "24px 0 0" }}>Operações e notícias ({operacoes.length})</p>
-                    <Operacoes operacoes={operacoes} />
+                    <p style={{ margin: "0 0 16px", fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
+                      Área: {crime.municipios.join(", ")} · {crime.populacao.toLocaleString("pt-BR")} habitantes.
+                      {crime.compartilhado && <> <strong style={{ color: "var(--ink)" }}>Atenção:</strong> {crime.compartilhado}.</>}
+                    </p>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 18 }}>
+                      {([["CVLI", crime.cvli, "#8a3b2e"], ["CVP", crime.cvp, "#b5933f"]] as const).map(([nome, d, cor]) => (
+                        <div key={nome} style={{ padding: "14px 16px", borderRadius: 14, border: "1px solid var(--surface)" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
+                            <strong style={{ fontSize: 15 }}>{nome}</strong>
+                            <span style={{ fontSize: 13 }}>{d.taxa2025.toLocaleString("pt-BR")} <span style={{ color: "var(--ink-60)" }}>por 100 mil (2025)</span></span>
+                          </div>
+                          <p style={{ margin: "0 0 12px", fontSize: 12, color: "var(--ink-60)", lineHeight: 1.5 }}>{criminalidade.explicacao[nome]}</p>
+                          <Barras cor={cor} max={Math.max(d.a2023, d.a2024, d.a2025)} itens={[{ rot: "2023", v: d.a2023 }, { rot: "2024", v: d.a2024 }, { rot: "2025", v: d.a2025, destaque: true }]} />
+                          <div style={{ marginTop: 12, paddingTop: 10, borderTop: "1px solid var(--surface)", fontSize: 13 }}>
+                            Jan–set: {d.jan_set_2025.toLocaleString("pt-BR")} (2025) → <strong>{d.jan_set_2026.toLocaleString("pt-BR")}</strong> (2026) · <Variacao v={d.variacao} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <p style={{ margin: "16px 0 0", fontSize: 13.5, lineHeight: 1.6 }}>
+                      Entre as áreas dos 13 batalhões, a taxa de CVLI daqui é <strong>{posTaxa === 1 ? "a mais baixa" : posTaxa === nTaxas ? "a mais alta" : `a ${posTaxa}ª mais baixa de ${nTaxas}`}</strong> (áreas no mesmo município contam uma vez).
+                    </p>
+                    <p style={{ margin: "8px 0 0", fontSize: 12, color: "var(--ink-60)", lineHeight: 1.5 }}>{criminalidade.metodo}</p>
                   </>
                 )}
               </>
             )}
 
-            {aba === "vagas" && (
+            {aba === "historico" && (
               <>
-                <h2 style={tituloAba}>Aspirantado das turmas anteriores (T1 e T2)</h2>
-                {(() => {
-                  const p = (remuneracao.porBatalhao as Record<string, { vagasT2: number; t2ComFuncao: number; pctT2: number; diarias: { total: number; pagamentos: number } | null }>)[sigla]
-                  if (!p) return null
-                  return (
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 8, marginBottom: 16 }}>
-                      <div style={{ padding: "10px 12px", borderRadius: 12, background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)" }}>
-                        <div style={{ fontFamily: "var(--serif-cfo)", fontSize: 22, fontWeight: 700, color: "var(--gold)" }}>{p.vagasT2}</div>
-                        <div style={{ fontSize: 12.5, fontWeight: 700 }}>vagas na escolha da T2</div>
-                        <div style={{ fontSize: 11, color: "var(--ink-60)" }}>quadro oficial de {remuneracao.escolhaT2.data}</div>
-                      </div>
-                      <div style={{ padding: "10px 12px", borderRadius: 12, background: "var(--surface)" }}>
-                        <div style={{ fontFamily: "var(--serif-cfo)", fontSize: 22, fontWeight: 700, color: "var(--olive)" }}>{p.pctT2}%</div>
-                        <div style={{ fontSize: 12.5, fontWeight: 700 }}>da T2 já com função</div>
-                        <div style={{ fontSize: 11, color: "var(--ink-60)" }}>{p.t2ComFuncao} de {p.vagasT2} vagas</div>
-                      </div>
-                      {p.diarias && (
-                        <div style={{ padding: "10px 12px", borderRadius: 12, background: "var(--surface)" }}>
-                          <div style={{ fontFamily: "var(--serif-cfo)", fontSize: 22, fontWeight: 700, color: "var(--olive)" }}>{p.diarias.total.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}</div>
-                          <div style={{ fontSize: 12.5, fontWeight: 700 }}>em diárias operacionais 2026</div>
-                          <div style={{ fontSize: 11, color: "var(--ink-60)" }}>todo o efetivo · até {remuneracao.diariasAte}</div>
-                        </div>
-                      )}
-                    </div>
-                  )
-                })()}
-                {camposDo("vagas").length > 0 && <Campos campos={camposDo("vagas")} info={info} />}
+                <h2 style={tituloAba}>O que as turmas anteriores encontraram aqui</h2>
                 {aspirantado && aspirantado.registros.length > 0
-                  ? <Aspirantado asp={aspirantado} temVagas={camposDo("vagas").length > 0} />
+                  ? <Aspirantado asp={aspirantado} temVagas={false} />
                   : <p style={semInfo}>Sem designações de aspirantes publicadas para este batalhão.</p>}
-                <Link href="/batalhoes/remuneracao" style={{ display: "inline-block", marginTop: 18, fontSize: 13.5, fontWeight: 700, color: "var(--olive)" }}>💰 Quanto ganha cada função e nossa previsão de salário →</Link>
+                <Link href="/batalhoes/remuneracao" style={{ display: "inline-block", marginTop: 16, fontSize: 13.5, fontWeight: 700, color: "var(--olive)" }}>Quanto ganha cada função →</Link>
+              </>
+            )}
+
+            {aba === "area" && (
+              <>
+                <h2 style={tituloAba}>Área e serviço</h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                  {info.area && <Texto texto={info.area} />}
+                  {info.sobreArea && <div style={{ paddingTop: 14, borderTop: "1px solid var(--surface)" }}><Texto texto={info.sobreArea} /></div>}
+                  {!info.area && !info.sobreArea && <p style={semInfo}>Sem informação ainda.</p>}
+                </div>
+                {opsRecentes.length > 0 && (
+                  <div style={{ marginTop: 20 }}>
+                    <p style={{ ...rotuloCampo, marginBottom: 10 }}>Operações recentes</p>
+                    <Operacoes operacoes={opsRecentes} />
+                  </div>
+                )}
               </>
             )}
 
             {aba === "morar" && (
               <>
-                <h2 style={tituloAba}>Onde morar</h2>
+                <h2 style={tituloAba}>Localização e onde morar</h2>
+                {info.endereco && <div style={{ marginBottom: 12 }}><Texto texto={info.endereco} /></div>}
+                {info.distanciaBR && <div style={{ marginBottom: 14, fontSize: 14 }}><Texto texto={info.distanciaBR} /></div>}
+                <iframe src={mapaEmbutidoUrl} title={`Mapa — ${sigla}`} loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                  style={{ width: "100%", height: 240, border: 0, borderRadius: 12, background: "var(--surface)", marginBottom: 18 }} />
                 {bairros.length > 0 && <TabelaBairros bairros={bairros} />}
-                {camposDo("morar").length > 0 && <div style={{ marginTop: bairros.length ? 20 : 0 }}><Campos campos={camposDo("morar")} info={info} /></div>}
-                {!bairros.length && !camposDo("morar").length && vazio}
-                <button onClick={() => { setTipo("moradia"); setFiltro(mural.some(m => m.tipo === "moradia") ? "moradia" : "todos"); setAba("colab") }}
-                  style={{ marginTop: 18, padding: 0, border: "none", background: "none", cursor: "pointer", color: "var(--olive)", fontWeight: 700, fontSize: 13.5, fontFamily: "inherit" }}>
-                  🏠 Conhece um lugar para alugar? Indique no espaço colaborativo →
+                {info.morarPerto && <div style={{ marginTop: 14 }}><Texto texto={info.morarPerto} /></div>}
+                {(info.telefone || info.email) && <p style={{ margin: "14px 0 0", fontSize: 12.5, color: "var(--ink-60)" }}>Contato: {[info.telefone, info.email].filter(Boolean).join(" · ")}</p>}
+                <button onClick={() => { setTipo("moradia"); setAba("colab") }}
+                  style={{ marginTop: 14, padding: 0, border: "none", background: "none", cursor: "pointer", color: "var(--olive)", fontWeight: 700, fontSize: 13.5, fontFamily: "inherit" }}>
+                  Conhece um lugar para alugar? Indique →
                 </button>
               </>
             )}
 
             {aba === "colab" && (
               <>
-                <h2 style={{ ...tituloAba, marginBottom: 6 }}>Espaço colaborativo — {sigla}</h2>
-                <p style={{ margin: "0 0 16px", fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.6 }}>Acrescente o que você sabe: lugar para alugar, como é o serviço, contatos úteis, dúvidas. Fica visível para a turma, com seu nome.</p>
+                <h2 style={{ ...tituloAba, marginBottom: 6 }}>Espaço colaborativo</h2>
+                <p style={{ margin: "0 0 14px", fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.6 }}>Quem já está no batalhão ou conhece a área: conte como é o serviço, indique moradia, tire dúvidas. Visível para a turma, com seu nome.</p>
                 {info.linkGrupo
-                  ? <a href={info.linkGrupo} target="_blank" rel="noopener noreferrer" style={{ ...botao("#25D366", "#fff"), display: "inline-block", marginBottom: 18 }}>💬 Entrar no grupo do WhatsApp ↗</a>
-                  : <p style={{ margin: "0 0 18px", padding: "10px 14px", borderRadius: 10, background: "var(--surface)", fontSize: 13.5, color: "var(--ink-60)" }}>💬 Grupo do WhatsApp dos interessados — <strong>link em breve</strong>.</p>}
-
-                <form onSubmit={publicar} style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20, padding: 14, borderRadius: 12, background: "var(--surface)" }}>
+                  ? <a href={info.linkGrupo} target="_blank" rel="noopener noreferrer" style={{ ...botao("#25D366", "#fff"), display: "inline-block", marginBottom: 16 }}>Grupo do WhatsApp ↗</a>
+                  : <p style={{ margin: "0 0 16px", fontSize: 13, color: "var(--ink-60)" }}>Grupo do WhatsApp: link em breve.</p>}
+                <form onSubmit={publicar} style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 18, padding: 14, borderRadius: 12, background: "var(--surface)" }}>
                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                     {TIPOS_CONTRIBUICAO.map(t => (
                       <button key={t.id} type="button" onClick={() => setTipo(t.id)}
@@ -344,14 +326,13 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
                     </div>
                   )}
                   <textarea rows={3} value={contrib.texto} maxLength={1000} onChange={e => setContrib({ ...contrib, texto: e.target.value })}
-                    placeholder={tipo === "moradia" ? "Descreva: tipo de imóvel, mobiliado, contato, se dá para ir a pé…" : tipo === "duvida" ? "Qual sua dúvida sobre o batalhão?" : "Escreva a informação…"}
+                    placeholder={tipo === "moradia" ? "Tipo de imóvel, mobiliado, contato, se dá para ir a pé…" : tipo === "duvida" ? "Qual sua dúvida?" : "Escreva a informação…"}
                     style={{ ...inputStyle, resize: "vertical" }} />
                   {erroContrib && <p style={{ margin: 0, color: "var(--red)", fontSize: 13 }}>✗ {erroContrib}</p>}
                   <button type="submit" disabled={enviando || !contrib.texto.trim()} style={{ alignSelf: "flex-end", padding: "8px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer", opacity: contrib.texto.trim() ? 1 : 0.5 }}>
                     {enviando ? "Publicando…" : "Acrescentar"}
                   </button>
                 </form>
-
                 {mural.length > 0 && (
                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
                     {filtros.map(f => (
@@ -361,7 +342,7 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
                     ))}
                   </div>
                 )}
-                {muralFiltrado.length === 0 ? <p style={semInfo}>{filtro === "todos" ? "Nada por aqui ainda — seja o primeiro a acrescentar." : "Nada desse tipo ainda."}</p> : (
+                {muralFiltrado.length === 0 ? <p style={semInfo}>Nada por aqui ainda — seja o primeiro.</p> : (
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {muralFiltrado.map(m => (
                       <div key={m.id} style={{ padding: "12px 14px", borderRadius: 12, background: "var(--surface)" }}>
@@ -378,69 +359,55 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
                 )}
               </>
             )}
-
-            {aba === "fontes" && (
-              <>
-                <h2 style={tituloAba}>Links e fontes</h2>
-                {links.length === 0 && fontes.length === 0 && vazio}
-                <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-                  {[...new Set(links.map(l => l.grupo || GRUPO_LINK_PADRAO))].map(grupo => (
-                    <div key={grupo}>
-                      <p style={{ ...rotuloCampo, marginBottom: 10 }}>{/legisla/i.test(grupo) ? "⚖️" : "🔗"} {grupo}</p>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                        {links.filter(l => (l.grupo || GRUPO_LINK_PADRAO) === grupo).map(l => (
-                          <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" style={{ padding: "7px 12px", borderRadius: 999, background: "var(--surface)", color: "var(--olive)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>{l.rotulo} ↗</a>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                  {fontes.length > 0 && (
-                    <div>
-                      <p style={{ ...rotuloCampo, marginBottom: 10 }}>📚 De onde veio cada informação</p>
-                      <ul style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 8, fontSize: 13.5, lineHeight: 1.5 }}>
-                        {fontes.map((f, i) => (
-                          <li key={i}><strong>{f.info}:</strong> {f.url ? <a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>{f.rotulo || f.url} ↗</a> : f.rotulo}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
-
-            {atualizadoEm && aba !== "escolha" && aba !== "colab" && (
-              <p style={{ margin: "22px 0 0", paddingTop: 12, borderTop: "1px solid var(--surface)", fontSize: 11.5, color: "var(--ink-60)" }}>
-                Ficha atualizada em {new Date(atualizadoEm).toLocaleDateString("pt-BR")} · cada informação traz a fonte entre parênteses (lista completa em “Links e fontes”).
-              </p>
-            )}
           </>
         )}
       </section>
+
+      {/* Fontes — sempre no rodapé */}
+      <details style={{ padding: "4px 4px 0" }}>
+        <summary style={{ cursor: "pointer", fontSize: 13, fontWeight: 600, color: "var(--ink-60)" }}>Fontes e links ({fontes.length + links.length + criminalidade.fontes.length + FONTES_ASPIRANTADO.length})</summary>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14, marginTop: 10, fontSize: 12.5, lineHeight: 1.55 }}>
+          <div>
+            <p style={{ ...rotuloCampo, marginBottom: 6 }}>Ficha</p>
+            {fontes.map((f, i) => <div key={i}>{f.info}: {f.url ? <a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>{f.rotulo} ↗</a> : f.rotulo}</div>)}
+          </div>
+          <div>
+            <p style={{ ...rotuloCampo, marginBottom: 6 }}>Segurança e turmas</p>
+            {[...criminalidade.fontes, ...FONTES_ASPIRANTADO].map(f => <div key={f.url}><a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>{f.rotulo} ↗</a></div>)}
+          </div>
+          {links.length > 0 && (
+            <div>
+              <p style={{ ...rotuloCampo, marginBottom: 6 }}>Links úteis e legislação</p>
+              {links.map(l => <div key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>{l.rotulo} ↗</a></div>)}
+            </div>
+          )}
+        </div>
+        <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>
+          {atualizadoEm && `Ficha atualizada em ${new Date(atualizadoEm).toLocaleDateString("pt-BR")}. `}Só entra dado com fonte pública.
+          {isAdmin && !editando && <> · <button onClick={() => setEditando(true)} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--olive)", fontWeight: 600, fontSize: 11.5 }}>editar ficha</button></>}
+        </p>
+      </details>
     </div>
   )
 }
 
 const chaveData = (d: string) => { const m = d.match(/(\d{1,2})\/(\d{2})\/(\d{4})/) ?? d.match(/(\d{1,2})[–-]\d{1,2}\/(\d{2})\/(\d{4})/); if (m) return m[3] + m[2] + m[1].padStart(2, "0"); const a = d.match(/(\d{4})/); return a ? a[1] + "0000" : "0" }
 
-function Operacoes({ operacoes: lista }: { operacoes: OperacaoFicha[] }) {
-  const operacoes = [...lista].sort((a, b) => chaveData(b.data).localeCompare(chaveData(a.data)))
+function Operacoes({ operacoes }: { operacoes: OperacaoFicha[] }) {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: 12, marginTop: 12 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       {operacoes.map(o => (
-        <article key={o.titulo + o.data} style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(58,74,58,0.14)", background: "#fff", display: "flex", flexDirection: "column" }}>
-          {o.foto && (
+        <div key={o.titulo + o.data} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+          {o.foto
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={o.foto} alt={o.titulo} loading="lazy" referrerPolicy="no-referrer" onError={e => { e.currentTarget.style.display = "none" }} style={{ width: "100%", aspectRatio: "16 / 10", objectFit: "cover", background: "var(--surface)" }} />
-          )}
-          <div style={{ padding: "10px 12px", display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
-            <span style={{ fontSize: 11.5, fontWeight: 700, color: "var(--gold)" }}>{o.data}</span>
-            <strong style={{ fontSize: 14, color: "var(--olive)", lineHeight: 1.3 }}>{o.titulo}</strong>
-            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.45 }}>{o.resumo}</p>
-            <span style={{ marginTop: "auto", paddingTop: 6, fontSize: 11.5, color: "var(--ink-60)" }}>
-              {o.foto ? "Foto e texto: " : "Fonte: "}{o.url ? <a href={o.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>{o.fonte} ↗</a> : o.fonte}
-            </span>
+            ? <img src={o.foto} alt="" loading="lazy" referrerPolicy="no-referrer" onError={e => { e.currentTarget.style.display = "none" }} style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 8, flex: "0 0 auto", background: "var(--surface)" }} />
+            : <span style={{ width: 72, height: 54, borderRadius: 8, flex: "0 0 auto", background: "var(--surface)" }} />}
+          <div style={{ fontSize: 13, lineHeight: 1.45 }}>
+            <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 11.5 }}>{o.data}</span><br />
+            <strong>{o.titulo}</strong> — {o.resumo}{" "}
+            {o.url && <a href={o.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600, whiteSpace: "nowrap" }}>{o.fonte} ↗</a>}
           </div>
-        </article>
+        </div>
       ))}
     </div>
   )

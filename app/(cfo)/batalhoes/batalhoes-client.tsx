@@ -2,10 +2,8 @@
 
 import Link from "next/link"
 import { useMemo, useState } from "react"
-import { FONTES_ASPIRANTADO } from "@/lib/batalhoes-base"
 import remuneracao from "@/lib/remuneracao-oficiais.json"
-
-const VAGAS_T2 = Object.fromEntries(Object.entries(remuneracao.porBatalhao).map(([o, p]) => [o, p.vagasT2])) as Record<string, number>
+import criminalidade from "@/lib/criminalidade-batalhoes.json"
 
 export type CardBatalhao = {
   sigla: string; slug: string; nome: string; sede: string; municipio: string
@@ -14,241 +12,168 @@ export type CardBatalhao = {
 }
 export type Pendente = { mat: number; nome: string; pelotao: number | null }
 
+type Rem = { vagasT2: number; pctT2: number; posT2: { mediana: number; n: number } | null }
+type Crime = { cvli: { taxa2025: number; variacao: number | null }; compartilhado: string | null }
+const REM = remuneracao.porBatalhao as Record<string, Rem>
+const CRIME = criminalidade.porBatalhao as Record<string, Crime>
+
 const semAcento = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
 const numero = (s: string) => Number(s.match(/\d+/)?.[0] ?? 999)
 const pct = (n: number, d: number) => (d ? Math.round((n / d) * 1000) / 10 : 0)
-const cartao: React.CSSProperties = { background: "#fff", borderRadius: 16, border: "1px solid rgba(58,74,58,0.14)", boxShadow: "0 2px 8px rgba(0,0,0,0.04)", padding: 18 }
-const tituloSecao: React.CSSProperties = { fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", margin: "0 0 4px" }
-const subSecao: React.CSSProperties = { margin: "0 0 14px", fontSize: 12.5, color: "var(--ink-60)" }
+const cartao: React.CSSProperties = { background: "#fff", borderRadius: 16, border: "1px solid rgba(58,74,58,0.12)", padding: 18 }
+const titulo: React.CSSProperties = { fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", margin: 0 }
+const th: React.CSSProperties = { padding: "8px 10px", textAlign: "left", fontSize: 11, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600, whiteSpace: "nowrap" }
+const td: React.CSSProperties = { padding: "10px", borderTop: "1px solid var(--surface)", fontSize: 13.5, whiteSpace: "nowrap" }
+
+type Ordem = "turma" | "vagas" | "disputa" | "seguranca"
+const ORDENS: { id: Ordem; rot: string }[] = [
+  { id: "turma", rot: "Mais escolhidos pela turma" },
+  { id: "vagas", rot: "Mais vagas (T2)" },
+  { id: "disputa", rot: "Mais disputados (T2)" },
+  { id: "seguranca", rot: "Menor violência" },
+]
+
+function Tendencia({ v }: { v: number | null }) {
+  if (v == null) return null
+  return <span style={{ fontSize: 12, color: v < 0 ? "#3a7a3a" : "var(--red)", fontWeight: 600 }}>{v < 0 ? "▼" : "▲"}{Math.abs(v)}%</span>
+}
 
 export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalAlunos, pendentes, minha, minhaMatricula, planilhaOk, planilhaUrl, formularioUrl }: {
   cards: CardBatalhao[]; respondentes: number; respondentesDaCia: number; totalAlunos: number; pendentes: Pendente[]
   minha: { opcao1: string; opcao2: string | null } | null; minhaMatricula: number
   planilhaOk: boolean; planilhaUrl: string; formularioUrl: string
 }) {
+  const [ordem, setOrdem] = useState<Ordem>("turma")
   const [busca, setBusca] = useState("")
-  const [criterio, setCriterio] = useState<"opcao1" | "opcao2">("opcao1")
-  const [turmaAsp, setTurmaAsp] = useState<"ambas" | "t1" | "t2">("ambas")
   const [verPendentes, setVerPendentes] = useState(false)
-  const [buscaPend, setBuscaPend] = useState("")
-
   const taxa = pct(respondentesDaCia, totalAlunos)
-  const ranking = useMemo(() => [...cards].sort((a, b) => b[criterio] - a[criterio] || numero(a.sigla) - numero(b.sigla)), [cards, criterio])
-  const maxRank = Math.max(1, ...ranking.map(c => c[criterio]))
+  const maxOp1 = Math.max(1, ...cards.map(c => c.opcao1))
+  const taxas = cards.map(c => CRIME[c.sigla]?.cvli.taxa2025 ?? 0)
+  const [tMin, tMax] = [Math.min(...taxas), Math.max(...taxas)]
+
+  const linhas = useMemo(() => {
+    const v = (c: CardBatalhao) => ordem === "turma" ? c.opcao1 : ordem === "vagas" ? (REM[c.sigla]?.vagasT2 ?? 0)
+      : ordem === "disputa" ? -(REM[c.sigla]?.posT2?.mediana ?? 999) : -(CRIME[c.sigla]?.cvli.taxa2025 ?? 999)
+    return [...cards].sort((a, b) => v(b) - v(a) || numero(a.sigla) - numero(b.sigla))
+  }, [cards, ordem])
   const emOrdem = useMemo(() => {
     const t = semAcento(busca.trim())
-    return cards
-      .filter(c => !t || semAcento(`${c.sigla} ${c.nome} ${c.sede} ${c.municipio} ${c.comandante ?? ""}`).includes(t))
-      .sort((a, b) => numero(a.sigla) - numero(b.sigla))
+    return cards.filter(c => !t || semAcento(`${c.sigla} ${c.nome} ${c.sede} ${c.municipio}`).includes(t)).sort((a, b) => numero(a.sigla) - numero(b.sigla))
   }, [cards, busca])
-  const pendFiltrados = useMemo(() => {
-    const t = semAcento(buscaPend.trim())
-    return pendentes.filter(p => !t || semAcento(`${p.mat} ${p.nome}`).includes(t))
-  }, [pendentes, buscaPend])
   const pendPorPel = useMemo(() => {
     const g = new Map<string, Pendente[]>()
-    for (const p of pendFiltrados) { const k = p.pelotao ? `${p.pelotao}º Pelotão` : "Sem pelotão"; (g.get(k) ?? g.set(k, []).get(k)!).push(p) }
+    for (const p of pendentes) { const k = p.pelotao ? `${p.pelotao}º Pelotão` : "Sem pelotão"; (g.get(k) ?? g.set(k, []).get(k)!).push(p) }
     return [...g.entries()]
-  }, [pendFiltrados])
-  const euFalto = pendentes.some(p => p.mat === minhaMatricula)
-  const valAsp = (c: CardBatalhao) => turmaAsp === "t1" ? c.t1 : turmaAsp === "t2" ? c.t2 : c.t1 + c.t2
-  const rankAsp = useMemo(() => [...cards].sort((a, b) => valAsp(b) - valAsp(a) || numero(a.sigla) - numero(b.sigla)), [cards, turmaAsp]) // eslint-disable-line react-hooks/exhaustive-deps
-  const maxAsp = Math.max(1, ...cards.map(c => c.t1 + c.t2))
-  const totT1 = cards.reduce((s, c) => s + c.t1, 0), totT2 = cards.reduce((s, c) => s + c.t2, 0)
+  }, [pendentes])
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      {/* ── Minha escolha + mudar ── */}
-      <section style={{ ...cartao, background: "linear-gradient(135deg, #3a4a3a 0%, #45573f 60%, #4f6347 100%)", color: "#fff", border: "none" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-          <div>
-            <p style={{ margin: 0, fontSize: 11.5, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)" }}>Minha escolha</p>
-            {minha ? (
-              <p style={{ margin: "6px 0 0", fontSize: 16 }}>
-                1ª <strong style={{ color: "#e0c979" }}>{minha.opcao1}</strong>
-                {minha.opcao2 && <> · 2ª <strong style={{ color: "#e0c979" }}>{minha.opcao2}</strong></>}
-              </p>
-            ) : (
-              <p style={{ margin: "6px 0 0", fontSize: 14.5, color: "rgba(255,255,255,0.9)" }}>{euFalto ? "Você ainda não respondeu o levantamento." : "Você não aparece no levantamento da DAG."}</p>
-            )}
+      {/* Minha escolha */}
+      <section style={{ ...cartao, background: "#3a4a3a", color: "#fff", border: "none", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+        <div>
+          <div style={{ fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", opacity: 0.7 }}>Minha escolha</div>
+          <div style={{ fontSize: 16, marginTop: 4 }}>
+            {minha ? <>1ª <strong style={{ color: "#e0c979" }}>{minha.opcao1}</strong>{minha.opcao2 && <> · 2ª <strong style={{ color: "#e0c979" }}>{minha.opcao2}</strong></>}</> : "Você ainda não respondeu"}
           </div>
-          <a href={formularioUrl} target="_blank" rel="noopener noreferrer"
-            style={{ padding: "10px 16px", borderRadius: 10, background: "#e0c979", color: "#2b2a27", fontWeight: 700, fontSize: 14, textDecoration: "none", whiteSpace: "nowrap" }}>
-            {minha ? "Mudar meu batalhão ↗" : "Escolher meu batalhão ↗"}
-          </a>
+          <div style={{ fontSize: 12, opacity: 0.75, marginTop: 4 }}>{taxa.toLocaleString("pt-BR")}% da CIA respondeu · faltam {pendentes.length}</div>
         </div>
-        <p style={{ margin: "10px 0 0", fontSize: 12, color: "rgba(255,255,255,0.72)", lineHeight: 1.5 }}>
-          Para mudar, responda de novo o formulário da DAG com a sua numérica — vale a resposta mais recente. O portal atualiza a cada 5 minutos.
+        <a href={formularioUrl} target="_blank" rel="noopener noreferrer" style={{ padding: "9px 14px", borderRadius: 10, background: "#e0c979", color: "#2b2a27", fontWeight: 700, fontSize: 13.5, textDecoration: "none" }}>
+          {minha ? "Mudar escolha ↗" : "Escolher ↗"}
+        </a>
+      </section>
+      {!planilhaOk && <p style={{ margin: 0, fontSize: 13, color: "var(--red)" }}>Não foi possível abrir a planilha da DAG agora.</p>}
+
+      {/* Comparativo */}
+      <section style={cartao}>
+        <h2 style={titulo}>Compare os batalhões</h2>
+        <p style={{ margin: "4px 0 12px", fontSize: 13, color: "var(--ink-60)", lineHeight: 1.5 }}>O que pesa na escolha, lado a lado. Toque no batalhão para ver a ficha completa.</p>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+          {ORDENS.map(o => (
+            <button key={o.id} onClick={() => setOrdem(o.id)} style={{ padding: "6px 12px", borderRadius: 999, border: "1px solid rgba(58,74,58,0.18)", cursor: "pointer", fontSize: 12.5, fontWeight: 600, fontFamily: "inherit",
+              background: ordem === o.id ? "var(--olive)" : "#fff", color: ordem === o.id ? "var(--canvas)" : "var(--ink-60)" }}>{o.rot}</button>
+          ))}
+        </div>
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead><tr>
+              <th style={th}>Batalhão</th><th style={th}>Turma (1ª opção)</th><th style={th}>Vagas T2</th><th style={th}>Posição típica T2</th><th style={th}>CVLI /100 mil</th>
+            </tr></thead>
+            <tbody>
+              {linhas.map(c => {
+                const r = REM[c.sigla], cr = CRIME[c.sigla]
+                const t = cr?.cvli.taxa2025 ?? 0
+                const nivel = tMax > tMin ? (t - tMin) / (tMax - tMin) : 0
+                const meu = minha?.opcao1 === c.sigla
+                return (
+                  <tr key={c.slug}>
+                    <td style={td}><Link href={`/batalhoes/${c.slug}`} style={{ color: "var(--olive)", fontWeight: 700, textDecoration: "none" }}>{c.sigla}{meu ? " ★" : ""}</Link></td>
+                    <td style={{ ...td, minWidth: 120 }}>
+                      <span style={{ display: "inline-block", width: 60, height: 8, borderRadius: 99, background: "var(--surface)", verticalAlign: "middle", marginRight: 8 }}>
+                        <span style={{ display: "block", height: "100%", width: `${(c.opcao1 / maxOp1) * 100}%`, borderRadius: 99, background: "var(--gold)" }} />
+                      </span>
+                      <strong>{c.opcao1}</strong> <span style={{ color: "var(--ink-60)", fontSize: 12 }}>{pct(c.opcao1, respondentes).toLocaleString("pt-BR")}%</span>
+                    </td>
+                    <td style={td}>{r?.vagasT2 ?? "—"}</td>
+                    <td style={td}>{r?.posT2 ? <>{r.posT2.mediana}º <span style={{ color: "var(--ink-60)", fontSize: 11.5 }}>(n={r.posT2.n})</span></> : "—"}</td>
+                    <td style={td}>
+                      <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, marginRight: 6, background: nivel < 0.34 ? "#7aa36f" : nivel < 0.67 ? "#d6b45a" : "#c0704f" }} />
+                      {t.toLocaleString("pt-BR")} <Tendencia v={cr?.cvli.variacao ?? null} />{cr?.compartilhado ? <span style={{ color: "var(--ink-60)", fontSize: 11 }}> *</span> : ""}
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
+          <strong>Posição típica T2</strong>: mediana da classificação dos aspirantes da T2 vistos no batalhão — quanto menor, mais cedo foi escolhido.
+          <strong> CVLI</strong>: mortes violentas intencionais por 100 mil habitantes (2025) e variação jan–set 2026. * dado do município inteiro (Recife ou Jaboatão).
+          Fontes: <a href="https://www.sds.pe.gov.br/estatisticas/crimes-violentos-letais-intencionais" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>SDS</a>, <a href="https://sidra.ibge.gov.br/tabela/4709" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>IBGE</a>, quadro de vagas da escolha da T2 e boletins da SDS · <a href={planilhaUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>planilha da DAG</a>.
         </p>
       </section>
 
-      {!planilhaOk && <p style={{ margin: 0, fontSize: 13, color: "var(--red)" }}>✗ Não foi possível abrir a planilha da DAG agora — os números podem estar zerados. Tente de novo em instantes.</p>}
-
-      {/* ── Participação ── */}
-      <section style={cartao}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-          <h2 style={tituloSecao}>Participação</h2>
-          <span style={{ fontFamily: "var(--serif-cfo)", fontSize: 30, fontWeight: 700, color: "var(--olive)" }}>{taxa.toLocaleString("pt-BR")}%</span>
-        </div>
-        <div style={{ height: 12, borderRadius: 99, background: "var(--surface)", overflow: "hidden", margin: "8px 0" }}>
-          <div style={{ width: `${taxa}%`, height: "100%", background: "linear-gradient(90deg, #3a4a3a, #b5933f)", borderRadius: 99 }} />
-        </div>
-        <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-60)" }}>
-          <strong style={{ color: "var(--ink)" }}>{respondentesDaCia}</strong> de {totalAlunos} alunos da CIA responderam · faltam <strong style={{ color: "var(--red)" }}>{pendentes.length}</strong>
-          {respondentes > respondentesDaCia && <> · {respondentes - respondentesDaCia} resposta(s) de fora do cadastro</>}
-          {" · "}<a href={planilhaUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>planilha da DAG ↗</a>
-        </p>
-      </section>
-
-      {/* ── Ranking ── */}
-      <section style={cartao}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-          <h2 style={tituloSecao}>Ranking dos mais escolhidos</h2>
-          <div style={{ display: "flex", gap: 6 }}>
-            {([["opcao1", "1ª opção"], ["opcao2", "2ª opção"]] as const).map(([k, r]) => (
-              <button key={k} onClick={() => setCriterio(k)}
-                style={{ padding: "6px 12px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600,
-                  background: criterio === k ? "var(--olive)" : "var(--surface)", color: criterio === k ? "var(--canvas)" : "var(--ink-60)" }}>{r}</button>
-            ))}
-          </div>
-        </div>
-        <p style={subSecao}>% sobre os {respondentes} que responderam</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-          {ranking.map((c, i) => {
-            const meu = criterio === "opcao1" ? minha?.opcao1 === c.sigla : minha?.opcao2 === c.sigla
-            return (
-              <Link key={c.slug} href={`/batalhoes/${c.slug}`} style={{ display: "grid", gridTemplateColumns: "26px 78px 1fr 92px", alignItems: "center", gap: 10, textDecoration: "none", color: "var(--ink)" }}>
-                <span style={{ fontWeight: 700, color: i < 3 ? "var(--gold)" : "var(--ink-60)", fontSize: 13.5, textAlign: "right" }}>{i + 1}º</span>
-                <span style={{ fontWeight: 700, color: "var(--olive)", fontSize: 13.5, whiteSpace: "nowrap" }}>{c.sigla}{meu ? " ★" : ""}</span>
-                <span style={{ height: 14, borderRadius: 99, background: "var(--surface)", overflow: "hidden" }}>
-                  <span style={{ display: "block", width: `${(c[criterio] / maxRank) * 100}%`, height: "100%", background: i < 3 ? "var(--gold)" : "var(--olive)", borderRadius: 99 }} />
-                </span>
-                <span style={{ fontSize: 13, textAlign: "right", whiteSpace: "nowrap" }}><strong>{c[criterio]}</strong> <span style={{ color: "var(--ink-60)" }}>· {pct(c[criterio], respondentes).toLocaleString("pt-BR")}%</span></span>
-              </Link>
-            )
-          })}
-        </div>
-        {minha && <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>★ = sua escolha</p>}
-      </section>
-
-      {/* ── Remuneração e carreira ── */}
-      <Link href="/batalhoes/remuneracao" style={{ ...cartao, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, textDecoration: "none", color: "var(--ink)", background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.35)" }}>
-        <span>
-          <span style={{ ...tituloSecao, display: "block" }}>💰 Remuneração e carreira</span>
-          <span style={{ fontSize: 13, color: "var(--ink-60)", lineHeight: 1.5 }}>Quanto ganha cada função (aspirante e 2º Ten), comparação entre T1 e T2, nossa previsão e o efetivo de oficiais — dados públicos do Portal da Transparência.</span>
-        </span>
-        <span style={{ fontSize: 22, color: "var(--gold)", fontWeight: 700 }}>›</span>
+      <Link href="/batalhoes/remuneracao" style={{ ...cartao, padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", color: "var(--ink)", background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)" }}>
+        <span style={{ fontSize: 13.5 }}><strong>Salário:</strong> é o mesmo em qualquer batalhão — o que muda é a função. Veja quanto ganha cada uma e a previsão para a nossa turma.</span>
+        <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 18 }}>›</span>
       </Link>
 
-      {/* ── Aspirantes das turmas anteriores ── */}
-      <section style={cartao}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-          <h2 style={tituloSecao}>Para onde foram as turmas anteriores</h2>
-          <div style={{ display: "flex", gap: 6 }}>
-            {([["ambas", "T1 + T2"], ["t1", "T1"], ["t2", "T2"]] as const).map(([k, r]) => (
-              <button key={k} onClick={() => setTurmaAsp(k)}
-                style={{ padding: "6px 12px", borderRadius: 999, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600,
-                  background: turmaAsp === k ? "var(--olive)" : "var(--surface)", color: turmaAsp === k ? "var(--canvas)" : "var(--ink-60)" }}>{r}</button>
-            ))}
-          </div>
-        </div>
-        <p style={subSecao}>
-          Vagas oficiais da escolha da T2 (28/06/2026, 182 vagas) e aspirantes com função publicada no Boletim da SDS (dez/2025–out/2026) nestes 13 batalhões: <strong style={{ color: "#3a4a3a" }}>T1 {totT1}</strong> (148 formados em 28/11/2025) · <strong style={{ color: "#b5933f" }}>T2 {totT2}</strong> (182 formados em 08/06/2026). É um mínimo — nem todo lotado recebe função publicada.
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-          {rankAsp.map(c => (
-            <Link key={c.slug} href={`/batalhoes/${c.slug}#ficha-vagas`} style={{ display: "grid", gridTemplateColumns: "78px 1fr 84px", alignItems: "center", gap: 10, textDecoration: "none", color: "var(--ink)" }}>
-              <span style={{ fontWeight: 700, color: "var(--olive)", fontSize: 13.5, whiteSpace: "nowrap" }}>{c.sigla}</span>
-              <span style={{ display: "flex", height: 14, borderRadius: 99, background: "var(--surface)", overflow: "hidden" }}>
-                {turmaAsp !== "t2" && <span style={{ width: `${(c.t1 / maxAsp) * 100}%`, background: "#3a4a3a" }} />}
-                {turmaAsp !== "t1" && <span style={{ width: `${(c.t2 / maxAsp) * 100}%`, background: "#b5933f" }} />}
-              </span>
-              <span style={{ fontSize: 12.5, textAlign: "right", whiteSpace: "nowrap" }}>
-                {turmaAsp === "ambas" ? <><strong>{c.t1 + c.t2}</strong> <span style={{ color: "var(--ink-60)" }}>({c.t1}+{c.t2})</span></> : <strong>{valAsp(c)}</strong>}
-                {VAGAS_T2[c.sigla] ? <span style={{ display: "block", fontSize: 11, color: "var(--ink-60)" }}>{VAGAS_T2[c.sigla]} vagas T2</span> : null}
-              </span>
-            </Link>
-          ))}
-        </div>
-        <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>■ <span style={{ color: "#3a4a3a" }}>T1</span> · ■ <span style={{ color: "#b5933f" }}>T2</span> · toque no batalhão para ver as funções (comando de pelotão, de companhia, PCT, seções) e o boletim de cada designação.</p>
-        <p style={{ margin: "6px 0 0", fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.7 }}>
-          <strong>Fontes:</strong>{" "}
-          {FONTES_ASPIRANTADO.map((f, i) => (
-            <span key={f.url}>{i > 0 && " · "}<a href={f.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)", fontWeight: 600 }}>{f.rotulo} ↗</a></span>
-          ))}
-        </p>
-      </section>
-
-      {/* ── Batalhões em ordem ── */}
+      {/* Batalhões */}
       <section>
-        <h2 style={{ ...tituloSecao, margin: "6px 0 4px" }}>Conheça cada batalhão</h2>
-        <p style={subSecao}>Em ordem numérica · toque para ver a ficha, quem escolheu e o mural da turma</p>
-        <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="🔍 Batalhão, bairro, município ou comandante"
-          style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15, marginBottom: 12 }} />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 12 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
+          <h2 style={titulo}>Fichas</h2>
+          <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="Buscar batalhão, bairro ou cidade"
+            style={{ flex: "1 1 220px", maxWidth: 320, padding: "8px 12px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.25)", background: "#fff", fontSize: 14 }} />
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10 }}>
           {emOrdem.map(c => {
             const meu = minha?.opcao1 === c.sigla
             return (
-              <Link key={c.slug} href={`/batalhoes/${c.slug}`}
-                style={{ ...cartao, padding: 16, textDecoration: "none", color: "var(--ink)", display: "flex", flexDirection: "column", gap: 6,
-                  border: meu ? "1.5px solid var(--gold)" : cartao.border, background: meu ? "#fbf7ec" : "#fff" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
-                  <span style={{ fontFamily: "var(--serif-cfo)", fontWeight: 700, fontSize: "1.35rem", color: "var(--olive)" }}>{c.sigla}</span>
-                  {meu && <span style={{ fontSize: 11, fontWeight: 700, color: "var(--gold)" }}>sua 1ª opção</span>}
-                </div>
-                <span style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.3 }}>{c.nome}</span>
-                <span style={{ fontSize: 12.5, color: "var(--ink-60)" }}>📍 {c.sede}, {c.municipio}</span>
-                <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
-                  <span style={{ flex: 1, textAlign: "center", padding: "6px 4px", borderRadius: 10, background: "var(--surface)" }}>
-                    <strong style={{ display: "block", fontSize: 18, color: "var(--olive)" }}>{c.opcao1}</strong><span style={{ fontSize: 11, color: "var(--ink-60)" }}>1ª opção</span>
-                  </span>
-                  <span style={{ flex: 1, textAlign: "center", padding: "6px 4px", borderRadius: 10, background: "var(--surface)" }}>
-                    <strong style={{ display: "block", fontSize: 18, color: "var(--olive)" }}>{c.opcao2}</strong><span style={{ fontSize: 11, color: "var(--ink-60)" }}>2ª opção</span>
-                  </span>
-                </div>
-                <span style={{ fontSize: 11.5, color: "var(--ink-60)" }}>
-                  {c.comandante ? `Cmt: ${c.comandante}` : "Ficha em construção"}{c.mensagens > 0 ? ` · 💬 ${c.mensagens}` : ""}
-                </span>
-                {(c.t1 > 0 || c.t2 > 0) && <span style={{ fontSize: 11.5, color: "var(--ink-60)" }}>🎓 Aspirantes com função: T1 <strong style={{ color: "#3a4a3a" }}>{c.t1}</strong> · T2 <strong style={{ color: "#b5933f" }}>{c.t2}</strong></span>}
-                <span style={{ fontSize: 12, color: "var(--gold)", fontWeight: 700 }}>Conheça o batalhão ›</span>
+              <Link key={c.slug} href={`/batalhoes/${c.slug}`} style={{ ...cartao, padding: 14, textDecoration: "none", color: "var(--ink)", border: meu ? "1.5px solid var(--gold)" : cartao.border }}>
+                <div style={{ fontFamily: "var(--serif-cfo)", fontWeight: 700, fontSize: "1.2rem", color: "var(--olive)" }}>{c.sigla}</div>
+                <div style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 2 }}>{c.sede}, {c.municipio}</div>
+                <div style={{ fontSize: 12, marginTop: 8, color: "var(--ink-60)" }}>{c.opcao1} na 1ª opção · {REM[c.sigla]?.vagasT2 ?? "—"} vagas T2{c.mensagens > 0 ? ` · ${c.mensagens} 💬` : ""}</div>
               </Link>
             )
           })}
         </div>
-        {emOrdem.length === 0 && <p style={{ color: "var(--ink-60)" }}>Nenhum batalhão encontrado.</p>}
       </section>
 
-      {/* ── Quem falta escolher ── */}
+      {/* Quem falta */}
       <section style={cartao}>
-        <button onClick={() => setVerPendentes(v => !v)} style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", background: "none", border: "none", padding: 0, cursor: "pointer", textAlign: "left" }}>
-          <span>
-            <span style={{ ...tituloSecao, display: "block" }}>Quem falta escolher <span style={{ color: "var(--red)" }}>({pendentes.length})</span></span>
-            <span style={{ fontSize: 12.5, color: "var(--ink-60)" }}>Alunos da CIA que ainda não aparecem no levantamento da DAG</span>
-          </span>
-          <span style={{ fontSize: 13, color: "var(--ink-60)", transform: verPendentes ? "rotate(180deg)" : "none", transition: "transform .2s" }}>▾</span>
+        <button onClick={() => setVerPendentes(v => !v)} style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "inherit" }}>
+          <span style={{ ...titulo, fontSize: "1.05rem" }}>Quem falta escolher <span style={{ color: "var(--red)" }}>({pendentes.length})</span></span>
+          <span style={{ color: "var(--ink-60)", transform: verPendentes ? "rotate(180deg)" : "none" }}>▾</span>
         </button>
         {verPendentes && (
-          <div style={{ marginTop: 12 }}>
-            {pendentes.length > 10 && (
-              <input value={buscaPend} onChange={e => setBuscaPend(e.target.value)} placeholder="🔍 Buscar nome ou matrícula"
-                style={{ width: "100%", padding: "9px 11px", borderRadius: 8, border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 14, marginBottom: 10 }} />
-            )}
-            {pendentes.length === 0 ? <p style={{ margin: 0, fontSize: 13.5, color: "var(--olive)", fontWeight: 600 }}>✓ Todos já responderam.</p> : (
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {pendPorPel.map(([pel, ps]) => (
-                  <div key={pel}>
-                    <p style={{ margin: "0 0 6px", fontSize: 12, fontWeight: 700, color: "var(--gold)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{pel} ({ps.length})</p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                      {ps.map(p => (
-                        <span key={p.mat} style={{ padding: "4px 10px", borderRadius: 999, fontSize: 13, background: p.mat === minhaMatricula ? "var(--gold)" : "var(--surface)", color: p.mat === minhaMatricula ? "#fff" : "var(--ink)", fontWeight: p.mat === minhaMatricula ? 700 : 500 }}>
-                          {p.mat} {p.nome}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 12 }}>
+            {pendentes.length === 0 ? <p style={{ margin: 0, fontSize: 13.5, color: "var(--olive)" }}>Todos já responderam.</p> : pendPorPel.map(([pel, ps]) => (
+              <div key={pel}>
+                <p style={{ margin: "0 0 6px", fontSize: 11.5, fontWeight: 700, color: "var(--gold)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{pel} ({ps.length})</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {ps.map(p => <span key={p.mat} style={{ padding: "3px 9px", borderRadius: 999, fontSize: 12.5, background: p.mat === minhaMatricula ? "var(--gold)" : "var(--surface)", color: p.mat === minhaMatricula ? "#fff" : "var(--ink)" }}>{p.mat} {p.nome}</span>)}
+                </div>
               </div>
-            )}
+            ))}
           </div>
         )}
       </section>

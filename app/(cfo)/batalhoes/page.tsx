@@ -53,7 +53,7 @@ export default async function BatalhoesPage() {
         Escolha de Batalhões
       </h1>
       <p style={{ color: "var(--ink-60)", margin: "0 0 20px", fontSize: 14, lineHeight: 1.5 }}>
-        Levantamento da DAG de interesse em OMEs para o aspirantado — quem escolheu cada batalhão e como conhecê-lo.
+        Quem escolheu cada batalhão e o que pesa na escolha: histórico das turmas anteriores, segurança da área e onde fica — tudo com fonte pública.
       </p>
       <BatalhoesClient
         cards={cards}

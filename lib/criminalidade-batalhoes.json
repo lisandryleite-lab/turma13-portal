@@ -1,0 +1,362 @@
+{
+ "atualizado": "15/10/2026",
+ "periodo": "2023 a set/2026",
+ "porBatalhao": {
+  "1º BPM": {
+   "municipios": [
+    "Olinda"
+   ],
+   "populacao": 349976,
+   "cvli": {
+    "a2023": 178,
+    "a2024": 147,
+    "a2025": 115,
+    "jan_set_2025": 90,
+    "jan_set_2026": 85,
+    "taxa2025": 32.9,
+    "variacao": -6
+   },
+   "cvp": {
+    "a2023": 3732,
+    "a2024": 3572,
+    "a2025": 3214,
+    "jan_set_2025": 2621,
+    "jan_set_2026": 1622,
+    "taxa2025": 918.3,
+    "variacao": -38
+   },
+   "compartilhado": null
+  },
+  "6º BPM": {
+   "municipios": [
+    "Jaboatão"
+   ],
+   "populacao": 644037,
+   "cvli": {
+    "a2023": 323,
+    "a2024": 289,
+    "a2025": 232,
+    "jan_set_2025": 168,
+    "jan_set_2026": 162,
+    "taxa2025": 36,
+    "variacao": -4
+   },
+   "cvp": {
+    "a2023": 3581,
+    "a2024": 3891,
+    "a2025": 3583,
+    "jan_set_2025": 2887,
+    "jan_set_2026": 1774,
+    "taxa2025": 556.3,
+    "variacao": -39
+   },
+   "compartilhado": "Jaboatão inteiro (dividido entre 6º e 25º BPM)"
+  },
+  "11º BPM": {
+   "municipios": [
+    "Recife"
+   ],
+   "populacao": 1488920,
+   "cvli": {
+    "a2023": 578,
+    "a2024": 618,
+    "a2025": 566,
+    "jan_set_2025": 414,
+    "jan_set_2026": 332,
+    "taxa2025": 38,
+    "variacao": -20
+   },
+   "cvp": {
+    "a2023": 18655,
+    "a2024": 18765,
+    "a2025": 16732,
+    "jan_set_2025": 13705,
+    "jan_set_2026": 7177,
+    "taxa2025": 1123.8,
+    "variacao": -48
+   },
+   "compartilhado": "Recife inteiro (dado municipal, dividido entre 11º, 12º, 13º, 16º e 19º BPM)"
+  },
+  "12º BPM": {
+   "municipios": [
+    "Recife"
+   ],
+   "populacao": 1488920,
+   "cvli": {
+    "a2023": 578,
+    "a2024": 618,
+    "a2025": 566,
+    "jan_set_2025": 414,
+    "jan_set_2026": 332,
+    "taxa2025": 38,
+    "variacao": -20
+   },
+   "cvp": {
+    "a2023": 18655,
+    "a2024": 18765,
+    "a2025": 16732,
+    "jan_set_2025": 13705,
+    "jan_set_2026": 7177,
+    "taxa2025": 1123.8,
+    "variacao": -48
+   },
+   "compartilhado": "Recife inteiro (dado municipal, dividido entre 11º, 12º, 13º, 16º e 19º BPM)"
+  },
+  "13º BPM": {
+   "municipios": [
+    "Recife"
+   ],
+   "populacao": 1488920,
+   "cvli": {
+    "a2023": 578,
+    "a2024": 618,
+    "a2025": 566,
+    "jan_set_2025": 414,
+    "jan_set_2026": 332,
+    "taxa2025": 38,
+    "variacao": -20
+   },
+   "cvp": {
+    "a2023": 18655,
+    "a2024": 18765,
+    "a2025": 16732,
+    "jan_set_2025": 13705,
+    "jan_set_2026": 7177,
+    "taxa2025": 1123.8,
+    "variacao": -48
+   },
+   "compartilhado": "Recife inteiro (dado municipal, dividido entre 11º, 12º, 13º, 16º e 19º BPM)"
+  },
+  "16º BPM": {
+   "municipios": [
+    "Recife"
+   ],
+   "populacao": 1488920,
+   "cvli": {
+    "a2023": 578,
+    "a2024": 618,
+    "a2025": 566,
+    "jan_set_2025": 414,
+    "jan_set_2026": 332,
+    "taxa2025": 38,
+    "variacao": -20
+   },
+   "cvp": {
+    "a2023": 18655,
+    "a2024": 18765,
+    "a2025": 16732,
+    "jan_set_2025": 13705,
+    "jan_set_2026": 7177,
+    "taxa2025": 1123.8,
+    "variacao": -48
+   },
+   "compartilhado": "Recife inteiro (dado municipal, dividido entre 11º, 12º, 13º, 16º e 19º BPM)"
+  },
+  "17º BPM": {
+   "municipios": [
+    "Paulista",
+    "Abreu e Lima"
+   ],
+   "populacao": 440629,
+   "cvli": {
+    "a2023": 136,
+    "a2024": 140,
+    "a2025": 129,
+    "jan_set_2025": 101,
+    "jan_set_2026": 93,
+    "taxa2025": 29.3,
+    "variacao": -8
+   },
+   "cvp": {
+    "a2023": 2541,
+    "a2024": 2760,
+    "a2025": 2431,
+    "jan_set_2025": 1932,
+    "jan_set_2026": 1225,
+    "taxa2025": 551.7,
+    "variacao": -37
+   },
+   "compartilhado": null
+  },
+  "18º BPM": {
+   "municipios": [
+    "Cabo",
+    "Ipojuca"
+   ],
+   "populacao": 302372,
+   "cvli": {
+    "a2023": 173,
+    "a2024": 175,
+    "a2025": 177,
+    "jan_set_2025": 137,
+    "jan_set_2026": 78,
+    "taxa2025": 58.5,
+    "variacao": -43
+   },
+   "cvp": {
+    "a2023": 1186,
+    "a2024": 1102,
+    "a2025": 853,
+    "jan_set_2025": 657,
+    "jan_set_2026": 527,
+    "taxa2025": 282.1,
+    "variacao": -20
+   },
+   "compartilhado": null
+  },
+  "19º BPM": {
+   "municipios": [
+    "Recife"
+   ],
+   "populacao": 1488920,
+   "cvli": {
+    "a2023": 578,
+    "a2024": 618,
+    "a2025": 566,
+    "jan_set_2025": 414,
+    "jan_set_2026": 332,
+    "taxa2025": 38,
+    "variacao": -20
+   },
+   "cvp": {
+    "a2023": 18655,
+    "a2024": 18765,
+    "a2025": 16732,
+    "jan_set_2025": 13705,
+    "jan_set_2026": 7177,
+    "taxa2025": 1123.8,
+    "variacao": -48
+   },
+   "compartilhado": "Recife inteiro (dado municipal, dividido entre 11º, 12º, 13º, 16º e 19º BPM)"
+  },
+  "20º BPM": {
+   "municipios": [
+    "São Lourenço",
+    "Camaragibe"
+   ],
+   "populacao": 259020,
+   "cvli": {
+    "a2023": 134,
+    "a2024": 150,
+    "a2025": 126,
+    "jan_set_2025": 102,
+    "jan_set_2026": 62,
+    "taxa2025": 48.6,
+    "variacao": -39
+   },
+   "cvp": {
+    "a2023": 1681,
+    "a2024": 1536,
+    "a2025": 1312,
+    "jan_set_2025": 1029,
+    "jan_set_2026": 705,
+    "taxa2025": 506.5,
+    "variacao": -31
+   },
+   "compartilhado": null
+  },
+  "25º BPM": {
+   "municipios": [
+    "Jaboatão",
+    "Moreno"
+   ],
+   "populacao": 699329,
+   "cvli": {
+    "a2023": 348,
+    "a2024": 326,
+    "a2025": 270,
+    "jan_set_2025": 194,
+    "jan_set_2026": 181,
+    "taxa2025": 38.6,
+    "variacao": -7
+   },
+   "cvp": {
+    "a2023": 3830,
+    "a2024": 4115,
+    "a2025": 3791,
+    "jan_set_2025": 3045,
+    "jan_set_2026": 1917,
+    "taxa2025": 542.1,
+    "variacao": -37
+   },
+   "compartilhado": "Jaboatão inteiro (dividido entre 6º e 25º BPM)"
+  },
+  "26º BPM": {
+   "municipios": [
+    "Igarassu",
+    "Itapissuma",
+    "Itamaracá",
+    "Araçoiaba"
+   ],
+   "populacao": 186728,
+   "cvli": {
+    "a2023": 78,
+    "a2024": 89,
+    "a2025": 86,
+    "jan_set_2025": 67,
+    "jan_set_2026": 62,
+    "taxa2025": 46.1,
+    "variacao": -7
+   },
+   "cvp": {
+    "a2023": 799,
+    "a2024": 764,
+    "a2025": 751,
+    "jan_set_2025": 593,
+    "jan_set_2026": 421,
+    "taxa2025": 402.2,
+    "variacao": -29
+   },
+   "compartilhado": null
+  },
+  "BPTur": {
+   "municipios": [
+    "Olinda",
+    "Recife"
+   ],
+   "populacao": 1838896,
+   "cvli": {
+    "a2023": 756,
+    "a2024": 765,
+    "a2025": 681,
+    "jan_set_2025": 504,
+    "jan_set_2026": 417,
+    "taxa2025": 37,
+    "variacao": -17
+   },
+   "cvp": {
+    "a2023": 22387,
+    "a2024": 22337,
+    "a2025": 19946,
+    "jan_set_2025": 16326,
+    "jan_set_2026": 8799,
+    "taxa2025": 1084.7,
+    "variacao": -46
+   },
+   "compartilhado": "Recife inteiro (dado municipal, dividido entre 11º, 12º, 13º, 16º e 19º BPM)"
+  }
+ },
+ "explicacao": {
+  "CVLI": "Crimes Violentos Letais Intencionais — homicídio, latrocínio, lesão corporal seguida de morte e feminicídio. Principal índice de letalidade usado pela SDS.",
+  "CVP": "Crimes Violentos contra o Patrimônio — roubos (a pessoa, comércio, veículo, residência etc.). Mede a violência do dia a dia."
+ },
+ "metodo": "Somatório dos municípios da área do batalhão (microdados da SDS) e taxa por 100 mil habitantes com a população do Censo IBGE 2022. A SDS não publica os dados por AIS; por isso os batalhões do Recife (11º, 12º, 13º, 16º e 19º) mostram o número da cidade inteira, e 6º e 25º dividem Jaboatão.",
+ "fontes": [
+  {
+   "rotulo": "SDS — Microdados de CVLI (jan/2004 a set/2026)",
+   "url": "https://www.sds.pe.gov.br/images/indicadores/CVP/MICRODADOS_DE_CVLI_JAN_2004_A_SETEMBRO_2026.xlsx"
+  },
+  {
+   "rotulo": "SDS — Microdados de CVP (jan/2014 a set/2026)",
+   "url": "https://www.sds.pe.gov.br/images/ESTAT%C3%8DSTICAS/GACE/Microdados_de_CVP_-_Dispon%C3%ADvel_janeiro_de_2014_a_setembro_de_2026.xlsx"
+  },
+  {
+   "rotulo": "SDS — Estatísticas de CVLI",
+   "url": "https://www.sds.pe.gov.br/estatisticas/crimes-violentos-letais-intencionais"
+  },
+  {
+   "rotulo": "IBGE — população Censo 2022",
+   "url": "https://sidra.ibge.gov.br/tabela/4709"
+  }
+ ]
+}
