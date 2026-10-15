@@ -1116,44 +1116,66 @@
      "simbolo": "GEC",
      "funcao": "Comandante de Batalhão",
      "quant": 34,
-     "valor": 3480
+     "valor": 3480,
+     "designados": {
+      "asp": 0,
+      "ten": 0
+     }
     },
     {
      "simbolo": "GEC-1",
      "funcao": "Comandante de Companhia Independente ou Especializada",
      "quant": 16,
-     "valor": 1530
+     "valor": 1530,
+     "designados": {
+      "asp": 0,
+      "ten": 0
+     }
     },
     {
      "simbolo": "GEC-2",
      "funcao": "Subcomandante de Batalhão / Comandante de Companhia",
      "quant": 148,
      "valor": 1320,
-     "turma": true
+     "designados": {
+      "asp": 12,
+      "ten": 30
+     }
     },
     {
      "simbolo": "GEC-3",
      "funcao": "Comandante de Pelotão / Subcomandante de Cia Independente ou Especializada",
      "quant": 139,
      "valor": 1044,
-     "turma": true
+     "designados": {
+      "asp": 51,
+      "ten": 10
+     }
     }
    ]
   },
   "fgs": {
-   "norma": "Função Gratificada de Supervisão — valor observado na folha de 09/2026",
+   "norma": "Função Gratificada de Supervisão — valores observados na folha de 09/2026",
    "itens": [
     {
      "simbolo": "FGS-2",
-     "funcao": "Chefe de seção (supervisão)",
+     "funcao": "Supervisão 2 — seções de Planejamento, Pessoal, Ensino",
      "quant": 366,
-     "valor": 1020
+     "valor": 1020,
+     "designados": {
+      "asp": 28,
+      "ten": 4
+     }
     },
     {
      "simbolo": "FGS-3",
-     "funcao": "Supervisão (seções de Planejamento, Pessoal, Ensino etc.)",
+     "funcao": "Supervisão 3 — Secretaria, Correcional, Logística",
      "quant": 415,
-     "valor": 680
+     "valor": 680,
+     "designados": {
+      "asp": 36,
+      "ten": 3
+     }
     }
    ]
   },
@@ -1161,8 +1183,8 @@
    "valorOficial": 300,
    "valorPraca": 200,
    "unidade": "plantão de 12 h",
-   "obs": "Valor do último reajuste publicado do Programa de Jornada Extra de Segurança (oficiais R$ 300; praças R$ 200). Adesão voluntária, conforme cotas da DPO. Confirme no Portal PJES."
+   "obs": "Adesão voluntária, conforme as cotas distribuídas pela DPO. Valor do último reajuste publicado — confirme no Portal PJES."
   },
-  "quotasFonte": "Quantidades na PMPE pelo Quadro de Alocação de Gratificações (Anexo II da INCG nº 605/2023, publicada no SUNOR nº 62/2023)."
+  "designadosFonte": "Designações de Aspirante e 2º Ten (T1 e T2) publicadas nos Boletins Gerais da SDS, dez/2025–out/2026, nos 13 batalhões do levantamento."
  }
 }
