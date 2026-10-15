@@ -198,7 +198,7 @@ export function BatalhaoClient({ sigla, mapaUrl, mapaEmbutidoUrl, isAdmin, minha
               <>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginBottom: 18 }}>
                   <div style={kpi}><div style={kpiNum}>{rem?.vagasT2 ?? "—"}</div><div style={kpiRot}>vagas na escolha da T2</div><div style={kpiSub}>quadro oficial, 28/06/2026</div></div>
-                  <div style={kpi}><div style={kpiNum}>{rem?.posT2 ? `${rem.posT2.pior}º` : "—"}</div><div style={kpiRot}>último colocado da T2</div><div style={kpiSub}>{rem?.posT2 ? `melhor ${rem.posT2.melhor}º · n=${rem.posT2.n}${rem.posT2.n < 3 ? " (amostra pequena)" : ""}` : ""}{rem?.posT1 ? ` · T1: ${rem.posT1.pior}º (n=${rem.posT1.n})` : ""}</div></div>
+                  <div style={kpi}><div style={kpiNum}>{rem?.posT2 ? `${rem.posT2.pior}º` : "—"}</div><div style={kpiRot}>corte na T2 (último colocado)</div><div style={kpiSub}>{rem?.posT1 ? `T1: ${rem.posT1.pior}º` : "T1: —"}{rem?.posT2 && rem.posT2.n < 3 ? " · poucos dados" : " · menor = mais disputado"}</div></div>
                   <div style={kpi}><div style={kpiNum}>{rem ? `${rem.pctT2}%` : "—"}</div><div style={kpiRot}>da T2 já com função</div><div style={kpiSub}>comando ou seção</div></div>
                   <div style={kpi}><div style={kpiNum}>{crime ? crime.cvli.taxa2025.toLocaleString("pt-BR") : "—"}</div><div style={kpiRot}>CVLI por 100 mil (2025)</div><div style={kpiSub}>{crime && <>2026: <Variacao v={crime.cvli.variacao} /> vs 2025</>}</div></div>
                 </div>

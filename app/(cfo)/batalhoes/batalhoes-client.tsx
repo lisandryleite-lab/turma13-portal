@@ -13,7 +13,7 @@ export type CardBatalhao = {
 export type Pendente = { mat: number; nome: string; pelotao: number | null }
 
 type Pos = { melhor: number; pior: number; n: number } | null
-type Rem = { vagasT2: number; pctT2: number; t2ComFuncao: number; t1ComFuncao: number; posT1: Pos; posT2: Pos; diarias: { total: number } | null }
+type Rem = { vagasT2: number; posT1: Pos; posT2: Pos; diarias: { total: number } | null }
 type Crime = { cvli: { taxa2025: number; variacao: number | null }; compartilhado: string | null }
 const REM = remuneracao.porBatalhao as Record<string, Rem>
 // Pior classificado de cada turma entre os aspirantes cruzados, e o batalhão para onde foi
@@ -39,12 +39,19 @@ const ORDENS: { id: Ordem; rot: string }[] = [
   { id: "seguranca", rot: "Menor violência" },
 ]
 
-const fixa: React.CSSProperties = { position: "sticky", left: 0, background: "#fff", zIndex: 1 }
+const mi = (v: number) => `R$ ${(v / 1e6).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} mi`
+const corCvli = (nivel: number) => nivel < 0.34 ? "#7aa36f" : nivel < 0.67 ? "#d6b45a" : "#c0704f"
+const rotulo: React.CSSProperties = { fontSize: 10.5, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: "0.04em" }
 
-function Posicao({ t, p }: { t: "T1" | "T2"; p: Pos }) {
-  if (!p) return <span style={{ color: "var(--ink-60)", fontSize: 12 }}>{t} —</span>
-  const pequena = p.n < AMOSTRA_MIN
-  return <span style={{ color: pequena ? "var(--ink-60)" : undefined }}><span style={{ fontSize: 11, color: "var(--ink-60)" }}>{t}</span> <strong>{p.pior}º</strong> <span title={`melhor ${p.melhor}º`} style={{ color: "var(--ink-60)", fontSize: 11.5 }}>n={p.n}{pequena ? "*" : ""}</span></span>
+// Corte = último colocado da T2 (destaque) e da T1 (secundário); cinza = poucos dados na amostra
+function Corte({ r }: { r: Rem | undefined }) {
+  const cinza = (p: Pos) => !p || p.n < AMOSTRA_MIN ? "var(--ink-60)" : undefined
+  return (
+    <span style={{ lineHeight: 1.25 }}>
+      <strong title={r?.posT2 ? `T2 · ${r.posT2.n} na amostra` : undefined} style={{ fontSize: 15, color: cinza(r?.posT2 ?? null) }}>{r?.posT2 ? `${r.posT2.pior}º` : "—"}</strong>
+      <span title={r?.posT1 ? `T1 · ${r.posT1.n} na amostra` : undefined} style={{ display: "block", fontSize: 11.5, color: "var(--ink-60)", opacity: r?.posT1 && r.posT1.n >= AMOSTRA_MIN ? 1 : 0.6 }}>T1 {r?.posT1 ? `${r.posT1.pior}º` : "—"}</span>
+    </span>
+  )
 }
 
 function Tendencia({ v }: { v: number | null }) {
@@ -109,34 +116,60 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
           ))}
         </div>
         <p style={{ margin: "0 0 10px", padding: "8px 12px", borderRadius: 10, background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)", fontSize: 13 }}>
-          <strong>Último da amostra:</strong> {(["T2", "T1"] as const).map((t, i) => ULTIMO[t] && <span key={t}>{i > 0 && " · "}{t} {ULTIMO[t]![1]}º → <strong>{ULTIMO[t]![0]}</strong></span>)}
-          <span style={{ color: "var(--ink-60)" }}> (só quem teve função publicada — os últimos da lista sem função não aparecem)</span>
+          <strong>Pior classificado que vimos:</strong> {(["T2", "T1"] as const).map((t, i) => ULTIMO[t] && <span key={t}>{i > 0 && " · "}{t} {ULTIMO[t]![1]}º no <strong>{ULTIMO[t]![0]}</strong></span>)}
         </p>
-        <div style={{ overflowX: "auto" }}>
+
+        {/* Celular: cartões */}
+        <div className="flex flex-col gap-2 sm:hidden">
+          {linhas.map(c => {
+            const r = REM[c.sigla], cr = CRIME[c.sigla]
+            const t = cr?.cvli.taxa2025 ?? 0
+            const meu = minha?.opcao1 === c.sigla
+            return (
+              <Link key={c.slug} href={`/batalhoes/${c.slug}`} style={{ display: "block", padding: "12px 14px", borderRadius: 12, border: meu ? "1.5px solid var(--gold)" : "1px solid rgba(58,74,58,0.12)", textDecoration: "none", color: "var(--ink)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+                  <strong style={{ color: "var(--olive)", fontSize: 15.5 }}>{c.sigla}{meu ? " ★" : ""}</strong>
+                  <span style={{ fontSize: 12.5, color: "var(--ink-60)" }}><strong style={{ color: "var(--ink)" }}>{c.opcao1}</strong> na 1ª opção · {pct(c.opcao1, respondentes).toLocaleString("pt-BR")}%</span>
+                </div>
+                <div style={{ height: 5, borderRadius: 99, background: "var(--surface)", margin: "6px 0 10px" }}>
+                  <div style={{ height: "100%", width: `${(c.opcao1 / maxOp1) * 100}%`, borderRadius: 99, background: "var(--gold)" }} />
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6 }}>
+                  <div><div style={rotulo}>Vagas T2</div><strong style={{ fontSize: 15 }}>{r?.vagasT2 ?? "—"}</strong></div>
+                  <div><div style={rotulo}>Corte</div><Corte r={r} /></div>
+                  <div><div style={rotulo}>Diárias</div><strong style={{ fontSize: 13.5 }}>{r?.diarias ? mi(r.diarias.total).replace("R$ ", "") : "—"}</strong></div>
+                  <div><div style={rotulo}>CVLI</div><strong style={{ fontSize: 13.5 }}><span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 99, marginRight: 4, background: corCvli(tMax > tMin ? (t - tMin) / (tMax - tMin) : 0) }} />{t.toLocaleString("pt-BR")}</strong></div>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+
+        {/* Computador: tabela */}
+        <div className="hidden sm:block" style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead><tr>
-              <th style={{ ...th, ...fixa }}>Batalhão</th><th style={th}>Turma (1ª opção)</th><th style={th}>Vagas T2</th><th style={th}>Último colocado</th><th style={th}>Diárias 2026</th><th style={th}>CVLI /100 mil</th>
+              <th style={th}>Batalhão</th><th style={th}>Turma (1ª opção)</th><th style={th}>Vagas T2</th><th style={th}>Corte</th><th style={th}>Diárias 2026</th><th style={th}>CVLI /100 mil</th>
             </tr></thead>
             <tbody>
               {linhas.map(c => {
                 const r = REM[c.sigla], cr = CRIME[c.sigla]
                 const t = cr?.cvli.taxa2025 ?? 0
-                const nivel = tMax > tMin ? (t - tMin) / (tMax - tMin) : 0
                 const meu = minha?.opcao1 === c.sigla
                 return (
                   <tr key={c.slug}>
-                    <td style={{ ...td, ...fixa }}><Link href={`/batalhoes/${c.slug}`} style={{ color: "var(--olive)", fontWeight: 700, textDecoration: "none" }}>{c.sigla}{meu ? " ★" : ""}</Link></td>
+                    <td style={td}><Link href={`/batalhoes/${c.slug}`} style={{ color: "var(--olive)", fontWeight: 700, textDecoration: "none" }}>{c.sigla}{meu ? " ★" : ""}</Link></td>
                     <td style={{ ...td, minWidth: 120 }}>
                       <span style={{ display: "inline-block", width: 60, height: 8, borderRadius: 99, background: "var(--surface)", verticalAlign: "middle", marginRight: 8 }}>
                         <span style={{ display: "block", height: "100%", width: `${(c.opcao1 / maxOp1) * 100}%`, borderRadius: 99, background: "var(--gold)" }} />
                       </span>
                       <strong>{c.opcao1}</strong> <span style={{ color: "var(--ink-60)", fontSize: 12 }}>{pct(c.opcao1, respondentes).toLocaleString("pt-BR")}%</span>
                     </td>
-                    <td style={td}>{r?.vagasT2 ?? "—"}<br /><span style={{ color: "var(--ink-60)", fontSize: 11.5 }}>c/ função {r?.t2ComFuncao ?? 0} · {r?.t1ComFuncao ?? 0}</span></td>
-                    <td style={td}><Posicao t="T2" p={r?.posT2 ?? null} /><br /><Posicao t="T1" p={r?.posT1 ?? null} /></td>
-                    <td style={td}>{r?.diarias ? `R$ ${(r.diarias.total / 1e6).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} mi` : "—"}</td>
+                    <td style={td}>{r?.vagasT2 ?? "—"}</td>
+                    <td style={td}><Corte r={r} /></td>
+                    <td style={td}>{r?.diarias ? mi(r.diarias.total) : "—"}</td>
                     <td style={td}>
-                      <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, marginRight: 6, background: nivel < 0.34 ? "#7aa36f" : nivel < 0.67 ? "#d6b45a" : "#c0704f" }} />
+                      <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, marginRight: 6, background: corCvli(tMax > tMin ? (t - tMin) / (tMax - tMin) : 0) }} />
                       {t.toLocaleString("pt-BR")} <Tendencia v={cr?.cvli.variacao ?? null} />{cr?.compartilhado ? <span style={{ color: "var(--ink-60)", fontSize: 11 }}> *</span> : ""}
                     </td>
                   </tr>
@@ -146,9 +179,9 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
           </table>
         </div>
         <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
-          <strong>Último colocado</strong>: pior classificação da turma (T2 de 1º a 182º; T1 de 1º a 148º) entre os aspirantes vistos no batalhão — é o parâmetro de corte: quanto menor, mais disputado. n = tamanho da amostra; * menos de {AMOSTRA_MIN} pessoas: fica em cinza e vai para o fim em “Mais disputados”. <strong>c/ função</strong>: aspirantes da T2 · T1 com designação publicada no BGSDS.
-          <strong> Diárias</strong>: diárias operacionais pagas em 2026 citando o batalhão (todo o efetivo).
-          <strong> CVLI</strong>: mortes violentas intencionais por 100 mil habitantes (2025) e variação jan–set 2026. * dado do município inteiro (Recife ou Jaboatão).
+          <strong>Corte</strong>: classificação do último aspirante da turma visto no batalhão (T2 de 1º a 182º; embaixo, a T1, de 1º a 148º) — quanto menor, mais disputado. Em cinza: menos de {AMOSTRA_MIN} aspirantes na amostra (vai para o fim em “Mais disputados”). A amostra só tem quem recebeu função publicada no BGSDS.
+          <strong> Diárias</strong>: pagas em 2026 citando o batalhão (todo o efetivo).
+          <strong> CVLI</strong>: mortes violentas por 100 mil habitantes (2025) e variação jan–set 2026. * dado do município inteiro (Recife ou Jaboatão).
           Fontes: <a href="https://www.sds.pe.gov.br/estatisticas/crimes-violentos-letais-intencionais" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>SDS</a>, <a href="https://sidra.ibge.gov.br/tabela/4709" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>IBGE</a>, quadro de vagas da escolha da T2 e boletins da SDS · <a href={planilhaUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>planilha da DAG</a>.
         </p>
       </section>
