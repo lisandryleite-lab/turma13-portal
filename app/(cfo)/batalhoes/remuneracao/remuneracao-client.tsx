@@ -172,6 +172,24 @@ export function RemuneracaoClient() {
                 </div>
               ))}
             </div>
+            <h3 style={{ ...titulo, fontSize: "1.02rem", margin: "22px 0 4px" }}>T1 no aspirantado, mês a mês</h3>
+            <p style={{ ...sub, margin: "0 0 10px" }}>Quando a gratificação começou a chegar (folha oficial; % dos aspirantes da T1 em cada situação).</p>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead><tr><th style={th}>Folha</th>{FUNCOES.map(f => <th key={f} style={th}>{f.replace("Função de supervisão (FGS)", "FGS").replace("Comandante de ", "Cmt ")}</th>)}</tr></thead>
+                <tbody>
+                  {dados.t1Linha.map(l => (
+                    <tr key={l.mes}>
+                      <td style={{ ...td, fontWeight: 600 }}>{l.mes}</td>
+                      {FUNCOES.map(f => <td key={f} style={{ ...td, color: (l.distribuicao as Record<string, number>)[f] ? "var(--ink)" : "var(--ink-60)" }}>{(l.distribuicao as Record<string, number>)[f]}%</td>)}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p style={{ ...sub, margin: "8px 0 0", fontSize: 12 }}>
+              {dados.t1LinhaNota} Remuneração típica do aspirante em mai/2026: sem função {brl(dados.t1Linha[5].remuneracao["Sem função"])} · FGS {brl(dados.t1Linha[5].remuneracao["Função de supervisão (FGS)"])} · cmt pelotão {brl(dados.t1Linha[5].remuneracao["Comandante de pelotão"])} · cmt companhia {brl(dados.t1Linha[5].remuneracao["Comandante de companhia"])}.
+            </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10, marginTop: 20 }}>
               {([["Nossa turma como aspirante", dados.previsao.aspirante], ["Nossa turma como 2º Ten", dados.previsao.segundoTenente]] as const).map(([rot, p]) => (
                 <div key={rot} style={{ padding: 14, borderRadius: 12, background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)" }}>

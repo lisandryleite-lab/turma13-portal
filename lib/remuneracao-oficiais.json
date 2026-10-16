@@ -469,7 +469,7 @@
    "t2ComFuncao": 4,
    "pctT2": 31,
    "t2NoComando": 2,
-   "t1ComFuncao": 9,
+   "t1ComFuncao": 10,
    "diarias": {
     "total": 2304540,
     "pagamentos": 4958,
@@ -516,7 +516,7 @@
    "t2ComFuncao": 5,
    "pctT2": 29,
    "t2NoComando": 3,
-   "t1ComFuncao": 12,
+   "t1ComFuncao": 14,
    "diarias": {
     "total": 2342160,
     "pagamentos": 5301,
@@ -537,9 +537,9 @@
     ]
    },
    "posT1": {
-    "n": 6,
-    "melhor": 60,
-    "mediana": 72,
+    "n": 8,
+    "melhor": 7,
+    "mediana": 64,
     "pior": 133
    },
    "posT2": {
@@ -563,7 +563,7 @@
    "t2ComFuncao": 9,
    "pctT2": 53,
    "t2NoComando": 5,
-   "t1ComFuncao": 8,
+   "t1ComFuncao": 12,
    "diarias": {
     "total": 3132900,
     "pagamentos": 4245,
@@ -584,10 +584,10 @@
     ]
    },
    "posT1": {
-    "n": 4,
-    "melhor": 52,
+    "n": 7,
+    "melhor": 36,
     "mediana": 60,
-    "pior": 119
+    "pior": 127
    },
    "posT2": {
     "n": 7,
@@ -610,7 +610,7 @@
    "t2ComFuncao": 5,
    "pctT2": 36,
    "t2NoComando": 3,
-   "t1ComFuncao": 5,
+   "t1ComFuncao": 11,
    "diarias": {
     "total": 2665800,
     "pagamentos": 6687,
@@ -631,10 +631,10 @@
     ]
    },
    "posT1": {
-    "n": 4,
+    "n": 9,
     "melhor": 1,
-    "mediana": 14,
-    "pior": 90
+    "mediana": 19,
+    "pior": 144
    },
    "posT2": {
     "n": 5,
@@ -657,7 +657,7 @@
    "t2ComFuncao": 3,
    "pctT2": 21,
    "t2NoComando": 2,
-   "t1ComFuncao": 5,
+   "t1ComFuncao": 7,
    "diarias": {
     "total": 2774340,
     "pagamentos": 5693,
@@ -678,8 +678,8 @@
     ]
    },
    "posT1": {
-    "n": 3,
-    "melhor": 10,
+    "n": 5,
+    "melhor": 6,
     "mediana": 11,
     "pior": 38
    },
@@ -704,7 +704,7 @@
    "t2ComFuncao": 8,
    "pctT2": 62,
    "t2NoComando": 2,
-   "t1ComFuncao": 11,
+   "t1ComFuncao": 14,
    "diarias": {
     "total": 1870740,
     "pagamentos": 6721,
@@ -751,7 +751,7 @@
    "t2ComFuncao": 1,
    "pctT2": 8,
    "t2NoComando": 1,
-   "t1ComFuncao": 3,
+   "t1ComFuncao": 7,
    "diarias": {
     "total": 1655280,
     "pagamentos": 4095,
@@ -772,9 +772,9 @@
     ]
    },
    "posT1": {
-    "n": 3,
-    "melhor": 20,
-    "mediana": 41,
+    "n": 5,
+    "melhor": 16,
+    "mediana": 20,
     "pior": 103
    },
    "posT2": {
@@ -798,7 +798,7 @@
    "t2ComFuncao": 8,
    "pctT2": 47,
    "t2NoComando": 4,
-   "t1ComFuncao": 8,
+   "t1ComFuncao": 11,
    "diarias": {
     "total": 1190340,
     "pagamentos": 3029,
@@ -819,9 +819,9 @@
     ]
    },
    "posT1": {
-    "n": 3,
-    "melhor": 68,
-    "mediana": 125,
+    "n": 4,
+    "melhor": 42,
+    "mediana": 68,
     "pior": 146
    },
    "posT2": {
@@ -845,7 +845,7 @@
    "t2ComFuncao": 8,
    "pctT2": 47,
    "t2NoComando": 3,
-   "t1ComFuncao": 7,
+   "t1ComFuncao": 15,
    "diarias": {
     "total": 1795860,
     "pagamentos": 4496,
@@ -866,9 +866,9 @@
     ]
    },
    "posT1": {
-    "n": 5,
-    "melhor": 56,
-    "mediana": 101,
+    "n": 10,
+    "melhor": 26,
+    "mediana": 56,
     "pior": 133
    },
    "posT2": {
@@ -892,7 +892,7 @@
    "t2ComFuncao": 6,
    "pctT2": 50,
    "t2NoComando": 2,
-   "t1ComFuncao": 5,
+   "t1ComFuncao": 11,
    "diarias": {
     "total": 1406700,
     "pagamentos": 3252,
@@ -913,9 +913,9 @@
     ]
    },
    "posT1": {
-    "n": 1,
-    "melhor": 109,
-    "mediana": 109,
+    "n": 7,
+    "melhor": 13,
+    "mediana": 40,
     "pior": 109
    },
    "posT2": {
@@ -939,7 +939,7 @@
    "t2ComFuncao": 6,
    "pctT2": 38,
    "t2NoComando": 1,
-   "t1ComFuncao": 6,
+   "t1ComFuncao": 11,
    "diarias": {
     "total": 1648620,
     "pagamentos": 3671,
@@ -960,8 +960,8 @@
     ]
    },
    "posT1": {
-    "n": 4,
-    "melhor": 43,
+    "n": 7,
+    "melhor": 9,
     "mediana": 82,
     "pior": 129
    },
@@ -986,7 +986,7 @@
    "t2ComFuncao": 2,
    "pctT2": 15,
    "t2NoComando": 1,
-   "t1ComFuncao": 6,
+   "t1ComFuncao": 8,
    "diarias": {
     "total": 1604880,
     "pagamentos": 3075,
@@ -1007,9 +1007,9 @@
     ]
    },
    "posT1": {
-    "n": 5,
+    "n": 7,
     "melhor": 27,
-    "mediana": 117,
+    "mediana": 113,
     "pior": 144
    },
    "posT2": {
@@ -1033,7 +1033,7 @@
    "t2ComFuncao": 2,
    "pctT2": 33,
    "t2NoComando": 0,
-   "t1ComFuncao": 5,
+   "t1ComFuncao": 7,
    "diarias": {
     "total": 2824380,
     "pagamentos": 8660,
@@ -1054,9 +1054,9 @@
     ]
    },
    "posT1": {
-    "n": 1,
-    "melhor": 107,
-    "mediana": 107,
+    "n": 3,
+    "melhor": 8,
+    "mediana": 34,
     "pior": 107
    },
    "posT2": {
@@ -1085,7 +1085,7 @@
  },
  "posicoes": {
   "metodo": "Posição na classificação final do concurso (atos de nomeação BGSDS nº 221 e nº 103). T1 = 1º a 148º; T2 = 150º a 331º, convertida para 1º a 182º dentro da turma. Cruzada com o batalhão das designações publicadas — amostra: só quem recebeu função e teve o nome legível na lista.",
-  "cruzados": 99
+  "cruzados": 132
  },
  "porteMetodo": {
   "resumo": "Estimativa do portal, não oficial. Base: diárias da Op. PE Seguro pagas em 2026 (Dados Abertos PE). Cada lote de pagamento citando o batalhão corresponde à relação mensal de policiais empregados; o maior lote mostra quantos PMs a unidade empregou num mês. A faixa de efetivo usa dois pontos oficiais de calibração.",
@@ -1138,7 +1138,7 @@
      "quant": 148,
      "valor": 1320,
      "designados": {
-      "asp": 12,
+      "asp": 32,
       "ten": 30
      }
     },
@@ -1148,7 +1148,7 @@
      "quant": 139,
      "valor": 1044,
      "designados": {
-      "asp": 51,
+      "asp": 81,
       "ten": 10
      }
     }
@@ -1163,7 +1163,7 @@
      "quant": 366,
      "valor": 1020,
      "designados": {
-      "asp": 28,
+      "asp": 33,
       "ten": 4
      }
     },
@@ -1173,7 +1173,7 @@
      "quant": 415,
      "valor": 680,
      "designados": {
-      "asp": 36,
+      "asp": 42,
       "ten": 3
      }
     }
@@ -1186,5 +1186,104 @@
    "obs": "Adesão voluntária, conforme as cotas distribuídas pela DPO. Valor do último reajuste publicado — confirme no Portal PJES."
   },
   "designadosFonte": "Designações de Aspirante e 2º Ten (T1 e T2) publicadas nos Boletins Gerais da SDS, dez/2025–out/2026, nos 13 batalhões do levantamento."
- }
+ },
+ "t1Linha": [
+  {
+   "mes": "12/2025",
+   "pessoas": 141,
+   "distribuicao": {
+    "Sem função": 100,
+    "Função de supervisão (FGS)": 0,
+    "Comandante de pelotão": 0,
+    "Comandante de companhia": 0
+   },
+   "remuneracao": {
+    "Sem função": 12419,
+    "Função de supervisão (FGS)": null,
+    "Comandante de pelotão": null,
+    "Comandante de companhia": null
+   }
+  },
+  {
+   "mes": "01/2026",
+   "pessoas": 143,
+   "distribuicao": {
+    "Sem função": 100,
+    "Função de supervisão (FGS)": 0,
+    "Comandante de pelotão": 0,
+    "Comandante de companhia": 0
+   },
+   "remuneracao": {
+    "Sem função": 12628,
+    "Função de supervisão (FGS)": null,
+    "Comandante de pelotão": null,
+    "Comandante de companhia": null
+   }
+  },
+  {
+   "mes": "02/2026",
+   "pessoas": 143,
+   "distribuicao": {
+    "Sem função": 52,
+    "Função de supervisão (FGS)": 12,
+    "Comandante de pelotão": 22,
+    "Comandante de companhia": 14
+   },
+   "remuneracao": {
+    "Sem função": 12628,
+    "Função de supervisão (FGS)": 13308,
+    "Comandante de pelotão": 13672,
+    "Comandante de companhia": 15040
+   }
+  },
+  {
+   "mes": "03/2026",
+   "pessoas": 145,
+   "distribuicao": {
+    "Sem função": 49,
+    "Função de supervisão (FGS)": 12,
+    "Comandante de pelotão": 23,
+    "Comandante de companhia": 16
+   },
+   "remuneracao": {
+    "Sem função": 12628,
+    "Função de supervisão (FGS)": 13308,
+    "Comandante de pelotão": 13672,
+    "Comandante de companhia": 15040
+   }
+  },
+  {
+   "mes": "04/2026",
+   "pessoas": 145,
+   "distribuicao": {
+    "Sem função": 42,
+    "Função de supervisão (FGS)": 14,
+    "Comandante de pelotão": 22,
+    "Comandante de companhia": 21
+   },
+   "remuneracao": {
+    "Sem função": 12628,
+    "Função de supervisão (FGS)": 13308,
+    "Comandante de pelotão": 13672,
+    "Comandante de companhia": 15040
+   }
+  },
+  {
+   "mes": "05/2026",
+   "pessoas": 145,
+   "distribuicao": {
+    "Sem função": 39,
+    "Função de supervisão (FGS)": 17,
+    "Comandante de pelotão": 22,
+    "Comandante de companhia": 21
+   },
+   "remuneracao": {
+    "Sem função": 12628,
+    "Função de supervisão (FGS)": 13308,
+    "Comandante de pelotão": 13672,
+    "Comandante de companhia": 15040
+   }
+  }
+ ],
+ "t1LinhaNota": "Designações com efeito a partir de 01/01/2026 (BGSDS), pagas retroativamente a partir da folha de fevereiro. Soldo do aspirante no período: R$ 11.731; reajustado para R$ 12.552 em jun/2026."
 }
