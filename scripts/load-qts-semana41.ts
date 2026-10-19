@@ -27,7 +27,8 @@ const DIAS = ["Seg 19/10","Ter 20/10","Qua 21/10","Qui 22/10","Sex 23/10","Sáb 
 // Seg 19/10: QAGV das 18h20 às 21h40 (idx10 a idx13), avisado pela turma.
 // Siglas da folha → banco: DPPPM → DPPM · UDFIT → UDF.
 // Sáb 24/10 e Dom 25/10 sem aula.
-// Sem contador X/Y nesta folha: a carga das disciplinas NÃO é mexida aqui.
+// Sem contador X/Y nesta folha: a carga é somada pela grade (1 faixa = 1h) sobre
+// o contador oficial do fim da semana 40 — ver CARGA_41.
 const grade: Record<string, string[]> = {
   "Seg 19/10": ["", "TPE","TPE", "TPE","TPE", "TPE","TPE", "TPE","TPE", "", "QAGV", "QAGV","QAGV","QAGV"],
   "Ter 20/10": ["", "TP","TP",   "TP","TP",   "AE","AE",   "AE","AE",   "", "AE",   "","",""],
@@ -49,5 +50,25 @@ async function main() {
     create: { semana: SEMANA, dados },
   })
   console.log(`✓ QTS da semana ${SEMANA} salvo (${DIAS.length} dias, ${HORARIOS.length} faixas).`)
+
+  // Carga gravada de forma ABSOLUTA (rodar de novo não soma): `antes` = contador
+  // oficial ao fim da semana 40; `depois` = antes + faixas desta grade.
+  const ANTES_41: Record<string, number> = { TPE: 30, QAGV: 14, TP: 32, AE: 24, TCC: 12, DPPM: 40, UDF: 10 }
+  const horas: Record<string, number> = {}
+  for (const aulas of Object.values(grade)) for (const s of aulas) if (s) horas[s] = (horas[s] ?? 0) + 1
+
+  console.log("\n── Carga ao fim da semana 41 (somada pela grade) ──")
+  for (const [sigla, h] of Object.entries(horas)) {
+    const antes = ANTES_41[sigla]
+    if (antes === undefined) throw new Error(`${sigla} sem carga de referência em ANTES_41`)
+    const disc = await prisma.disciplina.findUnique({ where: { sigla } })
+    if (!disc) { console.log(`  ⚠ disciplina ${sigla} não encontrada — pulando`); continue }
+    const depois = Math.min(antes + h, disc.cargaTotal)
+    const status = depois >= disc.cargaTotal ? "Concluída" : depois > 0 ? "Em andamento" : "Início"
+    await prisma.disciplina.update({ where: { sigla }, data: { cargaMinistrada: depois, status } })
+    const sobra = antes + h > disc.cargaTotal ? `  ⚠ grade passa do total em ${antes + h - disc.cargaTotal}h` : ""
+    console.log(`  ${status === "Concluída" ? "✔" : "•"} ${sigla.padEnd(5)} ${antes}h +${h} → ${depois}/${disc.cargaTotal}h  ${status}${sobra}`)
+  }
+  console.log(" ⚠ Lançado como PREVISTO: a semana ainda está em curso.")
 }
 main().catch(e => { console.error(e); process.exit(1) }).finally(() => prisma.$disconnect())
