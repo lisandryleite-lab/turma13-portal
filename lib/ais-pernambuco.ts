@@ -2,6 +2,7 @@
 // Territorial das Áreas Integradas de Segurança de Pernambuco" (SDS, banner v4).
 // Fontes do mapa: composição das AIS — Portaria GAB/SDS nº 1.197/2010 (Anexo I) e alterações;
 // unidades — banner SDS/GACE; limites municipais — IBGE.
+// Atualização posterior ao mapa: a 3ª CIPM (Goiana, AIS 11) virou o 27º BPM — DINTER 1 passa a 9 Batalhões e 5 CIPM.
 // Municípios de cada AIS: lidos do próprio mapa (cor do polígono municipal), ver lib/ais-mapa.ts.
 
 export const FONTE_AIS = "Mapa da Divisão Territorial das AIS de Pernambuco — SDS/PE (Portaria GAB/SDS nº 1.197/2010, Anexo I, e alterações)"
@@ -25,7 +26,7 @@ export const DIRETORIAS: Diretoria[] = [
     ],
   },
   {
-    id: "DINTER 1", nome: "Diretoria Integrada do Interior I", resumo: "8 Áreas · 8 Batalhões e 6 CIPM", cor: "#2457b5",
+    id: "DINTER 1", nome: "Diretoria Integrada do Interior I", resumo: "8 Áreas · 9 Batalhões e 5 CIPM", cor: "#2457b5",
     especializadas: [
       "SDS: GTA (Caruaru).",
       "PM: 1º BIEsp · GTA (Caruaru).",
@@ -84,7 +85,7 @@ export const AIS_PE: AIS[] = [
     areas: [{ numero: 10, civil: "10ª DESEC", militar: ["18º BPM"], bombeiro: "GBI-3ºSB-Ipojuca (Suape)" }] },
 
   { id: "11", rotulo: "AIS 11", nome: "Mata Norte", diretoria: "DINTER 1", regiao: "Zona da Mata", cor: "#ece79a",
-    areas: [{ numero: 11, civil: "11ª DESEC", militar: ["2º BPM", "3ª CIPM"], bombeiro: "7ºGB-Carpina/2ºSB-Goiana", cientifica: "URPOC-Mata Norte" }] },
+    areas: [{ numero: 11, civil: "11ª DESEC", militar: ["2º BPM", "27º BPM"], bombeiro: "7ºGB-Carpina/2ºSB-Goiana", cientifica: "URPOC-Mata Norte" }] },
   { id: "12", rotulo: "AIS 12", nome: "Mata Sul", diretoria: "DINTER 1", regiao: "Zona da Mata", cor: "#e8c29d",
     areas: [{ numero: 12, civil: "12ª DESEC", militar: ["21º BPM", "5ª CIPM"], bombeiro: "1ºGB-Vitória de Sto. Antão/CAT/2ºSB-Gravatá" }] },
   { id: "13", rotulo: "AIS 13", nome: "Mata Sul", diretoria: "DINTER 1", regiao: "Zona da Mata", cor: "#a9d896",
