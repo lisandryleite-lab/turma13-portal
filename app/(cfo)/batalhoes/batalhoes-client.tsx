@@ -13,16 +13,16 @@ export type CardBatalhao = {
 export type Pendente = { mat: number; nome: string; pelotao: number | null }
 
 type Pos = { melhor: number; pior: number; n: number } | null
-type Rem = { vagasT2: number; posT1: Pos; posT2: Pos; diarias: { total: number } | null }
+export type Rem = { vagasT2: number; posT1: Pos; posT2: Pos; diarias: { total: number } | null }
 type Crime = { cvli: { taxa2025: number; variacao: number | null }; compartilhado: string | null }
-const REM = remuneracao.porBatalhao as Record<string, Rem>
+export const REM = remuneracao.porBatalhao as Record<string, Rem>
 // Pior classificado de cada turma entre os aspirantes cruzados, e o batalhão para onde foi
 const ultimo = (t: "posT1" | "posT2") => Object.entries(REM).reduce<[string, number] | null>((m, [o, r]) => r[t] && (!m || r[t]!.pior > m[1]) ? [o, r[t]!.pior] : m, null)
 const ULTIMO = { T2: ultimo("posT2"), T1: ultimo("posT1") }
 const AMOSTRA_MIN = 3
 const TAMANHO = { posT2: 182, posT1: 148 } as const
 // Disputa T1+T2: média do corte em % da turma, só com amostras suficientes (menor = mais disputado)
-const disputa = (r: Rem | undefined) => {
+export const disputa = (r: Rem | undefined) => {
   const v = (["posT2", "posT1"] as const).flatMap(t => r?.[t] && r[t]!.n >= AMOSTRA_MIN ? [r[t]!.pior / TAMANHO[t]] : [])
   return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null
 }
@@ -65,10 +65,10 @@ function Tendencia({ v }: { v: number | null }) {
   return <span style={{ fontSize: 12, color: v < 0 ? "#3a7a3a" : "var(--red)", fontWeight: 600 }}>{v < 0 ? "▼" : "▲"}{Math.abs(v)}%</span>
 }
 
-export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalAlunos, pendentes, minha, minhaMatricula, planilhaOk, planilhaUrl, formularioUrl }: {
+export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalAlunos, pendentes, minha, minhaMatricula, planilhaOk, planilhaUrl, formularioUrl, mapa }: {
   cards: CardBatalhao[]; respondentes: number; respondentesDaCia: number; totalAlunos: number; pendentes: Pendente[]
   minha: { opcao1: string; opcao2: string | null } | null; minhaMatricula: number
-  planilhaOk: boolean; planilhaUrl: string; formularioUrl: string
+  planilhaOk: boolean; planilhaUrl: string; formularioUrl: string; mapa?: React.ReactNode
 }) {
   const [ordem, setOrdem] = useState<Ordem>("turma")
   const [busca, setBusca] = useState("")
@@ -196,6 +196,8 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
         <span style={{ fontSize: 13.5 }}><strong>Salário:</strong> é o mesmo em qualquer batalhão — o que muda é a função. Veja quanto ganha cada uma e a previsão para a nossa turma.</span>
         <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 18 }}>›</span>
       </Link>
+
+      {mapa}
 
       {/* Batalhões */}
       <section>
