@@ -29,7 +29,7 @@ export default async function QuestoesPage({ searchParams }: { searchParams: Pro
     matMap.set(c.materia, e)
   }
   const materias = [...matMap.entries()]
-    .map(([sigla, e]) => ({ sigla, nome: nomeMap.get(sigla) || sigla, total: e.total, modulos: [...e.modulos].sort() }))
+    .map(([sigla, e]) => ({ sigla, nome: nomeMap.get(sigla) || sigla, total: e.total, modulos: [...e.modulos].sort((a, b) => a.localeCompare(b, "pt-BR", { numeric: true })) }))
     .sort((a, b) => a.sigla.localeCompare(b.sigla))
 
   const statMap = new Map<string, { acertos: number; total: number }>()

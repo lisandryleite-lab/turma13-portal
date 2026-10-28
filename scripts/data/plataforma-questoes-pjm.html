@@ -1,0 +1,344 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questões PJM · CFO PM 2026</title>
+<style>
+:root{--bg:#fbf9f3;--ink:#2a2620;--bor:#7d1f2b;--azul:#1f4e79;--verde:#2e6b3e;--dour:#9a7b16;--cinza:#4a4a4a;--ok:#e3f1e6;--err:#f6e1e3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.5}
+header{background:var(--bor);color:#fff;padding:14px 20px;border-bottom:4px solid var(--dour)}
+header h1{margin:0;font-size:1.15rem;letter-spacing:.5px}
+nav{display:flex;flex-wrap:wrap;gap:4px;padding:10px 14px;background:#f1ece0;border-bottom:1px solid #d8d0bc;position:sticky;top:0;z-index:5}
+nav button{font:inherit;font-size:.85rem;padding:7px 12px;border:1px solid var(--cinza);background:#fff;color:var(--ink);cursor:pointer;border-radius:4px}
+nav button.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+nav button.sim{border-color:var(--bor)}nav button.sim.on{background:var(--bor)}
+main{max-width:900px;margin:0 auto;padding:18px 16px 60px}
+h2{color:var(--bor);border-bottom:2px solid var(--dour);padding-bottom:4px;margin-top:8px}
+h3{color:var(--azul);margin:26px 0 8px}
+.q{background:#fff;border:1px solid #ddd5c1;border-left:4px solid var(--azul);border-radius:4px;padding:10px 14px;margin:10px 0}
+.q.ok{background:var(--ok);border-left-color:var(--verde)}.q.err{background:var(--err);border-left-color:var(--bor)}
+.n{font-weight:bold;color:var(--azul);margin-right:6px}
+.vf{display:inline-flex;gap:4px;margin-right:10px;vertical-align:middle}
+.vf button,.opt{font:inherit;cursor:pointer;border:1px solid var(--cinza);background:#fff;border-radius:4px}
+.vf button{width:34px;height:30px;font-weight:bold}
+.vf button.sel{background:var(--azul);color:#fff;border-color:var(--azul)}
+.opt{display:block;width:100%;text-align:left;padding:6px 10px;margin:4px 0}
+.opt.sel{background:#dbe7f3;border-color:var(--azul)}
+.just{display:none;margin-top:6px;padding:6px 10px;font-size:.9rem;background:#faf3d9;border-left:3px solid var(--dour);color:var(--cinza)}
+.show .just{display:block}
+textarea{width:100%;min-height:130px;font:inherit;padding:8px;border:1px solid var(--cinza);border-radius:4px;background:#fffefb}
+.espelho{display:none;white-space:pre-wrap;margin-top:8px;padding:10px 12px;background:#e8eff6;border-left:4px solid var(--azul);font-size:.92rem}
+.show .espelho{display:block}
+.meta{font-size:.82rem;color:var(--cinza)}
+.btn{font:inherit;padding:9px 18px;border:0;background:var(--verde);color:#fff;border-radius:4px;cursor:pointer;margin:14px 8px 0 0}
+.btn.b2{background:var(--cinza)}.btn.b3{background:var(--bor)}
+.score{margin-top:14px;padding:12px 16px;background:#fff;border:2px solid var(--dour);font-weight:bold;display:none}
+.timer{position:sticky;top:52px;z-index:4;display:inline-block;background:var(--bor);color:#fff;padding:6px 14px;border-radius:4px;font-size:1.05rem;font-family:monospace;margin:6px 0}
+.box{border:1px solid #ccc;background:#fff;padding:8px 12px;margin:8px 0;border-radius:4px}
+select{font:inherit;padding:4px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<header><h1>QUESTÕES — POLÍCIA JUDICIÁRIA MILITAR (APFDM e IPD) · CFO PM 2026</h1></header>
+<nav id="nav"></nav>
+<main id="main"></main>
+
+<script>
+/* ===================== DADOS ===================== */
+var B=[];
+
+/* ---------- BLOCO 1 ---------- */
+B.push({t:"1 · Competência e Flagrante",
+vf:[
+["O APFDM é ato complexo: não se aperfeiçoa por um único ato, mas por um conjunto sequencial que se inicia com a voz de prisão e se encerra com a entrega da Nota de Culpa.",true,"Correto, conforme o conceito do APFDM na apostila."],
+["O fundamento constitucional da prisão em flagrante é o art. 5º, LXI, da CF/88, que ressalva os casos de transgressão militar ou crime propriamente militar definidos em lei.",true,"Correto: o inciso LXI traz essa ressalva."],
+["A Autoridade Originária Mitigada pode instaurar APFDM, IPM e IPD, desde que o faça dentro da sua unidade.",false,"Falso. A competência da Mitigada é limitada à lavratura do APFDM; não instaura IPM nem IPD."],
+["A Autoridade Originária Plena são os Comandantes em geral, que podem instaurar APFDM, IPM e IPD e podem delegar.",true,"Correto."],
+["A Autoridade Originária Mitigada pode delegar a lavratura do APFDM a outro oficial.",false,"Falso. A Mitigada não tem poder de delegação."],
+["A Autoridade Delegada é o oficial da ativa designado por autoridade superior (art. 7º, §1º, CPPM), com atribuição específica por tempo limitado.",true,"Correto."],
+["O Oficial de Dia, de Serviço ou de Quarto, bem como a autoridade correspondente, enquadram-se como Autoridade Originária Mitigada.",true,"Correto."],
+["A primeira atribuição cognitiva do Oficial de Serviço é verificar em duas etapas: se é crime militar (art. 9º do CPM) e se é flagrante (art. 244 do CPPM).",true,"Correto."],
+["Para a lavratura do APFDM basta que a situação seja de flagrante (art. 244 do CPPM), sendo irrelevante se o fato é crime militar.",false,"Falso. Somente se AMBAS as etapas forem positivas (crime militar e flagrante) lavra-se o APFDM."],
+["Se o imputado se apresentar espontaneamente, lavra-se o APFDM para garantir a custódia imediata.",false,"Falso. Na apresentação espontânea não se lavra APFDM; toma-se o termo de declarações (art. 262, CPPM)."],
+["O termo de declarações do art. 262 do CPPM é assinado por duas testemunhas presenciais.",true,"Correto."],
+["Segundo o art. 244 do CPPM, é flagrante impróprio (quase flagrante) a situação de quem é perseguido logo após o fato em situação que faça acreditar ser ele o autor.",true,"Correto (art. 244, c)."],
+["Nas infrações permanentes, considera-se o agente em flagrante delito apenas no momento em que o crime se inicia.",false,"Falso. Considera-se em flagrante enquanto não cessar a permanência (parágrafo único do art. 244)."],
+["Segundo o art. 243 do CPPM, qualquer pessoa poderá e os militares deverão prender quem seja encontrado em flagrante delito, inclusive um superior.",true,"Correto."],
+["O flagrante apresenta-se em duas fases, compostas por atos próprios: inicia-se na voz de prisão do condutor e se encerra na expedição da Nota de Culpa.",true,"Correto, conforme a apostila."]
+],
+mc:[
+["Sobre as autoridades de PJM para a lavratura do APFDM, assinale a alternativa INCORRETA.",["Autoridade Originária Plena: comandantes em geral, podendo instaurar APFDM, IPM e IPD e delegar.","Autoridade Originária Mitigada: Oficial de Dia, de Serviço ou de Quarto, com competência limitada ao APFDM.","A Autoridade Originária Mitigada pode delegar a lavratura do APFDM a oficial subordinado.","Autoridade Delegada: oficial da ativa designado por autoridade superior (art. 7º, §1º, CPPM).","A Autoridade Delegada recebe atribuição específica por tempo limitado."],2,"A Mitigada não tem poder de delegação; essa é uma das duas razões da mitigação."],
+["A primeira atribuição cognitiva do Oficial de Serviço diante de possível flagrante é:",["Expedir a Nota de Culpa.","Analisar se é crime militar (art. 9º, CPM) e se é flagrante (art. 244, CPPM).","Ouvir o imputado sobre a imputação.","Oficiar ao IML para o exame de corpo de delito.","Encaminhar o preso à Audiência de Custódia."],1,"São duas etapas obrigatórias e sequenciais: crime militar e flagrante."],
+["O flagrante presumido ou ficto (art. 244, d, CPPM) caracteriza-se quando o agente:",["está cometendo o crime.","acaba de cometê-lo.","é perseguido logo após o fato.","é encontrado, logo depois, com instrumentos, objetos, material ou papéis que façam presumir sua participação.","apresenta-se espontaneamente à autoridade."],3,"Alínea d do art. 244."],
+["Um militar suspeito apresenta-se espontaneamente ao Oficial de Serviço. O procedimento correto é:",["Lavrar APFDM com Nota de Culpa em 24 horas.","Não lavrar APFDM; tomar o termo de declarações (art. 262, CPPM), assinado por duas testemunhas.","Instaurar IPM de ofício.","Lavrar APFDM e relaxar a prisão em seguida.","Encaminhar à autoridade civil para lavratura de APFD."],1,"Apresentação espontânea afasta o APFDM."],
+["Sobre o art. 243 do CPPM, assinale a alternativa CORRETA.",["Somente oficiais podem prender em flagrante.","Apenas a Polícia Judiciária Militar pode dar voz de prisão.","Qualquer pessoa poderá e os militares deverão prender quem seja encontrado em flagrante delito.","O subordinado não pode dar voz de prisão a superior.","A prisão em flagrante é faculdade para o militar."],2,"Texto do art. 243: qualquer pessoa poderá e os militares deverão."]
+],
+dc:[
+["Explique o que é a Autoridade de Polícia Judiciária Militar Originária Mitigada e indique as duas razões pelas quais sua competência é mitigada. Compare com as autoridades Plena e Delegada.","6 a 15 linhas","A Autoridade Originária Mitigada é o pequeno rol de militares (Oficial de Dia, de Serviço ou de Quarto e autoridade correspondente) que, mesmo sem exercer o papel de Comandante, possuem por definição legal competência para instaurar procedimento de PJM, limitada ao APFDM (art. 245, CPPM).\nA competência é mitigada por duas razões: (1) limita-se à abertura do APFDM, não cabendo IPM ou IPD; (2) não cabe delegação.\nComparação: a Originária Plena (Comandantes em geral) pode instaurar APFDM, IPM e IPD e pode delegar; a Delegada é o oficial da ativa designado por autoridade superior (art. 7º, §1º, CPPM), com atribuição específica por tempo limitado."],
+["Descreva as duas etapas da primeira atribuição cognitiva do Oficial de Serviço diante de possível flagrante e o tratamento da apresentação espontânea do imputado.","6 a 15 linhas","Etapa 1: verificar se o fato é crime militar (art. 9º do CPM). Etapa 2: verificar se é flagrante, enquadrando-se em uma das hipóteses do art. 244 do CPPM. Somente se ambas forem positivas procede-se à lavratura do APFDM.\nSe o imputado se apresentar espontaneamente (sem condução coercitiva), não se lavra APFDM; toma-se o termo de declarações previsto no art. 262 do CPPM, assinado por duas testemunhas."],
+["Enumere as modalidades de flagrante previstas no art. 244 do CPPM e comente o art. 243 e a natureza do flagrante (ato complexo e fases).","10 a 20 linhas","Art. 244: considera-se em flagrante quem (a) está cometendo o crime; (b) acaba de cometê-lo (flagrante próprio); (c) é perseguido logo após em situação que faça acreditar ser o autor (impróprio ou quase flagrante); (d) é encontrado logo depois com instrumentos, objetos, material ou papéis que façam presumir sua participação (presumido ou ficto). Nas infrações permanentes, há flagrante enquanto não cessar a permanência.\nArt. 243: qualquer pessoa poderá e os militares deverão prender quem seja encontrado em flagrante, inclusive superior.\nO flagrante é ato complexo: não se completa por um só ato. Apresenta-se em duas fases, iniciando-se na voz de prisão do condutor (captura) e encerrando-se na expedição da Nota de Culpa. Fundamento constitucional: art. 5º, LXI, CF."]
+]});
+
+/* ---------- BLOCO 2 ---------- */
+B.push({t:"2 · Peças e Rito do APFDM",
+vf:[
+["A capa do APFDM não é numerada, mas é contada como folha.",true,"Correto."],
+["A capa divide-se em três partes: cabeçalho, dados indicativos e autuação.",true,"Correto."],
+["Na sinopse do fato, constante da capa, deve-se indicar expressamente o tipo penal em que o fato se encontra.",false,"Falso. A sinopse é narração sucinta dos fatos, evitando referir-se ao tipo penal."],
+["Constam dos dados indicativos: numeração do procedimento (SIGPAD), dados do presidente, do escrivão, do imputado e do ofendido (se houver).",true,"Correto."],
+["A Portaria é o documento inaugural do APFDM e a instauração é de ofício, originária do Oficial de Serviço.",true,"Correto."],
+["Preferencialmente, adotam-se as mesmas regras de competência do IPM, sendo a Portaria instaurada por Capitão.",true,"Correto, conforme a apostila."],
+["O escrivão designado em Portaria fica isento de prestar o compromisso legal para executar os atos.",false,"Falso. Cabe ao designado prestar o compromisso (Termo de Compromisso)."],
+["Se o indiciado for oficial, o escrivão deve ser capitão, capitão-tenente, primeiro ou segundo-tenente (art. 245, §4º, CPPM).",true,"Correto."],
+["Nos demais casos, a autoridade poderá designar subtenente, suboficial ou sargento como escrivão.",true,"Correto (art. 245, §4º)."],
+["Na falta ou impedimento do escrivão, a autoridade designará qualquer pessoa idônea, que prestará o compromisso legal (escrivão ad hoc).",true,"Correto (art. 245, §5º)."],
+["Na Nota de Ciência das Garantias Constitucionais, a assinatura do imputado é obrigatória e não pode ser substituída.",false,"Falso. A assinatura não é obrigatória e pode ser substituída por duas testemunhas."],
+["O Auto propriamente dito é feito em texto corrido, com a seguinte ordem de depoimentos: condutor, testemunhas, ofendido e, por último, o imputado.",true,"Correto."],
+["No APFDM, o imputado é o primeiro a ser ouvido, seguido do condutor, das testemunhas e do ofendido.",false,"Falso. O imputado é ouvido por último."],
+["No Auto, a primeira folha deve ser rubricada por todos, enquanto a última deve ser assinada por todos.",true,"Correto."],
+["Na Conclusão, o Presidente devolve os autos ao escrivão para a elaboração da Nota de Culpa.",false,"Falso. Na Conclusão o ESCRIVÃO devolve os autos ao Presidente, dando-os como prontos para a decisão."]
+],
+mc:[
+["Sobre a Portaria de instalação do APFDM, assinale a alternativa CORRETA.",["É o documento inaugural; a partir dela o Presidente dá as primeiras ordens ao Escrivão.","A designação do escrivão na Portaria o isenta do compromisso.","As ordens da Portaria não precisam ser recepcionadas nos autos.","É de ofício porque originária do graduado de serviço.","O escrivão não pode ser designado em Portaria."],0,"As ordens da Portaria são recepcionadas (Recebimento) e certificadas (Certidão)."],
+["A sequência correta de tomada de depoimentos no Auto propriamente dito é:",["Imputado, condutor, testemunhas, ofendido.","Condutor, testemunhas, ofendido, imputado.","Testemunhas, condutor, imputado, ofendido.","Ofendido, condutor, testemunhas, imputado.","Condutor, imputado, testemunhas, ofendido."],1,"Condutor, testemunhas, ofendido e, por último, o imputado."],
+["Sobre a Conclusão e o Relatório e Decisão, assinale a alternativa INCORRETA.",["Na Conclusão, o escrivão devolve os autos ao Presidente.","O Relatório contém introdução, exposição dos fatos e conclusão.","O Presidente lança o entendimento (prende ou não) e o fundamento.","É pelo relatório que o Juiz compreenderá as razões da prisão.","Na Conclusão, o Presidente devolve os autos ao escrivão para decisão do escrivão."],4,"Quem devolve os autos na Conclusão é o escrivão, ao Presidente."],
+["Nos termos do art. 251 do CPPM, o auto de prisão em flagrante deve ser remetido ao juiz competente:",["em até 30 dias.","em 48 horas, em qualquer hipótese.","imediatamente; e, no máximo, em cinco dias se depender de diligência do art. 246.","apenas após a Audiência de Custódia.","somente se houver pedido do Ministério Público."],2,"Art. 251, conforme a apostila."],
+["Nos despachos conclusivos, para cada situação a perícia correspondente. Assinale a associação INCORRETA.",["Drogas: laudo preliminar ao IC.","Lesão corporal: laudo traumatológico.","Armas: laudo de eficiência balística.","Morte: laudo tanatoscópico.","Disparo de arma de fogo: laudo de eficiência balística em substituição ao exame de projétil."],4,"Para vítima de disparo, o exame de projétil (balístico) verifica se o projétil é compatível com a arma. O laudo de eficiência balística atesta se a arma está em condições de uso."]
+],
+dc:[
+["Explique a natureza e a função da Portaria de instauração do APFDM, a designação do escrivão e os atos de Recebimento e Certidão.","6 a 15 linhas","A Portaria é o documento inaugural do APFDM; a partir dela o Presidente dá as primeiras ordens ao escrivão. A instauração é de ofício, originária do Oficial de Serviço, e preferencialmente se adotam as regras de competência do IPM (Capitão).\nO escrivão é designado já na Portaria (art. 245, §4º: se o indiciado for oficial, capitão, capitão-tenente, 1º ou 2º tenente; nos demais casos, subtenente, suboficial ou sargento) e deve prestar o compromisso legal, em termo assinado pelo Presidente e pelo escrivão. Na falta ou impedimento, designa-se pessoa idônea (§5º, escrivão ad hoc).\nAs ordens emanadas na Portaria devem ser recepcionadas nos autos (Recebimento) e certificadas ao serem cumpridas (Certidão)."],
+["Descreva a coleta dos depoimentos (Auto propriamente dito): forma, ordem, assinaturas e hipóteses de ausência de testemunhas ou recusa/analfabetismo.","6 a 15 linhas","O Auto propriamente dito é o principal documento do APFDM e, ao contrário do APFD, é feito em texto corrido. Ordem: condutor, testemunhas, ofendido e, por último, o imputado. A primeira folha é rubricada por todos e a última é assinada por todos.\nA falta de testemunhas não impede o APFDM, que será assinado por pelo menos duas pessoas que tenham presenciado a apresentação do preso (art. 245, §2º). Se alguém não quiser assinar ou for analfabeto, o auto será assinado por duas testemunhas que lhe tenham ouvido a leitura na presença do indiciado, do condutor e das testemunhas do fato (§3º)."],
+["Indique as providências imprescindíveis após a lavratura do APFDM e a distribuição das vias para a Audiência de Custódia, citando o fundamento do relaxamento da prisão (art. 247, §2º, CPPM).","10 a 20 linhas","Após a lavratura, juntam-se aos autos originais: (1) ofício de informação à família (ou pessoa indicada), devidamente recibado; (2) Nota de Culpa original, recibada pelo preso; (3) cópia do ofício de apresentação do preso ao IML, com recibo do médico.\nO preso é conduzido à Audiência de Custódia. Emite-se uma via do APFDM, xerocopiada em 3 vias: Juiz, Promotor e Defensor da Audiência de Custódia, ficando cópia na Central de Inquéritos. Outras vias podem ser enviadas por razões administrativas (Cmt da Unidade, 2ª EMG, Cmt-Geral), inclusive por e-mail.\nRelaxamento: se a autoridade verificar a manifesta inexistência de infração penal militar ou a não participação da pessoa conduzida, relaxará a prisão; tratando-se de infração comum, remeterá o preso à autoridade civil competente (art. 247, §2º)."]
+]});
+
+/* ---------- BLOCO 3 ---------- */
+B.push({t:"3 · Nota de Culpa, Prisões e APFDM x APFD",
+vf:[
+["A Nota de Culpa é o documento que dá ciência oficial ao preso das razões de sua prisão.",true,"Correto."],
+["Nos termos do art. 247 do CPPM, a Nota de Culpa deve ser dada ao preso dentro de 24 horas após a prisão.",true,"Correto."],
+["O prazo para entrega da Nota de Culpa é de 48 horas, conforme as atualizações da audiência de custódia.",false,"Falso. O prazo é de 24 horas (art. 247, CPPM)."],
+["A Nota de Culpa deve conter o motivo da prisão, o nome do condutor e os nomes das testemunhas.",true,"Correto."],
+["A indicação dos nomes do condutor e das testemunhas na Nota de Culpa é opcional.",false,"Falso. Esses elementos são obrigatórios (art. 247)."],
+["Se o preso não souber, não puder ou não quiser assinar, o recibo da Nota de Culpa será assinado por duas testemunhas.",true,"Correto (art. 247, §1º)."],
+["A Nota de Culpa original recibada deve ser juntada aos autos.",true,"Correto."],
+["No APFDM cabe liberdade provisória com fiança.",false,"Falso. No APFDM não cabe liberdade provisória, com ou sem fiança."],
+["Não há lavratura de TCO nos crimes militares (art. 90-A da Lei 9.099/95).",true,"Correto."],
+["No APFDM os depoimentos são em texto corrido e assinados conjuntamente; no APFD, após a reforma, são individualizados.",true,"Correto."],
+["O APFDM pode dispensar o IPM, como se ele próprio o fosse, em razão do art. 27 do CPPM.",true,"Correto."],
+["A prisão temporária está prevista no CPPM, com prazo de 5 dias prorrogáveis por mais 5.",false,"Falso. A temporária não é prevista no CPPM."],
+["A prisão do Encarregado do IPM dura 30 dias, prorrogáveis por mais 30.",true,"Correto."],
+["A Audiência de Custódia foi implementada a partir da Resolução 213/2015 do CNJ, e o exaurimento do flagrante só se dá após ela.",true,"Correto, conforme a apostila."],
+["Com a Audiência de Custódia, o encarregado pode ordenar diretamente ao Diretor do Presídio Militar o encarceramento do preso militar.",false,"Falso. Inexiste essa possibilidade com a Audiência de Custódia."]
+],
+mc:[
+["Sobre a Nota de Culpa no rito do APFDM, é CORRETO afirmar que:",["Deve ser entregue obrigatoriamente no momento da captura.","A indicação dos nomes do condutor e das testemunhas é opcional.","Se o preso não souber, não puder ou não quiser assinar, o recibo é assinado por duas testemunhas.","A assinatura do preso pode ser substituída por certidão lavrada pelo escrivão.","O prazo é de 48 horas."],2,"Art. 247, §1º, CPPM."],
+["Assinale a alternativa INCORRETA sobre APFDM x APFD.",["No APFDM não cabe liberdade provisória com fiança.","Não há TCO nos crimes militares.","O APFDM pode dispensar o IPM (art. 27, CPPM).","No APFDM os depoimentos são individualizados.","O APFD dá início a inquérito policial."],3,"No APFDM os depoimentos são em texto corrido, assinados em um só termo sequenciado."],
+["Sobre as prisões cautelares do CPPM, assinale a associação CORRETA.",["Prisão do desertor: 30 dias.","Prisão do Encarregado do IPM: 30 dias prorrogáveis por mais 30.","Prisão preventiva: decretada pelo Encarregado do IPM.","Temporária: 5 dias, prevista no CPPM.","Menagem: decretada pela autoridade de PJM."],1,"Desertor: 60 dias; preventiva e menagem: Juiz; temporária não prevista no CPPM."],
+["São providências imprescindíveis após a lavratura do APFDM, EXCETO:",["Ofício de informação à família, recibado.","Nota de Culpa original recibada pelo preso.","Cópia do ofício de apresentação do preso ao IML, com recibo do médico.","Condução do preso à Audiência de Custódia.","Remessa do preso ao Diretor do Presídio Militar por ordem do encarregado."],4,"Com a Audiência de Custódia, a ordem direta ao Diretor do Presídio Militar deixou de existir."],
+["Segundo o art. 247, §2º, do CPPM, verificada a manifesta inexistência de infração penal militar ou a não participação do conduzido, a autoridade:",["converterá a prisão em preventiva.","relaxará a prisão; se infração comum, remeterá o preso à autoridade civil competente.","lavrará o auto e aguardará a Audiência de Custódia.","expedirá Nota de Culpa e concederá fiança.","instaurará IPD."],1,"É o chamado relaxamento da prisão."]
+],
+dc:[
+["Discorra sobre a Nota de Culpa no APFDM: relevância, prazo, elementos estruturantes, recibo e procedimento diante da recusa do preso em assinar.","10 a 20 linhas","A Nota de Culpa é o documento que dá ciência oficial ao preso das razões de sua prisão, tendo fundamental importância, e integra a garantia constitucional (art. 5º, LXIV, CF).\nPrazo: dentro de 24 horas após a prisão (art. 247, CPPM). O descumprimento do prazo é irregularidade que compromete a regularidade da prisão.\nElementos: motivo da prisão, nome do condutor e nomes das testemunhas, assinada pela autoridade. A ausência desses elementos compromete a finalidade do ato.\nRecibo: o preso passa recibo; se não souber, não puder ou não quiser assinar, o recibo é assinado por duas testemunhas (§1º), com registro formal da recusa. A Nota de Culpa original recibada é juntada aos autos."],
+["Aponte, no mínimo, três diferenças entre o APFDM e o APFD.","6 a 15 linhas","(1) Liberdade provisória: no APFDM não cabe, com ou sem fiança; no APFD cabe, com fiança fixada pelo Delegado para crimes com pena máxima até 4 anos. (2) TCO: não há nos crimes militares (art. 90-A, Lei 9.099/95); no APFD cabe. (3) Forma: no APFDM os depoimentos são em texto corrido, com assinatura conjunta; no APFD, após a reforma, são individualizados. (4) O APFDM pode dispensar o IPM (art. 27, CPPM); o APFD dá início a inquérito policial. Em ambos o relaxamento pelo encarregado é possível, embora a expressão seja discutível no APFDM."],
+["Explique a Audiência de Custódia no contexto do APFDM e relacione as prisões cautelares previstas no CPPM, indicando as não previstas.","10 a 20 linhas","A Audiência de Custódia é instituto inspirado no art. 7º, V, do Pacto de San José da Costa Rica e no Pacto Internacional sobre Direitos Civis e Políticos, praticado desde 2016 a partir da Resolução 213/2015 do CNJ. Após a lavratura, o preso é conduzido a ela; o exaurimento do flagrante só ocorre depois dela. Antes, o militar preso era apresentado ao Diretor do Presídio Militar; hoje inexiste ordem direta do encarregado ao Diretor.\nPrisões cautelares do CPPM: flagrante (autoridade de PJM, até a audiência de custódia, art. 244), preventiva (Juiz, art. 255), prisão do Encarregado do IPM (30 dias, prorrogáveis por 30), prisão do desertor (60 dias) e menagem (Juiz, art. 263). Não previstas no CPPM: prisão temporária e prisão por pronúncia."]
+]});
+
+/* ---------- BLOCO 4 ---------- */
+B.push({t:"4 · IPD: Conceito, Deserção, Prazos e Prescrição",
+vf:[
+["A IPD é um procedimento misto e preliminar à ação penal.",true,"Correto."],
+["Na IPD, a fase administrativa é conduzida pela autoridade de PJM e a fase judicial pelos membros da Justiça Militar e pelo Ministério Público.",true,"Correto."],
+["A IPD é denominada procedimento especialíssimo porque cabe apenas para dois crimes: deserção e insubmissão.",true,"Correto."],
+["A IPD é cabível para a apuração de qualquer crime militar cometido por militar estadual.",false,"Falso. Somente deserção (art. 187, CPM) e insubmissão (art. 183, CPM)."],
+["A competência para determinar a instauração da IPD é do Comandante da OME do militar desertor.",true,"Correto."],
+["O IPD só pode ser delegado a oficial superior.",false,"Falso. Pode ser delegado a qualquer oficial da ativa, independentemente do posto."],
+["A delegação da IPD pode ser feita por despacho, ofício ou portaria.",true,"Correto."],
+["Deserção: ausentar-se o militar, sem licença, da unidade ou do lugar em que deve permanecer, por mais de oito dias; pena de detenção de seis meses a dois anos.",true,"Correto (art. 187, CPM)."],
+["A pena do crime de deserção é de detenção de um a três anos.",false,"Falso. É de seis meses a dois anos; se oficial, a pena é agravada."],
+["É caso assimilado à deserção o militar que não se apresenta no lugar designado dentro de oito dias, findo o prazo de trânsito ou férias.",true,"Correto (art. 188, I)."],
+["É caso assimilado à deserção quem consegue exclusão do serviço ativo ou situação de inatividade, criando ou simulando incapacidade.",true,"Correto (art. 188, IV)."],
+["A prescrição temporal da deserção é de 4 anos (art. 125, VI, CPM), regulada pelo máximo da pena.",true,"Correto."],
+["A prescrição por idade na deserção ocorre aos 45 anos para praça e 60 anos para oficial, e ambos os critérios (temporal e etário) devem ocorrer simultaneamente.",true,"Correto."],
+["Para a extinção da punibilidade na deserção, basta o decurso do prazo temporal de 4 anos.",false,"Falso. É necessário também atingir a idade (45 praça, 60 oficial)."],
+["A contagem dos dias de ausência inicia-se à zero hora do dia seguinte àquele em que for verificada a falta injustificada do militar (art. 451, §1º, CPPM).",true,"Correto."]
+],
+mc:[
+["Falta verificada no dia 5. A deserção estará consumada:",["às 23h59 do dia 13.","às 00h do dia 14.","às 00h do dia 13.","às 00h do dia 12.","às 23h59 do dia 12."],1,"Contagem inicia 00h do dia 6; o 8º dia termina 23h59 do dia 13; consuma-se 00h do dia 14."],
+["Sobre a Parte de Falta e a Parte de Ausência, é CORRETO afirmar:",["A Parte de Ausência é o marco inicial da contagem do prazo.","A IPD surge necessariamente a partir da Parte de Falta, marco inicial da contagem.","A Parte de Ausência é encaminhada 8 dias após a falta.","A Parte de Falta é lavrada após consumada a deserção.","A Parte de Ausência dispensa o Inventário."],1,"A Parte de Ausência é encaminhada 24h após o início da contagem e aciona o Inventário."],
+["Assinale a alternativa INCORRETA sobre as diligências de localização do ausente.",["Eram obrigatórias na redação antiga do art. 456, §2º, CPPM.","A Lei 8.236/1991 extinguiu a obrigatoriedade.","Tornaram-se mera praxe administrativa.","São recomendáveis para evitar erro de fato relevante.","São requisito legal de validade da IPD."],4,"Afirmar que são obrigatórias para a validade do processo é equívoco técnico."],
+["Sobre o Inventário na IPD, é CORRETO:",["Dispensa-se se o militar não tiver carga na Unidade.","É realizado com a assistência de duas testemunhas idôneas e é obrigatório.","Só inclui pertences particulares.","É feito após a remessa à Auditoria.","Em destacamento isolado, só oficial pode providenciá-lo."],1,"Art. 456, caput e §1º, CPPM."],
+["Não sendo instaurada a IPD no prazo assinalado na legislação processual penal militar, a deserção será apurada:",["por APFDM.","por IPM (art. 38, Manual de PJM da PMPE).","por sindicância.","por termo de declarações.","por Conselho de Disciplina."],1,"Apostila: art. 38 do Manual de PJM da PMPE."]
+],
+dc:[
+["Explique por que a Instrução Provisória de Deserção (IPD) é classificada como um “procedimento misto” e cite quais são os órgãos envolvidos em sua conclusão.","6 a 15 linhas","A IPD é procedimento misto e preliminar à ação penal porque seus atos se distribuem entre dois âmbitos: a fase administrativa-policial militar, conduzida pela autoridade de PJM (art. 7º, CPPM), e a fase judicial, conduzida pelos membros da Justiça Militar e pelo Ministério Público. Exige, portanto, atos conjuntos do Poder Executivo (APJM/Comando), do Judiciário e do MP.\nÓrgãos envolvidos na conclusão: Comando da OME (fase administrativa), Auditoria Militar e Ministério Público (fase judicial)."],
+["Explique o duplo prazo prescricional do crime de deserção.","6 a 15 linhas","A deserção tem regime prescricional especial, exigindo a concorrência de dois prazos para a extinção da punibilidade. Prescrição temporal (art. 125, CPM): regulada pelo máximo da pena privativa de liberdade; sendo o máximo de 2 anos, prescreve em 4 anos (art. 125, VI). Prescrição por idade (art. 132, CPM): embora decorrido o prazo temporal, só extingue a punibilidade quando o desertor atinge 45 anos (praça) ou 60 anos (oficial). Os dois critérios devem ocorrer simultaneamente; não basta o decurso do prazo temporal se o desertor ainda não atingiu a idade."],
+["Descreva o rito procedimental da fase administrativa da IPD (6 etapas) e a regra de contagem do prazo.","10 a 20 linhas","Etapas: (1) Parte de Falta, lavrada imediatamente após a ausência injustificada, de onde surge a IPD e marco inicial da contagem; (2) Parte de Ausência, 24h após o início da contagem, que aciona o Comandante para determinar o inventário; (3) Inventário, com duas testemunhas idôneas, obrigatório; (4) cópia dos assentamentos, solicitada à P/1; (5) Parte de Deserção, lavrada após consumado o prazo de 8 dias; (6) Termo de Deserção, ato mais importante, publicado em BI antes da remessa à Auditoria.\nContagem (art. 451, §1º, CPPM): inicia-se à 00h do dia seguinte à verificação da falta. Falta no dia 1: contagem às 00h do dia 2; o oitavo dia termina às 23h59 do dia 9; consumação às 00h do dia 10. Lavrar o termo antes disso é erro grave. As diligências de busca não são obrigatórias (Lei 8.236/1991)."]
+]});
+
+/* ---------- BLOCO 5 ---------- */
+B.push({t:"5 · Termo de Deserção, Remessa e Situação do Desertor",
+vf:[
+["O Termo de Deserção é o ato singular e formal mais relevante da IPD e equivale a mandado de prisão em aberto.",true,"Correto (art. 452, CPPM)."],
+["O Termo de Deserção é assinado por quatro agentes: o Comandante da Unidade, duas testemunhas idôneas e o militar incumbido da lavratura (escrevente).",true,"Correto."],
+["O Termo de Deserção é assinado exclusivamente pelo Comandante da Unidade.",false,"Falso. São quatro assinaturas."],
+["As testemunhas do Termo de Deserção devem ser, de preferência, oficiais.",true,"Correto."],
+["A publicação do Termo de Deserção em Boletim Interno (ou Geral) é obrigatória e precede a remessa à Auditoria.",true,"Correto."],
+["O Termo de Deserção deve ser publicado em BI somente após a remessa dos autos à Auditoria.",false,"Falso. A publicação é anterior à remessa."],
+["O oficial desertor será agregado ao apresentar-se ou ser capturado, e não pode ser demitido antes do trânsito em julgado.",true,"Correto (art. 454, §1º, CPPM)."],
+["A praça com estabilidade assegurada será agregada ao consumar-se a deserção, publicando-se o termo em boletim.",true,"Correto."],
+["A praça sem estabilidade é imediatamente excluída do serviço ativo ao consumar-se a deserção e, ao reaparecer, deve ser reincluída para fins de processo.",true,"Correto."],
+["A praça sem estabilidade que deserta será agregada, permanecendo assim até o trânsito em julgado.",false,"Falso. Ela é excluída imediatamente; a agregação é da praça estável e do oficial."],
+["Em Pernambuco, a agregação e a exclusão provisória são formalizadas por Portaria do Comandante-Geral.",true,"Correto."],
+["Os autos da IPD seguem à Auditoria com o Termo de Deserção, a Parte de Ausência, o Inventário, cópia do boletim e cópias dos assentamentos.",true,"Correto (art. 454, §2º)."],
+["Encerrar a atuação do encarregado sem remeter os autos ao Poder Judiciário configura grave omissão.",true,"Correto."],
+["Ao ser capturado ou apresentar-se, o desertor sem estabilidade é recolhido ao cárcere, submetido a inspeção de saúde e, se apto, reincluído para fins de processo.",true,"Correto (art. 457)."],
+["Se julgado definitivamente incapaz, o desertor sem estabilidade será reincluído e processado normalmente.",false,"Falso. Fica isento da reinclusão e do processo; os autos são arquivados após manifestação do MP."]
+],
+mc:[
+["Após o reaparecimento do desertor sem estabilidade, o CPPM determina que seja submetido a:",["Conselho de Disciplina imediato.","Interrogatório sem advogado.","Inspeção de saúde e, se apto, reinclusão para fins de processo.","Expulsão sumária da corporação.","Férias compulsórias."],2,"Art. 457, CPPM."],
+["Segundo o art. 453 do CPPM, o desertor que não for julgado em 60 dias, a contar da apresentação voluntária ou captura:",["será excluído.","será posto em liberdade, salvo se tiver dado causa ao retardamento do processo.","será mantido preso até o trânsito em julgado.","será reincluído e agregado.","terá o processo arquivado."],1,"Art. 453, conforme a apostila."],
+["Sobre as três particularidades do processamento do desertor, assinale a INCORRETA.",["Procedimento pré-processual misto.","Prazo prescricional duplo (temporal e etário).","A condição de militar é pressuposto processual.","A exclusão administrativa antes do trânsito em julgado não afeta a ação penal.","O réu deve ser militar (ativo, agregado ou reincluído) para ser processado."],3,"A exclusão administrativa antes do trânsito em julgado prejudica a ação penal."],
+["Em destacamento isolado, o inventário na ausência do militar:",["só pode ser feito por oficial.","pode ser providenciado pelo respectivo comandante, oficial ou não, com duas testemunhas idôneas.","é dispensado.","exige três testemunhas oficiais.","é feito pela Corregedoria."],1,"Art. 456, §1º: a lei não exige que o responsável seja oficial."],
+["Após a publicação do Termo de Deserção, o encarregado deve ainda oficiar, EXCETO a:",["Diretoria de Gestão de Pessoas.","Comando Geral e 2ª Seção do EMG.","Corregedoria.","Remessa imediata dos autos à Auditoria Militar.","Arquivamento da IPD pela própria APJM sem remessa à Auditoria."],4,"A IPD não pode ser encerrada pela APJM; os autos vão à Auditoria."]
+],
+dc:[
+["Discorra sobre o Termo de Deserção: requisitos formais, publicação e efeitos jurídicos.","10 a 20 linhas","O Termo de Deserção é o ato singular e formal mais relevante da IPD. Requisitos: lavrado imediatamente após a consumação da deserção (art. 451, caput, e art. 456, §3º, CPPM); pode ser impresso ou datilografado; assinado por quatro agentes: Comandante da Unidade (ou autoridade correspondente/superior), duas testemunhas idôneas (de preferência oficiais) e o militar incumbido da lavratura (escrevente).\nPublicação obrigatória em BI ou BG antes da remessa à Auditoria.\nEfeitos (art. 452): tem caráter de instrução provisória, fornecendo os elementos para a propositura da ação penal, e sujeita desde logo o desertor à prisão, equivalendo a mandado de prisão em aberto expedido pela autoridade de PJM."],
+["Descreva a situação administrativa do militar desertor por categoria (oficial, praça estável, praça sem estabilidade e praça especial) e a formalização em Pernambuco.","6 a 15 linhas","Para ser processado, o réu precisa gozar da condição de militar. Oficial: agregado ao apresentar-se ou ser capturado, até decisão transitada em julgado; não pode ser demitido antes (art. 454, §1º). Praça estável: agregada ao consumar-se a deserção, com publicação do termo em boletim e remessa dos autos à auditoria. Praça sem estabilidade (e praça especial): imediatamente excluída do serviço ativo ao consumar-se a deserção (art. 456, §4º) e, ao reaparecer, reincluída para fins de processo. Em Pernambuco, agregação e exclusão provisória são formalizadas por Portaria do Comandante-Geral."],
+["Caso hipotético: o Cb PM Rita faltou ao serviço no dia 10/05/2026. O 1º Ten Caio, comandante da subunidade, expediu a Parte de Ausência 5 dias depois. O Comandante delegou a IPD a um 2º Sgt. O oficial dispensou o inventário por não haver carga, lavrou o Termo de Deserção no dia 18/05, assinou-o sozinho, publicou-o após enviar os autos e arquivou a IPD. Identifique, no mínimo, 5 erros técnicos.","10 a 20 linhas","(1) Delegação a sargento: a IPD só pode ser delegada a oficial da ativa (art. 7º, §1º, CPPM). (2) Parte de Ausência fora do prazo: deve ser expedida 24h após o início da contagem (art. 456). (3) Dispensa do inventário: ato obrigatório, com duas testemunhas idôneas, mesmo sem carga. (4) Prazo: falta verificada no dia 10, contagem às 00h do dia 11, oitavo dia termina 23h59 do dia 18, consumação às 00h do dia 19; lavrar o termo no dia 18 é erro grave (art. 451, §1º). (5) Assinatura isolada: o termo exige quatro assinaturas (Comandante, duas testemunhas e escrevente). (6) Publicação em BI deve preceder a remessa. (7) Arquivamento: encerrar sem remeter os autos à Auditoria é grave omissão (art. 454, §2º)."]
+]});
+
+/* ---------- SIMULADO ---------- */
+var SIM={tempo:100,Q:[
+{tipo:"vf",val:1.0,enun:"Analise as proposições sobre competência e flagrante e marque (V) para verdadeiro ou (F) para falso.",itens:[
+["O Oficial de Serviço é Autoridade Originária Mitigada, com competência limitada à lavratura do APFDM e sem poder de delegação.",true,"Correto."],
+["A Autoridade Delegada é qualquer pessoa que tenha presenciado o flagrante.",false,"Falso. É o oficial da ativa designado por autoridade superior (art. 7º, §1º, CPPM)."],
+["Se o imputado se apresentar espontaneamente, toma-se o termo de declarações (art. 262, CPPM), assinado por duas testemunhas.",true,"Correto."],
+["Para lavrar o APFDM basta que a situação se amolde ao art. 244 do CPPM, ainda que o fato não seja crime militar.",false,"Falso. É preciso que seja crime militar (art. 9º, CPM) E flagrante."],
+["Está em flagrante quem está cometendo o crime ou acaba de cometê-lo.",true,"Correto (flagrante próprio)."]]},
+{tipo:"vf",val:1.0,enun:"Considerando as peças e o rito do APFDM, analise as assertivas e marque (V) ou (F).",itens:[
+["A capa do APFDM não é numerada, mas é contada como folha.",true,"Correto."],
+["O Termo de Compromisso do Escrivão é assinado pelo Presidente e pelo Escrivão.",true,"Correto."],
+["Na coleta de depoimentos, o imputado é o primeiro a ser ouvido.",false,"Falso. É o último (condutor, testemunhas, ofendido, imputado)."],
+["A assinatura do imputado na Nota de Ciência das Garantias Constitucionais é obrigatória e não pode ser substituída.",false,"Falso. Pode ser substituída por duas testemunhas."],
+["Se o indiciado for oficial, o escrivão deve ser capitão, capitão-tenente, primeiro ou segundo-tenente.",true,"Correto (art. 245, §4º)."]]},
+{tipo:"vf",val:1.0,enun:"Sobre a Nota de Culpa e as prisões cautelares, analise as assertivas e marque (V) ou (F).",itens:[
+["A Nota de Culpa deve ser entregue ao preso dentro de 24 horas após a prisão.",true,"Correto (art. 247)."],
+["A prisão em flagrante dura, em regra, até a confirmação na audiência de custódia.",true,"Correto, conforme a tabela de prisões cautelares da apostila."],
+["No APFDM cabe fiança fixada pelo Delegado para crimes com pena de até 4 anos.",false,"Falso. No APFDM não cabe liberdade provisória, com ou sem fiança."],
+["A prisão do desertor tem prazo de 60 dias.",true,"Correto (art. 453, CPPM)."],
+["A prisão temporária está prevista no CPPM, com prazo de 5 dias prorrogáveis.",false,"Falso. Não é prevista no CPPM."]]},
+{tipo:"mc",val:0.5,enun:"Assinale a alternativa que descreve CORRETAMENTE quando se consuma a deserção de militar cuja falta injustificada foi verificada no dia 12.",op:["Às 23h59 do dia 20.","Às 00h do dia 21.","Às 00h do dia 13.","Às 00h do dia 20.","No dia 12, imediatamente."],c:1,j:"Contagem às 00h do dia 13; oitavo dia termina 23h59 do dia 20; consuma-se às 00h do dia 21."},
+{tipo:"mc",val:0.5,enun:"Assinale a alternativa INCORRETA sobre a IPD.",op:["É procedimento misto.","É cabível apenas para deserção e insubmissão.","Só pode ser delegada a oficial superior.","A instauração é do Comandante da OME do desertor.","As diligências de busca não são obrigatórias."],c:2,j:"Pode ser delegada a qualquer oficial da ativa."},
+{tipo:"mc",val:0.5,enun:"Sobre o Termo de Deserção, é CORRETO afirmar que:",op:["É assinado apenas pelo Comandante.","É publicado em BI após a remessa à Auditoria.","É assinado por quatro agentes: Comandante, duas testemunhas e escrevente.","Dispensa testemunhas quando lavrado por praça.","Pode ser lavrado antes de consumada a deserção."],c:2,j:"Art. 451, caput, CPPM."},
+{tipo:"mc",val:0.5,enun:"A praça com estabilidade assegurada que deserta, ao consumar-se a deserção, será:",op:["Imediatamente excluída.","Agregada, com publicação do termo em boletim e remessa dos autos à auditoria.","Demitida.","Reincluída para fins de processo.","Mantida sem alteração."],c:1,j:"Praça estável é agregada; a sem estabilidade é excluída."},
+{tipo:"dc",val:1.5,min:6,max:15,enun:"Explique por que o crime de deserção possui “duplo prazo prescricional” e indique os dois prazos.",esp:"Exige-se a concorrência de dois prazos para a extinção da punibilidade. Prescrição temporal (art. 125, CPM): regulada pelo máximo da pena (2 anos), prescreve em 4 anos (art. 125, VI). Prescrição por idade (art. 132, CPM): só extingue a punibilidade quando o desertor atinge 45 anos (praça) ou 60 anos (oficial). Os dois critérios devem ocorrer simultaneamente; o decurso do prazo temporal não basta se o desertor não atingiu a idade."},
+{tipo:"dc",val:1.5,min:10,max:20,enun:"Um Capitão, presidente do APFDM, ratificou a prisão de um policial militar. A Nota de Culpa foi entregue 30 horas após a prisão, sem indicar o nome do condutor, e diante da recusa do preso em assinar, anotou-se apenas “recusou-se” no documento, sem testemunhas. Discorra sobre: a relevância da Nota de Culpa; as consequências do descumprimento do prazo; os elementos estruturantes e os impactos de sua ausência; o procedimento correto diante da recusa.",esp:"Relevância: a Nota de Culpa dá ciência oficial ao preso das razões de sua prisão; é garantia constitucional (art. 5º, LXIV, CF) e encerra a segunda fase do flagrante.\nPrazo: 24 horas após a prisão (art. 247, CPPM); a entrega às 30 horas descumpre o prazo legal e compromete a regularidade da prisão.\nElementos: motivo da prisão, nome do condutor e nomes das testemunhas, assinada pela autoridade; a omissão do nome do condutor viola o art. 247 e fragiliza o ato.\nRecusa: o recibo deve ser assinado por duas testemunhas quando o preso não souber, não puder ou não quiser assinar (§1º), com registro formal da recusa; a mera anotação sem testemunhas é insuficiente. A Nota de Culpa original recibada é juntada aos autos."},
+{tipo:"dc",val:2.0,min:10,max:20,enun:"Analise o caso e identifique, no mínimo, 5 erros técnicos na condução da IPD, fundamentando com o CPM, o CPPM e as normas da PMPE. O Cb PM Rita não compareceu ao serviço no dia 10/05/2026. O 1º Ten Caio expediu a Parte de Ausência 5 dias depois. O Comandante delegou a IPD a um 2º Sgt, que dispensou o inventário por não haver carga, lavrou o Termo de Deserção no dia 18/05, assinou-o sozinho, publicou-o em Boletim após enviar os autos ao juízo e arquivou a IPD.",esp:"1) Delegação a sargento: só oficial da ativa pode receber a delegação (art. 7º, §1º, CPPM).\n2) Parte de Ausência fora do prazo: deve ser encaminhada 24h após o início da contagem (art. 456, CPPM).\n3) Dispensa do inventário: ato obrigatório, com duas testemunhas idôneas, ainda que o militar não possua carga.\n4) Prazo: falta no dia 10, contagem às 00h do dia 11, oitavo dia termina 23h59 do dia 18; consumação às 00h do dia 19. Termo lavrado no dia 18 é erro grave (art. 451, §1º; art. 187, CPM).\n5) Assinatura isolada: exige quatro assinaturas (Comandante, duas testemunhas idôneas e escrevente).\n6) Publicação em BI/BG é obrigatória antes da remessa à Auditoria.\n7) Arquivamento pela APJM: os autos devem ser remetidos à Auditoria Militar (art. 454, §2º); encerrar sem remeter é grave omissão."}
+]};
+
+/* ===================== MOTOR ===================== */
+var $=function(s){return document.querySelector(s)};
+var nav=$("#nav"),main=$("#main");
+var tabs=B.map(function(b,i){return {id:"b"+i,label:b.t.split(" · ")[0]+" · "+b.t.split(" · ")[1]}});
+tabs.push({id:"sim",label:"SIMULADO"});
+var estado={};
+function el(h){var d=document.createElement("div");d.innerHTML=h;return d.firstElementChild}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+
+function mkNav(){tabs.forEach(function(t,i){var b=document.createElement("button");b.textContent=t.label;if(t.id==="sim")b.className="sim";b.onclick=function(){show(t.id)};b.id="nb_"+t.id;nav.appendChild(b)})}
+function show(id){tabs.forEach(function(t){var p=$("#p_"+t.id);if(p)p.classList.toggle("hide",t.id!==id);$("#nb_"+t.id).classList.toggle("on",t.id===id)});window.scrollTo(0,0)}
+
+function vfItem(txt,num,key){
+  var d=el('<div class="q"><span class="n">'+num+'.</span><span class="vf"><button data-v="1">V</button><button data-v="0">F</button></span><span>'+esc(txt)+'</span><div class="just"></div></div>');
+  d.querySelectorAll("button").forEach(function(b){b.onclick=function(){d.querySelectorAll("button").forEach(function(x){x.classList.remove("sel")});b.classList.add("sel");estado[key]=b.dataset.v==="1"}});
+  return d}
+function mcItem(q,num,key){
+  var d=el('<div class="q"><div><span class="n">'+num+'.</span>'+esc(q[0])+'</div><div class="ops"></div><div class="just"></div></div>');
+  q[1].forEach(function(o,i){var b=document.createElement("button");b.className="opt";b.textContent="("+"ABCDE"[i]+") "+o;b.onclick=function(){d.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel")});b.classList.add("sel");estado[key]=i};d.querySelector(".ops").appendChild(b)});
+  return d}
+function dcItem(enun,meta,num,key){
+  var d=el('<div class="q"><div><span class="n">'+num+'.</span>'+esc(enun)+'</div><div class="meta">'+esc(meta)+'</div><textarea></textarea><div class="espelho"></div></div>');
+  return d}
+
+function buildBloco(b,i){
+  var p=el('<section id="p_b'+i+'" class="hide"><h2>'+esc(b.t)+'</h2><div class="meta">23 questões: 15 V/F · 5 múltipla escolha · 3 discursivas</div></section>');
+  var k="b"+i;
+  p.appendChild(el("<h3>Parte A — Verdadeiro ou Falso (15)</h3>"));
+  b.vf.forEach(function(q,j){var d=vfItem(q[0],j+1,k+"v"+j);d.querySelector(".just").textContent="Justificativa: "+q[2];d.dataset.k=k+"v"+j;d.dataset.a=q[1];p.appendChild(d)});
+  p.appendChild(el("<h3>Parte B — Múltipla escolha (5)</h3>"));
+  b.mc.forEach(function(q,j){var d=mcItem(q,16+j,k+"m"+j);d.querySelector(".just").textContent="Gabarito: ("+"ABCDE"[q[2]]+"). "+q[3];d.dataset.k=k+"m"+j;d.dataset.a=q[2];p.appendChild(d)});
+  p.appendChild(el("<h3>Parte C — Discursivas (3)</h3>"));
+  b.dc.forEach(function(q,j){var d=dcItem(q[0],q[1],21+j,k+"d"+j);d.querySelector(".espelho").textContent="ESPELHO (modelo de resposta)\n\n"+q[2];p.appendChild(d)});
+  var bt=el('<button class="btn">Verificar gabarito</button>'),rs=el('<button class="btn b2">Refazer</button>'),sc=el('<div class="score"></div>');
+  bt.onclick=function(){
+    var ac=0,tot=0;
+    p.querySelectorAll(".q[data-k]").forEach(function(d){
+      var key=d.dataset.k,mc=key.indexOf("m")>0&&key.charAt(key.length-2)==="m";
+      var cor=mc?parseInt(d.dataset.a,10):(d.dataset.a==="true");
+      tot++;var ok=(estado[key]===cor);if(ok)ac++;
+      d.classList.remove("ok","err");d.classList.add(ok?"ok":"err");d.classList.add("show");
+    });
+    p.querySelectorAll(".q:not([data-k])").forEach(function(d){d.classList.add("show")});
+    sc.style.display="block";sc.textContent="Objetivas: "+ac+" de "+tot+" corretas ("+Math.round(ac*100/tot)+"%). Compare as discursivas com os espelhos.";
+    sc.scrollIntoView({behavior:"smooth",block:"center"})};
+  rs.onclick=function(){location.reload()};
+  p.appendChild(bt);p.appendChild(rs);p.appendChild(sc);
+  main.appendChild(p)}
+
+/* ---------- Simulado ---------- */
+var timerId=null,restante=SIM.tempo*60,iniciado=false;
+function fmt(s){var m=Math.floor(s/60),x=s%60;return (m<10?"0":"")+m+":"+(x<10?"0":"")+x}
+function buildSim(){
+  var p=el('<section id="p_sim" class="hide"><h2>Simulado · Polícia Judiciária Militar</h2><div class="box"><b>Estrutura (igual à prova):</b> 3 quesitos V/F de 5 assertivas (0,20 cada = 3,0) · 4 múltiplas escolhas (0,5 cada = 2,0) · 2 discursivas de 1,5 · 1 discursiva de 2,0 · Total 10,0 · Tempo: 100 min.</div></section>');
+  var ctl=el('<div><button class="btn" id="ini">Iniciar prova</button> <span class="timer" id="tm">100:00</span></div>');
+  p.appendChild(ctl);
+  var area=el('<div id="area"></div>');var n=0;
+  SIM.Q.forEach(function(q,i){
+    n++;var k="s"+i;
+    if(q.tipo==="vf"){
+      var w=el('<div class="box"><b>'+n+'º QUESITO</b> — '+esc(q.enun)+' <span class="meta">(Valor: 1,0 ponto; cada assertiva vale 0,20)</span></div>');
+      q.itens.forEach(function(it,j){var d=vfItem(it[0],String.fromCharCode(97+j),k+"i"+j);d.querySelector(".just").textContent="Justificativa: "+it[2];d.dataset.k=k+"i"+j;d.dataset.a=it[1];d.dataset.w=0.2;w.appendChild(d)});
+      area.appendChild(w)}
+    else if(q.tipo==="mc"){
+      var d=mcItem([n+"º QUESITO ("+q.val.toString().replace(".",",")+" pontos) — "+q.enun,q.op],"",k);d.querySelector(".just").textContent="Gabarito: ("+"ABCDE"[q.c]+"). "+q.j;d.dataset.k=k;d.dataset.a=q.c;d.dataset.w=q.val;d.dataset.mc="1";area.appendChild(d)}
+    else{
+      var d2=dcItem(n+"º QUESITO — "+q.enun,"Valor: "+q.val.toString().replace(".",",")+" pontos · Mínimo "+q.min+" e máximo "+q.max+" linhas","",k);
+      d2.querySelector(".espelho").textContent="ESPELHO\n\n"+q.esp;
+      var au=el('<div class="meta" style="margin-top:8px">Autoavaliação: <select data-dk="'+i+'"><option value="0">0 (não atendeu)</option><option value="0.5">Metade</option><option value="1">Total</option></select></div>');
+      d2.appendChild(au);area.appendChild(d2)}
+  });
+  var bt=el('<button class="btn">Verificar gabarito e calcular nota</button>'),sc=el('<div class="score"></div>');
+  bt.onclick=function(){
+    clearInterval(timerId);
+    var obj=0,maxObj=0;
+    area.querySelectorAll(".q[data-k]").forEach(function(d){
+      var key=d.dataset.k,w=parseFloat(d.dataset.w),mc=d.dataset.mc==="1";
+      var cor=mc?parseInt(d.dataset.a,10):(d.dataset.a==="true");
+      maxObj+=w;var ok=(estado[key]===cor);if(ok)obj+=w;
+      d.classList.remove("ok","err");d.classList.add(ok?"ok":"err");d.classList.add("show")});
+    var dis=0,maxDis=0;
+    area.querySelectorAll(".q:not([data-k])").forEach(function(d){
+      d.classList.add("show");var s=d.querySelector("select");var i=parseInt(s.dataset.dk,10);
+      var v=SIM.Q[i].val;maxDis+=v;dis+=v*parseFloat(s.value)});
+    var tot=obj+dis;
+    sc.style.display="block";
+    sc.innerHTML="Objetivas: "+obj.toFixed(2).replace(".",",")+" / "+maxObj.toFixed(1).replace(".",",")+"<br>Discursivas (autoavaliação): "+dis.toFixed(2).replace(".",",")+" / "+maxDis.toFixed(1).replace(".",",")+"<br><span style='font-size:1.2rem;color:var(--bor)'>NOTA FINAL: "+tot.toFixed(2).replace(".",",")+" / 10,0</span><br><span class='meta'>Atualize as autoavaliações e clique de novo para recalcular.</span>";
+    sc.scrollIntoView({behavior:"smooth",block:"center"})};
+  p.appendChild(area);p.appendChild(bt);p.appendChild(sc);
+  main.appendChild(p);
+  setTimeout(function(){$("#ini").onclick=function(){
+    if(iniciado)return;iniciado=true;this.disabled=true;
+    timerId=setInterval(function(){restante--;$("#tm").textContent=fmt(Math.max(restante,0));
+      if(restante<=0){clearInterval(timerId);alert("Tempo esgotado! Clique em “Verificar gabarito e calcular nota”.")}},1000)}},0)
+}
+
+mkNav();B.forEach(buildBloco);buildSim();show("b0");
+</script>
+</body>
+</html>
+
+</body></html>

@@ -7,12 +7,144 @@ import { moduloLabel, moduloLabelCurto } from "@/lib/modulos-titulos"
 
 type Materia = { sigla: string; nome: string; total: number; modulos: string[] }
 
-const TIPOS: [string, string][] = [["", "Todos os tipos"], ["certo_errado", "Certo/Errado"], ["multipla", "Múltipla escolha"], ["dissertativa", "Dissertativa"]]
-function buildQuery(materia: string, modulo: string, tipo: string, extra = "") {
-  let q = `materia=${encodeURIComponent(materia)}${extra}`
-  if (modulo !== "__all__") q += `&modulo=${encodeURIComponent(modulo)}`
-  if (tipo) q += `&tipo=${encodeURIComponent(tipo)}`
-  return q
+const TIPOS: [string, string][] = [["", "Todas as modalidades"], ["certo_errado", "Certo/Errado"], ["multipla", "Múltipla escolha"], ["dissertativa", "Dissertativa"]]
+const STATUS: [string, string][] = [["", "Todas"], ["nao_respondidas", "Não respondidas"], ["respondidas", "Respondidas"], ["acertei", "Acertei"], ["errei", "Errei"]]
+
+// Filtros no estilo QConcursos — combináveis entre si e enviados ao GET /api/questoes.
+type Filtros = { materia: string; modulos: string[]; tipo: string; status: string; excluirRespondidas: boolean; texto: string }
+const FILTROS_VAZIOS: Filtros = { materia: "", modulos: [], tipo: "", status: "", excluirRespondidas: false, texto: "" }
+const CHAVE_OCULTAR = "questoes:ocultarRespondidas"
+
+function buildQuery(f: Filtros, extra = "") {
+  const p = new URLSearchParams()
+  if (f.materia) p.set("materia", f.materia)
+  for (const m of f.modulos) p.append("modulo", m)
+  if (f.tipo) p.set("tipo", f.tipo)
+  if (f.excluirRespondidas) p.set("excluirRespondidas", "1")
+  else if (f.status) p.set("status", f.status)
+  if (f.texto.trim()) p.set("q", f.texto.trim())
+  return p.toString() + extra
+}
+
+function lerOcultar() {
+  try { return localStorage.getItem(CHAVE_OCULTAR) === "1" } catch { return false }
+}
+function gravarOcultar(v: boolean) {
+  try { localStorage.setItem(CHAVE_OCULTAR, v ? "1" : "0") } catch { /* sem storage: só não lembra */ }
+}
+
+/** Estado dos filtros + contagem ao vivo de quantas questões batem. */
+function useFiltros(materias: Materia[], inicial: Partial<Filtros> = {}, extraContagem = "") {
+  const [f, setF] = useState<Filtros>({ ...FILTROS_VAZIOS, ...inicial })
+  const [total, setTotal] = useState<number | null>(null)
+  const [rodada, setRodada] = useState(0)   // recontar ao voltar de uma bateria (respondidas mudaram)
+
+  useEffect(() => { if (lerOcultar()) setF(x => ({ ...x, excluirRespondidas: true })) }, [])
+
+  const query = buildQuery(f)
+  useEffect(() => {
+    const ctl = new AbortController()
+    setTotal(null)
+    const t = setTimeout(() => {
+      fetch(`/api/questoes?${query}&count=1${extraContagem}`, { signal: ctl.signal })
+        .then(r => r.json()).then(j => setTotal(typeof j.total === "number" ? j.total : 0))
+        .catch(() => {})
+    }, 300)
+    return () => { clearTimeout(t); ctl.abort() }
+  }, [query, extraContagem, rodada])
+
+  function set<K extends keyof Filtros>(k: K, v: Filtros[K]) {
+    if (k === "excluirRespondidas") gravarOcultar(v as boolean)
+    setF(x => ({ ...x, [k]: v, ...(k === "materia" ? { modulos: [] } : {}) }))
+  }
+  function limpar() { gravarOcultar(false); setF(FILTROS_VAZIOS) }
+  const mAtual = materias.find(m => m.sigla === f.materia)
+  return { f, set, limpar, total, mAtual, recontar: () => setRodada(r => r + 1) }
+}
+
+const chip = (ativo: boolean, desab = false): React.CSSProperties => ({
+  padding: "6px 12px", borderRadius: 999, fontSize: 13, fontWeight: 600, cursor: desab ? "default" : "pointer",
+  border: `1px solid ${ativo ? "var(--olive)" : "rgba(58,74,58,0.3)"}`,
+  background: ativo ? "var(--olive)" : "#fff", color: ativo ? "var(--canvas)" : "var(--ink)", opacity: desab ? 0.45 : 1,
+})
+const rotulo: React.CSSProperties = { display: "block", fontSize: 12, fontWeight: 700, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: ".04em", marginBottom: 6 }
+
+function PainelFiltros({ materias, filtros, comTipo = true }: { materias: Materia[]; filtros: ReturnType<typeof useFiltros>; comTipo?: boolean }) {
+  const { f, set, limpar, total, mAtual } = filtros
+  const sujo = JSON.stringify(f) !== JSON.stringify(FILTROS_VAZIOS)
+  function toggleModulo(md: string) {
+    set("modulos", f.modulos.includes(md) ? f.modulos.filter(x => x !== md) : [...f.modulos, md])
+  }
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <label style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
+        <span style={rotulo}>Disciplina</span>
+        <select style={inputStyle} value={f.materia} onChange={e => set("materia", e.target.value)}>
+          <option value="">Todas as disciplinas</option>
+          {materias.map(m => <option key={m.sigla} value={m.sigla}>{m.sigla} — {m.nome} ({m.total})</option>)}
+        </select>
+      </label>
+
+      {mAtual && mAtual.modulos.length > 1 && (
+        <div>
+          <span style={rotulo}>Assunto {f.modulos.length > 0 && <span style={{ textTransform: "none", fontWeight: 600 }}>· {f.modulos.length} selecionado{f.modulos.length > 1 ? "s" : ""}</span>}</span>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, maxHeight: 210, overflowY: "auto", padding: 2 }}>
+            <button type="button" onClick={() => set("modulos", [])} style={chip(f.modulos.length === 0)}>Todos</button>
+            {mAtual.modulos.map(md => (
+              <button key={md} type="button" onClick={() => toggleModulo(md)} style={{ ...chip(f.modulos.includes(md)), textAlign: "left", borderRadius: 12 }}>
+                {moduloLabel(f.materia, md)}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {comTipo && (
+        <label style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
+          <span style={rotulo}>Modalidade</span>
+          <select style={inputStyle} value={f.tipo} onChange={e => set("tipo", e.target.value)}>
+            {TIPOS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+          </select>
+        </label>
+      )}
+
+      <div>
+        <span style={rotulo}>Status</span>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {STATUS.map(([v, l]) => {
+            const desab = f.excluirRespondidas && v !== "" && v !== "nao_respondidas"
+            const ativo = f.excluirRespondidas ? v === "nao_respondidas" : f.status === v
+            return (
+              <button key={v} type="button" disabled={desab || f.excluirRespondidas} onClick={() => set("status", v)} style={chip(ativo, desab)}>{l}</button>
+            )
+          })}
+        </div>
+      </div>
+
+      <label style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderRadius: 10, cursor: "pointer",
+        background: f.excluirRespondidas ? "#eef4ea" : "#fff", border: `1px solid ${f.excluirRespondidas ? "var(--olive)" : "rgba(58,74,58,0.25)"}` }}>
+        <input type="checkbox" checked={f.excluirRespondidas} onChange={e => set("excluirRespondidas", e.target.checked)}
+          style={{ width: 18, height: 18, accentColor: "var(--olive)", flexShrink: 0 }} />
+        <span style={{ fontSize: 14, color: "var(--ink)" }}>
+          <strong>Ocultar questões que já respondi</strong>
+          <span style={{ display: "block", fontSize: 12, color: "var(--ink-60)" }}>Mostra só as inéditas para você. Dissertativas contam como não respondidas.</span>
+        </span>
+      </label>
+
+      <label style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
+        <span style={rotulo}>Palavra-chave</span>
+        <input style={inputStyle} type="search" value={f.texto} onChange={e => set("texto", e.target.value)} placeholder="Buscar no enunciado (ex.: deserção, art. 244)" />
+      </label>
+
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", fontSize: 13.5 }}>
+        <span style={{ color: "var(--ink-60)" }}>
+          {total === null ? "Contando…" : total < 0 ? "Não foi possível contar as questões." : <><strong style={{ color: total ? "var(--olive)" : "var(--red)", fontSize: 15 }}>{total}</strong> {total === 1 ? "questão encontrada" : "questões encontradas"}</>}
+          {!f.materia && total !== null && total > 300 && <span> · serão sorteadas até 300</span>}
+        </span>
+        {sujo && <button type="button" onClick={limpar} style={{ border: "none", background: "none", color: "var(--olive)", fontWeight: 600, cursor: "pointer", fontSize: 13.5, padding: 0 }}>Limpar filtros</button>}
+      </div>
+    </div>
+  )
 }
 type Disc = { sigla: string; nome: string }
 type Stat = { sigla: string; nome: string; acertos: number; total: number }
@@ -206,9 +338,7 @@ function Opcoes({ q, escolhida, gabarito, onPick }: { q: Questao; escolhida: str
 
 // ── Resolver ──
 function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; initialMateria?: string }) {
-  const [materia, setMateria] = useState(materias.some(m => m.sigla === initialMateria) ? initialMateria : "")
-  const [modulo, setModulo] = useState("__all__")
-  const [tipo, setTipo] = useState("")
+  const filtros = useFiltros(materias, { materia: materias.some(m => m.sigla === initialMateria) ? initialMateria : "" })
   const [qs, setQs] = useState<Questao[] | null>(null)
   const [i, setI] = useState(0)
   const [escolhida, setEscolhida] = useState<string | null>(null)
@@ -221,10 +351,9 @@ function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; init
   const [correcao, setCorrecao] = useState<Correcao | null>(null)
   const [corrErro, setCorrErro] = useState("")
 
-  const mAtual = materias.find(m => m.sigla === materia)
   async function iniciar() {
-    if (!materia) return
-    const res = await fetch(`/api/questoes?${buildQuery(materia, modulo, tipo, "&shuffle=1")}`)
+    if (!filtros.total) return   // 0 = nada a resolver; -1 (contagem falhou) segue
+    const res = await fetch(`/api/questoes?${buildQuery(filtros.f, "&shuffle=1")}`)
     const data = await res.json()
     setQs(data); setI(0); setEscolhida(null); setFeedback(null); setAcertos(0); setFeitas(0); setDisTexto(""); setDisRevelado(false); setCorrecao(null); setCorrErro("")
   }
@@ -251,31 +380,13 @@ function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; init
   if (!qs) {
     return (
       <div style={card}>
-        <label style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
-          Matéria
-          <select style={{ ...inputStyle, marginTop: 6 }} value={materia} onChange={e => { setMateria(e.target.value); setModulo("__all__") }}>
-            <option value="">— selecione —</option>
-            {materias.map(m => <option key={m.sigla} value={m.sigla}>{m.sigla} — {m.nome} ({m.total})</option>)}
-          </select>
-        </label>
-        {mAtual && (
-          <div style={{ display: "flex", gap: 12, marginTop: 12 }}>
-            <label style={{ flex: 1, fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>Módulo
-              <select style={{ ...inputStyle, marginTop: 6 }} value={modulo} onChange={e => setModulo(e.target.value)}>
-                <option value="__all__">Todos os módulos</option>
-                {mAtual.modulos.map(md => <option key={md} value={md}>{moduloLabel(materia, md)}</option>)}
-              </select>
-            </label>
-            <label style={{ flex: 1, fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>Tipo
-              <select style={{ ...inputStyle, marginTop: 6 }} value={tipo} onChange={e => setTipo(e.target.value)}>
-                {TIPOS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
-              </select>
-            </label>
-          </div>
+        {materias.length === 0 ? <p style={{ color: "var(--ink-60)", margin: 0, fontSize: 13.5 }}>Ainda não há questões cadastradas.</p> : (
+          <PainelFiltros materias={materias} filtros={filtros} />
         )}
-        {materias.length === 0 && <p style={{ color: "var(--ink-60)", marginTop: 10, fontSize: 13.5 }}>Ainda não há questões cadastradas.</p>}
-        <button onClick={iniciar} disabled={!materia} style={{ marginTop: 14, padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: materia ? "pointer" : "default" }}>
-          Começar
+        <button onClick={iniciar} disabled={!filtros.total}
+          style={{ marginTop: 16, width: "100%", padding: "12px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, fontSize: 15,
+            cursor: filtros.total ? "pointer" : "default", opacity: filtros.total ? 1 : 0.5 }}>
+          Resolver questões
         </button>
       </div>
     )
@@ -286,8 +397,8 @@ function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; init
       <div style={{ ...card, textAlign: "center" }}>
         <h2 style={{ fontFamily: "var(--serif-cfo)", color: "var(--olive)" }}>Concluído!</h2>
         <p style={{ fontSize: 18, marginTop: 8 }}>Acertos: <strong>{acertos}/{feitas}</strong></p>
-        <button onClick={() => setQs(null)} style={{ marginTop: 14, padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>
-          Escolher outra matéria
+        <button onClick={() => { setQs(null); filtros.recontar() }} style={{ marginTop: 14, padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>
+          Voltar aos filtros
         </button>
       </div>
     )
@@ -296,9 +407,12 @@ function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; init
   const q = qs[i]
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "var(--ink-60)", marginBottom: 8 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 8, flexWrap: "wrap", fontSize: 13, color: "var(--ink-60)", marginBottom: 8 }}>
         <span>{q.materia}{q.modulo ? ` · ${moduloLabelCurto(q.materia, q.modulo)}` : ""}</span>
-        <span>Questão {i + 1} de {qs.length} · acertos {acertos}/{feitas}</span>
+        <span>
+          Questão {i + 1} de {qs.length} · acertos {acertos}/{feitas}
+          <button onClick={() => { setQs(null); filtros.recontar() }} style={{ marginLeft: 10, border: "none", background: "none", padding: 0, color: "var(--olive)", fontWeight: 600, fontSize: 13, cursor: "pointer" }}>Filtros</button>
+        </span>
       </div>
       <div style={card}>
         <Enunciado q={q} />
@@ -359,8 +473,7 @@ function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; init
 
 // ── Simulado ──
 function Simulado({ materias }: { materias: Materia[] }) {
-  const [materia, setMateria] = useState("")
-  const [modulo, setModulo] = useState("__all__")
+  const filtros = useFiltros(materias, {}, "&objetivas=1")
   const [qtd, setQtd] = useState("10")
   const [min, setMin] = useState("15")
   const [qs, setQs] = useState<Questao[] | null>(null)
@@ -397,32 +510,17 @@ function Simulado({ materias }: { materias: Materia[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restante])
 
-  const mAtual = materias.find(m => m.sigla === materia)
   async function iniciar() {
-    if (!materia) return
-    const res = await fetch(`/api/questoes?${buildQuery(materia, modulo, "", "&shuffle=1")}`)
-    const todas: Questao[] = await res.json()
-    const data = todas.filter(q => q.tipo !== "dissertativa").slice(0, Number(qtd) || 10)
+    if (!filtros.total) return   // 0 = nada a resolver; -1 (contagem falhou) segue
+    const res = await fetch(`/api/questoes?${buildQuery(filtros.f, `&objetivas=1&shuffle=1&limit=${Number(qtd) || 10}`)}`)
+    const data: Questao[] = await res.json()
     setQs(data); setI(0); setRespostas({}); setResultado(null); setRestante((Number(min) || 15) * 60)
   }
 
   if (!qs) {
     return (
       <div style={card}>
-        <label style={{ fontSize: 13, fontWeight: 600 }}>Matéria
-          <select style={{ ...inputStyle, marginTop: 6 }} value={materia} onChange={e => { setMateria(e.target.value); setModulo("__all__") }}>
-            <option value="">— selecione —</option>
-            {materias.map(m => <option key={m.sigla} value={m.sigla}>{m.sigla} — {m.nome} ({m.total})</option>)}
-          </select>
-        </label>
-        {mAtual && (
-          <label style={{ display: "block", fontSize: 13, fontWeight: 600, marginTop: 12 }}>Módulo
-            <select style={{ ...inputStyle, marginTop: 6 }} value={modulo} onChange={e => setModulo(e.target.value)}>
-              <option value="__all__">Todos os módulos</option>
-              {mAtual.modulos.map(md => <option key={md} value={md}>{moduloLabel(materia, md)}</option>)}
-            </select>
-          </label>
-        )}
+        <PainelFiltros materias={materias} filtros={filtros} comTipo={false} />
         <p style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 10 }}>O simulado usa apenas questões objetivas (Certo/Errado e Múltipla escolha).</p>
         <div style={{ display: "flex", gap: 12, marginTop: 12 }}>
           <label style={{ fontSize: 13, fontWeight: 600, flex: 1 }}>Nº de questões
@@ -432,7 +530,7 @@ function Simulado({ materias }: { materias: Materia[] }) {
             <input style={{ ...inputStyle, marginTop: 6 }} value={min} onChange={e => setMin(e.target.value)} inputMode="numeric" />
           </label>
         </div>
-        <button onClick={iniciar} disabled={!materia} style={{ marginTop: 14, padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: materia ? "pointer" : "default" }}>
+        <button onClick={iniciar} disabled={!filtros.total} style={{ marginTop: 14, width: "100%", padding: "12px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, fontSize: 15, cursor: filtros.total ? "pointer" : "default", opacity: filtros.total ? 1 : 0.5 }}>
           Iniciar simulado
         </button>
       </div>
@@ -445,7 +543,7 @@ function Simulado({ materias }: { materias: Materia[] }) {
       <div style={{ ...card, textAlign: "center" }}>
         <h2 style={{ fontFamily: "var(--serif-cfo)", color: "var(--olive)" }}>Simulado encerrado</h2>
         <p style={{ fontSize: 22, marginTop: 8, fontWeight: 700, color: "var(--olive)" }}>{resultado.acertos}/{resultado.total} · {pct}%</p>
-        <button onClick={() => setQs(null)} style={{ marginTop: 14, padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>
+        <button onClick={() => { setQs(null); filtros.recontar() }} style={{ marginTop: 14, padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: "pointer" }}>
           Novo simulado
         </button>
       </div>
