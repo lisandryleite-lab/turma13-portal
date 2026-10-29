@@ -1,0 +1,411 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questões QAGV · CFO PM 2026</title>
+<style>
+:root{--bg:#fbf9f3;--ink:#2a2620;--bor:#7d1f2b;--azul:#1f4e79;--verde:#2e6b3e;--dour:#9a7b16;--cinza:#4a4a4a;--ok:#e3f1e6;--err:#f6e1e3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.5}
+header{background:var(--bor);color:#fff;padding:14px 20px;border-bottom:4px solid var(--dour)}
+header h1{margin:0;font-size:1.15rem;letter-spacing:.5px}
+nav{display:flex;flex-wrap:wrap;gap:4px;padding:10px 14px;background:#f1ece0;border-bottom:1px solid #d8d0bc;position:sticky;top:0;z-index:5}
+nav button{font:inherit;font-size:.85rem;padding:7px 12px;border:1px solid var(--cinza);background:#fff;color:var(--ink);cursor:pointer;border-radius:4px}
+nav button.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+nav button.sim{border-color:var(--bor)}nav button.sim.on{background:var(--bor)}
+main{max-width:900px;margin:0 auto;padding:18px 16px 60px}
+h2{color:var(--bor);border-bottom:2px solid var(--dour);padding-bottom:4px;margin-top:8px}
+h3{color:var(--azul);margin:26px 0 8px}
+.q{background:#fff;border:1px solid #ddd5c1;border-left:4px solid var(--azul);border-radius:4px;padding:10px 14px;margin:10px 0}
+.q.ok{background:var(--ok);border-left-color:var(--verde)}.q.err{background:var(--err);border-left-color:var(--bor)}
+.n{font-weight:bold;color:var(--azul);margin-right:6px}
+.vf{display:inline-flex;gap:4px;margin-right:10px;vertical-align:middle}
+.vf button,.opt{font:inherit;cursor:pointer;border:1px solid var(--cinza);background:#fff;border-radius:4px}
+.vf button{width:34px;height:30px;font-weight:bold}
+.vf button.sel{background:var(--azul);color:#fff;border-color:var(--azul)}
+.opt{display:block;width:100%;text-align:left;padding:6px 10px;margin:4px 0}
+.opt.sel{background:#dbe7f3;border-color:var(--azul)}
+.just{display:none;margin-top:6px;padding:6px 10px;font-size:.9rem;background:#faf3d9;border-left:3px solid var(--dour);color:var(--cinza)}
+.show .just{display:block}
+textarea{width:100%;min-height:130px;font:inherit;padding:8px;border:1px solid var(--cinza);border-radius:4px;background:#fffefb}
+.espelho{display:none;white-space:pre-wrap;margin-top:8px;padding:10px 12px;background:#e8eff6;border-left:4px solid var(--azul);font-size:.92rem}
+.show .espelho{display:block}
+.meta{font-size:.82rem;color:var(--cinza)}
+.btn{font:inherit;padding:9px 18px;border:0;background:var(--verde);color:#fff;border-radius:4px;cursor:pointer;margin:14px 8px 0 0}
+.btn.b2{background:var(--cinza)}.btn.b3{background:var(--bor)}
+.score{margin-top:14px;padding:12px 16px;background:#fff;border:2px solid var(--dour);font-weight:bold;display:none}
+.timer{position:sticky;top:52px;z-index:4;display:inline-block;background:var(--bor);color:#fff;padding:6px 14px;border-radius:4px;font-size:1.05rem;font-family:monospace;margin:6px 0}
+.box{border:1px solid #ccc;background:#fff;padding:8px 12px;margin:8px 0;border-radius:4px}
+select{font:inherit;padding:4px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<header><h1>QUESTÕES — QUALIDADE DO ATENDIMENTO AOS GRUPOS VULNERÁVEIS (QAGV) · CFO PM 2026</h1></header>
+<nav id="nav"></nav>
+<main id="main"></main>
+
+<script>
+/* ===================== DADOS ===================== */
+var B=[];
+
+/* ---------- BLOCO 1 ---------- */
+B.push({t:"1 · Minorias e Grupos Vulneráveis",
+vf:[
+["Os termos “minorias” e “grupos vulneráveis” são frequentemente empregados como sinônimos, remetendo a grupos em posição de desvantagem.",true,"Correto, conforme a apostila (2.1)."],
+["Os grupos vulneráveis têm alta probabilidade de serem ofendidos ou atacados e possuem uma identidade ou traço comum entre si.",false,"Falso. Os grupos vulneráveis NÃO possuem identidade ou traço comum entre si."],
+["São exemplos de grupos vulneráveis: consumidores, sindicatos, idosos, crianças, mulheres, pessoas com deficiência e pessoas LGBTQIAPN+.",true,"Correto (Siqueira e Castro, 2017)."],
+["Minorias são sujeitos conectados por um traço cultural comum, sendo esse traço o que as difere dos demais integrantes da sociedade.",true,"Correto."],
+["O traço cultural da minoria deve ser eliminado para viabilizar a integração social.",false,"Falso. Esse traço não visa a ser eliminado, mas reconhecido e respeitado, com fundamento na pluralidade."],
+["Os indígenas são exemplo de minoria: lutam pelo reconhecimento de sua cultura, não pela eliminação do traço diferenciado.",true,"Correto."],
+["O critério numérico, por si só, é suficiente para caracterizar uma minoria.",false,"Falso. O número, por si só, não caracteriza uma minoria."],
+["Para ser protegida institucionalmente, a minoria necessita ser não dominante no Estado em que vive.",true,"Correto."],
+["São quatro os elementos das minorias: não dominação, vínculo subjetivo de solidariedade, demanda de especial proteção estatal e opressão social.",true,"Correto (Siqueira e Castro, 2017, p. 111)."],
+["O vínculo subjetivo de solidariedade para proteção da identidade cultural é característica comum às minorias e aos grupos vulneráveis.",false,"Falso. Essa característica não pertence aos grupos vulneráveis."],
+["Os grupos vulneráveis são o gênero (minoria lato sensu); as minorias são a espécie (minoria stricto sensu).",true,"Correto."],
+["Nos grupos vulneráveis busca-se o respeito e o exercício de garantias já reconhecidas; as minorias buscam primeiro o reconhecimento de direitos e, depois, o seu exercício.",true,"Correto."],
+["Na política pública voltada a minorias, a estratégia deve eliminar o traço cultural específico para homogeneizar a sociedade.",false,"Falso. Deve-se manter o traço cultural específico, sem eliminá-lo (BRITO, 2009)."],
+["Entre os fundamentos legais da correlação com os Direitos Humanos estão a DUDH e a Convenção sobre a Eliminação de Todas as Formas de Discriminação Racial (CERD).",true,"Correto."],
+["As ações afirmativas são medidas para assegurar a igualdade meramente formal, sem relação com desigualdades históricas e sociais.",false,"Falso. Visam à igualdade de fato e a corrigir desigualdades históricas e sociais."]
+],
+mc:[
+["Sobre minorias, assinale a alternativa INCORRETA.",["São sujeitos conectados por um traço cultural comum.","O número, por si só, não caracteriza uma minoria.","Para proteção institucional, a minoria precisa ser não dominante no Estado.","O traço cultural é o que as difere dos demais integrantes da sociedade.","O traço cultural deve ser eliminado, para que a minoria seja reconhecida."],4,"O traço não visa a ser eliminado, mas reconhecido e respeitado."],
+["A apostila cita como exemplo de MINORIA:",["Consumidores.","Sindicatos.","Idosos.","Indígenas.","Crianças."],3,"Consumidores, sindicatos, idosos e crianças são exemplos de grupos vulneráveis."],
+["Sobre grupos vulneráveis, é CORRETO afirmar:",["Possuem um traço cultural comum que os difere dos demais.","Têm alta probabilidade de serem atacados, mas não possuem traço comum entre si.","São espécie, a minoria stricto sensu.","Buscam preservar o traço objeto de discriminação.","Têm vínculo subjetivo de solidariedade para proteção da identidade cultural."],1,"Grupos vulneráveis são o gênero (minoria lato sensu)."],
+["Na diferenciação para fins de política pública (BRITO, 2009), quando se trata de uma minoria deve-se:",["eliminar o traço cultural para homogeneizar a sociedade.","tratar igual aos grupos vulneráveis, sem preservar traço cultural.","pensar em estratégia que contemple o reconhecimento de direitos e a manutenção do traço cultural específico.","impor os valores da cultura majoritária.","ignorar a identidade do grupo."],2,"A estratégia deve manter o traço cultural, sem tentar eliminá-lo."],
+["As ações afirmativas, na correlação com os Direitos Humanos, são:",["medidas especiais para assegurar a igualdade de fato e corrigir desigualdades históricas e sociais.","medidas que excluem minorias dos processos decisórios.","substitutas da DUDH.","medidas que garantem apenas a igualdade formal.","medidas que eliminam a diversidade cultural."],0,"Item C da correlação: ações afirmativas."]
+],
+dc:[
+["Diferencie minorias de grupos vulneráveis, indicando exemplos, a relação gênero e espécie e o objetivo de cada grupo.","6 a 15 linhas","Grupos vulneráveis são indivíduos com alta probabilidade de serem ofendidos ou atacados, mas que não possuem identidade ou traço comum entre si (ex.: consumidores, sindicatos, idosos, crianças, mulheres, pessoas com deficiência, LGBTQIAPN+). São o gênero, a minoria lato sensu; buscam o respeito e o exercício de garantias já reconhecidas.\nMinorias são sujeitos conectados por um traço cultural comum, que os difere dos demais; esse traço não visa a ser eliminado, mas reconhecido e respeitado, com fundamento na pluralidade (ex.: indígenas). São a espécie, a minoria stricto sensu; buscam primeiro o reconhecimento de direitos e, depois, o seu exercício. O número, por si só, não caracteriza minoria, e a proteção institucional exige que seja não dominante no Estado (Siqueira e Castro, 2017)."],
+["Indique os quatro elementos (peculiaridades) das minorias e explique a importância da diferenciação para a política pública.","6 a 15 linhas","Elementos: (a) posição de não dominação junto ao grupo social; (b) vínculo subjetivo de solidariedade entre os membros para proteção da identidade cultural, característica que não pertence aos grupos vulneráveis; (c) demandam especial proteção estatal; (d) sofrem opressão social.\nImportância: ao tratar de minoria, a política pública deve contemplar o reconhecimento de direitos e a manutenção do traço cultural específico (fator de discriminação), sem eliminá-lo para homogeneizar a sociedade (BRITO, 2009). Para grupos vulneráveis, a estratégia é distinta, pois não envolve preservar traço cultural, e sim pôr em prática direitos já reconhecidos."],
+["Explique a correlação entre minorias e grupos vulneráveis e os Direitos Humanos, nos quatro aspectos da apostila.","10 a 20 linhas","(A) Fundamentação legal: DUDH, que estabelece princípios de igualdade e não discriminação; convenções e tratados, como a CERD e a Convenção sobre os Direitos das Pessoas com Deficiência (CDPD).\n(B) Princípio da igualdade e não discriminação: proibição da discriminação em todas as formas e igualdade de direitos e oportunidades, independentemente de raça, gênero, orientação sexual, religião, deficiência ou status socioeconômico.\n(C) Ações afirmativas: medidas especiais para assegurar a igualdade de fato e corrigir desigualdades históricas e sociais; proteção contra abusos, exploração e violência.\n(D) Reconhecimento e valorização da diversidade: direito à autodeterminação e à participação ativa nos processos decisórios; valorização da diversidade cultural, social e étnica."]
+]});
+
+/* ---------- BLOCO 2 ---------- */
+B.push({t:"2 · ECA e Estatuto do Idoso",
+vf:[
+["Considera-se criança a pessoa até doze anos de idade incompletos e adolescente aquela entre doze e dezoito anos (art. 2º, ECA).",true,"Correto."],
+["O parágrafo único do art. 2º prevê que o Estatuto se aplica excepcionalmente às pessoas entre dezoito e vinte e cinco anos.",false,"Falso. A faixa é entre dezoito e vinte e um anos, nos casos expressos em lei."],
+["É dever da família, da comunidade, da sociedade em geral e do poder público assegurar, com absoluta prioridade, a efetivação dos direitos fundamentais da criança e do adolescente (art. 4º).",true,"Correto."],
+["O art. 4º do ECA atribui o dever de assegurar os direitos fundamentais exclusivamente à família.",false,"Falso. O dever é da família, da comunidade, da sociedade em geral e do poder público."],
+["O art. 18-A garante à criança e ao adolescente o direito de serem educados e cuidados sem o uso de castigo físico ou de tratamento cruel ou degradante.",true,"Correto (incluído pela Lei 13.010/2014)."],
+["Castigo físico é a ação de natureza disciplinar ou punitiva aplicada com uso da força física que resulte em sofrimento físico ou lesão.",true,"Correto."],
+["Tratamento cruel ou degradante é a conduta que humilhe, ameace gravemente ou ridicularize a criança ou o adolescente.",true,"Correto."],
+["A proibição do art. 18-A alcança os pais, mas não os agentes públicos executores de medidas socioeducativas.",false,"Falso. Alcança pais, família ampliada, responsáveis, agentes públicos executores de medidas socioeducativas e qualquer pessoa encarregada de cuidar da criança."],
+["Ato infracional é a conduta descrita como crime ou contravenção penal praticada por criança ou adolescente (art. 103).",true,"Correto."],
+["As medidas de proteção do art. 98 aplicam-se quando os direitos forem ameaçados ou violados por ação ou omissão da sociedade ou do Estado, por falta, omissão ou abuso dos pais ou responsável, ou em razão da conduta da criança ou adolescente.",true,"Correto."],
+["A criança que pratica ato infracional é conduzida à Delegacia de Polícia, e o adolescente, ao Conselho Tutelar.",false,"Falso. A criança é conduzida ao Conselho Tutelar e o adolescente à Delegacia."],
+["Entre as medidas aplicáveis ao adolescente infrator está a prisão em presídio comum.",false,"Falso. O rol traz advertência, reparação do dano, PSC, liberdade assistida, semiliberdade e internação em estabelecimento educacional."],
+["O art. 71 do Estatuto do Idoso assegura prioridade na tramitação dos processos em que figure como parte ou interveniente pessoa com idade igual ou superior a 60 anos.",true,"Correto."],
+["Entre as pessoas idosas, é assegurada prioridade especial aos maiores de 80 anos (art. 3º, §2º).",true,"Correto."],
+["A gratuidade dos transportes coletivos públicos urbanos e semiurbanos é assegurada aos maiores de 60 anos (art. 39).",false,"Falso. É assegurada aos maiores de 65 anos."]
+],
+mc:[
+["Sobre o art. 18-A do ECA, assinale a alternativa INCORRETA.",["Garante o direito de ser educado e cuidado sem castigo físico ou tratamento cruel ou degradante.","Aplica-se aos pais e aos integrantes da família ampliada.","Aplica-se aos agentes públicos executores de medidas socioeducativas.","O castigo físico é admitido como forma de correção quando leve e de natureza disciplinar.","Tratamento cruel ou degradante inclui humilhar, ameaçar gravemente ou ridicularizar."],3,"O art. 18-A veda o castigo físico como forma de correção ou disciplina."],
+["Assinale a alternativa que NÃO integra as medidas aplicáveis ao adolescente a quem se atribui ato infracional.",["Advertência.","Obrigação de reparar o dano.","Prestação de serviços à comunidade.","Liberdade assistida.","Prisão preventiva em presídio comum."],4,"As medidas são as do rol do ECA (advertência a internação)."],
+["Sobre o Estatuto do Idoso, assinale a alternativa CORRETA.",["A prioridade especial é assegurada aos maiores de 80 anos.","A gratuidade nos transportes coletivos é para maiores de 60 anos.","A gratuidade alcança os serviços seletivos e especiais paralelos aos regulares.","Idoso, para a apostila, é quem tem mais de 70 anos.","A negativa de crédito motivada por superendividamento do idoso constitui sempre crime."],0,"Art. 3º, §2º. Gratuidade: maiores de 65, exceto serviços seletivos e especiais; a negativa de crédito por superendividamento não é crime."],
+["Segundo o art. 97 do Estatuto do Idoso (deixar de prestar assistência), se da omissão resulta morte, a pena é:",["dobrada.","aumentada de metade.","triplicada.","convertida em reclusão de 5 anos.","mantida sem aumento."],2,"Aumentada de 1/2 se resulta lesão corporal grave e triplicada se resulta morte."],
+["A conduta de discriminar pessoa idosa, impedindo ou dificultando seu acesso a operações bancárias, aos meios de transporte etc. (art. 96) tem pena de:",["detenção de 1 a 2 anos.","reclusão de 6 meses a 1 ano e multa.","reclusão de 1 a 3 anos.","detenção de 6 meses a 2 anos.","apenas multa."],1,"Art. 96, conforme a apostila."]
+],
+dc:[
+["Explique a diferença entre criança e adolescente no ECA e discorra sobre os arts. 3º, 4º e 18-A (proteção integral, dever de assegurar e vedação de castigo físico e tratamento cruel ou degradante).","10 a 20 linhas","Art. 2º: criança é a pessoa até doze anos incompletos; adolescente, entre doze e dezoito anos; excepcionalmente aplica-se o Estatuto entre dezoito e vinte e um anos, nos casos expressos em lei.\nArt. 3º: gozam de todos os direitos fundamentais, com proteção integral, e os direitos aplicam-se sem discriminação. Art. 4º: é dever da família, da comunidade, da sociedade em geral e do poder público assegurar, com absoluta prioridade, a efetivação desses direitos.\nArt. 18-A (Lei 13.010/2014): direito de serem educados e cuidados sem castigo físico ou tratamento cruel ou degradante, aplicável a pais, família ampliada, responsáveis, agentes públicos executores de medidas socioeducativas e qualquer pessoa encarregada de cuidar. Castigo físico: força física com fim disciplinar ou punitivo que resulte em sofrimento físico ou lesão. Tratamento cruel ou degradante: humilhar, ameaçar gravemente ou ridicularizar."],
+["Conceitue ato infracional, indique para onde são conduzidos a criança e o adolescente e enumere as medidas aplicáveis ao adolescente e as hipóteses do art. 98.","10 a 20 linhas","Ato infracional (art. 103): conduta descrita como crime ou contravenção penal praticada por criança ou adolescente. A criança é conduzida ao Conselho Tutelar e o adolescente à Delegacia de Polícia.\nVerificada a prática de ato infracional, a autoridade competente poderá aplicar ao adolescente: advertência; obrigação de reparar o dano; prestação de serviços à comunidade; liberdade assistida; inserção em regime de semiliberdade; internação em estabelecimento educacional; e qualquer das medidas do art. 101, I a VI.\nMedidas de proteção (art. 98) aplicam-se sempre que os direitos forem ameaçados ou violados: por ação ou omissão da sociedade ou do Estado; por falta, omissão ou abuso dos pais ou responsável; em razão da própria conduta."],
+["Discorra sobre o Estatuto do Idoso: conceito, prioridades (art. 3º, §2º e art. 71), gratuidade (art. 39), os crimes dos arts. 96 e 97 e a negativa de crédito por superendividamento.","10 a 20 linhas","Idoso é a pessoa com mais de 60 anos, conforme a apostila. Família, comunidade, sociedade e poder público devem assegurar, com absoluta prioridade, os direitos à vida, saúde, alimentação, educação, cultura, esporte, lazer, trabalho, cidadania, liberdade, dignidade, respeito e convivência familiar e comunitária. É dever de todos zelar pela dignidade do idoso (art. 10, §3º).\nPrioridade especial aos maiores de 80 (art. 3º, §2º); prioridade na tramitação processual a partir de 60 anos (art. 71). Gratuidade dos transportes coletivos públicos urbanos e semiurbanos aos maiores de 65 (art. 39), exceto serviços seletivos e especiais paralelos aos regulares.\nArt. 96: discriminar idoso, dificultando acesso a operações bancárias, transporte etc.: reclusão de 6 meses a 1 ano e multa. Art. 97: deixar de prestar assistência: detenção de 6 meses a 1 ano e multa, aumentada de metade se resulta lesão corporal grave e triplicada se resulta morte. A negativa de crédito motivada por superendividamento do idoso não constitui crime (novidade de 2021)."]
+]});
+
+/* ---------- BLOCO 3 ---------- */
+B.push({t:"3 · Lei Maria da Penha e POP de Violência contra a Mulher",
+vf:[
+["A Lei 11.340/06 cria mecanismos para coibir e prevenir a violência doméstica e familiar contra a mulher, nos termos do §8º do art. 226 da Constituição Federal.",true,"Correto."],
+["Configura violência doméstica e familiar contra a mulher qualquer ação ou omissão baseada no gênero que lhe cause morte, lesão, sofrimento físico, sexual ou psicológico e dano moral ou patrimonial (art. 5º).",true,"Correto."],
+["Para configurar violência por relação íntima de afeto, o art. 5º exige que agressor e ofendida convivam sob o mesmo teto.",false,"Falso. A relação íntima de afeto configura-se independentemente de coabitação."],
+["As relações pessoais enunciadas no art. 5º independem de orientação sexual.",true,"Correto (parágrafo único)."],
+["O art. 7º prevê cinco formas de violência: física, psicológica, sexual, patrimonial e moral.",true,"Correto."],
+["Violência moral é qualquer conduta que configure calúnia, difamação ou injúria.",true,"Correto."],
+["A violência patrimonial limita-se à destruição total de bens, não abrangendo retenção ou subtração.",false,"Falso. Abrange retenção, subtração, destruição parcial ou total de objetos, instrumentos de trabalho, documentos, bens, valores e direitos."],
+["O ciclo de violência é composto por três fases: tensão, explosão e arrependimento (lua de mel).",true,"Correto."],
+["Na fase da explosão o agressor se torna amável para conseguir a reconciliação.",false,"Falso. Isso ocorre na fase do arrependimento (lua de mel); a explosão é o ato violento."],
+["As medidas protetivas de urgência que obrigam o agressor estão no art. 22; as destinadas à ofendida, no art. 23; e as de ordem patrimonial, no art. 24.",true,"Correto."],
+["O rol de medidas de proteção da Lei Maria da Penha é exaustivo, não podendo o juiz conceder outras.",false,"Falso. O rol é não exaustivo; o juiz pode conceder outras medidas."],
+["Pelo POP, a entrevista da mulher em situação de violência deve ser feita, preferencialmente, por uma policial militar feminina.",true,"Correto."],
+["Havendo apenas uma viatura, vítima e agressor devem ser conduzidos juntos no banco traseiro.",false,"Falso. O agressor é conduzido no xadrez e a mulher no banco de trás; nunca no mesmo espaço físico."],
+["Se a mulher negar as agressões, mas houver lesões aparentes e testemunhas, todas as partes devem ser encaminhadas à delegacia, mesmo contra a vontade da ofendida.",true,"Correto (Situação 03, V)."],
+["No local de morte de mulher, o policial deve fotografar ou filmar o corpo para preservar a prova.",false,"Falso. Não deve fotografar nem filmar o corpo; deve isolar e preservar o local."]
+],
+mc:[
+["Sobre o art. 5º da Lei Maria da Penha, assinale a alternativa CORRETA.",["Exige coabitação para configurar relação íntima de afeto.","Alcança a relação íntima de afeto em que o agressor conviva ou tenha convivido com a ofendida, independentemente de coabitação.","Exclui as relações homoafetivas.","Restringe-se à unidade doméstica.","Limita-se à violência física."],1,"Art. 5º, III, e parágrafo único."],
+["O agressor se torna amável para conseguir a reconciliação e a mulher se sente confusa e pressionada a manter o relacionamento. Trata-se da fase:",["de tensão.","de explosão.","do arrependimento (lua de mel).","de ameaça.","de renúncia."],2,"Terceira fase do ciclo."],
+["Segundo o POP, ao atender ocorrência de violência doméstica à luz da Lei Maria da Penha, o efetivo deve:",["conduzir primeiro o agressor.","ouvir primeiro a mulher em situação de violência.","lavrar TCO no local.","encaminhar o caso ao Conselho Tutelar.","aguardar a vítima procurar a delegacia."],1,"Situação 03, item I."],
+["Em ocorrência de violência contra a mulher que NÃO se enquadre na Lei Maria da Penha, a mulher vítima de estupro deve ser:",["encaminhada de imediato para atendimento médico e, em seguida, à delegacia.","encaminhada primeiro à delegacia e depois ao hospital.","liberada no local.","conduzida ao Conselho Tutelar.","encaminhada exclusivamente à Delegacia da Mulher."],0,"Situação 04, item III. Em Recife, preferencialmente Hospital da Mulher, IMIP ou Hospital Agamenon Magalhães."],
+["Assinale a conduta que o POP manda EVITAR no atendimento de violência doméstica.",["Acolher e respeitar a vítima.","Ameaçar ou sugerir a possível prisão das partes para desencorajar futuros pedidos de intervenção.","Incentivar a mulher a fazer o registro.","Manter as partes separadas.","Entrevistar a vítima, preferencialmente, por policial feminina."],1,"Item C, II, do POP."]
+],
+dc:[
+["Explique as hipóteses do art. 5º e as cinco formas de violência do art. 7º da Lei Maria da Penha.","10 a 20 linhas","Art. 5º: configura violência doméstica e familiar contra a mulher qualquer ação ou omissão baseada no gênero que cause morte, lesão, sofrimento físico, sexual ou psicológico e dano moral ou patrimonial: I) no âmbito da unidade doméstica (espaço de convívio permanente, com ou sem vínculo familiar, inclusive esporadicamente agregadas); II) no âmbito da família (comunidade de indivíduos aparentados por laços naturais, afinidade ou vontade expressa); III) em qualquer relação íntima de afeto, na qual o agressor conviva ou tenha convivido com a ofendida, independentemente de coabitação. As relações independem de orientação sexual.\nArt. 7º: violência física (ofensa à integridade ou saúde corporal); psicológica (dano emocional, diminuição da autoestima, controle de ações, ameaça, humilhação, manipulação, isolamento, perseguição contumaz etc.); sexual (constranger a presenciar, manter ou participar de relação sexual não desejada; impedir uso de contraceptivo; forçar casamento, gravidez, aborto ou prostituição); patrimonial (retenção, subtração, destruição de bens, documentos, recursos); moral (calúnia, difamação ou injúria)."],
+["Descreva as três fases do ciclo de violência e o rol de medidas protetivas (arts. 22, 23 e 24), destacando seu caráter não exaustivo.","6 a 15 linhas","Fase 1, tensão: o agressor fica tenso e irritado por coisas insignificantes, com acessos de raiva, humilhações, ameaças e destruição de objetos. Fase 2, explosão: a tensão acumulada se materializa em violência verbal, física, psicológica, moral ou patrimonial. Fase 3, arrependimento (lua de mel): o agressor se torna amável para conseguir a reconciliação, e a mulher, confusa e pressionada, abre mão de seus direitos enquanto ele diz que vai mudar.\nMedidas: protetivas de urgência que obrigam o agressor (art. 22); protetivas de urgência à ofendida (art. 23); proteção de ordem patrimonial (art. 24). O rol é não exaustivo: o juiz pode conceder outras medidas se verificada situação que torne a mulher ainda mais vulnerável."],
+["Descreva a sequência de ações do efetivo na Situação 03 do POP (violência doméstica à luz da Lei Maria da Penha) e as condutas a evitar.","10 a 20 linhas","Sequência: certificar-se da violência ouvindo primeiro a mulher; obter confirmação e local do agressor, procurando conduzi-lo com as partes à Delegacia da Mulher, Delegacia Comum ou de Plantão; perguntar se a mulher autoriza a entrada na residência, de preferência com testemunhas da vizinhança; conduzir primeiro a vítima ferida ao atendimento médico e depois à delegacia, sem que vítima e agressor sigam no mesmo espaço físico; havendo lesões aparentes e testemunhas, encaminhar todas as partes à delegacia mesmo contra a vontade da ofendida; se a mulher negar e não houver lesões, registrar BO, colher assinatura de mulher e agressor e informar o COPOM/CIODS; se desistir de denunciar após confirmadas as agressões, prosseguir até a delegacia para decisão da autoridade judiciária; reportar ao Coordenador do COPOM/CIODS ou ao Oficial de Operações se houver dificuldade para o registro.\nA evitar: declarações que desencorajem o relato, ameaçar com prisão para desencorajar novos pedidos, comentários depreciativos, tratar o caso como de menor importância e julgamentos pessoais."]
+]});
+
+/* ---------- BLOCO 4 ---------- */
+B.push({t:"4 · PcD, TEA, LGBTQIAPN+, Povos Tradicionais, Refugiados e Rua",
+vf:[
+["Pessoa com deficiência é aquela que tem impedimento de longo prazo de natureza física, mental, intelectual ou sensorial que, em interação com barreiras, pode obstruir sua participação plena e efetiva na sociedade.",true,"Correto (art. 2º, Estatuto da PcD)."],
+["A pessoa com deficiência poderá ser obrigada a se submeter à institucionalização quando a família assim decidir.",false,"Falso. Art. 11: não poderá ser obrigada a intervenção clínica ou cirúrgica, tratamento ou institucionalização forçada."],
+["Praticar, induzir ou incitar discriminação em razão de deficiência: reclusão de 1 a 3 anos e multa (art. 88).",true,"Correto."],
+["Apropriar-se de ou desviar bens, proventos ou pensão de pessoa com deficiência (art. 89) tem pena de detenção de 6 meses a 2 anos.",false,"Falso. É reclusão de 1 a 4 anos e multa."],
+["Abandonar pessoa com deficiência em hospitais, casas de saúde, entidades de abrigamento ou congêneres: reclusão de 6 meses a 3 anos e multa (art. 90).",true,"Correto."],
+["O TEA é um grupo de transtornos do desenvolvimento do cérebro, com prejuízos em duas áreas: comunicação social e comportamentos repetitivos e restritos.",true,"Correto."],
+["As primeiras manifestações do TEA ocorrem geralmente antes dos três anos de idade.",true,"Correto."],
+["A fita do TEA é estampada com peças de quebra-cabeça em várias cores e tons vibrantes, e o azul representa a maior incidência no sexo masculino.",true,"Correto."],
+["O Dia Mundial de Conscientização do Autismo foi estipulado pela ONU em dezembro de 1997.",false,"Falso. Foi em dezembro de 2007."],
+["O TEA tem maior incidência entre meninas, na proporção de quatro meninas para um menino.",false,"Falso. A incidência é maior entre meninos, na proporção de 4 meninos para 1 menina."],
+["Pela legislação estadual 15.487/2015, servidores com cônjuges, filhos ou dependentes com TEA têm direito a horário especial, devendo haver compensação de horário.",true,"Correto."],
+["Identidade de gênero é a direção do desejo afetivo e sexual da pessoa.",false,"Falso. Isso é orientação sexual; identidade de gênero são papéis sociais, sentimentos e posturas subjetivas."],
+["Cisgênero é a pessoa que se identifica com o sexo biológico designado ao nascer; transgênero é quem se identifica com gênero diferente do atribuído no nascimento.",true,"Correto."],
+["O termo orientação sexual substituiu a noção de opção sexual, pois o objeto do desejo sexual não é uma escolha consciente.",true,"Correto."],
+["Refugiado é aquele que escolheu se deslocar ao país e pode voltar a qualquer momento ao país de origem.",false,"Falso. Isso define o imigrante; o refugiado foi forçado a se deslocar e conta com o princípio da não devolução."]
+],
+mc:[
+["A conduta de reter ou utilizar cartão magnético, meio eletrônico ou documento de pessoa com deficiência para obter vantagem indevida (art. 91) tem pena de:",["reclusão de 1 a 4 anos.","detenção de 6 meses a 2 anos e multa.","reclusão de 1 a 3 anos.","reclusão de 6 meses a 3 anos.","apenas multa."],1,"Art. 91, Estatuto da PcD."],
+["Sobre povos e comunidades tradicionais, assinale a alternativa INCORRETA.",["Têm conexão forte com a terra, a cultura e a natureza.","Não se resumem aos indígenas.","São 28 tipos reconhecidos.","O art. 231 da CF reconhece a organização social, costumes, línguas, crenças e tradições dos índios.","Pelo art. 232 da CF, os índios não podem ingressar em juízo sem tutela do Estado."],4,"Art. 232: índios, comunidades e organizações são partes legítimas para ingressar em juízo, com intervenção do MP."],
+["O refugiado, segundo a apostila, é aquele que:",["escolheu se deslocar e pode voltar a qualquer momento.","foi forçado a se deslocar e conta com proteção internacional e princípio da não devolução.","é foragido ou fugitivo da justiça.","é imigrante ilegal.","precisa de autorização de residência do art. 30 da Lei 13.445/2017, como o imigrante."],1,"Refugiado não é foragido nem fugitivo."],
+["Segundo a ONU, o “sem-teto” é:",["quem vive nas ruas por tragédias naturais, guerras ou desemprego em massa.","pessoa ou família sem abrigo que sobrevive à vida nas ruas, carrega suas posses e pernoita em ruas, estradas e cais.","quem utiliza apenas unidades de acolhimento.","quem tem moradia convencional regular.","quem cometeu contravenção de mendicância."],1,"A alternativa A descreve o desabrigado."],
+["Mulher transexual é a pessoa que:",["nasceu do sexo feminino e se identifica como mulher.","teve o sexo designado como masculino ao nascer, mas vive como e busca reconhecimento no gênero feminino.","nasce com anatomia reprodutiva que não se encaixa na definição típica.","é atraída por pessoas independentemente de sexo.","assume papéis de gênero impostos pela sociedade."],1,"Conceito da apostila (3.6)."]
+],
+dc:[
+["Discorra sobre o Estatuto da Pessoa com Deficiência: conceito (art. 2º), art. 11 e os crimes dos arts. 88 a 91 com suas penas.","10 a 20 linhas","Conceito (art. 2º): pessoa com impedimento de longo prazo de natureza física, mental, intelectual ou sensorial que, em interação com uma ou mais barreiras, pode obstruir sua participação plena e efetiva na sociedade em igualdade de condições com as demais.\nArt. 11: não poderá ser obrigada a se submeter a intervenção clínica ou cirúrgica, a tratamento ou a institucionalização forçada.\nCrimes: art. 88, discriminar, induzir ou incitar discriminação: reclusão de 1 a 3 anos e multa; art. 89, apropriar-se de ou desviar bens, proventos, pensão, benefícios, remuneração ou rendimento: reclusão de 1 a 4 anos e multa; art. 90, abandonar em hospitais, casas de saúde, entidades de abrigamento ou congêneres: reclusão de 6 meses a 3 anos e multa; art. 91, reter ou utilizar cartão magnético, meio eletrônico ou documento destinados ao recebimento de benefícios ou a operações financeiras, para obter vantagem indevida: detenção de 6 meses a 2 anos e multa."],
+["Explique o TEA: símbolos, o que é o autismo, manifestações e alguns direitos da legislação estadual 15.487/2015.","6 a 15 linhas","Símbolos: Dia Mundial de Conscientização do Autismo (ONU, dezembro de 2007); o azul representa a maior incidência no sexo masculino (4 meninos para 1 menina); a fita é estampada com peças de quebra-cabeça em várias cores vibrantes, simbolizando complexidade, esperança e diversidade.\nO autismo é um grupo de transtornos do desenvolvimento do cérebro (TEA), com prejuízos em comunicação social e em comportamentos repetitivos e restritos; cerca de 1% das crianças recebem o diagnóstico, com manifestações geralmente antes dos três anos.\nDireitos (Lei 15.487/2015): informações para diagnóstico e tratamento precoce; tratamento individualizado conforme a gravidade; atendimento em unidade clínica especializada, distinta das de doenças mentais e dependência química; acesso gratuito a medicamentos e nutrientes sem interrupção; professores capacitados; servidores federais com dependentes com TEA têm horário especial com compensação."],
+["Diferencie imigrante, refugiado e foragido; explique a afirmação “não existe imigrante ilegal” e conceitue população em situação de rua, desabrigado e sem-teto.","10 a 20 linhas","Imigrante escolheu se deslocar e pode voltar a qualquer momento ao país de origem; para viver regularmente no Brasil precisa de autorização de residência (art. 30 da Lei 13.445/2017). Refugiado foi forçado a se deslocar, conta com proteção internacional e princípio da não devolução, pois voltar significa risco à vida. Refugiado não é foragido nem fugitivo, que geralmente fogem da justiça por crime.\nNão existe imigrante ilegal: ele pode estar em situação irregular, infração administrativa que pode ser resolvida; isso não o torna criminoso. Todos os imigrantes têm os mesmos direitos à educação, saúde e trabalho.\nPopulação em situação de rua (Decreto 7.053/2009, art. 1º, p. único): grupo heterogêneo com pobreza extrema, vínculos familiares interrompidos ou fragilizados e inexistência de moradia convencional regular, que utiliza logradouros públicos e áreas degradadas como espaço de moradia e sustento, e unidades de acolhimento. Desabrigado (ONU): vive nas ruas por tragédias naturais, guerras, desemprego em massa etc. Sem-teto (ONU): pessoa ou família sem abrigo que sobrevive à vida nas ruas e carrega suas posses."]
+]});
+
+/* ---------- BLOCO 5 ---------- */
+B.push({t:"5 · POPs da PMPE (abordagens e ocorrências)",
+vf:[
+["Na abordagem a lésbicas, gays e bissexuais, a busca pessoal é convencional: homens por policiais masculinos e mulheres por policiais femininas.",true,"Correto (POP 0005)."],
+["A troca de carícias entre casal homoafetivo, ainda que sem conotação obscena, justifica a condução à delegacia.",false,"Falso. A exceção só se aplica se a troca de carícias constituir ato obsceno de cunho sexual, o que vale também para casal heterossexual."],
+["Para travestis e mulheres trans, recomenda-se que o efetivo feminino realize a busca pessoal.",true,"Correto."],
+["Na identificação documental de pessoa trans, deve-se repetir em voz alta o nome de registro para conferência.",false,"Falso. Deve-se evitar repetir em voz alta o nome de registro e chamá-la pelo nome social informado."],
+["Documentos oficiais, como o BO, devem conter o nome social informado, constando também o nome de registro.",true,"Correto."],
+["Em regra, recomenda-se que o efetivo feminino realize a busca pessoal no homem trans; se não for possível identificá-lo como homem trans, primeiro o efetivo masculino realiza a busca, salvo se ele se identificar e solicitar PM feminina.",true,"Correto."],
+["Nas pessoas intersexuais, a busca pessoal é realizada conforme a identidade por elas assumida, masculina ou feminina.",true,"Correto."],
+["A Nota Técnica nº 001/2024 do MPPE recomenda o direito de pessoas trans utilizarem banheiros públicos conforme sua identidade de gênero.",true,"Correto."],
+["Na abordagem à pessoa com deficiência, o comando verbal firme é: “Pare(m)! É a Polícia!”.",true,"Correto (POP 0029)."],
+["Na abordagem a cadeirante, o Comandante determina que trave a cadeira de rodas, lentamente, e retorne as mãos sobre a cabeça.",true,"Correto."],
+["Na abordagem à pessoa com deficiência, o efetivo deve manter a arma de fogo apontada, em posição de tiro.",false,"Falso. A arma deve estar no coldre, conforme avaliação do local, na posição sul ou pronto baixo."],
+["Em ocorrência com deficiente mental, o efetivo deve aproximar-se de forma vagarosa, com verbalização calma e firme, sem gesticular muito.",true,"Correto (POP 0009)."],
+["Em toda ocorrência com deficiente mental, o efetivo deve, primeiramente, algemá-lo para garantir a segurança.",false,"Falso. Deve primeiramente encaminhá-lo ao Hospital de referência ou Unidade de Saúde mais próxima para avaliação médica."],
+["O adolescente infrator não deve ser algemado, exceto em extrema necessidade, devendo o policial fundamentar por escrito; deve ser conduzido no banco traseiro, separado de adultos.",true,"Correto (POP 0021)."],
+["A criança acusada de ato infracional, documentalmente identificada, deve ser conduzida à Delegacia de Polícia.",false,"Falso. Deve ser conduzida ao Conselho Tutelar da área em que foi cometido o ato."]
+],
+mc:[
+["Nas ocorrências em que o adolescente estiver na condição de infrator, a competência é do plantão da:",["DECCA.","DEPAI (atual DPCCAI).","DHPP exclusivamente.","Delegacia da Mulher.","Conselho Tutelar."],1,"Nos CVLI praticados por adolescente a competência é concorrente com o DHPP."],
+["No policiamento em território indígena, ao chegar ao local o efetivo deve, logo que possível:",["dar ciência da presença ao cacique ou pajé (ou, na ausência, a outra liderança local).","apreender foices, facões, arcos e flechas.","revistar objetos considerados sagrados.","aguardar autorização do prefeito.","impedir a participação das lideranças."],0,"Os utensílios de lavoura, caça e pesca só são apreendidos se utilizados na prática de crime."],
+["Nos ensaios e sambadas de maracatus rurais ou baque solto, o Comandante da OME deve solicitar policiamento com antecedência mínima de:",["24 horas.","03 dias úteis.","15 dias úteis.","05 dias corridos.","30 dias."],1,"Os 15 dias úteis são da Lei 14.133/2010, inaplicável a esses eventos."],
+["Sobre maracatus rurais, assinale a alternativa INCORRETA.",["Os eventos costumam iniciar às 22h.","Acontecem apenas entre duas e três vezes ao ano.","Podem se encerrar somente após amanhecer.","A Lei 14.133/2010 se aplica integralmente por reunirem mais de 1.000 pessoas.","Devem constar no relatório de serviço os horários de início e término."],3,"A lei é inaplicável: tais eventos reúnem cerca de 200 a 400 pessoas."],
+["A mendicância deixou de ser contravenção penal a partir da:",["Lei 11.983, de 16 de julho de 2009.","Decreto 7.053/2009.","Constituição Federal de 1988.","Lei 13.445/2017.","Lei 10.741/2003."],0,"4.8 da apostila."]
+],
+dc:[
+["Descreva a atuação da PMPE na abordagem à população LGBTQIAPN+ (lésbicas, gays, bissexuais, travestis e mulheres trans, homens trans e intersexuais), o uso do nome social e a Nota Técnica 001/2024.","10 a 20 linhas","LGB: abordagem convencional (homens por PM masculinos, mulheres por PM femininas); exceção se a troca de carícias constituir ato obsceno de cunho sexual, vale também para casal hetero.\nTravestis e mulheres trans: efetivo feminino; exceções: ausência de PM feminina (solicitar uma mulher para acompanhar visualmente a revista ou mandar o abordado pressionar a própria roupa), disparidade de porte físico (PM masculino), constrangimento da policial.\nHomem trans: recomenda-se o efetivo feminino; se não for possível identificá-lo, primeiro o efetivo masculino, salvo se o homem trans se identificar e solicitar PM feminina; na ausência de efetivo feminino, observar o item 4.2.6 do POP 001/SDS.\nIntersexual: conforme a identidade assumida; discrição, respeito à intimidade e atenção à segurança.\nNome social: evitar repetir em voz alta o nome de registro; chamar pelo nome social; documentos oficiais devem conter o nome social e também o nome de registro. Nota Técnica 001/2024 (MPPE): recomenda o direito de pessoas trans usarem banheiros públicos conforme sua identidade de gênero."],
+["Compare o procedimento do POP para criança acusada de ato infracional e adolescente acusado, quanto a condução, algemas, feridos, ciência ao COPOM, sigilo e competência.","10 a 20 linhas","Criança: se identificada documentalmente, conduzida ao Conselho Tutelar da área; sem documento, conduzida à residência para que um responsável acompanhe e comprove a condição. Adolescente: sem documentos, conduzido à residência para comprovar a condição.\nAlgemas: o adolescente não deve ser algemado, exceto em circunstâncias de extrema necessidade, com fundamentação por escrito das motivações (Súmula Vinculante 11).\nCondução: banco traseiro da viatura, separado de adultos, ainda que tenham cometido o ilícito conjuntamente. Feridos: primeiro atendimento médico, solicitando a Ficha de esclarecimento médico, pois o Conselho Tutelar só recebe mediante ela.\nTodo deslocamento necessário dá ciência ao COPOM/DIM. Sigilo da imagem e da identidade (art. 17, ECA); jamais divulgar fotos em redes sociais.\nCompetência: plantão da DEPAI (atual DPCCAI) quando adolescente é infrator ou há coautoria com adultos; nos CVLI, concorrente com o DHPP. Criança ou adolescente vítima: DECCA, e encaminhamentos assistenciais ao Conselho Tutelar do local de moradia da vítima."],
+["Descreva a sequência de ações no policiamento em território indígena e nos eventos de ensaios e sambadas de maracatus rurais ou baque solto.","10 a 20 linhas","Território indígena: o Comandante determina à Seção de Operações levantamento prévio da área (residências, moradores, mapa, aceitação do policiamento). Havendo recusa, avalia a necessidade e oficia aos escalões superiores, ao Judiciário, ao MP e à FUNAI. Confecciona Cartão Programa ou Ordem de Serviço, fiscalizados pelo Oficial de Operações. No local, dar ciência ao cacique ou pajé (ou liderança local); não apreender utensílios de lavoura, caça e pesca, salvo se usados em crime; não permitir acesso a locais sagrados; evitar busca em objetos sagrados. Em mandados de prisão e busca: solicitar ao NIS equipe de inteligência, Ordem de Serviço, presença do Promotor, oficial comandando a operação, leitura do mandado independente de autorização do morador, e Auto Circunstanciado.\nMaracatus: o Comandante da OME recepciona a documentação, com antecedência mínima de 3 dias úteis, reúne-se com os organizadores e determina Ordem de Serviço; o P/3 faz vistoria prévia; a Seção de Instrução elabora Nota de Instrução. O efetivo apresenta-se aos organizadores, mantém a ordem sem restringir coercitivamente o término, sabe que os eventos costumam iniciar às 22h, ocorrem 2 a 3 vezes ao ano e podem terminar após o amanhecer, e registra horários no relatório."]
+]});
+
+/* ---------- BLOCO 6 ---------- */
+B.push({t:"6 · Rede de Enfrentamento, Comunicação e Temas Correlatos",
+vf:[
+["A Secretaria da Mulher de Pernambuco é regida pela Lei 15.452, de 15 de janeiro de 2015.",true,"Correto."],
+["O serviço de proteção à mulher funciona em plantão 24 horas e é composto por rede de quatro casas-abrigo em local sigiloso.",true,"Correto."],
+["O monitoramento eletrônico foi estabelecido pela Portaria Conjunta SecMulher/SDS nº 50/2015 e é medida cautelar deferida por decisão judicial.",true,"Correto."],
+["O 190 Mulher presta atendimento prioritário às mulheres sob risco, e o cadastro exige e-mail com nome, telefone e breve relato do caso.",true,"Correto."],
+["A Patrulha Maria da Penha fiscaliza o cumprimento das Medidas Protetivas de Urgência e foi inaugurada em 23 de setembro de 2013.",true,"Correto."],
+["A Ouvidoria da Mulher funciona 24 horas pelo 0800.281.8187.",true,"Correto."],
+["A Secretaria de Desenvolvimento Social, Criança, Juventude e Prevenção à Violência e às Drogas foi criada pela Lei 15.452/2015.",false,"Falso. Foi criada pela Lei 18.139, de 18 de janeiro de 2023."],
+["A SEPES é a antiga Secretaria Executiva de Segmentos Sociais (SESES), renomeada.",true,"Correto."],
+["A DASDH foi criada em 2013 pela Lei Estadual 15.186 e é subordinada à Diretoria de Planejamento Operacional (DPO).",true,"Correto."],
+["O Sistema Koban de policiamento comunitário surgiu na China.",false,"Falso. Surgiu no Japão."],
+["As cinco técnicas de comunicação eficaz e empática são: escuta ativa, empatia, não se prender a um script, personalizar a abordagem e ter proatividade.",true,"Correto."],
+["Para humanizar o atendimento, deve-se seguir rigorosamente um script engessado.",false,"Falso. Deve-se evitar se prender a um script; pode-se ter um roteiro de apoio."],
+["Preconceito é a ação de tratar alguém de forma injusta, e discriminação é o sentimento negativo em relação ao grupo.",false,"Falso. Preconceito é a atitude ou sentimento negativo; discriminação é a sua manifestação prática."],
+["Pela Lei 7.716/89, o agente criminoso só pode ser pessoa, não instituição; por isso, o racismo institucional não é criminalizável, mas gera indenização cível.",true,"Correto."],
+["Para aprimorar a relação com a mídia, deve-se priorizar a grande mídia nacional e desconsiderar a mídia regional e local.",false,"Falso. A apostila recomenda priorizar o contato com a mídia regional e local."]
+],
+mc:[
+["O programa que visa desenvolver a cultura da paz e a prevenção do uso indevido de drogas entre crianças e adolescentes, em ambiente escolar, é o:",["ASCRIAD.","PROERD.","Patrulha Escolar.","CIMus.","Programa de Enfrentamento à Intolerância."],1,"PROERD."],
+["A ASCRIAD realiza:",["operações de fiscalização de casas de shows e bares, com a Vara da Infância e da Juventude, para proteger menores.","policiamento com música.","fiscalização de medidas protetivas de urgência.","palestras sobre racismo.","policiamento comunitário no modelo Koban."],0,"Assessoria da Criança e do Adolescente."],
+["A Banda de Música da PMPE (CIMus) foi criada por Decreto da Província de Pernambuco datado de:",["05 de novembro de 1873.","12 de dezembro de 2013.","23 de setembro de 2013.","18 de janeiro de 2023.","09 de janeiro de 2024."],0,"Subordinada à DASDH."],
+["Sobre racismo institucional, é CORRETO:",["É a prática de uma organização de não prover serviço a determinada pessoa devido à sua cor, cultura ou origem étnica.","Só pode ser praticado por pessoa física.","Pode levar à condenação criminal da empresa pela Lei 7.716/89.","Não pode ser manifestado por normas ou práticas do trabalho.","Não gera indenização cível."],0,"Não há como criminalizar a instituição, mas cabe indenização cível."],
+["Qual NÃO é uma das cinco técnicas de comunicação eficaz e empática?",["Praticar a escuta ativa.","Demonstrar empatia.","Não se prender a um script.","Personalizar a abordagem.","Agir com rigidez e padronização."],4,"A quinta técnica é ter proatividade."]
+],
+dc:[
+["Explique a importância da integração com outras secretarias e descreva o portfólio da Secretaria da Mulher de Pernambuco.","10 a 20 linhas","A eficiência no controle e combate às dificuldades de minorias e grupos vulneráveis depende da integração entre os órgãos de controle interno e externo; um só setor não é suficiente, e a integração fortalece as instituições do Estado Democrático de Direito.\nSecretaria da Mulher: criada como Secretaria Especial da Mulher (Lei 13.205/2007), tornou-se Secretaria de Estado (Lei 14.264/2011) e é regida pela Lei 15.452/2015. Serviços: proteção e abrigamento (plantão 24h, quatro casas-abrigo sigilosas, pioneiro no abrigamento de mulheres e dependentes); monitoramento eletrônico (Portaria Conjunta SecMulher/SDS 50/2015, medida cautelar por decisão judicial); 190 Mulher (Portaria Conjunta 53/2015, atendimento prioritário, cadastro por e-mail); Patrulha Maria da Penha (fiscaliza MPU, com ações preventivas); Ouvidoria da Mulher (0800.281.8187, 24h)."],
+["Enumere e explique as cinco técnicas de comunicação eficaz e empática.","6 a 15 linhas","1) Escuta ativa: ouvir com atenção e passar mais tempo escutando do que falando, para entender o problema. 2) Empatia: capacidade de se colocar no lugar do outro, identificando seus sentimentos e entendendo o problema sob a perspectiva dele. 3) Não se prender a um script: um roteiro de apoio é útil, mas o script engessado não favorece o atendimento humanizado. 4) Personalizar a abordagem: levantar informações específicas, ouvir os detalhes da fala da vítima e fazer perguntas baseadas no relato. 5) Ter proatividade: antecipar-se às solicitações e cobranças da sociedade e oferecer soluções que vão além do problema apresentado."],
+["Diferencie preconceito, discriminação e racismo institucional e indique as práticas para aproximar a polícia da mídia.","10 a 20 linhas","Preconceito: atitude ou sentimento negativo em relação a um grupo, geralmente sem conhecimento real e baseado em estereótipos e generalizações. Discriminação: ação ou prática de tratar alguém de forma injusta devido à sua pertença a um grupo; é a manifestação prática do preconceito. Racismo institucional: prática de uma organização que deixa de prover serviço a determinada pessoa por cor, cultura ou origem étnica, também por normas e práticas discriminatórias do cotidiano. Pela Lei 7.716/89 o agente criminoso só pode ser pessoa, então não se criminaliza a empresa, mas cabe indenização cível.\nMídia: criar programa permanente de comunicação social, com técnicos especializados; priorizar a mídia regional e local (jornais de bairro, rádios locais, TVs regionais); desenvolver campanhas educativas de prevenção usando sempre a marca “Polícia”, e não batalhão ou distrito; elaborar propagandas de utilidade pública permanentes."]
+]});
+
+/* ---------- SIMULADO ---------- */
+var SIM={tempo:100,Q:[
+{tipo:"vf",val:1.0,enun:"Analise as proposições sobre minorias, ECA e Estatuto do Idoso e marque (V) para verdadeiro ou (F) para falso.",itens:[
+["Os grupos vulneráveis são o gênero (minoria lato sensu) e as minorias são a espécie (minoria stricto sensu).",true,"Correto."],
+["O número de integrantes, por si só, caracteriza uma minoria.",false,"Falso. O número, por si só, não caracteriza uma minoria."],
+["Criança é a pessoa até doze anos incompletos; adolescente, aquela entre doze e dezoito anos.",true,"Correto (art. 2º, ECA)."],
+["O art. 18-A do ECA não alcança os agentes públicos executores de medidas socioeducativas.",false,"Falso. Alcança também esses agentes."],
+["A gratuidade nos transportes coletivos públicos urbanos e semiurbanos é assegurada aos maiores de 65 anos.",true,"Correto (art. 39)."]]},
+{tipo:"vf",val:1.0,enun:"Considerando a Lei Maria da Penha e o POP de violência contra a mulher, analise as assertivas e marque (V) ou (F).",itens:[
+["O art. 7º da Lei Maria da Penha prevê cinco formas de violência doméstica e familiar contra a mulher.",true,"Correto."],
+["O ciclo de violência é composto pelas fases de tensão, explosão e arrependimento.",true,"Correto."],
+["A violência psicológica não está prevista no art. 7º.",false,"Falso. É o inciso II."],
+["A entrevista da vítima deve ser feita, preferencialmente, por policial militar feminina.",true,"Correto."],
+["Em ocorrência de feminicídio, o policial deve fotografar o corpo para registro da cena.",false,"Falso. Não deve fotografar ou filmar o corpo."]]},
+{tipo:"vf",val:1.0,enun:"Sobre os procedimentos da PMPE com grupos específicos, analise as assertivas e marque (V) ou (F).",itens:[
+["Na abordagem a travestis e mulheres trans, recomenda-se que o efetivo feminino realize a busca pessoal.",true,"Correto."],
+["O adolescente infrator deve ser algemado como regra, para garantir a segurança da guarnição.",false,"Falso. Não deve ser algemado, exceto em extrema necessidade, com fundamentação por escrito."],
+["O sem-teto, segundo a ONU, é quem vive nas ruas devido a tragédias naturais, guerras e desemprego em massa.",false,"Falso. Esse é o conceito de desabrigado."],
+["Em território indígena, o efetivo deve dar ciência de sua presença ao cacique ou pajé.",true,"Correto."],
+["Os ensaios e sambadas de maracatu rural costumam iniciar às 22h.",true,"Correto."]]},
+{tipo:"mc",val:0.5,enun:"Assinale a alternativa INCORRETA sobre o Transtorno do Espectro Autista (TEA).",op:["O Dia Mundial de Conscientização foi estipulado pela ONU em dezembro de 2007.","A fita é estampada com peças de quebra-cabeça em várias cores.","A incidência é maior entre crianças do sexo feminino.","As primeiras manifestações ocorrem geralmente antes dos três anos.","Os prejuízos ocorrem em comunicação social e comportamentos repetitivos e restritos."],c:2,j:"A incidência é maior entre meninos (4 para 1)."},
+{tipo:"mc",val:0.5,enun:"Sobre imigrantes e refugiados, é CORRETO afirmar:",op:["Não existe imigrante ilegal: ele pode estar em situação irregular, infração administrativa que pode ser resolvida.","O refugiado é foragido da justiça.","O imigrante conta com o princípio da não devolução.","O refugiado escolheu se deslocar.","Só os refugiados têm direito à saúde e à educação no Brasil."],c:0,j:"Todos os imigrantes têm os mesmos direitos, refugiados ou não."},
+{tipo:"mc",val:0.5,enun:"O serviço 190 Mulher foi estabelecido pela:",op:["Portaria Conjunta SEC. MULHER/SDS nº 53, de 05 de novembro de 2015.","Portaria Conjunta SecMulher/SDS nº 50, de 06 de outubro de 2015.","Lei Estadual 15.186/2013.","Lei 18.139/2023.","Lei 13.205/2007."],c:0,j:"A Portaria nº 50 estabeleceu o monitoramento eletrônico."},
+{tipo:"mc",val:0.5,enun:"Sobre a relação da Polícia com a mídia, é prática recomendada:",op:["Priorizar o contato com a mídia regional e local.","Evitar o contato com a imprensa.","Realizar campanhas com a marca de cada batalhão.","Divulgar propagandas apenas esporadicamente.","Excluir técnicos especializados do programa de comunicação."],c:0,j:"A apostila recomenda priorizar jornais de bairro, rádios locais e TVs regionais."},
+{tipo:"dc",val:1.5,min:6,max:15,enun:"Diferencie preconceito, discriminação e racismo institucional e explique por que o racismo institucional não pode ser criminalizado pela Lei 7.716/89.",esp:"Preconceito: atitude ou sentimento negativo em relação a um grupo, em geral sem conhecimento real e baseado em estereótipos. Discriminação: ação ou prática de tratar alguém de forma injusta ou prejudicial por pertencer a um grupo; é a manifestação prática do preconceito. Racismo institucional: prática de organização (empresa, grupo, associação ou instituição pública) de não prover serviço a determinada pessoa por cor, cultura ou origem étnica, inclusive por normas, práticas e comportamentos discriminatórios do cotidiano.\nPela Lei 7.716/89, o agente criminoso só pode ser pessoa, não instituição; portanto não há como criminalizar a empresa, mas há como obter indenização cível, pois o racismo institucional é fenômeno sociológico que gera esse tipo de indenização."},
+{tipo:"dc",val:1.5,min:10,max:20,enun:"Uma guarnição atende ocorrência de violência doméstica. A mulher nega as agressões, mas apresenta lesões aparentes e há testemunhas; o agressor não está no local. Discorra, com base no POP da PMPE, sobre: a ordem de oitiva e a entrevista; o atendimento médico e a condução; a condução da vítima e do agressor; o encaminhamento diante da negativa da vítima e a conduta se o agressor estiver ausente.",esp:"Oitiva e entrevista: ouvir primeiro a mulher em situação de violência, entrevistada preferencialmente por policial feminina, sem contato físico ou visual com testemunhas ou autor, acolhendo e respeitando, sem ofendê-la ou criticá-la.\nAtendimento médico: se ferida, conduzir primeiro ao atendimento médico e depois à delegacia.\nNegativa: havendo lesões aparentes e testemunhas, mesmo que a mulher negue, todas as partes devem ser encaminhadas à delegacia mais próxima, após o apoio ao atendimento médico, mesmo contra a vontade da ofendida; só se não houver lesões registra-se BO, com assinatura de mulher e agressor, informando o COPOM/CIODS.\nCondução: vítima e agressor em locais distintos; havendo só uma viatura, o agressor no xadrez e a mulher no banco de trás; nunca no mesmo espaço físico.\nAgressor ausente: realizar diligências para encontrá-lo e, mesmo sem encontrá-lo, conduzir os demais envolvidos (vítima, testemunhas) à Delegacia da Mulher; se houver dificuldade para o registro, reportar ao Coordenador do COPOM/CIODS ou ao Oficial de Operações."},
+{tipo:"dc",val:2.0,min:10,max:20,enun:"Analise o caso e identifique, no mínimo, 5 erros técnicos, fundamentando com o ECA e os POPs da PMPE. Uma guarnição abordou um adolescente suspeito de ato infracional, ferido e sem documentos. O comandante o algemou sem justificar, colocou-o no compartimento junto a presos adultos, conduziu-o diretamente à delegacia sem atendimento médico, não comunicou o COPOM sobre os deslocamentos e um dos policiais divulgou sua foto em rede social.",esp:"1) Algemas: o adolescente não deve ser algemado, exceto em extrema necessidade, com fundamentação por escrito (Súmula Vinculante 11).\n2) Condução: deve ser colocado no banco traseiro da viatura, separado dos adultos, ainda que tenham cometido o ilícito em conjunto.\n3) Ferimentos: havendo ferido, primeiro deve haver atendimento médico, solicitando a Ficha de esclarecimento médico.\n4) Ciência ao COPOM: todo deslocamento necessário deve dar ciência ao COPOM.\n5) Sigilo: o sigilo da imagem e da identidade deve ser respeitado; nunca divulgar fotos de crianças ou adolescentes em redes sociais (art. 17, ECA).\n6) Sem documentos: deveria ser conduzido à residência para que a identificação documental comprove sua condição de adolescente ou criança (se criança, ao Conselho Tutelar).\n7) Competência: o encaminhamento é ao plantão da DEPAI (atual DPCCAI), pois o adolescente está na condição de infrator."}
+]};
+
+/* ---------- PROVA AE 2026 (T19) ---------- */
+var SIM2={tempo:100,Q:[
+{tipo:"vf",val:1.0,enun:"Sobre a fundamentação legal de Direitos Humanos aplicável aos grupos vulneráveis e minorias, marque (V) verdadeiro ou (F) falso para as assertivas abaixo.",itens:[
+["Proibição da Discriminação: A legislação de direitos humanos não possui como objeto proibir a discriminação em todas as suas formas e garantir que minorias e grupos vulneráveis não sejam marginalizados;",false,"Falso. A apostila diz que a legislação de direitos humanos VISA proibir a discriminação em todas as suas formas."],
+["Medidas Especiais: Para assegurar a igualdade de fato, ... como ações afirmativas, para corrigir desigualdades históricas...;",true,"Correto. Podem ser necessárias medidas especiais, como ações afirmativas, para corrigir desigualdades históricas e sociais."],
+["Os direitos humanos são fundamentais para a proteção e promoção da dignidade e dos direitos de todas as pessoas, não incluindo, contudo, minorias e grupos vulneráveis;",false,"Falso. Os direitos humanos protegem todas as pessoas, INCLUINDO minorias e grupos vulneráveis."],
+["Declaração Universal dos Direitos Humanos (DUDH), Convenção sobre a Eliminação de Todas as Formas de Discriminação Racial (CERD), Convenção sobre os Direitos das Pessoas com Deficiência (CDPD), são institutos que oferecem uma base legal específica para a proteção dos grupos vulneráveis e minorias;",true,"Correto. A apostila cita esses instrumentos como base legal específica para a proteção desses grupos."],
+["Reconhecimento e valorização da diversidade, é promovida através Autodeterminação e Participação Diversidade Cultural e Social, com a inclusão de diferentes identidades e culturas, nos processos decisórios que afetam suas vidas.",true,"Correto. Item D da apostila: Autodeterminação e Participação; Diversidade Cultural e Social."]]},
+{tipo:"vf",val:1.0,enun:"Sobre o conceito de minorias marque (V) verdadeiro ou (F) falso para as assertivas abaixo.",itens:[
+["São sujeitos sem conexão comum ou traço cultural;",false,"Falso. Minorias são sujeitos CONECTADOS, com um traço cultural comum."],
+["O traço cultural em comum não difere as minorias dos demais integrantes da sociedade;",false,"Falso. É justamente esse traço cultural que difere o grupo dos demais integrantes da sociedade."],
+["O número, por si só é capaz de caracterizar uma minoria;",false,"Falso. O número, por si só, NÃO é capaz de caracterizar uma minoria."],
+["O traço que os difere, não visa a ser eliminado, visa justamente, ao contrário, ser reconhecido e respeitado, com fundamento na pluralidade;",true,"Correto (Siqueira e Castro, 2017)."],
+["Para que a minoria seja protegida institucionalmente, necessita sofrerem opressão social.",true,"Gabarito oficial: V. Atenção: a apostila diz que, para ser protegida institucionalmente, a minoria “necessita ser não dominante no Estado em que vive”; “sofrem opressão social” aparece como uma das quatro peculiaridades das minorias. A banca considerou a assertiva verdadeira."]]},
+{tipo:"vf",val:1.0,enun:"Sobre as diferenças entre grupos vulneráveis e minorias marque (V) verdadeiro ou (F) falso para as assertivas abaixo.",itens:[
+["Os grupos vulneráveis são categorizados como um grupo mais amplo (gênero), podendo ser descrito como “minoria stricto sensu”;",false,"Falso. Grupos vulneráveis = gênero = “minoria LATO sensu”. Stricto sensu são as minorias (espécie)."],
+["Nos grupos vulneráveis se cultua o seu fator de discrímen, o que se busca é o reconhecimento de seus direitos;",false,"Falso. Nos grupos vulneráveis NÃO se cultua o fator de discrímen; busca-se o RESPEITO e o EXERCÍCIO de suas garantias."],
+["As minorias são tidas como espécie ou “minoria stricto sensu”; definindo-se como um conjunto específico de indivíduos ligados pelo traço comum que os coloca em situação de isolamento social;",true,"Correto (item 2.2 da apostila)."],
+["Os grupos vulneráveis preocupam-se com o reconhecimento de seus direitos, isto é, procuram colocar em prática direitos já reconhecidos e aceitos;",false,"Falso. Os grupos vulneráveis procuram apenas EXERCER seus direitos (colocar em prática direitos já reconhecidos). Quem busca o reconhecimento de direitos são as minorias."],
+["A implementar uma política pública voltada para um grupo vulnerável, a estratégia e mecanismos utilizados devem ser traçados de forma distinta, já quando se tratar de políticas públicas voltadas para minorias deve-se tomar o cuidado de manter o traço cultural específico, fator de discriminação.",true,"Correto (Brito, 2009): para minorias, manter o traço cultural específico (igualdade na diferença)."]]},
+{tipo:"mc",val:0.5,enun:"Sobre o previsto nas legislações especiais que protegem os grupos vulneráveis e minorias marque a alternativa que corresponde a resposta CORRETA.",op:["Nos casos expressos na Lei 8.069/90, Estatuto da Criança e do Adolescente, não se aplica excepcionalmente este Estatuto às pessoas entre dezoito e vinte e um anos de idade.","As relações pessoais enunciadas na Lei 11.340/06, conhecida como a Lei Maria da Penha independem de orientação sexual.","Entre as pessoas idosas, é assegurada prioridade especial aos maiores de 75 (setenta e cinco) anos, atendendo-se suas necessidades sempre preferencialmente em relação às demais pessoas idosas.","Aos maiores de 60 (sessenta) anos fica assegurada a gratuidade dos transportes coletivos públicos urbanos e semiurbanos.","O Estatuto da Criança e Adolescente, em vários artigos estabelece a proteção integral à criança e parcial ao adolescente, bem como o direito a não discriminação."],c:1,j:"Art. 5º, parágrafo único, da Lei 11.340/06. (A) o ECA APLICA-SE excepcionalmente às pessoas entre 18 e 21 anos; (C) prioridade especial aos maiores de 80 anos; (D) gratuidade aos maiores de 65 anos (art. 39); (E) proteção integral à criança E ao adolescente."},
+{tipo:"mc",val:0.5,enun:"De acordo com o previsto nos POPs que regem as abordagens aos grupos vulneráveis e minorias marque a alternativa que corresponde a resposta INCORRETA.",op:["É recomendado que o efetivo policial feminino realize a busca pessoal na mulher transexual e na travesti, devido a sua aparência feminina.","Habitar uma rua, uma praça ou demais espaços públicos não constitui, por si só, crime de “mendicância”.","Ao profissional de segurança pública é facultado o direito de perguntar a forma como a pessoa abordada gostaria de ser chamada: nome social.","O policial deve ser discreto na revista de pertences, respeitar a intimidade da pessoa abordada, bem como não esquecer da segurança do seu efetivo.","O cidadão em situação de vivência de rua é sujeito de direitos e deveres, assim como qualquer outro brasileiro, de acordo com a Constituição Federal /1988."],c:2,j:"A apostila diz que o profissional de segurança pública DEVE perguntar a forma como a pessoa abordada gostaria de ser chamada (nome social); não é faculdade. A alternativa (A) está correta conforme o POP 0005."},
+{tipo:"mc",val:0.5,enun:"De acordo com o previsto nos POPs que regem as abordagens aos grupos vulneráveis e minorias marque a alternativa que corresponde a resposta CORRETA.",op:["A equipe policial deverá amparar a mulher vítima de violência, demonstrando interesse na ocorrência, porém desincentivando a mulher em situação de violência a fazer o registro do fato.","A depender da situação e equipe policial poderá conduzir a mulher detida juntamente com indivíduos do sexo masculino.","O efetivo não deve permitir que o Deficiente Mental explique seu comportamento, não gerando assim, uma confiança entre ele e o policiamento.","Não deverá apreender utensílios como foice, facão, machados, facas, arco, flecha e similares utilizados para lavoura, caça e pesca, exceto, quando esses tenham sido utilizados na prática de crime.","Comandante da Guarnição permitirá o acesso de seus componentes a locais considerados sagrados pelos povos indígenas."],c:3,j:"POP 0023 (território indígena), transcrito literalmente. (A) deve INCENTIVAR o registro; (B) deve conduzir a mulher detida SEPARADA dos homens; (C) deve PERMITIR que o Deficiente Mental explique seu comportamento; (E) NÃO permitirá o acesso a locais sagrados."},
+{tipo:"mc",val:0.5,enun:"De acordo com os conceitos e definições aplicados a comunidade LGBTQIAPN+, marque a alternativa que corresponde a resposta INCORRETA.",op:["Sexo Biológico - Macho ou fêmea, masculino ou feminino, a depender dos órgãos genitais, do sistema reprodutor que nascem com a pessoa e dos hormônios por ela desenvolvidos.","Cisgênero: é a pessoa que se identifica com o sexo biológico designado no momento de seu nascimento.","São os papéis sociais que cada um assume na sociedade. Refere-se a sentimentos, posturas subjetivas - Identidade de Gênero.","Orientação, Condição ou Prática Sexual: Refere-se à direção do desejo afetivo e sexual. O termo orientação sexual substituiu a noção de opção sexual.","Homem Transexual: Pessoa que teve o sexo designado como masculino ao nascer, mas que vive como e busca reconhecimento social no gênero feminino."],c:4,j:"Homem transexual é quem teve o sexo designado como FEMININO ao nascer e vive no gênero MASCULINO. A definição da alternativa é a de Mulher Transexual. A alternativa (C) está correta: identidade de gênero são os papéis sociais, sentimentos e posturas subjetivas."},
+{tipo:"dc",val:1.5,min:5,max:10,enun:"A relação entre a Mídia e a Polícia tem se tornado o grande desafio a ser vencido. Ao longo do tempo foram desenvolvidas formas de aproximar e aprimorar esse relacionamento. Assim sendo apresente as práticas que podem ser aplicadas para quebrar esse paradigma.",esp:"Contexto: há relação antiga e intrínseca entre mídia e sistema penal. A imprensa costuma destacar escândalos, o que cria nos policiais a ideia de que ela é inimiga da polícia, sem entender que a mídia vive dos espaços que ocupa na audiência (SENASP, 2007).\nPráticas para aproximar e aprimorar o relacionamento:\n1) Criar um programa permanente de comunicação social para divulgar as atividades da polícia, com técnicos especializados (relações públicas, jornalistas, marketeiros).\n2) Priorizar o contato com a mídia regional e local (jornais de bairro, rádios locais, TVs regionais), já que a grande mídia oferece resistência.\n3) Desenvolver campanhas educativas de prevenção contra a violência, usando sempre a mesma marca “Polícia”, e não o batalhão ou distrito.\n4) Elaborar propagandas de utilidade pública de forma permanente, para orientar as comunidades.\n\nComentário da correção (nota 1,2/1,5): faltou citar “elaborar propagandas de utilidade pública permanentes”."},
+{tipo:"dc",val:1.5,min:5,max:10,enun:"O atendimento humanizado, com respeito as diferenças, estreita a relação entre a Polícia Militar e a sociedade, elevando os padrões de legalidade, técnica e qualidade do serviço prestado pela Polícia Militar. Buscando uma atuação mais empática e respeitosa foram desenvolvidas técnicas de comunicação e aproximação da sociedade. Deste modo, discorra sobre a abordagem policial apresentando as técnicas de comunicação eficaz e empática.",esp:"O atendimento humanizado se apoia em cinco técnicas de comunicação eficaz e empática:\n1) Escuta ativa: ouvir com atenção o que o cidadão tem a dizer, passando mais tempo escutando do que falando, para entender o problema.\n2) Empatia: colocar-se no lugar do outro, identificando seus sentimentos e entendendo o problema sob a perspectiva dele.\n3) Não se prender a um script: um roteiro de apoio é útil, mas o script engessado não favorece o atendimento humanizado.\n4) Personalizar a abordagem: levantar informações específicas, ouvir os detalhes do relato e fazer perguntas baseadas nele.\n5) Ter proatividade: antecipar-se às demandas da sociedade e oferecer soluções que vão além do problema apresentado.\nNa abordagem, aplicar os POPs (ex.: POP 0005, LGBTQIAPN+: perguntar e usar o nome social, respeitar a individualidade).\n\nComentário da correção (nota 1,0/1,5): faltaram “não se prenda a um script”, “personalize sua abordagem” e “tenha proatividade”."},
+{tipo:"dc",val:2.0,min:5,max:10,enun:"Os conceitos de racismo institucional e estrutural, preconceito e discriminação, sempre estiveram ligados a Polícia Militar, portanto é fundamental para a instituição enfrentá-los combatendo as desigualdades e promovendo Direitos Humanos. Disserte sobre tais conceitos e apresente os avanços em DDHH desenvolvidos pela PMPE.",esp:"Preconceito: atitude ou sentimento negativo em relação a um grupo (raça, gênero, religião, orientação sexual etc.), formado em geral sem conhecimento real, com base em estereótipos e generalizações.\nDiscriminação: ação ou prática de tratar alguém de forma injusta ou prejudicial por pertencer a um grupo; é a manifestação prática do preconceito.\nRacismo institucional: prática de uma organização (empresa, grupo, associação ou instituição pública) de não prover serviço a alguém por cor, cultura ou origem étnica, também por normas, práticas e comportamentos discriminatórios do cotidiano. Pela Lei 7.716/89 o agente criminoso só pode ser pessoa: não há denúncia criminal contra a instituição, mas cabe indenização cível.\nAvanços da PMPE: a DASDH (Diretoria de Articulação Social e Direitos Humanos), criada pela Lei Estadual 15.186/2013 e subordinada à DPO, promove a aproximação comunitária e os direitos humanos por meio dos programas Polícia Comunitária (Sistema Koban), Patrulha Maria da Penha, Patrulha Escolar, PROERD, ASCRIAD, Programa de Enfrentamento à Intolerância e Companhia Independente de Música (CIMus). Também participa de conselhos e câmaras técnicas (violência contra a mulher, igualdade racial, pessoa com deficiência, criança e adolescente) e conta com os POPs padronizados de atendimento aos grupos vulneráveis.\n\nComentário da correção (nota 1,7/2,0): faltou apresentar os programas da DASDH/PMPE."}
+]};
+
+/* ===================== MOTOR ===================== */
+var $=function(s){return document.querySelector(s)};
+var nav=$("#nav"),main=$("#main");
+var tabs=B.map(function(b,i){return {id:"b"+i,label:b.t.split(" · ")[0]+" · "+b.t.split(" · ")[1]}});
+tabs.push({id:"sim",label:"SIMULADO"});
+tabs.push({id:"ae26",label:"PROVA AE 2026"});
+var estado={};
+function el(h){var d=document.createElement("div");d.innerHTML=h;return d.firstElementChild}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+
+function mkNav(){tabs.forEach(function(t,i){var b=document.createElement("button");b.textContent=t.label;if(t.id==="sim"||t.id==="ae26")b.className="sim";b.onclick=function(){show(t.id)};b.id="nb_"+t.id;nav.appendChild(b)})}
+function show(id){tabs.forEach(function(t){var p=$("#p_"+t.id);if(p)p.classList.toggle("hide",t.id!==id);$("#nb_"+t.id).classList.toggle("on",t.id===id)});window.scrollTo(0,0)}
+
+function vfItem(txt,num,key){
+  var d=el('<div class="q"><span class="n">'+num+'.</span><span class="vf"><button data-v="1">V</button><button data-v="0">F</button></span><span>'+esc(txt)+'</span><div class="just"></div></div>');
+  d.querySelectorAll("button").forEach(function(b){b.onclick=function(){d.querySelectorAll("button").forEach(function(x){x.classList.remove("sel")});b.classList.add("sel");estado[key]=b.dataset.v==="1"}});
+  return d}
+function mcItem(q,num,key){
+  var d=el('<div class="q"><div><span class="n">'+num+'.</span>'+esc(q[0])+'</div><div class="ops"></div><div class="just"></div></div>');
+  q[1].forEach(function(o,i){var b=document.createElement("button");b.className="opt";b.textContent="("+"ABCDE"[i]+") "+o;b.onclick=function(){d.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel")});b.classList.add("sel");estado[key]=i};d.querySelector(".ops").appendChild(b)});
+  return d}
+function dcItem(enun,meta,num,key){
+  var d=el('<div class="q"><div><span class="n">'+num+'.</span>'+esc(enun)+'</div><div class="meta">'+esc(meta)+'</div><textarea></textarea><div class="espelho"></div></div>');
+  return d}
+
+function buildBloco(b,i){
+  var p=el('<section id="p_b'+i+'" class="hide"><h2>'+esc(b.t)+'</h2><div class="meta">23 questões: 15 V/F · 5 múltipla escolha · 3 discursivas</div></section>');
+  var k="b"+i;
+  p.appendChild(el("<h3>Parte A — Verdadeiro ou Falso (15)</h3>"));
+  b.vf.forEach(function(q,j){var d=vfItem(q[0],j+1,k+"v"+j);d.querySelector(".just").textContent="Justificativa: "+q[2];d.dataset.k=k+"v"+j;d.dataset.a=q[1];p.appendChild(d)});
+  p.appendChild(el("<h3>Parte B — Múltipla escolha (5)</h3>"));
+  b.mc.forEach(function(q,j){var d=mcItem(q,16+j,k+"m"+j);d.querySelector(".just").textContent="Gabarito: ("+"ABCDE"[q[2]]+"). "+q[3];d.dataset.k=k+"m"+j;d.dataset.a=q[2];p.appendChild(d)});
+  p.appendChild(el("<h3>Parte C — Discursivas (3)</h3>"));
+  b.dc.forEach(function(q,j){var d=dcItem(q[0],q[1],21+j,k+"d"+j);d.querySelector(".espelho").textContent="ESPELHO (modelo de resposta)\n\n"+q[2];p.appendChild(d)});
+  var bt=el('<button class="btn">Verificar gabarito</button>'),rs=el('<button class="btn b2">Refazer</button>'),sc=el('<div class="score"></div>');
+  bt.onclick=function(){
+    var ac=0,tot=0;
+    p.querySelectorAll(".q[data-k]").forEach(function(d){
+      var key=d.dataset.k,mc=key.indexOf("m")>0&&key.charAt(key.length-2)==="m";
+      var cor=mc?parseInt(d.dataset.a,10):(d.dataset.a==="true");
+      tot++;var ok=(estado[key]===cor);if(ok)ac++;
+      d.classList.remove("ok","err");d.classList.add(ok?"ok":"err");d.classList.add("show");
+    });
+    p.querySelectorAll(".q:not([data-k])").forEach(function(d){d.classList.add("show")});
+    sc.style.display="block";sc.textContent="Objetivas: "+ac+" de "+tot+" corretas ("+Math.round(ac*100/tot)+"%). Compare as discursivas com os espelhos.";
+    sc.scrollIntoView({behavior:"smooth",block:"center"})};
+  rs.onclick=function(){location.reload()};
+  p.appendChild(bt);p.appendChild(rs);p.appendChild(sc);
+  main.appendChild(p)}
+
+/* ---------- Simulado ---------- */
+function fmt(s){var m=Math.floor(s/60),x=s%60;return (m<10?"0":"")+m+":"+(x<10?"0":"")+x}
+function buildSim(S,id,titulo,desc){
+  var timerId=null,restante=S.tempo*60,iniciado=false;
+  var p=el('<section id="p_'+id+'" class="hide"><h2>'+esc(titulo)+'</h2><div class="box">'+desc+'</div></section>');
+  var ctl=el('<div><button class="btn">Iniciar prova</button> <span class="timer">'+fmt(S.tempo*60)+'</span></div>');
+  var ini=ctl.querySelector("button"),tm=ctl.querySelector(".timer");
+  p.appendChild(ctl);
+  var area=el('<div></div>');var n=0;
+  S.Q.forEach(function(q,i){
+    n++;var k=id+"_"+i;
+    if(q.tipo==="vf"){
+      var w=el('<div class="box"><b>'+n+'º QUESITO</b> — '+esc(q.enun)+' <span class="meta">(Valor: 1,0 ponto; cada assertiva vale 0,20)</span></div>');
+      q.itens.forEach(function(it,j){var d=vfItem(it[0],String.fromCharCode(97+j),k+"i"+j);d.querySelector(".just").textContent="Justificativa: "+it[2];d.dataset.k=k+"i"+j;d.dataset.a=it[1];d.dataset.w=0.2;w.appendChild(d)});
+      area.appendChild(w)}
+    else if(q.tipo==="mc"){
+      var d=mcItem([n+"º QUESITO ("+q.val.toString().replace(".",",")+" pontos) — "+q.enun,q.op],"",k);d.querySelector(".just").textContent="Gabarito: ("+"ABCDE"[q.c]+"). "+q.j;d.dataset.k=k;d.dataset.a=q.c;d.dataset.w=q.val;d.dataset.mc="1";area.appendChild(d)}
+    else{
+      var d2=dcItem(n+"º QUESITO — "+q.enun,"Valor: "+q.val.toString().replace(".",",")+" pontos · Mínimo "+q.min+" e máximo "+q.max+" linhas","",k);
+      d2.querySelector(".espelho").textContent="ESPELHO\n\n"+q.esp;
+      var au=el('<div class="meta" style="margin-top:8px">Autoavaliação: <select data-dk="'+i+'"><option value="0">0 (não atendeu)</option><option value="0.5">Metade</option><option value="1">Total</option></select></div>');
+      d2.appendChild(au);area.appendChild(d2)}
+  });
+  var bt=el('<button class="btn">Verificar gabarito e calcular nota</button>'),sc=el('<div class="score"></div>');
+  bt.onclick=function(){
+    clearInterval(timerId);
+    var obj=0,maxObj=0;
+    area.querySelectorAll(".q[data-k]").forEach(function(d){
+      var key=d.dataset.k,w=parseFloat(d.dataset.w),mc=d.dataset.mc==="1";
+      var cor=mc?parseInt(d.dataset.a,10):(d.dataset.a==="true");
+      maxObj+=w;var ok=(estado[key]===cor);if(ok)obj+=w;
+      d.classList.remove("ok","err");d.classList.add(ok?"ok":"err");d.classList.add("show")});
+    var dis=0,maxDis=0;
+    area.querySelectorAll(".q:not([data-k])").forEach(function(d){
+      d.classList.add("show");var s=d.querySelector("select");var i=parseInt(s.dataset.dk,10);
+      var v=S.Q[i].val;maxDis+=v;dis+=v*parseFloat(s.value)});
+    var tot=obj+dis;
+    sc.style.display="block";
+    sc.innerHTML="Objetivas: "+obj.toFixed(2).replace(".",",")+" / "+maxObj.toFixed(1).replace(".",",")+"<br>Discursivas (autoavaliação): "+dis.toFixed(2).replace(".",",")+" / "+maxDis.toFixed(1).replace(".",",")+"<br><span style='font-size:1.2rem;color:var(--bor)'>NOTA FINAL: "+tot.toFixed(2).replace(".",",")+" / 10,0</span><br><span class='meta'>Atualize as autoavaliações e clique de novo para recalcular.</span>";
+    sc.scrollIntoView({behavior:"smooth",block:"center"})};
+  ini.onclick=function(){
+    if(iniciado)return;iniciado=true;ini.disabled=true;
+    timerId=setInterval(function(){restante--;tm.textContent=fmt(Math.max(restante,0));
+      if(restante<=0){clearInterval(timerId);alert("Tempo esgotado! Clique em “Verificar gabarito e calcular nota”.")}},1000)};
+  p.appendChild(area);p.appendChild(bt);p.appendChild(sc);
+  main.appendChild(p);
+}
+
+mkNav();B.forEach(buildBloco);
+buildSim(SIM,"sim","Simulado · QAGV","<b>Estrutura (igual à prova):</b> 3 quesitos V/F de 5 assertivas (0,20 cada = 3,0) · 4 múltiplas escolhas (0,5 cada = 2,0) · 2 discursivas de 1,5 · 1 discursiva de 2,0 · Total 10,0 · Tempo: 100 min.");
+buildSim(SIM2,"ae26","Prova AE de QAGV · CFO 2026 (T19)","<b>Prova real aplicada em 15/09/2026</b>, com o gabarito oficial da folha de respostas. 3 quesitos V/F (3,0) · 4 múltiplas escolhas (2,0) · discursivas de 1,5, 1,5 e 2,0 · Total 10,0 · Tempo: 100 min. Os espelhos das discursivas trazem a resposta pela apostila e os comentários da correção.");
+show("b0");
+
+</script>
+</body>
+</html>
+
+</body></html>

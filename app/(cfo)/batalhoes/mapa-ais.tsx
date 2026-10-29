@@ -31,7 +31,7 @@ const pilula = (ativo: boolean): React.CSSProperties => ({
   background: ativo ? "var(--olive)" : "#fff", color: ativo ? "var(--canvas)" : "var(--ink-60)",
 })
 
-export function MapaAIS({ batalhoes, respondentes, minha1 }: { batalhoes: BatalhaoMapa[]; respondentes: number; minha1: string | null }) {
+export function MapaAIS({ batalhoes, respondentes, minha1, embutido = false }: { batalhoes: BatalhaoMapa[]; respondentes: number; minha1: string | null; embutido?: boolean }) {
   const aisMinha = minha1 ? aisDoBatalhao(minha1) : null
   const [sel, setSel] = useState<IdAIS>(aisMinha ?? "1-5")
   const [hover, setHover] = useState<{ muni: string; ais: IdAIS } | null>(null)
@@ -91,9 +91,9 @@ export function MapaAIS({ batalhoes, respondentes, minha1 }: { batalhoes: Batalh
   const muniInfo = hover ?? (achado ? { muni: achado.nome, ais: achado.ais } : null)
 
   return (
-    <section style={cartao}>
-      <h2 style={titulo}>Mapa das AIS — onde cada batalhão atua</h2>
-      <p style={{ margin: "4px 0 12px", fontSize: 13, color: "var(--ink-60)", lineHeight: 1.5 }}>
+    <section style={embutido ? undefined : cartao}>
+      {!embutido && <h2 style={titulo}>Mapa das AIS — onde cada batalhão atua</h2>}
+      <p style={{ margin: embutido ? "0 0 12px" : "4px 0 12px", fontSize: 13, color: "var(--ink-60)", lineHeight: 1.5 }}>
         As 26 Áreas Integradas de Segurança de Pernambuco: cada uma junta um batalhão da PM, uma seccional da Polícia Civil, os Bombeiros e a Polícia Científica no mesmo território. Toque numa área para ver municípios e unidades.
       </p>
 
