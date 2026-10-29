@@ -4,6 +4,8 @@ import Link from "next/link"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { AIS_PE, DIRETORIAS, FONTE_AIS, NORONHA, REGIOES, UNIDADES_PRISIONAIS, aisDoBatalhao, type IdAIS, type Regiao } from "@/lib/ais-pernambuco"
 import { CAIXA_RMR, MAPA_ALTURA, MAPA_LARGURA, MUNICIPIOS_MAPA, RECORTE_RMR, ROTULOS_AIS } from "@/lib/ais-mapa"
+import { baseDoSlug, linkMapa } from "@/lib/batalhoes-base"
+import { FONTE_UNIDADES, RECORTE_RECIFE, TIPOS_UNIDADE, UNIDADES_MAPA, type TipoUnidade, type UnidadeMapa } from "@/lib/pmpe-unidades"
 import { REM, disputa } from "./batalhoes-client"
 
 export type BatalhaoMapa = { sigla: string; slug: string; opcao1: number }
@@ -22,6 +24,43 @@ const NOMES_MUNI = MUNICIPIOS_MAPA.map(m => m.nome)
 const NEUTRO = "#e7e3d8"
 const semAcento = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
 const numeroRotulo = (id: IdAIS) => id === "1-5" ? "1–5" : id
+const aisDaUnidade = (u: UnidadeMapa) => MUNICIPIOS_MAPA.find(m => m.nome === u.municipio)!.ais
+const dentro = (u: UnidadeMapa, [x, y, w, h]: [number, number, number, number]) => u.x >= x && u.x <= x + w && u.y >= y && u.y <= y + h
+const COR_TIPO = Object.fromEntries(TIPOS_UNIDADE.map(t => [t.id, t.cor])) as Record<TipoUnidade, string>
+type Zoom = "estado" | "rmr" | "recife"
+
+// Marcador: círculo (batalhão), losango (especializada) ou quadrado (comando/diretoria)
+function Marca({ u, r, ativo }: { u: UnidadeMapa; r: number; ativo: boolean }) {
+  const p = { fill: COR_TIPO[u.tipo], stroke: "#fff", strokeWidth: 1.2, vectorEffect: "non-scaling-stroke" as const }
+  return <>
+    {ativo && <circle cx={u.x} cy={u.y} r={r * 2} fill="none" stroke="var(--gold)" strokeWidth={2.5} vectorEffect="non-scaling-stroke" />}
+    {u.tipo === "batalhao" ? <circle cx={u.x} cy={u.y} r={r} {...p} />
+      : u.tipo === "especializada" ? <rect x={u.x - r * 0.8} y={u.y - r * 0.8} width={r * 1.6} height={r * 1.6} transform={`rotate(45 ${u.x} ${u.y})`} {...p} />
+      : <rect x={u.x - r * 0.85} y={u.y - r * 0.85} width={r * 1.7} height={r * 1.7} rx={r * 0.2} {...p} />}
+  </>
+}
+
+// Rótulos sem sobreposição: tenta à direita, acima/abaixo e à esquerda do marcador
+function posicionarRotulos(us: UnidadeMapa[], r: number, fs: number) {
+  const caixas: [number, number, number, number][] = []
+  const larg = (t: string) => t.length * fs * 0.58
+  const tentativas = [[1, 0], [1, 1], [1, -1], [-1, 0], [-1, 1], [-1, -1], [1, 2], [-1, 2], [1, -2], [-1, -2]]
+  return [...us].sort((a, b) => a.y - b.y || a.x - b.x).map(u => {
+    const w = larg(u.sigla)
+    let escolha = { x: u.x + r * 1.5, y: u.y + fs * 0.35, ancora: "start" as "start" | "end" }
+    for (const [lado, dy] of tentativas) {
+      const x0 = lado > 0 ? u.x + r * 1.5 : u.x - r * 1.5 - w
+      const yb = u.y + fs * 0.35 + dy * fs * 1.05
+      const cx: [number, number, number, number] = [x0, yb - fs * 0.85, x0 + w, yb + fs * 0.15]
+      if (!caixas.some(c => c[0] < cx[2] && cx[0] < c[2] && c[1] < cx[3] && cx[1] < c[3])) {
+        escolha = { x: lado > 0 ? x0 : x0 + w, y: yb, ancora: lado > 0 ? "start" : "end" }
+        caixas.push(cx)
+        break
+      }
+    }
+    return { u, ...escolha }
+  })
+}
 
 const cartao: React.CSSProperties = { background: "#fff", borderRadius: 16, border: "1px solid rgba(58,74,58,0.12)", padding: 18 }
 const titulo: React.CSSProperties = { fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", margin: 0 }
@@ -37,7 +76,11 @@ export function MapaAIS({ batalhoes, respondentes, minha1, embutido = false }: {
   const [hover, setHover] = useState<{ muni: string; ais: IdAIS } | null>(null)
   const [regiao, setRegiao] = useState<Regiao | null>(null)
   const [modo, setModo] = useState<Modo>("areas")
-  const [rmr, setRmr] = useState(false)
+  const [zoom, setZoom] = useState<Zoom>("estado")
+  const rmr = zoom !== "estado"
+  const setRmr = (v: boolean) => setZoom(v ? "rmr" : "estado")
+  const [camadas, setCamadas] = useState<Set<TipoUnidade>>(() => new Set(TIPOS_UNIDADE.map(t => t.id)))
+  const [unidade, setUnidade] = useState<string | null>(null)
   const [busca, setBusca] = useState("")
   const rolagem = useRef<HTMLDivElement>(null)
   // No celular o estado não cabe: começa pelo leste (Grande Recife e Agreste)
@@ -85,8 +128,17 @@ export function MapaAIS({ batalhoes, respondentes, minha1, embutido = false }: {
   const munis = MUNIS_DA_AIS.get(sel) ?? []
   const prisoes = UNIDADES_PRISIONAIS.filter(p => p.ais === sel)
   const topo = [...DIM].sort((a, b) => op1(b) - op1(a))[0]
-  const vb = rmr ? RECORTE_RMR.join(" ") : `0 0 ${MAPA_LARGURA} ${MAPA_ALTURA}`
-  const fs = rmr ? 4.2 : 13
+  const vb = zoom === "recife" ? RECORTE_RECIFE.join(" ") : rmr ? RECORTE_RMR.join(" ") : `0 0 ${MAPA_LARGURA} ${MAPA_ALTURA}`
+  const fs = zoom === "recife" ? 1.5 : rmr ? 4.2 : 13
+  const raio = zoom === "recife" ? 0.34 : rmr ? 1.3 : 6
+  const ligadas = UNIDADES_MAPA.filter(u => camadas.has(u.tipo))
+  // Na vista do estado, as unidades do Grande Recife ficam dentro do quadro tracejado (contadas no rótulo)
+  const marcas = zoom === "estado" ? ligadas.filter(u => !dentro(u, CAIXA_RMR)) : ligadas
+  const noQuadro = ligadas.length - marcas.length
+  const uSel = UNIDADES_MAPA.find(u => u.id === unidade) ?? null
+  const unidadesAqui = UNIDADES_MAPA.filter(u => aisDaUnidade(u) === sel)
+  const abrirUnidade = (u: UnidadeMapa) => { setUnidade(u.id); setSel(aisDaUnidade(u)) }
+  const alternar = (t: TipoUnidade) => setCamadas(c => { const n = new Set(c); if (n.has(t)) n.delete(t); else n.add(t); return n })
   const visiveis = AIS_PE.filter(a => !regiao || a.regiao === regiao)
   const muniInfo = hover ?? (achado ? { muni: achado.nome, ais: achado.ais } : null)
 
@@ -130,13 +182,24 @@ export function MapaAIS({ batalhoes, respondentes, minha1, embutido = false }: {
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
           <div style={{ display: "inline-flex", borderRadius: 10, border: "1px solid rgba(58,74,58,0.18)", overflow: "hidden" }}>
-            {[{ v: false, r: "Pernambuco" }, { v: true, r: "Grande Recife" }].map(o => (
-              <button key={o.r} onClick={() => setRmr(o.v)} style={{ padding: "6px 12px", border: "none", cursor: "pointer", fontSize: 12.5, fontWeight: 600, fontFamily: "inherit", background: rmr === o.v ? "var(--olive)" : "#fff", color: rmr === o.v ? "var(--canvas)" : "var(--ink-60)" }}>{o.r}</button>
+            {([{ v: "estado", r: "Pernambuco" }, { v: "rmr", r: "Grande Recife" }, { v: "recife", r: "Recife" }] as const).map(o => (
+              <button key={o.r} onClick={() => setZoom(o.v)} style={{ padding: "6px 12px", border: "none", cursor: "pointer", fontSize: 12.5, fontWeight: 600, fontFamily: "inherit", background: zoom === o.v ? "var(--olive)" : "#fff", color: zoom === o.v ? "var(--canvas)" : "var(--ink-60)" }}>{o.r}</button>
             ))}
           </div>
           <input value={busca} onChange={e => buscar(e.target.value)} list="ais-municipios" placeholder="Em que AIS fica a cidade…?" aria-label="Buscar município"
             style={{ flex: "1 1 200px", maxWidth: 300, padding: "7px 12px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.25)", background: "#fff", fontSize: 13.5 }} />
           <datalist id="ais-municipios">{NOMES_MUNI.map(n => <option key={n} value={n} />)}</datalist>
+        </div>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+          <span style={{ ...rotulo, marginRight: 2 }}>Mostrar no mapa</span>
+          {TIPOS_UNIDADE.map(t => (
+            <button key={t.id} onClick={() => alternar(t.id)} aria-pressed={camadas.has(t.id)} style={{ ...pilula(camadas.has(t.id)), display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <svg width="11" height="11" viewBox="-6 -6 12 12" aria-hidden>
+                {t.id === "batalhao" ? <circle r="5" fill={t.cor} stroke="#fff" strokeWidth="1" /> : t.id === "especializada" ? <rect x="-4" y="-4" width="8" height="8" transform="rotate(45)" fill={t.cor} stroke="#fff" strokeWidth="1" /> : <rect x="-4.5" y="-4.5" width="9" height="9" rx="1" fill={t.cor} stroke="#fff" strokeWidth="1" />}
+              </svg>
+              {t.rot}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -177,9 +240,23 @@ export function MapaAIS({ batalhoes, respondentes, minha1, embutido = false }: {
           {!rmr && (
             <g onClick={() => setRmr(true)} style={{ cursor: "pointer" }}>
               <rect x={CAIXA_RMR[0]} y={CAIXA_RMR[1]} width={CAIXA_RMR[2]} height={CAIXA_RMR[3]} fill="none" stroke="#1f8a4c" strokeWidth={1.5} strokeDasharray="5 3" vectorEffect="non-scaling-stroke" />
-              <text x={MAPA_LARGURA - 2} y={CAIXA_RMR[1] - 6} fontSize={12} textAnchor="end" fill="#1f8a4c" fontWeight={700} stroke="#fff" strokeWidth={3} paintOrder="stroke">AIS 1–10 · ampliar{aisMinha && DIM.has(aisMinha) ? " ★" : ""}</text>
+              <text x={MAPA_LARGURA - 2} y={CAIXA_RMR[1] - 6} fontSize={12} textAnchor="end" fill="#1f8a4c" fontWeight={700} stroke="#fff" strokeWidth={3} paintOrder="stroke">AIS 1–10{noQuadro > 0 ? ` · ${noQuadro} unidades` : ""} · ampliar{aisMinha && DIM.has(aisMinha) ? " ★" : ""}</text>
             </g>
           )}
+          {/* Unidades com localização */}
+          <g>
+            {marcas.map(u => (
+              <g key={u.id} role="button" tabIndex={0} aria-label={`${u.sigla} — ${u.nome}`} style={{ cursor: "pointer", outline: "none" }}
+                onClick={e => { e.stopPropagation(); abrirUnidade(u) }} onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); abrirUnidade(u) } }}>
+                <title>{`${u.sigla} — ${u.nome}`}</title>
+                <Marca u={u} r={raio} ativo={unidade === u.id} />
+              </g>
+            ))}
+            {zoom === "recife" && posicionarRotulos(marcas.filter(u => dentro(u, RECORTE_RECIFE)), raio, 0.6).map(({ u, x, y, ancora }) => (
+              <text key={u.id} x={x} y={y} fontSize={0.6} fontWeight={700} textAnchor={ancora} fill={unidade === u.id ? "#7a2e2e" : "var(--ink)"} stroke="#fff" strokeWidth={0.16} paintOrder="stroke"
+                style={{ cursor: "pointer" }} onClick={e => { e.stopPropagation(); abrirUnidade(u) }}>{u.sigla}</text>
+            ))}
+          </g>
         </svg>
       </div>
       <div style={{ minHeight: 20, marginTop: 6, fontSize: 12.5, color: "var(--ink-60)", textAlign: "center" }}>
@@ -254,6 +331,40 @@ export function MapaAIS({ batalhoes, respondentes, minha1, embutido = false }: {
           {!DIM.has(sel) && <p style={{ margin: "8px 0 0", fontSize: 12, color: "var(--ink-60)" }}>Fora da nossa escolha — referência para conhecer o estado, apoio entre áreas e remoções futuras.</p>}
         </div>
 
+        {/* Unidades com localização nesta AIS */}
+        {unidadesAqui.length > 0 && (
+          <div style={{ marginTop: 14 }}>
+            <div style={rotulo}>Onde ficam as unidades nesta área ({unidadesAqui.length})</div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 6 }}>
+              {unidadesAqui.map(u => (
+                <button key={u.id} onClick={() => abrirUnidade(u)} style={{ ...pilula(unidade === u.id), display: "inline-flex", alignItems: "center", gap: 6, padding: "4px 10px" }}>
+                  <span style={{ width: 8, height: 8, borderRadius: u.tipo === "batalhao" ? 99 : 2, background: COR_TIPO[u.tipo], transform: u.tipo === "especializada" ? "rotate(45deg)" : undefined }} />{u.sigla}
+                </button>
+              ))}
+            </div>
+            {uSel && aisDaUnidade(uSel) === sel && (
+              <div style={{ marginTop: 10, padding: "12px 14px", borderRadius: 12, border: "1px solid rgba(58,74,58,0.15)", background: "#fbfaf6" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 8, flexWrap: "wrap", alignItems: "baseline" }}>
+                  <strong style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.1rem", color: "var(--olive)" }}>{uSel.sigla}</strong>
+                  <span style={{ fontSize: 11.5, color: COR_TIPO[uSel.tipo], fontWeight: 700 }}>{TIPOS_UNIDADE.find(t => t.id === uSel.tipo)!.rot}</span>
+                </div>
+                <div style={{ fontSize: 12.5, color: "var(--ink-60)" }}>{uSel.nome}</div>
+                {uSel.missao && <p style={{ margin: "8px 0 0", fontSize: 13, lineHeight: 1.5 }}>{uSel.missao}</p>}
+                <div style={{ fontSize: 12.5, marginTop: 8, lineHeight: 1.6 }}>
+                  {uSel.slug && baseDoSlug(uSel.slug) && <div>Sede: {baseDoSlug(uSel.slug)!.sede}, {baseDoSlug(uSel.slug)!.municipio}</div>}
+                  {uSel.endereco && <div>Endereço: {uSel.endereco}</div>}
+                  {uSel.telefone && <div>Telefone: {uSel.telefone}</div>}
+                </div>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 8, fontSize: 12.5, fontWeight: 600 }}>
+                  {uSel.slug && <Link href={`/batalhoes/${uSel.slug}`} style={{ color: "var(--olive)" }}>Ficha do batalhão ›</Link>}
+                  {(uSel.endereco || (uSel.slug && baseDoSlug(uSel.slug))) && <a href={uSel.endereco ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(uSel.endereco + " - PE") : linkMapa(baseDoSlug(uSel.slug!)!)} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>Abrir no Google Maps ↗</a>}
+                  {uSel.url && <a href={uSel.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>Página oficial ↗</a>}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Integração */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10, marginTop: 14 }}>
           <div><div style={rotulo}>Polícia Civil</div><div style={{ fontSize: 13, marginTop: 3 }}>{ais.areas.map(r => r.civil).join(" · ")}</div></div>
@@ -288,7 +399,7 @@ export function MapaAIS({ batalhoes, respondentes, minha1, embutido = false }: {
       </div>
 
       <p style={{ margin: "14px 0 0", fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
-        Fora do mapa: {NORONHA.nome}, {NORONHA.resumo} ({NORONHA.unidades}). <strong>Escolha da turma</strong> soma a 1ª opção dos batalhões de cada AIS; <strong>Disputa</strong> usa o corte T1+T2 do batalhão mais disputado da área (mesma conta do comparativo). Fonte: {FONTE_AIS}; limites municipais do IBGE.
+        Fora do mapa: {NORONHA.nome}, {NORONHA.resumo} ({NORONHA.unidades}). <strong>Escolha da turma</strong> soma a 1ª opção dos batalhões de cada AIS; <strong>Disputa</strong> usa o corte T1+T2 do batalhão mais disputado da área (mesma conta do comparativo). Fonte: {FONTE_AIS}; limites municipais do IBGE. Unidades e endereços: {FONTE_UNIDADES}; posição no mapa aproximada.
       </p>
     </section>
   )
