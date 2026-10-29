@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { AIS_PE, DIRETORIAS, FONTE_AIS, NORONHA, REGIOES, UNIDADES_PRISIONAIS, aisDoBatalhao, type IdAIS, type Regiao } from "@/lib/ais-pernambuco"
 import { CAIXA_RMR, MAPA_ALTURA, MAPA_LARGURA, MUNICIPIOS_MAPA, RECORTE_RMR, ROTULOS_AIS } from "@/lib/ais-mapa"
+import { especializadasDaAIS } from "@/lib/pmpe-estrutura"
 import { REM, disputa } from "./batalhoes-client"
 
 export type BatalhaoMapa = { sigla: string; slug: string; opcao1: number }
@@ -269,6 +270,20 @@ export function MapaAIS({ batalhoes, respondentes, minha1, embutido = false }: {
           </div>
           {sel === "1-5" && <p style={{ margin: "6px 0 0", fontSize: 12, color: "var(--ink-60)" }}>O Recife é dividido em 5 áreas (uma por batalhão); o mapa da SDS mostra a capital numa mancha só.</p>}
         </div>
+
+        {especializadasDaAIS(sel).length > 0 && (
+          <div style={{ marginTop: 14 }}>
+            <div style={rotulo}>Especializadas com sede ou base aqui</div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 6 }}>
+              {especializadasDaAIS(sel).map(e => (
+                <span key={e.sigla} title={`${e.nome} — ${e.missao}`} style={{ padding: "4px 10px", borderRadius: 10, background: "#eef1ea", border: "1px solid rgba(58,74,58,0.18)", fontSize: 12.5 }}>
+                  <strong style={{ color: "var(--olive)" }}>{e.sigla}</strong> <span style={{ color: "var(--ink-60)" }}>· {e.tipo.toLowerCase()}</span>
+                </span>
+              ))}
+            </div>
+            <p style={{ margin: "6px 0 0", fontSize: 12, color: "var(--ink-60)" }}>Missão e origem de cada uma em “Especializadas e estrutura da PMPE”, mais abaixo.</p>
+          </div>
+        )}
 
         {prisoes.length > 0 && (
           <div style={{ marginTop: 14 }}>

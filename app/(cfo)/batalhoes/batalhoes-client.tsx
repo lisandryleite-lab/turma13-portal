@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useMemo, useState } from "react"
+import { EstruturaPMPE } from "./estrutura-pmpe"
 import remuneracao from "@/lib/remuneracao-oficiais.json"
 import criminalidade from "@/lib/criminalidade-batalhoes.json"
 
@@ -245,6 +246,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
       </Link>
 
       {mapa && <Secao titulo="Mapa das AIS" resumo="Onde cada batalhão atua">{mapa}</Secao>}
+      <Secao titulo="Especializadas e estrutura da PMPE" resumo="BOPE, Choque, GTA e demais especializadas · EMG, diretorias e cargos"><EstruturaPMPE /></Secao>
 
       <Secao titulo="Fichas dos batalhões" resumo={`${cards.length} batalhões · busca por bairro ou cidade`}>
         <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="Buscar batalhão, bairro ou cidade"
