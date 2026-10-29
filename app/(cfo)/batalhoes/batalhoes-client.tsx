@@ -196,6 +196,10 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
         <span style={{ fontSize: 13.5 }}><strong>Salário:</strong> é o mesmo em qualquer batalhão — o que muda é a função. Veja quanto ganha cada uma e a previsão para a nossa turma.</span>
         <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 18 }}>›</span>
       </Link>
+      <Link href="/batalhoes/carreira" style={{ ...cartao, padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", color: "var(--ink)", background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)" }}>
+        <span style={{ fontSize: 13.5 }}><strong>Simulador de carreira:</strong> quando você chega a 1º Ten, Capitão, Major… pela sua classificação, com as regras de promoção da LC nº 470/2021.</span>
+        <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 18 }}>›</span>
+      </Link>
 
       {mapa}
 

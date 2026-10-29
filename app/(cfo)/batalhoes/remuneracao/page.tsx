@@ -14,6 +14,10 @@ export default async function RemuneracaoPage() {
         Quanto ganham os aspirantes e tenentes das turmas anteriores, por função — e o que esperar para a nossa turma.
       </p>
       <RemuneracaoClient />
+      <Link href="/batalhoes/carreira" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginTop: 16, padding: "12px 16px", borderRadius: 16, textDecoration: "none", color: "var(--ink)", background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)" }}>
+        <span style={{ fontSize: 13.5 }}><strong>Simulador de carreira:</strong> veja quando você chega a cada posto e como funcionam as promoções (antiguidade, merecimento, decenal, bravura…).</span>
+        <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 18 }}>›</span>
+      </Link>
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>Desenvolvido por AL CFO PM 108 LISANDRY</footer>
     </main>
   )
