@@ -67,7 +67,7 @@ export default async function BatalhoesPage() {
         planilhaOk={respostas !== null}
         planilhaUrl={PLANILHA_URL}
         formularioUrl={FORMULARIO_DAG_URL}
-        mapa={<MapaAIS batalhoes={cards.map(c => ({ sigla: c.sigla, slug: c.slug, opcao1: c.opcao1 }))} respondentes={lista.length} minha1={minha?.opcao1 ?? null} />}
+        mapa={<MapaAIS batalhoes={cards.map(c => ({ sigla: c.sigla, slug: c.slug, opcao1: c.opcao1 }))} respondentes={lista.length} minha1={minha?.opcao1 ?? null} embutido />}
       />
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>Desenvolvido por AL CFO PM 108 LISANDRY</footer>
     </main>

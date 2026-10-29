@@ -67,81 +67,95 @@ const chip = (ativo: boolean, desab = false): React.CSSProperties => ({
   border: `1px solid ${ativo ? "var(--olive)" : "rgba(58,74,58,0.3)"}`,
   background: ativo ? "var(--olive)" : "#fff", color: ativo ? "var(--canvas)" : "var(--ink)", opacity: desab ? 0.45 : 1,
 })
-const rotulo: React.CSSProperties = { display: "block", fontSize: 12, fontWeight: 700, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: ".04em", marginBottom: 6 }
 
+const Seta = ({ aberto }: { aberto: boolean }) => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+    style={{ transition: "transform .15s", transform: aberto ? "rotate(180deg)" : "none", flexShrink: 0 }} aria-hidden><path d="m6 9 6 6 6-6" /></svg>
+)
+type AbaFiltro = "assunto" | "tipo" | "status" | "busca"
+
+// Filtros minimalistas: uma linha de abas que só mostram as opções ao toque (uma aberta por vez).
 function PainelFiltros({ materias, filtros, comTipo = true }: { materias: Materia[]; filtros: ReturnType<typeof useFiltros>; comTipo?: boolean }) {
   const { f, set, limpar, total, mAtual } = filtros
+  const [aberta, setAberta] = useState<AbaFiltro | null>(null)
   const sujo = JSON.stringify(f) !== JSON.stringify(FILTROS_VAZIOS)
   function toggleModulo(md: string) {
     set("modulos", f.modulos.includes(md) ? f.modulos.filter(x => x !== md) : [...f.modulos, md])
   }
+  const temAssunto = !!mAtual && mAtual.modulos.length > 1
+  const resumo: Record<AbaFiltro, string> = {
+    assunto: f.modulos.length === 0 ? "Assunto" : f.modulos.length === 1 ? moduloLabelCurto(f.materia, f.modulos[0]) : `${f.modulos.length} assuntos`,
+    tipo: f.tipo ? TIPOS.find(t => t[0] === f.tipo)![1] : "Modalidade",
+    status: f.status && !f.excluirRespondidas ? STATUS.find(s => s[0] === f.status)![1] : "Status",
+    busca: f.texto.trim() ? `“${f.texto.trim()}”` : "Palavra-chave",
+  }
+  const ativa: Record<AbaFiltro, boolean> = { assunto: f.modulos.length > 0, tipo: !!f.tipo, status: !!f.status && !f.excluirRespondidas, busca: !!f.texto.trim() }
+  const abas: AbaFiltro[] = [...(temAssunto ? ["assunto" as const] : []), ...(comTipo ? ["tipo" as const] : []), "status", "busca"]
+  const aba = (a: AbaFiltro) => (
+    <button key={a} type="button" onClick={() => setAberta(x => x === a ? null : a)} aria-expanded={aberta === a}
+      style={{ ...chip(ativa[a]), display: "inline-flex", alignItems: "center", gap: 6, maxWidth: "100%",
+        ...(aberta === a && !ativa[a] ? { border: "1px solid var(--olive)", color: "var(--olive)" } : {}) }}>
+      <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{resumo[a]}</span><Seta aberto={aberta === a} />
+    </button>
+  )
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <label style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
-        <span style={rotulo}>Disciplina</span>
-        <select style={inputStyle} value={f.materia} onChange={e => set("materia", e.target.value)}>
-          <option value="">Todas as disciplinas</option>
-          {materias.map(m => <option key={m.sigla} value={m.sigla}>{m.sigla} — {m.nome} ({m.total})</option>)}
-        </select>
-      </label>
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <select aria-label="Disciplina" style={inputStyle} value={f.materia} onChange={e => { set("materia", e.target.value); setAberta(null) }}>
+        <option value="">Todas as disciplinas</option>
+        {materias.map(m => <option key={m.sigla} value={m.sigla}>{m.sigla} — {m.nome} ({m.total})</option>)}
+      </select>
 
-      {mAtual && mAtual.modulos.length > 1 && (
-        <div>
-          <span style={rotulo}>Assunto {f.modulos.length > 0 && <span style={{ textTransform: "none", fontWeight: 600 }}>· {f.modulos.length} selecionado{f.modulos.length > 1 ? "s" : ""}</span>}</span>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, maxHeight: 210, overflowY: "auto", padding: 2 }}>
-            <button type="button" onClick={() => set("modulos", [])} style={chip(f.modulos.length === 0)}>Todos</button>
-            {mAtual.modulos.map(md => (
-              <button key={md} type="button" onClick={() => toggleModulo(md)} style={{ ...chip(f.modulos.includes(md)), textAlign: "left", borderRadius: 12 }}>
-                {moduloLabel(f.materia, md)}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {comTipo && (
-        <label style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
-          <span style={rotulo}>Modalidade</span>
-          <select style={inputStyle} value={f.tipo} onChange={e => set("tipo", e.target.value)}>
-            {TIPOS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
-          </select>
-        </label>
-      )}
-
-      <div>
-        <span style={rotulo}>Status</span>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-          {STATUS.map(([v, l]) => {
-            const desab = f.excluirRespondidas && v !== "" && v !== "nao_respondidas"
-            const ativo = f.excluirRespondidas ? v === "nao_respondidas" : f.status === v
-            return (
-              <button key={v} type="button" disabled={desab || f.excluirRespondidas} onClick={() => set("status", v)} style={chip(ativo, desab)}>{l}</button>
-            )
-          })}
-        </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
+        {abas.map(aba)}
+        <button type="button" role="switch" aria-checked={f.excluirRespondidas} onClick={() => set("excluirRespondidas", !f.excluirRespondidas)}
+          title="Mostra só as questões que você ainda não respondeu (dissertativas contam como não respondidas)"
+          style={{ ...chip(f.excluirRespondidas), display: "inline-flex", alignItems: "center", gap: 7 }}>
+          <span aria-hidden style={{ width: 26, height: 15, borderRadius: 99, position: "relative", flexShrink: 0,
+            background: f.excluirRespondidas ? "rgba(255,255,255,0.35)" : "rgba(58,74,58,0.2)" }}>
+            <span style={{ position: "absolute", top: 2, left: f.excluirRespondidas ? 13 : 2, width: 11, height: 11, borderRadius: 99, background: "#fff", transition: "left .15s" }} />
+          </span>
+          Ocultar respondidas
+        </button>
       </div>
 
-      <label style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderRadius: 10, cursor: "pointer",
-        background: f.excluirRespondidas ? "#eef4ea" : "#fff", border: `1px solid ${f.excluirRespondidas ? "var(--olive)" : "rgba(58,74,58,0.25)"}` }}>
-        <input type="checkbox" checked={f.excluirRespondidas} onChange={e => set("excluirRespondidas", e.target.checked)}
-          style={{ width: 18, height: 18, accentColor: "var(--olive)", flexShrink: 0 }} />
-        <span style={{ fontSize: 14, color: "var(--ink)" }}>
-          <strong>Ocultar questões que já respondi</strong>
-          <span style={{ display: "block", fontSize: 12, color: "var(--ink-60)" }}>Mostra só as inéditas para você. Dissertativas contam como não respondidas.</span>
-        </span>
-      </label>
-
-      <label style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>
-        <span style={rotulo}>Palavra-chave</span>
-        <input style={inputStyle} type="search" value={f.texto} onChange={e => set("texto", e.target.value)} placeholder="Buscar no enunciado (ex.: deserção, art. 244)" />
-      </label>
+      {aberta && (
+        <div style={{ padding: 12, borderRadius: 10, background: "#fff", border: "1px solid rgba(58,74,58,0.18)" }}>
+          {aberta === "assunto" && mAtual && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, maxHeight: 230, overflowY: "auto" }}>
+              <button type="button" onClick={() => set("modulos", [])} style={chip(f.modulos.length === 0)}>Todos</button>
+              {mAtual.modulos.map(md => (
+                <button key={md} type="button" onClick={() => toggleModulo(md)} style={{ ...chip(f.modulos.includes(md)), textAlign: "left", borderRadius: 12 }}>
+                  {moduloLabel(f.materia, md)}
+                </button>
+              ))}
+            </div>
+          )}
+          {aberta === "tipo" && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              {TIPOS.map(([v, l]) => <button key={v} type="button" onClick={() => { set("tipo", v); setAberta(null) }} style={chip(f.tipo === v)}>{v ? l : "Todas"}</button>)}
+            </div>
+          )}
+          {aberta === "status" && (
+            f.excluirRespondidas
+              ? <p style={{ margin: 0, fontSize: 13, color: "var(--ink-60)" }}>Com “Ocultar respondidas” ligado, só aparecem as não respondidas.</p>
+              : <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {STATUS.map(([v, l]) => <button key={v} type="button" onClick={() => { set("status", v); setAberta(null) }} style={chip(f.status === v)}>{l}</button>)}
+                </div>
+          )}
+          {aberta === "busca" && (
+            <input autoFocus style={inputStyle} type="search" value={f.texto} onChange={e => set("texto", e.target.value)}
+              onKeyDown={e => { if (e.key === "Enter") setAberta(null) }} placeholder="Buscar no enunciado (ex.: deserção, art. 244)" />
+          )}
+        </div>
+      )}
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", fontSize: 13.5 }}>
         <span style={{ color: "var(--ink-60)" }}>
-          {total === null ? "Contando…" : total < 0 ? "Não foi possível contar as questões." : <><strong style={{ color: total ? "var(--olive)" : "var(--red)", fontSize: 15 }}>{total}</strong> {total === 1 ? "questão encontrada" : "questões encontradas"}</>}
-          {!f.materia && total !== null && total > 300 && <span> · serão sorteadas até 300</span>}
+          {total === null ? "Contando…" : total < 0 ? "Não foi possível contar as questões." : <><strong style={{ color: total ? "var(--olive)" : "var(--red)", fontSize: 15 }}>{total}</strong> {total === 1 ? "questão" : "questões"}</>}
+          {!f.materia && total !== null && total > 300 && <span> · até 300 sorteadas</span>}
         </span>
-        {sujo && <button type="button" onClick={limpar} style={{ border: "none", background: "none", color: "var(--olive)", fontWeight: 600, cursor: "pointer", fontSize: 13.5, padding: 0 }}>Limpar filtros</button>}
+        {sujo && <button type="button" onClick={() => { limpar(); setAberta(null) }} style={{ border: "none", background: "none", color: "var(--olive)", fontWeight: 600, cursor: "pointer", fontSize: 13.5, padding: 0 }}>Limpar</button>}
       </div>
     </div>
   )

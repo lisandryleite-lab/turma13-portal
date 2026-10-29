@@ -60,6 +60,31 @@ function Corte({ r }: { r: Rem | undefined }) {
   )
 }
 
+const Seta = ({ aberto }: { aberto: boolean }) => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+    style={{ transition: "transform .15s", transform: aberto ? "rotate(180deg)" : "none", flexShrink: 0 }} aria-hidden><path d="m6 9 6 6 6-6" /></svg>
+)
+
+// Seção recolhida: só o título e um resumo; o conteúdo aparece ao toque.
+function Secao({ titulo: t, resumo, inicial = false, children }: { titulo: string; resumo?: React.ReactNode; inicial?: boolean; children: React.ReactNode }) {
+  const [aberta, setAberta] = useState(inicial)
+  return (
+    <section style={{ ...cartao, padding: 0 }}>
+      <button onClick={() => setAberta(v => !v)} aria-expanded={aberta}
+        style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "14px 18px", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", textAlign: "left" }}>
+        <span style={{ flex: 1, minWidth: 0 }}>
+          <span style={{ ...titulo, fontSize: "1.05rem", display: "block" }}>{t}</span>
+          {resumo && <span style={{ display: "block", fontSize: 12.5, color: "var(--ink-60)", marginTop: 2 }}>{resumo}</span>}
+        </span>
+        <span style={{ color: "var(--ink-60)" }}><Seta aberto={aberta} /></span>
+      </button>
+      {aberta && <div style={{ padding: "0 18px 18px" }}>{children}</div>}
+    </section>
+  )
+}
+
+const VISIVEIS = 6
+
 function Tendencia({ v }: { v: number | null }) {
   if (v == null) return null
   return <span style={{ fontSize: 12, color: v < 0 ? "#3a7a3a" : "var(--red)", fontWeight: 600 }}>{v < 0 ? "▼" : "▲"}{Math.abs(v)}%</span>
@@ -72,7 +97,9 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
 }) {
   const [ordem, setOrdem] = useState<Ordem>("turma")
   const [busca, setBusca] = useState("")
-  const [verPendentes, setVerPendentes] = useState(false)
+  const [verOrdens, setVerOrdens] = useState(false)
+  const [verTodos, setVerTodos] = useState(false)
+  const [verLegenda, setVerLegenda] = useState(false)
   const taxa = pct(respondentesDaCia, totalAlunos)
   const maxOp1 = Math.max(1, ...cards.map(c => c.opcao1))
   const taxas = cards.map(c => CRIME[c.sigla]?.cvli.taxa2025 ?? 0)
@@ -84,6 +111,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
       : -(CRIME[c.sigla]?.cvli.taxa2025 ?? 999)
     return [...cards].sort((a, b) => v(b) - v(a) || numero(a.sigla) - numero(b.sigla))
   }, [cards, ordem])
+  const exibidas = verTodos ? linhas : linhas.slice(0, VISIVEIS)
   const emOrdem = useMemo(() => {
     const t = semAcento(busca.trim())
     return cards.filter(c => !t || semAcento(`${c.sigla} ${c.nome} ${c.sede} ${c.municipio}`).includes(t)).sort((a, b) => numero(a.sigla) - numero(b.sigla))
@@ -113,21 +141,25 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
 
       {/* Comparativo */}
       <section style={cartao}>
-        <h2 style={titulo}>Compare os batalhões</h2>
-        <p style={{ margin: "4px 0 12px", fontSize: 13, color: "var(--ink-60)", lineHeight: 1.5 }}>O que pesa na escolha, lado a lado. Toque no batalhão para ver a ficha completa.</p>
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
-          {ORDENS.map(o => (
-            <button key={o.id} onClick={() => setOrdem(o.id)} style={{ padding: "6px 12px", borderRadius: 999, border: "1px solid rgba(58,74,58,0.18)", cursor: "pointer", fontSize: 12.5, fontWeight: 600, fontFamily: "inherit",
-              background: ordem === o.id ? "var(--olive)" : "#fff", color: ordem === o.id ? "var(--canvas)" : "var(--ink-60)" }}>{o.rot}</button>
-          ))}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
+          <h2 style={titulo}>Compare os batalhões</h2>
+          <button onClick={() => setVerOrdens(v => !v)} aria-expanded={verOrdens}
+            style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "6px 12px", borderRadius: 999, border: "1px solid rgba(58,74,58,0.25)", background: "#fff", cursor: "pointer", fontSize: 12.5, fontWeight: 600, fontFamily: "inherit", color: "var(--ink)" }}>
+            {ORDENS.find(o => o.id === ordem)!.rot}<Seta aberto={verOrdens} />
+          </button>
         </div>
-        <p style={{ margin: "0 0 10px", padding: "8px 12px", borderRadius: 10, background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)", fontSize: 13 }}>
-          <strong>Pior classificado que vimos:</strong> {(["T2", "T1"] as const).map((t, i) => ULTIMO[t] && <span key={t}>{i > 0 && " · "}{t} {ULTIMO[t]![1]}º no <strong>{ULTIMO[t]![0]}</strong></span>)}
-        </p>
+        {verOrdens && (
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10, padding: 10, borderRadius: 10, background: "var(--surface)" }}>
+            {ORDENS.map(o => (
+              <button key={o.id} onClick={() => { setOrdem(o.id); setVerOrdens(false) }} style={{ padding: "6px 12px", borderRadius: 999, border: "1px solid rgba(58,74,58,0.18)", cursor: "pointer", fontSize: 12.5, fontWeight: 600, fontFamily: "inherit",
+                background: ordem === o.id ? "var(--olive)" : "#fff", color: ordem === o.id ? "var(--canvas)" : "var(--ink-60)" }}>{o.rot}</button>
+            ))}
+          </div>
+        )}
 
         {/* Celular: cartões */}
         <div className="flex flex-col gap-2 sm:hidden">
-          {linhas.map(c => {
+          {exibidas.map(c => {
             const r = REM[c.sigla], cr = CRIME[c.sigla]
             const t = cr?.cvli.taxa2025 ?? 0
             const meu = minha?.opcao1 === c.sigla
@@ -158,7 +190,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
               <th style={th}>Batalhão</th><th style={th}>Turma (1ª opção)</th><th style={th}>Vagas T2</th><th style={th}>Corte</th><th style={th}>Diárias 2026</th><th style={th}>CVLI /100 mil</th>
             </tr></thead>
             <tbody>
-              {linhas.map(c => {
+              {exibidas.map(c => {
                 const r = REM[c.sigla], cr = CRIME[c.sigla]
                 const t = cr?.cvli.taxa2025 ?? 0
                 const meu = minha?.opcao1 === c.sigla
@@ -184,12 +216,23 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
             </tbody>
           </table>
         </div>
-        <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap", marginTop: 10 }}>
+          {linhas.length > VISIVEIS && (
+            <button onClick={() => setVerTodos(v => !v)} style={{ display: "inline-flex", alignItems: "center", gap: 6, border: "none", background: "none", padding: 0, color: "var(--olive)", fontWeight: 700, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>
+              {verTodos ? "Mostrar menos" : `Ver todos os ${linhas.length}`}<Seta aberto={verTodos} />
+            </button>
+          )}
+          <button onClick={() => setVerLegenda(v => !v)} style={{ display: "inline-flex", alignItems: "center", gap: 6, border: "none", background: "none", padding: 0, color: "var(--ink-60)", fontWeight: 600, fontSize: 12.5, cursor: "pointer", fontFamily: "inherit", marginLeft: "auto" }}>
+            Como ler e fontes<Seta aberto={verLegenda} />
+          </button>
+        </div>
+        {verLegenda && <p style={{ margin: "10px 0 0", fontSize: 11.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
+          <strong>Pior classificado que vimos:</strong> {(["T2", "T1"] as const).map((t, i) => ULTIMO[t] && <span key={t}>{i > 0 && " · "}{t} {ULTIMO[t]![1]}º no <strong>{ULTIMO[t]![0]}</strong></span>)}.{" "}
           <strong>Corte</strong>: classificação do último aspirante da turma visto no batalhão (T2 de 1º a 182º; embaixo, a T1, de 1º a 148º) — quanto menor, mais disputado. Em cinza: menos de {AMOSTRA_MIN} aspirantes na amostra. “Mais disputados” junta T1 e T2: média do corte em % de cada turma, ignorando as amostras em cinza. A amostra só tem quem recebeu função publicada no BGSDS.
           <strong> Diárias</strong>: pagas em 2026 citando o batalhão (todo o efetivo).
           <strong> CVLI</strong>: mortes violentas por 100 mil habitantes (2025) e variação jan–set 2026. * dado do município inteiro (Recife ou Jaboatão).
           Fontes: <a href="https://www.sds.pe.gov.br/estatisticas/crimes-violentos-letais-intencionais" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>SDS</a>, <a href="https://sidra.ibge.gov.br/tabela/4709" target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>IBGE</a>, quadro de vagas da escolha da T2 e boletins da SDS · <a href={planilhaUrl} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>planilha da DAG</a>.
-        </p>
+        </p>}
       </section>
 
       <Link href="/batalhoes/remuneracao" style={{ ...cartao, padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", color: "var(--ink)", background: "#fbf7ec", border: "1px solid rgba(181,147,63,0.3)" }}>
@@ -197,15 +240,11 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
         <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 18 }}>›</span>
       </Link>
 
-      {mapa}
+      {mapa && <Secao titulo="Mapa das AIS" resumo="Onde cada batalhão atua">{mapa}</Secao>}
 
-      {/* Batalhões */}
-      <section>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
-          <h2 style={titulo}>Fichas</h2>
-          <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="Buscar batalhão, bairro ou cidade"
-            style={{ flex: "1 1 220px", maxWidth: 320, padding: "8px 12px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.25)", background: "#fff", fontSize: 14 }} />
-        </div>
+      <Secao titulo="Fichas dos batalhões" resumo={`${cards.length} batalhões · busca por bairro ou cidade`}>
+        <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="Buscar batalhão, bairro ou cidade"
+          style={{ width: "100%", padding: "9px 12px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.25)", background: "#fff", fontSize: 14, marginBottom: 10 }} />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10 }}>
           {emOrdem.map(c => {
             const meu = minha?.opcao1 === c.sigla
@@ -218,16 +257,10 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
             )
           })}
         </div>
-      </section>
+      </Secao>
 
-      {/* Quem falta */}
-      <section style={cartao}>
-        <button onClick={() => setVerPendentes(v => !v)} style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "inherit" }}>
-          <span style={{ ...titulo, fontSize: "1.05rem" }}>Quem falta escolher <span style={{ color: "var(--red)" }}>({pendentes.length})</span></span>
-          <span style={{ color: "var(--ink-60)", transform: verPendentes ? "rotate(180deg)" : "none" }}>▾</span>
-        </button>
-        {verPendentes && (
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 12 }}>
+      <Secao titulo="Quem falta escolher" resumo={pendentes.length ? `${pendentes.length} alunos` : "Todos já responderam"}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {pendentes.length === 0 ? <p style={{ margin: 0, fontSize: 13.5, color: "var(--olive)" }}>Todos já responderam.</p> : pendPorPel.map(([pel, ps]) => (
               <div key={pel}>
                 <p style={{ margin: "0 0 6px", fontSize: 11.5, fontWeight: 700, color: "var(--gold)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{pel} ({ps.length})</p>
@@ -237,8 +270,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
               </div>
             ))}
           </div>
-        )}
-      </section>
+      </Secao>
     </div>
   )
 }
