@@ -13,7 +13,11 @@ import {
 const COR_GRUPO: Record<Grupo, string> = {
   GOLF: "#15803D", HOTEL: "#B91C1C", INDIA: "#1D4ED8", JULIETT: "#B45309",
   KILO: "#7E22CE", LIMA: "#0F766E", MIKE: "#BE185D", NOVEMBER: "#4D7C0F",
+  "1º PEL": "#15803D", "2º PEL": "#B91C1C", "3º PEL": "#1D4ED8", "4º PEL": "#B45309",
+  "5º PEL": "#7E22CE", "6º PEL": "#0F766E", "7º PEL": "#BE185D",
 }
+// "equipe GOLF", mas "1º PELOTÃO" (sem "equipe") nos meses com plantão por pelotão
+const rotuloEquipe = (g: Grupo) => (g.includes("PEL") ? ROTULO_GRUPO[g] : `equipe ${ROTULO_GRUPO[g]}`)
 const DIAS_SEMANA = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"]
 const ROTULO_TIPO: Record<CompromissoAluno["tipo"], string> = {
   plantao: "🛡 Plantão", auxiliar: "⭐ Auxiliar", adjunto: "⭐ Adjunto", sobreaviso: "📟 Sobreaviso",
@@ -91,7 +95,7 @@ export function EscalaCiaPainel({ hojeIso, minhaMatricula }: { hojeIso: string; 
         <p style={{ ...tituloSecao, color: "rgba(255,255,255,0.7)" }}>Minhas escalas</p>
         <p style={{ margin: "0 0 12px", fontSize: 14, color: "rgba(255,255,255,0.88)" }}>
           {nomeDaMatricula(minhaMatricula) ? <strong>{rotuloMilitar(minhaMatricula)}</strong> : <>Mat. {minhaMatricula}</>}
-          {" · "}equipe {minhaEquipe ? <strong style={{ color: "#e0c979" }}>{ROTULO_GRUPO[minhaEquipe]}</strong> : "não consta no mapa do mês"}
+          {" · "}{minhaEquipe ? <strong style={{ color: "#e0c979" }}>{rotuloEquipe(minhaEquipe)}</strong> : "não consta no mapa do mês"}
         </p>
         {proximos.length === 0 ? (
           <p style={{ margin: 0, fontSize: 13.5, color: "rgba(255,255,255,0.75)" }}>Nenhuma escala sua daqui pra frente nos meses publicados.</p>
@@ -144,7 +148,7 @@ export function EscalaCiaPainel({ hojeIso, minhaMatricula }: { hojeIso: string; 
             )
           })}
         </div>
-        <p style={{ margin: "4px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>● dourado = dia com escala sua · ● colorido = equipe de plantão</p>
+        <p style={{ margin: "4px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>● dourado = dia com escala sua · ● colorido = equipe/pelotão de plantão</p>
       </section>
 
       {/* ── Detalhe do dia ── */}
@@ -249,7 +253,7 @@ export function EscalaCiaPainel({ hojeIso, minhaMatricula }: { hojeIso: string; 
           return (
             <div style={{ marginTop: 12 }}>
               <p style={{ margin: "0 0 8px", fontSize: 14 }}>
-                <strong>{rotuloMilitar(pessoa)}</strong> · equipe {g ? ROTULO_GRUPO[g] : "—"}
+                <strong>{rotuloMilitar(pessoa)}</strong> · {g ? rotuloEquipe(g) : "sem equipe no mapa"}
                 <button onClick={() => setPessoa(null)} style={{ marginLeft: 8, background: "none", border: "none", color: "var(--olive)", cursor: "pointer", fontSize: 12.5 }}>trocar</button>
               </p>
               {lista.filter(c => c.tipo !== "plantao").length === 0 && <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-60)" }}>Sem funções individuais nos meses publicados (só os plantões da equipe).</p>}

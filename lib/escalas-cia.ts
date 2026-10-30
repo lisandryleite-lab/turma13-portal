@@ -13,25 +13,34 @@
 //  MESES_ESCALA.
 // ─────────────────────────────────────────────────────────────
 
-export type Grupo = "GOLF" | "HOTEL" | "INDIA" | "JULIETT" | "KILO" | "LIMA" | "MIKE" | "NOVEMBER"
+/** Equipes da escala 7x1 (setembro e outubro/2026). */
+export type Equipe7x1 = "GOLF" | "HOTEL" | "INDIA" | "JULIETT" | "KILO" | "LIMA" | "MIKE" | "NOVEMBER"
+/** Pelotões — a partir de novembro/2026 o plantão é por pelotão (1º ao 6º, de
+ *  segunda a sexta); o 7º concorre só ao sobreaviso. */
+export type Pelotao = "1º PEL" | "2º PEL" | "3º PEL" | "4º PEL" | "5º PEL" | "6º PEL" | "7º PEL"
+/** Quem dá o plantão do dia: equipe (7x1) ou pelotão, conforme o mês. */
+export type Grupo = Equipe7x1 | Pelotao
 
 /** Ordem do ciclo diário da escala 7x1. */
-export const ORDEM_GRUPOS: Grupo[] = ["GOLF", "HOTEL", "INDIA", "JULIETT", "KILO", "LIMA", "MIKE", "NOVEMBER"]
+export const ORDEM_GRUPOS: Equipe7x1[] = ["GOLF", "HOTEL", "INDIA", "JULIETT", "KILO", "LIMA", "MIKE", "NOVEMBER"]
 
 /** Rótulo de exibição — o documento grafa ÍNDIA com acento. */
 export const ROTULO_GRUPO: Record<Grupo, string> = {
   GOLF: "GOLF", HOTEL: "HOTEL", INDIA: "ÍNDIA", JULIETT: "JULIETT",
   KILO: "KILO", LIMA: "LIMA", MIKE: "MIKE", NOVEMBER: "NOVEMBER",
+  "1º PEL": "1º PELOTÃO", "2º PEL": "2º PELOTÃO", "3º PEL": "3º PELOTÃO", "4º PEL": "4º PELOTÃO",
+  "5º PEL": "5º PELOTÃO", "6º PEL": "6º PELOTÃO", "7º PEL": "7º PELOTÃO",
 }
 
-export type MapaEquipes = Record<Grupo, [number, string][]>
+/** Grupos que o mapa do mês traz (equipes ou pelotões). */
+export type MapaEquipes = Partial<Record<Grupo, [number, string][]>>
 
 // ═════════════════════════════════════════════════════════════
 //  SETEMBRO / 2026
 // ═════════════════════════════════════════════════════════════
 
 // Fonte: "MAPA DE EQUIPES DE PLANTÃO - ESCALA 7X1 · SETEMBRO/2026".
-const MAPA_SETEMBRO_2026: MapaEquipes = {
+const MAPA_SETEMBRO_2026: Record<Equipe7x1, [number, string][]> = {
   GOLF: [
     [1, "HELLTON FERNANDES"], [6, "CAMPOS"], [7, "ALDO SILVA"], [8, "JEFFERSON FRANCISCO"],
     [15, "TAYNÃ RAMALHO"], [16, "FLÁVIO CARVALHO"], [19, "THAIS FIGUEIREDO"], [27, "CLÁUDIA"],
@@ -406,6 +415,205 @@ const DOCS_OUTUBRO_2026: DocEscala[] = [
 ]
 
 // ═════════════════════════════════════════════════════════════
+//  NOVEMBRO / 2026
+//  Fontes (Corpo de Alunos — CAP QOPM Arantes; funções e guarda: 1º TEN Tenório):
+//   • MAPA DE EQUIPES - 1ª CIA - CFO 2026 · NOVEMBRO/2026 (efetivo de 29/10/2026)
+//   • ESCALA DE PLANTÃO, AUXILIAR, ADJUNTO E SOBREAVISO - 1ª CIA · NOVEMBRO/2026
+//   • ESCALA DE FUNÇÕES NAS FORMATURAS MATINAIS/GERAIS · NOVEMBRO/2026
+//   • ESCALA 1ª COMPANHIA - FUNÇÕES NAS FORMATURAS GERAIS · NOVEMBRO/2026
+// ═════════════════════════════════════════════════════════════
+
+// O regime mudou: as 8 equipes da 7x1 deram lugar aos 7 pelotões. Do 1º ao 6º
+// se revezam no plantão de segunda a sexta; o 7º só concorre ao sobreaviso.
+// Efetivo total: 202 alunos. Entrou 224 LÍGIA (7º Pel). A Turma 13 inteira é o
+// 1º Pelotão. Nomes como no documento (ex.: CLAUDIA, ABRÊU, JOSÉ BARBOZA).
+const MAPA_NOVEMBRO_2026: MapaEquipes = {
+  "1º PEL": [
+    [7, "ALDO SILVA"], [13, "JONAS"], [19, "THAIS FIGUEIREDO"], [23, "RODOLFO MOURA"], [26, "ANDRÉ"],
+    [37, "PABLO TORRES"], [41, "ALAN SILVA"], [45, "GABRIELE COSTA"], [55, "SHIRLAYNE"], [57, "CLEYTON"],
+    [60, "JOÃO NUNES"], [65, "KAUHANNI"], [71, "LEIMIG"], [76, "ARAÚJO JÚNIOR"], [81, "FERNANDO ROCHA"],
+    [94, "ANDRÉ CARDOSO"], [98, "JOSÉ MENEZES"], [105, "LUCAS EDUARDO"], [106, "RAFAEL RIBEIRO"],
+    [108, "LISANDRY"], [114, "JOSIANE FARIAS"], [116, "BERTIPALHA"], [131, "JOSÉ INÁCIO"], [143, "VIDAL"],
+    [144, "SAMUEL SANTOS"], [153, "HUGO"], [165, "KEVIN GOMES"], [167, "GUSTAVO NETO"], [174, "ALEXANDRE"],
+    [186, "SAMUEL SILVA"], [191, "GOMES NASCIMENTO"],
+  ],
+  "2º PEL": [
+    [8, "JEFFERSON FRANCISCO"], [14, "WINNY"], [20, "TIBÚRCIO"], [25, "CAROLINE QUEIROZ"], [28, "BRANDÃO"],
+    [30, "RODRIGUES"], [35, "FILLIPE PAIXÃO"], [40, "ALMEIDA"], [42, "JONILDO"], [56, "WESLEY BATISTA"],
+    [62, "IDEYVISON"], [72, "EDNALDO BEZERRA"], [73, "MILENE QUEIROZ"], [75, "JÚLIO CÉSAR"],
+    [83, "DIEGO SANTOS"], [92, "MOACIR"], [101, "MATHEUS ALBUQUERQUE"], [109, "LETÍCIA PINHEIRO"],
+    [115, "EDUARDO GONÇALVES"], [117, "GUILHERME"], [119, "HEITOR"], [130, "IVALDO"], [132, "CEZAR SANTOS"],
+    [145, "FRANCISCO VIEIRA"], [155, "VICTOR ALVES"], [168, "MATHEUS SILVA"], [171, "MAXWEL"],
+    [175, "EMERSON LOPES"],
+  ],
+  "3º PEL": [
+    [1, "HELLTON FERNANDES"], [9, "VERAS"], [15, "TAYNÃ RAMALHO"], [21, "SAMPAIO"], [27, "CLAUDIA"],
+    [31, "ROMÉRIO"], [44, "DIOGO ARAÚJO"], [66, "LUCAS MATEUS"], [70, "LUCAS GABRIEL"], [77, "FÁBIO"],
+    [85, "FLÁVIA COSTA"], [86, "HOLANDA"], [90, "NETTO"], [91, "DANILO"], [102, "LEITE JÚNIOR"],
+    [103, "MENDONÇA"], [107, "DIEGO LOPES"], [113, "ÁUREA AMORIM"], [118, "BRUNO SILVA"], [122, "ANDREY"],
+    [126, "LUCAS RIBEIRO"], [133, "ANDERSON SOARES"], [137, "PRISCYLA NEVES"], [146, "ELÍSIO"],
+    [149, "FELIPE FERREIRA"], [156, "SILVANO PEREIRA"], [170, "RONALDO"], [185, "VINÍCIUS KAIRÊ"],
+    [192, "JOSÉ BARBOZA"], [197, "ABRÊU"], [198, "MARCELO"], [200, "APOLLO"], [202, "FERRAZ"], [204, "AMANDA"],
+  ],
+  "4º PEL": [
+    [4, "ANA SILVA"], [10, "ERICK"], [16, "FLÁVIO CARVALHO"], [22, "WILLIAN SANTOS"], [32, "NAPOLEÃO"],
+    [36, "MACEDO JÚNIOR"], [43, "MATHEUS ROCHA"], [46, "FONTES"], [49, "MIRANDA"], [58, "JOHN FELIX"],
+    [61, "TEREZA"], [63, "ALVES"], [78, "FRANCISCO SOUZA"], [84, "EDILSON JOSÉ"], [88, "TACIANE"],
+    [93, "SALES"], [104, "FURTUNATO NETO"], [112, "IVHINNY"], [120, "ADRIANO"], [121, "LUNA"],
+    [123, "BEATRIZ"], [129, "MARTINS"], [134, "SILVÂNIO SANTOS"], [140, "RAIMUNDO"], [147, "JANDERSON"],
+    [154, "TÂMARA LEMOS"], [159, "HIGOR LIMA"], [160, "JONAS GOMES"], [163, "ELIVELTON RODRIGUES"],
+    [177, "ROSÁRIO JÚNIOR"], [179, "LEONARDO"], [193, "MÁRCIO LEITE"],
+  ],
+  "5º PEL": [
+    [5, "GEORGE"], [11, "KALYNNE GOMES"], [29, "LYSIA"], [33, "LUIZ VICENTE"], [38, "JOHN ALVES"],
+    [48, "LIMA"], [59, "ASSIS"], [64, "EDUARDO"], [68, "AMAURI"], [80, "LUIZ OLIVEIRA"], [82, "LEANDRO SILVA"],
+    [87, "BARRETO"], [96, "PATRÍCIA CORREIA"], [97, "ROBERTO CAVALCANTE"], [110, "WESLEY HENRIQUE"],
+    [124, "CECÍLIA"], [127, "LOIOLA"], [136, "RONIÉRISON BARROS"], [138, "JANAÍNA"], [141, "RAMONN"],
+    [150, "GERALDO"], [157, "CARLOS LIMA"], [161, "FELIPE GOMES"], [164, "ROBSON MELO"],
+    [169, "HYGO CESÁRIO"], [173, "HÉVILA"], [178, "GABRIEL SILVA"], [184, "PAULO AZEVÊDO"],
+    [187, "HERMESON FILHO"], [188, "ALBERTO"], [190, "LARISSA ALCANTARA"],
+  ],
+  "6º PEL": [
+    [6, "CAMPOS"], [12, "MELO"], [18, "FERNANDA BISPO"], [24, "MOYSÉS"], [34, "RICARDO"], [39, "CAETANO"],
+    [50, "ELDER FERREIRA"], [52, "JAMILLE"], [53, "PEDRO HENRIQUE"], [67, "BARBOSA"], [69, "AUGUSTO"],
+    [89, "EWERTON FARIAS"], [95, "ALEX SILVA"], [100, "KARLA ALBUQUERQUE"], [111, "ANDRÉ MARINHO"],
+    [128, "MIGUEL"], [135, "BELTRÃO"], [139, "GLEYDSON"], [142, "MAGALHÃES"], [151, "RAINY"], [152, "LÉLIS"],
+    [158, "FELIPE OLIVEIRA"], [162, "MARCONDES"], [166, "EVANGELISTA"], [176, "DIRLEYNNE ALVES"],
+    [180, "DANTAS"], [181, "PABLO MACIEL"], [183, "LÉIA"], [189, "PAULO NASCIMENTO"],
+    [195, "JEFFERSON NUNES"], [196, "EDUARDA RODRIGUES"],
+  ],
+  "7º PEL": [
+    [203, "J. LUIZ"], [206, "CÉSAR"], [207, "HOBERDAN"], [208, "FABIANA"], [210, "ANDRÉ JÚNIOR"],
+    [212, "CAMILA BUONORA"], [214, "DAMASCENA"], [216, "BARBOSA JÚNIOR"], [217, "SALUSTIANO"],
+    [218, "COELHO"], [220, "RATIS"], [221, "AMANDA ÂNGELO"], [222, "AFONSO DA CRUZ"], [223, "PACHÊCO"],
+    [224, "LÍGIA"],
+  ],
+}
+
+// Fins de semana: "SEM EQUIPE ESCALADA". Sobreaviso: dois do 7º Pelotão por dia.
+const PLANTAO_NOVEMBRO_2026: DiaPlantao[] = [
+  { data: "2026-11-01", grupo: null,     auxiliar: null, adjunto: null, sobreaviso: [] },
+  { data: "2026-11-02", grupo: "6º PEL", auxiliar: 142, adjunto: 152, sobreaviso: [203, 206] },
+  { data: "2026-11-03", grupo: "5º PEL", auxiliar: 138, adjunto: 157, sobreaviso: [207, 208] },
+  { data: "2026-11-04", grupo: "4º PEL", auxiliar: 154, adjunto: 163, sobreaviso: [210, 212] },
+  { data: "2026-11-05", grupo: "3º PEL", auxiliar: 1,   adjunto: 197, sobreaviso: [214, 216] },
+  { data: "2026-11-06", grupo: "2º PEL", auxiliar: 8,   adjunto: 168, sobreaviso: [217, 218] },
+  { data: "2026-11-07", grupo: null,     auxiliar: null, adjunto: null, sobreaviso: [] },
+  { data: "2026-11-08", grupo: null,     auxiliar: null, adjunto: null, sobreaviso: [] },
+  { data: "2026-11-09", grupo: "1º PEL", auxiliar: 26,  adjunto: 153, sobreaviso: [220, 221] },
+  { data: "2026-11-10", grupo: "6º PEL", auxiliar: 158, adjunto: 195, sobreaviso: [222, 223] },
+  { data: "2026-11-11", grupo: "5º PEL", auxiliar: 164, adjunto: 187, sobreaviso: [224, 203] },
+  { data: "2026-11-12", grupo: "4º PEL", auxiliar: 4,   adjunto: 147, sobreaviso: [206, 207] },
+  { data: "2026-11-13", grupo: "3º PEL", auxiliar: 185, adjunto: 200, sobreaviso: [208, 210] },
+  { data: "2026-11-14", grupo: null,     auxiliar: null, adjunto: null, sobreaviso: [] },
+  { data: "2026-11-15", grupo: null,     auxiliar: null, adjunto: null, sobreaviso: [] },
+  { data: "2026-11-16", grupo: "2º PEL", auxiliar: 20,  adjunto: 56,  sobreaviso: [212, 214] },
+  { data: "2026-11-17", grupo: "1º PEL", auxiliar: 7,   adjunto: 144, sobreaviso: [216, 217] },
+  { data: "2026-11-18", grupo: "6º PEL", auxiliar: 176, adjunto: 183, sobreaviso: [218, 220] },
+  { data: "2026-11-19", grupo: "5º PEL", auxiliar: 48,  adjunto: 161, sobreaviso: [221, 222] },
+  { data: "2026-11-20", grupo: "4º PEL", auxiliar: 16,  adjunto: 58,  sobreaviso: [223, 224] },
+  { data: "2026-11-21", grupo: null,     auxiliar: null, adjunto: null, sobreaviso: [] },
+  { data: "2026-11-22", grupo: null,     auxiliar: null, adjunto: null, sobreaviso: [] },
+  { data: "2026-11-23", grupo: "3º PEL", auxiliar: 9,   adjunto: 15,  sobreaviso: [203, 206] },
+  { data: "2026-11-24", grupo: "2º PEL", auxiliar: 14,  adjunto: 40,  sobreaviso: [207, 208] },
+  { data: "2026-11-25", grupo: "1º PEL", auxiliar: 37,  adjunto: 41,  sobreaviso: [210, 212] },
+  { data: "2026-11-26", grupo: "6º PEL", auxiliar: 34,  adjunto: 39,  sobreaviso: [214, 216] },
+  { data: "2026-11-27", grupo: "5º PEL", auxiliar: 5,   adjunto: 29,  sobreaviso: [217, 218] },
+  { data: "2026-11-28", grupo: null,     auxiliar: null, adjunto: null, sobreaviso: [] },
+  { data: "2026-11-29", grupo: null,     auxiliar: null, adjunto: null, sobreaviso: [] },
+  { data: "2026-11-30", grupo: "4º PEL", auxiliar: 10,  adjunto: 32,  sobreaviso: [220, 221] },
+]
+
+const FUNCOES_NOVEMBRO_2026: DiaFuncoes[] = [
+  { data: "2026-11-02", mestreCerimonia: 224, leitorBI: 196, discurso: 195, comandante: 189 },
+  { data: "2026-11-03", mestreCerimonia: 190, leitorBI: 223, discurso: 188, comandante: 187 },
+  { data: "2026-11-04", mestreCerimonia: 179, leitorBI: 177, discurso: 222, comandante: 160 },
+  { data: "2026-11-05", mestreCerimonia: 221, leitorBI: 204, discurso: 202, comandante: 200 },
+  { data: "2026-11-06", mestreCerimonia: 175, leitorBI: 220, discurso: 171, comandante: 155 },
+  { data: "2026-11-09", mestreCerimonia: 191, leitorBI: 186, discurso: 218, comandante: 174 },
+  { data: "2026-11-10", mestreCerimonia: 217, leitorBI: 183, discurso: 181, comandante: 180 },
+  { data: "2026-11-11", mestreCerimonia: 173, leitorBI: 216, discurso: 169, comandante: 157 },
+  { data: "2026-11-12", mestreCerimonia: 163, leitorBI: 159, discurso: 214, comandante: 154 },
+  { data: "2026-11-13", mestreCerimonia: 212, leitorBI: 198, discurso: 197, comandante: 192 },
+  { data: "2026-11-16", mestreCerimonia: 168, leitorBI: 210, discurso: 145, comandante: 132 },
+  { data: "2026-11-17", mestreCerimonia: 167, leitorBI: 165, discurso: 208, comandante: 153 },
+  { data: "2026-11-18", mestreCerimonia: 207, leitorBI: 166, discurso: 162, comandante: 158 },
+  { data: "2026-11-19", mestreCerimonia: 184, leitorBI: 206, discurso: 178, comandante: 164 },
+  { data: "2026-11-20", mestreCerimonia: 147, leitorBI: 140, discurso: 203, comandante: 134 },
+  { data: "2026-11-23", mestreCerimonia: 224, leitorBI: 185, discurso: 170, comandante: 156 },
+  { data: "2026-11-24", mestreCerimonia: 130, leitorBI: 223, discurso: 119, comandante: 117 },
+  { data: "2026-11-25", mestreCerimonia: 144, leitorBI: 143, discurso: 222, comandante: 131 },
+  { data: "2026-11-26", mestreCerimonia: 221, leitorBI: 176, discurso: 151, comandante: 139 },
+  { data: "2026-11-27", mestreCerimonia: 161, leitorBI: 220, discurso: 150, comandante: 141 },
+  { data: "2026-11-30", mestreCerimonia: 129, leitorBI: 123, discurso: 218, comandante: 121 },
+]
+
+// Em 20/11 (2º Pel) os três últimos guardas são do 7º Pelotão.
+const GUARDA_NOVEMBRO_2026: DiaGuarda[] = [
+  guarda("2026-11-04", 3, [
+    [9, "VERAS", PN], [27, "CLÁUDIA", CGH], [122, "ANDREY", BPE], [200, "APOLLO", BCE],
+    [202, "FERRAZ", BAPMP], [204, "AMANDA", PF], [1, "HELLTON FERNANDES", G], [15, "TAYNÃ RAMALHO", G],
+    [21, "SAMPAIO", G], [31, "ROMÉRIO", G], [44, "DIOGO ARAÚJO", G], [66, "LUCAS MATEUS", G],
+    [70, "LUCAS GABRIEL", G], [77, "FÁBIO", G],
+  ]),
+  guarda("2026-11-06", 4, [
+    [129, "MARTINS", PN], [123, "BEATRIZ", CGH], [134, "SILVÂNIO SANTOS", BPE], [140, "RAIMUNDO", BCE],
+    [147, "JANDERSON", BAPMP], [154, "TÂMARA LEMOS", PF], [159, "HIGOR LIMA", G], [160, "JONAS GOMES", G],
+    [163, "ELIVELTON RODRIGUES", G], [177, "ROSÁRIO JÚNIOR", G], [179, "LEONARDO", G], [36, "MACÊDO JÚNIOR", G],
+    [10, "ERICK", G], [32, "NAPOLEÃO", G],
+  ]),
+  guarda("2026-11-11", 5, [
+    [110, "WESLEY HENRIQUE", PN], [161, "FELIPE GOMES", CGH], [38, "JOHN ALVES", BPE], [59, "ASSIS", BCE],
+    [178, "GABRIEL SILVA", BAPMP], [68, "AMAURI", PF], [5, "GEORGE", G], [48, "LIMA", G],
+    [97, "ROBERTO CAVALCANTE", G], [136, "RONIÉRISON BARROS", G], [138, "JANAÍNA", G], [184, "PAULO AZEVÊDO", G],
+    [64, "EDUARDO", G], [190, "LARISSA ALCÂNTARA", G],
+  ]),
+  guarda("2026-11-13", 6, [
+    [67, "BARBOSA", PN], [180, "DANTAS", CGH], [183, "LÉIA", BPE], [195, "JEFFERSON NUNES", BCE],
+    [139, "GLEYDSON", BAPMP], [196, "EDUARDA RODRIGUES", PF], [12, "MELO", G], [95, "ALEX SILVA", G],
+    [100, "KARLA ALBUQUERQUE", G], [128, "MIGUEL", G], [151, "RAINY", G], [152, "LÉLIS", G],
+    [158, "FELIPE OLIVEIRA", G], [189, "PAULO NASCIMENTO", G],
+  ]),
+  guarda("2026-11-18", 1, [
+    [165, "KEVIN GOMES", PN], [114, "JOSIANE FARIAS", CGH], [71, "LEIMIG", BPE], [76, "ARAÚJO JÚNIOR", BCE],
+    [94, "ANDRÉ CARDOSO", BAPMP], [57, "CLEYTON", PF], [23, "RODOLFO MOURA", G], [37, "PABLO TORRES", G],
+    [41, "ALAN SILVA", G], [45, "GABRIELE COSTA", G], [60, "JOÃO NUNES", G], [98, "JOSÉ MENEZES", G],
+    [105, "LUCAS EDUARDO", G], [108, "LISANDRY", G],
+  ]),
+  guarda("2026-11-20", 2, [
+    [119, "HEITOR", PN], [40, "ALMEIDA", CGH], [168, "MATHEUS SILVA", BPE], [8, "JEFFERSON FRANCISCO", BCE],
+    [155, "VICTOR ALVES", BAPMP], [92, "MOACIR", PF], [35, "FILLIPE PAIXÃO", G], [115, "EDUARDO GONÇALVES", G],
+    [117, "GUILHERME", G], [130, "IVALDO", G], [75, "JÚLIO CÉSAR", G], [214, "DAMASCENA", G],
+    [206, "CÉSAR", G], [207, "HOBERDAN", G],
+  ]),
+  guarda("2026-11-25", 3, [
+    [85, "FLÁVIA COSTA", PN], [86, "HOLANDA", CGH], [90, "NETTO", BPE], [91, "DANILO", BCE],
+    [102, "LEITE JÚNIOR", BAPMP], [103, "MENDONÇA", PF], [107, "DIEGO LOPES", G], [113, "ÁUREA AMORIM", G],
+    [118, "BRUNO SILVA", G], [122, "ANDREY", G], [126, "LUCAS RIBEIRO", G], [133, "ANDERSON SOARES", G],
+    [137, "PRISCYLA NEVES", G], [146, "ELÍSIO", G],
+  ]),
+  guarda("2026-11-27", 4, [
+    [4, "ANA SILVA", PN], [93, "SALES", CGH], [43, "MATHEUS ROCHA", BPE], [49, "MIRANDA", BCE],
+    [61, "TEREZA", BAPMP], [63, "ALVES", PF], [78, "FRANCISCO SOUZA", G], [84, "EDILSON JOSÉ", G],
+    [88, "TACIANE", G], [193, "MÁRCIO LEITE", G], [16, "FLÁVIO CARVALHO", G], [22, "WILLIAN SANTOS", G],
+    [46, "FONTES", G], [58, "JOHN FELIX", G],
+  ]),
+]
+
+const OBS_NOVEMBRO_2026 = [
+  "Os pelotões (1º ao 6º) se revezam no plantão de segunda a sexta-feira; fins de semana sem equipe escalada.",
+  "O 7º Pelotão concorre ao sobreaviso e assume a limpeza do DAG, dos banheiros de visitantes, o recolhimento do lixo das lixeiras externas, apagar as luzes ao amanhecer e tocar o sino da alvorada.",
+  "Caso o pelotão de plantão esteja fora da APMP, as funções de auxiliar e adjunto serão assumidas pelo 7º Pelotão.",
+]
+
+const DOCS_NOVEMBRO_2026: DocEscala[] = [
+  { titulo: "Escala de plantão", descricao: "Plantão por pelotão, auxiliar, adjunto e sobreaviso (7º Pel) — 07h às 07h.", arquivo: "/escalas/novembro-2026-plantao.pdf" },
+  { titulo: "Mapa de equipes", descricao: "Os 7 pelotões da 1ª Companhia — 202 alunos.", arquivo: "/escalas/novembro-2026-mapa-equipes.pdf" },
+  { titulo: "Funções de destaque", descricao: "Mestre de cerimônia, leitor de BI, discurso e comandante nas formaturas.", arquivo: "/escalas/novembro-2026-funcoes-destaque.pdf" },
+  { titulo: "Guarda-Bandeira", descricao: "Funções nas formaturas gerais — 14 militares por formatura.", arquivo: "/escalas/novembro-2026-guarda-bandeira.pdf" },
+]
+
+// ═════════════════════════════════════════════════════════════
 //  Meses publicados
 // ═════════════════════════════════════════════════════════════
 
@@ -433,6 +641,11 @@ export const MESES_ESCALA: MesEscala[] = [
     chave: "2026-10", rotulo: "Outubro / 2026", inicio: "2026-10-01", fim: "2026-10-31",
     mapa: MAPA_OUTUBRO_2026, plantao: PLANTAO_OUTUBRO_2026, funcoes: FUNCOES_OUTUBRO_2026,
     guarda: GUARDA_OUTUBRO_2026, obs: [OBS_ADVENTISTA], docs: DOCS_OUTUBRO_2026,
+  },
+  {
+    chave: "2026-11", rotulo: "Novembro / 2026", inicio: "2026-11-01", fim: "2026-11-30",
+    mapa: MAPA_NOVEMBRO_2026, plantao: PLANTAO_NOVEMBRO_2026, funcoes: FUNCOES_NOVEMBRO_2026,
+    guarda: GUARDA_NOVEMBRO_2026, obs: OBS_NOVEMBRO_2026, docs: DOCS_NOVEMBRO_2026,
   },
 ]
 
@@ -493,7 +706,7 @@ export function escalaDoDia(iso: string): EscalaDoDia {
     data: iso,
     mes,
     plantao,
-    equipe: plantao?.grupo && mes ? mes.mapa[plantao.grupo] : [],
+    equipe: (plantao?.grupo && mes?.mapa[plantao.grupo]) || [],
     funcoes: mes?.funcoes.find(f => f.data === iso) ?? null,
     guarda: mes?.guarda.find(g => g.data === iso) ?? null,
   }
@@ -509,7 +722,7 @@ export function compromissosDaMatricula(mat: number): CompromissoAluno[] {
     for (const p of mes.plantao) {
       if (p.auxiliar === mat) out.push({ data: p.data, tipo: "auxiliar", descricao: "Auxiliar do Oficial de Dia" })
       else if (p.adjunto === mat) out.push({ data: p.data, tipo: "adjunto", descricao: "Adjunto ao Auxiliar do Oficial de Dia" })
-      else if (grupo && p.grupo === grupo) out.push({ data: p.data, tipo: "plantao", descricao: `Plantão — equipe ${ROTULO_GRUPO[grupo]}` })
+      else if (grupo && p.grupo === grupo) out.push({ data: p.data, tipo: "plantao", descricao: `Plantão — ${grupo.includes("PEL") ? "" : "equipe "}${ROTULO_GRUPO[grupo]}` })
       if (p.sobreaviso.includes(mat)) out.push({ data: p.data, tipo: "sobreaviso", descricao: "Sobreaviso" })
     }
     for (const f of mes.funcoes) {

@@ -74,10 +74,14 @@ export const GRUPOS_3X1 = ["ALPHA", "BRAVO", "CHARLIE", "DELTA"] as const
 
 export type Grupo7x1 = typeof GRUPOS_7X1[number]
 export type Grupo3x1 = typeof GRUPOS_3X1[number]
-export type GrupoPlantao = Grupo7x1 | Grupo3x1
+// Novembro/2026 em diante: plantão por pelotão (1º ao 6º, seg a sex). A Turma 13
+// inteira é o 1º Pelotão — os demais só aparecem como "pelotão do dia".
+export const PELOTOES = ["1º PEL", "2º PEL", "3º PEL", "4º PEL", "5º PEL", "6º PEL", "7º PEL"] as const
+export type GrupoPelotao = typeof PELOTOES[number]
+export type GrupoPlantao = Grupo7x1 | Grupo3x1 | GrupoPelotao
 
 // O que as telas listam = o regime vigente.
-export const GRUPOS_PLANTAO = GRUPOS_7X1
+export const GRUPOS_PLANTAO: readonly GrupoPlantao[] = ["1º PEL"]
 
 // Cor por grupo de plantão — fonte única (evita paletas divergentes entre telas)
 export const CORES_PLANTAO: Record<string, string> = {
@@ -86,6 +90,9 @@ export const CORES_PLANTAO: Record<string, string> = {
   KILO: "#7E22CE", LIMA: "#0F766E", MIKE: "#BE185D", NOVEMBER: "#4D7C0F",
   // 3X1 (agosto/2026)
   ALPHA: "#15803D", BRAVO: "#B91C1C", CHARLIE: "#1D4ED8", DELTA: "#B45309",
+  // Pelotões (novembro/2026)
+  "1º PEL": "#15803D", "2º PEL": "#B91C1C", "3º PEL": "#1D4ED8", "4º PEL": "#B45309",
+  "5º PEL": "#7E22CE", "6º PEL": "#0F766E", "7º PEL": "#BE185D",
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -99,6 +106,9 @@ export const CORES_PLANTAO: Record<string, string> = {
 //  A virada é 01/09/2026. Antes disso vale a 3X1; de lá em diante, a 7X1.
 // ─────────────────────────────────────────────────────────────
 const INICIO_7X1_UTC = Date.UTC(2026, 8, 1) // 01/09/2026
+// A partir de novembro/2026 o plantão é por pelotão, sem ciclo fixo: só vale a
+// tabela do mês publicado em lib/escalas-cia.
+const INICIO_PELOTOES_UTC = Date.UTC(2026, 10, 1) // 01/11/2026
 
 // 7X1 — referência: 01/09/2026 (Ter) = ÍNDIA (índice 2). Conferida contra os 30
 // dias do mês na escala diária: bate em todos, inclusive 07/09 = GOLF,
@@ -131,6 +141,7 @@ export function grupoPlantaoPorData(data: Date): GrupoPlantao | null {
     if (dia) return dia.grupo
   }
   const dataUTC = Date.UTC(data.getFullYear(), data.getMonth(), data.getDate())
+  if (dataUTC >= INICIO_PELOTOES_UTC) return null
   return dataUTC >= INICIO_7X1_UTC
     ? ciclico(GRUPOS_7X1, REF_7X1_UTC, REF_7X1_IDX, dataUTC)
     : ciclico(GRUPOS_3X1, REF_3X1_UTC, REF_3X1_IDX, dataUTC)
@@ -242,9 +253,26 @@ export const MEMBROS_3X1: Record<Grupo3x1, { mat: number; nome: string }[]> = {
 
 // Os dois regimes juntos: `grupoPlantaoPorData` devolve nome de 3X1 para agosto
 // e de 7X1 daí em diante, então quem procura a equipe do dia precisa dos 12.
+// Pelotões (novembro/2026): a Turma 13 é o 1º Pelotão inteiro; dos outros a
+// Turma 13 não guarda composição (fica em lib/escalas-cia, mapa do mês).
+export const MEMBROS_PELOTAO: Record<GrupoPelotao, { mat: number; nome: string }[]> = {
+  "1º PEL": [
+    { mat: 7, nome: "ALDO SILVA" }, { mat: 13, nome: "JONAS" }, { mat: 19, nome: "THAIS FIGUEIREDO" }, { mat: 23, nome: "RODOLFO MOURA" },
+    { mat: 26, nome: "ANDRÉ" }, { mat: 37, nome: "PABLO TORRES" }, { mat: 41, nome: "ALAN SILVA" }, { mat: 45, nome: "GABRIELE COSTA" },
+    { mat: 55, nome: "SHIRLAYNE" }, { mat: 57, nome: "CLEYTON" }, { mat: 60, nome: "JOÃO NUNES" }, { mat: 65, nome: "KAUHANNI" },
+    { mat: 71, nome: "LEIMIG" }, { mat: 76, nome: "ARAÚJO JR" }, { mat: 81, nome: "FERNANDO ROCHA" }, { mat: 94, nome: "ANDRÉ CARDOSO" },
+    { mat: 98, nome: "JOSÉ MENEZES" }, { mat: 105, nome: "LUCAS EDUARDO" }, { mat: 106, nome: "RAFAEL RIBEIRO" }, { mat: 108, nome: "LISANDRY" },
+    { mat: 114, nome: "JOSIANE FARIAS" }, { mat: 116, nome: "BERTIPALHA" }, { mat: 131, nome: "JOSÉ INÁCIO" }, { mat: 143, nome: "VIDAL" },
+    { mat: 144, nome: "SAMUEL SANTOS" }, { mat: 153, nome: "HUGO" }, { mat: 165, nome: "KEVIN GOMES" }, { mat: 167, nome: "GUSTAVO NETO" },
+    { mat: 174, nome: "ALEXANDRE" }, { mat: 186, nome: "SAMUEL SILVA" }, { mat: 191, nome: "GOMES NASCIMENTO" },
+  ],
+  "2º PEL": [], "3º PEL": [], "4º PEL": [], "5º PEL": [], "6º PEL": [], "7º PEL": [],
+}
+
 export const MEMBROS_PLANTAO: Record<GrupoPlantao, { mat: number; nome: string }[]> = {
   ...MEMBROS_7X1,
   ...MEMBROS_3X1,
+  ...MEMBROS_PELOTAO,
 }
 
 // Alunos da Turma 13 ainda sem equipe no mapa da 1ª CIA (também ausentes do

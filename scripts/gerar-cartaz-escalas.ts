@@ -23,6 +23,8 @@ const COR_FAXINA: Record<string, string> = { SEGUNDA: "#1D4ED8", "TERÇA": "#7C3
 const COR_GRUPO: Record<Grupo, string> = {
   GOLF: "#15803D", HOTEL: "#B91C1C", INDIA: "#1D4ED8", JULIETT: "#B45309",
   KILO: "#7E22CE", LIMA: "#0F766E", MIKE: "#BE185D", NOVEMBER: "#4D7C0F",
+  "1º PEL": "#15803D", "2º PEL": "#B91C1C", "3º PEL": "#1D4ED8", "4º PEL": "#B45309",
+  "5º PEL": "#7E22CE", "6º PEL": "#0F766E", "7º PEL": "#BE185D",
 }
 
 // ── Faxina ─────────────────────────────────────────────────────────────
@@ -52,7 +54,7 @@ const cardDomingo = `
 
 // ── Plantão (só Turma 13) ──────────────────────────────────────────────
 const equipes = (Object.keys(mes.mapa) as Grupo[])
-  .map(g => ({ g, membros: mes.mapa[g].filter(([m]) => T13.has(m)), dias: mes.plantao.filter(p => p.grupo === g).map(p => p.data) }))
+  .map(g => ({ g, membros: (mes.mapa[g] ?? []).filter(([m]) => T13.has(m)), dias: mes.plantao.filter(p => p.grupo === g).map(p => p.data) }))
   .filter(e => e.membros.length > 0)
 const cardsPlantao = equipes.map(e => `
   <div class="pl" style="--c:${COR_GRUPO[e.g]}">
