@@ -6,6 +6,7 @@
 // art. 5º) ou por merecimento (só em 6 de março, art. 49), na proporção do art. 7º.
 
 import remuneracao from "./remuneracao-oficiais.json"
+import { calcularReserva, mesAbs, type DadosPessoais } from "./reserva-pmpe"
 
 export const POSTOS = ["Aspirante", "2º Ten", "1º Ten", "Capitão", "Major", "Ten-Cel", "Coronel"] as const
 export type Posto = (typeof POSTOS)[number]
@@ -40,6 +41,8 @@ export type Parametros = {
   atrasoCursos: number       // anos além do interstício até concluir CAO (p/ Major e TC) e CSP (p/ Coronel)
   aumentoEfetivo: number     // % a mais no efetivo fixado (nova lei)
   aspPrecisaVaga: boolean    // aspirante só vira 2º Ten se houver vaga de 2º Ten
+  pessoal: DadosPessoais     // nascimento, sexo, ingresso na PMPE e serviço anterior (reserva)
+  sairNaIntegral: boolean    // pede a reserva assim que tiver o tempo integral (senão, fica até os 67)
 }
 
 // Saída anual para a reserva (fração do posto). Estimativa do portal — não há série pública por posto.
@@ -54,11 +57,15 @@ export const CENARIOS: { id: string; nome: string; desc: string; p: Pick<Paramet
 export const PADRAO: Parametros = {
   posicao: 1, tamanhoTurma: 100, formatura: "2026-12-15",
   saidas: 1, reducaoArt26: false, perfil: "antiguidade", atrasoCursos: 0, aumentoEfetivo: 0, aspPrecisaVaga: false,
+  pessoal: { nascimento: 1995, sexo: "M", ingresso: "2026-01", averbado: 0 }, sairNaIntegral: true,
 }
 
 // Meses contados a partir de nov/2026 (mês 0)
 const INICIO = { ano: 2026, mes: 11 }
 const HORIZONTE = 12 * 42
+const INICIO_ABS = mesAbs(INICIO.ano, INICIO.mes)
+/** Mês absoluto (lib/reserva-pmpe) → índice da simulação. */
+export const mesDoAbs = (t: number) => Math.ceil(t) - INICIO_ABS
 export const mesDe = (iso: string) => { const [a, m, d] = iso.split("-").map(Number); return (a - INICIO.ano) * 12 + (m - INICIO.mes) + (d > 15 ? 1 : 0) }
 export const dataDoMes = (i: number) => { const t = INICIO.ano * 12 + INICIO.mes - 1 + i; return { ano: Math.floor(t / 12), mes: (t % 12) + 1 } }
 export const rotuloMes = (i: number) => { const { ano, mes } = dataDoMes(i); return `${["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"][mes - 1]}/${ano}` }
@@ -69,13 +76,19 @@ type Pessoa = {
   ingresso: number; voce?: boolean
 }
 
-export type Gargalo = "interstício" | "reduzido" | "vaga" | "curso" | "decenal"
+export type Gargalo = "interstício" | "reduzido" | "vaga" | "curso" | "decenal" | "requerida"
+export type SaidaReserva = {
+  mes: number
+  motivo: "integral" | "compulsoria" | "tc5"   // a pedido com tempo integral · 67 anos · Ten-Cel há 5 anos (art. 90, X)
+  posto: number                               // posto em que sai (com a requerida, já o seguinte)
+  quotas: number                              // anos de serviço computados, até 35 (proventos = quotas/35)
+}
 export type Etapa = { posto: number; mes: number | null; gargalo: Gargalo | null }
 export type Resultado = {
   voce: Etapa[]                       // mês em que VOCÊ chega a cada posto (1..6)
   turma: { primeiro: number | null; ultimo: number | null }[] // por posto: primeiro e último da sua turma
   t1: (number | null)[]; t2: (number | null)[] // mês em que metade da T1/T2 chega a cada posto
-  reserva: number | null              // mês em que você completa 35 anos de serviço sem ter chegado a coronel
+  reserva: SaidaReserva | null       // quando e como você vai para a reserva antes de chegar a coronel
 }
 
 export function simular(p: Parametros): Resultado {
@@ -126,9 +139,24 @@ export function simular(p: Parametros): Resultado {
   // Fila de antiguidade no posto: promovido antes = mais antigo; empate pela ordem de entrada
   const fila = (k: number) => noPosto(k).sort((a, b) => a.desde - b.desde || a.ordem - b.ordem)
 
-  let reserva: number | null = null
+  // Sua reserva (Estatuto, arts. 89, 89-A e 90): a pedido com o tempo integral, ou de ofício
+  const res = calcularReserva(p.pessoal)
+  const integral = mesDoAbs(res.integral), compulsoria = mesDoAbs(res.compulsoria)
+  let reserva: SaidaReserva | null = null
+  const sair = (mes: number, motivo: SaidaReserva["motivo"]) => {
+    let posto = voce.posto
+    // Promoção requerida (ingresso até 2021): sai no posto seguinte, sem vaga nem interstício
+    if (res.requerida && motivo === "integral" && posto >= 0 && posto < 6) {
+      chegada[posto].mes = mes; chegada[posto].gargalo = "requerida"; posto++
+    }
+    // Com o requisito integral cumprido (inclusive na transição), proventos integrais; senão, quotas
+    const quotas = mes >= integral ? 35 : Math.min(35, Math.floor(res.servicoMeses(mes + INICIO_ABS) / 12))
+    reserva = { mes, motivo, posto, quotas }
+  }
   for (let mes = 0; mes < HORIZONTE && chegada[5].mes == null; mes++) {
-    if (mes - voce.ingresso >= 35 * 12) { reserva = mes; break }
+    if (mes >= compulsoria) { sair(mes, "compulsoria"); break }
+    if (p.sairNaIntegral && mes >= integral) { sair(mes, "integral"); break }
+    if (res.regra === "nova" && voce.posto === 5 && mes - voce.desde > 60 && mes >= integral) { sair(mes, "tc5"); break }
     // Formatura da nossa turma
     if (mes === t3Asp) for (const x of pessoas) if (x.turma === "T3") { x.posto = 0; x.desde = mes }
     // Reserva: sai o mais antigo do posto; ninguém passa de 35 anos de serviço

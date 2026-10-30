@@ -3,7 +3,9 @@ import { redirect } from "next/navigation"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { calcularMGCSimples, calcularProjecaoConsolidada, type Verificacao } from "@/lib/ranking"
-import { LC470_URL, OUTRAS_REGRAS, PROMOCOES_EXTRAORDINARIAS, PROMOCOES_ORDINARIAS, REQUISITOS_POSTO, type TipoPromocao } from "@/lib/promocoes-lei"
+import { LC470_URL, OUTRAS_REGRAS, PROMOCOES_EXTRAORDINARIAS, PROMOCOES_ORDINARIAS, REQUISITOS_POSTO, RESERVA_REGRAS, type TipoPromocao } from "@/lib/promocoes-lei"
+import { ESTATUTO_URL } from "@/lib/reserva-pmpe"
+import { Divisas, NOME_DIVISA } from "./divisas"
 import { CarreiraClient } from "./carreira-client"
 
 export const dynamic = "force-dynamic"
@@ -75,14 +77,25 @@ export default async function CarreiraPage() {
         <h3 style={{ fontSize: 12, color: "var(--gold)", textTransform: "uppercase", letterSpacing: "0.06em", margin: "16px 0 6px" }}>Requisitos por posto (Anexos V e VII)</h3>
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 480 }}>
-            <thead><tr><th style={th}>No posto de</th><th style={th}>Interstício</th><th style={th}>Serviço arregimentado</th><th style={th}>Curso exigido</th></tr></thead>
-            <tbody>{REQUISITOS_POSTO.map(r => (
-              <tr key={r.posto}><td style={{ ...td, fontWeight: 600 }}>{r.posto}</td><td style={td}>{r.intersticio}</td><td style={td}>{r.arregimentado}</td><td style={td}>{r.curso}</td></tr>
+            <thead><tr><th style={th}>Divisa</th><th style={th}>No posto de</th><th style={th}>Interstício</th><th style={th}>Serviço arregimentado</th><th style={th}>Curso exigido</th></tr></thead>
+            <tbody>{REQUISITOS_POSTO.map((r, i) => (
+              <tr key={r.posto}><td style={{ ...td, whiteSpace: "nowrap" }} title={NOME_DIVISA[i]}><Divisas posto={i} size={16} /></td><td style={{ ...td, fontWeight: 600 }}>{r.posto}</td><td style={td}>{r.intersticio}</td><td style={td}>{r.arregimentado}</td><td style={td}>{r.curso}</td></tr>
             ))}</tbody>
           </table>
         </div>
+        <p style={{ margin: "6px 0 0", fontSize: 12, color: "var(--ink-60)" }}>
+          Coronel: <Divisas posto={6} size={14} /> {NOME_DIVISA[6]} — divisas conforme o Manual de Uniformes da PMPE (SN G 1.0.00.0 068/2020).
+        </p>
         <ul style={{ margin: "12px 0 0", paddingLeft: 18, fontSize: 13, lineHeight: 1.6 }}>
           {OUTRAS_REGRAS.map(r => <li key={r}>{r}</li>)}
+        </ul>
+
+        <h3 style={{ fontSize: 12, color: "var(--gold)", textTransform: "uppercase", letterSpacing: "0.06em", margin: "16px 0 6px" }}>Reserva remunerada</h3>
+        <p style={{ margin: "0 0 6px", fontSize: 13, color: "var(--ink-60)", lineHeight: 1.5 }}>
+          <a href={ESTATUTO_URL} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>Estatuto dos Militares de PE</a> (Lei nº 6.783/1974), com a redação da LC nº 460/2021.
+        </p>
+        <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, lineHeight: 1.6 }}>
+          {RESERVA_REGRAS.map(r => <li key={r}>{r}</li>)}
         </ul>
       </section>
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>Desenvolvido por AL CFO PM 108 LISANDRY</footer>

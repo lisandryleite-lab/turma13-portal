@@ -1,7 +1,12 @@
 "use client"
 
-import { useDeferredValue, useMemo, useState } from "react"
+import { useDeferredValue, useEffect, useMemo, useState } from "react"
 import { CENARIOS, FIXADO, FOLHA, PADRAO, POSTOS, T1, T2, dataDoMes, mesDe, rotuloMes, simular, type Gargalo, type Parametros, type Perfil } from "@/lib/carreira"
+import { IDADE_LIMITE_OFICIAL, calcularReserva, type DadosPessoais } from "@/lib/reserva-pmpe"
+import { Divisas, NOME_DIVISA } from "./divisas"
+
+// Dados pessoais (nascimento, ingresso…) ficam só neste aparelho
+const CHAVE_PESSOAL = "carreira-dados-pessoais"
 
 const caixa: React.CSSProperties = { background: "#fff", borderRadius: 16, border: "1px solid rgba(58,74,58,0.12)", padding: 18 }
 const h2: React.CSSProperties = { fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", margin: 0 }
@@ -23,6 +28,12 @@ const GARGALO: Record<Gargalo, { rot: string; cor: string; explica: string }> = 
   vaga: { rot: "esperou vaga", cor: "#b5933f", explica: "já tinha o tempo mínimo, mas os mais antigos ocupavam as vagas" },
   curso: { rot: "esperou curso", cor: "#7a2e2e", explica: "esperou concluir o CAO/CSP" },
   decenal: { rot: "pela decenal", cor: "#2457b5", explica: "a promoção decenal (10/20 anos de oficial) chegou antes da vaga" },
+  requerida: { rot: "pela requerida", cor: "#7a2e2e", explica: "promoção requerida junto com o pedido de reserva — só para quem ingressou na PMPE até 31/12/2021 (LC 470, art. 13)" },
+}
+const MOTIVO = {
+  integral: "a pedido, com o tempo integral",
+  compulsoria: `de ofício, aos ${IDADE_LIMITE_OFICIAL} anos de idade`,
+  tc5: "de ofício: Ten-Cel há mais de 5 anos com 35 de serviço (art. 90, X)",
 }
 const anos = (m: number) => { const a = m / 12; return a < 1 ? `${Math.round(m)} meses` : `${a.toLocaleString("pt-BR", { maximumFractionDigits: 1 })} anos` }
 
@@ -31,11 +42,27 @@ export function CarreiraClient({ tamanhoTurma, posicaoSugerida }: { tamanhoTurma
   const [p, setP] = useState<Parametros>(inicial)
   const [cenario, setCenario] = useState("base")
   const set = <K extends keyof Parametros>(k: K, v: Parametros[K]) => { setP(x => ({ ...x, [k]: v })); if (k === "saidas" || k === "reducaoArt26" || k === "aumentoEfetivo") setCenario("") }
+  const setPes = <K extends keyof DadosPessoais>(k: K, v: DadosPessoais[K]) => setP(x => ({ ...x, pessoal: { ...x.pessoal, [k]: v } }))
+  useEffect(() => {
+    try {
+      const s = localStorage.getItem(CHAVE_PESSOAL)
+      if (s) { const d = JSON.parse(s); setP(x => ({ ...x, pessoal: { ...x.pessoal, ...d.pessoal }, sairNaIntegral: d.sairNaIntegral ?? x.sairNaIntegral })) }
+    } catch {}
+  }, [])
+  useEffect(() => {
+    try { localStorage.setItem(CHAVE_PESSOAL, JSON.stringify({ pessoal: p.pessoal, sairNaIntegral: p.sairNaIntegral })) } catch {}
+  }, [p.pessoal, p.sairNaIntegral])
+  const res = useMemo(() => calcularReserva(p.pessoal), [p.pessoal])
+  const idade = new Date().getFullYear() - p.pessoal.nascimento
   const adiado = useDeferredValue(p)
   const r = useMemo(() => simular(adiado), [adiado])
-  // Comparação: mesma posição, cenário base e só antiguidade
-  const base = useMemo(() => simular({ ...PADRAO, posicao: adiado.posicao, tamanhoTurma: adiado.tamanhoTurma, formatura: adiado.formatura }), [adiado.posicao, adiado.tamanhoTurma, adiado.formatura])
-  const ehBase = JSON.stringify({ ...p, posicao: 0, tamanhoTurma: 0, formatura: "" }) === JSON.stringify({ ...PADRAO, posicao: 0, tamanhoTurma: 0, formatura: "" })
+  // Comparação: mesma posição e mesmos dados pessoais, cenário base e só antiguidade
+  const base = useMemo(
+    () => simular({ ...PADRAO, posicao: adiado.posicao, tamanhoTurma: adiado.tamanhoTurma, formatura: adiado.formatura, pessoal: adiado.pessoal, sairNaIntegral: adiado.sairNaIntegral }),
+    [adiado.posicao, adiado.tamanhoTurma, adiado.formatura, adiado.pessoal, adiado.sairNaIntegral],
+  )
+  const neutro = (x: Parametros) => JSON.stringify({ ...x, posicao: 0, tamanhoTurma: 0, formatura: "", pessoal: null, sairNaIntegral: true })
+  const ehBase = neutro(p) === neutro(PADRAO)
   const asp = mesDe(p.formatura)
   const pendente = adiado !== p
 
@@ -79,6 +106,52 @@ export function CarreiraClient({ tamanhoTurma, posicaoSugerida }: { tamanhoTurma
         </div>
 
         <details style={{ marginTop: 14 }}>
+          <summary style={{ cursor: "pointer", fontSize: 13.5, fontWeight: 600, color: "var(--olive)" }}>
+            Seus dados para a reserva{" "}
+            <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>
+              · {idade} anos · ingresso em {p.pessoal.ingresso.split("-").reverse().join("/")} · {res.regra === "nova" ? "regra nova" : res.regra === "transicao" ? "transição + requerida" : "direito adquirido"}
+            </span>
+          </summary>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14, marginTop: 12 }}>
+            <label style={{ display: "block" }}>
+              <span style={rotulo}>Ano em que nasceu</span>
+              <select value={p.pessoal.nascimento} onChange={e => setPes("nascimento", Number(e.target.value))} style={{ ...campo, display: "block", marginTop: 6, width: 110 }}>
+                {Array.from({ length: 2008 - 1960 + 1 }, (_, i) => 2008 - i).map(a => <option key={a} value={a}>{a}</option>)}
+              </select>
+              <span style={{ fontSize: 12, color: "var(--ink-60)" }}>Compulsória aos {IDADE_LIMITE_OFICIAL} anos: em {p.pessoal.nascimento + IDADE_LIMITE_OFICIAL}.</span>
+            </label>
+            <label style={{ display: "block" }}>
+              <span style={rotulo}>Ingresso na PMPE</span>
+              <input type="month" value={p.pessoal.ingresso} min="1985-01" max="2026-12" onChange={e => e.target.value && setPes("ingresso", e.target.value)} style={{ ...campo, display: "block", marginTop: 6 }} />
+              <span style={{ fontSize: 12, color: "var(--ink-60)" }}>Ex-praça: a inclusão como soldado. Senão, a do CFO.</span>
+            </label>
+            <label style={{ display: "block" }}>
+              <span style={rotulo}>Serviço anterior averbado: {p.pessoal.averbado} {p.pessoal.averbado === 1 ? "ano" : "anos"}</span>
+              <input type="range" min={0} max={20} step={1} value={p.pessoal.averbado} onChange={e => setPes("averbado", Number(e.target.value))} style={{ width: "100%", accentColor: "var(--olive)" }} />
+              <span style={{ fontSize: 12, color: "var(--ink-60)" }}>Tempo de contribuição antes da PMPE: INSS, serviço público ou Forças Armadas (art. 74-AB).</span>
+            </label>
+            <div>
+              <div style={rotulo}>Sexo</div>
+              <div style={{ display: "flex", gap: 6, marginTop: 6 }}>
+                {(["M", "F"] as const).map(s => <button key={s} onClick={() => setPes("sexo", s)} style={pilula(p.pessoal.sexo === s)}>{s === "M" ? "Masculino" : "Feminino"}</button>)}
+              </div>
+              <span style={{ fontSize: 12, color: "var(--ink-60)" }}>Só muda a regra de transição (30 ou 25 anos).</span>
+            </div>
+            <label style={{ display: "flex", gap: 8, alignItems: "flex-start", fontSize: 13, cursor: "pointer" }}>
+              <input type="checkbox" checked={p.sairNaIntegral} onChange={e => set("sairNaIntegral", e.target.checked)} style={{ marginTop: 3, accentColor: "var(--olive)" }} />
+              <span><strong>Peço a reserva assim que tiver o tempo integral</strong><br /><span style={{ color: "var(--ink-60)" }}>Desligado, a simulação segue até a compulsória por idade.</span></span>
+            </label>
+          </div>
+          <ul style={{ margin: "10px 0 0", paddingLeft: 18, fontSize: 12.5, lineHeight: 1.55 }}>
+            {res.detalhe.map(d => <li key={d}>{d}</li>)}
+            <li>{res.requerida
+              ? <>Você ingressou até 31/12/2021: <strong>tem direito à promoção requerida</strong> ao pedir a reserva — sobe um posto, sem vaga nem interstício (não vale para quem já é coronel).</>
+              : <>Ingresso a partir de 2022: <strong>sem promoção requerida</strong> — ela só vale para quem entrou na Corporação até 31/12/2021.</>}</li>
+          </ul>
+          <p style={{ margin: "8px 0 0", fontSize: 11.5, color: "var(--ink-60)" }}>Esses dados ficam só neste aparelho. A contagem oficial é a da Diretoria de Pessoal, com as certidões averbadas.</p>
+        </details>
+
+        <details style={{ marginTop: 10 }}>
           <summary style={{ cursor: "pointer", fontSize: 13.5, fontWeight: 600, color: "var(--olive)" }}>Mais variáveis</summary>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14, marginTop: 12 }}>
             <label style={{ display: "block" }}>
@@ -125,13 +198,14 @@ export function CarreiraClient({ tamanhoTurma, posicaoSugerida }: { tamanhoTurma
             const dif = e.mes != null && b != null && !ehBase ? Math.round((e.mes - b) / 12 * 10) / 10 : 0
             return (
               <div key={e.posto} style={{ padding: "10px 12px", borderRadius: 12, background: "var(--surface)" }}>
+                <div title={NOME_DIVISA[e.posto]} style={{ height: 20, marginBottom: 4 }}><Divisas posto={e.posto} /></div>
                 <div style={rotulo}>{POSTOS[e.posto]}</div>
                 {e.mes != null ? <>
                   <div style={{ fontSize: 17, fontWeight: 700, color: "var(--olive)", marginTop: 2 }}>{rotuloMes(e.mes)}</div>
                   <div style={{ fontSize: 11.5, color: "var(--ink-60)" }}>{anos(e.mes - asp)} de oficial</div>
                   {g && <div style={{ fontSize: 11, fontWeight: 700, color: g.cor, marginTop: 3 }}>● {g.rot}</div>}
                   {dif !== 0 && <div style={{ fontSize: 11, color: dif < 0 ? "#3a7a3a" : "var(--red)", marginTop: 2 }}>{dif < 0 ? "▼" : "▲"} {Math.abs(dif).toLocaleString("pt-BR")} ano{Math.abs(dif) >= 2 ? "s" : ""} vs. base</div>}
-                </> : <div style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 4, lineHeight: 1.35 }}>não chega antes dos 35 anos de serviço</div>}
+                </> : <div style={{ fontSize: 12.5, color: "var(--ink-60)", marginTop: 4, lineHeight: 1.35 }}>não chega antes da reserva</div>}
               </div>
             )
           })}
@@ -175,7 +249,12 @@ export function CarreiraClient({ tamanhoTurma, posicaoSugerida }: { tamanhoTurma
         {/* Por quê */}
         <ul style={{ margin: "14px 0 0", paddingLeft: 18, fontSize: 13, lineHeight: 1.6 }}>
           {r.voce.filter(e => e.mes != null && e.gargalo).map(e => <li key={e.posto}><strong>{POSTOS[e.posto]}</strong>: {GARGALO[e.gargalo!].explica}.</li>)}
-          {r.reserva != null && <li>Você completa 35 anos de serviço em <strong>{rotuloMes(r.reserva)}</strong> — o limite da simulação.</li>}
+          {r.reserva != null && (
+            <li>
+              Reserva em <strong>{rotuloMes(r.reserva.mes)}</strong>, {MOTIVO[r.reserva.motivo]}, como <strong>{POSTOS[r.reserva.posto]}</strong>
+              {r.reserva.quotas < 35 ? <> — proventos proporcionais: {r.reserva.quotas}/35 ({Math.round((r.reserva.quotas / 35) * 100)}%)</> : " — proventos integrais"}.
+            </li>
+          )}
         </ul>
       </section>
 

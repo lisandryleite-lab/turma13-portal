@@ -65,10 +65,11 @@ export const PROMOCOES_EXTRAORDINARIAS: TipoPromocao[] = [
   },
   {
     nome: "Requerida", artigos: "arts. 13 e 14",
-    resumo: "Promoção a pedido de quem já tem tempo para a reserva — só para quem ingressou até 31/12/2021 (não vale para a nossa turma).",
+    resumo: "Promoção a pedido de quem já tem tempo para a reserva — só para quem ingressou na Corporação até 31/12/2021 (vale para os ex-praças da turma).",
     criterios: [
       "Independe de vaga, interstício e cursos; depois do pedido o militar deixa de concorrer às demais promoções e vai para a reserva.",
       "Irrevogável depois de publicada; não se aplica a quem já é coronel.",
+      "É pedida junto com o requerimento de reserva (Estatuto, arts. 89-B e 89-C); o militar fica excedente e é desligado após dois meses com a remuneração do novo posto.",
     ],
   },
   {
@@ -89,6 +90,14 @@ export const REQUISITOS_POSTO = [
   { posto: "Capitão", intersticio: "4 anos", arregimentado: "24 meses", curso: "CAO (para Major e Ten-Cel)" },
   { posto: "Major", intersticio: "4 anos", arregimentado: "12 meses", curso: "CSP (para Coronel)" },
   { posto: "Tenente-Coronel", intersticio: "3 anos", arregimentado: "12 meses", curso: "CSP (para Coronel)" },
+]
+
+// Reserva remunerada — Estatuto dos Militares de PE (Lei nº 6.783/1974), redação da LC nº 460/2021
+export const RESERVA_REGRAS = [
+  "Ingresso a partir de 01/01/2022: reserva a pedido com proventos integrais aos 35 anos de serviço, dos quais 30 de atividade de natureza militar em Pernambuco (art. 89). Antes disso, proventos proporcionais: uma quota por ano de serviço, até 35 (art. 89, § 5º).",
+  "Ingresso até 31/12/2021 (transição, art. 89-A): o tempo que faltava em 01/01/2022 para 30 anos de serviço (homem) ou 25 (mulher), mais 17%; e atividade militar em PE de 25 anos, mais 4 meses por ano faltante (Anexo Único — 26 anos e 4 meses para quem completa em 2026, até 30 anos a partir de 2037).",
+  "De ofício (art. 90): 67 anos de idade para oficiais (63 para praças); e, para quem ingressou a partir de 2022, Ten-Cel com mais de 5 anos no posto ou Coronel com mais de 3, desde que tenham 35 anos de serviço.",
+  "Tempo de contribuição ao INSS ou a regime próprio e o serviço nas Forças Armadas contam para o tempo de serviço (arts. 74-AB, 121 e 122), mas não para a atividade militar em PE.",
 ]
 
 export const OUTRAS_REGRAS = [
