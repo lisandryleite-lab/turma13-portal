@@ -117,7 +117,7 @@ export function AcoesDupla({
   }
 
   const botoes: { acao: Acao; label: string; forte?: boolean }[] = []
-  if (podeDeclarar && !declarado && !confirmado) botoes.push({ acao: "declarar", label: "Enviamos o arquivo", forte: true })
+  if (podeDeclarar && !declarado && !confirmado) botoes.push({ acao: "declarar", label: "Enviamos os arquivos", forte: true })
   if (podeDeclarar && declarado && !confirmado) botoes.push({ acao: "desfazer-declaracao", label: "Desfazer" })
   if (ehAdmin && !confirmado) botoes.push({ acao: "confirmar", label: "Confirmar recebimento", forte: true })
   if (ehAdmin && confirmado) botoes.push({ acao: "desfazer-confirmacao", label: "Desfazer confirmação" })

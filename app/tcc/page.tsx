@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { garantirTabelaTcc } from "@/lib/tcc-db"
 import {
-  DUPLAS_TCC, TCC_PRAZO, TCC_LINK_ENVIO, TCC_NOME_PASTA, TCC_EXTENSAO,
+  DUPLAS_TCC, TCC_PRAZO, TCC_LINK_ENVIO, TCC_NOME_PASTA, TCC_FORMATOS,
   codigoDupla, nomeArquivoTcc,
 } from "@/lib/tcc"
 import { Contagem, CopiarNome, AcoesDupla } from "./tcc-client"
@@ -98,7 +98,8 @@ const CHECKLIST: { titulo: string; itens: string[] }[] = [
     titulo: "Antes de enviar",
     itens: [
       "Apague as instruções do modelo, comentários e marcas de revisão.",
-      `Salve em .${TCC_EXTENSAO.toUpperCase()} com o nome padronizado da sua dupla (abaixo).`,
+      "Gere os dois arquivos — PDF e Word (.docx) — com o mesmo nome padronizado da sua dupla (abaixo).",
+      "Confira se o PDF ficou igual ao .docx (quebras de página, tabelas, notas de rodapé).",
       "Confira ortografia, numeração das seções e se toda citação está nas referências (e vice-versa).",
     ],
   },
@@ -177,13 +178,13 @@ export default async function TccPage() {
         <details style={card}>
           <summary style={resumo}>Como enviar</summary>
           <ol style={{ margin: "12px 0 0", paddingLeft: 20, display: "flex", flexDirection: "column", gap: 8, fontSize: 14.5, lineHeight: 1.5 }}>
-            <li>Revise o artigo pelo checklist abaixo e salve em <strong>.{TCC_EXTENSAO.toUpperCase()}</strong>.</li>
-            <li>Renomeie o arquivo com o <strong>nome padronizado da sua dupla</strong> (botão “copiar” na lista).</li>
-            <li>Abra a pasta de envio <strong>{TCC_NOME_PASTA}</strong> e faça o upload. Um arquivo por dupla — não crie subpastas.</li>
-            <li>Volte aqui, entre no portal e clique em <strong>“Enviamos o arquivo”</strong>. A administração confere a pasta e marca ✅.</li>
+            <li>Revise o artigo pelo checklist abaixo e gere <strong>dois arquivos</strong>: o <strong>PDF</strong> e o editável em <strong>Word (.docx)</strong>.</li>
+            <li>Dê aos dois o <strong>nome padronizado da sua dupla</strong> (botões “copiar” na lista) — só muda a extensão.</li>
+            <li>Abra a pasta de envio <strong>{TCC_NOME_PASTA}</strong> e faça o upload dos dois. Não crie subpastas.</li>
+            <li>Volte aqui, entre no portal e clique em <strong>“Enviamos os arquivos”</strong>. A administração confere a pasta e marca ✅.</li>
           </ol>
           <p style={{ margin: "12px 0 0", fontSize: 13, color: "var(--ink-60)" }}>
-            Padrão: <code>TCC_T13_D07_MAT1-MAT2_NOME1-NOME2.{TCC_EXTENSAO}</code> — dupla, matrículas e nomes de guerra, sem acentos.
+            Padrão: <code>TCC_T13_D07_MAT1-MAT2_NOME1-NOME2.pdf</code> e <code>.docx</code> — dupla, matrículas e nomes de guerra, sem acentos.
           </p>
         </details>
 
@@ -242,7 +243,11 @@ export default async function TccPage() {
                         {selo.txt}
                       </span>
                     </div>
-                    {!confirmado && <CopiarNome nome={nomeArquivoTcc(d)} />}
+                    {!confirmado && (
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                        {TCC_FORMATOS.map((ext) => <CopiarNome key={ext} nome={`${nomeArquivoTcc(d)}.${ext}`} />)}
+                      </div>
+                    )}
                     {status !== null && (
                       <AcoesDupla dupla={d.n} podeDeclarar={podeDeclarar && !encerrado} ehAdmin={ehAdmin} declarado={declarado} confirmado={confirmado} />
                     )}

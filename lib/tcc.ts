@@ -17,8 +17,8 @@ export const TCC_LINK_ENVIO = "https://drive.google.com/drive/folders/1UgAVCoSXH
 /** Nome padronizado da pasta que será encaminhada ao setor responsável. */
 export const TCC_NOME_PASTA = "TCC_CFO2026_T13_1PEL"
 
-/** Formato exigido do arquivo. */
-export const TCC_EXTENSAO = "pdf"
+/** Cada dupla envia DOIS arquivos com o mesmo nome: o PDF e o editável (Word). */
+export const TCC_FORMATOS = ["pdf", "docx"] as const
 
 export type AlunoTcc = { mat: number; nome: string }
 export type DuplaTcc = { n: number; alunos: AlunoTcc[] }
@@ -62,9 +62,9 @@ function nomeParaArquivo(nome: string): string {
     .replace(/\s+/g, "_")
 }
 
-/** Ex.: TCC_T13_D07_108-191_LISANDRY-GOMES_NASCIMENTO.pdf */
+/** Ex.: TCC_T13_D11_108-191_LISANDRY-GOMES_NASCIMENTO (sem extensão) */
 export function nomeArquivoTcc(dupla: DuplaTcc): string {
   const mats = dupla.alunos.map((a) => a.mat).join("-")
   const ns = dupla.alunos.map((a) => nomeParaArquivo(a.nome)).join("-")
-  return `TCC_T13_${codigoDupla(dupla.n)}_${mats}_${ns}.${TCC_EXTENSAO}`
+  return `TCC_T13_${codigoDupla(dupla.n)}_${mats}_${ns}`
 }
