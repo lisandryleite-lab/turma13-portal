@@ -98,6 +98,15 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "7": "Níveis de submissão, níveis de força e técnicas de menor potencial ofensivo",
     "8": "Instrumentos de menor potencial ofensivo, espargidores e descontaminação",
     SIM: "Simulado — formato da prova (10,0 pontos)",
+    // Banco UDFIT (artefato de out/2026)
+    T1: "UDFIT · Conceitos, direitos humanos e ética no uso da força",
+    T2: "UDFIT · Legislação internacional: CCEAL (1979) e PBUFAF (1990)",
+    T3: "UDFIT · Legislação nacional: CPP, CPPM, Portaria 4.226, Lei 13.060 e Decreto 12.341",
+    T4: "UDFIT · Portaria 855/2025: alcance, princípios, arma de fogo, IMPO e crises",
+    T5: "UDFIT · Portaria 855/2025: buscas, algemas, lesão ou morte, registro e capacitação",
+    T6: "UDFIT · Modelos de uso da força e níveis de submissão e de resposta",
+    T7: "UDFIT · Técnicas e IMPO, espargidores, arma elétrica e descontaminação",
+    SIM2: "UDFIT · Simulado (10,0 pontos · 100 min)",
   },
   ABAA: {
     "1": "Histórico, estrutura, missão e acionamento do GTA",
@@ -107,6 +116,14 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "5": "Equipamentos especiais, orientação e coordenadas",
     "6": "Operações aerotransportadas e resgate aeromédico",
     SIM: "Simulado — formato da prova (10,0 pontos)",
+    // Banco ABAA (artefato de out/2026)
+    T1: "Banco 2 · Histórico, estrutura, frota, ingresso e cursos do GTA",
+    T2: "Banco 2 · Segurança de voo e SIPAER",
+    T3: "Banco 2 · Briefing e POP para passageiros",
+    T4: "Banco 2 · Locais de pouso (ZPH), balizamento e isolamento",
+    T5: "Banco 2 · Equipamentos, fraseologia, coordenadas e acionamento",
+    T6: "Banco 2 · Apoio aeromédico: vantagens, limitações e atividades críticas",
+    SIM2: "Banco 2 · Simulado (10,0 pontos · 100 min)",
   },
   QAGV: {
     "1": "Minorias × grupos vulneráveis e direitos humanos",
@@ -251,6 +268,15 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "5": "Crimes contra o serviço, o dever e a administração militar",
     "6": "Processo penal militar: rito, ação penal e prisões",
     SIM: "Simulado — formato da prova (10,0 pontos · 100 min)",
+    // DPPM 2 (artefato de out/2026)
+    T1: "DPPM 2 · Crimes contra a Administração Militar (arts. 298 a 303)",
+    T2: "DPPM 2 · A Justiça Militar na Constituição Federal",
+    T3: "DPPM 2 · Fontes, interpretação, aplicação e princípios do CPPM",
+    T4: "DPPM 2 · Ação penal militar e seu exercício",
+    T5: "DPPM 2 · Processo criminal militar: rito, citação, provas e julgamento",
+    T6: "DPPM 2 · Sujeitos processuais",
+    T7: "DPPM 2 · Prisões, menagem e liberdade provisória",
+    SIM2: "DPPM 2 · Simulado (10,0 pontos · 100 min)",
   },
   AM: {
     "1": "Conceito de arma, espécies e as 09 classificações",
