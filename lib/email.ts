@@ -33,3 +33,6 @@ export function htmlEmail(nomeGuerra: string, ...paragrafos: string[]) {
 }
 
 export const urlPortal = () => (process.env.NEXTAUTH_URL || "https://portalcfo2026.com.br").replace(/\/$/, "")
+
+/** E-mail inventado no cadastro (sem caixa real): o aluno precisa cadastrar o dele. */
+export const emailProvisorio = (email: string) => /@([^@]+\.placeholder|[^@]+\.local|turma13\.app)$/i.test(email.trim())

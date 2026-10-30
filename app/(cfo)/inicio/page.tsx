@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { auth } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { ViewToggle } from "../view-toggle"
 import { ContagemCFO } from "@/components/contagem-cfo"
@@ -124,10 +123,9 @@ const cards: {
   },
 ]
 
-// Card extra "Modificar senha" — só para alunos que NÃO são da Turma 13
-// (eles não entram no portal T13, onde fica a troca de senha).
+// Card "Senha e e-mail" — troca de senha e e-mail de recuperação, para todos.
 const cardSenha: (typeof cards)[number] = {
-  label: "Modificar senha",
+  label: "Senha e e-mail",
   href: "/trocar-senha",
   bg: "gold",
   icon: (
@@ -203,11 +201,7 @@ export default async function PortalCfoHome() {
   const isAdmin = !!session?.user?.isAdmin
   const admView = await adminAtivo(isAdmin)
 
-  // Alunos fora da Turma 13 ganham um card extra "Modificar senha"
-  const eu = session?.user?.id
-    ? await prisma.user.findUnique({ where: { id: session.user.id }, select: { turma13: true } })
-    : null
-  const cardsToShow = eu?.turma13 ? cards : [...cards, cardSenha]
+  const cardsToShow = [...cards, cardSenha]
 
   return (
     <main
