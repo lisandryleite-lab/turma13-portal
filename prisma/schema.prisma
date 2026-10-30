@@ -737,3 +737,15 @@ model EventoCalendario {
 
   @@index([inicio])
 }
+
+// ── Turma 13 — Envio do TCC (/tcc) ────────────────────────────────
+// Uma linha por dupla (número em DUPLAS_TCC, lib/tcc.ts). O membro da
+// dupla declara o envio; o admin confere a pasta e confirma.
+model TccEnvio {
+  dupla         Int       @id
+  declaradoEm   DateTime?
+  declaradoPor  Int?      // matrícula
+  confirmadoEm  DateTime?
+  confirmadoPor Int?      // matrícula do admin
+  updatedAt     DateTime  @updatedAt
+}

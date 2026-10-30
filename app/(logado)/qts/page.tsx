@@ -105,7 +105,7 @@ function QtsDisplay({ dados, disciplinas }: { dados: QtsDados; disciplinas: Disc
         </thead>
         <tbody>
           {dados.horarios.map((hora, i) => {
-            const isInterval = hora.startsWith("10h00") || hora.startsWith("13h40") || hora.startsWith("15h40")
+            const isInterval = hora.startsWith("10h00") || hora.startsWith("13h40") || hora.startsWith("15h40") || hora.startsWith("18h00")
             return (
               <tr key={hora} style={{ borderTop: isInterval ? "2px solid #dde3ee" : "1px solid #f0f4ff" }}>
                 <td style={{ padding: "7px 12px", color: "#9aa3b8", fontFamily: "monospace", fontSize: 11, whiteSpace: "nowrap", background: "#fafbff" }}>{hora}</td>
