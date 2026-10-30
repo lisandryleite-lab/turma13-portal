@@ -25,7 +25,8 @@ export default function ForgotPasswordPage() {
     })
     setLoading(false)
     if (!res.ok) {
-      setErro("Erro ao processar. Tente novamente.")
+      const d = await res.json().catch(() => ({}))
+      setErro(d.error || "Erro ao processar. Tente novamente.")
       return
     }
     setSent(true)
