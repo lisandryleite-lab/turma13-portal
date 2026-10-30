@@ -4,11 +4,13 @@ import { useState, useCallback } from "react"
 import { useRouter } from "next/navigation"
 
 // ── Constantes ────────────────────────────────────────────────────────────────
+// Faixas da folha da DEIP a partir da semana 43 (manhã, tarde e noite até 21h40)
 const HORARIOS = [
   "07h00-07h50","08h00-08h50","08h50-09h40",
   "10h00-10h50","10h50-11h40",
   "13h40-14h30","14h30-15h20",
-  "15h40-16h30","16h30-17h20","17h30-18h20","18h20-19h10",
+  "15h40-16h30","16h30-17h20",
+  "18h00-18h50","18h50-19h40","20h00-20h50","20h50-21h40",
 ]
 
 // Data local (não UTC) — primeira segunda-feira do curso. Construída com

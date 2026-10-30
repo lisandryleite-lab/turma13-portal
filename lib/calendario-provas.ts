@@ -9,7 +9,7 @@
 //  do memento resolva. Duas divergem da grafia do PDF, anotadas em `siglaPdf`.
 // ─────────────────────────────────────────────────────────────
 
-export const CALENDARIO_ATUALIZADO_EM = "11/10/2026"
+export const CALENDARIO_ATUALIZADO_EM = "30/10/2026"
 
 export type ProvaCalendario = {
   /** sigla da disciplina no portal — usada no link do memento */
@@ -34,6 +34,8 @@ export type SemanaCalendario = {
   obs?: string
   /** dia da prova (ISO) quando NÃO é a quarta-feira da semana */
   diaIso?: string
+  /** provas já feitas — a semana conta como passada mesmo antes do domingo */
+  realizada?: boolean
 }
 
 export const MENSAGEM_SECAO_PROVAS = [
@@ -142,7 +144,8 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
       { sigla: "QAGV" },
       { sigla: "PJM", avaliacao: "2AE" },
     ],
-    obs: "Provas à tarde. Entrega do TCC até as 12h do mesmo dia.",
+    realizada: true,
+    obs: "Provas realizadas em 30/10. PJM e QAGV concluídas.",
   },
   {
     semana: 43,
@@ -153,9 +156,11 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
     diaIso: "2026-11-06",
     provas: [
       { sigla: "ABAA", siglaPdf: "ABA" },
-      { sigla: "DPPM", siglaPdf: "DPPPM", avaliacao: "2AE" },
+      { sigla: "UDF", siglaPdf: "UDFIT", avaliacao: "1AE" },
     ],
-    obs: "Horário a confirmar.",
+    // QTS da semana 43: as marcas de prova de sexta estão em ABAA (8h–9h40) e
+    // UDFIT (10h–11h40) — UDF entrou no lugar de DPPM.
+    obs: "Sexta 06/11: ABAA e UDFIT (UDFIT no lugar de DPPM, que fica com data a definir). A 2ª avaliação de UDF é prática.",
   },
   {
     semana: 44,
@@ -165,17 +170,19 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
     fimIso: "2026-11-15",
     diaIso: "2026-11-11",
     provas: [
-      { sigla: "UDF", siglaPdf: "UDFIT", avaliacao: "1AE" },
       { sigla: "POE", avaliacao: "2AE" },
     ],
-    obs: "Horário a confirmar. A 2ª avaliação de UDF é prática.",
+    obs: "Horário a confirmar.",
   },
 ]
 
 // Provas teóricas ainda SEM semana definida pela Seção de Provas. Quando sair a
 // data, mover a prova para CALENDARIO_PROVAS e tirar daqui. (Out/2026: todas as
 // que restavam ganharam data no cronograma de entregas e avaliações.)
-export const PROVAS_A_DEFINIR: ProvaCalendario[] = []
+export const PROVAS_A_DEFINIR: ProvaCalendario[] = [
+  // Saiu da sexta 06/11 (entrou UDFIT) — nova data ainda não divulgada.
+  { sigla: "DPPM", siglaPdf: "DPPPM", avaliacao: "2AE" },
+]
 
 /** A avaliação escrita acontece na QUARTA-FEIRA da semana planejada. */
 export function diaDaProva(s: SemanaCalendario): string {
@@ -206,7 +213,7 @@ export function hojeRecifeISO(): string {
 
 /** Situação da semana em relação a hoje (YYYY-MM-DD). */
 export function situacao(s: SemanaCalendario, hojeISO: string): "passada" | "atual" | "futura" {
-  if (hojeISO > s.fimIso) return "passada"
+  if (s.realizada || hojeISO > s.fimIso) return "passada"
   if (hojeISO < s.inicioIso) return "futura"
   return "atual"
 }
