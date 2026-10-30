@@ -12,7 +12,7 @@
 export const TCC_PRAZO = new Date("2026-11-02T07:00:00-03:00")
 
 /** Link da pasta do Google Drive (ou formulário) onde as duplas enviam o arquivo. */
-export const TCC_LINK_ENVIO = ""
+export const TCC_LINK_ENVIO = "https://drive.google.com/drive/folders/1UgAVCoSXHaDxKP3a_KrzCF24quJvluGK"
 
 /** Nome padronizado da pasta que será encaminhada ao setor responsável. */
 export const TCC_NOME_PASTA = "TCC_CFO2026_T13_1PEL"
