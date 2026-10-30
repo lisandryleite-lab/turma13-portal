@@ -79,31 +79,21 @@ export function CopiarNome({ nome }: { nome: string }) {
   )
 }
 
-// ─── Botões de status (membro declara, admin confirma) ───────────────────────
+// ─── Botão de status (a própria dupla marca) ─────────────────────────────────
 
-type Acao = "declarar" | "desfazer-declaracao" | "confirmar" | "desfazer-confirmacao"
-
-export function AcoesDupla({
-  dupla, podeDeclarar, ehAdmin, declarado, confirmado,
-}: {
-  dupla: number
-  podeDeclarar: boolean
-  ehAdmin: boolean
-  declarado: boolean
-  confirmado: boolean
-}) {
+export function MarcarEnvio({ dupla, enviado }: { dupla: number; enviado: boolean }) {
   const router = useRouter()
   const [ocupado, setOcupado] = useState(false)
   const [erro, setErro] = useState("")
 
-  async function enviar(acao: Acao) {
+  async function marcar() {
     setOcupado(true)
     setErro("")
     try {
       const res = await fetch("/api/tcc", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ dupla, acao }),
+        body: JSON.stringify({ dupla, acao: enviado ? "desfazer" : "enviado" }),
       })
       if (!res.ok) {
         const j = await res.json().catch(() => ({}))
@@ -116,33 +106,23 @@ export function AcoesDupla({
     }
   }
 
-  const botoes: { acao: Acao; label: string; forte?: boolean }[] = []
-  if (podeDeclarar && !declarado && !confirmado) botoes.push({ acao: "declarar", label: "Enviamos os arquivos", forte: true })
-  if (podeDeclarar && declarado && !confirmado) botoes.push({ acao: "desfazer-declaracao", label: "Desfazer" })
-  if (ehAdmin && !confirmado) botoes.push({ acao: "confirmar", label: "Confirmar recebimento", forte: true })
-  if (ehAdmin && confirmado) botoes.push({ acao: "desfazer-confirmacao", label: "Desfazer confirmação" })
-  if (botoes.length === 0) return null
-
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-      {botoes.map((b) => (
-        <button
-          key={b.acao}
-          type="button"
-          disabled={ocupado}
-          onClick={() => enviar(b.acao)}
-          style={{
-            fontSize: 12, fontWeight: 600, borderRadius: 8, padding: "5px 10px", cursor: ocupado ? "wait" : "pointer",
-            border: b.forte ? "none" : "1px solid rgba(58,74,58,0.3)",
-            background: b.forte ? "var(--olive)" : "transparent",
-            color: b.forte ? "var(--canvas)" : "var(--olive)",
-            opacity: ocupado ? 0.6 : 1,
-          }}
-        >
-          {b.label}
-        </button>
-      ))}
+    <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+      <button
+        type="button"
+        disabled={ocupado}
+        onClick={marcar}
+        style={{
+          fontSize: 12.5, fontWeight: 600, borderRadius: 8, padding: "6px 12px", cursor: ocupado ? "wait" : "pointer",
+          border: enviado ? "1px solid rgba(58,74,58,0.3)" : "none",
+          background: enviado ? "transparent" : "var(--olive)",
+          color: enviado ? "var(--olive)" : "var(--canvas)",
+          opacity: ocupado ? 0.6 : 1,
+        }}
+      >
+        {enviado ? "Desfazer" : "✓ Marcar como enviado"}
+      </button>
       {erro && <span style={{ fontSize: 12, color: "var(--red)" }}>⚠ {erro}</span>}
-    </div>
+    </span>
   )
 }

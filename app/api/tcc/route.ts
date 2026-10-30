@@ -1,16 +1,15 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { rotaApi, lerCorpo, naoAutorizado, proibido, naoEncontrado, ErroHttp, z } from "@/lib/api"
+import { rotaApi, lerCorpo, naoAutorizado, proibido, naoEncontrado, z } from "@/lib/api"
 import { DUPLAS_TCC } from "@/lib/tcc"
 import { garantirTabelaTcc } from "@/lib/tcc-db"
 
-// Status do envio do TCC (página pública /tcc).
-//   declarar / desfazer-declaracao → membro da dupla ou admin
-//   confirmar / desfazer-confirmacao → só admin (conferiu a pasta do Drive)
+// Status do envio do TCC (página pública /tcc): a própria dupla marca
+// "enviado" ou desfaz. Admin pode corrigir qualquer dupla.
 const Acao = z.object({
   dupla: z.number().int().positive(),
-  acao: z.enum(["declarar", "desfazer-declaracao", "confirmar", "desfazer-confirmacao"]),
+  acao: z.enum(["enviado", "desfazer"]),
 })
 
 export const POST = rotaApi(async (req: NextRequest) => {
@@ -22,22 +21,12 @@ export const POST = rotaApi(async (req: NextRequest) => {
   if (!d) throw naoEncontrado("Dupla")
 
   const { matricula, isAdmin } = session.user
-  const ehMembro = d.alunos.some((a) => a.mat === matricula)
-  if (!isAdmin && !ehMembro) throw proibido()
-  if (!isAdmin && (acao === "confirmar" || acao === "desfazer-confirmacao")) throw proibido()
+  if (!isAdmin && !d.alunos.some((a) => a.mat === matricula)) throw proibido()
 
   await garantirTabelaTcc()
-  const atual = await prisma.tccEnvio.findUnique({ where: { dupla } })
-  if (!isAdmin && acao === "desfazer-declaracao" && atual?.confirmadoEm) {
-    throw new ErroHttp(409, "O recebimento já foi confirmado. Fale com a administração.")
-  }
-
-  const agora = new Date()
-  const dados =
-    acao === "declarar" ? { declaradoEm: agora, declaradoPor: matricula }
-    : acao === "desfazer-declaracao" ? { declaradoEm: null, declaradoPor: null }
-    : acao === "confirmar" ? { confirmadoEm: agora, confirmadoPor: matricula }
-    : { confirmadoEm: null, confirmadoPor: null }
+  const dados = acao === "enviado"
+    ? { declaradoEm: new Date(), declaradoPor: matricula }
+    : { declaradoEm: null, declaradoPor: null }
 
   const r = await prisma.tccEnvio.upsert({
     where: { dupla },

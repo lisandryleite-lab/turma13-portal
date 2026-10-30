@@ -4,12 +4,12 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { garantirTabelaTcc } from "@/lib/tcc-db"
 import {
-  DUPLAS_TCC, TCC_PRAZO, TCC_LINK_ENVIO, TCC_NOME_PASTA, TCC_FORMATOS,
-  codigoDupla, nomeArquivoTcc,
+  DUPLAS_TCC, TCC_PRAZO, TCC_PASTA, TCC_NOME_PASTA, TCC_FORMATOS,
+  codigoDupla, nomeArquivoTcc, linkPasta,
 } from "@/lib/tcc"
-import { Contagem, CopiarNome, AcoesDupla } from "./tcc-client"
+import { Contagem, CopiarNome, MarcarEnvio } from "./tcc-client"
 
-// Página PÚBLICA (em PUBLIC_PATHS): qualquer um com o link vê o status.
+// Página PÚBLICA e temporária (em PUBLIC_PATHS) até o prazo do TCC.
 // Mostra só nome de guerra e matrícula — nada de e-mail, CPF ou telefone.
 
 export const metadata: Metadata = {
@@ -21,15 +21,14 @@ export const dynamic = "force-dynamic"
 const fmt = (d: Date) =>
   d.toLocaleString("pt-BR", { timeZone: "America/Recife", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })
 
-type Status = { declaradoEm: Date | null; confirmadoEm: Date | null }
-
-async function lerStatus(): Promise<Map<number, Status> | null> {
+/** Dupla → hora em que marcou "enviado". `null` se o banco não respondeu. */
+async function lerEnvios(): Promise<Map<number, Date> | null> {
   try {
     await garantirTabelaTcc()
-    const linhas = await prisma.tccEnvio.findMany()
-    return new Map(linhas.map((l) => [l.dupla, l]))
+    const linhas = await prisma.tccEnvio.findMany({ where: { declaradoEm: { not: null } } })
+    return new Map(linhas.map((l) => [l.dupla, l.declaradoEm!]))
   } catch {
-    return null // tabela ainda não criada: página segue, só sem status
+    return null
   }
 }
 
@@ -120,27 +119,18 @@ const card: React.CSSProperties = {
   padding: 16,
 }
 
-const resumo: React.CSSProperties = {
-  cursor: "pointer",
-  fontFamily: "var(--serif-cfo)",
-  fontSize: 17,
-  fontWeight: 600,
-  color: "var(--olive)",
+const botaoPasta: React.CSSProperties = {
+  fontSize: 12.5, fontWeight: 600, color: "var(--olive)", border: "1px solid rgba(58,74,58,0.3)",
+  borderRadius: 8, padding: "6px 12px", textDecoration: "none", whiteSpace: "nowrap",
 }
 
 export default async function TccPage() {
   const session = await auth()
-  const status = await lerStatus()
+  const envios = await lerEnvios()
 
   const encerrado = Date.now() >= TCC_PRAZO.getTime()
   const total = DUPLAS_TCC.length
-  const confirmadas = DUPLAS_TCC.filter((d) => status?.get(d.n)?.confirmadoEm).length
-  const declaradas = DUPLAS_TCC.filter((d) => {
-    const s = status?.get(d.n)
-    return s?.declaradoEm && !s.confirmadoEm
-  }).length
-  const pendentes = total - confirmadas - declaradas
-
+  const enviados = DUPLAS_TCC.filter((d) => envios?.has(d.n)).length
   const minhaMat = session?.user.matricula
   const ehAdmin = session?.user.isAdmin === true
 
@@ -148,7 +138,6 @@ export default async function TccPage() {
     <main style={{ minHeight: "100vh", background: "var(--canvas)", color: "var(--ink)", fontFamily: "var(--sans)" }}>
       <div style={{ maxWidth: 820, margin: "0 auto", padding: "24px 16px 48px", display: "flex", flexDirection: "column", gap: 16 }}>
 
-        {/* Cabeçalho */}
         <header style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           <p style={{ margin: 0, fontSize: 12, letterSpacing: 1.2, textTransform: "uppercase", color: "var(--gold)", fontWeight: 700 }}>
             CFO PM 2026 · Turma 13 · 1º Pelotão
@@ -157,116 +146,89 @@ export default async function TccPage() {
             Envio do TCC
           </h1>
           <p style={{ margin: 0, color: "var(--ink-60)", fontSize: 14.5 }}>
-            Prazo: <strong style={{ color: "var(--ink)" }}>segunda-feira, 02/11/2026, às 07h</strong> (horário de Recife).
+            Prazo: <strong style={{ color: "var(--ink)" }}>segunda-feira, 02/11/2026, às 07h</strong>
           </p>
         </header>
 
-        {/* Prazo + envio */}
+        {/* Prazo + como enviar */}
         <section style={{ ...card, display: "flex", flexDirection: "column", gap: 14 }}>
           <Contagem prazoIso={TCC_PRAZO.toISOString()} />
-          {TCC_LINK_ENVIO && !encerrado ? (
-            <a href={TCC_LINK_ENVIO} target="_blank" rel="noopener noreferrer"
-              style={{ alignSelf: "flex-start", background: "var(--olive)", color: "var(--canvas)", textDecoration: "none", fontWeight: 600, borderRadius: 10, padding: "10px 16px", fontSize: 14.5 }}>
-              Abrir pasta de envio (Google Drive) ↗
-            </a>
-          ) : !TCC_LINK_ENVIO ? (
-            <p style={{ margin: 0, fontSize: 14, color: "var(--ink-60)" }}>🔗 O link da pasta de envio será publicado aqui.</p>
-          ) : null}
+          <ol style={{ margin: 0, paddingLeft: 20, display: "flex", flexDirection: "column", gap: 6, fontSize: 14.5, lineHeight: 1.5 }}>
+            <li>Abra a <strong>pasta da sua dupla</strong> (botão na lista abaixo).</li>
+            <li>Envie <strong>dois arquivos</strong>: o <strong>PDF</strong> e o <strong>Word (.docx)</strong>, com o nome indicado.</li>
+            <li>Entre no portal e clique em <strong>“Marcar como enviado”</strong>.</li>
+          </ol>
         </section>
 
-        {/* Como enviar */}
-        <details style={card}>
-          <summary style={resumo}>Como enviar</summary>
-          <ol style={{ margin: "12px 0 0", paddingLeft: 20, display: "flex", flexDirection: "column", gap: 8, fontSize: 14.5, lineHeight: 1.5 }}>
-            <li>Revise o artigo pelo checklist abaixo e gere <strong>dois arquivos</strong>: o <strong>PDF</strong> e o editável em <strong>Word (.docx)</strong>.</li>
-            <li>Dê aos dois o <strong>nome padronizado da sua dupla</strong> (botões “copiar” na lista) — só muda a extensão.</li>
-            <li>Abra a pasta de envio <strong>{TCC_NOME_PASTA}</strong> e faça o upload dos dois. Não crie subpastas.</li>
-            <li>Volte aqui, entre no portal e clique em <strong>“Enviamos os arquivos”</strong>. A administração confere a pasta e marca ✅.</li>
-          </ol>
-          <p style={{ margin: "12px 0 0", fontSize: 13, color: "var(--ink-60)" }}>
-            Padrão: <code>TCC_T13_D07_MAT1-MAT2_NOME1-NOME2.pdf</code> e <code>.docx</code> — dupla, matrículas e nomes de guerra, sem acentos.
-          </p>
-        </details>
-
-        {/* Transparência */}
+        {/* Duplas */}
         <section style={{ ...card, display: "flex", flexDirection: "column", gap: 12 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8 }}>
             <h2 style={{ margin: 0, fontFamily: "var(--serif-cfo)", fontSize: 20, color: "var(--olive)" }}>Duplas</h2>
-            {total > 0 && (
-              <span style={{ fontSize: 13, color: "var(--ink-60)" }}>
-                ✅ {confirmadas} recebido{confirmadas === 1 ? "" : "s"} · 📤 {declaradas} a conferir · ⏳ {pendentes} pendente{pendentes === 1 ? "" : "s"}
-              </span>
-            )}
+            <span style={{ fontSize: 13.5, color: "var(--ink-60)" }}>
+              <strong style={{ color: "var(--olive)" }}>{enviados}</strong> de {total} enviaram
+            </span>
           </div>
-
-          {total > 0 && (
-            <div style={{ height: 8, borderRadius: 99, background: "rgba(58,74,58,0.12)", overflow: "hidden", display: "flex" }}
-              role="img" aria-label={`${confirmadas} de ${total} duplas com recebimento confirmado`}>
-              <div style={{ width: `${(confirmadas / total) * 100}%`, background: "var(--olive)" }} />
-              <div style={{ width: `${(declaradas / total) * 100}%`, background: "var(--gold)" }} />
-            </div>
-          )}
-
-          {status === null && total > 0 && (
+          <div style={{ height: 8, borderRadius: 99, background: "rgba(58,74,58,0.12)", overflow: "hidden" }}
+            role="img" aria-label={`${enviados} de ${total} duplas enviaram`}>
+            <div style={{ width: `${(enviados / total) * 100}%`, height: "100%", background: "var(--olive)" }} />
+          </div>
+          {envios === null && (
             <p style={{ margin: 0, fontSize: 13, color: "var(--red)" }}>⚠ Status indisponível no momento.</p>
           )}
 
-          {total === 0 ? (
-            <p style={{ margin: 0, fontSize: 14, color: "var(--ink-60)" }}>A lista de duplas está sendo cadastrada.</p>
-          ) : (
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-              {DUPLAS_TCC.map((d) => {
-                const s = status?.get(d.n)
-                const confirmado = !!s?.confirmadoEm
-                const declarado = !!s?.declaradoEm
-                const selo = confirmado
-                  ? { txt: `✅ Recebido · ${fmt(s!.confirmadoEm!)}`, cor: "var(--olive)", fundo: "rgba(58,74,58,0.10)" }
-                  : declarado
-                    ? { txt: `📤 Enviado · ${fmt(s!.declaradoEm!)} · a conferir`, cor: "#7a5c1c", fundo: "rgba(181,147,63,0.16)" }
-                    : encerrado
-                      ? { txt: "✖ Não enviado", cor: "var(--red)", fundo: "rgba(122,46,46,0.08)" }
-                      : { txt: "⏳ Pendente", cor: "var(--ink-60)", fundo: "rgba(43,42,39,0.06)" }
-                const podeDeclarar = status !== null && (ehAdmin || d.alunos.some((a) => a.mat === minhaMat))
+          <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+            {DUPLAS_TCC.map((d) => {
+              const em = envios?.get(d.n)
+              const selo = em
+                ? { txt: `✅ Enviado · ${fmt(em)}`, cor: "var(--olive)", fundo: "rgba(58,74,58,0.10)" }
+                : encerrado
+                  ? { txt: "✖ Não enviado", cor: "var(--red)", fundo: "rgba(122,46,46,0.08)" }
+                  : { txt: "⏳ Pendente", cor: "var(--ink-60)", fundo: "rgba(43,42,39,0.06)" }
+              const podeMarcar = envios !== null && !encerrado && (ehAdmin || d.alunos.some((a) => a.mat === minhaMat))
 
-                return (
-                  <li key={d.n} style={{ background: "var(--canvas)", border: "1px solid rgba(58,74,58,0.10)", borderRadius: 10, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 8 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                      <div style={{ display: "flex", alignItems: "baseline", gap: 10, minWidth: 0 }}>
-                        <span style={{ fontFamily: "ui-monospace, Consolas, monospace", fontWeight: 700, color: "var(--gold)", fontSize: 13 }}>{codigoDupla(d.n)}</span>
-                        <span style={{ fontWeight: 600, fontSize: 14.5 }}>
-                          {d.alunos.map((a, i) => (
-                            <span key={a.mat}>{i > 0 && " · "}<span style={{ color: "var(--ink-60)", fontWeight: 500 }}>{a.mat}</span> {a.nome}</span>
-                          ))}
-                        </span>
-                      </div>
-                      <span style={{ fontSize: 12, fontWeight: 600, color: selo.cor, background: selo.fundo, borderRadius: 99, padding: "3px 10px", whiteSpace: "nowrap" }}>
-                        {selo.txt}
+              return (
+                <li key={d.n} style={{ background: "var(--canvas)", border: "1px solid rgba(58,74,58,0.10)", borderRadius: 10, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 10, minWidth: 0 }}>
+                      <span style={{ fontFamily: "ui-monospace, Consolas, monospace", fontWeight: 700, color: "var(--gold)", fontSize: 13 }}>{codigoDupla(d.n)}</span>
+                      <span style={{ fontWeight: 600, fontSize: 14.5 }}>
+                        {d.alunos.map((a, i) => (
+                          <span key={a.mat}>{i > 0 && " · "}<span style={{ color: "var(--ink-60)", fontWeight: 500 }}>{a.mat}</span> {a.nome}</span>
+                        ))}
                       </span>
                     </div>
-                    {!confirmado && (
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                        {TCC_FORMATOS.map((ext) => <CopiarNome key={ext} nome={`${nomeArquivoTcc(d)}.${ext}`} />)}
-                      </div>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: selo.cor, background: selo.fundo, borderRadius: 99, padding: "3px 10px", whiteSpace: "nowrap" }}>
+                      {selo.txt}
+                    </span>
+                  </div>
+                  {!em && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                      {TCC_FORMATOS.map((ext) => <CopiarNome key={ext} nome={`${nomeArquivoTcc(d)}.${ext}`} />)}
+                    </div>
+                  )}
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
+                    {!encerrado && (
+                      <a href={linkPasta(d.pasta)} target="_blank" rel="noopener noreferrer" style={botaoPasta}>📁 Abrir pasta da dupla ↗</a>
                     )}
-                    {status !== null && (
-                      <AcoesDupla dupla={d.n} podeDeclarar={podeDeclarar && !encerrado} ehAdmin={ehAdmin} declarado={declarado} confirmado={confirmado} />
-                    )}
-                  </li>
-                )
-              })}
-            </ul>
-          )}
+                    {podeMarcar && <MarcarEnvio dupla={d.n} enviado={!!em} />}
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
 
-          {!session && total > 0 && (
+          {!session && !encerrado && (
             <p style={{ margin: 0, fontSize: 13, color: "var(--ink-60)" }}>
-              Já enviou? <Link href="/login" style={{ color: "var(--olive)", fontWeight: 600 }}>Entre no portal</Link> para marcar a sua dupla.
+              Já enviou? <Link href="/login" style={{ color: "var(--olive)", fontWeight: 600 }}>Entre no portal</Link> e volte aqui para marcar a sua dupla.
             </p>
           )}
         </section>
 
         {/* Modelo + checklist */}
         <details style={card}>
-          <summary style={resumo}>Modelo do artigo e checklist ABNT</summary>
+          <summary style={{ cursor: "pointer", fontFamily: "var(--serif-cfo)", fontSize: 17, fontWeight: 600, color: "var(--olive)" }}>
+            Modelo do artigo e checklist ABNT
+          </summary>
           <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
               {ARQUIVOS.map((a) => (
@@ -293,7 +255,7 @@ export default async function TccPage() {
         </details>
 
         <footer style={{ fontSize: 12, color: "var(--ink-60)", textAlign: "center" }}>
-          <Link href="/dashboard" style={{ color: "var(--olive)" }}>Portal da Turma 13</Link>
+          Pasta geral: <a href={linkPasta(TCC_PASTA)} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>{TCC_NOME_PASTA}</a>
         </footer>
       </div>
     </main>
