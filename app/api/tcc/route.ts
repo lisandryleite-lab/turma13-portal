@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { rotaApi, lerCorpo, naoAutorizado, proibido, naoEncontrado, ErroHttp, z } from "@/lib/api"
 import { DUPLAS_TCC } from "@/lib/tcc"
+import { garantirTabelaTcc } from "@/lib/tcc-db"
 
 // Status do envio do TCC (página pública /tcc).
 //   declarar / desfazer-declaracao → membro da dupla ou admin
@@ -25,6 +26,7 @@ export const POST = rotaApi(async (req: NextRequest) => {
   if (!isAdmin && !ehMembro) throw proibido()
   if (!isAdmin && (acao === "confirmar" || acao === "desfazer-confirmacao")) throw proibido()
 
+  await garantirTabelaTcc()
   const atual = await prisma.tccEnvio.findUnique({ where: { dupla } })
   if (!isAdmin && acao === "desfazer-declaracao" && atual?.confirmadoEm) {
     throw new ErroHttp(409, "O recebimento já foi confirmado. Fale com a administração.")

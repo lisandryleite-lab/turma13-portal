@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { garantirTabelaTcc } from "@/lib/tcc-db"
 import {
   DUPLAS_TCC, TCC_PRAZO, TCC_LINK_ENVIO, TCC_NOME_PASTA, TCC_EXTENSAO,
   codigoDupla, nomeArquivoTcc,
@@ -24,6 +25,7 @@ type Status = { declaradoEm: Date | null; confirmadoEm: Date | null }
 
 async function lerStatus(): Promise<Map<number, Status> | null> {
   try {
+    await garantirTabelaTcc()
     const linhas = await prisma.tccEnvio.findMany()
     return new Map(linhas.map((l) => [l.dupla, l]))
   } catch {
