@@ -17,7 +17,7 @@ export type AlunoTropa = {
 }
 
 const PELOTOES = [1, 2, 3, 4, 5, 6, 7]
-const semAcento = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+import { bate } from "@/lib/busca"
 const inputStyle: React.CSSProperties = { width: "100%", padding: "9px 11px", borderRadius: 8, border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 14 }
 const cartao: React.CSSProperties = { background: "#fff", borderRadius: 14, border: "1px solid rgba(58,74,58,0.14)", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }
 
@@ -36,10 +36,10 @@ export function TropaClient({ alunos, isAdmin, minhaMatricula }: { alunos: Aluno
   }, [alunos])
 
   const lista = useMemo(() => {
-    const termo = semAcento(busca.trim())
+    const termo = busca.trim()
     return alunos
       .filter(a => termo ? true : filtro === "todos" ? true : filtro === "sem" ? a.pelotao == null : a.pelotao === filtro)
-      .filter(a => !termo || semAcento(`${a.matricula} ${a.nomeGuerra} ${a.nomeCompleto}`).includes(termo))
+      .filter(a => bate(`${a.matricula} ${a.nomeGuerra} ${a.nomeCompleto}`, termo))
       .sort((a, b) => (a.pelotao ?? 99) - (b.pelotao ?? 99) || a.matricula - b.matricula)
   }, [alunos, filtro, busca])
 

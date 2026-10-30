@@ -17,7 +17,7 @@ type ApostilaMateria = { sigla: string; parts: PdfPart[] }
 type GaivotaMsg = { id: string; matricula: number; nomeGuerra: string; texto: string; createdAt: string }
 type Disc = { sigla: string; nome: string; status: string; fase: Fase; ordem: number }
 type Filtro = "todas" | Fase
-const semAcento = (t: string) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+import { semAcento, bate } from "@/lib/busca"
 const PENDENTE_A_DEFINIR = new Set(PROVAS_A_DEFINIR.map(p => p.sigla))
 const SUB_FASE: Record<Fase, string> = {
   concluida: "da 1ª que terminou à mais recente",
@@ -352,7 +352,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
       ) : (
         <>
           {/* Busca + filtro por situação (pelo QTS da Turma 13) */}
-          <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="🔍 Buscar matéria por sigla ou nome"
+          <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="🔍 Buscar matéria ou assunto do memento"
             style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15, marginBottom: 10 }} />
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 18 }}>
             {([["todas", "Todas"], ...FASES] as const).map(([f, rot]) => {
@@ -375,7 +375,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
                 fase: f, rot,
                 itens: materias
                   .filter(([sg]) => faseDe(sg) === f)
-                  .filter(([sg, e]) => !termo || semAcento(`${sg} ${e.nome}`).includes(termo))
+                  .filter(([sg, e]) => bate(`${sg} ${e.nome} ${e.items.map(i => i.titulo).join(" ")}`, termo))
                   .sort(([a], [b]) => (faseMap.get(a)?.ordem ?? -1000) - (faseMap.get(b)?.ordem ?? -1000) || a.localeCompare(b)),
               }))
               .filter(sec => sec.itens.length > 0)
@@ -826,7 +826,7 @@ function TutorIA({ materia }: { materia: string }) {
   )
 }
 
-// ── Admin: importar memento + flashcards ──
+// ── Admin: importar memento ──
 function Admin({ disciplinas, conteudoMaterias, onImport }: { disciplinas: Disc[]; conteudoMaterias: ContMat[]; onImport: () => void }) {
   const [json, setJson] = useState("")
   const [msg, setMsg] = useState("")
@@ -840,7 +840,7 @@ function Admin({ disciplinas, conteudoMaterias, onImport }: { disciplinas: Disc[
 
   async function limpar() {
     if (!limparMat) return
-    const escopo = limparMod === "__all__" ? "TODO o conteúdo (mementos e cards)" : `o conteúdo do ${moduloLabel(limparMod)}`
+    const escopo = limparMod === "__all__" ? "TODOS os mementos" : `o memento do ${moduloLabel(limparMod)}`
     if (!confirm(`Excluir ${escopo} de ${limparMat}? Ação irreversível.`)) return
     setLimpando(true); setLimparMsg("")
     let url = `/api/mementos/import?materia=${encodeURIComponent(limparMat)}`
@@ -849,7 +849,7 @@ function Admin({ disciplinas, conteudoMaterias, onImport }: { disciplinas: Disc[
     const j = await res.json()
     setLimpando(false)
     if (!res.ok) return setLimparMsg("✗ " + (j.error || "Erro"))
-    setLimparMsg(`✓ ${j.mementos} mementos e ${j.flashcards} cards removidos.`)
+    setLimparMsg(`✓ ${j.mementos} mementos removidos.`)
     setLimparMat(""); setLimparMod("__all__"); onImport()
   }
 
@@ -861,22 +861,19 @@ function Admin({ disciplinas, conteudoMaterias, onImport }: { disciplinas: Disc[
     const j = await res.json()
     setEnviando(false)
     if (!res.ok) return setMsg("✗ " + (j.error || "Erro"))
-    setMsg(`✓ ${j.materia}${j.modulo ? "/" + j.modulo : ""}: ${j.mementoMsg || "sem memento"}; cards ${j.criadosCards} criados, ${j.atualizadosCards} atualizados.${j.erros?.length ? " Avisos: " + j.erros.join("; ") : ""}`)
+    setMsg(`✓ ${j.materia}${j.modulo ? "/" + j.modulo : ""}: ${j.mementoMsg}.`)
     setJson(""); onImport()
   }
 
   return (
     <div>
       <p style={{ fontSize: 14, color: "var(--ink-60)", lineHeight: 1.5 }}>
-        Cole o <strong>pacote JSON</strong> (memento em Markdown + flashcards). A matéria deve existir entre as {disciplinas.length} disciplinas.
+        Cole o <strong>pacote JSON</strong> (memento em Markdown). A matéria deve existir entre as {disciplinas.length} disciplinas.
       </p>
       <pre style={{ ...cardBox, fontSize: 12, overflowX: "auto", color: "var(--ink-60)" }}>{`{
   "materia": "LPMO", "modulo": "1",
   "memento": { "titulo": "Lei 14.751/23 — Fundamentos",
-    "conteudoMd": "# Capítulo 1\\n\\nTexto **em negrito**...\\n\\n| A | B |\\n|---|---|\\n| x | y |\\n\\n> ⚠ Pegadinha de prova\\n> 🔑 palavra-chave" },
-  "flashcards": [
-    { "frente": "Base constitucional da Lei 14.751/23?", "verso": "Art. 22, XXI da CF/88 — competência privativa da União." }
-  ]
+    "conteudoMd": "# Capítulo 1\\n\\nTexto **em negrito**...\\n\\n| A | B |\\n|---|---|\\n| x | y |\\n\\n> ⚠ Pegadinha de prova\\n> 🔑 palavra-chave" }
 }`}</pre>
       <textarea value={json} onChange={e => setJson(e.target.value)} rows={10} placeholder="Cole o JSON aqui…"
         style={{ ...inputStyle, fontFamily: "monospace", fontSize: 13, marginTop: 8 }} />
@@ -888,7 +885,7 @@ function Admin({ disciplinas, conteudoMaterias, onImport }: { disciplinas: Disc[
       {/* Limpar matéria */}
       <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--red)", marginTop: 32, marginBottom: 8 }}>Limpar matéria</h2>
       <p style={{ fontSize: 13.5, color: "var(--ink-60)", lineHeight: 1.5, marginTop: 0 }}>
-        Remove os mementos e flashcards de uma matéria (ou de um módulo específico) — útil para recadastrar do zero. Ação irreversível.
+        Remove os mementos de uma matéria (ou de um módulo específico) — útil para recadastrar do zero. Ação irreversível.
       </p>
       {conteudoMaterias.length === 0 ? <p style={{ color: "var(--ink-60)", fontSize: 13.5 }}>Nenhuma matéria com conteúdo.</p> : (
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "end" }}>

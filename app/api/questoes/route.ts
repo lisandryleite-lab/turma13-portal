@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import type { Prisma } from "@/lib/generated/prisma/client"
+import { Prisma } from "@/lib/generated/prisma/client"
+import { palavrasDe } from "@/lib/busca"
 import { rotaApi, naoAutorizado } from "@/lib/api"
 
 /** Fisher-Yates. `sort(() => Math.random() - 0.5)` não embaralha uniforme. */
@@ -14,6 +15,22 @@ function embaralhar<T>(itens: T[]): T[] {
   return a
 }
 
+// Busca sem acento: o Postgres compara "deserção" com "desercao" só se os dois
+// lados perderem o acento — translate() é nativo, não precisa da extensão unaccent.
+const COM_ACENTO = "áàâãäéèêëíìîïóòôõöúùûüç"
+const SEM_ACENTO = "aaaaaeeeeiiiiooooouuuuc"
+
+/** Ids das questões cujo enunciado/contexto tem todas as palavras de `q`. */
+async function idsPorTexto(q: string, materia: string): Promise<string[]> {
+  const palavras = palavrasDe(q).slice(0, 8)
+  const texto = Prisma.sql`translate(lower(coalesce("enunciado", '') || ' ' || coalesce("contexto", '')), ${COM_ACENTO}, ${SEM_ACENTO})`
+  // % e _ digitados pelo aluno são literais, não curingas do LIKE
+  const conds = palavras.map(p => Prisma.sql`${texto} LIKE ${"%" + p.replace(/[\\%_]/g, "\\$&") + "%"}`)
+  if (materia) conds.push(Prisma.sql`"materia" = ${materia}`)
+  const linhas = await prisma.$queryRaw<{ id: string }[]>`SELECT "id" FROM "Questao" WHERE ${Prisma.join(conds, " AND ")}`
+  return linhas.map(l => l.id)
+}
+
 // Sem matéria escolhida, a busca percorre o banco inteiro: limita o lote.
 const LIMITE_SEM_MATERIA = 300
 
@@ -22,7 +39,7 @@ const LIMITE_SEM_MATERIA = 300
  *   materia  — sigla (opcional; vazio = todas as disciplinas)
  *   modulo   — assunto; pode repetir (?modulo=1&modulo=3). "" = sem módulo
  *   tipo     — certo_errado | multipla | dissertativa  (objetivas=1: tudo menos dissertativa)
- *   q        — texto no enunciado/contexto
+ *   q        — palavras no enunciado/contexto (sem acento, em qualquer ordem)
  *   status   — nao_respondidas | respondidas | acertei | errei (pela última resposta do aluno)
  *   excluirRespondidas=1 — tira as que o aluno já respondeu (prevalece sobre `status`)
  *   count=1  — devolve só { total }
@@ -36,10 +53,7 @@ async function filtro(sp: URLSearchParams, userId: string): Promise<Prisma.Quest
   else if (sp.get("objetivas") === "1") where.tipo = { not: "dissertativa" }   // simulado
 
   const q = (sp.get("q") || "").trim()
-  if (q) where.OR = [
-    { enunciado: { contains: q, mode: "insensitive" } },
-    { contexto: { contains: q, mode: "insensitive" } },
-  ]
+  if (palavrasDe(q).length > 0) where.AND = [{ id: { in: await idsPorTexto(q, materia) } }]
 
   const status = sp.get("excluirRespondidas") === "1" ? "nao_respondidas" : sp.get("status") || ""
   if (status === "nao_respondidas") where.respostas = { none: { userId } }

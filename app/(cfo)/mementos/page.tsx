@@ -22,13 +22,11 @@ export default async function MementosPage({ searchParams }: {
   const { materia } = await searchParams
   const materiaInicial = (Array.isArray(materia) ? materia[0] : materia)?.toUpperCase() || null
 
-  const [mementos, fcGroups, disciplinasBrutas, midias, qtss] = await Promise.all([
+  const [mementos, disciplinasBrutas, midias, qtss] = await Promise.all([
     prisma.memento.findMany({
       select: { id: true, materia: true, modulo: true, titulo: true },
       orderBy: [{ materia: "asc" }, { modulo: "asc" }, { ordem: "asc" }],
     }),
-    // mantido apenas para a área "Limpar matéria" do admin (conteudoMaterias)
-    prisma.flashcard.groupBy({ by: ["materia", "modulo"], _count: { _all: true } }),
     prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true, cargaMinistrada: true, cargaTotal: true }, orderBy: { sigla: "asc" } }),
     // vídeo / áudio / mapa mental por matéria (links do Drive ou YouTube)
     // (tolerante: se a tabela ainda não existir no banco — antes do db:push — segue sem itens)
@@ -109,10 +107,9 @@ export default async function MementosPage({ searchParams }: {
   )
   const todasMidias = [...midiasLocais, ...midiasDrive, ...midias].sort((a, b) => a.materia.localeCompare(b.materia) || a.tipo.localeCompare(b.tipo) || a.ordem - b.ordem)
 
-  // matérias com conteúdo (mementos + flashcards) — para a área de limpar
+  // matérias com memento — para a área de limpar
   const contMap = new Map<string, Set<string>>()
   for (const m of mementos) (contMap.get(m.materia) || contMap.set(m.materia, new Set()).get(m.materia)!).add(m.modulo)
-  for (const g of fcGroups) (contMap.get(g.materia) || contMap.set(g.materia, new Set()).get(g.materia)!).add(g.modulo)
   const conteudoMaterias = [...contMap.entries()]
     .map(([sigla, mods]) => ({ sigla, nome: nomeMap.get(sigla) || sigla, modulos: [...mods].sort() }))
     .sort((a, b) => a.sigla.localeCompare(b.sigla))

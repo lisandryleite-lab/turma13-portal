@@ -22,7 +22,7 @@ const DIM = new Set<IdAIS>(AIS_PE.filter(a => a.diretoria === "DIM").map(a => a.
 const MUNIS_DA_AIS = MUNICIPIOS_MAPA.reduce((m, x) => m.set(x.ais, [...(m.get(x.ais) ?? []), x.nome]), new Map<IdAIS, string[]>())
 const NOMES_MUNI = MUNICIPIOS_MAPA.map(m => m.nome)
 const NEUTRO = "#e7e3d8"
-const semAcento = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+import { semAcento } from "@/lib/busca"
 const numeroRotulo = (id: IdAIS) => id === "1-5" ? "1–5" : id
 const aisDaUnidade = (u: UnidadeMapa) => MUNICIPIOS_MAPA.find(m => m.nome === u.municipio)!.ais
 const dentro = (u: UnidadeMapa, [x, y, w, h]: [number, number, number, number]) => u.x >= x && u.x <= x + w && u.y >= y && u.y <= y + h

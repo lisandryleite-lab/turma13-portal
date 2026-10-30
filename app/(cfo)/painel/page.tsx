@@ -24,26 +24,23 @@ export default async function PainelPage() {
   await logAcesso(session.user as any, "painel-admin", "acessou o painel administrativo")
 
   const [
-    alunos, qCount, mCount, fCount, prefCount, qPorMat, fPorMat, mPorMat, logs,
+    alunos, qCount, mCount, prefCount, qPorMat, mPorMat, logs,
     acessosTotal,
   ] = await Promise.all([
     prisma.user.count({ where: { turma: 3 } }),
     prisma.questao.count(),
     prisma.memento.count(),
-    prisma.flashcard.count(),
     prisma.preferenciaOPM.count(),
     prisma.questao.groupBy({ by: ["materia"], _count: { materia: true } }),
-    prisma.flashcard.groupBy({ by: ["materia"], _count: { materia: true } }),
     prisma.memento.groupBy({ by: ["materia"], _count: { materia: true } }),
     prisma.logAcesso.findMany({ where: { area: { not: "login" } }, orderBy: { timestamp: "desc" }, take: 200 }),
     prisma.logAcesso.count({ where: { area: "login" } }),
   ])
 
-  const mats = new Set<string>([...qPorMat, ...fPorMat, ...mPorMat].map(x => x.materia))
+  const mats = new Set<string>([...qPorMat, ...mPorMat].map(x => x.materia))
   const qMap = new Map(qPorMat.map(x => [x.materia, x._count.materia]))
-  const fMap = new Map(fPorMat.map(x => [x.materia, x._count.materia]))
   const mMap = new Map(mPorMat.map(x => [x.materia, x._count.materia]))
-  const conteudo = [...mats].sort().map(m => ({ sigla: m, q: qMap.get(m) || 0, f: fMap.get(m) || 0, me: mMap.get(m) || 0 }))
+  const conteudo = [...mats].sort().map(m => ({ sigla: m, q: qMap.get(m) || 0, me: mMap.get(m) || 0 }))
 
   const stat = (label: string, valor: number | string) => (
     <div style={{ padding: "14px 12px", borderRadius: 10, background: "var(--surface)", textAlign: "center" }}>
@@ -62,7 +59,6 @@ export default async function PainelPage() {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10 }}>
         {stat("Alunos T3", alunos)}
         {stat("Questões", qCount)}
-        {stat("Flashcards", fCount)}
         {stat("Mementos", mCount)}
         {stat("Pref. OPM", prefCount)}
       </div>
@@ -85,7 +81,6 @@ export default async function PainelPage() {
               <tr style={{ background: "var(--olive)", color: "var(--canvas)" }}>
                 <th style={{ textAlign: "left", padding: "8px 10px" }}>Matéria</th>
                 <th style={{ padding: "8px 10px" }}>Questões</th>
-                <th style={{ padding: "8px 10px" }}>Flashcards</th>
                 <th style={{ padding: "8px 10px" }}>Mementos</th>
               </tr>
             </thead>
@@ -94,7 +89,6 @@ export default async function PainelPage() {
                 <tr key={c.sigla} style={{ background: i % 2 ? "#f4f1e8" : "#fff" }}>
                   <td style={{ padding: "7px 10px", fontWeight: 600 }}>{c.sigla}</td>
                   <td style={{ padding: "7px 10px", textAlign: "center" }}>{c.q}</td>
-                  <td style={{ padding: "7px 10px", textAlign: "center" }}>{c.f}</td>
                   <td style={{ padding: "7px 10px", textAlign: "center" }}>{c.me}</td>
                 </tr>
               ))}

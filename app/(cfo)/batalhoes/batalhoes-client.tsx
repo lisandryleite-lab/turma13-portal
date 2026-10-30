@@ -28,7 +28,7 @@ export const disputa = (r: Rem | undefined) => {
 }
 const CRIME = criminalidade.porBatalhao as Record<string, Crime>
 
-const semAcento = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+import { bate } from "@/lib/busca"
 const numero = (s: string) => Number(s.match(/\d+/)?.[0] ?? 999)
 const pct = (n: number, d: number) => (d ? Math.round((n / d) * 1000) / 10 : 0)
 const cartao: React.CSSProperties = { background: "#fff", borderRadius: 16, border: "1px solid rgba(58,74,58,0.12)", padding: 18 }
@@ -113,8 +113,7 @@ export function BatalhoesClient({ cards, respondentes, respondentesDaCia, totalA
   }, [cards, ordem])
   const exibidas = verTodos ? linhas : linhas.slice(0, VISIVEIS)
   const emOrdem = useMemo(() => {
-    const t = semAcento(busca.trim())
-    return cards.filter(c => !t || semAcento(`${c.sigla} ${c.nome} ${c.sede} ${c.municipio}`).includes(t)).sort((a, b) => numero(a.sigla) - numero(b.sigla))
+    return cards.filter(c => bate(`${c.sigla} ${c.nome} ${c.sede} ${c.municipio}`, busca)).sort((a, b) => numero(a.sigla) - numero(b.sigla))
   }, [cards, busca])
   const pendPorPel = useMemo(() => {
     const g = new Map<string, Pendente[]>()

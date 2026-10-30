@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { bate } from "@/lib/busca"
 
 // ── tipos ────────────────────────────────────────────────────────────────────────
 type Aluno = {
@@ -94,7 +95,7 @@ function AbaAlunos({ alunos: inicial }: { alunos: Aluno[] }) {
     setAlunos(p => p.filter(a => a.id !== id))
   }
 
-  const filtrados = alunos.filter(a => !search || a.nomeGuerra.toLowerCase().includes(search.toLowerCase()) || String(a.matricula).includes(search))
+  const filtrados = alunos.filter(a => bate(`${a.matricula} ${a.nomeGuerra}`, search))
   const inp = (label: string, k: keyof typeof CAMPO_VAZIO, type="text", placeholder="") => (
     <div>
       <label style={{ fontSize: 11, color: "#6b7a99", display: "block", marginBottom: 3 }}>{label}</label>

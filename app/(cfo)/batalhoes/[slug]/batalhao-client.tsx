@@ -20,14 +20,13 @@ const inputStyle: React.CSSProperties = { width: "100%", padding: "9px 11px", bo
 const tituloGrupo: React.CSSProperties = { margin: "0 0 8px", fontSize: 13, color: "var(--gold)", textTransform: "uppercase", letterSpacing: "0.06em" }
 const semInfo: React.CSSProperties = { margin: 0, fontSize: 13.5, color: "var(--ink-60)", fontStyle: "italic" }
 const botao = (bg: string, cor: string): React.CSSProperties => ({ padding: "9px 14px", borderRadius: 10, background: bg, color: cor, fontWeight: 700, textDecoration: "none", fontSize: 13.5, textAlign: "center" })
-const semAcento = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+import { bate } from "@/lib/busca"
 const rotuloTipo = (t: string) => TIPOS_CONTRIBUICAO.find(x => x.id === t)?.rotulo ?? "💡 Dica"
 
 function ListaPessoas({ pessoas, minhaMatricula, rotuloOutra }: { pessoas: Pessoa[]; minhaMatricula: number; rotuloOutra: string }) {
   const [busca, setBusca] = useState("")
   const lista = useMemo(() => {
-    const t = semAcento(busca.trim())
-    return pessoas.filter(p => !t || semAcento(`${p.mat} ${p.nome}`).includes(t)).sort((a, b) => a.mat - b.mat)
+    return pessoas.filter(p => bate(`${p.mat} ${p.nome}`, busca)).sort((a, b) => a.mat - b.mat)
   }, [pessoas, busca])
   if (pessoas.length === 0) return <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-60)" }}>Ninguém por enquanto.</p>
   return (

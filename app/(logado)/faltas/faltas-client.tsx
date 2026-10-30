@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import { bate } from "@/lib/busca"
 
 type Disciplina = {
   sigla: string; nome: string; modulo: string
@@ -83,8 +84,7 @@ export function FaltasClient({ disciplinas }: { disciplinas: Disciplina[] }) {
         const lim = limiteFaltas(d.cargaTotal)
         if (!(lim > 0 && (faltas[d.sigla] || 0) >= lim)) return false
       }
-      if (!termo) return true
-      return d.sigla.toLowerCase().includes(termo) || d.nome.toLowerCase().includes(termo)
+      return bate(`${d.sigla} ${d.nome}`, termo)
     })
   }, [disciplinas, busca, soRisco, faltas])
 

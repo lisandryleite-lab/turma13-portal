@@ -15,13 +15,16 @@ const inputStyle: React.CSSProperties = {
   border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15,
 }
 
+// Em andamento primeiro: é onde as notas novas costumam cair.
 const GRUPOS_DISC = [
-  ["concluida", "Concluídas", "da 1ª que terminou à mais recente, pelo QTS da Turma 13"],
-  ["andamento", "Em andamento", "pela aula mais recente no QTS"],
-  ["inicio", "Pendentes", "ainda não começaram"],
+  ["andamento", "Em andamento"],
+  ["concluida", "Concluídas"],
+  ["inicio", "Pendentes"],
 ] as const
 
-const semAcento = (t: string) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+const AVALIACOES = ["P1", "P2", "P3", "AF"] as const
+
+import { semAcento, bate } from "@/lib/busca"
 
 function toVerif(notas: Nota[]): Verificacao[] {
   return notas.map(n => ({ disciplina: n.disciplina, avaliacao: n.avaliacao, nota: n.valor, peso: 1, ehAF: n.ehAF, apto: n.apto }))
@@ -61,6 +64,7 @@ export function RankingClient({
   // form lançar
   const [disc, setDisc] = useState("")
   const [busca, setBusca] = useState("")
+  const [buscaDisc, setBuscaDisc] = useState("")
   const [aval, setAval] = useState("P1")
   const [valor, setValor] = useState("")
   const [ehAF, setEhAF] = useState(false)
@@ -95,9 +99,16 @@ export function RankingClient({
       if (i >= 0) { const c = [...prev]; c[i] = nova; return c }
       return [...prev, nova].sort((a, b) => a.disciplina.localeCompare(b.disciplina))
     })
-    setValor(""); setEhAF(false); setApto(false)
+    setValor(""); setEhAF(false); setApto(false); setAval("P1")
     router.refresh()
   }
+
+  // Tocar numa nota lançada traz ela de volta ao formulário para corrigir.
+  function editar(n: Nota) {
+    setDisc(n.disciplina); setAval(n.avaliacao); setValor(String(n.valor)); setEhAF(n.ehAF); setApto(n.apto); setErro("")
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+  function escolherAval(a: string) { setAval(a); setEhAF(a === "AF") }
 
   async function excluir(id: string) {
     if (!confirm("Excluir esta nota?")) return
@@ -145,163 +156,206 @@ export function RankingClient({
         ))}
       </div>
 
-      <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginTop: 20, padding: "12px 14px", borderRadius: 10, background: "#fbf3e3", border: "1px solid var(--gold)" }}>
-        <span aria-hidden style={{ fontSize: 18 }}>⚠️</span>
-        <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink)" }}>
-          <strong>Simulação não-oficial.</strong> Notas informadas pelo próprio aluno. Cálculo pela fórmula do CFO
-          (MGC = MFIC×6,5 + NFDC×2,5 + TCC×1, ÷10). Só você vê as suas notas.
-        </p>
+      <div style={{ margin: "14px 0 0", fontSize: 12.5, color: "var(--ink-60)" }}>
+        Simulação não-oficial · só você vê as suas notas ·{" "}
+        <details style={{ display: "inline" }}>
+          <summary style={{ display: "inline", cursor: "pointer", color: "var(--olive)", fontWeight: 600 }}>como é calculado</summary>
+          <span style={{ display: "block", marginTop: 4 }}>MGC = (MFIC×6,5 + NFDC×2,5 + TCC×1) ÷ 10, pela fórmula do CFO.</span>
+        </details>
       </div>
 
-      {aba === "lancar" && (
-        <>
-          <form onSubmit={salvar} style={{ marginTop: 20, padding: 16, borderRadius: 12, background: "var(--surface)", display: "grid", gridTemplateColumns: "1fr 90px 90px", gap: 12, alignItems: "end" }}>
-            <div style={{ gridColumn: "1 / -1", display: "flex", flexDirection: "column", gap: 14 }}>
-              {GRUPOS_DISC.map(([fase, rotulo, sub]) => {
-                const lista = disciplinas.filter(d => d.fase === fase)
-                  .sort((a, b) => a.ordem - b.ordem || a.sigla.localeCompare(b.sigla))
-                if (lista.length === 0) return null
-                return (
-                  <div key={fase}>
-                    <p style={{ margin: "0 0 6px", fontSize: 13, fontWeight: 700, color: "var(--olive)" }}>
-                      {rotulo} ({lista.length}) <span style={{ fontWeight: 400, color: "var(--ink-60)", fontSize: 12 }}>· {sub}</span>
-                    </p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                      {lista.map(d => {
-                        const sel = disc === d.sigla
-                        const temNota = grupos.has(d.sigla)
-                        return (
-                          <button key={d.sigla} type="button" title={d.nome} onClick={() => setDisc(d.sigla)}
-                            style={{
-                              padding: "6px 10px", borderRadius: 999, fontSize: 13, fontWeight: 600, cursor: "pointer",
-                              border: sel ? "1px solid var(--olive)" : "1px solid rgba(58,74,58,0.25)",
-                              background: sel ? "var(--olive)" : temNota ? "#eef2ea" : "#fff",
-                              color: sel ? "var(--canvas)" : "var(--ink)",
-                            }}>
-                            {temNota && !sel ? "✓ " : ""}{d.sigla}
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-              })}
-              <p style={{ margin: 0, fontSize: 12, color: "var(--ink-60)" }}>✓ = já tem nota lançada. Toque na sigla para escolher.</p>
-            </div>
-            <div style={{ fontSize: 13, color: "var(--ink)", fontWeight: 600 }}>Disciplina
-              <div style={{ ...inputStyle, marginTop: 4, background: disc ? "#fff" : "transparent", color: disc ? "var(--ink)" : "var(--ink-60)", fontWeight: disc ? 600 : 400, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                {disc ? `${disc} — ${nomeDisc(disc)}` : "toque numa sigla acima"}
-              </div>
-            </div>
-            <label style={{ fontSize: 13, color: "var(--ink)", fontWeight: 600 }}>Avaliação
-              <input style={{ ...inputStyle, marginTop: 4 }} value={aval} onChange={e => setAval(e.target.value)} placeholder="P1" />
-            </label>
-            <label style={{ fontSize: 13, color: "var(--ink)", fontWeight: 600 }}>Nota
-              <input style={{ ...inputStyle, marginTop: 4 }} value={valor} onChange={e => setValor(e.target.value)} placeholder="0–10" inputMode="decimal" />
-            </label>
-            <div style={{ gridColumn: "1 / -1", display: "flex", gap: 18, fontSize: 13.5, color: "var(--ink)" }}>
-              <label style={{ display: "flex", gap: 6, alignItems: "center" }}><input type="checkbox" checked={ehAF} onChange={e => setEhAF(e.target.checked)} /> Avaliação Final (AF)</label>
-              <label style={{ display: "flex", gap: 6, alignItems: "center" }}><input type="checkbox" checked={apto} onChange={e => setApto(e.target.checked)} /> Disciplina de conceito (APTO/INAPTO)</label>
-            </div>
-            <button type="submit" disabled={salvando} style={{ gridColumn: "1 / -1", padding: "11px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontSize: 15, fontWeight: 600, cursor: salvando ? "default" : "pointer" }}>
-              {salvando ? "Salvando…" : "Salvar nota"}
+      {aba === "lancar" && (() => {
+        const termoDisc = semAcento(buscaDisc.trim())
+        const ordenadas = (fase: string) => disciplinas.filter(d => d.fase === fase)
+          .sort((a, b) => a.ordem - b.ordem || a.sigla.localeCompare(b.sigla))
+        const chip = (d: Disc) => {
+          const sel = disc === d.sigla
+          const temNota = grupos.has(d.sigla)
+          return (
+            <button key={d.sigla} type="button" title={d.nome} onClick={() => { setDisc(d.sigla); setErro("") }}
+              style={{
+                padding: "5px 10px", borderRadius: 999, fontSize: 13, fontWeight: 600, cursor: "pointer",
+                border: sel ? "1px solid var(--olive)" : "1px solid rgba(58,74,58,0.2)",
+                background: sel ? "var(--olive)" : temNota ? "#eef2ea" : "#fff",
+                color: sel ? "var(--canvas)" : "var(--ink)",
+              }}>
+              {temNota && !sel ? "✓ " : ""}{d.sigla}
             </button>
-            {erro && <p style={{ gridColumn: "1 / -1", margin: 0, color: "var(--red)", fontSize: 13.5 }}>✗ {erro}</p>}
-          </form>
+          )
+        }
+        const resultados = termoDisc
+          ? disciplinas.filter(d => bate(`${d.sigla} ${d.nome}`, termoDisc)).sort((a, b) => a.sigla.localeCompare(b.sigla))
+          : []
+        const avalPadrao = (AVALIACOES as readonly string[]).includes(aval)
+        const comNotas = notas.filter(n => n.disciplina !== "TCC")
 
-          {/* TCC e Nota Disciplinar */}
-          <div style={{ marginTop: 14 }}>
-            <NfdcTccEditor nfdc={nfdcState} tcc={tccState} tccDefinido={tccReal != null} onSaveNfdc={salvarNfdc} onSaveTcc={salvarTcc} />
-          </div>
-
-          <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: 24, marginBottom: 10, gap: 12 }}>
-            <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", margin: 0 }}>Minhas notas</h2>
-            {notas.filter(n => n.disciplina !== "TCC").length > 0 && (
-              <button onClick={() => { setBusca(""); setTimeout(() => window.print(), 50) }}
-                style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 13.5, cursor: "pointer" }}>
-                🖨 Imprimir notas
-              </button>
-            )}
-          </div>
-          {notas.some(n => n.disciplina !== "TCC") && (
-            <div className="no-print" style={{ marginBottom: 14 }}>
-              <input style={inputStyle} value={busca} onChange={e => setBusca(e.target.value)}
-                placeholder="🔍 Buscar por sigla ou nome (ex.: AP, tiro, pessoas)" />
+        return (
+          <>
+            {/* 1 · disciplina */}
+            <div style={{ marginTop: 20 }}>
+              <input style={{ ...inputStyle, fontSize: 14 }} value={buscaDisc} onChange={e => setBuscaDisc(e.target.value)}
+                placeholder="Buscar disciplina (sigla ou nome)" aria-label="Buscar disciplina" />
+              {termoDisc ? (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 10 }}>
+                  {resultados.length > 0 ? resultados.map(chip)
+                    : <span style={{ fontSize: 13, color: "var(--ink-60)" }}>Nenhuma disciplina com “{buscaDisc}”.</span>}
+                </div>
+              ) : (
+                <div style={{ marginTop: 6 }}>
+                  {GRUPOS_DISC.map(([fase, rotulo]) => {
+                    const lista = ordenadas(fase)
+                    if (lista.length === 0) return null
+                    return (
+                      <details key={fase} open={fase === "andamento"} style={{ borderBottom: "1px solid rgba(58,74,58,0.1)", padding: "8px 0" }}>
+                        <summary style={{ cursor: "pointer", fontSize: 13, fontWeight: 700, color: "var(--olive)" }}>
+                          {rotulo} <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>({lista.length})</span>
+                        </summary>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>{lista.map(chip)}</div>
+                      </details>
+                    )
+                  })}
+                </div>
+              )}
             </div>
-          )}
-          {notas.filter(n => n.disciplina !== "TCC").length === 0 ? <p style={{ color: "var(--ink-60)" }}>Nenhuma nota de disciplina lançada ainda.</p> : (
-            <div className="notas-print">
-              {/* Cabeçalho que só aparece na impressão */}
-              <div className="print-only" style={{ marginBottom: 14 }}>
-                <h1 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.5rem", color: "#000", margin: "0 0 2px", borderBottom: "2px solid #000", paddingBottom: 6 }}>
-                  Boletim de Notas — {nomeGuerra}
-                </h1>
-                <p style={{ margin: "6px 0 0", fontSize: 12.5, color: "#333" }}>
-                  Portal CFO PM 2026 · emitido em {hoje} · <em>simulação não-oficial (notas informadas pelo aluno)</em>
-                </p>
+
+            {/* 2 · avaliação + nota */}
+            <form onSubmit={salvar} style={{ marginTop: 14, padding: 14, borderRadius: 12, background: "var(--surface)" }}>
+              <div style={{ fontSize: 14, fontWeight: 600, color: disc ? "var(--olive)" : "var(--ink-60)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {disc ? `${disc} — ${nomeDisc(disc)}` : "Escolha uma disciplina acima"}
               </div>
-              {(() => {
-                // Mesma ordem do seletor: Concluídas (ordem de término no QTS) →
-                // Em andamento → Pendentes; a busca filtra por sigla ou nome.
-                const termo = semAcento(busca.trim())
-                const info = new Map(disciplinas.map(d => [d.sigla, d]))
-                const lista = [...grupos.entries()]
-                  .filter(([d]) => d !== "TCC")
-                  .filter(([d]) => !termo || semAcento(`${d} ${nomeDisc(d)}`).includes(termo))
-                const secoes = [...GRUPOS_DISC.map(([fase, rotulo]) => [fase, rotulo] as const), ["outras", "Outras"] as const]
-                  .map(([fase, rotulo]) => ({
-                    rotulo,
-                    itens: lista.filter(([d]) => (info.get(d)?.fase ?? "outras") === fase)
-                      .sort(([a], [b]) => (info.get(a)?.ordem ?? 0) - (info.get(b)?.ordem ?? 0) || a.localeCompare(b)),
-                  }))
-                  .filter(sec => sec.itens.length > 0)
-                if (secoes.length === 0) return <p style={{ color: "var(--ink-60)" }}>Nenhuma disciplina com nota bate com “{busca}”.</p>
-                return secoes.map(sec => (
-                  <section key={sec.rotulo} style={{ marginBottom: 18 }}>
-                    <h3 style={{ margin: "0 0 8px", fontSize: 13, fontWeight: 700, color: "var(--olive)", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                      {sec.rotulo} <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>({sec.itens.length})</span>
-                    </h3>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 10 }}>
+                {AVALIACOES.map(a => (
+                  <button key={a} type="button" onClick={() => escolherAval(a)}
+                    style={{ padding: "6px 12px", borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: "pointer",
+                      border: "1px solid rgba(58,74,58,0.2)",
+                      background: aval === a ? "var(--olive)" : "#fff", color: aval === a ? "var(--canvas)" : "var(--ink)" }}>
+                    {a}
+                  </button>
+                ))}
+                {!avalPadrao && (
+                  <span style={{ padding: "6px 12px", borderRadius: 8, fontSize: 13, fontWeight: 600, background: "var(--olive)", color: "var(--canvas)" }}>{aval}</span>
+                )}
+              </div>
+              <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+                <input style={{ ...inputStyle, flex: 1, minWidth: 0 }} value={valor} onChange={e => setValor(e.target.value)}
+                  placeholder="Nota (0–10)" inputMode="decimal" aria-label="Nota" />
+                <button type="submit" disabled={salvando || !disc}
+                  style={{ padding: "10px 20px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontSize: 15, fontWeight: 600,
+                    cursor: salvando || !disc ? "default" : "pointer", opacity: disc ? 1 : 0.5 }}>
+                  {salvando ? "Salvando…" : "Salvar"}
+                </button>
+              </div>
+              <label style={{ display: "flex", gap: 6, alignItems: "center", marginTop: 10, fontSize: 12.5, color: "var(--ink-60)" }}>
+                <input type="checkbox" checked={apto} onChange={e => setApto(e.target.checked)} /> disciplina de conceito (APTO/INAPTO)
+              </label>
+              {erro && <p style={{ margin: "8px 0 0", color: "var(--red)", fontSize: 13.5 }}>✗ {erro}</p>}
+            </form>
+
+            {/* NFDC e TCC — recolhido */}
+            <details style={{ marginTop: 10, padding: "10px 14px", borderRadius: 12, background: "var(--surface)" }}>
+              <summary style={{ cursor: "pointer", fontSize: 13.5, fontWeight: 600, color: "var(--olive)" }}>
+                NFDC {nfdcState.toFixed(1)} · TCC {tccState.toFixed(1)}{tccReal == null ? "*" : ""}
+                <span style={{ fontWeight: 400, color: "var(--ink-60)" }}> — ajustar</span>
+              </summary>
+              <div style={{ marginTop: 10 }}>
+                <NfdcTccEditor nfdc={nfdcState} tcc={tccState} tccDefinido={tccReal != null} onSaveNfdc={salvarNfdc} onSaveTcc={salvarTcc} plano />
+              </div>
+            </details>
+
+            {/* Minhas notas */}
+            <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: 28, marginBottom: 6, gap: 12 }}>
+              <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", margin: 0 }}>
+                Minhas notas {comNotas.length > 0 && <span style={{ fontSize: 13, fontWeight: 400, color: "var(--ink-60)" }}>· MFIC {mfic != null ? mfic.toFixed(3) : "—"}</span>}
+              </h2>
+              {comNotas.length > 0 && (
+                <button onClick={() => { setBusca(""); setTimeout(() => window.print(), 50) }}
+                  style={{ background: "none", border: "none", padding: 0, color: "var(--olive)", fontWeight: 600, fontSize: 13, cursor: "pointer" }}>
+                  Imprimir
+                </button>
+              )}
+            </div>
+            {grupos.size > 8 && (
+              <div className="no-print" style={{ marginBottom: 8 }}>
+                <input style={{ ...inputStyle, fontSize: 14 }} value={busca} onChange={e => setBusca(e.target.value)}
+                  placeholder="Filtrar minhas notas" aria-label="Filtrar minhas notas" />
+              </div>
+            )}
+            {comNotas.length === 0 ? (
+              <p style={{ color: "var(--ink-60)", fontSize: 14 }}>Nenhuma nota ainda. Escolha uma disciplina acima para começar.</p>
+            ) : (
+              <div className="notas-print">
+                {/* Cabeçalho que só aparece na impressão */}
+                <div className="print-only" style={{ marginBottom: 14 }}>
+                  <h1 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.5rem", color: "#000", margin: "0 0 2px", borderBottom: "2px solid #000", paddingBottom: 6 }}>
+                    Boletim de Notas — {nomeGuerra}
+                  </h1>
+                  <p style={{ margin: "6px 0 0", fontSize: 12.5, color: "#333" }}>
+                    Portal CFO PM 2026 · emitido em {hoje} · <em>simulação não-oficial (notas informadas pelo aluno)</em>
+                  </p>
+                </div>
+                {(() => {
+                  // Mesma ordem do seletor: Concluídas (ordem de término no QTS) →
+                  // Em andamento → Pendentes; a busca filtra por sigla ou nome.
+                  const termo = semAcento(busca.trim())
+                  const info = new Map(disciplinas.map(d => [d.sigla, d]))
+                  const lista = [...grupos.entries()]
+                    .filter(([d]) => d !== "TCC")
+                    .filter(([d]) => bate(`${d} ${nomeDisc(d)}`, termo))
+                  const secoes = [...GRUPOS_DISC.map(([fase, rotulo]) => [fase, rotulo] as const), ["outras", "Outras"] as const]
+                    .map(([fase, rotulo]) => ({
+                      rotulo,
+                      itens: lista.filter(([d]) => (info.get(d)?.fase ?? "outras") === fase)
+                        .sort(([a], [b]) => (info.get(a)?.ordem ?? 0) - (info.get(b)?.ordem ?? 0) || a.localeCompare(b)),
+                    }))
+                    .filter(sec => sec.itens.length > 0)
+                  if (secoes.length === 0) return <p style={{ color: "var(--ink-60)", fontSize: 14 }}>Nenhuma disciplina com nota bate com “{busca}”.</p>
+                  return secoes.map(sec => (
+                    <section key={sec.rotulo} style={{ marginTop: 14 }}>
+                      <h3 style={{ margin: "0 0 2px", fontSize: 11.5, fontWeight: 700, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                        {sec.rotulo} ({sec.itens.length})
+                      </h3>
                       {sec.itens.map(([d, ns]) => {
                         const m = md(ns)
                         const abaixo = m != null && m < 7
                         return (
-                          <div key={d} className="nota-card" style={{ ...card, borderLeft: `4px solid ${abaixo ? "var(--red)" : "var(--olive)"}` }}>
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginBottom: 8 }}>
-                              <div style={{ minWidth: 0 }}>
-                                <strong style={{ color: "var(--olive)", fontSize: 16 }}>{d}</strong>
-                                <div style={{ fontSize: 12.5, color: "var(--ink-60)" }}>{nomeDisc(d)}</div>
+                          <div key={d} className="nota-card" style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0", borderBottom: "1px solid rgba(58,74,58,0.1)" }}>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ display: "flex", alignItems: "baseline", gap: 8, minWidth: 0 }}>
+                                <strong style={{ color: "var(--olive)", fontSize: 15, flexShrink: 0 }}>{d}</strong>
+                                <span style={{ fontSize: 12.5, color: "var(--ink-60)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{nomeDisc(d)}</span>
                               </div>
-                              <span style={{ flexShrink: 0, padding: "4px 10px", borderRadius: 999, fontSize: 13, fontWeight: 700,
-                                background: abaixo ? "#fbe9e7" : "#e6ede1", color: abaixo ? "var(--red)" : "var(--olive)" }}>
-                                MD {m != null ? m.toFixed(2) : "—"}
-                              </span>
+                              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 5 }}>
+                                {ns.map(n => (
+                                  <span key={n.id} style={{ display: "inline-flex", alignItems: "center", borderRadius: 6, background: "var(--surface)", fontSize: 13 }}>
+                                    <button onClick={() => editar(n)} title="Corrigir esta nota"
+                                      style={{ background: "none", border: "none", padding: "3px 4px 3px 8px", cursor: "pointer", fontSize: 13, color: "var(--ink)" }}>
+                                      {n.avaliacao}{n.ehAF && n.avaliacao !== "AF" ? " (AF)" : ""}{n.apto ? " · conceito" : ""} <strong style={{ color: "var(--olive)" }}>{n.valor.toFixed(2)}</strong>
+                                    </button>
+                                    <button className="no-print" onClick={() => excluir(n.id)} aria-label={`Excluir ${n.avaliacao} de ${d}`} title="Excluir"
+                                      style={{ background: "none", border: "none", padding: "3px 8px 3px 2px", cursor: "pointer", fontSize: 15, lineHeight: 1, color: "var(--ink-60)" }}>×</button>
+                                  </span>
+                                ))}
+                              </div>
                             </div>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 5 }}>
-                              {ns.map(n => (
-                                <li key={n.id} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
-                                  <span style={{ flex: 1 }}>{n.avaliacao}{n.ehAF ? " (AF)" : ""}{n.apto ? " · conceito" : ""}</span>
-                                  <span style={{ fontWeight: 700, color: "var(--olive)" }}>{n.valor.toFixed(2)}</span>
-                                  <button className="no-print" onClick={() => excluir(n.id)} style={{ background: "none", border: "none", color: "var(--red)", cursor: "pointer", fontSize: 12.5, fontWeight: 600 }}>excluir</button>
-                                </li>
-                              ))}
-                            </ul>
+                            <span style={{ flexShrink: 0, fontSize: 13, fontWeight: 700, color: abaixo ? "var(--red)" : "var(--olive)" }}>
+                              {abaixo ? "▼ " : ""}MD {m != null ? m.toFixed(2) : "—"}
+                            </span>
                           </div>
                         )
                       })}
-                    </div>
-                  </section>
-                ))
-              })()}
-              {/* Resumo que só aparece na impressão */}
-              <div className="print-only" style={{ marginTop: 16, paddingTop: 10, borderTop: "1px solid #ccc", fontSize: 13, color: "#000" }}>
-                <strong>Resumo:</strong> MFIC {mfic != null ? mfic.toFixed(3) : "—"} · NFDC {nfdcState.toFixed(1)} · TCC {tccState.toFixed(1)}{tccReal == null ? "*" : ""} · <strong>MGC {mgc != null ? mgc.toFixed(3) : "—"}</strong>
-                <div style={{ marginTop: 4, fontSize: 11, color: "#555" }}>MGC = (MFIC×6,5 + NFDC×2,5 + TCC×1) ÷ 10. {tccReal == null ? "* TCC ainda não lançado (10 por padrão). " : ""}Documento sem valor oficial.</div>
+                    </section>
+                  ))
+                })()}
+                {/* Resumo que só aparece na impressão */}
+                <div className="print-only" style={{ marginTop: 16, paddingTop: 10, borderTop: "1px solid #ccc", fontSize: 13, color: "#000" }}>
+                  <strong>Resumo:</strong> MFIC {mfic != null ? mfic.toFixed(3) : "—"} · NFDC {nfdcState.toFixed(1)} · TCC {tccState.toFixed(1)}{tccReal == null ? "*" : ""} · <strong>MGC {mgc != null ? mgc.toFixed(3) : "—"}</strong>
+                  <div style={{ marginTop: 4, fontSize: 11, color: "#555" }}>MGC = (MFIC×6,5 + NFDC×2,5 + TCC×1) ÷ 10. {tccReal == null ? "* TCC ainda não lançado (10 por padrão). " : ""}Documento sem valor oficial.</div>
+                </div>
               </div>
-            </div>
-          )}
-        </>
-      )}
+            )}
+          </>
+        )
+      })()}
 
       {aba === "ranking" && (
         mgc == null ? <p style={{ color: "var(--ink-60)", marginTop: 20 }}>Lance suas notas para ver o ranking e a previsão.</p> : (
@@ -322,14 +376,15 @@ export function RankingClient({
 
 
 // ── Editor de NFDC e TCC (default 10) ──
-function NfdcTccEditor({ nfdc, tcc, tccDefinido, onSaveNfdc, onSaveTcc }: {
+function NfdcTccEditor({ nfdc, tcc, tccDefinido, onSaveNfdc, onSaveTcc, plano }: {
   nfdc: number; tcc: number; tccDefinido: boolean; onSaveNfdc: (v: number) => void; onSaveTcc: (v: number) => void
+  plano?: boolean // sem caixa própria (quando já está dentro de outra)
 }) {
   const [n, setN] = useState(String(nfdc))
   const [t, setT] = useState(String(tcc))
   const [msg, setMsg] = useState("")
   return (
-    <div style={card}>
+    <div style={plano ? undefined : card}>
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "end" }}>
         <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 200px" }}>
           Nota Disciplinar (NFDC) <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>— inicia em 10</span>

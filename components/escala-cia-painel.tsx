@@ -24,7 +24,7 @@ const ROTULO_TIPO: Record<CompromissoAluno["tipo"], string> = {
   funcao: "🎖 Formatura", guarda: "🚩 Guarda-Bandeira",
 }
 
-const semAcento = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+import { semAcento, bate } from "@/lib/busca"
 function diaSemana(iso: string) {
   const [a, m, d] = iso.split("-").map(Number)
   return DIAS_SEMANA[new Date(a, m - 1, d).getDay()]
@@ -77,9 +77,11 @@ export function EscalaCiaPainel({ hojeIso, minhaMatricula }: { hojeIso: string; 
     if (termo.length < 2) return []
     const vistos = new Map<number, string>()
     for (const m of MESES_ESCALA) for (const membros of Object.values(m.mapa)) for (const [mat, nome] of membros) vistos.set(mat, nome)
+    // quem começa com o termo (matrícula exata ou início do nome) vem primeiro
+    const inicio = ([mat, nome]: [number, string]) => String(mat) === termo || semAcento(nome).startsWith(termo) ? 0 : 1
     return [...vistos.entries()]
-      .filter(([mat, nome]) => semAcento(`${mat} ${nome}`).includes(termo))
-      .sort((a, b) => a[0] - b[0]).slice(0, 12)
+      .filter(([mat, nome]) => bate(`${mat} ${nome}`, termo))
+      .sort((a, b) => inicio(a) - inicio(b) || a[0] - b[0]).slice(0, 12)
   }, [busca])
 
   const trocarMes = (chave: string) => {
