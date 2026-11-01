@@ -1,15 +1,13 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { auth } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
-import { garantirTabelaTcc } from "@/lib/tcc-db"
 import {
   DUPLAS_TCC, TCC_PRAZO, TCC_PASTA, TCC_NOME_PASTA, TCC_FORMATOS,
   codigoDupla, nomeArquivoTcc, linkPasta,
 } from "@/lib/tcc"
-import { Contagem, CopiarNome, MarcarEnvio } from "./tcc-client"
+import { lerPastaDrive, type ArquivoDrive } from "@/lib/tcc-drive"
+import { Contagem, CopiarNome } from "./tcc-client"
 
 // Página PÚBLICA e temporária (em PUBLIC_PATHS) até o prazo do TCC.
+// O status sai sozinho do Drive: cada subpasta com PDF + editável = enviado.
 // Mostra só nome de guerra e matrícula — nada de e-mail, CPF ou telefone.
 
 export const metadata: Metadata = {
@@ -18,18 +16,14 @@ export const metadata: Metadata = {
 }
 export const dynamic = "force-dynamic"
 
-const fmt = (d: Date) =>
-  d.toLocaleString("pt-BR", { timeZone: "America/Recife", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })
+type Situacao = "enviado" | "incompleto" | "pendente" | "sem-leitura"
 
-/** Dupla → hora em que marcou "enviado". `null` se o banco não respondeu. */
-async function lerEnvios(): Promise<Map<number, Date> | null> {
-  try {
-    await garantirTabelaTcc()
-    const linhas = await prisma.tccEnvio.findMany({ where: { declaradoEm: { not: null } } })
-    return new Map(linhas.map((l) => [l.dupla, l.declaradoEm!]))
-  } catch {
-    return null
-  }
+function situacao(arqs: ArquivoDrive[] | null): Situacao {
+  if (arqs === null) return "sem-leitura"
+  const pdf = arqs.some((a) => a.tipo === "pdf")
+  const editavel = arqs.some((a) => a.tipo === "editavel")
+  if (pdf && editavel) return "enviado"
+  return arqs.length > 0 ? "incompleto" : "pendente"
 }
 
 // ─── Checklist (modelo oficial CFO PM 2025 + ABNT) ───────────────────────────
@@ -125,14 +119,13 @@ const botaoPasta: React.CSSProperties = {
 }
 
 export default async function TccPage() {
-  const session = await auth()
-  const envios = await lerEnvios()
+  const pastas = await Promise.all(DUPLAS_TCC.map((d) => lerPastaDrive(d.pasta)))
+  const sits = pastas.map(situacao)
 
   const encerrado = Date.now() >= TCC_PRAZO.getTime()
   const total = DUPLAS_TCC.length
-  const enviados = DUPLAS_TCC.filter((d) => envios?.has(d.n)).length
-  const minhaMat = session?.user.matricula
-  const ehAdmin = session?.user.isAdmin === true
+  const enviados = sits.filter((s) => s === "enviado").length
+  const faltam = DUPLAS_TCC.filter((_, i) => sits[i] !== "enviado")
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--canvas)", color: "var(--ink)", fontFamily: "var(--sans)" }}>
@@ -156,7 +149,7 @@ export default async function TccPage() {
           <ol style={{ margin: 0, paddingLeft: 20, display: "flex", flexDirection: "column", gap: 6, fontSize: 14.5, lineHeight: 1.5 }}>
             <li>Abra a <strong>pasta da sua dupla</strong> (botão na lista abaixo).</li>
             <li>Envie <strong>dois arquivos</strong>: o <strong>PDF</strong> e o <strong>Word (.docx)</strong>, com o nome indicado.</li>
-            <li>Entre no portal e clique em <strong>“Marcar como enviado”</strong>.</li>
+            <li>Pronto — o status abaixo atualiza <strong>sozinho</strong> (em até 1 minuto).</li>
           </ol>
         </section>
 
@@ -172,19 +165,24 @@ export default async function TccPage() {
             role="img" aria-label={`${enviados} de ${total} duplas enviaram`}>
             <div style={{ width: `${(enviados / total) * 100}%`, height: "100%", background: "var(--olive)" }} />
           </div>
-          {envios === null && (
-            <p style={{ margin: 0, fontSize: 13, color: "var(--red)" }}>⚠ Status indisponível no momento.</p>
+          {faltam.length > 0 && (
+            <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.5 }}>
+              <strong>{encerrado ? "Não enviaram" : "Faltam"}:</strong>{" "}
+              {faltam.map((d) => `${codigoDupla(d.n)} ${d.alunos.map((a) => a.nome).join(" e ")}`).join(" · ")}
+            </p>
           )}
 
           <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-            {DUPLAS_TCC.map((d) => {
-              const em = envios?.get(d.n)
-              const selo = em
-                ? { txt: `✅ Enviado · ${fmt(em)}`, cor: "var(--olive)", fundo: "rgba(58,74,58,0.10)" }
-                : encerrado
-                  ? { txt: "✖ Não enviado", cor: "var(--red)", fundo: "rgba(122,46,46,0.08)" }
-                  : { txt: "⏳ Pendente", cor: "var(--ink-60)", fundo: "rgba(43,42,39,0.06)" }
-              const podeMarcar = envios !== null && !encerrado && (ehAdmin || d.alunos.some((a) => a.mat === minhaMat))
+            {DUPLAS_TCC.map((d, idx) => {
+              const sit = sits[idx]
+              const arqs = pastas[idx] ?? []
+              const enviado = sit === "enviado"
+              const selo =
+                sit === "enviado" ? { txt: "✅ Enviado", cor: "var(--olive)", fundo: "rgba(58,74,58,0.10)" }
+                : sit === "incompleto" ? { txt: "⚠ Falta o PDF ou o Word", cor: "#7a5c1c", fundo: "rgba(181,147,63,0.16)" }
+                : sit === "sem-leitura" ? { txt: "… sem leitura do Drive", cor: "var(--ink-60)", fundo: "rgba(43,42,39,0.06)" }
+                : encerrado ? { txt: "✖ Não enviado", cor: "var(--red)", fundo: "rgba(122,46,46,0.08)" }
+                : { txt: "⏳ Pendente", cor: "var(--ink-60)", fundo: "rgba(43,42,39,0.06)" }
 
               return (
                 <li key={d.n} style={{ background: "var(--canvas)", border: "1px solid rgba(58,74,58,0.10)", borderRadius: 10, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 8 }}>
@@ -201,27 +199,23 @@ export default async function TccPage() {
                       {selo.txt}
                     </span>
                   </div>
-                  {!em && (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                      {TCC_FORMATOS.map((ext) => <CopiarNome key={ext} nome={`${nomeArquivoTcc(d)}.${ext}`} />)}
-                    </div>
+                  {arqs.length > 0 && (
+                    <ul style={{ margin: 0, paddingLeft: 18, fontSize: 12.5, color: "var(--ink-60)", lineHeight: 1.5 }}>
+                      {arqs.map((a) => <li key={a.nome}>{a.nome}</li>)}
+                    </ul>
                   )}
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-                    {!encerrado && (
-                      <a href={linkPasta(d.pasta)} target="_blank" rel="noopener noreferrer" style={botaoPasta}>📁 Abrir pasta da dupla ↗</a>
-                    )}
-                    {podeMarcar && <MarcarEnvio dupla={d.n} enviado={!!em} />}
-                  </div>
+                  {!enviado && !encerrado && (
+                    <>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                        {TCC_FORMATOS.map((ext) => <CopiarNome key={ext} nome={`${nomeArquivoTcc(d)}.${ext}`} />)}
+                      </div>
+                      <a href={linkPasta(d.pasta)} target="_blank" rel="noopener noreferrer" style={{ ...botaoPasta, alignSelf: "flex-start" }}>📁 Abrir pasta da dupla ↗</a>
+                    </>
+                  )}
                 </li>
               )
             })}
           </ul>
-
-          {!session && !encerrado && (
-            <p style={{ margin: 0, fontSize: 13, color: "var(--ink-60)" }}>
-              Já enviou? <Link href="/login" style={{ color: "var(--olive)", fontWeight: 600 }}>Entre no portal</Link> e volte aqui para marcar a sua dupla.
-            </p>
-          )}
         </section>
 
         {/* Modelo + checklist */}
