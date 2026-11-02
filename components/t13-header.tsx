@@ -17,7 +17,6 @@ const SECOES: Secao[] = [
   { href: "/escalas", label: "Escalas" },
   { href: "/xerifancia", label: "Xerifância" },
   { href: "/tropa", label: "Controle de Tropa" },
-  { href: "/tcc", label: "TCC" },
 ]
 
 export function T13Header({ isAdmin }: { isAdmin: boolean }) {
