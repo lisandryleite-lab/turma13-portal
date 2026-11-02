@@ -9,6 +9,7 @@ import "server-only"
 export type ArquivoDrive = { nome: string; tipo: "pdf" | "editavel" | "outro" }
 
 const EDITAVEL = /\.(docx?|odt|rtf)$/i
+const MIME_EDITAVEL = /msword|wordprocessingml|opendocument\.text|rtf|google-apps\.document/
 
 function decodificar(s: string) {
   return s
@@ -29,9 +30,12 @@ export async function lerPastaDrive(id: string): Promise<ArquivoDrive[] | null> 
     return html.split('class="flip-entry"').slice(1).map((bloco) => {
       const nome = decodificar(bloco.match(/flip-entry-title">([^<]*)</)?.[1] ?? "").trim()
       const href = bloco.match(/href="([^"]*)"/)?.[1] ?? ""
+      // O ícone traz o tipo real (…/type/application/pdf) — vale mesmo quando
+      // o arquivo foi enviado sem extensão no nome.
+      const mime = bloco.match(/\/type\/([^"]+)"/)?.[1] ?? ""
       const tipo: ArquivoDrive["tipo"] =
-        /\.pdf$/i.test(nome) ? "pdf"
-        : EDITAVEL.test(nome) || href.includes("docs.google.com/document") ? "editavel"
+        /\.pdf$/i.test(nome) || mime === "application/pdf" ? "pdf"
+        : EDITAVEL.test(nome) || MIME_EDITAVEL.test(mime) || href.includes("docs.google.com/document") ? "editavel"
         : "outro"
       return { nome, tipo }
     }).filter((a) => a.nome)
