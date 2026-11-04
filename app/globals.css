@@ -218,3 +218,6 @@
 @media (prefers-reduced-motion: reduce) {
   .t13-skel { animation: none; }
 }
+
+/* Homenagem dos Mementos: <details> sem o triângulo padrão */
+.memento-honra > summary::-webkit-details-marker { display: none; }

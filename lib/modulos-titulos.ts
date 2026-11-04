@@ -105,7 +105,8 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     T4: "UDFIT · Portaria 855/2025: alcance, princípios, arma de fogo, IMPO e crises",
     T5: "UDFIT · Portaria 855/2025: buscas, algemas, lesão ou morte, registro e capacitação",
     T6: "UDFIT · Modelos de uso da força e níveis de submissão e de resposta",
-    T7: "UDFIT · Técnicas e IMPO, espargidores, arma elétrica e descontaminação",
+    T7: "UDFIT · Técnicas e IMPO, espargidores e descontaminação",
+    T8: "UDFIT · Arma elétrica: TASER e SPARK DSK-700",
     SIM2: "UDFIT · Simulado (10,0 pontos · 100 min)",
   },
   ABAA: {

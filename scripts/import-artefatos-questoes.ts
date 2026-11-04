@@ -4,6 +4,8 @@
 //
 // Uso: npx tsx scripts/import-artefatos-questoes.ts <SIGLA> <arquivo.html> [--gravar]
 // Sem --gravar só mostra o que faria. Idempotente (hash materia|modulo|enunciado).
+// Artefato atualizado: as questões dos módulos T*/SIM2 que sumiram dele (ou
+// mudaram de texto) são apagadas, com as respostas dos alunos a elas.
 
 import "dotenv/config"
 import { readFileSync } from "fs"
@@ -79,9 +81,16 @@ async function main() {
   const hashes = linhas.map(l => createHash("sha1").update(`${SIGLA}|${l.modulo}|${l.enunciado}`).digest("hex"))
   const ja = new Set((await prisma.questao.findMany({ where: { hash: { in: hashes } }, select: { hash: true } })).map(q => q.hash))
   const porTipo = linhas.reduce<Record<string, number>>((a, l) => (a[l.tipo] = (a[l.tipo] ?? 0) + 1, a), {})
-  console.log(`${SIGLA} (${disc.nome}): ${linhas.length} questões em ${BANK.length} temas + SIM2`, porTipo, `· já no banco: ${ja.size}`)
+  const obsoletas = await prisma.questao.findMany({
+    where: { materia: SIGLA, OR: [{ modulo: { startsWith: "T" } }, { modulo: "SIM2" }], hash: { notIn: hashes } },
+    select: { id: true, _count: { select: { respostas: true } } },
+  })
+  const respPerdidas = obsoletas.reduce((s, q) => s + q._count.respostas, 0)
+  console.log(`${SIGLA} (${disc.nome}): ${linhas.length} questões em ${BANK.length} temas + SIM2`, porTipo,
+    `· já no banco: ${ja.size} · a remover: ${obsoletas.length} (com ${respPerdidas} respostas de alunos)`)
   BANK.forEach((t, i) => console.log(`  T${i + 1}: ${semTema(t.t)}`))
   if (!GRAVAR) { console.log("  (teste — nada gravado; rode com --gravar)"); return }
+  if (obsoletas.length) await prisma.questao.deleteMany({ where: { id: { in: obsoletas.map(q => q.id) } } })
   let novas = 0
   for (const [i, l] of linhas.entries()) {
     const data = { materia: SIGLA, ...l, alternativas: l.alternativas, modelo: l.modelo ?? undefined }

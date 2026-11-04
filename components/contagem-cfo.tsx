@@ -78,7 +78,7 @@ export function ContagemCFO({
               <p style={{ fontSize: 13, margin: 0, color: "rgba(255,255,255,0.85)" }}>
                 {m.emAndamento ? <><strong style={{ color: paleta.realce }}>{m.rotulo === "MAPOM" ? "MAPOM" : m.rotulo[0].toUpperCase() + m.rotulo.slice(1)} {m.fim ? "em andamento" : "é hoje!"}</strong>{m.nota ? ` · ${m.nota}` : ""}</> : <>
                   <strong style={{ fontFamily: paleta.serif, fontSize: 20, color: paleta.realce }}>{m.dias}</strong>{" "}
-                  {m.dias === 1 ? "dia" : "dias"} para {m.id === "mapom" ? "o" : "a"} <strong>{m.rotulo}</strong> · {m.nota ?? ddmmaa(m.inicio)}
+                  {m.dias === 1 ? "dia" : "dias"} para {m.id === "formatura" ? "a" : "o"} <strong>{m.rotulo}</strong> · {m.nota ?? ddmmaa(m.inicio)}
                 </>}
               </p>
             </div>

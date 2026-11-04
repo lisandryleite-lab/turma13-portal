@@ -57,7 +57,7 @@ export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmi
     <main style={{ maxWidth: 820, margin: "0 auto", padding: "32px 24px" }}>
       <Link href="/inicio" style={{ color: "var(--olive)", fontSize: 14, fontWeight: 600, textDecoration: "none" }}>← Voltar</Link>
       <h1 style={{ fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "1.9rem", color: "var(--olive)", marginTop: 16, marginBottom: 16 }}>
-        Mementos & Cards
+        Mementos
       </h1>
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 22 }}>
         {abas.map(([t, rot]) => (
@@ -80,26 +80,28 @@ export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmi
 }
 
 // Nota de honra ao autor dos mementos
+// Homenagem recolhida: uma linha que abre ao clicar, para as matérias ficarem à vista.
 function NotaMaciel() {
   return (
-    <div className="memento-honra" style={{
-      borderRadius: 16, padding: "18px 20px", marginBottom: 24,
+    <details className="memento-honra" style={{
+      borderRadius: 16, padding: "12px 18px", marginBottom: 16,
       background: "linear-gradient(135deg, #1f3b1f 0%, #2e4a2e 100%)", color: "#f4ecd8",
-      border: "1px solid var(--gold)", boxShadow: "0 4px 14px rgba(0,0,0,0.12)",
+      border: "1px solid var(--gold)",
     }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-        <span style={{ fontSize: 22 }}>🦅</span>
-        <span style={{ fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "1.15rem", color: "var(--gold)" }}>
+      <summary style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", listStyle: "none" }}>
+        <span style={{ fontSize: 18 }}>🦅</span>
+        <span style={{ fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "1.02rem", color: "var(--gold)" }}>
           Reconhecimento &amp; Gratidão
         </span>
-      </div>
-      <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6 }}>
+        <span style={{ fontSize: 12.5, opacity: 0.8 }}>· Pernambuco Imortal</span>
+      </summary>
+      <p style={{ margin: "10px 0 2px", fontSize: 14.5, lineHeight: 1.6 }}>
         Estes mementos só existem graças ao <strong>MACIEL</strong> — o <em>“Pernambuco Imortal”</em>,{" "}
         <strong>1º colocado geral da 2ª Turma do CFO 2025</strong>. Quase todos os resumos aqui reunidos
         nasceram do seu estudo, da sua dedicação e da sua generosidade em compartilhar. Que cada página
         consultada honre esse legado. <strong>Muito obrigado, Pernambuco Imortal.</strong>
       </p>
-    </div>
+    </details>
   )
 }
 
@@ -456,7 +458,7 @@ function EmBreve({ texto, concluida, drive }: { texto: React.ReactNode; concluid
 
 // ── Calendário de provas (semanas 34–39) ──
 function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes: Map<string, string>; onAbrir: (sigla: string) => void }) {
-  const [aberto, setAberto] = useState(true)
+  const [aberto, setAberto] = useState(false) // fechado: o resumo da semana já aparece na linha do título
   const proximas = CALENDARIO_PROVAS.filter(s => situacao(s, hojeISO) !== "passada")
   const semanaAtual = CALENDARIO_PROVAS.find(s => situacao(s, hojeISO) === "atual")
   const resumo = semanaAtual?.provas.length

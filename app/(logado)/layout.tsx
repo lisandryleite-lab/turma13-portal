@@ -29,12 +29,13 @@ export default async function LogadoLayout({ children }: { children: React.React
   const session = await auth()
   if (!session) redirect("/login")
 
-  // Portal da Turma 13 (1º Pelotão) — restrito aos membros + admin.
-  const me = await prisma.user.findUnique({
+  // Portal da Turma 13 (1º Pelotão) — restrito aos membros + admin. O dado vem
+  // no token do login; só sessões antigas, sem o campo, consultam o banco.
+  const turma13 = session.user.isAdmin || (session.user.turma13 ?? (await prisma.user.findUnique({
     where: { id: session.user.id! },
     select: { turma13: true },
-  })
-  if (!me?.turma13 && !session.user.isAdmin) {
+  }))?.turma13)
+  if (!turma13) {
     return (
       <div style={{ minHeight: "100vh", background: "var(--canvas)", color: "var(--ink)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
         <div style={{ maxWidth: 420, textAlign: "center" }}>

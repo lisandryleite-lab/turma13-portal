@@ -12,6 +12,7 @@ declare module "next-auth" {
       nomeGuerra: string
       isAdmin: boolean
       financeiroAdmin: boolean
+      turma13?: boolean
     }
   }
 
@@ -22,6 +23,7 @@ declare module "next-auth" {
     nomeGuerra: string
     isAdmin: boolean
     financeiroAdmin?: boolean
+    turma13?: boolean
   }
 }
 
@@ -32,5 +34,6 @@ declare module "next-auth/jwt" {
     nomeGuerra: string
     isAdmin: boolean
     financeiroAdmin: boolean
+    turma13?: boolean
   }
 }

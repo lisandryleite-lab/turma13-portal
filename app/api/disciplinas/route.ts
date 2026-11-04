@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
+import { revalidateTag } from "next/cache"
+import { TAG_DISCIPLINAS } from "@/lib/disciplinas-cache"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { rotaApi, lerCorpo, proibido, z } from "@/lib/api"
@@ -21,5 +23,6 @@ export const PUT = rotaApi(async (req: NextRequest) => {
   const { sigla, ...data } = await lerCorpo(req, AtualizarDisciplina)
   // Sigla inexistente vira P2025 → 404 pelo rotaApi (antes: 500 genérico).
   await prisma.disciplina.update({ where: { sigla }, data })
+  revalidateTag(TAG_DISCIPLINAS)
   return NextResponse.json({ ok: true })
 })

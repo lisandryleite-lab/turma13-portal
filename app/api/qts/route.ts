@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
+import { revalidateTag } from "next/cache"
+import { TAG_DISCIPLINAS } from "@/lib/disciplinas-cache"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { rotaApi, lerCorpo, proibido, z, zSemana } from "@/lib/api"
@@ -16,6 +18,7 @@ export const GET = rotaApi(async (req: NextRequest) => {
   const qts = semana
     ? await prisma.qTS.findUnique({ where: { semana } })
     : await prisma.qTS.findFirst({ orderBy: { semana: "desc" } })
+  revalidateTag(TAG_DISCIPLINAS)
   return NextResponse.json(qts)
 })
 
@@ -62,5 +65,6 @@ export const DELETE = rotaApi(async (req: NextRequest) => {
 
   const { semana } = await lerCorpo(req, z.object({ semana: zSemana }))
   await prisma.qTS.delete({ where: { semana } })
+  revalidateTag(TAG_DISCIPLINAS)
   return NextResponse.json({ ok: true })
 })

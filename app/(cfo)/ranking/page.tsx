@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { calcularMGCSimples, type Verificacao } from "@/lib/ranking"
-import { fasesDisciplinas } from "@/lib/disciplinas-fase"
+import { disciplinasComFase } from "@/lib/disciplinas-cache"
 import { RankingClient } from "./ranking-client"
 
 export default async function RankingPage() {
@@ -10,9 +10,9 @@ export default async function RankingPage() {
   if (!session?.user) redirect("/login")
   const userId = session.user.id!
 
-  const [minhasNotas, disciplinasBrutas, todasNotas, eu, turmaSize, qtss] = await Promise.all([
+  const [minhasNotas, disciplinas, todasNotas, eu, turmaSize] = await Promise.all([
     prisma.notaCFO.findMany({ where: { userId }, orderBy: [{ disciplina: "asc" }, { avaliacao: "asc" }] }),
-    prisma.disciplina.findMany({ select: { sigla: true, nome: true, status: true, cargaMinistrada: true, cargaTotal: true }, orderBy: { sigla: "asc" } }),
+    disciplinasComFase(),
     // Filtra no SQL: antes puxava a tabela INTEIRA (todas as turmas, todos os
     // campos) e descartava em JS — atravessando a rede à toa a cada abertura.
     prisma.notaCFO.findMany({
@@ -25,11 +25,7 @@ export default async function RankingPage() {
     }),
     prisma.user.findUnique({ where: { id: userId }, select: { nfdc: true } }),
     prisma.user.count({ where: { turma: 3 } }),
-    prisma.qTS.findMany({ select: { semana: true, dados: true } }),
   ])
-
-  const fases = fasesDisciplinas(disciplinasBrutas, qtss)
-  const disciplinas = disciplinasBrutas.map(d => ({ sigla: d.sigla, nome: d.nome, status: d.status, ...fases.get(d.sigla)! }))
 
   // MGC dos OUTROS alunos T3 que já lançaram notas (para posicionar o ranking)
   const porUser = new Map<string, { nfdc: number; vs: Verificacao[] }>()
