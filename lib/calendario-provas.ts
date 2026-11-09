@@ -9,7 +9,7 @@
 //  do memento resolva. Duas divergem da grafia do PDF, anotadas em `siglaPdf`.
 // ─────────────────────────────────────────────────────────────
 
-export const CALENDARIO_ATUALIZADO_EM = "30/10/2026"
+export const CALENDARIO_ATUALIZADO_EM = "09/11/2026"
 
 export type ProvaCalendario = {
   /** sigla da disciplina no portal — usada no link do memento */
@@ -160,7 +160,8 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
     ],
     // QTS da semana 43: as marcas de prova de sexta estão em ABAA (8h–9h40) e
     // UDFIT (10h–11h40) — UDF entrou no lugar de DPPM.
-    obs: "Sexta 06/11: ABAA e UDFIT (UDFIT no lugar de DPPM, que fica com data a definir). A 2ª avaliação de UDF é prática.",
+    realizada: true,
+    obs: "Provas realizadas na sexta 06/11: ABAA e UDFIT (UDFIT no lugar de DPPM, que passou para 11/11). A 2ª avaliação de UDF é prática.",
   },
   {
     semana: 44,
@@ -170,19 +171,19 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
     fimIso: "2026-11-15",
     diaIso: "2026-11-11",
     provas: [
+      { sigla: "DPPM", siglaPdf: "DPPPM", avaliacao: "2AE" },
       { sigla: "POE", avaliacao: "2AE" },
     ],
-    obs: "Horário a confirmar.",
+    // QTS da semana 44: marcas de prova na quarta, POE (8h–9h40) e DPPM (10h–11h40).
+    obs: "Quarta 11/11: DPPM e POE — as últimas provas teóricas do curso. Depois, só o MAPOM (29/11 a 04/12).",
   },
 ]
 
 // Provas teóricas ainda SEM semana definida pela Seção de Provas. Quando sair a
 // data, mover a prova para CALENDARIO_PROVAS e tirar daqui. (Out/2026: todas as
 // que restavam ganharam data no cronograma de entregas e avaliações.)
-export const PROVAS_A_DEFINIR: ProvaCalendario[] = [
-  // Saiu da sexta 06/11 (entrou UDFIT) — nova data ainda não divulgada.
-  { sigla: "DPPM", siglaPdf: "DPPPM", avaliacao: "2AE" },
-]
+// Nov/2026: DPPM ganhou data (11/11, com POE) — não resta nenhuma.
+export const PROVAS_A_DEFINIR: ProvaCalendario[] = []
 
 /** A avaliação escrita acontece na QUARTA-FEIRA da semana planejada. */
 export function diaDaProva(s: SemanaCalendario): string {

@@ -18,6 +18,7 @@ type GaivotaMsg = { id: string; matricula: number; nomeGuerra: string; texto: st
 type Disc = { sigla: string; nome: string; status: string; fase: Fase; ordem: number }
 type Filtro = "todas" | Fase
 import { semAcento, bate } from "@/lib/busca"
+import { RetaFinal } from "./reta-final"
 const PENDENTE_A_DEFINIR = new Set(PROVAS_A_DEFINIR.map(p => p.sigla))
 const SUB_FASE: Record<Fase, string> = {
   concluida: "da 1ª que terminou à mais recente",
@@ -349,6 +350,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
     <div>
       <NotaMaciel />
       <CalendarioProvas hojeISO={hojeISO} nomes={nomes} onAbrir={sigla => abrirMateria(sigla)} />
+      <RetaFinal />
       {materias.length === 0 ? (
         <p style={{ color: "var(--ink-60)" }}>Nenhum memento publicado ainda.</p>
       ) : (
