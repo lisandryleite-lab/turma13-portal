@@ -55,9 +55,9 @@ export function semanaAtual(agora: Date = new Date()): number {
   return Math.min(52, Math.max(1, Math.floor(diff / (7 * 24 * 60 * 60 * 1000)) + 1))
 }
 
-// Data prevista de término do CFO — 05/01/2027 (previsão da turma, ago/2026).
+// Data prevista de término do CFO — 18/12/2026 (atualizada em nov/2026; antes, 05/01/2027).
 // Meia-noite UTC para o cálculo não escorregar de dia em fuso negativo.
-export const DATA_FIM_CFO = new Date("2027-01-05T00:00:00.000Z")
+export const DATA_FIM_CFO = new Date("2026-12-18T00:00:00.000Z")
 
 // Dias que faltam para o término, contando o dia de hoje como já vivido:
 // 25/08/2026 → 133. Nunca negativo — depois da data, zera.
@@ -67,13 +67,14 @@ export function diasParaFimCFO(agora: Date = new Date()): number {
 
 // Marcos com contagem regressiva, abaixo da do término do CFO (em ordem de data).
 // `fim` = último dia de um evento de vários dias: até ele, o marco segue no card
-// como "em andamento"; depois some.
-export type MarcoCFO = { id: string; rotulo: string; inicio: Date; fim?: Date; nota?: string }
+// como "em andamento"; depois some. `artigo` = "para o MAPOM" / "para a escolha…".
+export type MarcoCFO = { id: string; rotulo: string; artigo: "o" | "a"; inicio: Date; fim?: Date; nota?: string }
 
 export const MARCOS_CFO: MarcoCFO[] = [
-  { id: "mapom", rotulo: "MAPOM", inicio: new Date("2026-11-29T00:00:00.000Z"), fim: new Date("2026-12-04T00:00:00.000Z"), nota: "data possível · 29/11 a 04/12" },
-  { id: "formatura", rotulo: "formatura", inicio: new Date("2026-12-15T00:00:00.000Z") },
-  { id: "baile", rotulo: "baile", inicio: new Date("2027-01-23T00:00:00.000Z") },
+  { id: "mapom", rotulo: "MAPOM", artigo: "o", inicio: new Date("2026-11-29T00:00:00.000Z"), fim: new Date("2026-12-04T00:00:00.000Z"), nota: "data possível · 29/11 a 04/12" },
+  { id: "escolha", rotulo: "escolha do batalhão", artigo: "a", inicio: new Date("2026-12-07T00:00:00.000Z"), nota: "data possível · 07/12/2026" },
+  { id: "culto", rotulo: "culto ecumênico e cerimônia militar", artigo: "o", inicio: new Date("2026-12-17T00:00:00.000Z") },
+  { id: "baile", rotulo: "baile", artigo: "o", inicio: new Date("2027-01-23T00:00:00.000Z") },
 ]
 
 /** Marcos ainda por vir (ou em andamento), com os dias que faltam para o início. */

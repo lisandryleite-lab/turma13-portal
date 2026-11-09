@@ -55,7 +55,7 @@ export const CENARIOS: { id: string; nome: string; desc: string; p: Pick<Paramet
 ]
 
 export const PADRAO: Parametros = {
-  posicao: 1, tamanhoTurma: 100, formatura: "2026-12-15",
+  posicao: 1, tamanhoTurma: 100, formatura: "2026-12-18",
   saidas: 1, reducaoArt26: false, perfil: "antiguidade", atrasoCursos: 0, aumentoEfetivo: 0, aspPrecisaVaga: false,
   pessoal: { nascimento: 1995, sexo: "M", ingresso: "2026-01", averbado: 0 }, sairNaIntegral: true,
 }
