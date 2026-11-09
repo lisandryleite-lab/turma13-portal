@@ -338,7 +338,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
           <MidiaTab key={`${sigla}-${subAba}`} sigla={sigla} tipo={subAba} itens={midiasDe(sigla, subAba)} isAdmin={isAdmin} concluida={concluida}
             onAdd={m => setMidias(l => [...l, m])} onRemove={id => setMidias(l => l.filter(x => x.id !== id))} />
         )}
-        {subAba === "questoes" && <QuestoesLink sigla={sigla} />}
+        {subAba === "questoes" && <QuestoesLink sigla={sigla} hojeISO={hojeISO} />}
         {subAba === "tutor" && <TutorIA materia={sigla} />}
         {subAba === "gaivotas" && <Gaivotas materia={sigla} isAdmin={isAdmin} currentUser={currentUser} />}
       </div>
@@ -743,15 +743,18 @@ function PdfOriginal({ sigla, parts, base = "mementos", labelVazio = "PDF Pernam
 }
 
 // Link para as questões da matéria
-function QuestoesLink({ sigla }: { sigla: string }) {
+function QuestoesLink({ sigla, hojeISO }: { sigla: string; hojeISO: string }) {
+  // Prova da 2ª AE ainda por vir: o link já abre o banco filtrado no conteúdo dela.
+  const prox = provasPorMateria(hojeISO).get(sigla)
+  const ae = prox && situacao(prox.semana, hojeISO) !== "passada" ? prox.prova.avaliacao?.match(/^([12])AE$/)?.[1] : undefined
   return (
     <div style={cardBox}>
       <p style={{ margin: "0 0 12px", fontSize: 14.5, color: "var(--ink-60)", lineHeight: 1.6 }}>
         ❓ Resolva questões de <strong>{sigla}</strong> no banco de questões da turma.
       </p>
-      <Link href={`/questoes?materia=${encodeURIComponent(sigla)}`}
+      <Link href={`/questoes?materia=${encodeURIComponent(sigla)}${ae ? `&ae=${ae}` : ""}`}
         style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
-        Ir para Questões de {sigla} →
+        {ae ? `Questões da ${ae}ª AE de ${sigla}` : `Ir para Questões de ${sigla}`} →
       </Link>
     </div>
   )
