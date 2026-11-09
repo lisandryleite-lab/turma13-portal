@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { moduloLabel, moduloLabelCurto } from "@/lib/modulos-titulos"
+import { agruparModulos, moduloLabel, moduloLabelCurto } from "@/lib/modulos-titulos"
 
 type Materia = { sigla: string; nome: string; total: number; modulos: string[] }
 
@@ -84,7 +84,9 @@ function PainelFiltros({ materias, filtros, comTipo = true }: { materias: Materi
   }
   const temAssunto = !!mAtual && mAtual.modulos.length > 1
   const resumo: Record<AbaFiltro, string> = {
-    assunto: f.modulos.length === 0 ? "Assunto" : f.modulos.length === 1 ? moduloLabelCurto(f.materia, f.modulos[0]) : `${f.modulos.length} assuntos`,
+    assunto: f.modulos.length === 0 ? "Assunto" : f.modulos.length === 1 ? moduloLabelCurto(f.materia, f.modulos[0])
+      : (mAtual && agruparModulos(f.materia, mAtual.modulos).find(g => g.rotulo && g.modulos.length === f.modulos.length && g.modulos.every(m => f.modulos.includes(m)))?.rotulo.split(" · ")[0])
+        || `${f.modulos.length} assuntos`,
     tipo: f.tipo ? TIPOS.find(t => t[0] === f.tipo)![1] : "Modalidade",
     status: f.status && !f.excluirRespondidas ? STATUS.find(s => s[0] === f.status)![1] : "Status",
     busca: f.texto.trim() ? `“${f.texto.trim()}”` : "Palavra-chave",
@@ -122,13 +124,29 @@ function PainelFiltros({ materias, filtros, comTipo = true }: { materias: Materi
       {aberta && (
         <div style={{ padding: 12, borderRadius: 10, background: "#fff", border: "1px solid rgba(58,74,58,0.18)" }}>
           {aberta === "assunto" && mAtual && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, maxHeight: 230, overflowY: "auto" }}>
-              <button type="button" onClick={() => set("modulos", [])} style={chip(f.modulos.length === 0)}>Todos</button>
-              {mAtual.modulos.map(md => (
-                <button key={md} type="button" onClick={() => toggleModulo(md)} style={{ ...chip(f.modulos.includes(md)), textAlign: "left", borderRadius: 12 }}>
-                  {moduloLabel(f.materia, md)}
-                </button>
-              ))}
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, maxHeight: 320, overflowY: "auto" }}>
+              <div><button type="button" onClick={() => set("modulos", [])} style={chip(f.modulos.length === 0)}>Todos</button></div>
+              {agruparModulos(f.materia, mAtual.modulos).map(g => {
+                const todos = g.modulos.every(m => f.modulos.includes(m))
+                return (
+                  <div key={g.rotulo} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    {g.rotulo && (
+                      <button type="button" onClick={() => set("modulos", todos ? [] : g.modulos)} aria-pressed={todos}
+                        title={todos ? "Desmarcar a divisão" : "Marcar todos os assuntos da divisão"}
+                        style={{ ...chip(todos), alignSelf: "flex-start", borderRadius: 8, fontSize: 12, textTransform: "uppercase", letterSpacing: 0.3 }}>
+                        {g.rotulo} · {g.modulos.length}
+                      </button>
+                    )}
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, paddingLeft: g.rotulo ? 8 : 0 }}>
+                      {g.modulos.map(md => (
+                        <button key={md} type="button" onClick={() => toggleModulo(md)} style={{ ...chip(f.modulos.includes(md)), textAlign: "left", borderRadius: 12 }}>
+                          {moduloLabel(f.materia, md)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           )}
           {aberta === "tipo" && (
@@ -278,10 +296,10 @@ const inputStyle: React.CSSProperties = {
 }
 
 export function QuestoesClient({
-  materias, disciplinas, isAdmin, stats, totalResp, totalAcertos, initialMateria = "",
+  materias, disciplinas, isAdmin, stats, totalResp, totalAcertos, initialMateria = "", initialAE,
 }: {
   materias: Materia[]; disciplinas: Disc[]; isAdmin: boolean
-  stats: Stat[]; totalResp: number; totalAcertos: number; initialMateria?: string
+  stats: Stat[]; totalResp: number; totalAcertos: number; initialMateria?: string; initialAE?: string
 }) {
   const router = useRouter()
   const [aba, setAba] = useState<Aba>("resolver")
@@ -312,7 +330,7 @@ export function QuestoesClient({
         ))}
       </div>
 
-      {aba === "resolver" && <Resolver materias={materias} initialMateria={initialMateria} />}
+      {aba === "resolver" && <Resolver materias={materias} initialMateria={initialMateria} initialAE={initialAE} />}
       {aba === "simulado" && <Simulado materias={materias} />}
       {aba === "acerto" && <Acerto stats={stats} totalResp={totalResp} totalAcertos={totalAcertos} />}
       {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} materias={materias} onImport={() => router.refresh()} />}
@@ -351,8 +369,12 @@ function Opcoes({ q, escolhida, gabarito, onPick }: { q: Questao; escolhida: str
 }
 
 // ── Resolver ──
-function Resolver({ materias, initialMateria = "" }: { materias: Materia[]; initialMateria?: string }) {
-  const filtros = useFiltros(materias, { materia: materias.some(m => m.sigla === initialMateria) ? initialMateria : "" })
+function Resolver({ materias, initialMateria = "", initialAE }: { materias: Materia[]; initialMateria?: string; initialAE?: string }) {
+  const mInicial = materias.find(m => m.sigla === initialMateria)
+  const modulosAE = mInicial && initialAE
+    ? agruparModulos(mInicial.sigla, mInicial.modulos).find(g => g.rotulo.startsWith(`${initialAE}ª AE`))?.modulos ?? []
+    : []
+  const filtros = useFiltros(materias, { materia: mInicial?.sigla ?? "", modulos: modulosAE })
   const [qs, setQs] = useState<Questao[] | null>(null)
   const [i, setI] = useState(0)
   const [escolhida, setEscolhida] = useState<string | null>(null)

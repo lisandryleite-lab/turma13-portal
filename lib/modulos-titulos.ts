@@ -69,6 +69,28 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "5": "DIRESP, DASDH e programas institucionais",
     "6": "Planejamento: 3ª EMG, documentos, PDCA e Juntos pela Segurança",
     SIM: "Simulado — formato da prova (10,0 pontos · 100 min)",
+    // 2ª AE (11/11/2026) — caps. 7 a 11 (scripts/import-poe-2ae.ts)
+    "2AE-1": "3ª EMG: Estado-Maior Geral, seções e atribuições da PM/3",
+    "2AE-2": "Planejamento operacional: atividades de EM e as 8 fases da decisão",
+    "2AE-3": "Documentos de EM: estudos, diretrizes, planos, ordens, notas e relatórios",
+    "2AE-4": "Mementos: Diretriz, Estudo de Situação e Estudo de Estado-Maior",
+    "2AE-5": "Ciclo PDCA",
+    "2AE-6": "Juntos pela Segurança: pilares, AIS, NGR, indicadores e metas",
+    "2AE-7": "Juntos pela Segurança: atores, câmaras técnicas e monitoramento",
+    "2AE-SIM": "Simulado da 2ª AE (10,0 pontos · 100 min)",
+    // Artefato da 1ª AV (out/2026)
+    "1AV-1": "1ª AV · Conceitos constitucionais, poder de polícia e ordem pública",
+    "1AV-2": "1ª AV · Conceitos operacionais do policiamento ostensivo",
+    "1AV-3": "1ª AV · Características do policiamento ostensivo",
+    "1AV-4": "1ª AV · Princípios do policiamento ostensivo",
+    "1AV-5": "1ª AV · Variáveis do policiamento ostensivo",
+    "1AV-6": "1ª AV · Órgãos do sistema de segurança pública",
+    "1AV-7": "1ª AV · DPO e Diretoria Integrada Metropolitana (DIM)",
+    "1AV-8": "1ª AV · DINTER I",
+    "1AV-9": "1ª AV · DINTER II",
+    "1AV-10": "1ª AV · DIRESP e DASDH",
+    "1AV-SA": "1ª AV · Simulado A",
+    "1AV-SB": "1ª AV · Simulado B",
   },
   AP: {
     "1": "Fundamentação legal da busca pessoal (CPP)",
@@ -381,6 +403,38 @@ export const TITULOS_MODULO: Record<string, Record<string, string>> = {
     "6": "SEI, Expresso e sistemas administrativos",
     "7": "Código Q e alfabeto fonético",
   },
+}
+
+// Divisões do filtro "Assunto" em /questoes, pelo conteúdo de cada avaliação.
+// A ordem das divisões é a da lista (a prova mais próxima primeiro); módulo que
+// não casa com nenhuma cai em "Outros assuntos". Matéria sem entrada: lista simples.
+type GrupoModulo = { rotulo: string; casa: (modulo: string) => boolean }
+export const GRUPOS_MODULO: Record<string, GrupoModulo[]> = {
+  DPPM: [
+    { rotulo: "2ª AE (11/11) · Processo Penal Militar e crimes contra a Adm. Militar", casa: m => /^T\d+$/.test(m) || m === "SIM2" || m === "6" },
+    { rotulo: "1ª AE · Direito Penal Militar", casa: m => /^[1-5]$/.test(m) || m === "SIM" },
+  ],
+  POE: [
+    { rotulo: "2ª AE (11/11) · Planejamento — caps. 7 a 11", casa: m => m.startsWith("2AE-") || m === "6" },
+    { rotulo: "1ª AE · Policiamento ostensivo e estrutura da PMPE — caps. 1 a 6", casa: m => m.startsWith("1AV-") || /^[1-5]$/.test(m) },
+    { rotulo: "Apostila inteira", casa: m => m === "SIM" },
+  ],
+}
+
+/** Separa os módulos de uma matéria nas divisões de GRUPOS_MODULO (vazias são omitidas). */
+export function agruparModulos(materia: string, modulos: string[]): { rotulo: string; modulos: string[] }[] {
+  const grupos = GRUPOS_MODULO[materia]
+  if (!grupos) return [{ rotulo: "", modulos }]
+  const usados = new Set<string>()
+  const saida = grupos.map(g => {
+    // bancos novos (T1, 2AE-1, 1AV-1…) antes dos módulos numéricos antigos
+    const ms = modulos.filter(m => !usados.has(m) && g.casa(m))
+      .sort((a, b) => Number(/^\d+$/.test(a)) - Number(/^\d+$/.test(b)) || a.localeCompare(b, "pt-BR", { numeric: true }))
+    ms.forEach(m => usados.add(m))
+    return { rotulo: g.rotulo, modulos: ms }
+  })
+  saida.push({ rotulo: "Outros assuntos", modulos: modulos.filter(m => !usados.has(m)) })
+  return saida.filter(g => g.modulos.length > 0)
 }
 
 /** Rótulo completo do módulo: "Módulo 3 — Culto à Bandeira". */

@@ -4,11 +4,13 @@ import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
 import { QuestoesClient } from "./questoes-client"
 
-export default async function QuestoesPage({ searchParams }: { searchParams: Promise<{ materia?: string }> }) {
+export default async function QuestoesPage({ searchParams }: { searchParams: Promise<{ materia?: string; ae?: string }> }) {
   const session = await auth()
   if (!session?.user) redirect("/login")
   const userId = session.user.id!
-  const initialMateria = ((await searchParams).materia || "").toUpperCase()
+  const sp = await searchParams
+  const initialMateria = (sp.materia || "").toUpperCase()
+  const initialAE = /^[12]$/.test(sp.ae || "") ? sp.ae : undefined   // ?ae=2 → já abre na divisão da 2ª AE
 
   const [combos, disciplinas, respostas] = await Promise.all([
     prisma.questao.groupBy({ by: ["materia", "modulo"], _count: { _all: true } }),
@@ -53,6 +55,7 @@ export default async function QuestoesPage({ searchParams }: { searchParams: Pro
       totalResp={respostas.length}
       totalAcertos={respostas.filter(r => r.acertou).length}
       initialMateria={initialMateria}
+      initialAE={initialAE}
     />
   )
 }

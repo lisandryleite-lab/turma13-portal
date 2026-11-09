@@ -2,7 +2,6 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { semanaAtual } from "@/lib/utils"
 import { ResumoHoje, carregarResumoHoje } from "@/components/resumo-hoje"
-import { ContagemCFO } from "@/components/contagem-cfo"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
@@ -28,20 +27,11 @@ const SECOES: Tile[] = [
     icon: <Ico><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></Ico> },
 ]
 
-const ATALHOS: Tile[] = [
-  { href: "/mementos", label: "Mementos", nota: "Resumos por matéria", cor: "olive",
-    icon: <Ico><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" /></Ico> },
-  { href: "/documentos", label: "Documentos", nota: "Modelos e links", cor: "gold",
-    icon: <Ico><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /><path d="M16 13H8" /><path d="M16 17H8" /></Ico> },
-  { href: "/ranking", label: "Ranking", nota: "Notas e previsão", cor: "olive",
-    icon: <Ico><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" /><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" /><path d="M4 22h16" /><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" /><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" /><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" /></Ico> },
-]
-
-function TileCard({ t, tamanho = 72 }: { t: Tile; tamanho?: number }) {
+function TileCard({ t }: { t: Tile }) {
   return (
     <Link href={t.href} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, textDecoration: "none", padding: "6px 4px" }}>
       <span style={{
-        width: tamanho, height: tamanho, borderRadius: 20, display: "flex", alignItems: "center", justifyContent: "center",
+        width: 72, height: 72, borderRadius: 20, display: "flex", alignItems: "center", justifyContent: "center",
         background: t.cor === "gold" ? "var(--gold)" : "var(--olive)", color: "var(--canvas)",
         border: "1px solid var(--gold)", boxShadow: "0 6px 18px rgba(43,42,39,0.12)",
       }}>
@@ -92,22 +82,15 @@ export default async function DashboardPage() {
         </Link>
       )}
 
-      <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", marginBottom: 32 }}>
-        <ContagemCFO tema="olive" />
+      {/* A contagem do fim do CFO e os atalhos gerais ficam no Portal (← Portal) */}
+      <div style={{ marginBottom: 32 }}>
         <ResumoHoje matricula={matricula} dados={resumoHoje} />
       </div>
 
-      <section style={{ marginBottom: 32 }}>
+      <section>
         <h2 style={tituloSecao}>Turma 13</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "24px 12px" }}>
           {SECOES.map(t => <TileCard key={t.href} t={t} />)}
-        </div>
-      </section>
-
-      <section>
-        <h2 style={tituloSecao}>Atalhos do portal</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "24px 12px" }}>
-          {ATALHOS.map(t => <TileCard key={t.href} t={t} tamanho={60} />)}
         </div>
       </section>
 

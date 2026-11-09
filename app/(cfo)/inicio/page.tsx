@@ -3,24 +3,22 @@ import { auth } from "@/lib/auth"
 import { adminAtivo } from "@/lib/view"
 import { ViewToggle } from "../view-toggle"
 import { ContagemCFO } from "@/components/contagem-cfo"
+import { CALENDARIO_PROVAS, diaDaProva, diaSemanaDaProva, hojeRecifeISO, situacao } from "@/lib/calendario-provas"
 
 // A contagem regressiva tem que ser recalculada a cada acesso, nunca servida de cache.
 export const dynamic = "force-dynamic"
 
-type Tile = "olive" | "gold"
-
 const cards: {
   label: string
   href: string
-  bg: Tile
-  externo?: boolean
   nota?: string
+  /** só para a Turma 13 (o grupo (logado) bloqueia os demais) */
+  soTurma13?: boolean
   icon: React.ReactNode
 }[] = [
   {
     label: "Ranking",
     href: "/ranking",
-    bg: "gold",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
@@ -35,7 +33,6 @@ const cards: {
   {
     label: "Questões",
     href: "/questoes",
-    bg: "olive",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
@@ -48,7 +45,6 @@ const cards: {
     label: "Escalas",
     href: "/escalas-cia",
     nota: "Plantão · Funções do dia",
-    bg: "gold",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M8 2v4" />
@@ -67,7 +63,6 @@ const cards: {
     label: "Batalhões",
     href: "/batalhoes",
     nota: "Escolha e conheça",
-    bg: "olive",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
@@ -78,7 +73,6 @@ const cards: {
   {
     label: "Mementos",
     href: "/mementos",
-    bg: "gold",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
@@ -88,7 +82,6 @@ const cards: {
   {
     label: "Documentos",
     href: "/documentos",
-    bg: "olive",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
@@ -103,7 +96,6 @@ const cards: {
     label: "Carreira",
     href: "/batalhoes/carreira",
     nota: "Simule suas promoções",
-    bg: "gold",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="m17 11-5-5-5 5" />
@@ -114,31 +106,28 @@ const cards: {
   {
     label: "Turma 13",
     href: "/dashboard",
-    bg: "olive",
+    soTurma13: true,
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z" />
       </svg>
     ),
   },
-]
-
-// Card "Senha e e-mail" — troca de senha e e-mail de recuperação, para todos.
-const cardSenha: (typeof cards)[number] = {
-  label: "Senha e e-mail",
-  href: "/trocar-senha",
-  bg: "gold",
-  icon: (
-    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+  {
+    label: "Senha e e-mail",
+    href: "/trocar-senha",
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
       <circle cx="12" cy="16" r="1" />
-    </svg>
-  ),
-}
+      </svg>
+    ),
+  },
+]
 
-function CardTile({ card }: { card: (typeof cards)[number] }) {
-  const isGold = card.bg === "gold"
+// Os ícones alternam dourado/oliva pela posição — esconder um card não quebra a alternância.
+function CardTile({ card, isGold }: { card: (typeof cards)[number]; isGold: boolean }) {
   const wrapStyle: React.CSSProperties = {
     display: "flex",
     flexDirection: "column",
@@ -182,13 +171,6 @@ function CardTile({ card }: { card: (typeof cards)[number] }) {
     </>
   )
 
-  if (card.externo) {
-    return (
-      <a href={card.href} target="_blank" rel="noopener noreferrer" style={wrapStyle}>
-        {inner}
-      </a>
-    )
-  }
   return (
     <Link href={card.href} style={wrapStyle}>
       {inner}
@@ -201,7 +183,10 @@ export default async function PortalCfoHome() {
   const isAdmin = !!session?.user?.isAdmin
   const admView = await adminAtivo(isAdmin)
 
-  const cardsToShow = [...cards, cardSenha]
+  const daTurma = isAdmin || session?.user?.turma13 !== false
+  const cardsToShow = cards.filter(c => !c.soTurma13 || daTurma)
+  const hoje = hojeRecifeISO()
+  const proxima = CALENDARIO_PROVAS.find(s => s.provas.length > 0 && situacao(s, hoje) !== "passada")
 
   return (
     <main
@@ -223,7 +208,7 @@ export default async function PortalCfoHome() {
           <ViewToggle adminAtivo={admView} />
         </div>
       )}
-      <header style={{ textAlign: "center", marginBottom: 48 }}>
+      <header style={{ textAlign: "center", marginBottom: 20 }}>
         <h1
           style={{
             fontFamily: "var(--serif-cfo)",
@@ -238,9 +223,28 @@ export default async function PortalCfoHome() {
       </header>
 
       {/* Contagem regressiva para o fim do CFO — esta é a página inicial do portal */}
-      <div style={{ width: "100%", maxWidth: 460, marginTop: -28, marginBottom: 36 }}>
+      <div style={{ width: "100%", maxWidth: 460, marginBottom: proxima ? 14 : 36 }}>
         <ContagemCFO tema="olive" compacto />
       </div>
+
+      {/* Próxima prova teórica, com atalho para as questões do conteúdo dela */}
+      {proxima && (
+        <div style={{ width: "100%", maxWidth: 460, marginBottom: 32, padding: "12px 14px", borderRadius: 14,
+          background: "#fff", border: "1px solid rgba(58,74,58,0.18)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px 10px" }}>
+          <span style={{ fontSize: 13.5, fontWeight: 600, color: "var(--ink)", flex: "1 1 100%" }}>
+            📝 Próxima prova · {diaSemanaDaProva(proxima).toLowerCase()}, {diaDaProva(proxima).slice(8, 10)}/{diaDaProva(proxima).slice(5, 7)}
+          </span>
+          {proxima.provas.map(p => {
+            const ae = p.avaliacao?.match(/^([12])AE$/)?.[1]
+            return (
+              <Link key={p.sigla} href={`/questoes?materia=${p.sigla}${ae ? `&ae=${ae}` : ""}`}
+                style={{ padding: "6px 12px", borderRadius: 999, background: "var(--olive)", color: "var(--canvas)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>
+                {p.sigla}{ae ? ` · ${ae}ª AE` : ""} → questões
+              </Link>
+            )
+          })}
+        </div>
+      )}
 
       <div
         style={{
@@ -255,9 +259,9 @@ export default async function PortalCfoHome() {
           alignContent: "flex-start",
         }}
       >
-        {cardsToShow.map(card => (
+        {cardsToShow.map((card, i) => (
           <div key={card.href} style={{ width: "calc((100% - 80px) / 3)", display: "flex", justifyContent: "center" }}>
-            <CardTile card={card} />
+            <CardTile card={card} isGold={i % 2 === 0} />
           </div>
         ))}
       </div>
