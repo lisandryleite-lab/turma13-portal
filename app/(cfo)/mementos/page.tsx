@@ -8,7 +8,7 @@ import { PDF_PARTS, type PdfPart } from "@/lib/mementos-pdfs"
 import { APOSTILA_PARTS, type ApostilaPart } from "@/lib/apostilas"
 import { hojeRecifeISO } from "@/lib/calendario-provas"
 import { tipoPorExtensao, tituloDeArquivo } from "@/lib/midia-embed"
-import { MIDIAS_DRIVE } from "@/lib/midias-drive"
+import { acervoAtivo } from "@/lib/acervo"
 import { disciplinasComFase } from "@/lib/disciplinas-cache"
 import { MementosClient } from "./mementos-client"
 
@@ -29,15 +29,18 @@ export default async function MementosPage({ searchParams }: {
     }),
     // situação (concluída / em andamento / pendente) e ordem pelo QTS da Turma 13
     disciplinasComFase(),
-    // vídeo / áudio / mapa mental por matéria (links do Drive ou YouTube)
+    // mapa mental por matéria (links do Drive). Vídeo e áudio saíram em nov/2026
+    // (não foram usados) — linhas antigas desses tipos no banco são ignoradas.
     // (tolerante: se a tabela ainda não existir no banco — antes do db:push — segue sem itens)
     prisma.mementoMidia.findMany({
+      where: { tipo: "mapa" },
       select: { id: true, materia: true, tipo: true, titulo: true, url: true, ordem: true },
       orderBy: [{ materia: "asc" }, { tipo: "asc" }, { ordem: "asc" }, { createdAt: "asc" }],
     }).catch(() => [] as { id: string; materia: string; tipo: string; titulo: string; url: string; ordem: number }[]),
   ])
 
   const nomeMap = new Map(disciplinas.map(d => [d.sigla, d.nome]))
+  const hoje = hojeRecifeISO()
 
   // matérias com PDF "Pernambuco Imortal" em /public/mementos/
   // (1 arquivo = <SIGLA>.pdf; várias partes = <SIGLA>-N.pdf, rotuladas no manifesto)
@@ -93,16 +96,12 @@ export default async function MementosPage({ searchParams }: {
       try { arquivos = await readdir(path.join(raiz, pasta)) } catch { continue }
       for (const [i, f] of arquivos.sort().entries()) {
         const tipo = tipoPorExtensao(f)
-        if (!tipo) continue
+        if (tipo !== "mapa") continue
         midiasLocais.push({ id: `file:${sigla}/${f}`, materia: sigla, tipo, titulo: tituloDeArquivo(f), url: `/midias/${encodeURIComponent(pasta)}/${encodeURIComponent(f)}`, ordem: -1000 + i })
       }
     }
   } catch { /* pasta ausente — sem mídias locais */ }
-  // mídias declaradas em código (links do Drive/YouTube) — não pesam no repositório
-  const midiasDrive: MidiaItem[] = Object.entries(MIDIAS_DRIVE).flatMap(([sigla, itens]) =>
-    itens.map((m, i) => ({ id: `drive:${sigla}/${i}`, materia: sigla.toUpperCase(), tipo: m.tipo, titulo: m.titulo, url: m.url, ordem: -500 + i }))
-  )
-  const todasMidias = [...midiasLocais, ...midiasDrive, ...midias].sort((a, b) => a.materia.localeCompare(b.materia) || a.tipo.localeCompare(b.tipo) || a.ordem - b.ordem)
+  const todasMidias = [...midiasLocais, ...midias].sort((a, b) => a.materia.localeCompare(b.materia) || a.tipo.localeCompare(b.tipo) || a.ordem - b.ordem)
 
   // matérias com memento — para a área de limpar
   const contMap = new Map<string, Set<string>>()
@@ -122,7 +121,8 @@ export default async function MementosPage({ searchParams }: {
       apostilaMaterias={apostilaMaterias}
       materiaInicial={materiaInicial}
       midias={todasMidias}
-      hojeISO={hojeRecifeISO()}
+      hojeISO={hoje}
+      acervo={acervoAtivo(hoje)}
     />
   )
 }

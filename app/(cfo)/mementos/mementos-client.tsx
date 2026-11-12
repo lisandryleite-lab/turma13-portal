@@ -7,7 +7,9 @@ import { renderMarkdown } from "@/lib/markdown"
 import { MEMENTO_PROPRIO } from "@/lib/mementos-pdfs"
 import { CALENDARIO_PROVAS, CALENDARIO_ATUALIZADO_EM, PROVAS_A_DEFINIR, diaDaProva, diaSemanaDaProva, periodo, provasPorMateria, situacao } from "@/lib/calendario-provas"
 import { FASES, type Fase } from "@/lib/disciplinas-fase"
-import { DRIVE_MEMENTOS_URL, MIDIA_INFO, embedDe, ehLocal, extensaoDe, type TipoMidia } from "@/lib/midia-embed"
+import { MIDIA_INFO, embedDe, ehLocal, extensaoDe, type TipoMidia } from "@/lib/midia-embed"
+import { SELO_ACERVO } from "@/lib/acervo"
+import { NotaParabens } from "@/components/nota-parabens"
 
 type MementoMeta = { id: string; materia: string; modulo: string; titulo: string; nome: string }
 type CurrentUser = { matricula: number; nomeGuerra: string }
@@ -43,11 +45,13 @@ const inputStyle: React.CSSProperties = {
   border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15,
 }
 
-export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias, apostilaMaterias, materiaInicial = null, midias, hojeISO }: {
+export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmin, currentUser, pdfMaterias, apostilaMaterias, materiaInicial = null, midias, hojeISO, acervo }: {
   mementos: MementoMeta[]; conteudoMaterias: ContMat[]; disciplinas: Disc[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]; apostilaMaterias: ApostilaMateria[]
   /** sigla vinda de ?materia= — abre a matéria já selecionada */
   materiaInicial?: string | null
   midias: Midia[]; hojeISO: string
+  /** provas teóricas encerradas: reta final em destaque, matérias no Acervo */
+  acervo: boolean
 }) {
   const router = useRouter()
   const [aba, setAba] = useState<Aba>("mementos")
@@ -70,7 +74,7 @@ export function MementosClient({ mementos, conteudoMaterias, disciplinas, isAdmi
         ))}
       </div>
 
-      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} apostilaMaterias={apostilaMaterias} materiaInicial={materiaInicial} midias={midias} hojeISO={hojeISO} />}
+      {aba === "mementos" && <Mementos mementos={mementos} isAdmin={isAdmin} currentUser={currentUser} pdfMaterias={pdfMaterias} disciplinas={disciplinas} apostilaMaterias={apostilaMaterias} materiaInicial={materiaInicial} midias={midias} hojeISO={hojeISO} acervo={acervo} />}
       {aba === "admin" && isAdmin && <Admin disciplinas={disciplinas} conteudoMaterias={conteudoMaterias} onImport={() => router.refresh()} />}
 
       <footer style={{ marginTop: 40, fontSize: 13, color: "var(--ink-60)", textAlign: "center" }}>
@@ -185,12 +189,12 @@ function Gaivotas({ materia, isAdmin, currentUser }: { materia: string; isAdmin:
 
 // ── Mementos (grid de matérias → abas fixas por matéria) ──
 // Ordem padronizada em TODAS as matérias; o que não existir mostra "em breve".
-type SubAba = "memento" | "apostila" | "video" | "audio" | "mapa" | "questoes" | "tutor" | "gaivotas"
+type SubAba = "memento" | "apostila" | "mapa" | "questoes" | "tutor" | "gaivotas"
 
-function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, apostilaMaterias, materiaInicial, midias: midiasIniciais, hojeISO }: {
+function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, apostilaMaterias, materiaInicial, midias: midiasIniciais, hojeISO, acervo }: {
   mementos: MementoMeta[]; isAdmin: boolean; currentUser: CurrentUser; pdfMaterias: PdfMateria[]
   disciplinas: Disc[]; apostilaMaterias: ApostilaMateria[]; materiaInicial: string | null
-  midias: Midia[]; hojeISO: string
+  midias: Midia[]; hojeISO: string; acervo: boolean
 }) {
   const comPdf = new Set(pdfMaterias.map(p => p.sigla))
   const pdfPartsMap = new Map(pdfMaterias.map(p => [p.sigla, p.parts]))
@@ -280,8 +284,6 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
     const subAbas: [SubAba, string, boolean][] = [
       ["memento", mementoLabel, temMemento],
       ["apostila", "Apostila", temApostila],
-      ["video", "🎬 Memento em vídeo", midiasDe(sigla, "video").length > 0],
-      ["audio", "🎧 Memento em áudio", midiasDe(sigla, "audio").length > 0],
       ["mapa", "🧠 Mapa mental", midiasDe(sigla, "mapa").length > 0],
       ["questoes", "Questões", true],
       ["tutor", "✦ Tutor IA", true],
@@ -295,7 +297,8 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
         <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.3rem", color: "var(--olive)", margin: "10px 0 10px" }}>
           {sigla}{grupo?.nome && grupo.nome !== sigla ? ` — ${grupo.nome}` : ""}
         </h2>
-        {prova && (
+        {acervo && <SeloAcervo />}
+        {prova && !acervo && (
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px", borderRadius: 999, marginBottom: 14, fontSize: 13, fontWeight: 600,
             background: situacao(prova.semana, hojeISO) === "passada" ? "var(--surface)" : "rgba(181,147,63,0.16)",
             color: situacao(prova.semana, hojeISO) === "passada" ? "var(--ink-60)" : "var(--olive)", border: "1px solid rgba(181,147,63,0.45)" }}>
@@ -334,7 +337,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
             ? <PdfOriginal sigla={sigla} parts={apostilaPartsMap.get(sigla) ?? []} base="apostilas" labelVazio="apostila" />
             : <EmBreve texto={<>Apostila de <strong>{sigla}</strong> <em>em breve</em>.</>} concluida={concluida} />
         )}
-        {(subAba === "video" || subAba === "audio" || subAba === "mapa") && (
+        {subAba === "mapa" && (
           <MidiaTab key={`${sigla}-${subAba}`} sigla={sigla} tipo={subAba} itens={midiasDe(sigla, subAba)} isAdmin={isAdmin} concluida={concluida}
             onAdd={m => setMidias(l => [...l, m])} onRemove={id => setMidias(l => l.filter(x => x.id !== id))} />
         )}
@@ -346,12 +349,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
   }
 
   // ── grade de matérias (estilo app) ──
-  return (
-    <div>
-      <NotaMaciel />
-      <CalendarioProvas hojeISO={hojeISO} nomes={nomes} onAbrir={sigla => abrirMateria(sigla)} />
-      <RetaFinal />
-      {materias.length === 0 ? (
+  const grade = materias.length === 0 ? (
         <p style={{ color: "var(--ink-60)" }}>Nenhum memento publicado ainda.</p>
       ) : (
         <>
@@ -400,7 +398,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
               : temPdf ? "PDF Pernambuco Imortal"
               : e.items.length > 0 ? "PDF Pernambuco Imortal"
               : temApostila ? "Apostila"
-              : temMidia ? "Vídeo / áudio"
+              : temMidia ? "Mapa mental"
               : "em breve"
             const subInicial: SubAba = (e.items.length > 0 || temPdf) ? "memento" : temApostila ? "apostila"
               : (midias.find(m => m.materia === sigla)?.tipo as SubAba | undefined) ?? "memento"
@@ -437,23 +435,60 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
             ))
           })()}
         </>
-      )}
+      )
+
+  // Depois das provas teóricas: nota à turma + reta final em destaque, e as
+  // matérias recolhidas no "Acervo do curso" (consulta — nada foi apagado).
+  if (acervo) {
+    return (
+      <div>
+        <NotaParabens />
+        <RetaFinal aberta />
+        <details style={{ marginBottom: 16, borderRadius: 16, border: "1px solid rgba(58,74,58,0.2)", background: "var(--surface)", padding: "4px 12px 12px" }}>
+          <summary style={{ cursor: "pointer", padding: "10px 4px", display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontSize: 20 }}>🗄️</span>
+            <span style={{ minWidth: 0 }}>
+              <span style={{ display: "block", fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "1.05rem", color: "var(--olive)" }}>Acervo do curso</span>
+              <span style={{ display: "block", fontSize: 12.5, color: "var(--ink-60)" }}>{materias.length} matérias · mementos, apostilas e questões para consulta</span>
+            </span>
+          </summary>
+          <SeloAcervo />
+          <NotaMaciel />
+          <Link href="/questoes" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 16, fontSize: 14, fontWeight: 600, color: "var(--olive)", textDecoration: "none" }}>
+            ❓ Banco de questões (revisão livre) →
+          </Link>
+          {grade}
+        </details>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <NotaMaciel />
+      <CalendarioProvas hojeISO={hojeISO} nomes={nomes} onAbrir={sigla => abrirMateria(sigla)} />
+      <RetaFinal />
+      {grade}
     </div>
   )
 }
 
-// Mensagem padrão de conteúdo ainda não publicado (com atalho para a pasta do Drive)
-function EmBreve({ texto, concluida, drive }: { texto: React.ReactNode; concluida?: boolean; drive?: boolean }) {
+// Selo do material antigo (modo Acervo)
+function SeloAcervo() {
+  return (
+    <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px", borderRadius: 999, marginBottom: 14, fontSize: 12.5, fontWeight: 600,
+      background: "rgba(181,147,63,0.14)", color: "var(--olive)", border: "1px solid rgba(181,147,63,0.45)" }}>
+      🗄️ Acervo · {SELO_ACERVO}
+    </div>
+  )
+}
+
+// Mensagem padrão de conteúdo ainda não publicado
+function EmBreve({ texto, concluida }: { texto: React.ReactNode; concluida?: boolean }) {
   return (
     <div style={cardBox}>
       <p style={{ margin: 0, fontSize: 14.5, color: "var(--ink-60)", lineHeight: 1.6 }}>{texto}</p>
       {concluida && <p style={{ margin: "6px 0 0", fontSize: 13, color: "var(--ink-60)" }}>Matéria concluída — o material será publicado conforme o calendário de estudos.</p>}
-      {drive && (
-        <a href={DRIVE_MEMENTOS_URL} target="_blank" rel="noopener noreferrer"
-          style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 12, fontSize: 13.5, fontWeight: 600, color: "var(--olive)", textDecoration: "none" }}>
-          📁 Ver pasta de mementos no Drive ↗
-        </a>
-      )}
     </div>
   )
 }
@@ -554,7 +589,7 @@ function CalendarioProvas({ hojeISO, nomes, onAbrir }: { hojeISO: string; nomes:
   )
 }
 
-// ── Vídeo / áudio / mapa mental por matéria (links do Drive ou YouTube) ──
+// ── Mapa mental por matéria (arquivo local ou link do Drive) ──
 function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
   sigla: string; tipo: TipoMidia; itens: Midia[]; isAdmin: boolean; concluida: boolean
   onAdd: (m: Midia) => void; onRemove: (id: string) => void
@@ -586,16 +621,12 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
   const sel = itens[Math.min(i, Math.max(0, itens.length - 1))]
   const local = sel ? ehLocal(sel.url) : false
   const embed = sel && !local ? embedDe(sel.url) : null
-  // O visualizador do Drive desenha a própria moldura (nome do arquivo + controles)
-  // acima do player. Em 120px o áudio ficava cortado dentro de uma caixa preta e
-  // parecia não existir. 260px cabe a moldura inteira.
-  const altura = tipo === "audio" ? 260 : "70vh"
   const linkStyle: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, border: "1px solid var(--olive)", background: "#fff", color: "var(--olive)", fontWeight: 600, fontSize: 14, textDecoration: "none" }
 
   return (
     <div>
       {itens.length === 0 ? (
-        <EmBreve drive concluida={concluida} texto={<>{info.icone} {info.rotulo} de <strong>{sigla}</strong> <em>em breve</em>.</>} />
+        <EmBreve concluida={concluida} texto={<>{info.icone} {info.rotulo} de <strong>{sigla}</strong> <em>em breve</em>.</>} />
       ) : (
         <div>
           {itens.length > 1 && (
@@ -616,12 +647,9 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
             {isAdmin && !local && <button onClick={() => remover(sel.id)} style={{ ...linkStyle, color: "var(--red)", borderColor: "var(--red)", cursor: "pointer" }}>✕ Remover</button>}
           </div>
           {local ? (
-            <PlayerLocal tipo={tipo} url={sel.url} titulo={`${info.rotulo} ${sigla} — ${sel.titulo}`} />
+            <PlayerLocal url={sel.url} titulo={`${info.rotulo} ${sigla} — ${sel.titulo}`} />
           ) : embed?.src ? (
-            <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(58,74,58,0.15)",
-              // fundo preto só faz sentido para vídeo; no áudio ele escondia a moldura do Drive
-              background: tipo === "video" ? "#000" : "var(--surface)",
-              ...(tipo === "video" ? { aspectRatio: "16 / 9" } : { height: altura }) }}>
+            <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(58,74,58,0.15)", background: "var(--surface)", height: "70vh" }}>
               <iframe key={embed.src} src={embed.src} title={`${info.rotulo} ${sigla} — ${sel.titulo}`} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen
                 style={{ width: "100%", height: "100%", border: "none", display: "block" }} />
             </div>
@@ -629,12 +657,8 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
             <div style={cardBox}><p style={{ margin: 0, fontSize: 14, color: "var(--ink-60)" }}>Este link não pode ser embutido aqui — use “Abrir em nova aba”.</p></div>
           )}
           <p style={{ marginTop: 8, fontSize: 12, color: "var(--ink-60)" }}>
-            {tipo === "mapa" ? "Mapa mental" : "Conteúdo"} gerado com NotebookLM a partir do memento da matéria.
-            {local
-              ? " Se o player não carregar, use “Baixar”."
-              : tipo === "audio"
-                ? " O Drive nem sempre toca .m4a embutido; se o player não aparecer, use “Abrir em nova aba”."
-                : " Se o player não carregar, abra em nova aba."}
+            Mapa mental gerado com NotebookLM a partir do memento da matéria.
+            {local ? " Se não carregar, use “Baixar”." : " Se não carregar, abra em nova aba."}
           </p>
         </div>
       )}
@@ -645,8 +669,7 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
             + Publicar {info.curto} de {sigla} <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>(admin)</span>
           </p>
           <p style={{ margin: "0 0 10px", fontSize: 12.5, color: "var(--ink-60)", lineHeight: 1.5 }}>
-            Suba o arquivo na pasta <a href={DRIVE_MEMENTOS_URL} target="_blank" rel="noopener noreferrer" style={{ color: "var(--olive)" }}>MEMENTOS (MATERIAL DE ESTUDO)</a> do Drive,
-            marque “Qualquer pessoa com o link”, copie o link e cole abaixo. Links do YouTube também funcionam.
+            Suba o arquivo no Drive, marque “Qualquer pessoa com o link”, copie o link e cole abaixo.
           </p>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <input value={titulo} onChange={e => setTitulo(e.target.value)} placeholder={`Título (ex.: ${info.rotulo} — Módulo 1)`} style={{ ...inputStyle, flex: "1 1 200px" }} />
@@ -663,28 +686,9 @@ function MidiaTab({ sigla, tipo, itens, isAdmin, concluida, onAdd, onRemove }: {
   )
 }
 
-// Player para arquivos servidos pelo próprio portal (/public/midias/<SIGLA>/…)
-function PlayerLocal({ tipo, url, titulo }: { tipo: TipoMidia; url: string; titulo: string }) {
+// Mapa mental servido pelo próprio portal (/public/midias/<SIGLA>/…): PDF ou imagem
+function PlayerLocal({ url, titulo }: { url: string; titulo: string }) {
   const borda: React.CSSProperties = { borderRadius: 12, border: "1px solid rgba(58,74,58,0.15)", overflow: "hidden" }
-  if (tipo === "video") {
-    return (
-      <div style={{ ...borda, background: "#000" }}>
-        <video key={url} src={url} controls playsInline preload="metadata" style={{ width: "100%", maxHeight: "70vh", display: "block" }}>
-          Seu navegador não reproduz este vídeo. <a href={url} download>Baixe o arquivo</a>.
-        </video>
-      </div>
-    )
-  }
-  if (tipo === "audio") {
-    return (
-      <div style={{ ...borda, background: "var(--surface)", padding: "18px 16px", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-        <span style={{ fontSize: 34 }}>🎧</span>
-        <audio key={url} src={url} controls preload="metadata" style={{ flex: "1 1 260px", minWidth: 0 }}>
-          Seu navegador não reproduz este áudio. <a href={url} download>Baixe o arquivo</a>.
-        </audio>
-      </div>
-    )
-  }
   const ext = extensaoDe(url)
   if (ext === "pdf") {
     return (

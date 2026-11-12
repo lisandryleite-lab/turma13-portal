@@ -1,18 +1,16 @@
 // Converte links "de compartilhar" (Google Drive / YouTube) em URLs embutíveis.
 // Puro, sem dependências — pode ser usado no cliente.
+//
+// Nov/2026: "Memento em vídeo" e "Memento em áudio" saíram do portal (não
+// foram usados). Sobra só o mapa mental.
 
-export type TipoMidia = "video" | "audio" | "mapa"
+export type TipoMidia = "mapa"
 
-export const TIPOS_MIDIA: TipoMidia[] = ["video", "audio", "mapa"]
+export const TIPOS_MIDIA: TipoMidia[] = ["mapa"]
 
 export const MIDIA_INFO: Record<TipoMidia, { rotulo: string; icone: string; curto: string }> = {
-  video: { rotulo: "Memento em vídeo", icone: "🎬", curto: "vídeo" },
-  audio: { rotulo: "Memento em áudio", icone: "🎧", curto: "áudio" },
-  mapa:  { rotulo: "Mapa mental",      icone: "🧠", curto: "mapa mental" },
+  mapa: { rotulo: "Mapa mental", icone: "🧠", curto: "mapa mental" },
 }
-
-// Pasta da turma no Drive com o material de estudo (mementos, vídeos, áudios…)
-export const DRIVE_MEMENTOS_URL = "https://drive.google.com/drive/folders/1f6uAKOxgnEWQDNaAgslZLW_BG0RJG-ht"
 
 export type Embed = { origem: "drive" | "youtube" | "outro"; src: string | null }
 
@@ -36,8 +34,6 @@ export function urlValida(url: string): boolean {
 
 // Arquivos locais em /public/midias/<SIGLA>/ — tipo pela extensão.
 const EXT_TIPO: Record<string, TipoMidia> = {
-  mp4: "video", webm: "video", mov: "video", m4v: "video",
-  m4a: "audio", mp3: "audio", wav: "audio", ogg: "audio", aac: "audio", opus: "audio",
   pdf: "mapa", png: "mapa", jpg: "mapa", jpeg: "mapa", webp: "mapa", svg: "mapa",
 }
 export function tipoPorExtensao(nome: string): TipoMidia | null {

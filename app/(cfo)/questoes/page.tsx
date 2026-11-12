@@ -2,6 +2,8 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import { adminAtivo } from "@/lib/view"
+import { acervoAtivo } from "@/lib/acervo"
+import { hojeRecifeISO } from "@/lib/calendario-provas"
 import { QuestoesClient } from "./questoes-client"
 
 export default async function QuestoesPage({ searchParams }: { searchParams: Promise<{ materia?: string }> }) {
@@ -53,6 +55,7 @@ export default async function QuestoesPage({ searchParams }: { searchParams: Pro
       totalResp={respostas.length}
       totalAcertos={respostas.filter(r => r.acertou).length}
       initialMateria={initialMateria}
+      acervo={acervoAtivo(hojeRecifeISO())}
     />
   )
 }
