@@ -3,6 +3,9 @@ import { auth } from "@/lib/auth"
 import { adminAtivo } from "@/lib/view"
 import { ViewToggle } from "../view-toggle"
 import { ContagemCFO } from "@/components/contagem-cfo"
+import { NotaParabens } from "@/components/nota-parabens"
+import { acervoAtivo } from "@/lib/acervo"
+import { hojeRecifeISO } from "@/lib/calendario-provas"
 
 // A contagem regressiva tem que ser recalculada a cada acesso, nunca servida de cache.
 export const dynamic = "force-dynamic"
@@ -201,7 +204,15 @@ export default async function PortalCfoHome() {
   const isAdmin = !!session?.user?.isAdmin
   const admView = await adminAtivo(isAdmin)
 
-  const cardsToShow = [...cards, cardSenha]
+  // Fim das provas teóricas: Questões sai da tela inicial (segue no Acervo, dentro
+  // de Mementos) e o card de Mementos passa a apontar a reta final.
+  const acervo = acervoAtivo(hojeRecifeISO())
+  const cardsToShow = [
+    ...(acervo
+      ? cards.filter(c => c.href !== "/questoes").map(c => (c.href === "/mementos" ? { ...c, nota: "Reta final · Acervo" } : c))
+      : cards),
+    cardSenha,
+  ]
 
   return (
     <main
@@ -241,6 +252,12 @@ export default async function PortalCfoHome() {
       <div style={{ width: "100%", maxWidth: 460, marginTop: -28, marginBottom: 36 }}>
         <ContagemCFO tema="olive" compacto />
       </div>
+
+      {acervo && (
+        <div style={{ width: "100%", maxWidth: 460, marginTop: -16, marginBottom: 28 }}>
+          <NotaParabens />
+        </div>
+      )}
 
       <div
         style={{

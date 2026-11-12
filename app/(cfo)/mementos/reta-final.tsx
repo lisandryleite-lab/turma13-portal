@@ -12,7 +12,7 @@ const CHAVE = "cfo:mapom:material:v1"
 const caixa: React.CSSProperties = { borderRadius: 12, border: "1px solid rgba(58,74,58,0.15)", background: "#fff", marginTop: 8 }
 const resumo: React.CSSProperties = { cursor: "pointer", padding: "11px 14px", fontSize: 14, fontWeight: 600, color: "var(--olive)" }
 
-export function RetaFinal() {
+export function RetaFinal({ aberta = false }: { aberta?: boolean }) {
   const [marcados, setMarcados] = useState<Set<string>>(new Set())
   useEffect(() => {
     try { setMarcados(new Set(JSON.parse(localStorage.getItem(CHAVE) || "[]"))) } catch { /* sem armazenamento — lista começa vazia */ }
@@ -45,7 +45,7 @@ export function RetaFinal() {
   )
 
   return (
-    <details style={{ marginBottom: 16, borderRadius: 16, border: "1px solid rgba(181,147,63,0.45)", background: "var(--surface)", padding: "4px 12px 12px" }}>
+    <details open={aberta} style={{ marginBottom: 16, borderRadius: 16, border: "1px solid rgba(181,147,63,0.45)", background: "var(--surface)", padding: "4px 12px 12px" }}>
       <summary style={{ cursor: "pointer", padding: "10px 4px", display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ fontSize: 20 }}>🎖️</span>
         <span style={{ minWidth: 0 }}>

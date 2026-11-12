@@ -5,7 +5,7 @@ import { TIPOS_MIDIA, urlValida, type TipoMidia } from "@/lib/midia-embed"
 
 const sel = { id: true, materia: true, tipo: true, titulo: true, url: true, ordem: true } as const
 
-// GET ?materia= -> mídias (vídeo / áudio / mapa mental) da matéria
+// GET ?materia= -> mapas mentais da matéria
 export async function GET(req: NextRequest) {
   const session = await auth()
   if (!session?.user) return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   const materia = (req.nextUrl.searchParams.get("materia") || "").trim().toUpperCase()
   const where = materia ? { materia } : {}
   const itens = await prisma.mementoMidia.findMany({
-    where, select: sel,
+    where: { ...where, tipo: { in: TIPOS_MIDIA } }, select: sel,
     orderBy: [{ materia: "asc" }, { tipo: "asc" }, { ordem: "asc" }, { createdAt: "asc" }],
   })
   return NextResponse.json(itens)
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
   const url = String(body.url || "").trim()
 
   if (!materia) return NextResponse.json({ error: "Informe a matéria." }, { status: 400 })
-  if (!TIPOS_MIDIA.includes(tipo)) return NextResponse.json({ error: "Tipo inválido (video, audio ou mapa)." }, { status: 400 })
+  if (!TIPOS_MIDIA.includes(tipo)) return NextResponse.json({ error: "Tipo inválido (só mapa mental)." }, { status: 400 })
   if (!titulo || titulo.length > 120) return NextResponse.json({ error: "Título obrigatório (máx. 120)." }, { status: 400 })
   if (!urlValida(url)) return NextResponse.json({ error: "Cole um link https:// válido (Drive ou YouTube)." }, { status: 400 })
 

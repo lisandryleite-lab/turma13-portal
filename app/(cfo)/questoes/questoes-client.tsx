@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { moduloLabel, moduloLabelCurto } from "@/lib/modulos-titulos"
+import { SELO_ACERVO } from "@/lib/acervo"
 
 type Materia = { sigla: string; nome: string; total: number; modulos: string[] }
 
@@ -278,10 +279,12 @@ const inputStyle: React.CSSProperties = {
 }
 
 export function QuestoesClient({
-  materias, disciplinas, isAdmin, stats, totalResp, totalAcertos, initialMateria = "",
+  materias, disciplinas, isAdmin, stats, totalResp, totalAcertos, initialMateria = "", acervo = false,
 }: {
   materias: Materia[]; disciplinas: Disc[]; isAdmin: boolean
   stats: Stat[]; totalResp: number; totalAcertos: number; initialMateria?: string
+  /** provas teóricas encerradas: banco vira acervo de revisão livre */
+  acervo?: boolean
 }) {
   const router = useRouter()
   const [aba, setAba] = useState<Aba>("resolver")
@@ -301,6 +304,13 @@ export function QuestoesClient({
       <h1 style={{ fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "1.9rem", color: "var(--olive)", marginTop: 16, marginBottom: 16 }}>
         Questões
       </h1>
+      {acervo && (
+        <div style={{ padding: "10px 14px", borderRadius: 12, marginBottom: 18, fontSize: 13.5, lineHeight: 1.5,
+          background: "rgba(181,147,63,0.14)", color: "var(--olive)", border: "1px solid rgba(181,147,63,0.45)" }}>
+          🗄️ <strong>Acervo</strong> · As provas teóricas terminaram em 11/11. O banco segue aqui para revisão livre,
+          com o seu histórico de acertos. {SELO_ACERVO}.
+        </div>
+      )}
 
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 22 }}>
         {abas.map(([t, rot]) => (
