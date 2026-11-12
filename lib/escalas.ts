@@ -29,8 +29,10 @@ export const MATRICULAS_ORDEM = [
 // semana 43 passou para a 40): semana 40 → P1=23 RODOLFO MOURA, P3=26 ANDRÉ,
 // P4=37 PABLO TORRES. Assim cada aluno faz P4 → P3 → P1 em semanas seguidas,
 // folga uma semana e só então é xerife — nunca duas funções na mesma semana.
-const REF_SEMANA = 40
-const REF_P1_IDX = MATRICULAS_ORDEM.indexOf(23)
+// Nov/2026: reposicionada a pedido — semana 44 (09/11/2026) → P1=57 CLEYTON,
+// P3=60 JOÃO NUNES, P4=65 KAUHANNI; daí segue a antiguidade normalmente.
+const REF_SEMANA = 44
+const REF_P1_IDX = MATRICULAS_ORDEM.indexOf(57)
 
 export function calcularServico(semana: number): {
   p1: number | null
