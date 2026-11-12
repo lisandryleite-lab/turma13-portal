@@ -19,6 +19,7 @@ export const MARCOS_LINHA: MarcoLinha[] = [
   { id: "disciplinas", rotulo: "Fim das disciplinas" },
   { id: "ranking", rotulo: "Divulgação do ranking" },
   { id: "mapom", rotulo: "MAPOM", data: "2026-11-29", fim: "2026-12-04", nota: "data possível" },
+  { id: "escolha", rotulo: "Escolha do batalhão", data: "2026-12-07", nota: "data possível" },
   { id: "culto", rotulo: "Culto ecumênico e cerimônia militar", data: "2026-12-17" },
   { id: "formatura", rotulo: "Formatura e baile", data: "2027-01-23", nota: "baile" },
 ]
