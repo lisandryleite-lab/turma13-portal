@@ -1,18 +1,29 @@
 import { dataCurta, marcosComSituacao } from "@/lib/marcos-cfo"
 
-// Linha do tempo minimalista dos marcos da reta final (página inicial).
-// Server component — /inicio é force-dynamic, então a situação de cada marco
-// é recalculada a cada acesso.
+// Linha do tempo minimalista dos marcos da reta final (página inicial), numa
+// aba recolhida: a linha de resumo mostra o próximo evento e abre ao tocar.
+// Server component (<details> nativo) — /inicio é force-dynamic, então a
+// situação de cada marco é recalculada a cada acesso.
 export function MarcosCFO() {
   const marcos = marcosComSituacao()
+  const proximo = marcos.find(m => m.situacao === "agora" || m.situacao === "proximo")
+  const resumo = !proximo ? "Todos os eventos concluídos"
+    : proximo.situacao === "agora" ? `Agora: ${proximo.rotulo}`
+    : `Próximo: ${proximo.rotulo}${proximo.data ? ` · ${dataCurta(proximo.data)}` : ""}${proximo.dias ? ` · em ${proximo.dias} ${proximo.dias === 1 ? "dia" : "dias"}` : ""}`
 
   return (
-    <section style={{ width: "100%", padding: "16px 18px 6px", borderRadius: 16, background: "#fff",
+    <details className="marcos-cfo" style={{ width: "100%", padding: "0 18px", borderRadius: 16, background: "#fff",
       border: "1px solid rgba(181,147,63,0.45)", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
-      <p style={{ margin: "0 0 12px", fontSize: 11, fontWeight: 700, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-        Rumo ao aspirantado
-      </p>
-      <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+      <summary style={{ listStyle: "none", cursor: "pointer", padding: "13px 0", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+        <span style={{ minWidth: 0 }}>
+          <span style={{ display: "block", fontSize: 11, fontWeight: 700, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            Demais eventos
+          </span>
+          <span style={{ display: "block", fontSize: 13.5, fontWeight: 600, color: "var(--olive)", marginTop: 2 }}>{resumo}</span>
+        </span>
+        <span className="marcos-cfo-seta" aria-hidden style={{ fontSize: 13, color: "var(--ink-60)", flexShrink: 0 }}>▾</span>
+      </summary>
+      <ol style={{ listStyle: "none", margin: "4px 0 0", padding: "0 0 6px" }}>
         {marcos.map((m, i) => {
           const feito = m.situacao === "feito"
           const destaque = m.situacao === "agora" || m.situacao === "proximo"
@@ -55,6 +66,6 @@ export function MarcosCFO() {
           )
         })}
       </ol>
-    </section>
+    </details>
   )
 }

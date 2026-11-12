@@ -71,7 +71,7 @@ export function diasParaFimCFO(agora: Date = new Date()): number {
 export type MarcoCFO = { id: string; rotulo: string; artigo: "o" | "a"; inicio: Date; fim?: Date; nota?: string }
 
 export const MARCOS_CFO: MarcoCFO[] = [
-  { id: "mapom", rotulo: "MAPOM", artigo: "o", inicio: new Date("2026-11-29T00:00:00.000Z"), fim: new Date("2026-12-04T00:00:00.000Z"), nota: "data possível · 29/11 a 04/12" },
+  { id: "mapom", rotulo: "MAPOM", artigo: "o", inicio: new Date("2026-11-23T00:00:00.000Z"), fim: new Date("2026-11-27T00:00:00.000Z"), nota: "data provável · 23 a 27/11" },
   { id: "escolha", rotulo: "escolha do batalhão", artigo: "a", inicio: new Date("2026-12-07T00:00:00.000Z"), nota: "data possível · 07/12/2026" },
   { id: "culto", rotulo: "culto ecumênico e cerimônia militar", artigo: "o", inicio: new Date("2026-12-17T00:00:00.000Z") },
   { id: "baile", rotulo: "baile", artigo: "o", inicio: new Date("2027-01-23T00:00:00.000Z") },

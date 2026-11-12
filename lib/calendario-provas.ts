@@ -175,7 +175,7 @@ export const CALENDARIO_PROVAS: SemanaCalendario[] = [
       { sigla: "POE", avaliacao: "2AE" },
     ],
     // QTS da semana 44: marcas de prova na quarta, POE (8h–9h40) e DPPM (10h–11h40).
-    obs: "Quarta 11/11: DPPM e POE — as últimas provas teóricas do curso. Depois, só o MAPOM (29/11 a 04/12).",
+    obs: "Quarta 11/11: DPPM e POE — as últimas provas teóricas do curso. Depois, só o MAPOM (23 a 27/11).",
   },
 ]
 
