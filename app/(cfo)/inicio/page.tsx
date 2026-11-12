@@ -4,6 +4,7 @@ import { adminAtivo } from "@/lib/view"
 import { ViewToggle } from "../view-toggle"
 import { ContagemCFO } from "@/components/contagem-cfo"
 import { NotaParabens } from "@/components/nota-parabens"
+import { MarcosCFO } from "@/components/marcos-cfo"
 import { acervoAtivo } from "@/lib/acervo"
 import { hojeRecifeISO } from "@/lib/calendario-provas"
 
@@ -250,7 +251,8 @@ export default async function PortalCfoHome() {
 
       {/* Contagem regressiva para o fim do CFO — esta é a página inicial do portal */}
       <div style={{ width: "100%", maxWidth: 460, marginTop: -28, marginBottom: 36 }}>
-        <ContagemCFO tema="olive" compacto />
+        {/* Depois das provas teóricas: só os marcos até o aspirantado */}
+        {acervo ? <MarcosCFO /> : <ContagemCFO tema="olive" compacto />}
       </div>
 
       {acervo && (

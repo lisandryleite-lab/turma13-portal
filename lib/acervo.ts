@@ -20,7 +20,6 @@ export const SELO_ACERVO = "Material de turmas anteriores — pode estar desatua
 /** Nota à turma pelo fim das provas teóricas. */
 export const NOTA_PARABENS = {
   titulo: "Missão cumprida: fim das provas teóricas",
-  resumo: "11/11/2026 · DPPM e POE fecharam as avaliações teóricas do CFO",
   paragrafos: [
     "Turma, com DPPM e POE na quarta, 11/11, encerramos oficialmente as avaliações teóricas do CFO 2026.",
     "Foram meses de estudo de madrugada, plantão emendado com prova, memento impresso, questão resolvida no intervalo e muita gaivota trocada. Cada um sabe o quanto custou chegar até aqui.",

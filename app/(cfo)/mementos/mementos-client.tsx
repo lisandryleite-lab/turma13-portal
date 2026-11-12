@@ -39,7 +39,8 @@ const dmyCurto = (iso: string) => { const [, m, d] = iso.split("-"); return `${d
 /** "1AE" → "1ª AE" (rótulo da avaliação no calendário de provas) */
 const avaliacaoLabel = (a?: string) => (a ? a.replace(/^(\d+)\s*AE$/i, "$1ª AE") : "")
 
-const cardBox: React.CSSProperties = { padding: 16, borderRadius: 12, background: "var(--surface)" }
+const gradeCartoes: React.CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 12 }
+const cardBox: React.CSSProperties ={ padding: 16, borderRadius: 12, background: "var(--surface)" }
 const inputStyle: React.CSSProperties = {
   width: "100%", padding: "10px 12px", borderRadius: 8,
   border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15,
@@ -388,8 +389,17 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
                   {sec.rot} <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>({sec.itens.length})</span>
                   <span style={{ fontWeight: 400, color: "var(--ink-60)", textTransform: "none", letterSpacing: 0, fontSize: 12 }}> · {SUB_FASE[sec.fase]}</span>
                 </h3>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 12 }}>
-          {sec.itens.map(([sigla, e]) => {
+        <div style={gradeCartoes}>
+          {sec.itens.map(cartao)}
+        </div>
+              </section>
+            ))
+          })()}
+        </>
+      )
+
+  // cartão de uma matéria na grade
+  function cartao([sigla, e]: (typeof materias)[number]) {
             const temPdf = comPdf.has(sigla)
             const temApostila = comApostila.has(sigla)
             const temMidia = midias.some(m => m.materia === sigla)
@@ -429,17 +439,15 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
                 <span style={{ fontSize: 11.5, color: vazio ? "var(--ink-60)" : "var(--gold)", fontWeight: 600 }}>{rodape} ›</span>
               </button>
             )
-          })}
-        </div>
-              </section>
-            ))
-          })()}
-        </>
-      )
+  }
 
   // Depois das provas teóricas: nota à turma + reta final em destaque, e as
   // matérias recolhidas no "Acervo do curso" (consulta — nada foi apagado).
+  // Sem divisão por situação (todas terminaram): primeiro Mementos, depois Questões.
   if (acervo) {
+    const termo = semAcento(busca.trim())
+    const achadas = materias.filter(([sg, e]) => bate(`${sg} ${e.nome} ${e.items.map(i => i.titulo).join(" ")}`, termo))
+    const tituloSecao: React.CSSProperties = { margin: "4px 0 10px", fontSize: 13, fontWeight: 700, color: "var(--olive)", textTransform: "uppercase", letterSpacing: "0.06em" }
     return (
       <div>
         <NotaParabens />
@@ -454,10 +462,23 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
           </summary>
           <SeloAcervo />
           <NotaMaciel />
-          <Link href="/questoes" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 16, fontSize: 14, fontWeight: 600, color: "var(--olive)", textDecoration: "none" }}>
-            ❓ Banco de questões (revisão livre) →
+
+          <h3 style={tituloSecao}>Mementos <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>({materias.length})</span></h3>
+          <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="🔍 Buscar matéria ou assunto do memento"
+            style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15, marginBottom: 12 }} />
+          {achadas.length === 0
+            ? <p style={{ color: "var(--ink-60)" }}>Nenhuma matéria encontrada.</p>
+            : <div style={gradeCartoes}>{achadas.map(cartao)}</div>}
+
+          <h3 style={{ ...tituloSecao, marginTop: 24 }}>Questões</h3>
+          <Link href="/questoes" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "16px 18px", borderRadius: 16,
+            background: "var(--olive)", color: "var(--canvas)", textDecoration: "none", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
+            <span style={{ minWidth: 0 }}>
+              <span style={{ display: "block", fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "1.1rem" }}>❓ Banco de questões</span>
+              <span style={{ display: "block", fontSize: 12.5, opacity: 0.85 }}>Revisão livre por matéria, com o seu histórico de acertos</span>
+            </span>
+            <span style={{ fontSize: 20, flexShrink: 0 }}>→</span>
           </Link>
-          {grade}
         </details>
       </div>
     )
