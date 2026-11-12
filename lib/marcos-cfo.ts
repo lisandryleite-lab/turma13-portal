@@ -16,12 +16,13 @@ export type MarcoLinha = {
 
 export const MARCOS_LINHA: MarcoLinha[] = [
   { id: "provas", rotulo: "Fim das provas teóricas", data: "2026-11-11" },
-  { id: "disciplinas", rotulo: "Fim das disciplinas" },
-  { id: "ranking", rotulo: "Divulgação do ranking" },
-  { id: "mapom", rotulo: "MAPOM", data: "2026-11-29", fim: "2026-12-04", nota: "data possível" },
+  { id: "disciplinas", rotulo: "Fim das disciplinas", data: "2026-11-20", nota: "data provável" },
+  { id: "mapom", rotulo: "MAPOM", data: "2026-11-23", fim: "2026-11-27", nota: "data provável" },
+  { id: "ranking", rotulo: "Divulgação do ranking", data: "2026-11-30", nota: "data provável" },
   { id: "escolha", rotulo: "Escolha do batalhão", data: "2026-12-07", nota: "data possível" },
   { id: "culto", rotulo: "Culto ecumênico e cerimônia militar", data: "2026-12-17" },
-  { id: "formatura", rotulo: "Formatura e baile", data: "2027-01-23", nota: "baile" },
+  { id: "formatura", rotulo: "Formatura", data: "2026-12-18" },
+  { id: "baile", rotulo: "Baile", data: "2027-01-23" },
 ]
 
 export type SituacaoMarco = "feito" | "agora" | "proximo" | "futuro"

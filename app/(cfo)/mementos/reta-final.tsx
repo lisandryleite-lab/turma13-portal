@@ -75,7 +75,7 @@ export function RetaFinal({ aberta = false }: { aberta?: boolean }) {
         </details>
       ))}
 
-      <p style={{ margin: "16px 4px 0", fontSize: 11.5, fontWeight: 700, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: "0.06em" }}>MAPOM · 29/11 a 04/12 (data possível)</p>
+      <p style={{ margin: "16px 4px 0", fontSize: 11.5, fontWeight: 700, color: "var(--ink-60)", textTransform: "uppercase", letterSpacing: "0.06em" }}>MAPOM · 23 a 27/11 (data provável)</p>
       <details style={caixa}>
         <summary style={resumo}>Material individual <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>· {feitos} de {total} separados</span></summary>
         {lista(MATERIAL_MAPOM_INDIVIDUAL)}

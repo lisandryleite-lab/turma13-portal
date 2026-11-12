@@ -6,8 +6,14 @@ import { DATA_FIM_CFO, DATA_INICIO, diasParaFimCFO, marcosPendentes } from "@/li
 // `tema`: o portal tem duas paletas — "azul" no grupo (logado) e "olive" no hub
 // (cfo). O componente aparece nos dois, então precisa vestir a cor de cada um.
 export function ContagemCFO({
-  compacto = false, tema = "azul",
-}: { compacto?: boolean; tema?: "azul" | "olive" }) {
+  compacto = false, tema = "azul", rotulo = "Para o término do CFO", semMarcos = false,
+}: {
+  compacto?: boolean; tema?: "azul" | "olive"
+  /** título acima da data (ex.: "Para a formatura") */
+  rotulo?: string
+  /** esconde a lista de marcos (a página mostra os eventos em outro lugar) */
+  semMarcos?: boolean
+}) {
   const dias = diasParaFimCFO()
   const semanas = Math.floor(dias / 7)
   const meses = Math.floor(dias / 30)
@@ -18,7 +24,7 @@ export function ContagemCFO({
   const percorrido = Math.min(100, Math.max(0, Math.round(((totalDias - dias) / totalDias) * 100)))
 
   const fim = DATA_FIM_CFO.toLocaleDateString("pt-BR", { timeZone: "UTC" })
-  const marcos = marcosPendentes()
+  const marcos = semMarcos ? [] : marcosPendentes()
   const ddmmaa = (d: Date) => d.toLocaleDateString("pt-BR", { timeZone: "UTC" })
 
   const paleta = tema === "olive"
@@ -52,7 +58,7 @@ export function ContagemCFO({
           fontSize: 10, fontWeight: 700, textTransform: "uppercase",
           letterSpacing: "0.1em", color: "rgba(255,255,255,0.65)", margin: 0,
         }}>
-          Para o término do CFO
+          {rotulo}
         </p>
         <p style={{ fontSize: 13, margin: "3px 0 9px", color: "rgba(255,255,255,0.85)" }}>
           {dias === 0 ? "É hoje." : <>Previsão: <strong>{fim}</strong> · ~{semanas} semanas{meses > 0 && ` · ~${meses} ${meses === 1 ? "mês" : "meses"}`}</>}

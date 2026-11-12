@@ -463,14 +463,7 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
           <SeloAcervo />
           <NotaMaciel />
 
-          <h3 style={tituloSecao}>Mementos <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>({materias.length})</span></h3>
-          <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="🔍 Buscar matéria ou assunto do memento"
-            style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15, marginBottom: 12 }} />
-          {achadas.length === 0
-            ? <p style={{ color: "var(--ink-60)" }}>Nenhuma matéria encontrada.</p>
-            : <div style={gradeCartoes}>{achadas.map(cartao)}</div>}
-
-          <h3 style={{ ...tituloSecao, marginTop: 24 }}>Questões</h3>
+          <h3 style={tituloSecao}>Questões</h3>
           <Link href="/questoes" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "16px 18px", borderRadius: 16,
             background: "var(--olive)", color: "var(--canvas)", textDecoration: "none", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
             <span style={{ minWidth: 0 }}>
@@ -479,6 +472,13 @@ function Mementos({ mementos, isAdmin, currentUser, pdfMaterias, disciplinas, ap
             </span>
             <span style={{ fontSize: 20, flexShrink: 0 }}>→</span>
           </Link>
+
+          <h3 style={{ ...tituloSecao, marginTop: 24 }}>Mementos <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>({materias.length})</span></h3>
+          <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="🔍 Buscar matéria ou assunto do memento"
+            style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(58,74,58,0.3)", background: "#fff", color: "var(--ink)", fontSize: 15, marginBottom: 12 }} />
+          {achadas.length === 0
+            ? <p style={{ color: "var(--ink-60)" }}>Nenhuma matéria encontrada.</p>
+            : <div style={gradeCartoes}>{achadas.map(cartao)}</div>}
         </details>
       </div>
     )

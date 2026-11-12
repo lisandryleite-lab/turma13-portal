@@ -251,8 +251,14 @@ export default async function PortalCfoHome() {
 
       {/* Contagem regressiva para o fim do CFO — esta é a página inicial do portal */}
       <div style={{ width: "100%", maxWidth: 460, marginTop: -28, marginBottom: 36 }}>
-        {/* Depois das provas teóricas: só os marcos até o aspirantado */}
-        {acervo ? <MarcosCFO /> : <ContagemCFO tema="olive" compacto />}
+        {/* Depois das provas teóricas: contagem para a formatura e, numa aba
+            que abre ao tocar, a linha do tempo dos demais eventos */}
+        {acervo ? (
+          <>
+            <ContagemCFO tema="olive" compacto rotulo="Para a formatura" semMarcos />
+            <div style={{ marginTop: 10 }}><MarcosCFO /></div>
+          </>
+        ) : <ContagemCFO tema="olive" compacto />}
       </div>
 
       {acervo && (

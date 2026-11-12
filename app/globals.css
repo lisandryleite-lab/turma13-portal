@@ -221,3 +221,6 @@
 
 /* Homenagem dos Mementos: <details> sem o triângulo padrão */
 .memento-honra > summary::-webkit-details-marker { display: none; }
+.marcos-cfo > summary::-webkit-details-marker { display: none; }
+.marcos-cfo-seta { transition: transform 0.2s; }
+.marcos-cfo[open] .marcos-cfo-seta { transform: rotate(180deg); }
