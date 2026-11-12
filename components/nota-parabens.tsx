@@ -12,11 +12,8 @@ export function NotaParabens({ aberta = false }: { aberta?: boolean }) {
     }}>
       <summary style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", listStyle: "none" }}>
         <span style={{ fontSize: 20 }}>🎖️</span>
-        <span style={{ minWidth: 0 }}>
-          <span style={{ display: "block", fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "1.05rem", color: "var(--gold)" }}>
-            {n.titulo}
-          </span>
-          <span style={{ display: "block", fontSize: 12.5, opacity: 0.8 }}>{n.resumo}</span>
+        <span style={{ fontFamily: "var(--serif-cfo)", fontWeight: 600, fontSize: "1.05rem", color: "var(--gold)" }}>
+          {n.titulo}
         </span>
       </summary>
       {n.paragrafos.map((p, i) => (
