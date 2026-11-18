@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { calcularComponentes, calcularProjecaoConsolidada, calcularPosicaoHistorica, BASE_T1, BASE_T2, type Verificacao } from "@/lib/ranking"
+import { calcularComponentes, calcularProjecaoConsolidada, calcularPosicaoHistorica, BASE_T1, BASE_T2, MFIC_DECLARADA, type Verificacao } from "@/lib/ranking"
 
 type Nota = { id: string; disciplina: string; avaliacao: string; valor: number; ehAF: boolean; apto: boolean }
 type Disc = { sigla: string; nome: string; status: string; fase: "concluida" | "andamento" | "inicio"; ordem: number }
@@ -35,7 +35,7 @@ const mgcDe = (mfic: number | null, nfdc: number, tcc: number) =>
 // MDs reais por disciplina (exclui TCC e conceito), aplicando regra de MDR
 function mdsReais(notas: Nota[]): number[] {
   const g = new Map<string, Nota[]>()
-  for (const n of notas) { if (n.disciplina === "TCC") continue; if (!g.has(n.disciplina)) g.set(n.disciplina, []); g.get(n.disciplina)!.push(n) }
+  for (const n of notas) { if (n.disciplina === "TCC" || n.disciplina === MFIC_DECLARADA) continue; if (!g.has(n.disciplina)) g.set(n.disciplina, []); g.get(n.disciplina)!.push(n) }
   const out: number[] = []
   for (const [, ns] of g) {
     if (ns.some(n => n.apto)) continue
@@ -80,6 +80,8 @@ export function RankingClient({
   const comp = calcularComponentes(toVerif(notas), nfdcState)
   const mfic = comp.mfic
   const mgc = mgcDe(mfic, nfdcState, tccState)
+  // MFIC informada de uma vez (planilha própria) — vale no lugar das disciplinas.
+  const notaMfic = notas.find(n => n.disciplina === MFIC_DECLARADA) ?? null
 
   async function salvar(e: React.FormEvent) {
     e.preventDefault(); setErro("")
@@ -129,8 +131,27 @@ export function RankingClient({
     }
   }
 
+  // Lançamento agregado: MFIC + TCC + NFDC de uma vez, sem nota por disciplina.
+  async function salvarResumo(mficV: number, tccV: number, nfdcV: number): Promise<string | null> {
+    const res = await fetch("/api/notas-cfo", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ disciplina: MFIC_DECLARADA, avaliacao: MFIC_DECLARADA, valor: mficV }),
+    })
+    if (!res.ok) { const j = await res.json().catch(() => ({})); return j.error || "Erro ao salvar a MFIC." }
+    const nova: Nota = await res.json()
+    setNotas(prev => [...prev.filter(n => n.disciplina !== MFIC_DECLARADA), nova])
+    await Promise.all([salvarTcc(tccV), salvarNfdc(nfdcV)])
+    return null
+  }
+  async function removerMfic() {
+    if (!notaMfic) return
+    if (!confirm("Remover a MFIC informada e voltar a calcular pelas notas das disciplinas?")) return
+    const res = await fetch(`/api/notas-cfo?id=${notaMfic.id}`, { method: "DELETE" })
+    if (res.ok) { setNotas(prev => prev.filter(n => n.id !== notaMfic.id)); router.refresh() }
+  }
+
   const grupos = new Map<string, Nota[]>()
-  for (const n of notas) { if (!grupos.has(n.disciplina)) grupos.set(n.disciplina, []); grupos.get(n.disciplina)!.push(n) }
+  for (const n of notas) { if (n.disciplina === MFIC_DECLARADA) continue; if (!grupos.has(n.disciplina)) grupos.set(n.disciplina, []); grupos.get(n.disciplina)!.push(n) }
   const nomeDisc = (s: string) => disciplinas.find(d => d.sigla === s)?.nome || s
   function md(ns: Nota[]): number | null {
     const reg = ns.filter(n => !n.ehAF && !n.apto)
@@ -187,12 +208,33 @@ export function RankingClient({
           ? disciplinas.filter(d => bate(`${d.sigla} ${d.nome}`, termoDisc)).sort((a, b) => a.sigla.localeCompare(b.sigla))
           : []
         const avalPadrao = (AVALIACOES as readonly string[]).includes(aval)
-        const comNotas = notas.filter(n => n.disciplina !== "TCC")
+        const comNotas = notas.filter(n => n.disciplina !== "TCC" && n.disciplina !== MFIC_DECLARADA)
 
         return (
           <>
+            {/* Atalho: quem acompanha em planilha própria informa só MFIC + TCC + NFDC */}
+            <details open={notaMfic != null} style={{ marginTop: 20, padding: "10px 14px", borderRadius: 12, background: "var(--surface)" }}>
+              <summary style={{ cursor: "pointer", fontSize: 13.5, fontWeight: 600, color: "var(--olive)" }}>
+                {notaMfic
+                  ? <>Usando sua MFIC informada: {notaMfic.valor.toFixed(3)}</>
+                  : <>Já tem suas médias numa planilha? <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>— informe MFIC + TCC + NFDC</span></>}
+              </summary>
+              <div style={{ marginTop: 10 }}>
+                <ResumoDeclarado mfic={notaMfic?.valor ?? null} tcc={tccState} nfdc={nfdcState} onSave={salvarResumo} />
+                {notaMfic && (
+                  <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "var(--ink-60)", lineHeight: 1.5 }}>
+                    Enquanto houver MFIC informada, ela vale no ranking no lugar das notas por disciplina.{" "}
+                    <button type="button" onClick={removerMfic}
+                      style={{ background: "none", border: "none", padding: 0, color: "var(--olive)", fontWeight: 600, fontSize: 12.5, cursor: "pointer", textDecoration: "underline" }}>
+                      Voltar a calcular pelas disciplinas
+                    </button>
+                  </p>
+                )}
+              </div>
+            </details>
+
             {/* 1 · disciplina */}
-            <div style={{ marginTop: 20 }}>
+            <div style={{ marginTop: 14 }}>
               <input style={{ ...inputStyle, fontSize: 14 }} value={buscaDisc} onChange={e => setBuscaDisc(e.target.value)}
                 placeholder="Buscar disciplina (sigla ou nome)" aria-label="Buscar disciplina" />
               {termoDisc ? (
@@ -265,7 +307,7 @@ export function RankingClient({
             {/* Minhas notas */}
             <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: 28, marginBottom: 6, gap: 12 }}>
               <h2 style={{ fontFamily: "var(--serif-cfo)", fontSize: "1.2rem", color: "var(--olive)", margin: 0 }}>
-                Minhas notas {comNotas.length > 0 && <span style={{ fontSize: 13, fontWeight: 400, color: "var(--ink-60)" }}>· MFIC {mfic != null ? mfic.toFixed(3) : "—"}</span>}
+                Minhas notas {comNotas.length > 0 && <span style={{ fontSize: 13, fontWeight: 400, color: "var(--ink-60)" }}>· MFIC {mfic != null ? mfic.toFixed(3) : "—"}{comp.mficDeclarada ? " (informada)" : ""}</span>}
               </h2>
               {comNotas.length > 0 && (
                 <button onClick={() => { setBusca(""); setTimeout(() => window.print(), 50) }}
@@ -281,7 +323,9 @@ export function RankingClient({
               </div>
             )}
             {comNotas.length === 0 ? (
-              <p style={{ color: "var(--ink-60)", fontSize: 14 }}>Nenhuma nota ainda. Escolha uma disciplina acima para começar.</p>
+              <p style={{ color: "var(--ink-60)", fontSize: 14 }}>
+                {notaMfic ? "Nenhuma nota por disciplina — o ranking usa a MFIC informada acima." : "Nenhuma nota ainda. Escolha uma disciplina acima para começar."}
+              </p>
             ) : (
               <div className="notas-print">
                 {/* Cabeçalho que só aparece na impressão */}
@@ -299,7 +343,7 @@ export function RankingClient({
                   const termo = semAcento(busca.trim())
                   const info = new Map(disciplinas.map(d => [d.sigla, d]))
                   const lista = [...grupos.entries()]
-                    .filter(([d]) => d !== "TCC")
+                    .filter(([d]) => d !== "TCC" && d !== MFIC_DECLARADA)
                     .filter(([d]) => bate(`${d} ${nomeDisc(d)}`, termo))
                   const secoes = [...GRUPOS_DISC.map(([fase, rotulo]) => [fase, rotulo] as const), ["outras", "Outras"] as const]
                     .map(([fase, rotulo]) => ({
@@ -359,13 +403,16 @@ export function RankingClient({
 
       {aba === "ranking" && (
         mgc == null ? <p style={{ color: "var(--ink-60)", marginTop: 20 }}>Lance suas notas para ver o ranking e a previsão.</p> : (
-          <RankingPanel mgc={mgc} mfic={mfic} nfdc={nfdcState} tcc={tccState} tccDefinido={tccReal != null}
+          <RankingPanel mgc={mgc} mfic={mfic} mficDeclarada={comp.mficDeclarada} nfdc={nfdcState} tcc={tccState} tccDefinido={tccReal != null}
             mgcsOutros={mgcsOutros} turmaSize={turmaSize} onSaveNfdc={salvarNfdc} onSaveTcc={salvarTcc} />
         )
       )}
 
       {aba === "simular" && (
-        <Simular mdsBase={mdsReais(notas)} tccInicial={tccReal ?? 10} nfdcInicial={nfdcState}
+        <Simular mdsBase={notaMfic
+            // MFIC informada: trata as disciplinas já concluídas como tendo essa média.
+            ? Array(disciplinas.filter(d => d.fase === "concluida").length || 1).fill(notaMfic.valor)
+            : mdsReais(notas)} tccInicial={tccReal ?? 10} nfdcInicial={nfdcState}
           totalDisciplinas={totalDisciplinas} mgcsOutros={mgcsOutros} turmaSize={turmaSize} />
       )}
 
@@ -409,9 +456,62 @@ function NfdcTccEditor({ nfdc, tcc, tccDefinido, onSaveNfdc, onSaveTcc, plano }:
   )
 }
 
+// ── Lançamento agregado (planilha própria): MFIC + TCC + NFDC ──
+function ResumoDeclarado({ mfic, tcc, nfdc, onSave }: {
+  mfic: number | null; tcc: number; nfdc: number
+  onSave: (mfic: number, tcc: number, nfdc: number) => Promise<string | null>
+}) {
+  const [m, setM] = useState(mfic != null ? String(mfic) : "")
+  const [t, setT] = useState(String(tcc))
+  const [n, setN] = useState(String(nfdc))
+  const [msg, setMsg] = useState("")
+  const [salvando, setSalvando] = useState(false)
+  const num = (s: string) => Number(s.replace(",", "."))
+  const mgcPrevia = mgcDe(m.trim() ? num(m) : null, num(n), num(t))
+
+  async function salvar() {
+    const mv = num(m), tv = num(t), nv = num(n)
+    if (!m.trim()) return setMsg("Informe a MFIC.")
+    if ([mv, tv, nv].some(v => isNaN(v) || v < 0 || v > 10)) return setMsg("Valores devem ser entre 0 e 10.")
+    setSalvando(true); setMsg("")
+    const erro = await onSave(mv, tv, nv)
+    setSalvando(false)
+    setMsg(erro ? erro : "✓ Salvo — você já entra no ranking.")
+  }
+
+  const campo = (rot: string, dica: string, v: string, set: (s: string) => void) => (
+    <label style={{ fontSize: 13, fontWeight: 600, flex: "1 1 140px" }}>
+      {rot} <span style={{ fontWeight: 400, color: "var(--ink-60)" }}>{dica}</span>
+      <input style={{ ...inputStyle, marginTop: 4 }} value={v} onChange={e => set(e.target.value)} inputMode="decimal" placeholder="0–10" />
+    </label>
+  )
+
+  return (
+    <div>
+      <p style={{ margin: "0 0 10px", fontSize: 12.5, color: "var(--ink-60)", lineHeight: 1.5 }}>
+        Para quem acompanha as notas em planilha própria: informe a média final das disciplinas (MFIC),
+        a nota do TCC e a nota disciplinar (NFDC). Não precisa lançar disciplina por disciplina.
+      </p>
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "end" }}>
+        {campo("MFIC", "— média das disciplinas", m, setM)}
+        {campo("TCC", "", t, setT)}
+        {campo("NFDC", "— disciplinar", n, setN)}
+        <button type="button" onClick={salvar} disabled={salvando}
+          style={{ padding: "10px 16px", borderRadius: 8, border: "none", background: "var(--olive)", color: "var(--canvas)", fontWeight: 600, cursor: salvando ? "default" : "pointer" }}>
+          {salvando ? "Salvando…" : "Salvar"}
+        </button>
+      </div>
+      {mgcPrevia != null && !isNaN(mgcPrevia) && (
+        <p style={{ margin: "8px 0 0", fontSize: 13, color: "var(--ink)" }}>MGC resultante: <strong style={{ color: "var(--olive)" }}>{mgcPrevia.toFixed(3)}</strong></p>
+      )}
+      {msg && <p style={{ margin: "8px 0 0", fontSize: 13, color: msg.startsWith("✓") ? "var(--olive)" : "var(--red)" }}>{msg}</p>}
+    </div>
+  )
+}
+
 // ── Painel "Meu ranking" ──
-function RankingPanel({ mgc, mfic, nfdc, tcc, tccDefinido, mgcsOutros, turmaSize, onSaveNfdc, onSaveTcc }: {
-  mgc: number; mfic: number | null; nfdc: number; tcc: number; tccDefinido: boolean
+function RankingPanel({ mgc, mfic, mficDeclarada, nfdc, tcc, tccDefinido, mgcsOutros, turmaSize, onSaveNfdc, onSaveTcc }: {
+  mgc: number; mfic: number | null; mficDeclarada: boolean; nfdc: number; tcc: number; tccDefinido: boolean
   mgcsOutros: number[]; turmaSize: number; onSaveNfdc: (v: number) => void; onSaveTcc: (v: number) => void
 }) {
   const acima = mgcsOutros.filter(m => m > mgc).length
@@ -447,7 +547,7 @@ function RankingPanel({ mgc, mfic, nfdc, tcc, tccDefinido, mgcsOutros, turmaSize
 
       {/* Componentes */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginTop: 10 }}>
-        {box("MFIC", mfic != null ? mfic.toFixed(3) : "—")}
+        {box(mficDeclarada ? "MFIC (informada)" : "MFIC", mfic != null ? mfic.toFixed(3) : "—")}
         {box("NFDC", nfdc.toFixed(1))}
         {box("TCC", tcc.toFixed(1) + (tccDefinido ? "" : "*"))}
       </div>

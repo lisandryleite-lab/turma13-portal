@@ -81,28 +81,39 @@ export function calcularMGC({ mfic, nfdc, tcc }: ComponentesMGC): number | null 
 }
 
 /**
- * Versão simplificada para o ranking enquanto o aluno lança notas:
- * Agrupa as verificações por disciplina e calcula MFIC + MGC.
- * NFDC = 10 (sem transgressões registradas ainda).
- * TCC = incluído se avaliacao === "TCC".
+ * MFIC declarada de uma vez: para quem acompanha as notas em planilha própria
+ * e não quer lançar disciplina por disciplina. Fica guardada como NotaCFO com
+ * disciplina = avaliacao = "MFIC" e, quando existe, SUBSTITUI a MFIC calculada.
  */
-export function calcularMGCSimples(notas: Verificacao[], nfdc = 10): number | null {
-  if (notas.length === 0) return null
+export const MFIC_DECLARADA = "MFIC"
 
-  // Separa TCC
-  const notaTCC = notas.find((n) => n.disciplina === "TCC" || n.avaliacao === "TCC")
-  const notasSemTCC = notas.filter((n) => n.disciplina !== "TCC" && n.avaliacao !== "TCC")
+const ehTCC = (n: Verificacao) => n.disciplina === "TCC" || n.avaliacao === "TCC"
+const ehMficDeclarada = (n: Verificacao) => n.disciplina === MFIC_DECLARADA
 
-  // Agrupa por disciplina
+/** Separa TCC e MFIC declarada das verificações comuns e devolve MFIC e TCC. */
+function extrairMficTcc(notas: Verificacao[]): { mfic: number | null; tcc: number | null; mficDeclarada: boolean } {
+  const tcc = notas.find(ehTCC)?.nota ?? null
+  const declarada = notas.find(ehMficDeclarada)
+  if (declarada) return { mfic: declarada.nota, tcc, mficDeclarada: true }
+
   const porDisc = new Map<string, Verificacao[]>()
-  for (const n of notasSemTCC) {
+  for (const n of notas) {
+    if (ehTCC(n)) continue
     if (!porDisc.has(n.disciplina)) porDisc.set(n.disciplina, [])
     porDisc.get(n.disciplina)!.push(n)
   }
+  return { mfic: calcularMFIC(porDisc), tcc, mficDeclarada: false }
+}
 
-  const mfic = calcularMFIC(porDisc)
-  const tcc = notaTCC?.nota ?? null
-
+/**
+ * Versão simplificada para o ranking enquanto o aluno lança notas:
+ * Agrupa as verificações por disciplina e calcula MFIC + MGC.
+ * TCC = incluído se avaliacao === "TCC".
+ * MFIC declarada (disciplina "MFIC"), se houver, vale no lugar da calculada.
+ */
+export function calcularMGCSimples(notas: Verificacao[], nfdc = 10): number | null {
+  if (notas.length === 0) return null
+  const { mfic, tcc } = extrairMficTcc(notas)
   return calcularMGC({ mfic, nfdc, tcc })
 }
 
@@ -209,18 +220,7 @@ export function calcularProjecaoConsolidada(
 
 /** Extrai MFIC e TCC separadamente (para exibição detalhada) */
 export function calcularComponentes(notas: Verificacao[], nfdc = 10) {
-  const notaTCC = notas.find((n) => n.disciplina === "TCC" || n.avaliacao === "TCC")
-  const notasSemTCC = notas.filter((n) => n.disciplina !== "TCC" && n.avaliacao !== "TCC")
-
-  const porDisc = new Map<string, Verificacao[]>()
-  for (const n of notasSemTCC) {
-    if (!porDisc.has(n.disciplina)) porDisc.set(n.disciplina, [])
-    porDisc.get(n.disciplina)!.push(n)
-  }
-
-  const mfic = calcularMFIC(porDisc)
-  const tcc = notaTCC?.nota ?? null
+  const { mfic, tcc, mficDeclarada } = extrairMficTcc(notas)
   const mgc = calcularMGC({ mfic, nfdc, tcc })
-
-  return { mfic, nfdc, tcc, mgc }
+  return { mfic, nfdc, tcc, mgc, mficDeclarada }
 }
