@@ -678,6 +678,20 @@ export function rotuloMilitar(mat: number): string {
   return nome ? `${mat} ${nome}` : String(mat)
 }
 
+/**
+ * Efetivo que concorre na classificação final: militares do mapa de equipes
+ * mais recente, SEM o 7º PEL (só sobreaviso). Novembro/2026: 202 − 15 = 187.
+ * É o "de N" do /ranking e da previsão em /batalhoes/carreira.
+ */
+export function efetivoRanking(mes: MesEscala = MESES_ESCALA[MESES_ESCALA.length - 1]): number {
+  const mats = new Set<number>()
+  for (const [g, membros] of Object.entries(mes.mapa) as [Grupo, [number, string][]][]) {
+    if (g === "7º PEL") continue
+    for (const [m] of membros) mats.add(m)
+  }
+  return mats.size
+}
+
 /** Equipe de plantão da matrícula no mapa do mês (padrão: mês vigente). */
 export function grupoDaMatricula(mat: number, mes: MesEscala = MESES_ESCALA[MESES_ESCALA.length - 1]): Grupo | null {
   for (const [g, membros] of Object.entries(mes.mapa) as [Grupo, [number, string][]][]) {

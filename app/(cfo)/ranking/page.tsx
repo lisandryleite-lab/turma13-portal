@@ -4,13 +4,14 @@ import { prisma } from "@/lib/prisma"
 import { calcularMGCSimples, type Verificacao } from "@/lib/ranking"
 import { disciplinasComFase } from "@/lib/disciplinas-cache"
 import { RankingClient } from "./ranking-client"
+import { efetivoRanking } from "@/lib/escalas-cia"
 
 export default async function RankingPage() {
   const session = await auth()
   if (!session?.user) redirect("/login")
   const userId = session.user.id!
 
-  const [minhasNotas, disciplinas, todasNotas, eu, turmaSize] = await Promise.all([
+  const [minhasNotas, disciplinas, todasNotas, eu] = await Promise.all([
     prisma.notaCFO.findMany({ where: { userId }, orderBy: [{ disciplina: "asc" }, { avaliacao: "asc" }] }),
     disciplinasComFase(),
     // Filtra no SQL: antes puxava a tabela INTEIRA (todas as turmas, todos os
@@ -24,8 +25,10 @@ export default async function RankingPage() {
       },
     }),
     prisma.user.findUnique({ where: { id: userId }, select: { nfdc: true } }),
-    prisma.user.count({ where: { turma: 3 } }),
   ])
+
+  // Total da turma = mapa de equipes mais recente sem o 7º PEL (lib/escalas-cia).
+  const turmaSize = efetivoRanking()
 
   // MGC dos OUTROS alunos T3 que já lançaram notas (para posicionar o ranking)
   const porUser = new Map<string, { nfdc: number; vs: Verificacao[] }>()

@@ -1,3 +1,4 @@
+import { efetivoRanking } from "@/lib/escalas-cia"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { auth } from "@/lib/auth"
@@ -51,7 +52,7 @@ function Tipo({ t }: { t: TipoPromocao }) {
 export default async function CarreiraPage() {
   const session = await auth()
   if (!session?.user) redirect("/login")
-  const turmaSize = await prisma.user.count({ where: { turma: 3 } })
+  const turmaSize = efetivoRanking() // mapa mais recente sem o 7º PEL
   const sugerida = await posicaoProvavel(session.user.id!, turmaSize)
 
   return (
