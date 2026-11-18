@@ -74,7 +74,9 @@ export function calcularMFIC(verificacoesPorDisciplina: Map<string, Verificacao[
 export function calcularMGC({ mfic, nfdc, tcc }: ComponentesMGC): number | null {
   if (mfic === null) return null
 
-  const tccVal = tcc ?? 0
+  // TCC ainda não lançado conta como 10 — mesma regra que o aluno vê na própria
+  // MGC (ranking-client), para comparar todos na mesma base.
+  const tccVal = tcc ?? 10
   const mgc = (mfic * 6.5 + nfdc * 2.5 + tccVal * 1) / 10
 
   return Number(mgc.toFixed(3))
