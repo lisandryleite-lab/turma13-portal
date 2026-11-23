@@ -136,7 +136,8 @@ Avisos gerais. `fixado` mantém no topo; `destaque` aplica estilo especial.
 
 ### Usuários fora da Turma 13 (`turma13: false`)
 O portal também hospeda alunos de outros pelotões do CFO 2026. Eles têm `turma13: false` e por isso só acessam a **área CFO** (`app/(cfo)/`: `/inicio`, `/mementos`, `/questoes`, `/ranking`, `/permutas`, `/documentos`, `/trocar-senha`) — o grupo `(logado)` é bloqueado pelo próprio `app/(logado)/layout.tsx`. Com `turma: 3` contam no `turmaSize` do `/ranking` e do `/painel`.
-**Turma 19** (set/2026, `scripts/add-turma19.ts`): 199 BARROS, 203 J LUIZ, 217 SALUSTIANO, 218 COELHO, 219 BRENER, 220 RATIS. Senha inicial = a própria matrícula.
+**Turma 19** (set/2026, `scripts/add-turma19.ts`): 199 BARROS, 203 J LUIZ, 217 SALUSTIANO, 218 COELHO, 219 BRENER, 220 RATIS. Senha inicial = a própria matrícula. Obs.: esse script não chegou a criar 203 e 217–220 no banco.
+**7º Pelotão** (nov/2026, `scripts/add-7pel-novembro.ts`): 217 SALUSTIANO, 221 AMANDA ÂNGELO, 224 LÍGIA — `turma: 3`, `turma13: false`, `pelotao: 7` (fora do levantamento de batalhões e do total do ranking). Senha inicial = matrícula.
 
 ### Grupos de faxina — fonte viva no banco
 A composição exibida em `/escalas` vem da tabela **`FaxinaGrupoMembro`** quando não vazia; `COMPOSICAO_FAXINA` em `lib/escalas.ts` é só fallback (mantida em sincronia). `User.grupoFaxina` (dashboard) deve espelhar a tabela — `scripts/integra-novatos-escalas.ts` sincroniza. Em jul/2026: G7 = Thais, Gabriele, Cleyton, 211 Dário, 213 R Silva; G8 = Aldo, Rodolfo, André, Pablo, 212 Camila (grupos com 5).
